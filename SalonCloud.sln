@@ -3,14 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D1937837-3C8B-4EF3-8D80-E53E5D08D419}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{40F42CAD-4D9A-4642-9C05-70666BACA34B}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SalonCloud", "src\SalonCloud\SalonCloud.xproj", "{882C8FB9-3AEF-4CB3-BD54-8289E36F1D47}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "SalonCloud.Server", "SalonCloud.Server\SalonCloud.Server.njsproj", "{6C4B9E9B-4884-4384-8566-57A2000BC196}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,15 +11,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{882C8FB9-3AEF-4CB3-BD54-8289E36F1D47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{882C8FB9-3AEF-4CB3-BD54-8289E36F1D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{882C8FB9-3AEF-4CB3-BD54-8289E36F1D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{882C8FB9-3AEF-4CB3-BD54-8289E36F1D47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C4B9E9B-4884-4384-8566-57A2000BC196}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C4B9E9B-4884-4384-8566-57A2000BC196}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C4B9E9B-4884-4384-8566-57A2000BC196}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C4B9E9B-4884-4384-8566-57A2000BC196}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{882C8FB9-3AEF-4CB3-BD54-8289E36F1D47} = {D1937837-3C8B-4EF3-8D80-E53E5D08D419}
 	EndGlobalSection
 EndGlobal
