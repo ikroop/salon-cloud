@@ -3,10 +3,10 @@ import routes = require('./routes/index');
 import user = require('./routes/user');
 import http = require('http');
 import path = require('path');
-import mongoose = require("mongoose");
+import mongoose = require('mongoose');
 
  // connect to database
-var configDB = require('./Config/database.js');
+var configDB = require('./Config/dev/database.js');
 mongoose.connect(configDB.url);
 
 var app = express();
