@@ -9,9 +9,10 @@ SalonCloud – a software will change all your definition about managing a salon
 |       |----password: string
 |       |----Email: string
 |       |----salon:
-|             |----id: string
-|             |----status: boolean
-|             |----type: number
+|             |----<id>
+|                   |----salonid: string
+|                   |----status: boolean
+|                   |----type: number
 |------salon
 |       |----appointment
 |       |----customer
@@ -20,6 +21,27 @@ SalonCloud – a software will change all your definition about managing a salon
 |       |----finance
 |       |----giftcard
 |       |----schedule
+|             |----salon
+              |     |----weekly
+              |     |     |----0
+              |     |     |    |----close: number
+              |     |     |    |----open: number
+              |     |     |    |----status: boolean
+              |     |     |    |----dayofweek: number
+              |     |     |----1
+              |     |          |----close: number
+              |     |          |----open: number
+              |     |          |----status: boolean
+              |     |          |----dayofweek: number
+              |     |     .............
+              |     |----daily
+              |     |     |----<id>
+              |     |           |----close: number
+              |     |           |----open: number
+              |     |           |----status: boolean
+              |     |           |----date: number
+              |     |     
+              |----emplopyee
 |       |----service
 |       |----setting
 |------domain
