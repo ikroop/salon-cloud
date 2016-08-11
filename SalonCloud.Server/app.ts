@@ -11,7 +11,7 @@ import passportLocal = require('passport-local');
 var LocalStrategy = passportLocal.Strategy;
 
  // connect to database
-var configDB = require('./Config/database.js');
+var configDB = require('./Config/dev/database.js');
 mongoose.connect(configDB.url);
 
 var app = express();
