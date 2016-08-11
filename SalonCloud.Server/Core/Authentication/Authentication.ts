@@ -4,16 +4,19 @@
  *
  *
  */
+import mongoose = require('mongoose');
+import passportLocalMongoose = require('passport-local-mongoose');
+import Schema = mongoose.Schema;
+
 
 import {IAuthentication} from './IAuthentication';
 import {IAuthModel} from './IAuthModel';
 
-export class Authentication implements IAuthentication {
+var Account = new Schema({
+    username: String,
+    password: String
+});
 
-    public SignUp(Username: string, Password: string) {
+Account.plugin(passportLocalMongoose);
 
-    }
-
-    public SignIn(Username: string, Password: string) {
-    }
-}
+module.exports = mongoose.model('Account', Account);
