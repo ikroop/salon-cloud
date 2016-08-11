@@ -17,38 +17,42 @@ SalonCloud – a software will change all your definition about managing a salon
 |------salon
 |       |----appointment
 |       |----customer
+|       |     |----<id>
+|       |           |----uid: string
+|       |           |----birthday: string
+|       |           |----address: string
 |       |----discount
 |       |----employee
 |       |----finance
 |       |----giftcard
 |       |----schedule
-|             |----salon
-|             |     |----weekly
-|             |     |     |----0
-|             |     |     |    |----close: number
-|             |     |     |    |----open: number
-|             |     |     |    |----status: boolean
-|             |     |     |    |----dayofweek: number
-|             |     |     |----1
-|             |     |          |----close: number
-|             |     |          |----open: number
-|             |     |          |----status: boolean
-|             |     |          |----dayofweek: number
-|             |     |     .............
-|             |     |----daily
-|             |     |     |----<id>
-|             |     |           |----close: number
-|             |     |           |----open: number
-|             |     |           |----status: boolean
-|             |     |           |----date: number
-|             |     |     
-|             |----emplopyee
-|                   |----<id>
-|                         |----uid: string
-|                         |----nickname: string
-|                         |----social_security_number: string
-|                         |----salary_rate: double
-|                         |----cash_rate: double
+|       |     |----salon
+|       |     |     |----weekly
+|       |     |     |     |----0
+|       |     |     |     |    |----close: number
+|       |     |     |     |    |----open: number
+|       |     |     |     |    |----status: boolean
+|       |     |     |     |    |----dayofweek: number
+|       |     |     |     |----1
+|       |     |     |          |----close: number
+|       |     |     |          |----open: number
+|       |     |     |          |----status: boolean
+|       |     |     |          |----dayofweek: number
+|       |     |     |     .............
+|       |     |     |----daily
+|       |     |     |     |----<id>
+|       |     |     |           |----close: number
+|       |     |     |           |----open: number
+|       |     |     |           |----status: boolean
+|       |     |     |           |----date: number
+|       |     |     |     
+|       |     |----emplopyee
+|       |           |----<id>
+|       |                 |----uid: string
+|       |                 |----nickname: string
+|       |                 |----social_security_number: string
+|       |                 |----salary_rate: double
+|       |                 |----cash_rate: double
 |       |----service
 |       |----setting
 |------domain
