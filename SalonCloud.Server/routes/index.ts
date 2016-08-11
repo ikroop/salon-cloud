@@ -3,6 +3,15 @@
  */
 import express = require('express');
 
-export function index(req: express.Request, res: express.Response) {
-    res.render('index', { title: 'Express' });
-};
+module route {
+    export class Index {
+        public static index(req: express.Request, res: express.Response) {
+            res.json({'Index':'Test'});
+            //res.render('index', { title: "Express" });
+        };        
+    }
+
+
+}
+
+export = route;

@@ -2,9 +2,13 @@
 const express = require('express');
 const routes = require('./routes/index');
 const user = require('./routes/user');
+const register = require('./routes/authentication');
 const http = require('http');
 const path = require('path');
 const mongoose = require("mongoose");
+const passport = require('passport');
+const passportLocal = require('passport-local');
+var LocalStrategy = passportLocal.Strategy;
 // connect to database
 var configDB = require('./Config/database.js');
 mongoose.connect(configDB.url);
@@ -26,8 +30,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
-app.get('/', routes.index);
+const Authentication = require('./Core/Authentication/Authentication');
+passport.use(new LocalStrategy(Authentication.authenticate()));
+passport.serializeUser(Authentication.serializeUser());
+passport.deserializeUser(Authentication.deserializeUser());
+var index = new routes.Index();
+app.get('/', routes.Index.index);
 app.get('/users', user.list);
+app.get('/register', register.Authentication.registerGet);
+app.post('/register', register.Authentication.registerPost);
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });

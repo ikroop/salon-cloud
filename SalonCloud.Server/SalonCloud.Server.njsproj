@@ -42,6 +42,7 @@
     <TypeScriptCompile Include="Core\User\IUserModel.ts" />
     <TypeScriptCompile Include="Core\User\User.ts" />
     <TypeScriptCompile Include="routes\index.ts" />
+    <TypeScriptCompile Include="routes\authentication.ts" />
     <TypeScriptCompile Include="routes\user.ts" />
     <TypeScriptCompile Include="Scripts\typings\express\express.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
@@ -64,6 +65,7 @@
     <Folder Include="Core\Authentication\" />
     <Folder Include="Core\User\" />
     <Folder Include="Config\" />
+    <Folder Include="public\" />
     <Folder Include="public\javascripts\" />
     <Folder Include="public\stylesheets\" />
     <Folder Include="routes\" />
