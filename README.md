@@ -53,26 +53,34 @@ SalonCloud – a software will change all your definition about managing a salon
 |       |     |                 |----date: number
 |       |     |          
 |       |     |----emplopyee
-|       |     |     |----<uid>
-|       |     |           |----weekly
-|       |     |           |     |----0
-|       |     |           |     |    |----close: number
-|       |     |           |     |    |----open: number
-|       |     |           |     |    |----status: boolean
-|       |     |           |     |    |----dayofweek: number
-|       |     |           |     |----1
-|       |     |           |          |----close: number
-|       |     |           |          |----open: number
-|       |     |           |          |----status: boolean
-|       |     |           |          |----dayofweek: number
-|       |     |           |     .............
-|       |     |           |----daily
-|       |     |                 |----<id>
-|       |     |                       |----close: number
-|       |     |                       |----open: number
-|       |     |                       |----status: boolean
-|       |     |                       |----date: number            
+|       |           |----<uid>
+|       |                 |----weekly
+|       |                 |     |----0
+|       |                 |     |    |----close: number
+|       |                 |     |    |----open: number
+|       |                 |     |    |----status: boolean
+|       |                 |     |    |----dayofweek: number
+|       |                 |     |----1
+|       |                 |          |----close: number
+|       |                 |          |----open: number
+|       |                 |          |----status: boolean
+|       |                 |          |----dayofweek: number
+|       |                 |     .............
+|       |                 |----daily
+|       |                       |----<id>
+|       |                             |----close: number
+|       |                             |----open: number
+|       |                             |----status: boolean
+|       |                             |----date: number            
 |       |----service
+|             |----<id>
+|                   |----group_name: string
+|                   |----description: string
+|                   |----service_list
+|                         |----<id>
+|                               |----name: string
+|                               |----price: number
+|                               |----time: number
 |       |----setting
 |------domain
 ```
