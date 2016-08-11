@@ -39,8 +39,7 @@ passport.deserializeUser(Authentication.deserializeUser());
 var index = new routes.Index();
 app.get('/', routes.Index.index);
 app.get('/users', user.list);
-app.get('/register', register.Authentication.registerGet);
-app.post('/register', register.Authentication.registerPost);
+app.post('/auth/register', register.Authentication.registerPost);
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
