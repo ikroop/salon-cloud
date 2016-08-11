@@ -20,16 +20,18 @@ module route {
         };
 
         public static registerPost(req: express.Request, res: express.Response) {
-            Account.register(new Account({ username: req.body.username, password: req.body.password })), function (err, account) {
+            Account.register(new Account({ username: req.body.username }), req.body.password, function (err, account) {
                 if (err) {
-                    return res.render('register', { account: account });
+                    return res.json({ 'err': err });
+                } else {
+                    return res.json({'account': account});
                 }
 
-                passport.authenticate('local')(req, res, function () {
-                    res.redirect('/');
-                });
-
+                //passport.authenticate('local')(req, res, function () {
+                //  res.redirect('/');
+                //});
             });
+
 
         }
 
