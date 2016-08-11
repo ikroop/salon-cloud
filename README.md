@@ -1,6 +1,8 @@
 # salon-cloud
 SalonCloud – a software will change all your definition about managing a salon to a high new level.
 # Database Structure
+```
+[root]
 |
 |------user
 |       |----phone: string
@@ -21,3 +23,4 @@ SalonCloud – a software will change all your definition about managing a salon
 |       |----service
 |       |----setting
 |------domain
+```
