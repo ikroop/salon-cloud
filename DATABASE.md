@@ -71,14 +71,14 @@
 |       |                             |----status: boolean
 |       |                             |----date: number            
 |       |----service
-|             |----<id>
-|                   |----group_name: string
-|                   |----description: string
-|                   |----service_list
-|                         |----<id>
-|                               |----name: string
-|                               |----price: number
-|                               |----time: number
+|       |     |----<id>
+|       |           |----group_name: string
+|       |           |----description: string
+|       |           |----service_list
+|       |                |----<id>
+|       |                       |----name: string
+|       |                       |----price: number
+|       |                       |----time: number
 |       |----setting
 |------domain
 ```
