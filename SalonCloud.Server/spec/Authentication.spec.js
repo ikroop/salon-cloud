@@ -3,7 +3,7 @@ var assert = require('assert');
 var request = require('supertest');
 var mongoose = require('mongoose');
 var winston = require('winston');
-var configDB = require('./Config/dev/database.js');
+var configDB = require('./../config/dev/database.js');
 
 describe('Routing', function () {
     var url = 'http://localhost:3000';
@@ -39,17 +39,17 @@ describe('Routing', function () {
                         throw err;
                     } 
                     // this is should.js syntax, very clear
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
+                    res.status.should.be.equal(200);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('MissingUsername');
                     done();
                 });
         });
 
-        it('should return "MissingPassword" error trying to register without password', function (done) {
+        it('should return "NotEmailOrPhoneNumber" error trying to register with username as phone number or email', function (done) {
             var user = {
-                username: 'unittest'
+                username: 'salonhelpstest',
+                password: '123456'
             };
             // once we have specified the info we want to send to the server via POST verb,
             // we need to actually perform the action on the resource, in this case we want to 
@@ -64,8 +64,31 @@ describe('Routing', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('NotEmailOrPhoneNumber');
+                    done();
+                });
+        });
+
+        it('should return "MissingPassword" error trying to register without password', function (done) {
+            var user = {
+                username: 'unittest@gmail.com'
+            };
+            // once we have specified the info we want to send to the server via POST verb,
+            // we need to actually perform the action on the resource, in this case we want to 
+            // POST on /api/auth/register and we want to send some info
+            // We do this using the request object, requiring supertest!
+            request(url)
+                .post('/auth/register')
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(200);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('MissingPassword');
                     done();
