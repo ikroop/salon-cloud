@@ -14,6 +14,26 @@
 |                   |----type: number
 |------salon
 |       |----appointment
+|       |     |----<id>
+|       |           |----comment: string
+|       |           |----device: number
+|       |           |----employee
+|       |           |     |----<id>
+|       |           |           |----uid: string
+|       |           |           |----service
+|       |           |                 |----<id>
+|       |           |                       |----service_id: string
+|       |           |                       |----realized_time: number
+|       |           |                       |----realized_price: number
+|       |           |----end: timestamp
+|       |           |----flexible
+|       |           |     |----status: boolean
+|       |           |     |----appointment_id: string
+|       |           |----customer_id(uid): string
+|       |           |----no: number
+|       |           |----start: timestamp
+|       |           |----status: number
+|       |           |----type: number
 |       |----customer
 |       |     |----<id>
 |       |           |----uid: string
