@@ -8,10 +8,10 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 var Schema = mongoose.Schema;
-var Account = new Schema({
+var Authentication = new Schema({
     username: String,
     password: String
 });
-Account.plugin(passportLocalMongoose);
-module.exports = mongoose.model('Account', Account);
+Authentication.plugin(passportLocalMongoose);
+module.exports = mongoose.model('User', Authentication);
 //# sourceMappingURL=Authentication.js.map

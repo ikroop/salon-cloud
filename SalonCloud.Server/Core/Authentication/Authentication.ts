@@ -12,11 +12,11 @@ import Schema = mongoose.Schema;
 import {IAuthentication} from './IAuthentication';
 import {IAuthModel} from './IAuthModel';
 
-var Account = new Schema({
+var Authentication = new Schema({
     username: String,
     password: String
 });
 
-Account.plugin(passportLocalMongoose);
+Authentication.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model('Account', Account);
+module.exports = mongoose.model('User', Authentication);
