@@ -2,15 +2,16 @@
 const express = require('express');
 const routes = require('./routes/index');
 const user = require('./routes/user');
-const register = require('./routes/authentication');
+const AuthenticationRoute = require('./routes/authentication');
 const http = require('http');
 const path = require('path');
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const passport = require('passport');
 const passportLocal = require('passport-local');
+const Authentication = require('./core/authentication/Authentication');
 var LocalStrategy = passportLocal.Strategy;
 // connect to database
-var configDB = require('./Config/dev/database.js');
+var configDB = require('./config/dev/database.js');
 mongoose.connect(configDB.url);
 var app = express();
 // all environments
@@ -32,14 +33,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
-const Authentication = require('./Core/Authentication/Authentication');
 passport.use(new LocalStrategy(Authentication.authenticate()));
 passport.serializeUser(Authentication.serializeUser());
 passport.deserializeUser(Authentication.deserializeUser());
 var index = new routes.Index();
 app.get('/', routes.Index.index);
 app.get('/users', user.list);
-app.post('/auth/register', register.Authentication.registerPost);
+app.post('/auth/register', AuthenticationRoute.registerPost);
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
