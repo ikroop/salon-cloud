@@ -35,13 +35,13 @@
   </PropertyGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="Config\dev\database.ts" />
-    <TypeScriptCompile Include="Core\Authentication\Authentication.ts" />
-    <TypeScriptCompile Include="Core\Authentication\IAuthentication.ts" />
-    <TypeScriptCompile Include="Core\Authentication\IAuthModel.ts" />
-    <TypeScriptCompile Include="Core\User\IUser.ts" />
-    <TypeScriptCompile Include="Core\User\IUserModel.ts" />
-    <TypeScriptCompile Include="Core\User\User.ts" />
+    <TypeScriptCompile Include="config\dev\database.ts" />
+    <TypeScriptCompile Include="core\authentication\Authentication.ts" />
+    <TypeScriptCompile Include="core\authentication\IAuthentication.ts" />
+    <TypeScriptCompile Include="core\authentication\IAuthModel.ts" />
+    <TypeScriptCompile Include="core\user\IUser.ts" />
+    <TypeScriptCompile Include="core\user\IUserModel.ts" />
+    <TypeScriptCompile Include="core\user\User.ts" />
     <TypeScriptCompile Include="routes\index.ts" />
     <TypeScriptCompile Include="routes\authentication.ts" />
     <TypeScriptCompile Include="routes\user.ts" />
@@ -63,11 +63,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
-    <Folder Include="Config\dev\" />
-    <Folder Include="Core\" />
-    <Folder Include="Core\Authentication\" />
-    <Folder Include="Core\User\" />
-    <Folder Include="Config\" />
+    <Folder Include="config\dev\" />
+    <Folder Include="core\" />
+    <Folder Include="core\authentication\" />
+    <Folder Include="core\user\" />
+    <Folder Include="config\" />
     <Folder Include="spec\" />
     <Folder Include="public\" />
     <Folder Include="public\javascripts\" />
