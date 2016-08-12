@@ -127,6 +127,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SalonCloud.CheckIn\SalonCloud.CheckIn.csproj">
+      <Project>{6F9928CB-A1C1-4475-8272-E622B7A53820}</Project>
+      <Name>SalonCloud.CheckIn</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
