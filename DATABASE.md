@@ -39,6 +39,8 @@
 |       |           |----uid: string
 |       |           |----birthday: string
 |       |           |----address: string
+|       |           |----last_appointment: timestamp
+|       |           |----total_spent: number
 |       |----discount
 |       |----employee
 |       |     |----<id>
