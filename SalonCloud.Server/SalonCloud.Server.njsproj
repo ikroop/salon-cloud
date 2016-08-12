@@ -81,7 +81,7 @@
     <Folder Include="views\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="spec\Authentication.spec.js">
+    <Compile Include="spec\authentication.spec.js">
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>
     </Compile>
