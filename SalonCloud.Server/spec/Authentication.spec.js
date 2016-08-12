@@ -21,10 +21,9 @@ describe('Routing', function () {
     // specify a function that takes a single parameter, "done", that we will use 
     // to specify when our test is completed, and that's what makes easy
     // to perform async test!
-    describe('Authentication', function () {
-        it('should return user model trying to register new user', function (done) {
+    describe('User Register', function () {
+        it('should return "MissingUsername" error trying to register without username', function (done) {
             var user = {
-                username: '4049806189',
                 password: '123456'
             };
             // once we have specified the info we want to send to the server via POST verb,
@@ -32,7 +31,32 @@ describe('Routing', function () {
             // POST on /api/auth/register and we want to send some info
             // We do this using the request object, requiring supertest!
             request(url)
-                .post('/api/auth/register')
+                .post('/auth/register')
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    } 
+                    // this is should.js syntax, very clear
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('MissingUsername');
+                    done();
+                });
+        });
+
+        it('should return "MissingPassword" error trying to register without password', function (done) {
+            var user = {
+                username: 'unittest'
+            };
+            // once we have specified the info we want to send to the server via POST verb,
+            // we need to actually perform the action on the resource, in this case we want to 
+            // POST on /api/auth/register and we want to send some info
+            // We do this using the request object, requiring supertest!
+            request(url)
+                .post('/auth/register')
                 .send(user)
                 // end handles the response
                 .end(function (err, res) {
@@ -41,6 +65,9 @@ describe('Routing', function () {
                     }
                     // this is should.js syntax, very clear
                     res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('MissingPassword');
                     done();
                 });
         });
