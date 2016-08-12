@@ -11,7 +11,7 @@
   |             |----<id>
   |                   |----salonid: string
   |                   |----status: boolean
-  |                   |----type: number
+  |                   |----role: number
   |------salon
   |       |----appointment
   |       |     |----<id>
