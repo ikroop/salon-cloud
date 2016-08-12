@@ -3,7 +3,7 @@
 [root]
 |
 |------user
-|       |----phone(username): string
+|       |----username(phonenumber or email): string
 |       |----password: string
 |       |----fullname: string
 |       |----Email: string
