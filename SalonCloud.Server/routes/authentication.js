@@ -4,7 +4,6 @@ var route;
 (function (route) {
     class AuthenticationRoute {
         static SignUpWithEmailAndPassword(req, res) {
-            console.log('sus1');
             //validate username;
             if (!req.body.username) {
                 res.statusCode = 400;
@@ -60,7 +59,6 @@ var route;
                     });
                 }
             }
-            console.log('sus2');
             //validate fullname;
             if (!req.body.fullname) {
                 res.statusCode = 400;
@@ -71,16 +69,12 @@ var route;
                     }
                 });
             }
-            console.log('sus');
             Authentication.register(new Authentication({ username: req.body.username }), req.body.password, function (err, account) {
                 if (err) {
-                    console.log('err: %j', err);
-                    console.log('err');
                     res.statusCode = 409;
                     return res.json({ 'err': err });
                 }
                 else {
-                    console.log('sus');
                     res.statusCode = 200;
                     return res.json({ 'user': account });
                 }
