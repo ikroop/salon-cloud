@@ -321,7 +321,9 @@ describe('Routing', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(409);
                     res.body.should.have.property('user');
-                    res.body.err.should.have.property('username').eql(user.username);
+                    res.body.user.should.have.property('username').eql(user.username);
+                    res.body.should.have.property('auth');
+                    res.body.auth.should.have.property('token');
                     done();
                 });
         });
