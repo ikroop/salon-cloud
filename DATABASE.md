@@ -7,6 +7,7 @@
   |       |----password: string
   |       |----fullname: string
   |       |----status: boolean
+  |       |----is_verified: boolean
   |       |----salon:
   |             |----<id>
   |                   |----salon_id: string
