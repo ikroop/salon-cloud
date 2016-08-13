@@ -119,6 +119,83 @@ describe('Routing', function () {
                     done();
                 });
         });
+
+        it('should return "PasswordTooShort" error trying to register with password which length < 6', function (done) {
+            var user = {
+                username: 'unittest@gmail.com',
+                password: '12345'
+            };
+            // once we have specified the info we want to send to the server via POST verb,
+            // we need to actually perform the action on the resource, in this case we want to 
+            // POST on /api/auth/register and we want to send some info
+            // We do this using the request object, requiring supertest!
+            request(url)
+                .post('/auth/register')
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('PasswordTooShort');
+                    done();
+                });
+        });
+
+        it('should return "MissingFullName" error trying to register without full name', function (done) {
+            var user = {
+                username: 'unittest@gmail.com',
+                password: '123456'
+            };
+            // once we have specified the info we want to send to the server via POST verb,
+            // we need to actually perform the action on the resource, in this case we want to 
+            // POST on /api/auth/register and we want to send some info
+            // We do this using the request object, requiring supertest!
+            request(url)
+                .post('/auth/register')
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('MissingFullName');
+                    done();
+                });
+        });
+
+        it('should return user object trying to register sucessfully', function (done) {
+            var user = {
+                username: 'unittest@gmail.com',
+                password: '123456',
+                fullname: 'salonhelps'
+            };
+            // once we have specified the info we want to send to the server via POST verb,
+            // we need to actually perform the action on the resource, in this case we want to 
+            // POST on /api/auth/register and we want to send some info
+            // We do this using the request object, requiring supertest!
+            request(url)
+                .post('/auth/register')
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('user');
+                    res.body.err.should.have.property('username').eql(user.username);
+                    done();
+                });
+        });
+
         
     });
 });
