@@ -7,19 +7,7 @@ import Authentication = require('../core/authentication/Authentication');
 
 module route {
     export class AuthenticationRoute {
-        public static register(req: express.Request, res: express.Response) {
-
-            res.send("respond with a resource");
-        };
-
-
-        public static registerGet(req: express.Request, res: express.Response) {
-            //res.render('register', {});
-            res.json({ 'register': 'Test' });
-
-        };
-
-        public static registerPost(req: express.Request, res: express.Response) {
+       public static SignUpWithEmailAndPassword(req: express.Request, res: express.Response) {
             //validate username;
             if (!req.body.username) {
                 res.statusCode = 400;

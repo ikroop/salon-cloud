@@ -3,16 +3,7 @@ const Authentication = require('../core/authentication/Authentication');
 var route;
 (function (route) {
     class AuthenticationRoute {
-        static register(req, res) {
-            res.send("respond with a resource");
-        }
-        ;
-        static registerGet(req, res) {
-            //res.render('register', {});
-            res.json({ 'register': 'Test' });
-        }
-        ;
-        static registerPost(req, res) {
+        static SignUpWithEmailAndPassword(req, res) {
             //validate username;
             if (!req.body.username) {
                 res.statusCode = 400;

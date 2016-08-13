@@ -21,8 +21,8 @@ describe('Routing', function () {
     // specify a function that takes a single parameter, "done", that we will use 
     // to specify when our test is completed, and that's what makes easy
     // to perform async test!
-    describe('User Register', function () {
-        var apiUrl = /auth/register;
+    describe('User SignUp with Username & Password', function () {
+        var apiUrl = '/auth/signupwithemailandpassword';
 
         it('should return "MissingUsername" error trying to register without username', function (done) {
             var user = {
@@ -225,10 +225,10 @@ describe('Routing', function () {
         });    
     });
 
-    describe('User Login', function () {
-        var apiUrl = /auth/login;
+    describe('User Signin with Username & Password', function () {
+        var apiUrl = '/auth/signinwithemailandpassword';
 
-        it('should return "MissingUsername" error trying to login without username', function (done) {
+        it('should return "MissingUsername" error trying to Signin without username', function (done) {
             var user = {
                 password: '123456'
             };
@@ -252,7 +252,7 @@ describe('Routing', function () {
                 });
         });         
 
-        it('should return "MissingPassword" error trying to login without password', function (done) {
+        it('should return "MissingPassword" error trying to Signin without password', function (done) {
             var user = {
                 username: 'test@salonhelps.com'
             };
@@ -276,7 +276,7 @@ describe('Routing', function () {
                 });
         });
 
-        it('should return "LoginFailed" error trying to login wrong password or username', function (done) {
+        it('should return "SigninFailed" error trying to Signin wrong password or username', function (done) {
             var user = {
                 username: 'test@salonhelps.com',
                 password: '123456'
@@ -296,12 +296,12 @@ describe('Routing', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('LoginFailed');
+                    res.body.err.should.have.property('name').eql('SigninFailed');
                     done();
                 });
         });
 
-        it('should return user object trying to login sucessfully', function (done) {
+        it('should return user object trying to Signin sucessfully', function (done) {
             var user = {
                 username: 'unittest@gmail.com',
                 password: '123456'
