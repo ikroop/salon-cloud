@@ -6,6 +6,7 @@
   |       |----username(phonenumber or email): string
   |       |----password: string
   |       |----fullname: string
+  |       |----status: boolean
   |       |----salon:
   |             |----<id>
   |                   |----salon_id: string
