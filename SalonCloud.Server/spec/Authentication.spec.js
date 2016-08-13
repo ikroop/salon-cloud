@@ -174,7 +174,7 @@ describe('Routing', function () {
 
         it('should return user object trying to register sucessfully', function (done) {
             var user = {
-                username: 'unittest@gmail.com',
+                username: 'unittest3@gmail.com',
                 password: '123456',
                 fullname: 'salonhelps'
             };
@@ -193,7 +193,7 @@ describe('Routing', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(200);
                     res.body.should.have.property('user');
-                    res.body.err.should.have.property('username').eql(user.username);
+                    res.body.user.should.have.property('username').eql(user.username);
                     done();
                 });
         });        
