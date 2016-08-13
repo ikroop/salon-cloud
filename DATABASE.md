@@ -8,7 +8,7 @@
   |       |----fullname: string
   |       |----salon:
   |             |----<id>
-  |                   |----salonid: string
+  |                   |----salon_id: string
   |                   |----status: boolean
   |                   |----role: number
   |------salon
