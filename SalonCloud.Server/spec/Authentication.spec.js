@@ -276,7 +276,7 @@ describe('Routing', function () {
                 });
         });
 
-        it('should return "SigninFailed" error trying to Signin wrong password or username', function (done) {
+        it('should return "SignInFailed" error trying to Signin wrong password or username', function (done) {
             var user = {
                 username: 'test@salonhelps.com',
                 password: '123456'
@@ -296,7 +296,7 @@ describe('Routing', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('SigninFailed');
+                    res.body.err.should.have.property('name').eql('SignInFailed');
                     done();
                 });
         });
