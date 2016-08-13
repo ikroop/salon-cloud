@@ -46,9 +46,34 @@ describe('Routing', function () {
                 });
         });
 
-        it('should return "NotEmailOrPhoneNumber" error trying to register with username as phone number or email', function (done) {
+        it('should return "NotEmailOrPhoneNumber" error trying to register with username is not email', function (done) {
             var user = {
                 username: 'salonhelpstest',
+                password: '123456'
+            };
+            // once we have specified the info we want to send to the server via POST verb,
+            // we need to actually perform the action on the resource, in this case we want to 
+            // POST on /api/auth/register and we want to send some info
+            // We do this using the request object, requiring supertest!
+            request(url)
+                .post('/auth/register')
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('NotEmailOrPhoneNumber');
+                    done();
+                });
+        });
+
+        it('should return "NotEmailOrPhoneNumber" error trying to register with username is not phone number', function (done) {
+            var user = {
+                username: '12345678',
                 password: '123456'
             };
             // once we have specified the info we want to send to the server via POST verb,
