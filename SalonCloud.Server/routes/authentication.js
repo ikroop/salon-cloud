@@ -15,6 +15,7 @@ var route;
         static registerPost(req, res) {
             //validate username;
             if (!req.body.username) {
+                res.statusCode = 400;
                 return res.json({
                     'err': {
                         'name': 'MissingUsername',
@@ -36,6 +37,7 @@ var route;
                     isEmail = false;
                 }
                 if (!(isPhonenumber || isEmail)) {
+                    res.statusCode = 400;
                     return res.json({
                         'err': {
                             'name': 'NotEmailOrPhoneNumber',
@@ -46,6 +48,7 @@ var route;
             }
             //validate password;
             if (!req.body.password) {
+                res.statusCode = 400;
                 return res.json({
                     'err': {
                         'name': 'MissingPassword',
