@@ -147,7 +147,7 @@ describe('Routing', function () {
                 });
         });
 
-        it('should return "MissingFullName" error trying to register without full name', function (done) {
+        it('should return "MissingFullname" error trying to register without full name', function (done) {
             var user = {
                 username: 'unittest@gmail.com',
                 password: '123456'
@@ -167,7 +167,7 @@ describe('Routing', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingFullName');
+                    res.body.err.should.have.property('name').eql('MissingFullname');
                     done();
                 });
         });

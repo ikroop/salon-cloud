@@ -48,9 +48,8 @@ var route;
                 });
             }
             else {
-                console.log('al alo');
+                //validate password length, must be > = 6;
                 if (req.body.password.length < 6) {
-                    console.log(req.body.password);
                     res.statusCode = 400;
                     return res.json({
                         'err': {
@@ -59,6 +58,16 @@ var route;
                         }
                     });
                 }
+            }
+            //validate fullname;
+            if (!req.body.name) {
+                res.statusCode = 400;
+                return res.json({
+                    'err': {
+                        'name': 'MissingFullname',
+                        'message': 'A fullname is required for registration!'
+                    }
+                });
             }
             Authentication.register(new Authentication({ username: req.body.username }), req.body.password, function (err, account) {
                 if (err) {
