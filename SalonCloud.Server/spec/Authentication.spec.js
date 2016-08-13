@@ -301,7 +301,7 @@ describe('Routing', function () {
                 });
         });
 
-        it('should return user object trying to Signin sucessfully', function (done) {
+        it('should return user & auth object trying to Signin sucessfully', function (done) {
             var user = {
                 username: 'unittest@gmail.com',
                 password: '123456'
