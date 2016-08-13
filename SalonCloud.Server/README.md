@@ -14,5 +14,8 @@ Run Unit Test
 =============
 
 $ npm install mocha -g
-
+$ cd <project_path> (ex: workspace/salon-cloud/SalonCloud.Server)
+$ npm install
 $ mocha ./spec/authentication.spec.js
+
+
