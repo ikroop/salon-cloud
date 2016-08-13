@@ -5,9 +5,11 @@ import express = require('express');
 import passport = require('passport');
 import Authentication = require('../core/authentication/Authentication');
 
+
 module route {
     export class AuthenticationRoute {
         public static SignUpWithEmailAndPassword(req: express.Request, res: express.Response) {
+            console.log('sus1');
             //validate username;
             if (!req.body.username) {
                 res.statusCode = 400;
@@ -65,9 +67,10 @@ module route {
                     });
                 }
             }
+            console.log('sus2');
 
             //validate fullname;
-            if (!req.body.name) {
+            if (!req.body.fullname) {
                 res.statusCode = 400;
                 return res.json({
                     'err': {
@@ -76,11 +79,17 @@ module route {
                     }
                 });
             }
+            console.log('sus');
             Authentication.register(new Authentication({ username: req.body.username }), req.body.password, function (err, account) {
                 if (err) {
+                    console.log('err: %j', err);
+                    console.log('err');
+                    res.statusCode = 409;
                     return res.json({ 'err': err });
                 } else {
-                    return res.json({ 'account': account });
+                    console.log('sus');
+                    res.statusCode = 200;
+                    return res.json({ 'user': account });
                 }
 
                 //passport.authenticate('local')(req, res, function () {

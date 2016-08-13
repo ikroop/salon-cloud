@@ -198,7 +198,7 @@ describe('Routing', function () {
                 });
         });        
 
-        it('should return "UsernameAlreadyExists" trying to register with existing username', function (done) {
+        it('should return "UserExistsError" trying to register with existing username', function (done) {
             var user = {
                 username: 'unittest@gmail.com',
                 password: '123456',
@@ -219,7 +219,7 @@ describe('Routing', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(409);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UsernameAlreadyExists');
+                    res.body.err.should.have.property('name').eql('UserExistsError');
                     done();
                 });
         });    
