@@ -85,15 +85,36 @@ var route;
         }
         static SignInWithEmailAndPassword(req, res, done) {
             console.log('preLogin');
+            if (!req.body.username) {
+                res.statusCode = 400;
+                return res.json({
+                    'err': {
+                        'name': 'MissingUsername',
+                        'message': 'Username is required to login'
+                    }
+                });
+            }
+            if (!req.body.password) {
+                res.statusCode = 400;
+                return res.json({
+                    'err': {
+                        'name': 'MissingPassword',
+                        'message': 'Password is required to login'
+                    }
+                });
+            }
             Authentication.authenticate()(req.body.username, req.body.password, function (err, user, options) {
                 if (err) {
-                    console.log('err: %j', err);
                     return done(err);
                 }
                 if (user === false) {
-                    res.send({
-                        message: options.message,
-                        success: false
+                    res.statusCode = 403;
+                    console.log('res: %j', res);
+                    return res.json({
+                        'err': {
+                            'name': 'SignInFailed',
+                            'message': options.message
+                        }
                     });
                 }
                 else {
