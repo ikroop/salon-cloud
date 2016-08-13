@@ -91,6 +91,31 @@ module route {
                 //});
             });
         }
+
+        public static SignInWithEmailAndPassword(req: express.Request, res: express.Response, done) {
+            console.log('preLogin');
+            Authentication.authenticate()(req.body.username, req.body.password, function (err, user, options) {
+                if (err) {
+                    console.log('err: %j', err);
+                    return done(err);
+                }
+
+                if (user === false) {
+                    res.send({
+                        message: options.message,
+                        success: false
+                    });
+                } else {
+                    req.login(user, function (err) {
+                        res.send({
+                            success: true,
+                            user: user
+                        });
+                    });
+                }
+            });
+            console.log('login succeed');
+        }
     }
 }
 export = route.AuthenticationRoute;

@@ -40,6 +40,7 @@ var index = new routes.Index();
 app.get('/', routes.Index.index);
 app.get('/users', user.list);
 app.post('/auth/signupwithemailandpassword', AuthenticationRoute.SignUpWithEmailAndPassword);
+app.post('/auth/signinwithemailandpassword', AuthenticationRoute.SignInWithEmailAndPassword);
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
