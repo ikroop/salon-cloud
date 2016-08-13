@@ -7,7 +7,7 @@ import Authentication = require('../core/authentication/Authentication');
 
 module route {
     export class AuthenticationRoute {
-       public static SignUpWithEmailAndPassword(req: express.Request, res: express.Response) {
+        public static SignUpWithEmailAndPassword(req: express.Request, res: express.Response) {
             //validate username;
             if (!req.body.username) {
                 res.statusCode = 400;
@@ -22,9 +22,9 @@ module route {
                 var isEmail = true;
 
                 //case: username is phonenumber
-                var phoneReg = /^\d{10}$/;                                   
+                var phoneReg = /^\d{10}$/;
                 if (!req.body.username.match(phoneReg)) {
-                    isPhonenumber = false;                   
+                    isPhonenumber = false;
                 }
 
                 //case: username is email
@@ -33,7 +33,7 @@ module route {
                     isEmail = false;
                 }
 
-                if (!(isPhonenumber || isEmail)) {        
+                if (!(isPhonenumber || isEmail)) {
                     res.statusCode = 400;
                     return res.json({
                         'err': {
@@ -53,12 +53,24 @@ module route {
                         'message': 'A required password is missing!'
                     }
                 });
+            } else {
+                console.log('al alo');
+                if (req.body.password.length < 6) {
+                    console.log(req.body.password);
+                    res.statusCode = 400;
+                    return res.json({
+                        'err': {
+                            'name': 'PasswordTooShort',
+                            'message': 'A password must be at least 6-character long!'
+                        }
+                    });
+                }
             }
             Authentication.register(new Authentication({ username: req.body.username }), req.body.password, function (err, account) {
                 if (err) {
                     return res.json({ 'err': err });
                 } else {
-                    return res.json({'account': account});
+                    return res.json({ 'account': account });
                 }
 
                 //passport.authenticate('local')(req, res, function () {

@@ -47,6 +47,19 @@ var route;
                     }
                 });
             }
+            else {
+                console.log('al alo');
+                if (req.body.password.length < 6) {
+                    console.log(req.body.password);
+                    res.statusCode = 400;
+                    return res.json({
+                        'err': {
+                            'name': 'PasswordTooShort',
+                            'message': 'A password must be at least 6-character long!'
+                        }
+                    });
+                }
+            }
             Authentication.register(new Authentication({ username: req.body.username }), req.body.password, function (err, account) {
                 if (err) {
                     return res.json({ 'err': err });
