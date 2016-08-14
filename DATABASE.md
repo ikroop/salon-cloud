@@ -3,16 +3,23 @@
 [root]
   |
   |------user
-  |       |----username(phonenumber or email): string
-  |       |----password: string
-  |       |----fullname: string
-  |       |----status: boolean
-  |       |----is_verified: boolean
-  |       |----salon:
-  |             |----<id>
-  |                   |----salon_id: string
-  |                   |----status: boolean
-  |                   |----role: number
+  |       |----<id>
+  |             |----username(phonenumber or email): string
+  |             |----password: string
+  |             |----fullname: string
+  |             |----status: boolean
+  |             |----is_verified: boolean                        
+  |             |----birthday: string
+  |             |----address: string
+  |             |----salon:
+  |                   |----<id>
+  |                         |----salon_id: string
+  |                         |----status: boolean
+  |                         |----role: number
+  |                         |----nickname: string
+  |                         |----social_security_number: string
+  |                         |----salary_rate: double
+  |                         |----cash_rate: double
   |------salon
   |       |----appointment
   |       |     |----<id>
@@ -38,18 +45,9 @@
   |       |----customer
   |       |     |----<id>
   |       |           |----uid: string
-  |       |           |----birthday: string
-  |       |           |----address: string
   |       |           |----last_appointment: timestamp
   |       |           |----total_spent: number
   |       |----discount
-  |       |----employee
-  |       |     |----<id>
-  |       |           |----uid: string
-  |       |           |----nickname: string
-  |       |           |----social_security_number: string
-  |       |           |----salary_rate: double
-  |       |           |----cash_rate: double
   |       |----finance
   |       |----giftcard
   |       |----schedule
