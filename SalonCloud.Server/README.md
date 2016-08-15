@@ -16,7 +16,7 @@ Run web server
 $ npm install -g nodemon
 $ cd <project_path> (ex: workspace/salon-cloud/SalonCloud.Server)
 $ npm install 
-$ node ./app.js
+$ nodemon ./app.js
 ```
 Run Unit Test
 =============
