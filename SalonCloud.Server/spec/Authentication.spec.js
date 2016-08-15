@@ -355,14 +355,14 @@ describe('Routing', function () {
                 });
         });  
 
-        it('should return "UserNotFound" error if username is wrong-email-formatted.', function (done) {
+        it('should return "UserNotFound" error trying to get verification code with wrong-email-formatted username.', function (done) {
             var user = {
                 username: 'unittest'
             };
 
             request(url)
                 .post(apiUrl)
-                .send(username)
+                .send(user)
                 // end handles the response
                 .end(function (err, res) {
                     if (err) {
@@ -376,14 +376,14 @@ describe('Routing', function () {
                 });
         });
 
-        it('should return "UserNotFound" error if username is wrong-phoneNo-formatted.', function (done) {
+        it('should return "UserNotFound" error trying to get verification code with wrong-phoneNo-formatted username.', function (done) {
             var user = {
                 username: '123'
             };
 
             request(url)
                 .post(apiUrl)
-                .send(username)
+                .send(user)
                 // end handles the response
                 .end(function (err, res) {
                     if (err) {
@@ -397,14 +397,14 @@ describe('Routing', function () {
                 });
         });
 
-        it('should return "UserNotFound" error if username is not existed', function (done) {
+        it('should return "UserNotFound" error trying to get verification code with not-found user', function (done) {
             var user = {
                 username: 'unittest@gmail.com'
             };
 
             request(url)
                 .post(apiUrl)
-                .send(username)
+                .send(user)
                 // end handles the response
                 .end(function (err, res) {
                     if (err) {
@@ -418,14 +418,14 @@ describe('Routing', function () {
                 });
         });
 
-        it('should return "UserIsBlocked" error if username is not blocked', function (done) {
+        it('should return "UserIsBlocked" error trying to get verification code with blocked user', function (done) {
             var user = {
                 username: 'samthui7@gmail.com'
             };
 
             request(url)
                 .post(apiUrl)
-                .send(username)
+                .send(user)
                 // end handles the response
                 .end(function (err, res) {
                     if (err) {
@@ -446,7 +446,197 @@ describe('Routing', function () {
 
             request(url)
                 .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(200);
+                    !res.body.should.have.property('err');
+                    done();
+                });
+        });
+    });
+
+    describe('Verify password reset code via email or sms.', function () {
+        var apiUrl = '/auth/verifypasswordreset';
+
+        it('should return "UserNotFound" error trying to verify with not-found user', function (done) {
+            var user = {
+                username: 'vinhden@yahoo.co.uk',
+                password: 'ab',
+                verify_code: '123'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    done();
+                });
+        });
+
+        it('should return "UserIsBlocked" error trying to verify with blocked user', function (done) {
+            var user = {
+                username: 'samthui7@gmail.com',
+                password: 'ab',
+                verify_code: '123'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('UserIsBlocked');
+                    done();
+                });
+        });
+
+        it('should return "MissingUsername" error trying to verify without username', function (done) {
+            var user = {
+                username: '',
+                password: 'ab',
+                verify_code: '123'
+            };
+            // once we have specified the info we want to send to the server via POST verb,
+            // we need to actually perform the action on the resource, in this case we want to 
+            // POST on /api/auth/register and we want to send some info
+            // We do this using the request object, requiring supertest!
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('MissingUsername');
+                    done();
+                });
+        });
+
+        it('should return "MissingPassword" error trying to verify code without password', function (done) {
+            var user = {
+                username: 'siamtian2015@smisy.com',
+                password: '',
+                verify_code: '123'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('MissingPassword');
+                    done();
+                });
+        });
+
+        it('should return "PasswordTooShort" error trying to verify code with short password.', function (done) {
+            var user = {
+                username: 'siamtian2015@smisy.com',
+                password: '1',
+                verify_code: '123'
+            };
+
+            request(url)
+                .post(apiUrl)
                 .send(username)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(404);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('PasswordTooShort');
+                    done();
+                });
+        });
+
+        it('should return "MissingVerifyCode" error trying to verify without code', function (done) {
+            var user = {
+                username: 'siamtian2015@smisy.com',
+                password: '1234567890',
+                verify_code: ''
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('MissingVerifyCode');
+                    done();
+                });
+        });
+
+        it('should return "WrongVerifyCode" error trying to verify with wrong code', function (done) {
+            var user = {
+                username: 'siamtian2015@smisy.com',
+                password: '1234567890',
+                verify_code: '000'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('WrongVerifyCode');
+                    done();
+                });
+        });
+
+        it('should return code 200 if verification done', function (done) {
+            var user = {
+                username: 'siamtian2015@smisy.com',
+                password: '1234567890',
+                verify_code: '308372'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
                 // end handles the response
                 .end(function (err, res) {
                     if (err) {
