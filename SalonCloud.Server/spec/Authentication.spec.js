@@ -328,4 +328,135 @@ describe('Routing', function () {
                 });
         });
     });
+
+    describe('Send password reset code to user by username(email or sms).', function (){
+        var apiUrl = '/auth/sendpasswordreset';
+
+        it('should return "MissingUsername" error trying to get password reset code without username', function (done) {
+            var user = {
+            };
+            // once we have specified the info we want to send to the server via POST verb,
+            // we need to actually perform the action on the resource, in this case we want to 
+            // POST on /api/auth/register and we want to send some info
+            // We do this using the request object, requiring supertest!
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('MissingUsername');
+                    done();
+                });
+        });  
+
+        it('should return "UserNotFound" error if username is wrong-email-formatted.', function (done) {
+            var user = {
+                username: 'unittest'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(username)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    done();
+                });
+        });
+
+        it('should return "UserNotFound" error if username is wrong-phoneNo-formatted.', function (done) {
+            var user = {
+                username: '123'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(username)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    done();
+                });
+        });
+
+        it('should return "UserNotFound" error if username is not existed', function (done) {
+            var user = {
+                username: 'unittest@gmail.com'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(username)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    done();
+                });
+        });
+
+        it('should return "UserIsBlocked" error if username is not blocked', function (done) {
+            var user = {
+                username: 'samthui7@gmail.com'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(username)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('UserIsBlocked');
+                    done();
+                });
+        });
+
+        it('should return code 200 if user is valid to receive password reset code', function (done) {
+            var user = {
+                username: 'siamtian2015@gmail.com'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(username)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(200);
+                    !res.body.should.have.property('err');
+                    done();
+                });
+        });
+    });
 });
