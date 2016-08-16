@@ -120,8 +120,10 @@ module route {
                 if (err) {
                     return done(err);
                 }
-
                 if (user === false) {
+                    console.log('kinh');
+                    console.log(user);
+
                     res.statusCode = 403;
                     return res.json({
                         'err': {
@@ -132,7 +134,7 @@ module route {
 
                 } else {
                     console.log(user);
-                    req.user = {id: user.id};
+                    req.user = {username: user.username};
                     var token = jwt.sign({
                         id: user._id,
                           }, 'server secret', {
@@ -144,9 +146,13 @@ module route {
                       //      user: user
                       //  });
                     //});
-                    res.status(200).json({
+                    console.log(token);
+                    res.statusCode = 409;
+
+                    return res.json({
                             user: req.user,
-                            token: token
+                            auth: {
+                                token: token}
                          });
                 }
             });
