@@ -1,12 +1,12 @@
 "use strict";
+const jwt = require('jsonwebtoken');
 var Authentication = require('../core/authentication/Authentication');
 var route;
 (function (route) {
-    var AuthenticationRoute = (function () {
-        function AuthenticationRoute() {
-        }
-        AuthenticationRoute.SignUpWithEmailAndPassword = function (req, res) {
+    class AuthenticationRoute {
+        static SignUpWithEmailAndPassword(req, res) {
             //validate username;
+            console.log('tset');
             if (!req.body.username) {
                 res.statusCode = 400;
                 return res.json({
@@ -84,8 +84,8 @@ var route;
                 //  res.redirect('/');
                 //});
             });
-        };
-        AuthenticationRoute.SignInWithEmailAndPassword = function (req, res, done) {
+        }
+        static SignInWithEmailAndPassword(req, res, done) {
             console.log('preLogin');
             if (!req.body.username) {
                 res.statusCode = 400;
@@ -105,13 +105,12 @@ var route;
                     }
                 });
             }
-            Authentication.authenticate()(req.body.username, req.body.password, function (err, user, options) {
+            Authentication.authenticate('local', { session: false })(req.body.username, req.body.password, function (err, user, options) {
                 if (err) {
                     return done(err);
                 }
                 if (user === false) {
                     res.statusCode = 403;
-                    console.log('res: %j', res);
                     return res.json({
                         'err': {
                             'name': 'SignInFailed',
@@ -120,18 +119,28 @@ var route;
                     });
                 }
                 else {
-                    req.login(user, function (err) {
-                        res.send({
-                            success: true,
-                            user: user
-                        });
+                    console.log(user);
+                    req.user = { id: user.id };
+                    var token = jwt.sign({
+                        id: user._id,
+                    }, 'server secret', {
+                        expiresIn: 120
+                    });
+                    //req.login(user, function (err) {
+                    //   res.send({
+                    //      success: true,
+                    //      user: user
+                    //  });
+                    //});
+                    res.status(200).json({
+                        user: req.user,
+                        token: token
                     });
                 }
             });
             console.log('login succeed');
-        };
-        return AuthenticationRoute;
-    }());
+        }
+    }
     route.AuthenticationRoute = AuthenticationRoute;
 })(route || (route = {}));
 module.exports = route.AuthenticationRoute;
