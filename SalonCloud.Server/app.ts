@@ -1,56 +1,45 @@
-﻿import express = require('express');
-import routes = require('./routes/index');
-import user = require('./routes/user');
-import AuthenticationRoute = require('./routes/authentication');
-import http = require('http');
-import path = require('path');
-import mongoose = require('mongoose');
-import passport = require('passport');
-import passportLocal = require('passport-local');
-import Authentication = require('./core/authentication/Authentication');
-
-var LocalStrategy = passportLocal.Strategy;
-
- // connect to database
-var configDB = require('./config/dev/database.js');
-mongoose.connect(configDB.url);
-
+﻿import * as http from "http";
+import * as url from "url";
+import * as express from "express";
+import * as bodyParser from "body-parser";
+import errorHandler = require("errorhandler");
+import methodOverride = require("method-override");
+import * as mongoose from "mongoose";
+import * as passport from "passport";
+import * as passportLocal from "passport-local";
 var app = express();
 
-// all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
+// Configuration
+
+app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
+app.set('view options', { layout: false });
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(methodOverride());
+app.use(express.static(__dirname + '/public'));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 app.use(app.router);
 
-import stylus = require('stylus');
-app.use(stylus.middleware(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
+var env = process.env.NODE_ENV || 'development';
 
-// development only
-if ('development' == app.get('env')) {
-    app.use(express.errorHandler());
+// connect to database
+var configDB = require('./config/dev/database.js');
+mongoose.connect(configDB.url);
+
+if (env === 'development') {
+    app.use(errorHandler());
 }
-passport.use(new LocalStrategy(Authentication.authenticate()));
-passport.serializeUser(Authentication.serializeUser());
-passport.deserializeUser(Authentication.deserializeUser());
 
-var index: routes.Index = new routes.Index();
-app.get('/', routes.Index.index);
-app.get('/users', user.list);
-app.post('/auth/signupwithemailandpassword', AuthenticationRoute.SignUpWithEmailAndPassword);
-app.post('/auth/signinwithemailandpassword', AuthenticationRoute.SignInWithEmailAndPassword);
-
-http.createServer(app).listen(app.get('port'), function () {
-    console.log('Express server listening on port ' + app.get('port'));
+app.get('/', (req, res) => {
+    res.json({ 'test': 'ok' });
 });
+
+app.listen(3000, function () {
+    console.log("SalonCloud server listening on port %d in %s mode", 3000, app.settings.env);
+});
+
+export var App = app;

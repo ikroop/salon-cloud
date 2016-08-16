@@ -79,7 +79,7 @@ module route {
             }
             Authentication.register(new Authentication({ username: req.body.username }), req.body.password, function (err, account) {
                 if (err) {
-\                    res.statusCode = 409;
+                    res.statusCode = 409;
                     return res.json({ 'err': err });
                 } else {
                     res.statusCode = 200;

@@ -1,9 +1,11 @@
 "use strict";
-const Authentication = require('../core/authentication/Authentication');
+var Authentication = require('../core/authentication/Authentication');
 var route;
 (function (route) {
-    class AuthenticationRoute {
-        static SignUpWithEmailAndPassword(req, res) {
+    var AuthenticationRoute = (function () {
+        function AuthenticationRoute() {
+        }
+        AuthenticationRoute.SignUpWithEmailAndPassword = function (req, res) {
             //validate username;
             if (!req.body.username) {
                 res.statusCode = 400;
@@ -82,8 +84,8 @@ var route;
                 //  res.redirect('/');
                 //});
             });
-        }
-        static SignInWithEmailAndPassword(req, res, done) {
+        };
+        AuthenticationRoute.SignInWithEmailAndPassword = function (req, res, done) {
             console.log('preLogin');
             if (!req.body.username) {
                 res.statusCode = 400;
@@ -127,8 +129,9 @@ var route;
                 }
             });
             console.log('login succeed');
-        }
-    }
+        };
+        return AuthenticationRoute;
+    }());
     route.AuthenticationRoute = AuthenticationRoute;
 })(route || (route = {}));
 module.exports = route.AuthenticationRoute;
