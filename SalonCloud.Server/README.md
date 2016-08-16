@@ -10,7 +10,10 @@ Confluence](https://smisyteam.atlassian.net/wiki/display/SC/REST+API+References)
 Global packages
 =============
 ```
+# WINDOWS
 $ npm install -g tsd typescript nodemon mocha
+# MAC OS
+$ sudo npm install -g tsd typescript nodemon mocha
 ```
 
 Build project
@@ -27,6 +30,7 @@ Run web server
 =============
 ```
 $ nodemon ./app.js
+Server is running at port 3000: http://localhost:3000
 ```
 Run Unit Test
 =============
