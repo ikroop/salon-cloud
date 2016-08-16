@@ -6,14 +6,14 @@
   },
   "files": [
     "./typings/tsd.d.ts",
+    "./routes/authentication.ts",
     "./config/dev/database.ts",
-    /*"./core/authentication/Authentication.ts",
-    "./core/authentication/IAuthentication.ts",
+    "./core/authentication/Authentication.ts",
+    /*"./core/authentication/IAuthentication.ts",
     "./core/authentication/IAuthModel.ts",
     "./core/user/IUser.ts",
     "./core/user/IUserModel.ts",
     "./core/user/User.ts",
-    "./routes/authentication.ts",
     "./routes/index.ts",
     "./routes/user.ts",*/
     "./app.ts"
