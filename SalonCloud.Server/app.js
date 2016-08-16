@@ -16,7 +16,6 @@ app.use(methodOverride());
 app.use(express.static(__dirname + '/public'));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(app.router);
 var env = process.env.NODE_ENV || 'development';
 // connect to database
 var configDB = require('./config/dev/database.js');
