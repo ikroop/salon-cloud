@@ -397,7 +397,7 @@ describe('Routing', function () {
                 });
         });
 
-        it('should return "UserNotFound" error trying to get verification code with not-found user', function (done) {
+        it('should return "UserNotFound" error trying to get verification code with not-found email user', function (done) {
             var user = {
                 username: 'unittest@gmail.com'
             };
@@ -418,7 +418,28 @@ describe('Routing', function () {
                 });
         });
 
-        it('should return "UserIsBlocked" error trying to get verification code with blocked user', function (done) {
+        it('should return "UserNotFound" error trying to get verification code with not-found phone user', function (done) {
+            var user = {
+                username: '0000000000'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    done();
+                });
+        });
+
+        it('should return "UserIsBlocked" error trying to get verification code with blocked email user', function (done) {
             var user = {
                 username: 'samthui7@gmail.com'
             };
@@ -439,9 +460,50 @@ describe('Routing', function () {
                 });
         });
 
-        it('should return code 200 if user is valid to receive password reset code', function (done) {
+        it('should return "UserIsBlocked" error trying to get verification code with blocked phone user', function (done) {
+            var user = {
+                username: '1111111111'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('UserIsBlocked');
+                    done();
+                });
+        });
+
+        it('should return code 200 if email user is valid to receive password reset code', function (done) {
             var user = {
                 username: 'siamtian2015@gmail.com'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(200);
+                    !res.body.should.have.property('err');
+                    done();
+                });
+        });
+
+        it('should return code 200 if phone user is valid to receive password reset code', function (done) {
+            var user = {
+                username: '4049806189'
             };
 
             request(url)
@@ -463,9 +525,9 @@ describe('Routing', function () {
     describe('Verify password reset code via email or sms.', function () {
         var apiUrl = '/auth/verifypasswordreset';
 
-        it('should return "UserNotFound" error trying to verify with not-found user', function (done) {
+        it('should return "UserNotFound" error trying to verify with wrong-email-formatted username.', function (done) {
             var user = {
-                username: 'vinhden@yahoo.co.uk',
+                username: 'unittest',
                 password: 'ab',
                 verify_code: '123'
             };
@@ -486,9 +548,101 @@ describe('Routing', function () {
                 });
         });
 
-        it('should return "UserIsBlocked" error trying to verify with blocked user', function (done) {
+        it('should return "UserNotFound" error trying to verify  with wrong-phoneNo-formatted username.', function (done) {
+            var user = {
+                username: '123',
+                password: 'ab',
+                verify_code: '123'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    done();
+                });
+        });
+
+        it('should return "UserNotFound" error trying to verify with not-found email user', function (done) {
+            var user = {
+                username: 'unittest@gmail.com',
+                password: 'ab',
+                verify_code: '123'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    done();
+                });
+        });
+
+        it('should return "UserNotFound" error trying to verify with not-found phone user', function (done) {
+            var user = {
+                username: '0000000000',
+                password: 'ab',
+                verify_code: '123'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    done();
+                });
+        });
+
+        it('should return "UserIsBlocked" error trying to verify with blocked email user', function (done) {
             var user = {
                 username: 'samthui7@gmail.com',
+                password: 'ab',
+                verify_code: '123'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('UserIsBlocked');
+                    done();
+                });
+        });
+
+        it('should return "UserIsBlocked" error trying to verify with blocked phone user', function (done) {
+            var user = {
+                username: '1111111111',
                 password: 'ab',
                 verify_code: '123'
             };
@@ -627,9 +781,31 @@ describe('Routing', function () {
                 });
         });
 
-        it('should return code 200 if verification done', function (done) {
+        it('should return code 200 if verification done for email user', function (done) {
             var user = {
                 username: 'siamtian2015@smisy.com',
+                password: '1234567890',
+                verify_code: '308372'
+            };
+
+            request(url)
+                .post(apiUrl)
+                .send(user)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(200);
+                    !res.body.should.have.property('err');
+                    done();
+                });
+        });
+
+        it('should return code 200 if verification done for phone user', function (done) {
+            var user = {
+                username: '4049806189',
                 password: '1234567890',
                 verify_code: '308372'
             };
