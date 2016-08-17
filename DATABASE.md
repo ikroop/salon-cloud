@@ -42,6 +42,7 @@
   |       |           |----start: timestamp
   |       |           |----status: number
   |       |           |----type: number
+  |       |           |----is_reminded: boolean
   |       |----customer
   |       |     |----<id>
   |       |           |----uid: string
