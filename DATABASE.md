@@ -11,6 +11,7 @@
   |             |----is_verified: boolean                        
   |             |----birthday: string
   |             |----address: string
+  |             |----is_temporary: boolean (account is created automatic after customer books appointment)
   |             |----salon:
   |                   |----<id>
   |                         |----salon_id: string
