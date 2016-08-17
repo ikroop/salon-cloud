@@ -303,7 +303,7 @@ describe('Routing', function () {
 
         it('should return user & auth object trying to Signin sucessfully', function (done) {
             var user = {
-                username: 'unittest@gmail.com',
+                username: 'unittest3@gmail.com',
                 password: '123456'
             };
             // once we have specified the info we want to send to the server via POST verb,

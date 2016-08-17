@@ -9,8 +9,8 @@ import passportLocalMongoose = require('passport-local-mongoose');
 import Schema = mongoose.Schema;
 
 
-import {IAuthentication} from './IAuthentication';
-import {IAuthModel} from './IAuthModel';
+//import {IAuthentication} from './IAuthentication';
+//import {IAuthModel} from './IAuthModel';
 
 var Authentication = new Schema({
     username: String,

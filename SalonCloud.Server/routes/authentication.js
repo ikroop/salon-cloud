@@ -1,10 +1,12 @@
 "use strict";
-const Authentication = require('../core/authentication/Authentication');
+const jwt = require('jsonwebtoken');
+var Authentication = require('../core/authentication/Authentication');
 var route;
 (function (route) {
     class AuthenticationRoute {
         static SignUpWithEmailAndPassword(req, res) {
             //validate username;
+            console.log('tset');
             if (!req.body.username) {
                 res.statusCode = 400;
                 return res.json({
@@ -103,13 +105,14 @@ var route;
                     }
                 });
             }
-            Authentication.authenticate()(req.body.username, req.body.password, function (err, user, options) {
+            Authentication.authenticate('local', { session: false })(req.body.username, req.body.password, function (err, user, options) {
                 if (err) {
                     return done(err);
                 }
                 if (user === false) {
+                    console.log('kinh');
+                    console.log(user);
                     res.statusCode = 403;
-                    console.log('res: %j', res);
                     return res.json({
                         'err': {
                             'name': 'SignInFailed',
@@ -118,11 +121,25 @@ var route;
                     });
                 }
                 else {
-                    req.login(user, function (err) {
-                        res.send({
-                            success: true,
-                            user: user
-                        });
+                    console.log(user);
+                    req.user = { username: user.username };
+                    var token = jwt.sign({
+                        id: user._id,
+                    }, 'server secret', {
+                        expiresIn: 120
+                    });
+                    //req.login(user, function (err) {
+                    //   res.send({
+                    //      success: true,
+                    //      user: user
+                    //  });
+                    //});
+                    console.log(token);
+                    res.statusCode = 409;
+                    return res.json({
+                        user: req.user,
+                        auth: {
+                            token: token }
                     });
                 }
             });

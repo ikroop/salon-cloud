@@ -7,20 +7,34 @@ API References
 [REST API References on
 Confluence](https://smisyteam.atlassian.net/wiki/display/SC/REST+API+References)
 
+Global packages
+=============
+```
+Install NodeJS v4.5 (LTS - Recommended For Most Users): https://nodejs.org/en/download/
+# WINDOWS
+$ npm install -g tsd typescript nodemon mocha
+# MAC OS
+$ sudo npm install -g tsd typescript nodemon mocha
+```
+
 Build project
 =============
-
+```
+$ cd <project_path> (ex: workspace/salon-cloud/SalonCloud.Server)
+$ npm install
+Install DefinitelyTyped (tsd.json)
+$ tsd install
+Compile typescript file (tsconfig.json)
+$ tsc
+```
 Run web server
 =============
 ```
-$ npm install -g nodemon
-$ cd <project_path> (ex: workspace/salon-cloud/SalonCloud.Server)
-$ npm install 
 $ nodemon ./app.js
+Server is running at port 3000: http://localhost:3000
 ```
 Run Unit Test
 =============
 ```
-$ npm install -g mocha
 $ mocha ./spec/authentication.spec.js
 ```

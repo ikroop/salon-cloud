@@ -3,13 +3,15 @@
  */
 import express = require('express');
 import passport = require('passport');
-import Authentication = require('../core/authentication/Authentication');
+import jwt = require('jsonwebtoken');
+var Authentication = require('../core/authentication/Authentication');
 
 
 module route {
     export class AuthenticationRoute {
         public static SignUpWithEmailAndPassword(req: express.Request, res: express.Response) {
             //validate username;
+            console.log('tset');
             if (!req.body.username) {
                 res.statusCode = 400;
                 return res.json({
@@ -79,7 +81,7 @@ module route {
             }
             Authentication.register(new Authentication({ username: req.body.username }), req.body.password, function (err, account) {
                 if (err) {
-\                    res.statusCode = 409;
+                    res.statusCode = 409;
                     return res.json({ 'err': err });
                 } else {
                     res.statusCode = 200;
@@ -114,14 +116,15 @@ module route {
 
             }
 
-            Authentication.authenticate()(req.body.username, req.body.password, function (err, user, options) {
+            Authentication.authenticate('local', {session: false})(req.body.username, req.body.password, function (err, user, options) {
                 if (err) {
                     return done(err);
                 }
-
                 if (user === false) {
+                    console.log('kinh');
+                    console.log(user);
+
                     res.statusCode = 403;
-                    console.log('res: %j', res);
                     return res.json({
                         'err': {
                             'name': 'SignInFailed',
@@ -130,12 +133,27 @@ module route {
                     });
 
                 } else {
-                    req.login(user, function (err) {
-                        res.send({
-                            success: true,
-                            user: user
+                    console.log(user);
+                    req.user = {username: user.username};
+                    var token = jwt.sign({
+                        id: user._id,
+                          }, 'server secret', {
+                             expiresIn: 120
                         });
-                    });
+                    //req.login(user, function (err) {
+                     //   res.send({
+                      //      success: true,
+                      //      user: user
+                      //  });
+                    //});
+                    console.log(token);
+                    res.statusCode = 409;
+
+                    return res.json({
+                            user: req.user,
+                            auth: {
+                                token: token}
+                         });
                 }
             });
             console.log('login succeed');
