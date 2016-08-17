@@ -10,6 +10,7 @@ Confluence](https://smisyteam.atlassian.net/wiki/display/SC/REST+API+References)
 Global packages
 =============
 ```
+Install NodeJS v4.5 (LTS - Recommended For Most Users): https://nodejs.org/en/download/
 # WINDOWS
 $ npm install -g tsd typescript nodemon mocha
 # MAC OS
