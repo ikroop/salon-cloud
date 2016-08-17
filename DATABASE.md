@@ -1,3 +1,5 @@
+# Timestamp
+use UTC.
 # Database Structure
 ```
 [root]
