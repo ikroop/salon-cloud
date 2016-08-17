@@ -103,5 +103,20 @@
   |       |                       |----price: number
   |       |                       |----time: number
   |       |----setting
+  |       |     |----appointment_reminder
+  |       |     |     |----status: boolean
+  |       |     |----flexible_time
+  |       |     |     |----time: number
+  |       |     |----technician_checkout
+  |       |           |---status: boolean
+  |       |----information
+  |       |     |----salon_name: string
+  |       |     |----phone
+  |       |     |     |----number: string
+  |       |     |     |----is_verified: boolean
+  |       |     |----location
+  |       |     |     |----address: string
+  |       |     |     |----is_verified: boolean
+  |       |     |----email: string
   |------domain
 ```
