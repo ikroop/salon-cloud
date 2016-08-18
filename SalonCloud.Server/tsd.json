@@ -46,6 +46,9 @@
     },
     "express-serve-static-core/express-serve-static-core.d.ts": {
       "commit": "4cb9c9032e8a1cfb45b7f4684aca52c1ce0f2685"
+    },
+    "jsonwebtoken/jsonwebtoken.d.ts":{
+      "commit": "150227f1870c71ff602da2cf1281878ed925a44c"
     }
   }
 }
