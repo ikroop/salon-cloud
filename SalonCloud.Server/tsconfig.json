@@ -16,6 +16,7 @@
     "./core/user/User.ts",
     "./routes/index.ts",
     "./routes/user.ts",*/
+    "./modules/salon/Salon.d.ts",
     "./app.ts"
   ]
 }
