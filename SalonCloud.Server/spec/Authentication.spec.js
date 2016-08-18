@@ -7,6 +7,7 @@ var configDB = require('./../config/dev/database.js');
 
 describe('Authentication', function () {
     var url = 'http://localhost:3000';
+    var timestamp = new Date().getTime() / 1000;
     // within before() you can run all the operations that are needed to setup your tests. In this case
     // I want to create a connection with the database, and when I'm done, I call done().
     before(function (done) {
@@ -39,7 +40,7 @@ describe('Authentication', function () {
                 .end(function (err, res) {
                     if (err) {
                         throw err;
-                    } 
+                    }
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
@@ -174,7 +175,7 @@ describe('Authentication', function () {
 
         it('should return user object trying to register sucessfully', function (done) {
             var user = {
-                username: 'unittest3@gmail.com',
+                username: 'unittest' + timestamp + '@gmail.com',
                 password: '123456',
                 fullname: 'salonhelps'
             };
@@ -196,11 +197,11 @@ describe('Authentication', function () {
                     res.body.user.should.have.property('username').eql(user.username);
                     done();
                 });
-        });        
+        });
 
         it('should return "UserExistsError" trying to register with existing username', function (done) {
             var user = {
-                username: 'unittest@gmail.com',
+                username: 'unittest' + timestamp + '@gmail.com',
                 password: '123456',
                 fullname: 'salonhelps'
             };
@@ -222,7 +223,7 @@ describe('Authentication', function () {
                     res.body.err.should.have.property('name').eql('UserExistsError');
                     done();
                 });
-        });    
+        });
     });
 
     describe('User Signin with Username & Password', function () {
@@ -250,7 +251,7 @@ describe('Authentication', function () {
                     res.body.err.should.have.property('name').eql('MissingUsername');
                     done();
                 });
-        });         
+        });
 
         it('should return "MissingPassword" error trying to Signin without password', function (done) {
             var user = {
@@ -303,7 +304,7 @@ describe('Authentication', function () {
 
         it('should return user & auth object trying to Signin sucessfully', function (done) {
             var user = {
-                username: 'unittest3@gmail.com',
+                username: 'unittest' + timestamp + '@gmail.com',
                 password: '123456'
             };
             // once we have specified the info we want to send to the server via POST verb,
@@ -329,7 +330,7 @@ describe('Authentication', function () {
         });
     });
 
-    describe('Send password reset code to user by username(email or sms).', function (){
+    describe('Send password reset code to user by username(email or sms).', function () {
         var apiUrl = '/auth/sendpasswordreset';
 
         it('should return "MissingUsername" error trying to get password reset code without username', function (done) {
@@ -353,7 +354,7 @@ describe('Authentication', function () {
                     res.body.err.should.have.property('name').eql('MissingUsername');
                     done();
                 });
-        });  
+        });
 
         it('should return "UserNotFound" error trying to get verification code with wrong-email-formatted username.', function (done) {
             var user = {
