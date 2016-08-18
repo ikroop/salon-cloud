@@ -36,5 +36,8 @@ Server is running at port 3000: http://localhost:3000
 Run Unit Test
 =============
 ```
+# Test only one file in spec folder
 $ mocha ./spec/authentication.spec.js
+# Test all files in spec folder
+$ mocha ./spec
 ```
