@@ -102,6 +102,12 @@ module.exports = {
             'message': 'A required address is missing!'
         }
     },
+    'MissingPhoneNumber': {
+        'err': {
+            'name': 'MissingPhoneNumber',
+            'message': 'A required phone number is missing!'
+        }
+    },
     'WrongPhoneNumberFormat': {
         'err': {
             'name': 'WrongPhoneNumberFormat',
