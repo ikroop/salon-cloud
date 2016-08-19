@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var winston = require('winston');
 var configDB = require('./../config/dev/database.js');
 
-describe('User', function () {
+describe('Salon', function () {
     var url = 'http://localhost:3000';
     var validToken;
     var invalidToken;
@@ -17,11 +17,11 @@ describe('User', function () {
 
         //get valid token
         var user = {
-            username: 'unittest' + timestamp + '@gmail.com',
+            username: 'unittest@gmail.com',
             password: '123456'
         };
         request(url)
-            .post(apiUrl)
+            .post('/auth/signinwithemailandpassword')
             .send(user)
             // end handles the response
             .end(function (err, res) {
@@ -30,6 +30,7 @@ describe('User', function () {
                 }
                 validToken = res.auth.token;
                 invalidToken = validToken + '1';
+                console.log('validToken:' + validToken);
                 done();
             });
         done();
