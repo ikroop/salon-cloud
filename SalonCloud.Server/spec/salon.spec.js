@@ -9,6 +9,8 @@ describe('Salon', function () {
     var url = 'http://localhost:3000';
     var validToken;
     var invalidToken;
+    var defaultPassword = '1234@1234'
+
     // within before() you can run all the operations that are needed to setup your tests. In this case
     // I want to create a connection with the database, and when I'm done, I call done().
     before(function (done) {
@@ -17,8 +19,8 @@ describe('Salon', function () {
 
         //get valid token
         var user = {
-            username: 'unittest@gmail.com',
-            password: '123456'
+            username: 'unittest1471640655028@gmail.com',
+            password: defaultPassword
         };
         request(url)
             .post('/auth/signinwithemailandpassword')
@@ -30,7 +32,6 @@ describe('Salon', function () {
                 }
                 validToken = res.auth.token;
                 invalidToken = validToken + '1';
-                console.log('validToken:' + validToken);
                 done();
             });
         done();
@@ -54,7 +55,7 @@ describe('Salon', function () {
             request(url)
                 .post(apiUrl)
                 .send(bodyRequest)
-                .set('Authorization', 'Bearer ' + token)
+                .set({ 'Authorization': token })
                 // end handles the response
                 .end(function (err, res) {
                     if (err) {
@@ -82,7 +83,7 @@ describe('Salon', function () {
             request(url)
                 .post(apiUrl)
                 .send(bodyRequest)
-                .set('Authorization', 'Bearer ' + token)
+                .set({ 'Authorization': token })
                 // end handles the response
                 .end(function (err, res) {
                     if (err) {
@@ -110,7 +111,7 @@ describe('Salon', function () {
             request(url)
                 .post(apiUrl)
                 .send(bodyRequest)
-                .set('Authorization', 'Bearer ' + token)
+                .set({ 'Authorization': token })
                 // end handles the response
                 .end(function (err, res) {
                     if (err) {
@@ -139,7 +140,7 @@ describe('Salon', function () {
             request(url)
                 .post(apiUrl)
                 .send(bodyRequest)
-                .set('Authorization', 'Bearer ' + token)
+                .set('Authorization', token)
                 // end handles the response
                 .end(function (err, res) {
                     if (err) {
@@ -166,8 +167,8 @@ describe('Salon', function () {
             // We do this using the request object, requiring supertest!
             request(url)
                 .post(apiUrl)
+                .set({ 'Authorization': token })
                 .send(bodyRequest)
-                .set('Authorization', 'Bearer ' + token)
                 // end handles the response
                 .end(function (err, res) {
                     if (err) {
@@ -196,7 +197,7 @@ describe('Salon', function () {
             request(url)
                 .post(apiUrl)
                 .send(bodyRequest)
-                .set('Authorization', 'Bearer ' + token)
+                .set({ 'Authorization': token })
                 // end handles the response
                 .end(function (err, res) {
                     if (err) {
@@ -225,7 +226,7 @@ describe('Salon', function () {
             request(url)
                 .post(apiUrl)
                 .send(bodyRequest)
-                .set('Authorization', 'Bearer ' + token)
+                .set({ 'Authorization': token })
                 // end handles the response
                 .end(function (err, res) {
                     if (err) {
@@ -254,7 +255,7 @@ describe('Salon', function () {
             request(url)
                 .post(apiUrl)
                 .send(bodyRequest)
-                .set('Authorization', 'Bearer ' + token)
+                .set({ 'Authorization': token })
                 // end handles the response
                 .end(function (err, res) {
                     if (err) {
