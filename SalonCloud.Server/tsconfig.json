@@ -9,6 +9,7 @@
     "./routes/routes.d.ts",
     "./config/dev/database.ts",
     "./core/authentication/Authentication.d.ts",
+    "./core/validator/Validator.ts",
     "./modules/salon/Salon.d.ts",
     "./app.ts"
   ]
