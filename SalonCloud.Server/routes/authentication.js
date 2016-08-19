@@ -1,5 +1,7 @@
 "use strict";
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+var ErrorMessage = require('./ErrorMessage');
 var Authentication = require('../core/authentication/Authentication');
 var route;
 (function (route) {
@@ -70,7 +72,7 @@ var route;
                     }
                 });
             }
-            Authentication.register(new Authentication({ username: req.body.username }), req.body.password, function (err, account) {
+            Authentication.register(new Authentication({ 'username': req.body.username, 'fullname': req.body.fullname }), req.body.password, function (err, account) {
                 if (err) {
                     res.statusCode = 409;
                     return res.json({ 'err': err });
@@ -79,13 +81,9 @@ var route;
                     res.statusCode = 200;
                     return res.json({ 'user': account });
                 }
-                //passport.authenticate('local')(req, res, function () {
-                //  res.redirect('/');
-                //});
             });
         }
         static SignInWithEmailAndPassword(req, res, done) {
-            console.log('preLogin');
             if (!req.body.username) {
                 res.statusCode = 400;
                 return res.json({
@@ -109,8 +107,6 @@ var route;
                     return done(err);
                 }
                 if (user === false) {
-                    console.log('kinh');
-                    console.log(user);
                     res.statusCode = 403;
                     return res.json({
                         'err': {
@@ -120,29 +116,54 @@ var route;
                     });
                 }
                 else {
-                    console.log(user);
+                    var created_at = new Date().getTime();
                     req.user = { username: user.username };
+                    /*var token = jwt.sign({
+                        'id': user._id,
+                        'created_at': created_at
+                    }, ServerConfig.secret, {
+                            expiresIn: 2592000
+                        });*/
+                    var cert = fs.readFileSync('./config/dev/private.key'); // get private key
                     var token = jwt.sign({
-                        id: user._id,
-                    }, 'server secret', {
-                        expiresIn: 120
-                    });
-                    //req.login(user, function (err) {
-                    //   res.send({
-                    //      success: true,
-                    //      user: user
-                    //  });
-                    //});
-                    console.log(token);
-                    res.statusCode = 409;
+                        'id': user._id,
+                        'created_at': created_at
+                    }, cert, { algorithm: 'RS256' });
+                    res.statusCode = 200;
+                    console.log('token:', token);
                     return res.json({
                         user: req.user,
                         auth: {
-                            token: token }
+                            token: token
+                        }
                     });
                 }
             });
-            console.log('login succeed');
+        }
+        static VerifyToken(req, res, next) {
+            var token = req.headers.authorization;
+            console.log('VerifyToken:', token);
+            if (!token) {
+                res.statusCode = 403;
+                return res.json(ErrorMessage.InvalidTokenError);
+            }
+            else {
+                var cert = fs.readFileSync('./config/dev/public.pem'); // get private key
+                console.log('cert:', cert);
+                jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, payload) {
+                    // if token alg != RS256,  err == invalid signature
+                    if (err) {
+                        console.log('err:', err);
+                        return res.json(ErrorMessage.InvalidTokenError);
+                    }
+                    else {
+                        // if everything is good, save to request for use in other routes
+                        console.log('payload:', payload);
+                        req.user = payload;
+                        next();
+                    }
+                });
+            }
         }
     }
     route.AuthenticationRoute = AuthenticationRoute;
