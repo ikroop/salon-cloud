@@ -6,7 +6,6 @@ var route;
     class AuthenticationRoute {
         static SignUpWithEmailAndPassword(req, res) {
             //validate username;
-            console.log('tset');
             if (!req.body.username) {
                 res.statusCode = 400;
                 return res.json({

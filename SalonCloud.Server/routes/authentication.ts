@@ -11,7 +11,6 @@ module route {
     export class AuthenticationRoute {
         public static SignUpWithEmailAndPassword(req: express.Request, res: express.Response) {
             //validate username;
-            console.log('tset');
             if (!req.body.username) {
                 res.statusCode = 400;
                 return res.json({
