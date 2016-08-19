@@ -4,9 +4,10 @@
 import express = require('express');
 import passport = require('passport');
 import jwt = require('jsonwebtoken');
+import fs = require('fs');
+var ErrorMessage = require('./ErrorMessage');
+
 var Authentication = require('../core/authentication/Authentication');
-
-
 module route {
     export class AuthenticationRoute {
         public static SignUpWithEmailAndPassword(req: express.Request, res: express.Response) {
@@ -78,7 +79,7 @@ module route {
                     }
                 });
             }
-            Authentication.register(new Authentication({ username: req.body.username }), req.body.password, function (err, account) {
+            Authentication.register(new Authentication({ 'username': req.body.username, 'fullname': req.body.fullname }), req.body.password, function (err, account) {
                 if (err) {
                     res.statusCode = 409;
                     return res.json({ 'err': err });
@@ -86,15 +87,10 @@ module route {
                     res.statusCode = 200;
                     return res.json({ 'user': account });
                 }
-
-                //passport.authenticate('local')(req, res, function () {
-                //  res.redirect('/');
-                //});
             });
         }
 
         public static SignInWithEmailAndPassword(req: express.Request, res: express.Response, done) {
-            console.log('preLogin');
             if (!req.body.username) {
                 res.statusCode = 400;
                 return res.json({
@@ -115,14 +111,11 @@ module route {
 
             }
 
-            Authentication.authenticate('local', {session: false})(req.body.username, req.body.password, function (err, user, options) {
+            Authentication.authenticate('local', { session: false })(req.body.username, req.body.password, function (err, user, options) {
                 if (err) {
                     return done(err);
                 }
                 if (user === false) {
-                    console.log('kinh');
-                    console.log(user);
-
                     res.statusCode = 403;
                     return res.json({
                         'err': {
@@ -132,30 +125,54 @@ module route {
                     });
 
                 } else {
-                    console.log(user);
-                    req.user = {username: user.username};
-                    var token = jwt.sign({
-                        id: user._id,
-                          }, 'server secret', {
-                             expiresIn: 120
-                        });
-                    //req.login(user, function (err) {
-                     //   res.send({
-                      //      success: true,
-                      //      user: user
-                      //  });
-                    //});
-                    console.log(token);
-                    res.statusCode = 409;
+                    var created_at = new Date().getTime();
+                    req.user = { username: user.username };
+                    /*var token = jwt.sign({
+                        'id': user._id,
+                        'created_at': created_at
+                    }, ServerConfig.secret, {
+                            expiresIn: 2592000
+                        });*/
+                    var cert = fs.readFileSync('./config/dev/private.key');  // get private key
 
+                    var token = jwt.sign({
+                        'id': user._id,
+                        'created_at': created_at
+                    }, cert, { algorithm: 'RS256' });
+
+                    res.statusCode = 200;
+                    console.log('token:', token);
                     return res.json({
-                            user: req.user,
-                            auth: {
-                                token: token}
-                         });
+                        user: req.user,
+                        auth: {
+                            token: token
+                        }
+                    });
                 }
             });
-            console.log('login succeed');
+        }
+
+        public static VerifyToken(req: express.Request, res: express.Response, next) {
+            var token = req.headers.authorization;
+            console.log('VerifyToken:', token);
+
+            if (!token) {
+                res.statusCode = 403;
+                return res.json(ErrorMessage.InvalidTokenError);
+            } else {
+                var cert = fs.readFileSync('./config/dev/public.pem');  // get private key
+                console.log('cert:', cert);
+                jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, payload) {
+                    if (err) {
+                        return res.json(ErrorMessage.InvalidTokenError);
+                    } else {
+                        req.user = payload;
+                        next();
+                    }
+                });
+
+
+            }
         }
     }
 }

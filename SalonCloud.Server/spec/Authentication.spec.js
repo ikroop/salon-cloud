@@ -7,7 +7,8 @@ var configDB = require('./../config/dev/database.js');
 
 describe('Authentication', function () {
     var url = 'http://localhost:3000';
-    var timestamp = new Date().getTime() / 1000;
+    var timestamp = new Date().getTime();
+    var defaultPassword = '1234@1234'
     // within before() you can run all the operations that are needed to setup your tests. In this case
     // I want to create a connection with the database, and when I'm done, I call done().
     before(function (done) {
@@ -27,7 +28,7 @@ describe('Authentication', function () {
 
         it('should return "MissingUsername" error trying to register without username', function (done) {
             var user = {
-                password: '123456'
+                password: defaultPassword
             };
             // once we have specified the info we want to send to the server via POST verb,
             // we need to actually perform the action on the resource, in this case we want to 
@@ -52,7 +53,7 @@ describe('Authentication', function () {
         it('should return "NotEmailOrPhoneNumber" error trying to register with username is not email', function (done) {
             var user = {
                 username: 'salonhelpstest',
-                password: '123456'
+                password: defaultPassword
             };
             // once we have specified the info we want to send to the server via POST verb,
             // we need to actually perform the action on the resource, in this case we want to 
@@ -77,7 +78,7 @@ describe('Authentication', function () {
         it('should return "NotEmailOrPhoneNumber" error trying to register with username is not phone number', function (done) {
             var user = {
                 username: '12345678',
-                password: '123456'
+                password: defaultPassword
             };
             // once we have specified the info we want to send to the server via POST verb,
             // we need to actually perform the action on the resource, in this case we want to 
@@ -151,7 +152,7 @@ describe('Authentication', function () {
         it('should return "MissingFullname" error trying to register without full name', function (done) {
             var user = {
                 username: 'unittest@gmail.com',
-                password: '123456'
+                password: defaultPassword
             };
             // once we have specified the info we want to send to the server via POST verb,
             // we need to actually perform the action on the resource, in this case we want to 
@@ -176,7 +177,7 @@ describe('Authentication', function () {
         it('should return user object trying to register sucessfully', function (done) {
             var user = {
                 username: 'unittest' + timestamp + '@gmail.com',
-                password: '123456',
+                password: defaultPassword,
                 fullname: 'salonhelps'
             };
             // once we have specified the info we want to send to the server via POST verb,
@@ -203,7 +204,7 @@ describe('Authentication', function () {
         it('should return "UserExistsError" trying to register with existing username', function (done) {
             var user = {
                 username: 'unittest' + timestamp + '@gmail.com',
-                password: '123456',
+                password: defaultPassword,
                 fullname: 'salonhelps'
             };
             // once we have specified the info we want to send to the server via POST verb,
@@ -232,7 +233,7 @@ describe('Authentication', function () {
 
         it('should return "MissingUsername" error trying to Signin without username', function (done) {
             var user = {
-                password: '123456'
+                password: defaultPassword
             };
             // once we have specified the info we want to send to the server via POST verb,
             // we need to actually perform the action on the resource, in this case we want to 
@@ -281,7 +282,7 @@ describe('Authentication', function () {
         it('should return "SignInFailed" error trying to Signin wrong password or username', function (done) {
             var user = {
                 username: 'test@salonhelps.com',
-                password: '123456'
+                password: defaultPassword
             };
             // once we have specified the info we want to send to the server via POST verb,
             // we need to actually perform the action on the resource, in this case we want to 
@@ -306,7 +307,7 @@ describe('Authentication', function () {
         it('should return user & auth object trying to Signin sucessfully', function (done) {
             var user = {
                 username: 'unittest' + timestamp + '@gmail.com',
-                password: '123456'
+                password: defaultPassword
             };
             // once we have specified the info we want to send to the server via POST verb,
             // we need to actually perform the action on the resource, in this case we want to 
@@ -321,7 +322,7 @@ describe('Authentication', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(409);
+                    res.status.should.be.equal(200);
                     res.body.should.have.property('user');
                     res.body.user.should.have.property('username').eql(user.username);
                     res.body.should.have.property('auth');
