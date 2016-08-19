@@ -41,3 +41,10 @@ $ mocha ./spec/authentication.spec.js
 # Test all files in spec folder
 $ mocha ./spec
 ```
+
+Generate Secret Key 
+=============
+```
+$ ssh-keygen
+$ openssl rsa -in private_key_filename -pubout -outform PEM -out public_key_output_filename
+```
