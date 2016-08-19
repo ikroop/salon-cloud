@@ -2,8 +2,8 @@
 module.exports = {
     'MissingUsername': {
         'err': {
-            'name': 'InvalidTokenError',
-            'message': 'Token is invalid'
+            'name': 'MissingUsername',
+            'message': 'A required username is missing'
         }
     },
     'MissingPassword': {
@@ -39,7 +39,7 @@ module.exports = {
     'InvalidTokenError': {
         'err': {
             'name': 'InvalidTokenError',
-            'message': 'Username is already existing'
+            'message': 'Token is invalid'
         }
     },
     'NoPermission': {
