@@ -8,6 +8,7 @@ import * as mongoose from "mongoose";
 import * as passport from "passport";
 import * as passportLocal from "passport-local";
 var AuthRoute = require ("./routes/authentication");
+var SalonRoute = require("./routes/salon");
 var Authentication = require ("./core/authentication/Authentication");
 var app = express();
 
@@ -43,8 +44,12 @@ if (env === 'development') {
 app.get('/', (req, res) => {
     res.json({ 'test': 'ok' });
 });
+//Authentication
 app.post('/auth/signupwithemailandpassword', AuthRoute.SignUpWithEmailAndPassword);
 app.post('/auth/SigninWithEmailAndPassword', AuthRoute.SignInWithEmailAndPassword);
+
+//Salon
+app.post('/salon/createinformation', SalonRoute.CreateInformation);
 app.listen(3000, function () {
     console.log("SalonCloud server listening on port %d in %s mode", 3000, app.settings.env);
 });
