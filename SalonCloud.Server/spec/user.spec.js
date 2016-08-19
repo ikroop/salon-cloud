@@ -44,4 +44,31 @@ describe('User', function () {
 
         
     });
+
+    describe('Get User Profile', function () {
+        var apiUrl = '/user/getprofile';
+
+        it('should return "InvalidTokenError" error trying to create profile with invalid token', function (done) {
+            var user = {
+                password: '123456'
+            };
+            // once we have specified the info we want to send to the server via POST verb,
+            // we need to actually perform the action on the resource, in this case we want to 
+            // POST on /api/auth/register and we want to send some info
+            // We do this using the request object, requiring supertest!
+            request(url)
+                .get(apiUrl)
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    } 
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('InvalidTokenError');
+                    res.body.err.should.have.property('name').eql('Token is invalid');
+                    done();
+                });
+        });
+    });
 });
