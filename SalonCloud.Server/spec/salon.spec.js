@@ -19,10 +19,10 @@ describe('Salon', function () {
 
         //get valid token
         var user = {
-            username: 'unittest1471640655028@gmail.com',
+            username: 'unittest1471723005545@gmail.com',
             password: defaultPassword
         };
-        request(url)
+        /*request(url)
             .post('/auth/signinwithemailandpassword')
             .send(user)
             // end handles the response
@@ -33,7 +33,9 @@ describe('Salon', function () {
                 validToken = res.auth.token;
                 invalidToken = validToken + '1';
                 done();
-            });
+            });*/
+        validToken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU3YjhiNWZkYmIxYjRiMDkwY2MxN2EyOCIsImNyZWF0ZWRfYXQiOjE0NzE3Mjk0ODQyMjIsImlhdCI6MTQ3MTcyOTQ4NH0.aq_3rcu62_Jt1LOIDBi16lXshwCj62DspgOnBVqcABO0y8rZ5qlGm0KnjwnwnuayWuruICpgPiVMHlhKrcUFvfEctFEmHJFyqCabmBvZCFWkwnK7zOGbKxh72BJKDYPjZ1JL4PCsZWMYZpVkca8iU_ILIrZlaUnobqUe1rwpBbUwTT-4NBNEarjuJhVleJSouCaJOFANLXf0ikyMhzGzef78Ja3rrZBg5Ivq8a_7duaporxL8TYXO4Q7ynCL_foKuwjGWIQRE5Q_GlOHUkTVclIx8hESsexXrENh8m_V8yzIAMUAUqoYmh_UR5L08WdyLpss-Pwh_MUiT-z_On--aA';    
+        invalidToken = 'eyJhbGciOiJSUz';
         done();
     });
 
@@ -62,7 +64,7 @@ describe('Salon', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(400);
+                    res.status.should.be.equal(403);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('InvalidTokenError');
                     done();
@@ -263,7 +265,7 @@ describe('Salon', function () {
                     }
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(200);
-                    res.body.should.have.property('id');
+                    res.body.should.have.property('salon_name');
                     done();
                 });
         });
