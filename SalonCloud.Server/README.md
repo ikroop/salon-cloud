@@ -29,12 +29,12 @@ $ tsc
 ```
 Run web server
 =============
+Windows
 ```
 $ nodemon ./app.js
 Server is running at port 3000: http://localhost:3000
 ```
-NOTE: for “Error: EACCES: permission denied, open '/Users/<USER>/.config/configstore/update-notifier-nodemon.json'
-You don't have access to this file.” error, run
+Mac OS / Linux
 ```
 $ sudo nodemon ./app.js
 Server is running at port 3000: http://localhost:3000
