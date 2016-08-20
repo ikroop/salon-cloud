@@ -4,7 +4,11 @@
 //
 //
 //
-import {ISalonInformationModel} from './ISalonInformationModel';
+import * as mongoose from "mongoose";
+
 export interface ISalon{
-    CreateSalonInformation(SalonInformation: ISalonInformationModel);
+    salon_name: string;
+    address: string;
+    phonenumber: string;
+    email?: string;
 }
