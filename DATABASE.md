@@ -7,7 +7,6 @@ use UTC.
   |----user
   |     |----id: string
   |     |----username(phonenumber or email): string
-  |     |----password: string
   |     |----fullname: string
   |     |----status: boolean
   |     |----is_verified: boolean                        
