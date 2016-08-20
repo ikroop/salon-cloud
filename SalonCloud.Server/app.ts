@@ -28,8 +28,8 @@ app.use(passport.session());
 // passport config
 var LocalStrategy = passportLocal.Strategy;
 passport.use(new LocalStrategy(Authentication.authenticate()));
-//passport.serializeUser(Authentication.serializeUser());
-//passport.deserializeUser(Authentication.deserializeUser());
+passport.serializeUser(Authentication.serializeUser());
+passport.deserializeUser(Authentication.deserializeUser());
 
 var env = process.env.NODE_ENV || 'development';
 

@@ -151,14 +151,10 @@ var route;
                 var cert = fs.readFileSync('./config/dev/public.pem'); // get private key
                 console.log('cert:', cert);
                 jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, payload) {
-                    // if token alg != RS256,  err == invalid signature
                     if (err) {
-                        console.log('err:', err);
                         return res.json(ErrorMessage.InvalidTokenError);
                     }
                     else {
-                        // if everything is good, save to request for use in other routes
-                        console.log('payload:', payload);
                         req.user = payload;
                         next();
                     }

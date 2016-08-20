@@ -14,7 +14,8 @@ import Schema = mongoose.Schema;
 
 var Authentication = new Schema({
     username: String,
-    password: String
+    password: String,
+    fullname: String
 });
 
 Authentication.plugin(passportLocalMongoose);
