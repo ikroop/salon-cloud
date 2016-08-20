@@ -10,8 +10,8 @@ use UTC.
   |     |----fullname: string
   |     |----status: boolean
   |     |----is_verified: boolean                        
-  |     |----birthday: string
-  |     |----address: string
+  |     |----birthday: string (optional)
+  |     |----address: string (optional)
   |     |----is_temporary: boolean (account is created automatic after customer books appointment)
   |     |----salon:
   |           |----<id>
@@ -19,9 +19,9 @@ use UTC.
   |           |----status: boolean
   |           |----role: number
   |           |----nickname: string
-  |           |----social_security_number: string
-  |           |----salary_rate: double
-  |           |----cash_rate: double
+  |           |----social_security_number: string (optional)
+  |           |----salary_rate: double (optional)
+  |           |----cash_rate: double (optional)
   |----appointment
   |     |----id: string
   |     |----salon_id: string
