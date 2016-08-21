@@ -20,6 +20,11 @@ module route {
                 res.statusCode = 400;
                 return res.json(ErrorMessage.SalonNotFound);
             }
+            if (!req.params.salon_id) {// TODO: salonId's' not found
+                res.statusCode = 400;
+                return res.json(ErrorMessage.SalonNotFound);
+            }
+
             if (!req.param.start_date) {
                 res.statusCode = 400;
                 return res.json(ErrorMessage.MissingStartDate);
