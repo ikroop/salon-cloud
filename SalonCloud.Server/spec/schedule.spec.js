@@ -19,7 +19,7 @@ describe('Schedule', function () {
         var apiUrl = '/schedule/getsalondailyschedules';
 
         it('should return "InvalidTokenError" error trying to request with invalid token', function (done) {
-
+            // TODO: discuss
             apiUrl = apiUrl + ':salon_id=<salon_id>&start_date=<start_date>&end_date=<end_date>';
 
             // once we have specified the info we want to send to the server via POST verb,

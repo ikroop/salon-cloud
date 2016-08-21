@@ -22,6 +22,15 @@ class Validator {
     static IsAdress(address) {
         return true;
     }
+    static IsValidDate(date) {
+        return true;
+    }
+    static IsValidEndDateForStartDate(endDate, startDate) {
+        return true;
+    }
+    static IsValidWeekDay(date) {
+        return true;
+    }
 }
 exports.Validator = Validator;
 //# sourceMappingURL=Validator.js.map

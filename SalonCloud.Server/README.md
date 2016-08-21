@@ -100,6 +100,8 @@ module route {
 export = route.SalonRoute;
 ```
 Add function REST API to [app.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/app.ts)
+
+
 Add define
 ```
 var SalonRoute = require("./routes/salon");
@@ -109,6 +111,14 @@ then
 app.post('/salon/createinformation', AuthRoute.VerifyToken, SalonRoute.CreateInformation);
 ``` 
 **Test your API**
+
+Compile new ts file & run server
+```
+$ cd <project_path> (ex: workspace/salon-cloud/SalonCloud.Server)
+$ tsc
+$ sudo nodemon ./app.js
+```
+
 Use Postman and post request to server, example:
 ```
 POST http://localhost:3000/salon/createinformation
