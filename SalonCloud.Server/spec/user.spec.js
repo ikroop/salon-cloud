@@ -37,7 +37,7 @@ describe('User', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingUsername');
+                    res.body.err.should.have.property('name').eql('InvalidTokenError');
                     done();
                 });
         });
