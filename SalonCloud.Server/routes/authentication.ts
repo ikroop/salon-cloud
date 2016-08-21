@@ -134,12 +134,6 @@ module route {
                 } else {
                     var created_at = new Date().getTime();
                     req.user = { username: user.username };
-                    /*var token = jwt.sign({
-                        'id': user._id,
-                        'created_at': created_at
-                    }, ServerConfig.secret, {
-                            expiresIn: 2592000
-                        });*/
                     var cert = fs.readFileSync('./config/dev/private.key');  // get private key
 
                     var token = jwt.sign({
@@ -148,7 +142,6 @@ module route {
                     }, cert, { algorithm: 'RS256' });
 
                     res.statusCode = 200;
-                    console.log('token:', token);
                     return res.json({
                         user: req.user,
                         auth: {
@@ -161,16 +154,14 @@ module route {
 
         public static VerifyToken(req: express.Request, res: express.Response, next) {
             var token = req.headers.authorization;
-            console.log('VerifyToken:', token);
-
             if (!token) {
                 res.statusCode = 403;
                 return res.json(ErrorMessage.InvalidTokenError);
             } else {
                 var cert = fs.readFileSync('./config/dev/public.pem');  // get private key
-                console.log('cert:', cert);
                 jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, payload) {
                     if (err) {
+                        res.statusCode = 403;
                         return res.json(ErrorMessage.InvalidTokenError);
                     } else {
                         req.user = payload;

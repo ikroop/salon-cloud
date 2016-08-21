@@ -5,6 +5,8 @@ import express = require('express');
 import passport = require('passport');
 import jwt = require('jsonwebtoken');
 import {Validator} from '../core/validator/Validator';
+import {Salon} from '../modules/salon/Salon';
+import {ISalon} from '../modules/salon/ISalon';
 
 var ErrorMessage = require('./ErrorMessage');
 
@@ -27,10 +29,9 @@ module route {
                     return res.json(ErrorMessage.WrongAddressFormat);
                 }
             }
-           
+
             if (!req.body.phonenumber) {
                 res.statusCode = 400;
-                console.log(ErrorMessage.MissingPhoneNumber);
                 return res.json(ErrorMessage.MissingPhoneNumber);
             } else {
                 if (!Validator.IsPhoneNumber(req.body.phonenumber)) {
@@ -42,7 +43,22 @@ module route {
             if (req.body.email && !Validator.IsEmail(req.body.email)) {
                 res.statusCode = 400;
                 return res.json(ErrorMessage.WrongEmailFormat);
-            }        
+            }
+            var salon = new Salon();
+            var salonData = {
+                salon_name: req.body.salon_name,
+                address: req.body.address,
+                phonenumber: req.body.phonenumber
+            };
+            var salonResponse = salon.CreateSalonInformation(salonData, function (salonResponse) {
+                if (salonResponse) {
+                    res.statusCode = 200;
+                    return res.json(salonResponse);
+                } else {
+                    res.statusCode = 500;
+                    return res;
+                }
+            });
 
         }
     }

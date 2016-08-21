@@ -4,7 +4,9 @@
 //
 //
 //
-import {ISalonInformationModel} from './ISalonInformationModel';
 export interface ISalon{
-    CreateSalonInformation(SalonInformation: ISalonInformationModel);
+    salon_name: string;
+    address: string;
+    phonenumber: string;
+    email?: string;
 }
