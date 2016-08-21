@@ -96,12 +96,9 @@ use UTC.
   |----salon
   |     |----id: string
   |     |----setting
-  |     |     |----appointment_reminder
-  |     |     |     |----status: boolean
-  |     |     |----flexible_time
-  |     |     |     |----time: number
-  |     |     |----technician_checkout
-  |     |           |---status: boolean
+  |     |     |----appointment_reminder: boolean
+  |     |     |----flexible_time: number
+  |     |     |----technician_checkout: boolean
   |     |----information
   |           |----salon_name: string
   |           |----phone
