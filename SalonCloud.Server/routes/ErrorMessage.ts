@@ -119,6 +119,35 @@ module.exports = {
             'name': 'WrongEmailFormat',
             'message': 'Email format is wrong'
         }
+    },
+    'MissingStartDate': {
+        'err': {
+            'name': 'MissingStartDate',
+            'message': 'A required start-date is missing!'
+        }
+    },
+    'InvalidStartDate': {
+        'err': {
+            'name': 'InvalidStartDate',
+            'message': 'start-date param is an invalid date!'
+        }
+    },
+    'MissingEndDate': {
+        'err': {
+            'name': 'MissingEndDate',
+            'message': 'A required end-date is missing!'
+        }
+    },
+    'InvalidEndDate': {
+        'err': {
+            'name': 'InvalidEndDate',
+            'message': 'end-date param is an invalid date!'
+        }
+    },
+    'InvalidEndDateForStartDate': {
+        'err': {
+            'name': 'InvalidEndDateForStartDate',
+            'message': 'end-date is earlier than start-date!'
+        }
     }
-
 };

@@ -24,4 +24,16 @@ export class Validator {
     static IsAdress(address: string){
         return true;
     }
+
+    static IsValidDate(date: Date){
+        return true;
+    }
+
+    static IsValidEndDateForStartDate(endDate: Date, startDate: Date){
+        return true;
+    }
+
+    static IsValidWeekDay(date: Date){
+        return true;
+    }
 }
