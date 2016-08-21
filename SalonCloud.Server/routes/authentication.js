@@ -72,7 +72,13 @@ var route;
                     }
                 });
             }
-            Authentication.register(new Authentication({ 'username': req.body.username, 'fullname': req.body.fullname }), req.body.password, function (err, account) {
+            Authentication.register(new Authentication({
+                'username': req.body.username,
+                'fullname': req.body.fullname,
+                'status': true,
+                'is_verified': false,
+                'is_temporary': false
+            }), req.body.password, function (err, account) {
                 if (err) {
                     res.statusCode = 409;
                     return res.json({ 'err': err });
