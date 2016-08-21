@@ -95,19 +95,18 @@ use UTC.
   |           |----time: number
   |----salon
   |     |----id: string
-  |     |----profile
-  |           |----setting
-  |           |     |----appointment_reminder: boolean
-  |           |     |----flexible_time: number
-  |           |     |----technician_checkout: boolean
-  |           |----information
-  |                 |----salon_name: string
-  |                 |----phone
-  |                 |     |----number: string
-  |                 |     |----is_verified: boolean
-  |                 |----location
-  |                 |     |----address: string
-  |                 |     |----is_verified: boolean
-  |                 |----email: string
+  |     |----setting
+  |     |     |----appointment_reminder: boolean
+  |     |     |----flexible_time: number
+  |     |     |----technician_checkout: boolean
+  |     |----information
+  |           |----salon_name: string
+  |           |----phone
+  |           |     |----number: string
+  |           |     |----is_verified: boolean
+  |           |----location
+  |           |     |----address: string
+  |           |     |----is_verified: boolean
+  |           |----email: string
   |----domain
 ```
