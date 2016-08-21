@@ -54,3 +54,62 @@ Generate Secret Key
 $ ssh-keygen
 $ openssl rsa -in private_key_filename -pubout -outform PEM -out public_key_output_filename
 ```
+Development
+============
+## How to add new REST API ##
+Create file in routes folder. Example routes/salon.ts:
+```
+import express = require('express');
+import passport = require('passport');
+import jwt = require('jsonwebtoken');
+import {Validator} from '../core/validator/Validator';
+import {Salon} from '../modules/salon/Salon';
+import {ISalon} from '../modules/salon/ISalon';
+var ErrorMessage = require('./ErrorMessage');
+var Authentication = require('../modules/salon/Salon');
+module route {
+    export class SalonRoute {
+        public static CreateInformation(req: express.Request, res: express.Response) {
+        
+            if (!req.body.salon_name) {
+                res.statusCode = 400;
+                return res.json(ErrorMessage.MissingSalonName);
+
+           if (!req.body.phonenumber) {
+                res.statusCode = 400;
+                return res.json(ErrorMessage.MissingPhoneNumber);
+            } else {
+                if (!Validator.IsPhoneNumber(req.body.phonenumber)) {
+                    res.statusCode = 400;
+                    return res.json(ErrorMessage.WrongPhoneNumberFormat);
+                }
+            }       
+                 
+            var salonResponse = salon.CreateSalonInformation(salonData, function (salonResponse) {
+                if (salonResponse) {
+                    res.statusCode = 200;
+                    return res.json(salonResponse);
+                } else {
+                    res.statusCode = 500;
+                    return res;
+                }
+            });
+        }
+    }
+}
+export = route.SalonRoute;
+```
+Add function REST API to app.ts
+```
+app.post('/salon/createinformation', AuthRoute.VerifyToken, SalonRoute.CreateInformation);
+``` 
+Test your API:
+Use Postman and post request to server, example:
+```
+POST http://localhost:3000/salon/createinformation
+add data to body
+add access token to header if it is required.
+```
+## How to get access token ##
+Use Postman to get access token
+[Signin with email & password documentation](https://smisyteam.atlassian.net/wiki/display/SC/Authentication#Authentication-SigninWithEmail&Password)
