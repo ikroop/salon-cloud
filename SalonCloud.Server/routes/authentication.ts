@@ -68,20 +68,9 @@ module route {
                     });
                 }
             }
-
-            //validate fullname;
-            if (!req.body.fullname) {
-                res.statusCode = 400;
-                return res.json({
-                    'err': {
-                        'name': 'MissingFullname',
-                        'message': 'A fullname is required for registration!'
-                    }
-                });
-            }
+                        
             Authentication.register(new Authentication({ 
                 'username': req.body.username,
-                'fullname': req.body.fullname,
                 'status': true,
                 'is_verified': false,
                 'is_temporary': false

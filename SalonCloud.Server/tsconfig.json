@@ -11,6 +11,7 @@
     "./core/authentication/Authentication.d.ts",
     "./core/validator/Validator.ts",
     "./modules/salon/Salon.d.ts",
+    "./modules/user/User.d.ts",
     "./app.ts"
   ]
 }

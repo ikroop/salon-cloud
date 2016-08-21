@@ -147,38 +147,12 @@ describe('Authentication', function () {
                     res.body.err.should.have.property('name').eql('PasswordTooShort');
                     done();
                 });
-        });
-
-        it('should return "MissingFullname" error trying to register without full name', function (done) {
-            var user = {
-                username: 'unittest@gmail.com',
-                password: defaultPassword
-            };
-            // once we have specified the info we want to send to the server via POST verb,
-            // we need to actually perform the action on the resource, in this case we want to 
-            // POST on /api/auth/register and we want to send some info
-            // We do this using the request object, requiring supertest!
-            request(url)
-                .post(apiUrl)
-                .send(user)
-                // end handles the response
-                .end(function (err, res) {
-                    if (err) {
-                        throw err;
-                    }
-                    // this is should.js syntax, very clear
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingFullname');
-                    done();
-                });
-        });
+        });       
 
         it('should return user object trying to register sucessfully', function (done) {
             var user = {
                 username: 'unittest' + timestamp + '@gmail.com',
-                password: defaultPassword,
-                fullname: 'salonhelps'
+                password: defaultPassword
             };
             // once we have specified the info we want to send to the server via POST verb,
             // we need to actually perform the action on the resource, in this case we want to 
@@ -196,7 +170,6 @@ describe('Authentication', function () {
                     res.status.should.be.equal(200);
                     res.body.should.have.property('user');
                     res.body.user.should.have.property('username').eql(user.username);
-                    res.body.user.should.have.property('fullname').eql(user.fullname);                    
                     done();
                 });
         });

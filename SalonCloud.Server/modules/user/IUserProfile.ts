@@ -2,13 +2,30 @@
 import * as mongoose from "mongoose";
 
 export interface IUserProfile {
-    
+    salon_id?: string,
+    status: boolean,
+    role: number,
+    fullname: string,
+    nickname: string,
+    social_security_number: string,
+    salary_rate: number,
+    cash_rate: number,
+    birthday: string,
+    address: string,
+    email: string
 }
 
 export const UserProfileSchema = new mongoose.Schema({
-    salon_name: { type: String, required: true },
-    address: { type: String, required: true },
-    phonenumber: { type: String, required: true },
+    salon_id: String,
+    status: Boolean,
+    role: Number,
+    fullname: String,
+    nickname: String,
+    social_security_number: String,
+    salary_rate: Number,
+    cash_rate: Number,
+    birthday: String,
+    address: String,
     email: String
 });
 
