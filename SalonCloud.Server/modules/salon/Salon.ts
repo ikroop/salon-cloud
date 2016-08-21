@@ -3,7 +3,6 @@
 //
 //
 import {ISalon} from './ISalon';
-import {ISalonInformationModel} from './ISalonInformationModel';
 import * as mongoose from "mongoose";
 
 export const SalonSchema = new mongoose.Schema({
