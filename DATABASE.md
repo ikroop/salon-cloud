@@ -7,15 +7,15 @@ use UTC.
   |----user
   |     |----id: string
   |     |----username(phonenumber or email): string
-  |     |----fullname: string
   |     |----status: boolean
   |     |----is_verified: boolean                 
   |     |----is_temporary: boolean (account is created automatic after customer books appointment)
   |     |----salon:
-  |           |----<id>
+  |           |----id: string
   |           |----salon_id: string
   |           |----status: boolean
   |           |----role: number
+  |           |----fullname: string
   |           |----nickname: string
   |           |----social_security_number: string (optional)
   |           |----salary_rate: double (optional)
