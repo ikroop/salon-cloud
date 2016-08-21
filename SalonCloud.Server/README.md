@@ -57,7 +57,7 @@ $ openssl rsa -in private_key_filename -pubout -outform PEM -out public_key_outp
 Development
 ============
 ## How to add new REST API ##
-Create file in routes folder. Example routes/salon.ts:
+Create file in routes folder. Example [routes/salon.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/routes/salon.ts):
 ```
 import express = require('express');
 import passport = require('passport');
@@ -99,11 +99,11 @@ module route {
 }
 export = route.SalonRoute;
 ```
-Add function REST API to app.ts
+Add function REST API to [app.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/app.ts)
 ```
 app.post('/salon/createinformation', AuthRoute.VerifyToken, SalonRoute.CreateInformation);
 ``` 
-Test your API:
+**Test your API**
 Use Postman and post request to server, example:
 ```
 POST http://localhost:3000/salon/createinformation
@@ -113,3 +113,9 @@ add access token to header if it is required.
 ## How to get access token ##
 Use Postman to get access token
 [Signin with email & password documentation](https://smisyteam.atlassian.net/wiki/display/SC/Authentication#Authentication-SigninWithEmail&Password)
+## How to use mongoose ##
+
+ 1. Read [Getting Started](http://mongoosejs.com/docs/index.html)
+ 2. Read data structure file: [modules/salon/ISalon.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/modules/salon/ISalon.ts)
+ 3. Read Logic Class: [modules/salon/Salon.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/modules/salon/Salon.ts)
+ 4. Expert: [How to add Sub Docs](http://mongoosejs.com/docs/subdocs.html)
