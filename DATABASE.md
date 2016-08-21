@@ -9,9 +9,7 @@ use UTC.
   |     |----username(phonenumber or email): string
   |     |----fullname: string
   |     |----status: boolean
-  |     |----is_verified: boolean                        
-  |     |----birthday: string (optional)
-  |     |----address: string (optional)
+  |     |----is_verified: boolean                 
   |     |----is_temporary: boolean (account is created automatic after customer books appointment)
   |     |----salon:
   |           |----<id>
@@ -22,6 +20,8 @@ use UTC.
   |           |----social_security_number: string (optional)
   |           |----salary_rate: double (optional)
   |           |----cash_rate: double (optional)
+  |           |----birthday: string (optional)
+  |           |----address: string (optional)
   |----appointment
   |     |----id: string
   |     |----salon_id: string
