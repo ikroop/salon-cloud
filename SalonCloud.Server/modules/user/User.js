@@ -4,8 +4,8 @@
 //
 //
 const mongoose = require("mongoose");
-const Authentication_1 = require("./../../core/authentication/Authentication");
-var UserModel = mongoose.model('User', Authentication_1.AuthenticationSchema);
+const AuthenticationModel_1 = require("./../../core/authentication/AuthenticationModel");
+var UserModel = mongoose.model('User', AuthenticationModel_1.AuthenticationSchema);
 class User {
     constructor(SalonId, UserId) {
         this.UserId = UserId;

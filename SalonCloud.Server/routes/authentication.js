@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 var ErrorMessage = require('./ErrorMessage');
-var Authentication = require('../core/authentication/Authentication');
+var Authentication = require('../core/authentication/AuthenticationModel');
 var route;
 (function (route) {
     class AuthenticationRoute {

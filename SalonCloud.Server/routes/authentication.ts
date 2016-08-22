@@ -7,7 +7,7 @@ import jwt = require('jsonwebtoken');
 import fs = require('fs');
 var ErrorMessage = require('./ErrorMessage');
 
-var Authentication = require('../core/authentication/Authentication');
+var Authentication = require('../core/authentication/AuthenticationModel');
 module route {
     export class AuthenticationRoute {
         public static SignUpWithEmailAndPassword(req: express.Request, res: express.Response) {

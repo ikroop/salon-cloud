@@ -4,7 +4,7 @@
 //
 import * as mongoose from "mongoose";
 import {UserProfile} from "./UserProfile";
-import {AuthenticationSchema} from "./../../core/authentication/Authentication";
+import {AuthenticationSchema} from "./../../core/authentication/AuthenticationModel";
 
 var UserModel = mongoose.model('User', AuthenticationSchema);
 

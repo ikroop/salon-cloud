@@ -19,4 +19,4 @@ exports.AuthenticationSchema = new Schema({
 });
 exports.AuthenticationSchema.plugin(passportLocalMongoose);
 module.exports = mongoose.model('User', exports.AuthenticationSchema);
-//# sourceMappingURL=Authentication.js.map
+//# sourceMappingURL=AuthenticationModel.js.map

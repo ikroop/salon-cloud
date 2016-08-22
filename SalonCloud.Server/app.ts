@@ -10,7 +10,7 @@ import * as passportLocal from "passport-local";
 var AuthRoute = require ("./routes/authentication");
 var SalonRoute = require("./routes/salon");
 var ScheduleRoute = require("./routes/schedule");
-var Authentication = require ("./core/authentication/Authentication");
+var Authentication = require ("./core/authentication/AuthenticationModel");
 var app = express();
 
 // Configuration
