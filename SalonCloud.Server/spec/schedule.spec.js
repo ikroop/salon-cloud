@@ -464,7 +464,28 @@ describe('Schedule', function () {
 
 
         it('should return "InvalidTokenError" error trying to request with invalid token', function(done){
-
+            var token = invalidToken;
+            var bodyRequest = {
+                'status': true, 
+                'weekday': 1,  
+                'open_time': 36000,     
+                'close_time': 72000,
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('InvalidTokenError');
+                    done();
+                });
         });
 
     });
