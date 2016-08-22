@@ -7,7 +7,7 @@
 import mongoose = require('mongoose');
 import passportLocalMongoose = require('passport-local-mongoose');
 import Schema = mongoose.Schema;
-import {UserProfileSchema} from '../../modules/user/IUserProfile';
+import {UserProfileSchema} from '../../modules/user/UserProfile';
 var Authentication = new Schema({
     username: {type: String, required: true},
     password: String,
