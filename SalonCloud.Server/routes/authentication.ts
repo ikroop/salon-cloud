@@ -7,81 +7,19 @@ import jwt = require('jsonwebtoken');
 import fs = require('fs');
 var ErrorMessage = require('./ErrorMessage');
 
-var Authentication = require('../core/authentication/AuthenticationModel');
+var AuthenticationModel = require('../core/authentication/AuthenticationModel');
+import {Authentication} from '../core/authentication/Authentication';
 module route {
     export class AuthenticationRoute {
         public static SignUpWithEmailAndPassword(req: express.Request, res: express.Response) {
-            //validate username;
-            if (!req.body.username) {
-                res.statusCode = 400;
-                return res.json({
-                    'err': {
-                        'name': 'MissingUsername',
-                        'message': 'A required username is missing!'
-                    }
-                });
-            } else {
-                var isPhonenumber = true;
-                var isEmail = true;
-
-                //case: username is phonenumber
-                var phoneReg = /^\d{10}$/;
-                if (!req.body.username.match(phoneReg)) {
-                    isPhonenumber = false;
-                }
-
-                //case: username is email
-                var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                if (!req.body.username.match(emailReg)) {
-                    isEmail = false;
-                }
-
-                if (!(isPhonenumber || isEmail)) {
-                    res.statusCode = 400;
-                    return res.json({
-                        'err': {
-                            'name': 'NotEmailOrPhoneNumber',
-                            'message': 'A username must be a phone number or email'
-                        }
-                    });
-                }
-
-            }
-            //validate password;
-            if (!req.body.password) {
-                res.statusCode = 400;
-                return res.json({
-                    'err': {
-                        'name': 'MissingPassword',
-                        'message': 'A required password is missing!'
-                    }
-                });
-            } else {
-                //validate password length, must be > = 6;
-                if (req.body.password.length < 6) {
-                    res.statusCode = 400;
-                    return res.json({
-                        'err': {
-                            'name': 'PasswordTooShort',
-                            'message': 'A password must be at least 6-character long!'
-                        }
-                    });
-                }
-            }
-                        
-            Authentication.register(new Authentication({ 
-                'username': req.body.username,
-                'status': true,
-                'is_verified': false,
-                'is_temporary': false
-             }), 
-                req.body.password, function (err, account) {
-                if (err) {
-                    res.statusCode = 409;
-                    return res.json({ 'err': err });
-                } else {
-                    res.statusCode = 200;
-                    return res.json({ 'user': account });
+            var authentication = new Authentication();
+            authentication.signUpWithEmailAndPassword(req.body.username, req.body.password, function(err, code, data){
+                if (err){
+                    res.statusCode = code;
+                    return res.json(err);
+                }else{
+                    res.statusCode = code;
+                    return res.json(data);
                 }
             });
         }
@@ -107,7 +45,7 @@ module route {
 
             }
 
-            Authentication.authenticate('local', { session: false })(req.body.username, req.body.password, function (err, user, options) {
+            AuthenticationModel.authenticate('local', { session: false })(req.body.username, req.body.password, function (err, user, options) {
                 if (err) {
                     return done(err);
                 }

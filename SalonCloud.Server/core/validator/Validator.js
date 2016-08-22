@@ -33,4 +33,4 @@ class Validator {
     }
 }
 exports.Validator = Validator;
-//# sourceMappingURL=Validator.js.map
+//# sourceMappingURL=validator.js.map

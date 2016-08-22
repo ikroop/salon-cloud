@@ -10,7 +10,7 @@ import * as passportLocal from "passport-local";
 var AuthRoute = require ("./routes/authentication");
 var SalonRoute = require("./routes/salon");
 var ScheduleRoute = require("./routes/schedule");
-var Authentication = require ("./core/authentication/AuthenticationModel");
+var AuthenticationModel = require ("./core/authentication/AuthenticationModel");
 var app = express();
 
 // Configuration
@@ -28,9 +28,9 @@ app.use(passport.session());
 
 // passport config
 var LocalStrategy = passportLocal.Strategy;
-passport.use(new LocalStrategy(Authentication.authenticate()));
-passport.serializeUser(Authentication.serializeUser());
-passport.deserializeUser(Authentication.deserializeUser());
+passport.use(new LocalStrategy(AuthenticationModel.authenticate()));
+passport.serializeUser(AuthenticationModel.serializeUser());
+passport.deserializeUser(AuthenticationModel.deserializeUser());
 
 var env = process.env.NODE_ENV || 'development';
 
