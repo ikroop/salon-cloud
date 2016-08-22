@@ -9,7 +9,7 @@ import passportLocalMongoose = require('passport-local-mongoose');
 import Schema = mongoose.Schema;
 import {UserProfileSchema, UserProfile} from '../../modules/user/UserProfile';
 
-export interface AuthenticationModel{
+export interface AuthenticationData{
     username: string,
     password?: string,
     status: boolean,
