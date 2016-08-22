@@ -24,7 +24,6 @@ var route;
             var authentication = new Authentication_1.Authentication();
             authentication.SignInWithEmailAndPassword(req.body.username, req.body.password, function (err, code, data) {
                 if (err) {
-                    console.log('err ----: %j', err);
                     res.statusCode = code;
                     return res.json(err);
                 }

@@ -79,7 +79,6 @@ class Authentication {
                 return;
             }
             if (user === false) {
-                console.log('sigin err: %j', ErrorMessage.SignInFailed);
                 callback(ErrorMessage.SignInFailed, 403, undefined);
                 return;
             }
