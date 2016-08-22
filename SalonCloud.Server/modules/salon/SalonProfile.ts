@@ -5,6 +5,7 @@
 //
 //
 export interface SalonProfile{
+    _id?: string,
     information:{
         salon_name: string;
         phone:{
