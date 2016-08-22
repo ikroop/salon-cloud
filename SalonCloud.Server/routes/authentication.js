@@ -128,6 +128,10 @@ var route;
                 }
             });
         }
+        /**
+         * Check access TOKEN in Request
+         * Push user(id, iat, ...) to req.user
+         */
         static VerifyToken(req, res, next) {
             var token = req.headers.authorization;
             if (!token) {
