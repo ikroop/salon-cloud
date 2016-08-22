@@ -28,7 +28,6 @@ module route {
             var authentication = new Authentication();
             authentication.SignInWithEmailAndPassword(req.body.username, req.body.password, function (err, code, data) {
                 if (err) {
-                    console.log('err ----: %j', err);
                     res.statusCode = code;
                     return res.json(err);
                 } else {
