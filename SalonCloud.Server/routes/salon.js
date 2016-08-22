@@ -53,7 +53,7 @@ var route;
                     technician_checkout: false
                 }
             };
-            var salon = new Salon_1.Salon();
+            var salon = new Salon_1.Salon(req.user.id);
             var salonResponse = salon.createSalonInformation(salonProfileData, function (salonResponse) {
                 if (salonResponse) {
                     res.statusCode = 200;

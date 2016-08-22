@@ -63,7 +63,8 @@ module route {
                     technician_checkout: false
                 }                
             };
-            var salon = new Salon();
+
+            var salon = new Salon(req.user.id);
 
             var salonResponse = salon.createSalonInformation(salonProfileData, function (salonResponse) {
                 if (salonResponse) {

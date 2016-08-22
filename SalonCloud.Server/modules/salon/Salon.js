@@ -1,4 +1,5 @@
 "use strict";
+const User_1 = require('./../User/User');
 const mongoose = require("mongoose");
 exports.SalonProfileSchema = new mongoose.Schema({
     setting: {
@@ -21,14 +22,24 @@ exports.SalonProfileSchema = new mongoose.Schema({
 });
 exports.SalonProfileModel = mongoose.model('Salon', exports.SalonProfileSchema);
 class Salon {
+    constructor(UserId) {
+        this.UserId = UserId;
+    }
     createSalonInformation(SalonProfileData, callback) {
-        console.log('SalonProfileData:', SalonProfileData);
         //create salon object in database
         exports.SalonProfileModel.create(SalonProfileData, (err, salon) => {
             if (err) {
                 callback(null);
             }
             else {
+                this.SalonId = salon._id;
+                var user = new User_1.User(this.SalonId, this.UserId);
+                user.createProfile({
+                    "salon_id": this.SalonId,
+                    "role": User_1.User.SALON_OWNER_ROLE,
+                    "status": true
+                }, function (data) {
+                });
                 callback(salon);
             }
         });
