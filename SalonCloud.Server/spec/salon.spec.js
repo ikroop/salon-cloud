@@ -265,7 +265,7 @@ describe('Salon', function () {
                     }
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(200);
-                    res.body.should.have.property('salon_name');
+                    res.body.should.have.property('_id');
                     done();
                 });
         });
