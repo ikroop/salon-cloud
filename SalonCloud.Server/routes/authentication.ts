@@ -141,6 +141,10 @@ module route {
             });
         }
 
+        /**
+         * Check access TOKEN in Request
+         * Push user(id, iat, ...) to req.user
+         */
         public static VerifyToken(req: express.Request, res: express.Response, next) {
             var token = req.headers.authorization;
             if (!token) {
