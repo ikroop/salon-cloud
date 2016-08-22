@@ -43,6 +43,7 @@ app.post('/auth/SigninWithEmailAndPassword', AuthRoute.SignInWithEmailAndPasswor
 app.post('/salon/createinformation', AuthRoute.VerifyToken, SalonRoute.CreateInformation);
 //Schedule
 app.get('/schedule/getsalondailyschedules', AuthRoute.VerifyToken, ScheduleRoute.GetSalonDailySchedule);
+app.get('/schedule/getemployeedailyschedules', AuthRoute.VerifyToken, ScheduleRoute.GetEmployeeDailySchedule);
 app.listen(3000, function () {
     console.log("SalonCloud server listening on port %d in %s mode", 3000, app.settings.env);
 });

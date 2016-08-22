@@ -99,6 +99,11 @@ module route {
 }
 export = route.SalonRoute;
 ```
+Add config to [routes.d.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/routes/routes.d.ts)
+```
+/// <reference path="salon.ts" />
+```
+
 Add function REST API to [app.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/app.ts)
 
 

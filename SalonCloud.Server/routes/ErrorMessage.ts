@@ -149,5 +149,11 @@ module.exports = {
             'name': 'InvalidEndDateForStartDate',
             'message': 'end-date is earlier than start-date!'
         }
+    },
+    'EmployeeNotFound': {
+        'err': {
+            'name': 'EmployeeNotFound',
+            'message': 'Employee is not found'
+        }
     }
 };
