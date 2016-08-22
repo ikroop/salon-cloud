@@ -2,31 +2,42 @@
 //
 //
 //
-import {ISalon} from './ISalon';
+import {SalonProfile} from './SalonProfile';
 import * as mongoose from "mongoose";
 
-export const SalonSchema = new mongoose.Schema({
-    salon_name: { type: String, required: true },
-    address: { type: String, required: true },
-    phonenumber: { type: String, required: true },
-    email: String
+export const SalonProfileSchema = new mongoose.Schema({
+    setting:{
+        appointment_reminder: { type: Boolean, required: true },
+        flexible_time: { type: Number, required: true },
+        technician_checkout: { type: Boolean, required: true }
+    },
+    information:{
+        salon_name: { type: String, required: true },
+        phone:{
+            number:{ type: String, required: true },
+            is_verified: { type: Boolean, required: true }
+        },
+        location:{
+            address: { type: String, required: true },
+            is_verified: { type: Boolean, required: true }
+        }, 
+        email: String
+    }
 });
 
-export const SalonModel = mongoose.model<ISalon>('Salon', SalonSchema);
+export const SalonProfileModel = mongoose.model<SalonProfile>('Salon', SalonProfileSchema);
 
 export class Salon {
-    CreateSalonInformation(salonData: ISalon, callback) {
+    createSalonInformation(SalonProfileData: SalonProfile, callback) {
 
+        console.log('SalonProfileData:', SalonProfileData);
         //create salon object in database
-        SalonModel.create(salonData, (err: any, salon: ISalon) => {
+        SalonProfileModel.create(SalonProfileData, (err: any, salon: SalonProfile) => {
             if (err) {
                 callback(null);
             } else {
                 callback(salon);
             }
         });
-
-
-
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 import * as mongoose from "mongoose";
 
-export interface IUserProfile {
+export interface UserProfile {
     salon_id?: string,
     status: boolean,
     role: number,
@@ -29,4 +29,4 @@ export const UserProfileSchema = new mongoose.Schema({
     email: String
 });
 
-export const UserModel = mongoose.model<IUserProfile>('Profile', UserProfileSchema);
+export const UserModel = mongoose.model<UserProfile>('Profile', UserProfileSchema);

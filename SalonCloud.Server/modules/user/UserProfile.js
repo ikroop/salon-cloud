@@ -14,4 +14,4 @@ exports.UserProfileSchema = new mongoose.Schema({
     email: String
 });
 exports.UserModel = mongoose.model('Profile', exports.UserProfileSchema);
-//# sourceMappingURL=IUserProfile.js.map
+//# sourceMappingURL=UserProfile.js.map

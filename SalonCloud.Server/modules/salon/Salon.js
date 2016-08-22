@@ -1,16 +1,30 @@
 "use strict";
 const mongoose = require("mongoose");
-exports.SalonSchema = new mongoose.Schema({
-    salon_name: { type: String, required: true },
-    address: { type: String, required: true },
-    phonenumber: { type: String, required: true },
-    email: String
+exports.SalonProfileSchema = new mongoose.Schema({
+    setting: {
+        appointment_reminder: { type: Boolean, required: true },
+        flexible_time: { type: Number, required: true },
+        technician_checkout: { type: Boolean, required: true }
+    },
+    information: {
+        salon_name: { type: String, required: true },
+        phone: {
+            number: { type: String, required: true },
+            is_verified: { type: Boolean, required: true }
+        },
+        location: {
+            address: { type: String, required: true },
+            is_verified: { type: Boolean, required: true }
+        },
+        email: String
+    }
 });
-exports.SalonModel = mongoose.model('Salon', exports.SalonSchema);
+exports.SalonProfileModel = mongoose.model('Salon', exports.SalonProfileSchema);
 class Salon {
-    CreateSalonInformation(salonData, callback) {
+    createSalonInformation(SalonProfileData, callback) {
+        console.log('SalonProfileData:', SalonProfileData);
         //create salon object in database
-        exports.SalonModel.create(salonData, (err, salon) => {
+        exports.SalonProfileModel.create(SalonProfileData, (err, salon) => {
             if (err) {
                 callback(null);
             }

@@ -35,13 +35,26 @@ var route;
                 res.statusCode = 400;
                 return res.json(ErrorMessage.WrongEmailFormat);
             }
-            var salon = new Salon_1.Salon();
-            var salonData = {
-                salon_name: req.body.salon_name,
-                address: req.body.address,
-                phonenumber: req.body.phonenumber
+            var salonProfileData = {
+                information: {
+                    salon_name: req.body.salon_name,
+                    location: {
+                        address: req.body.address,
+                        is_verified: false
+                    },
+                    phone: {
+                        number: req.body.phonenumber,
+                        is_verified: false
+                    }
+                },
+                setting: {
+                    appointment_reminder: true,
+                    flexible_time: 900,
+                    technician_checkout: false
+                }
             };
-            var salonResponse = salon.CreateSalonInformation(salonData, function (salonResponse) {
+            var salon = new Salon_1.Salon();
+            var salonResponse = salon.createSalonInformation(salonProfileData, function (salonResponse) {
                 if (salonResponse) {
                     res.statusCode = 200;
                     return res.json(salonResponse);
