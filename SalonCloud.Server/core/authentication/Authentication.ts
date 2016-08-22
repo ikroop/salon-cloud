@@ -7,8 +7,18 @@
 import mongoose = require('mongoose');
 import passportLocalMongoose = require('passport-local-mongoose');
 import Schema = mongoose.Schema;
-import {UserProfileSchema} from '../../modules/user/UserProfile';
-var Authentication = new Schema({
+import {UserProfileSchema, UserProfile} from '../../modules/user/UserProfile';
+
+export interface AuthenticationModel{
+    username: string,
+    password?: string,
+    status: boolean,
+    is_verified: boolean,
+    is_temporary: boolean,
+    profile?: [UserProfile]
+}
+
+export const AuthenticationSchema = new Schema({
     username: {type: String, required: true},
     password: String,
     status: {type: Boolean, required: true},
@@ -17,6 +27,6 @@ var Authentication = new Schema({
     profile: [UserProfileSchema]
 });
 
-Authentication.plugin(passportLocalMongoose);
+AuthenticationSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model('User', Authentication);
+module.exports = mongoose.model('User', AuthenticationSchema);

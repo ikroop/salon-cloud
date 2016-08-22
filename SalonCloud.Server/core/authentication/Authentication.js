@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 var Schema = mongoose.Schema;
 const UserProfile_1 = require('../../modules/user/UserProfile');
-var Authentication = new Schema({
+exports.AuthenticationSchema = new Schema({
     username: { type: String, required: true },
     password: String,
     status: { type: Boolean, required: true },
@@ -17,6 +17,6 @@ var Authentication = new Schema({
     is_temporary: { type: Boolean, required: true },
     profile: [UserProfile_1.UserProfileSchema]
 });
-Authentication.plugin(passportLocalMongoose);
-module.exports = mongoose.model('User', Authentication);
+exports.AuthenticationSchema.plugin(passportLocalMongoose);
+module.exports = mongoose.model('User', exports.AuthenticationSchema);
 //# sourceMappingURL=Authentication.js.map

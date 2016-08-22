@@ -34,7 +34,7 @@ describe('Salon', function () {
                 invalidToken = validToken + '1';
                 done();
             });*/
-        validToken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU3YjhiNWZkYmIxYjRiMDkwY2MxN2EyOCIsImNyZWF0ZWRfYXQiOjE0NzE3Mjk0ODQyMjIsImlhdCI6MTQ3MTcyOTQ4NH0.aq_3rcu62_Jt1LOIDBi16lXshwCj62DspgOnBVqcABO0y8rZ5qlGm0KnjwnwnuayWuruICpgPiVMHlhKrcUFvfEctFEmHJFyqCabmBvZCFWkwnK7zOGbKxh72BJKDYPjZ1JL4PCsZWMYZpVkca8iU_ILIrZlaUnobqUe1rwpBbUwTT-4NBNEarjuJhVleJSouCaJOFANLXf0ikyMhzGzef78Ja3rrZBg5Ivq8a_7duaporxL8TYXO4Q7ynCL_foKuwjGWIQRE5Q_GlOHUkTVclIx8hESsexXrENh8m_V8yzIAMUAUqoYmh_UR5L08WdyLpss-Pwh_MUiT-z_On--aA';    
+        validToken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU3YmEyNjNmMWMxZDE3MGIyMmZmZGZlZSIsImNyZWF0ZWRfYXQiOjE0NzE4ODU0Nzg3OTMsImlhdCI6MTQ3MTg4NTQ3OH0.e0HTSVOXrL4qrXwkHNVEWkLTABWHvQJNuK9H_J5Qu2N0Dr4x9fiWtO41PQ22EuiIlW0f74cgKbHmbIqLmIvWPomJ_X7MVkf2NgzzL9Skaj-V190-IN7KfwCpIjz_NbEbHneMIX1k6fmn_uA1qz3kvGzFf-fr72ZWHGm48R2rOqL2ORxayqLgMzsCLBB2HwpFVEmvy9UaGuYd-gSsLd-CtWgJC7q18qCXC6NUTYEH_z-N2Ay6hXUXuuD7_GTHOrDf4FxH4Wyin8bcaFN2_g-EhvuYjYg1FlZjxW6I32Xz08-FURLoNE7OlSfEt6tlxEIgayP3OZ9AjFkN8-4WJ_AAOQ';    
         invalidToken = 'eyJhbGciOiJSUz';
         done();
     });
