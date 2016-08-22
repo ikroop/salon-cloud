@@ -155,6 +155,12 @@ module.exports = {
             'name': 'EmployeeNotFound',
             'message': 'Employee is not found'
         }
+    },
+    'SignInFailed': {
+        'err': {
+            'name': 'SignInFailed',
+            'message': 'Username or password is wrong'
+        }
     }
 };
 //# sourceMappingURL=ErrorMessage.js.map

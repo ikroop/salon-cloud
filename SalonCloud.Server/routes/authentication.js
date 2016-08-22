@@ -21,52 +21,16 @@ var route;
             });
         }
         static SignInWithEmailAndPassword(req, res, done) {
-            if (!req.body.username) {
-                res.statusCode = 400;
-                return res.json({
-                    'err': {
-                        'name': 'MissingUsername',
-                        'message': 'Username is required to login'
-                    }
-                });
-            }
-            if (!req.body.password) {
-                res.statusCode = 400;
-                return res.json({
-                    'err': {
-                        'name': 'MissingPassword',
-                        'message': 'Password is required to login'
-                    }
-                });
-            }
-            AuthenticationModel.authenticate('local', { session: false })(req.body.username, req.body.password, function (err, user, options) {
+            var authentication = new Authentication_1.Authentication();
+            authentication.SignInWithEmailAndPassword(req.body.username, req.body.password, function (err, code, data) {
                 if (err) {
-                    return done(err);
-                }
-                if (user === false) {
-                    res.statusCode = 403;
-                    return res.json({
-                        'err': {
-                            'name': 'SignInFailed',
-                            'message': options.message
-                        }
-                    });
+                    console.log('err ----: %j', err);
+                    res.statusCode = code;
+                    return res.json(err);
                 }
                 else {
-                    var created_at = new Date().getTime();
-                    req.user = { username: user.username };
-                    var cert = fs.readFileSync('./config/dev/private.key'); // get private key
-                    var token = jwt.sign({
-                        'id': user._id,
-                        'created_at': created_at
-                    }, cert, { algorithm: 'RS256' });
-                    res.statusCode = 200;
-                    return res.json({
-                        user: req.user,
-                        auth: {
-                            token: token
-                        }
-                    });
+                    res.statusCode = code;
+                    return res.json(data);
                 }
             });
         }

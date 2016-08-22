@@ -18,7 +18,7 @@ var AuthenticationModel = require ("./AuthenticationModel");
 * Authentication
 */
 export class Authentication {
-    signUpWithEmailAndPassword(username: string, password: string, callback) {
+    public signUpWithEmailAndPassword(username: string, password: string, callback) {
         //validate username;
         if (!username) {
             callback(ErrorMessage.MissingUsername, 400, undefined);
@@ -72,4 +72,40 @@ export class Authentication {
             }
         });
     }
+
+    public SignInWithEmailAndPassword(username: string, password: string, callback) {
+            if (!username) {
+                callback(ErrorMessage.MissingUsername, 400, undefined);
+                return;             
+            }
+            if (!password) {
+                callback(ErrorMessage.MissingPassword, 400, undefined);
+                return;
+            }
+
+            AuthenticationModel.authenticate('local', { session: false })(username, password, function (err, user, options) {
+                if (err) {
+                    callback({'err':err}, 403, undefined);
+                    return;
+                }
+                if (user === false) {
+                    console.log('sigin err: %j', ErrorMessage.SignInFailed);
+
+                    callback(ErrorMessage.SignInFailed, 403, undefined);
+                    return;
+                } else {
+                    var created_at = new Date().getTime();
+                    var cert = fs.readFileSync('./config/dev/private.key');  // get private key
+
+                    var token = jwt.sign(user, cert, { algorithm: 'RS256' });
+                    callback(undefined, 200, {
+                        user: user,
+                        auth: {
+                            token: token
+                        }
+                    });
+                    return;                    
+                }
+            });
+        }
 }
