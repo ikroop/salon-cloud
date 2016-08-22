@@ -7,11 +7,33 @@ var configDB = require('./../config/dev/database.js');
 
 describe('Schedule', function () {
     var url = 'http://localhost:3000';
+    var validToken;
+    var invalidToken;
+    var defaultPassword = '1234@1234'
+
     // within before() you can run all the operations that are needed to setup your tests. In this case
     // I want to create a connection with the database, and when I'm done, I call done().
     before(function (done) {
         // In our tests we use the test db
         mongoose.connect(configDB.url);
+        var user = {
+            username: 'unittest1471723005545@gmail.com',
+            password: defaultPassword
+        };
+        /*request(url)
+            .post('/auth/signinwithemailandpassword')
+            .send(user)
+            // end handles the response
+            .end(function (err, res) {
+                if (err) {
+                    throw err;
+                }
+                validToken = res.auth.token;
+                invalidToken = validToken + '1';
+                done();
+            });*/
+        validToken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU3YjhiNWZkYmIxYjRiMDkwY2MxN2EyOCIsImNyZWF0ZWRfYXQiOjE0NzE3Mjk0ODQyMjIsImlhdCI6MTQ3MTcyOTQ4NH0.aq_3rcu62_Jt1LOIDBi16lXshwCj62DspgOnBVqcABO0y8rZ5qlGm0KnjwnwnuayWuruICpgPiVMHlhKrcUFvfEctFEmHJFyqCabmBvZCFWkwnK7zOGbKxh72BJKDYPjZ1JL4PCsZWMYZpVkca8iU_ILIrZlaUnobqUe1rwpBbUwTT-4NBNEarjuJhVleJSouCaJOFANLXf0ikyMhzGzef78Ja3rrZBg5Ivq8a_7duaporxL8TYXO4Q7ynCL_foKuwjGWIQRE5Q_GlOHUkTVclIx8hESsexXrENh8m_V8yzIAMUAUqoYmh_UR5L08WdyLpss-Pwh_MUiT-z_On--aA';    
+        invalidToken = 'eyJhbGciOiJSUz';
         done();
     });
     
@@ -435,5 +457,15 @@ describe('Schedule', function () {
                     done();
                 });
         });
+    });
+
+    describe('Insert Salon Weekly Schedule', function(){
+        var apiUrl = '/schedule/getsalondailyschedules';
+
+
+        it('should return "InvalidTokenError" error trying to request with invalid token', function(done){
+
+        });
+
     });
 });
