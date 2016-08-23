@@ -4,11 +4,14 @@ var request = require('supertest');
 var mongoose = require('mongoose');
 var winston = require('winston');
 var configDB = require('./../config/dev/database.js');
+var ErrorMessage = require('./../routes/ErrorMessage');
 
 describe('Schedule', function () {
     var url = 'http://localhost:3000';
     var validToken;
     var invalidToken;
+    var validSalonId;
+    var invalidSalonId;
     var defaultPassword = '1234@1234'
 
     // within before() you can run all the operations that are needed to setup your tests. In this case
@@ -34,6 +37,8 @@ describe('Schedule', function () {
             });*/
         validToken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU3YjhiNWZkYmIxYjRiMDkwY2MxN2EyOCIsImNyZWF0ZWRfYXQiOjE0NzE3Mjk0ODQyMjIsImlhdCI6MTQ3MTcyOTQ4NH0.aq_3rcu62_Jt1LOIDBi16lXshwCj62DspgOnBVqcABO0y8rZ5qlGm0KnjwnwnuayWuruICpgPiVMHlhKrcUFvfEctFEmHJFyqCabmBvZCFWkwnK7zOGbKxh72BJKDYPjZ1JL4PCsZWMYZpVkca8iU_ILIrZlaUnobqUe1rwpBbUwTT-4NBNEarjuJhVleJSouCaJOFANLXf0ikyMhzGzef78Ja3rrZBg5Ivq8a_7duaporxL8TYXO4Q7ynCL_foKuwjGWIQRE5Q_GlOHUkTVclIx8hESsexXrENh8m_V8yzIAMUAUqoYmh_UR5L08WdyLpss-Pwh_MUiT-z_On--aA';    
         invalidToken = 'eyJhbGciOiJSUz';
+        validSalonId = '57ba6280f531d1b53d54a6e5';
+        invalidSalonId = 'invaliddddd';
         done();
     });
     
@@ -465,6 +470,34 @@ describe('Schedule', function () {
 
         it('should return "InvalidTokenError" error trying to request with invalid token', function(done){
             var token = invalidToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'status': true, 
+                'weekday': 1,  
+                'open_time': 36000,     
+                'close_time': 72000,
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('InvalidTokenError');
+                    done();
+                });
+        });
+         
+         it('TODO spec: should return "NoPermission" error trying to request with unauthorized acc', function(done){
+            var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
                 'status': true, 
                 'weekday': 1,  
@@ -484,6 +517,300 @@ describe('Schedule', function () {
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('InvalidTokenError');
+                    done();
+                });
+        });
+
+         it('should return "SalonNotFound" error trying to request with not-found salonId', function(done){
+            var token = validToken;
+            var salonId = invalidSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'status': true, 
+                'weekday': 1,  
+                'open_time': 36000,     
+                'close_time': 72000,
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('SalonNotFound');
+                    done();
+                });
+        });
+
+         it('should return ' + ErrorMessage.MissingScheduleOpenTime.err.name +' error trying to request without open time', function(done){
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'status': true, 
+                'weekday': 1,  
+                'close_time': 72000,
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleOpenTime.err.name);
+                    done();
+                });
+        });
+        
+        it('should return ' + ErrorMessage.InvalidScheduleOpenTime.err.name +' error trying to request with negative open time', function(done){
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'status': true, 
+                'weekday': 1,  
+                'open_time': -98,     
+                'close_time': 72000,
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    done();
+                });
+        });
+        
+        it('should return ' + ErrorMessage.InvalidScheduleOpenTime.err.name +' error trying to request with not-an-integer open time', function(done){
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'status': true, 
+                'weekday': 1,  
+                'open_time': 'string is not an integer',     
+                'close_time': 72000,
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleOpenTime.err.name +' error trying to request with open time greater than 24*3600 = 86400', function(done){
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'status': true, 
+                'weekday': 1,  
+                'open_time': 86401,     
+                'close_time': 72000,
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    done();
+                });
+        });
+
+     it('should return ' + ErrorMessage.MissingScheduleCloseTime.err.name +' error trying to request without open time', function(done){
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'status': true, 
+                'weekday': 1,  
+                'open_time':32000,
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleCloseTime.err.name);
+                    done();
+                });
+        });
+        
+        it('should return ' + ErrorMessage.InvalidScheduleCloseTime.err.name +' error trying to request with negative close time', function(done){
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'status': true, 
+                'weekday': 1,  
+                'close_time': -98,     
+                'open_time': 72000,
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    done();
+                });
+        });
+        
+        it('should return ' + ErrorMessage.InvalidScheduleCloseTime.err.name +' error trying to request with not-an-integer close time', function(done){
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'status': true, 
+                'weekday': 1,  
+                'close_time': 'string is not an integer',     
+                'open_time': 72000,
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleCloseTime.err.name +' error trying to request with close time greater than 24*3600 = 86400', function(done){
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'status': true, 
+                'weekday': 1,  
+                'open_time': 32000,     
+                'close_time': 86401,
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingScheduleWeekday.err.name +' error trying to request without weekday', function(done){
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'status': true, 
+                'open_time': 32000,     
+                'close_time': 86401,
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleWeekday.err.name);
+                    done();
+                });
+        });
+
+         it('should return ' + ErrorMessage.InvalidScheduleWeekday.err.name +' error trying to request with weekday equal 7', function(done){
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'status': true, 
+                'weekday': 7,
+                'open_time': 32000,     
+                'close_time': 86401,
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleWeekday.err.name);
                     done();
                 });
         });
