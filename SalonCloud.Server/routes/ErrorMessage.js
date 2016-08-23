@@ -167,6 +167,66 @@ module.exports = {
             'name': 'ServerError',
             'message': 'Internal Server Error'
         }
+    },
+    'MissingScheduleStatus': {
+        'err': {
+            'name': 'MissingScheduleStatus',
+            'message': 'Schedule status is required!',
+        }
+    },
+    'MissingScheduleOpenTime': {
+        'err': {
+            'name': 'MissingScheduleOpenTime',
+            'message': 'Schedule open time is required!'
+        }
+    },
+    'MissingScheduleCloseTime': {
+        'err': {
+            'name': 'MissingScheduleCloseTime',
+            'message': 'Schedule close time is required!'
+        }
+    },
+    'MissingScheduleWeekday': {
+        'err': {
+            'name': 'MissingScheduleWeekday',
+            'message': 'Schedule weekday is required!'
+        }
+    },
+    'InvalidScheduleOpenTime': {
+        'err': {
+            'name': 'InvalidScheduleOpenTime',
+            'message': 'Open time value must range from 0 to 24*3600 = 86400!'
+        }
+    },
+    'InvalidScheduleCloseTime': {
+        'err': {
+            'name': 'InvalidScheduleCloseTime',
+            'message': 'Close time value must range from 0 to 24*3600 = 86400!'
+        }
+    },
+    'CloseTimeGreaterThanOpenTime': {
+        'err': {
+            'name': 'CloseTimeGreaterThanOpenTime',
+            'message': 'Close time can not be greater than open time!'
+        }
+    },
+    'InvalidScheduleWeekday': {
+        'err': {
+            'name': 'InvalidScheduleWeekday',
+            'message': 'Weekday must be integer and range from 0 to 6!'
+        }
+    },
+    'MissingScheduleDate': {
+        'err': {
+            'name': 'MissingScheduleDate',
+            'message': 'Schedule date is required!'
+        }
+    },
+    'InvalidScheduleDate': {
+        'err': {
+            'name': 'InvalidScheduleDate',
+            'message': 'Invalid Schedule Date!'
+        }
     }
 };
 //# sourceMappingURL=ErrorMessage.js.map
