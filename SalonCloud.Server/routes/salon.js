@@ -6,7 +6,7 @@ var Authentication = require('../modules/salon/Salon');
 var route;
 (function (route) {
     class SalonRoute {
-        static CreateInformation(req, res) {
+        static createInformation(req, res) {
             if (!req.body.salon_name) {
                 res.statusCode = 400;
                 return res.json(ErrorMessage.MissingSalonName);

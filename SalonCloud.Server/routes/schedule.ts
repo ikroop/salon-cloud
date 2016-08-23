@@ -19,7 +19,7 @@ var ErrorMessage = require('./ErrorMessage');
 
 module route {
     export class ScheduleRoute {
-        public static GetSalonDailySchedule(req: express.Request, res: express.Response) {
+        public static getSalonDailySchedule(req: express.Request, res: express.Response) {
          /*
                 res.statusCode = 400;
                 return res.json(ErrorMessage.SalonNotFound);
@@ -57,7 +57,7 @@ module route {
             // then return
         }
 
-        public static GetEmployeeDailySchedule(req: express.Request, res: express.Response) {
+        public static getEmployeeDailySchedule(req: express.Request, res: express.Response) {
          /*   if (!req.params.employee_id) {
                 res.statusCode = 400;
                 return res.json(ErrorMessage.EmployeeNotFound);

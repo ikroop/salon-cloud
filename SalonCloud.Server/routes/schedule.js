@@ -8,7 +8,7 @@ var ErrorMessage = require('./ErrorMessage');
 var route;
 (function (route) {
     class ScheduleRoute {
-        static GetSalonDailySchedule(req, res) {
+        static getSalonDailySchedule(req, res) {
             /*
                    res.statusCode = 400;
                    return res.json(ErrorMessage.SalonNotFound);
@@ -45,7 +45,7 @@ var route;
             // TODO: access DB here
             // then return
         }
-        static GetEmployeeDailySchedule(req, res) {
+        static getEmployeeDailySchedule(req, res) {
             /*   if (!req.params.employee_id) {
                    res.statusCode = 400;
                    return res.json(ErrorMessage.EmployeeNotFound);

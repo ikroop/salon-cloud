@@ -15,7 +15,7 @@ var Authentication = require('../modules/salon/Salon');
 
 module route {
     export class SalonRoute {
-        public static CreateInformation(req: express.Request, res: express.Response) {
+        public static createInformation(req: express.Request, res: express.Response) {
             if (!req.body.salon_name) {
                 res.statusCode = 400;
                 return res.json(ErrorMessage.MissingSalonName);
