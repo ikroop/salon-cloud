@@ -8,7 +8,7 @@ import fs = require('fs');
 
 import {Validator} from '../core/validator/Validator';
 // import {SalonSchedule} from '../modules/schedules/SalonSchedule';
-// import {ISchedule} from '../modules/schedules/ISchedule';
+// import {ScheduleProfile} from '../modules/schedules/ScheduleProfile';
 // import {DailyScheduleModel} from '../modules/schedules/models/DailyScheduleModel';
 // import {WeeklyScheduleModel} from '../modules/schedules/models/WeeklyScheduleModel';
 

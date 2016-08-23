@@ -5,7 +5,6 @@
 import {SalonProfile} from './SalonProfile';
 import {User} from './../User/User';
 import * as mongoose from "mongoose";
-
 export const SalonProfileSchema = new mongoose.Schema({
     setting:{
         appointment_reminder: { type: Boolean, required: true },

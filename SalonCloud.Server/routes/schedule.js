@@ -1,6 +1,6 @@
 "use strict";
 // import {SalonSchedule} from '../modules/schedules/SalonSchedule';
-// import {ISchedule} from '../modules/schedules/ISchedule';
+// import {ScheduleProfile} from '../modules/schedules/ScheduleProfile';
 // import {DailyScheduleModel} from '../modules/schedules/models/DailyScheduleModel';
 // import {WeeklyScheduleModel} from '../modules/schedules/models/WeeklyScheduleModel';
 var ErrorMessage = require('./ErrorMessage');
