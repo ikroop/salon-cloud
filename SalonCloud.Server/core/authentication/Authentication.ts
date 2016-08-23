@@ -73,7 +73,7 @@ export class Authentication {
         });
     }
 
-    public SignInWithEmailAndPassword(username: string, password: string, callback) {
+    public signInWithEmailAndPassword(username: string, password: string, callback) {
             if (!username) {
                 callback(ErrorMessage.MissingUsername, 400, undefined);
                 return;             
@@ -95,9 +95,15 @@ export class Authentication {
                     var created_at = new Date().getTime();
                     var cert = fs.readFileSync('./config/dev/private.key');  // get private key
 
-                    var token = jwt.sign(user, cert, { algorithm: 'RS256' });
+                    var UserToken = {
+                        _id: user._id,
+                        username: user.username,
+                        status: user.status
+                    };                   
+
+                    var token = jwt.sign(UserToken, cert, { algorithm: 'RS256' });
                     callback(undefined, 200, {
-                        user: user,
+                        user: UserToken,
                         auth: {
                             token: token
                         }
@@ -105,5 +111,26 @@ export class Authentication {
                     return;                    
                 }
             });
+        }
+        /**
+         * Check access TOKEN in Request
+         * Push user(id, iat, ...) to req.user
+         */
+        public verifyToken(token:string, callback) {
+            if (!token) {
+                callback(ErrorMessage.InvalidTokenError, 403, undefined);
+                return;
+            } else {
+                var cert = fs.readFileSync('./config/dev/public.pem');  // get private key
+                jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, payload) {
+                    if (err) {
+                        callback(ErrorMessage.InvalidTokenError, 403, undefined);
+                        return;
+                    } else {
+                        callback(undefined, 200, payload);
+                        return;   
+                    }
+                });
+            }
         }
 }

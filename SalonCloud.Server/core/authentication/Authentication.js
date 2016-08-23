@@ -64,7 +64,7 @@ class Authentication {
             }
         });
     }
-    SignInWithEmailAndPassword(username, password, callback) {
+    signInWithEmailAndPassword(username, password, callback) {
         if (!username) {
             callback(ErrorMessage.MissingUsername, 400, undefined);
             return;
@@ -85,9 +85,14 @@ class Authentication {
             else {
                 var created_at = new Date().getTime();
                 var cert = fs.readFileSync('./config/dev/private.key'); // get private key
-                var token = jwt.sign(user, cert, { algorithm: 'RS256' });
+                var UserToken = {
+                    _id: user._id,
+                    username: user.username,
+                    status: user.status
+                };
+                var token = jwt.sign(UserToken, cert, { algorithm: 'RS256' });
                 callback(undefined, 200, {
-                    user: user,
+                    user: UserToken,
                     auth: {
                         token: token
                     }
@@ -95,6 +100,29 @@ class Authentication {
                 return;
             }
         });
+    }
+    /**
+     * Check access TOKEN in Request
+     * Push user(id, iat, ...) to req.user
+     */
+    verifyToken(token, callback) {
+        if (!token) {
+            callback(ErrorMessage.InvalidTokenError, 403, undefined);
+            return;
+        }
+        else {
+            var cert = fs.readFileSync('./config/dev/public.pem'); // get private key
+            jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, payload) {
+                if (err) {
+                    callback(ErrorMessage.InvalidTokenError, 403, undefined);
+                    return;
+                }
+                else {
+                    callback(undefined, 200, payload);
+                    return;
+                }
+            });
+        }
     }
 }
 exports.Authentication = Authentication;
