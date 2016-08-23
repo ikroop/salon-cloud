@@ -1,4 +1,8 @@
 "use strict";
+/**
+ *
+ *
+ */
 const mongoose = require("mongoose");
 const DailySchedule_1 = require('./models/DailySchedule');
 const WeeklySchedule_1 = require('./models/WeeklySchedule');
