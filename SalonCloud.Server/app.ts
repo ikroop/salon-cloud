@@ -47,15 +47,15 @@ app.get('/', (req, res) => {
 });
 
 //Authentication
-app.post('/auth/signupwithemailandpassword', AuthRoute.SignUpWithEmailAndPassword);
-app.post('/auth/SigninWithEmailAndPassword', AuthRoute.SignInWithEmailAndPassword);
+app.post('/auth/signupwithemailandpassword', AuthRoute.signUpWithEmailAndPassword);
+app.post('/auth/SigninWithEmailAndPassword', AuthRoute.signInWithEmailAndPassword);
 
 //Salon
-app.post('/salon/createinformation', AuthRoute.VerifyToken, SalonRoute.CreateInformation);
+app.post('/salon/createinformation', AuthRoute.verifyToken, SalonRoute.createInformation);
 
 //Schedule
-app.get('/schedule/getsalondailyschedules', AuthRoute.VerifyToken, ScheduleRoute.GetSalonDailySchedule);
-app.get('/schedule/getemployeedailyschedules', AuthRoute.VerifyToken, ScheduleRoute.GetEmployeeDailySchedule);
+app.get('/schedule/getsalondailyschedules', AuthRoute.verifyToken, ScheduleRoute.getSalonDailySchedule);
+app.get('/schedule/getemployeedailyschedules', AuthRoute.verifyToken, ScheduleRoute.getEmployeeDailySchedule);
 
 app.listen(3000, function () {
     console.log("SalonCloud server listening on port %d in %s mode", 3000, app.settings.env);
