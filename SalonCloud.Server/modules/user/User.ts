@@ -1,7 +1,3 @@
-//
-//
-//
-//
 import * as mongoose from "mongoose";
 import {UserProfile} from "./UserProfile";
 import {AuthenticationSchema} from "./../../core/authentication/AuthenticationModel";

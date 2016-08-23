@@ -1,12 +1,6 @@
-//
-//
-//
-//
-//
-//
 import * as mongoose from "mongoose";
-import {DailyScheduleSchema} from 'models/DailySchedule';
-import {WeeklyScheduleSchema} from 'models/WeeklySchedule';
+import {DailyScheduleSchema} from './models/DailySchedule';
+import {WeeklyScheduleSchema} from './models/WeeklySchedule';
 
 export const ScheduleProfileSchema = new mongoose.Schema({
     salon: {

@@ -1,7 +1,3 @@
-//
-//
-//
-//
 import {SalonProfile} from './SalonProfile';
 import {User} from './../User/User';
 import * as mongoose from "mongoose";

@@ -1,9 +1,3 @@
-//
-//
-//
-//
-//
-//
 import * as mongoose from "mongoose";
 // import {UserProfileSchema} from '../../user/UserProfile';
 

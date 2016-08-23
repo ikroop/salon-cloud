@@ -4,8 +4,8 @@
 //
 //
 //
-import { DailyScheduleProfile } from 'models/DailyScheduleProfile';
-import { WeeklyScheduleProfile } from 'models/WeeklyScheduleProfile';
+import { DailyScheduleProfile } from './models/DailyScheduleProfile';
+import { WeeklyScheduleProfile } from './models/WeeklyScheduleProfile';
 
 export interface ScheduleProfile{
     salon: {

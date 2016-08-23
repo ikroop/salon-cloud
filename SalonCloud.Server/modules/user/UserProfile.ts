@@ -1,5 +1,4 @@
-﻿
-import * as mongoose from "mongoose";
+﻿import * as mongoose from "mongoose";
 
 export interface UserProfile {
     salon_id: string,

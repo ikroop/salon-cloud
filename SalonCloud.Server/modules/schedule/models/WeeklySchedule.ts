@@ -1,9 +1,5 @@
-//
-//
-//
-//
 import * as mongoose from "mongoose";
-import {Schedule} from 'ScheduleData';
+import {Schedule} from './ScheduleData';
 // import {UserProfileSchema} from '../../user/UserProfile';
 
 export const WeeklyScheduleSchema = new mongoose.Schema({
