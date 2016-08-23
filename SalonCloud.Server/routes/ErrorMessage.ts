@@ -161,5 +161,11 @@ module.exports = {
             'name': 'SignInFailed',
             'message': 'Username or password is wrong'
         }
+    },
+    'ServerError':{
+        'err': {
+            'name': 'ServerError',
+            'message': 'Internal Server Error'
+        }
     }
 };

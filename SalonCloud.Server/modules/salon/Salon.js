@@ -1,6 +1,8 @@
 "use strict";
 const User_1 = require('./../User/User');
 const mongoose = require("mongoose");
+var ErrorMessage = require('./../../routes/ErrorMessage');
+const Validator_1 = require('../../core/validator/Validator');
 exports.SalonProfileSchema = new mongoose.Schema({
     setting: {
         appointment_reminder: { type: Boolean, required: true },
@@ -26,10 +28,38 @@ class Salon {
         this.UserId = UserId;
     }
     createSalonInformation(SalonProfileData, callback) {
+        if (!SalonProfileData.information.salon_name) {
+            callback(ErrorMessage.MissingSalonName, 400, undefined);
+            return;
+        }
+        if (!SalonProfileData.information.location.address) {
+            callback(ErrorMessage.MissingAddress, 400, undefined);
+            return;
+        }
+        else {
+            if (!Validator_1.Validator.IsAdress(SalonProfileData.information.location.address)) {
+                callback(ErrorMessage.WrongAddressFormat, 400, undefined);
+                return;
+            }
+        }
+        if (!SalonProfileData.information.phone.number) {
+            callback(ErrorMessage.MissingPhoneNumber, 400, undefined);
+            return;
+        }
+        else {
+            if (!Validator_1.Validator.IsPhoneNumber(SalonProfileData.information.phone.number)) {
+                callback(ErrorMessage.WrongPhoneNumberFormat, 400, undefined);
+                return;
+            }
+        }
+        if (SalonProfileData.information.email && !Validator_1.Validator.IsEmail(SalonProfileData.information.email)) {
+            callback(ErrorMessage.WrongEmailFormat, 400, undefined);
+            return;
+        }
         //create salon object in database
         exports.SalonProfileModel.create(SalonProfileData, (err, salon) => {
             if (err) {
-                callback(null);
+                callback(ErrorMessage.ServerError, 500, undefined);
             }
             else {
                 this.SalonId = salon._id;
@@ -40,7 +70,7 @@ class Salon {
                     "status": true
                 }, function (data) {
                 });
-                callback(salon);
+                callback(undefined, 200, salon);
             }
         });
     }
