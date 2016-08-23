@@ -490,7 +490,7 @@ describe('Schedule', function () {
 
     });
 
-    describe('Get Salon Daily Schedules', function () {
+    describe('Get Salon Weeky Schedules', function () {
         var apiUrl = '/schedule/getsalonweeklyschedules';
 
         it('should return "InvalidTokenError" error trying to request with invalid token', function (done) {
