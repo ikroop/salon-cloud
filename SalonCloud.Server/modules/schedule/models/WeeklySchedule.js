@@ -1,15 +1,6 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-//
-//
-//
-//
-var mongoose = require("mongoose");
-var ScheduleData_1 = require('./ScheduleData');
+const mongoose = require("mongoose");
+const ScheduleData_1 = require('./ScheduleData');
 // import {UserProfileSchema} from '../../user/UserProfile';
 exports.WeeklyScheduleSchema = new mongoose.Schema({
     id: { type: String, required: true },
@@ -23,11 +14,7 @@ exports.WeeklyScheduleSchema = new mongoose.Schema({
     dayofweek: { type: Number, required: true }
 });
 exports.WeeklyScheduleModel = mongoose.model('WeeklySchedule', exports.WeeklyScheduleSchema);
-var WeeklySchedule = (function (_super) {
-    __extends(WeeklySchedule, _super);
-    function WeeklySchedule() {
-        _super.apply(this, arguments);
-    }
-    return WeeklySchedule;
-}(ScheduleData_1.Schedule));
+class WeeklySchedule extends ScheduleData_1.Schedule {
+}
 exports.WeeklySchedule = WeeklySchedule;
+//# sourceMappingURL=WeeklySchedule.js.map

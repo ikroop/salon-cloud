@@ -1,3 +1,7 @@
+/**
+ * 
+ * 
+ */
 import { ScheduleBehavior } from './ScheduleBehavior';
 import {Schedule} from './models/ScheduleData';
 import {DailySchedule} from './models/DailySchedule';

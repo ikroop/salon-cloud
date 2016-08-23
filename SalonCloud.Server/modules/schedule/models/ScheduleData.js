@@ -1,5 +1,5 @@
 "use strict";
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 // import {UserProfileSchema} from '../../user/UserProfile';
 exports.ScheduleDataSchema = new mongoose.Schema({
     id: { type: String, required: true },
@@ -12,9 +12,7 @@ exports.ScheduleDataSchema = new mongoose.Schema({
     status: { type: Boolean, required: true }
 });
 exports.ScheduleDataModel = mongoose.model('ScheduleData', exports.ScheduleDataSchema);
-var Schedule = (function () {
-    function Schedule() {
-    }
-    return Schedule;
-}());
+class Schedule {
+}
 exports.Schedule = Schedule;
+//# sourceMappingURL=ScheduleData.js.map

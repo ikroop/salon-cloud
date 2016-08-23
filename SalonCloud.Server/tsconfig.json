@@ -13,6 +13,7 @@
     "./core/validator/Validator.ts",
     "./modules/salon/Salon.d.ts",
     "./modules/user/User.d.ts",
+    "./modules/schedule/Schedule.d.ts",
     "./app.ts"
   ]
 }

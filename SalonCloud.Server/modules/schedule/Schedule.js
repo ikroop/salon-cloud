@@ -1,13 +1,7 @@
 "use strict";
-//
-//
-//
-//
-//
-//
-var mongoose = require("mongoose");
-var DailySchedule_1 = require('./models/DailySchedule');
-var WeeklySchedule_1 = require('./models/WeeklySchedule');
+const mongoose = require("mongoose");
+const DailySchedule_1 = require('./models/DailySchedule');
+const WeeklySchedule_1 = require('./models/WeeklySchedule');
 exports.ScheduleProfileSchema = new mongoose.Schema({
     salon: {
         salon_id: { type: String, required: true },
@@ -22,3 +16,4 @@ exports.ScheduleProfileSchema = new mongoose.Schema({
     }
 });
 exports.ScheduleProfileModel = mongoose.model('Schedule', exports.ScheduleProfileSchema);
+//# sourceMappingURL=Schedule.js.map

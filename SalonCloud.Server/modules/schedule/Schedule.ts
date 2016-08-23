@@ -1,3 +1,7 @@
+/**
+ * 
+ * 
+ */
 import * as mongoose from "mongoose";
 import {DailyScheduleSchema} from './models/DailySchedule';
 import {WeeklyScheduleSchema} from './models/WeeklySchedule';

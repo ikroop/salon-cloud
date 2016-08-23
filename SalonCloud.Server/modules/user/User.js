@@ -1,8 +1,4 @@
 "use strict";
-//
-//
-//
-//
 const mongoose = require("mongoose");
 const AuthenticationModel_1 = require("./../../core/authentication/AuthenticationModel");
 var UserModel = mongoose.model('User', AuthenticationModel_1.AuthenticationSchema);
