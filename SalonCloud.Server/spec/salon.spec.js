@@ -19,10 +19,10 @@ describe('Salon', function () {
 
         //get valid token
         var user = {
-            username: 'unittest1471723005545@gmail.com',
+            username: 'unittest1471817279525@gmail.com',
             password: defaultPassword
         };
-        /*request(url)
+        request(url)
             .post('/auth/signinwithemailandpassword')
             .send(user)
             // end handles the response
@@ -30,13 +30,10 @@ describe('Salon', function () {
                 if (err) {
                     throw err;
                 }
-                validToken = res.auth.token;
-                invalidToken = validToken + '1';
+                validToken = res.body.auth.token;
+                invalidToken = 'eyJhbGciOiJSUz';
                 done();
-            });*/
-        validToken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1N2JhMjYzZjFjMWQxNzBiMjJmZmRmZWUiLCJ1c2VybmFtZSI6InVuaXR0ZXN0MTQ3MTgxNzI3OTUyNUBnbWFpbC5jb20iLCJzdGF0dXMiOnRydWUsImlhdCI6MTQ3MTkyMjY3Nn0.M3C6rAF48NEeZ4fRdCKVysxfJyGuH_EbvE5_wwHxdPjQmq9dVb1XlX9KzB8oeTbzkcrpPha69IFcDZvA2tQ58KtwP8FcPi5mnEFF8Nrjujckt2kQUvLl8U9ko-sDhBMwnw0LmM7M8NRB87Ewz8tD9AwUrCFhGmXIoLvgVkY9hE_8QwKSu4ncM_qift7IuYkFh3QYNZ2TU3YCHdjzzlU5OMwqPV8bY2KCDm9bEHaeSSqIqa3x4_QAntSJk6AFjIyyfP19vBCnJ1P245ULGaEWF-tR0fPJFU7mF-bep2yDlMd8jNW_Fs3cFmK5q-f-MxaLqxcuD51Vbn9C9pL6xtXFrQ';    
-        invalidToken = 'eyJhbGciOiJSUz';
-        done();
+            });
     });
 
     describe('Create Salon Information', function () {
