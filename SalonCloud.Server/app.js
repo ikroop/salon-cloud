@@ -9,6 +9,7 @@ const passportLocal = require("passport-local");
 var AuthRoute = require("./routes/authentication");
 var SalonRoute = require("./routes/salon");
 var ScheduleRoute = require("./routes/schedule");
+var UserRoute = require("./routes/user");
 var AuthenticationModel = require("./core/authentication/AuthenticationModel");
 var app = express();
 // Configuration
@@ -39,13 +40,15 @@ app.get('/', (req, res) => {
 //Authentication
 app.post('/auth/signupwithemailandpassword', AuthRoute.signUpWithEmailAndPassword);
 app.post('/auth/SigninWithEmailAndPassword', AuthRoute.signInWithEmailAndPassword);
+//User
+app.post('/user/createProfile', AuthRoute.verifyToken, UserRoute.createProfile);
 //Salon
 app.post('/salon/createinformation', AuthRoute.verifyToken, SalonRoute.createInformation);
 //Schedule
 app.get('/schedule/getsalondailyschedules', AuthRoute.verifyToken, ScheduleRoute.getSalonDailySchedule);
 app.get('/schedule/getemployeedailyschedules', AuthRoute.verifyToken, ScheduleRoute.getEmployeeDailySchedule);
-app.post('/schedule/insertsalonweeklyschedule', AuthRoute.verifyToken, ScheduleRoute.InsertSalonWeeklySchedule);
-app.post('/schedule/insertsalondailyschedule', AuthRoute.verifyToken, ScheduleRoute.InsertSalonDailySchedule);
+//app.post('/schedule/insertsalonweeklyschedule', AuthRoute.verifyToken, ScheduleRoute.InsertSalonWeeklySchedule);
+//app.post('/schedule/insertsalondailyschedule', AuthRoute.verifyToken, ScheduleRoute.InsertSalonDailySchedule);
 app.listen(3000, function () {
     console.log("SalonCloud server listening on port %d in %s mode", 3000, app.settings.env);
 });
