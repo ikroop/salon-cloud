@@ -227,6 +227,36 @@ module.exports = {
             'name': 'InvalidScheduleDate',
             'message': 'Invalid Schedule Date!'
         }
+    },
+    'MissingSalonId': {
+        'err': {
+            'name': 'MissingSalonId',
+            'message': 'Salon Id is required'
+        }
+    },
+    'MissingStatus': {
+        'err': {
+            'name': 'MissingStatus',
+            'message': 'Status is required'
+        }
+    },
+    'MissingRole': {
+        'err': {
+            'name': 'MissingRole',
+            'message': 'Role is required'
+        }
+    },
+    'RoleRangeError': {
+        'err': {
+            'name': 'RoleRangeError',
+            'message': 'Role must be greater than 0 and less than 5.'
+        }
+    },
+    'WrongSSNFormat': {
+        'err': {
+            'name': 'WrongSSNFormat',
+            'message': 'Social Security Number is wrong format.'
+        }
     }
 };
 //# sourceMappingURL=ErrorMessage.js.map

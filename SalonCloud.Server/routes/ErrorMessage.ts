@@ -156,19 +156,19 @@ module.exports = {
             'message': 'Employee is not found'
         }
     },
-    'SignInFailed':{
+    'SignInFailed': {
         'err': {
             'name': 'SignInFailed',
             'message': 'Username or password is wrong'
         }
     },
-    'ServerError':{
+    'ServerError': {
         'err': {
             'name': 'ServerError',
             'message': 'Internal Server Error'
         }
     },
-    'MissingScheduleStatus':{
+    'MissingScheduleStatus': {
         'err': {
             'name': 'MissingScheduleStatus',
             'message': 'Schedule status is required!',
@@ -176,58 +176,86 @@ module.exports = {
     },
     'MissingScheduleOpenTime': {
         'err': {
-                'name': 'MissingScheduleOpenTime',
-                'message': 'Schedule open time is required!'
+            'name': 'MissingScheduleOpenTime',
+            'message': 'Schedule open time is required!'
         }
     },
     'MissingScheduleCloseTime': {
         'err': {
-                'name': 'MissingScheduleCloseTime',
-                'message': 'Schedule close time is required!'
+            'name': 'MissingScheduleCloseTime',
+            'message': 'Schedule close time is required!'
         }
     },
     'MissingScheduleWeekday': {
         'err': {
-                'name': 'MissingScheduleWeekday',
-                'message': 'Schedule weekday is required!'
+            'name': 'MissingScheduleWeekday',
+            'message': 'Schedule weekday is required!'
         }
     },
     'InvalidScheduleOpenTime': {
         'err': {
-                'name': 'InvalidScheduleOpenTime',
-                'message': 'Open time value must range from 0 to 24*3600 = 86400!'
+            'name': 'InvalidScheduleOpenTime',
+            'message': 'Open time value must range from 0 to 24*3600 = 86400!'
         }
     },
     'InvalidScheduleCloseTime': {
         'err': {
-                'name': 'InvalidScheduleCloseTime',
-                'message': 'Close time value must range from 0 to 24*3600 = 86400!'
+            'name': 'InvalidScheduleCloseTime',
+            'message': 'Close time value must range from 0 to 24*3600 = 86400!'
         }
     },
     'CloseTimeGreaterThanOpenTime': {
         'err': {
-                'name': 'CloseTimeGreaterThanOpenTime',
-                'message': 'Close time can not be greater than open time!'
+            'name': 'CloseTimeGreaterThanOpenTime',
+            'message': 'Close time can not be greater than open time!'
         }
     },
     'InvalidScheduleWeekday': {
         'err': {
-                'name': 'InvalidScheduleWeekday',
-                'message': 'Weekday must be integer and range from 0 to 6!'
-         }
+            'name': 'InvalidScheduleWeekday',
+            'message': 'Weekday must be integer and range from 0 to 6!'
+        }
     },
     'MissingScheduleDate': {
         'err': {
-                'name': 'MissingScheduleDate',
-                'message': 'Schedule date is required!'
+            'name': 'MissingScheduleDate',
+            'message': 'Schedule date is required!'
         }
     },
     'InvalidScheduleDate': {
         'err': {
-                'name': 'InvalidScheduleDate',
-                'message': 'Invalid Schedule Date!'
+            'name': 'InvalidScheduleDate',
+            'message': 'Invalid Schedule Date!'
+        }
+    },
+    'MissingSalonId': {
+        'err': {
+            'name': 'MissingSalonId',
+            'message': 'Salon Id is required'
+        }
+    },
+    'MissingStatus': {
+        'err': {
+            'name': 'MissingStatus',
+            'message': 'Status is required'
+        }
+    },
+    'MissingRole': {
+        'err': {
+            'name': 'MissingRole',
+            'message': 'Role is required'
+        }
+    },
+    'RoleRangeError': {
+        'err': {
+            'name': 'RoleRangeError',
+            'message': 'Role must be greater than 0 and less than 5.'
+        }
+    },
+    'WrongSSNFormat': {
+        'err': {
+            'name': 'WrongSSNFormat',
+            'message': 'Social Security Number is wrong format.'
         }
     }
-
-    
 };
