@@ -19,7 +19,32 @@ class Validator {
         }
         return isPhoneNumber;
     }
+    static IsSocialSecurityNumber(SocialSecurityNumber) {
+        var SSNReg = /^\d{9}$/;
+        var isSSN = true;
+        if (!SocialSecurityNumber.match(SSNReg)) {
+            isSSN = false;
+        }
+        return isSSN;
+    }
+    static IsSalaryRate(SalaryRate) {
+        if (SalaryRate <= 0 || SalaryRate >= 10) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    static IsCashRate(CashRate) {
+        if (CashRate <= 0 || CashRate >= 10) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
     static IsAdress(address) {
+        //TODO:
         return true;
     }
     static IsValidDate(date) {
