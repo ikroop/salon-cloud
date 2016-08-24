@@ -21,7 +21,7 @@ var route;
                 email: BodyData.email
             };
             var UserData = req.user;
-            var user = new User_1.User(UserProfile.salon_id, UserData.id);
+            var user = new User_1.User(UserProfile.salon_id, UserData._id);
             user.createProfile(UserProfile, function (err, code, data) {
                 res.statusCode = code;
                 if (err) {
