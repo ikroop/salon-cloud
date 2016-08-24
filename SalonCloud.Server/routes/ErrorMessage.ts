@@ -257,5 +257,11 @@ module.exports = {
             'name': 'WrongSSNFormat',
             'message': 'Social Security Number is wrong format.'
         }
+    },
+    'ProfileAlreadyExist': {
+        'err': {
+            'name': 'ProfileAlreadyExist',
+            'message': 'Social Security Number is wrong format.'
+        }
     }
 };
