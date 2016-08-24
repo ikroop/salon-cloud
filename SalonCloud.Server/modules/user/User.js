@@ -45,14 +45,21 @@ class User {
             callback(ErrorMessage.CashRateRangeError, 400, undefined);
             return;
         }
-        UserModel.findOne({ "_id": this.UserId }, function (err, docs) {
+        var UserId = this.UserId;
+        UserModel.findOne({ "_id": this.UserId, "profile.salon_id": this.SalonId }, function (err, docs) {
             if (err) {
                 callback(ErrorMessage.ServerError, 500, undefined);
             }
-            if (docs) {
-                docs.profile.push(profileData);
-                docs.save();
-                callback(undefined, 200, docs);
+            else if (!docs) {
+                UserModel.findOne({ "_id": UserId }, function (err, docs) {
+                    docs.profile.push(profileData);
+                    docs.save();
+                    docs.profile = docs.profile.filter(profile => profile.salon_id == profileData.salon_id);
+                    callback(undefined, 200, docs);
+                });
+            }
+            else {
+                callback(ErrorMessage.ProfileAlreadyExist, 409, undefined);
             }
         });
     }
