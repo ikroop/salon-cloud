@@ -1,6 +1,11 @@
 "use strict";
+/**
+ *
+ */
 const mongoose = require("mongoose");
 const AuthenticationModel_1 = require("./../../core/authentication/AuthenticationModel");
+var ErrorMessage = require('./../../routes/ErrorMessage');
+const Validator_1 = require('../../core/validator/Validator');
 var UserModel = mongoose.model('User', AuthenticationModel_1.AuthenticationSchema);
 class User {
     constructor(SalonId, UserId) {
@@ -8,14 +13,46 @@ class User {
         this.SalonId = SalonId;
     }
     createProfile(profileData, callback) {
+        if (!profileData.salon_id) {
+            callback(ErrorMessage.MissingSalonId, 400, undefined);
+            return;
+        }
+        if (!profileData.status) {
+            callback(ErrorMessage.MissingStatus, 400, undefined);
+            return;
+        }
+        if (!profileData.role) {
+            callback(ErrorMessage.MissingRole, 400, undefined);
+            return;
+        }
+        else if (profileData.role <= 0 || profileData.role >= 5) {
+            callback(ErrorMessage.RoleRangeError, 400, undefined);
+            return;
+        }
+        if (profileData.social_security_number && !Validator_1.Validator.IsSocialSecurityNumber(profileData.social_security_number)) {
+            callback(ErrorMessage.WrongSSNFormat, 400, undefined);
+            return;
+        }
+        if (profileData.social_security_number && !Validator_1.Validator.IsSocialSecurityNumber(profileData.social_security_number)) {
+            callback(ErrorMessage.WrongSSNFormat, 400, undefined);
+            return;
+        }
+        if (profileData.salary_rate && !Validator_1.Validator.IsSalaryRate(profileData.salary_rate)) {
+            callback(ErrorMessage.SalaryRateRangeError, 400, undefined);
+            return;
+        }
+        if (profileData.cash_rate && !Validator_1.Validator.IsCashRate(profileData.cash_rate)) {
+            callback(ErrorMessage.CashRateRangeError, 400, undefined);
+            return;
+        }
         UserModel.findOne({ "_id": this.UserId }, function (err, docs) {
             if (err) {
-                callback(undefined);
+                callback(ErrorMessage.ServerError, 500, undefined);
             }
             if (docs) {
                 docs.profile.push(profileData);
                 docs.save();
-                callback(docs);
+                callback(undefined, 200, docs);
             }
         });
     }
