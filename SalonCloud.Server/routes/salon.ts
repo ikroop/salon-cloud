@@ -10,9 +10,6 @@ import {SalonProfile} from '../modules/salon/SalonProfile';
 
 var ErrorMessage = require('./ErrorMessage');
 
-var Authentication = require('../modules/salon/Salon');
-
-
 module route {
     export class SalonRoute {
         public static createInformation(req: express.Request, res: express.Response) {
