@@ -1,6 +1,10 @@
 import * as mongoose from "mongoose";
-import {Schedule} from './ScheduleData';
+import {Schedule, ScheduleProfile} from './ScheduleModel';
 // import {UserProfileSchema} from '../../user/UserProfile';
+
+export interface DailyScheduleProfile extends ScheduleProfile {
+    date: Date
+}
 
 export const DailyScheduleSchema = new mongoose.Schema({
     id: {type: String, required: true},

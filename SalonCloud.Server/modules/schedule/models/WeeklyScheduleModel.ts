@@ -1,6 +1,10 @@
 import * as mongoose from "mongoose";
-import {Schedule} from './ScheduleData';
+import {Schedule, ScheduleProfile} from './ScheduleModel';
 // import {UserProfileSchema} from '../../user/UserProfile';
+
+export interface WeeklyScheduleProfile extends ScheduleProfile {
+    dayofweek: number
+}
 
 export const WeeklyScheduleSchema = new mongoose.Schema({
     id: {type: String, required: true},

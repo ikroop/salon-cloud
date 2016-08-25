@@ -1,10 +1,25 @@
-/**
- * 
- * 
- */
-import * as mongoose from "mongoose";
-import {DailyScheduleSchema} from './models/DailySchedule';
-import {WeeklyScheduleSchema} from './models/WeeklySchedule';
+//
+//
+//
+//
+//
+//
+import { DailyScheduleProfile } from './models/DailyScheduleProfile';
+import { WeeklyScheduleProfile } from './models/WeeklyScheduleProfile';
+
+export interface ScheduleProfile{
+    salon: {
+        salon_id: string,
+        weekly: [WeeklyScheduleProfile],
+        daily: [DailyScheduleProfile]
+    },
+    emplopyee: {
+        employee_id: string,
+        salon_id: string,
+        weekly: [WeeklyScheduleProfile],
+        daily: [DailyScheduleProfile]
+    }
+}
 
 export const ScheduleProfileSchema = new mongoose.Schema({
     salon: {

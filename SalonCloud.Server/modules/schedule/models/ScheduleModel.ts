@@ -1,7 +1,18 @@
 import * as mongoose from "mongoose";
 // import {UserProfileSchema} from '../../user/UserProfile';
 
-export const ScheduleDataSchema = new mongoose.Schema({
+export interface ScheduleProfile{
+    id: string,
+    // employee_id: string,
+    // created_date: Date,
+    // last_modified: Date,
+    // created_by: <UserProfile>,
+    close: number,
+    open: number,
+    status: boolean
+}
+
+export const ScheduleSchema = new mongoose.Schema({
     id: {type: String, required: true},
     // employee_id: {type: String, required: true},
     // created_date: {type: Date, required: true},
@@ -12,7 +23,7 @@ export const ScheduleDataSchema = new mongoose.Schema({
     status: {type: Boolean, required: true}
 });
 
-export const ScheduleDataModel = mongoose.model('ScheduleData', ScheduleDataSchema);
+export const ScheduleModel = mongoose.model('ScheduleData', ScheduleSchema);
 
 export class Schedule {
     private id: string;

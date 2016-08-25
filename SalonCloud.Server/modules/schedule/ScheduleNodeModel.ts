@@ -4,10 +4,10 @@
 //
 //
 //
-import { DailyScheduleProfile } from './models/DailyScheduleProfile';
-import { WeeklyScheduleProfile } from './models/WeeklyScheduleProfile';
+import { DailyScheduleProfile } from './models/DailyScheduleModel';
+import { WeeklyScheduleProfile } from './models/WeeklyScheduleModel';
 
-export interface ScheduleProfile{
+export interface ScheduleNodeProfile{
     salon: {
         salon_id: string,
         weekly: [WeeklyScheduleProfile],

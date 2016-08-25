@@ -1,7 +1,6 @@
 "use strict";
 const mongoose = require("mongoose");
-const ScheduleData_1 = require('./ScheduleData');
-// import {UserProfileSchema} from '../../user/UserProfile';
+const ScheduleModel_1 = require('./ScheduleModel');
 exports.WeeklyScheduleSchema = new mongoose.Schema({
     id: { type: String, required: true },
     // employee_id: {type: String, required: true},
@@ -14,7 +13,7 @@ exports.WeeklyScheduleSchema = new mongoose.Schema({
     dayofweek: { type: Number, required: true }
 });
 exports.WeeklyScheduleModel = mongoose.model('WeeklySchedule', exports.WeeklyScheduleSchema);
-class WeeklySchedule extends ScheduleData_1.Schedule {
+class WeeklySchedule extends ScheduleModel_1.Schedule {
 }
 exports.WeeklySchedule = WeeklySchedule;
-//# sourceMappingURL=WeeklySchedule.js.map
+//# sourceMappingURL=WeeklyScheduleModel.js.map

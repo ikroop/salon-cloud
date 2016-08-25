@@ -1,7 +1,6 @@
 "use strict";
 const mongoose = require("mongoose");
-// import {UserProfileSchema} from '../../user/UserProfile';
-exports.ScheduleDataSchema = new mongoose.Schema({
+exports.ScheduleSchema = new mongoose.Schema({
     id: { type: String, required: true },
     // employee_id: {type: String, required: true},
     // created_date: {type: Date, required: true},
@@ -11,8 +10,8 @@ exports.ScheduleDataSchema = new mongoose.Schema({
     open: { type: Number, required: true },
     status: { type: Boolean, required: true }
 });
-exports.ScheduleDataModel = mongoose.model('ScheduleData', exports.ScheduleDataSchema);
+exports.ScheduleModel = mongoose.model('ScheduleData', exports.ScheduleSchema);
 class Schedule {
 }
 exports.Schedule = Schedule;
-//# sourceMappingURL=ScheduleData.js.map
+//# sourceMappingURL=ScheduleModel.js.map

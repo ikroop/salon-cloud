@@ -1,7 +1,7 @@
-import {ScheduleBehavior} from './ScheduleBehavior';
-import {Schedule} from './models/ScheduleData';
-import {DailyScheduleModel, DailySchedule} from './models/DailySchedule';
-import {WeeklyScheduleModel, WeeklySchedule} from './models/WeeklySchedule';
+import { ScheduleBehavior } from './ScheduleBehavior';
+import {Schedule} from './models/ScheduleModel';
+import {DailyScheduleModel, DailySchedule} from './models/DailyScheduleModel';
+import {WeeklyScheduleModel, WeeklySchedule} from './models/WeeklyScheduleModel';
 import * as mongoose from "mongoose";
 
 export class SalonSchedule implements ScheduleBehavior {

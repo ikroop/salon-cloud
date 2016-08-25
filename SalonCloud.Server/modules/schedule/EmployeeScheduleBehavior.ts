@@ -3,9 +3,9 @@
  * 
  */
 import { ScheduleBehavior } from './ScheduleBehavior';
-import {Schedule} from './models/ScheduleData';
-import {DailySchedule} from './models/DailySchedule';
-import {WeeklySchedule} from './models/WeeklySchedule';
+import {Schedule} from './models/ScheduleModel';
+import {DailyScheduleModel, DailySchedule} from './models/DailyScheduleModel';
+import {WeeklyScheduleModel, WeeklySchedule} from './models/WeeklyScheduleModel';
 import * as mongoose from "mongoose";
 
 export class EmployeeSchedule implements ScheduleBehavior {
