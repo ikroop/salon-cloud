@@ -1,28 +1,8 @@
 "use strict";
 const User_1 = require('./../User/User');
-const mongoose = require("mongoose");
 var ErrorMessage = require('./../../routes/ErrorMessage');
 const Validator_1 = require('../../core/validator/Validator');
-exports.SalonProfileSchema = new mongoose.Schema({
-    setting: {
-        appointment_reminder: { type: Boolean, required: true },
-        flexible_time: { type: Number, required: true },
-        technician_checkout: { type: Boolean, required: true }
-    },
-    information: {
-        salon_name: { type: String, required: true },
-        phone: {
-            number: { type: String, required: true },
-            is_verified: { type: Boolean, required: true }
-        },
-        location: {
-            address: { type: String, required: true },
-            is_verified: { type: Boolean, required: true }
-        },
-        email: String
-    }
-});
-exports.SalonProfileModel = mongoose.model('Salon', exports.SalonProfileSchema);
+const SalonModel = require("./SalonModel");
 class Salon {
     constructor(UserId) {
         this.UserId = UserId;
@@ -57,7 +37,7 @@ class Salon {
             return;
         }
         //create salon object in database
-        exports.SalonProfileModel.create(SalonProfileData, (err, salon) => {
+        SalonModel.create(SalonProfileData, (err, salon) => {
             if (err) {
                 callback(ErrorMessage.ServerError, 500, undefined);
             }
@@ -68,9 +48,30 @@ class Salon {
                     "salon_id": this.SalonId,
                     "role": User_1.User.SALON_OWNER_ROLE,
                     "status": true
-                }, function (data) {
+                }, function (err, code, data) {
+                    if (err) {
+                        callback(err, code, undefined);
+                    }
+                    else {
+                        callback(undefined, 200, salon);
+                    }
                 });
-                callback(undefined, 200, salon);
+            }
+        });
+    }
+    /**
+     *
+     */
+    static isExisting(salon_id, callback) {
+        SalonModel.findOne({ "_id": salon_id }, function (err, docs) {
+            if (err) {
+                callback(ErrorMessage.ServerError, 500, undefined);
+            }
+            else if (!docs) {
+                callback(undefined, 200, false);
+            }
+            else {
+                callback(undefined, 200, true);
             }
         });
     }
