@@ -29,6 +29,16 @@ $ tsc
 ```
 Run web server
 =============
+Required: 
+- List all .ts files that need to be compile into a "d.ts" file, e.g: "Salon.d.ts" (in SalonCloud.Server/modules/salon)
+```
+/// <reference path="Salon.ts" />
+```
+- Add file that "d.ts" file (e.g: "Salon.d.ts") into "files" node of "tsconfig.json" file (in SalonCloud.Server)
+```
+"./modules/salon/Salon.d.ts"
+```
+
 Windows
 ```
 $ nodemon ./app.js
