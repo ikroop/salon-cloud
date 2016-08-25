@@ -28,4 +28,4 @@ export const UserProfileSchema = new mongoose.Schema({
     email: String
 });
 
-export const UserModel = mongoose.model<UserProfile>('Profile', UserProfileSchema);
+//export const UserModel = mongoose.model<UserProfile>('Profile', UserProfileSchema);

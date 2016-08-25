@@ -29,4 +29,4 @@ export const AuthenticationSchema = new Schema({
 
 AuthenticationSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model('User', AuthenticationSchema);
+module.exports = mongoose.model<AuthenticationData>('User', AuthenticationSchema);
