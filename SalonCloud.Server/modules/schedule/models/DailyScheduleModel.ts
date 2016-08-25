@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-import {Schedule, ScheduleProfile} from './ScheduleModel';
+import {ScheduleProfile} from './ScheduleModel';
 // import {UserProfileSchema} from '../../user/UserProfile';
 
 export interface DailyScheduleProfile extends ScheduleProfile {
@@ -19,7 +19,3 @@ export const DailyScheduleSchema = new mongoose.Schema({
 });
 
 export const DailyScheduleModel = mongoose.model('DailySchedule', DailyScheduleSchema);
-
-export class DailySchedule extends Schedule {
-    private date: Date;
-}

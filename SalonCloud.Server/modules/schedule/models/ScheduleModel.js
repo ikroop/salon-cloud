@@ -11,7 +11,4 @@ exports.ScheduleSchema = new mongoose.Schema({
     status: { type: Boolean, required: true }
 });
 exports.ScheduleModel = mongoose.model('ScheduleData', exports.ScheduleSchema);
-class Schedule {
-}
-exports.Schedule = Schedule;
 //# sourceMappingURL=ScheduleModel.js.map
