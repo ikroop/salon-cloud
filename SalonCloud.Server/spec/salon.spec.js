@@ -19,7 +19,7 @@ describe('Salon', function () {
 
         //get valid token
         var user = {
-            username: 'unittest1471817279525@gmail.com',
+            username: 'unittest1472245629435@gmail.com',
             password: defaultPassword
         };
         request(url)
