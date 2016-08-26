@@ -34,7 +34,7 @@ module route {
                 }
             };
 
-            var salon = new Salon(req.user.id);
+            var salon = new Salon(req.user._id);
 
             salon.createSalonInformation(salonProfileData, function (err, code, data) {
                 res.statusCode = code;

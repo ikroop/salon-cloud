@@ -24,7 +24,7 @@ var route;
                     technician_checkout: false
                 }
             };
-            var salon = new Salon_1.Salon(req.user.id);
+            var salon = new Salon_1.Salon(req.user._id);
             salon.createSalonInformation(salonProfileData, function (err, code, data) {
                 res.statusCode = code;
                 if (err) {

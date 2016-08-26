@@ -63,7 +63,7 @@ export class User {
         }
 
         var UserId = this.UserId;
-        var SalonId = mongoose.Types.ObjectId(this.SalonId);
+        var SalonId = new mongoose.Types.ObjectId(this.SalonId);
 
         UserModel.findOne({ "_id": this.UserId, "profile.salon_id": this.SalonId }, function (err, docs) {
             if (err) {

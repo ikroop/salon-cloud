@@ -7,32 +7,46 @@ var configDB = require('./../config/dev/database.js');
 
 describe('User', function () {
     var url = 'http://localhost:3000';
-    var defaultPassword = '1234@1234'
+    var defaultPassword = '1234@1234';
     var validToken = null;
     var invalidToken = null;
     var salon_id = null;
     // within before() you can run all the operations that are needed to setup your tests. In this case
     // I want to create a connection with the database, and when I'm done, I call done().
     before(function (done) {
+        var timestamp = new Date().getTime();
         var user = {
-            username: 'unittest1471817279525@gmail.com',
+            username: 'unittest' + timestamp + '@gmail.com',
             password: defaultPassword
         };
         // In our tests we use the test db
+
         mongoose.connect(configDB.url);
         request(url)
-            .post('/auth/signinwithemailandpassword')
+            .post('/auth/signupwithemailandpassword')
             .send(user)
             // end handles the response
             .end(function (err, res) {
                 if (err) {
                     throw err;
                 }
-                validToken = res.body.auth.token;
-                invalidToken = '1234455';
-                salon_id = "57bc91c0862745040f89681a"; //(new Date().getTime()).toString();
-                done();
+                request(url)
+                    .post('/auth/signinwithemailandpassword')
+                    .send(user)
+                    // end handles the response
+                    .end(function (err, res) {
+                        if (err) {
+                            throw err;
+                        }
+                        console.log('body:', res.body);
+                        validToken = res.body.auth.token;
+                        invalidToken = '1234455';
+                        salon_id = "57c0afac9265a426237f6f5f"; //(new Date().getTime()).toString();
+                        done();
+                    });
             });
+
+
     });
 
     describe('Create Profile', function () {

@@ -22,7 +22,7 @@ describe('Schedule', function () {
         // In our tests we use the test db
         mongoose.connect(configDB.url);
         var user = {
-            username: 'unittest1471817279525@gmail.com',
+            username: 'unittest1472245629435@gmail.com',
             password: defaultPassword
         };
         request(url)
