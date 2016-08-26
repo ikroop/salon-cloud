@@ -8,9 +8,10 @@ import fs = require('fs');
 
 import {Validator} from '../core/validator/Validator';
 import {SalonSchedule} from '../modules/schedule/SalonScheduleBehavior';
-// import {SalonSchedule} from '../modules/schedules/SalonSchedule';
 // import {ScheduleProfile} from '../modules/schedules/ScheduleProfile';
-// import {DailyScheduleModel} from '../modules/schedules/models/DailyScheduleModel';
+import {DailySchedule} from '../modules/schedule/models/DailySchedule';
+import {DailyScheduleModel} from '../modules/schedule/models/DailyScheduleModel';
+import {WeeklySchedule} from '../modules/schedule/models/WeeklySchedule';
 // import {WeeklyScheduleModel} from '../modules/schedules/models/WeeklyScheduleModel';
 
 var ErrorMessage = require('./ErrorMessage');
@@ -56,6 +57,19 @@ module route {
 */
             // TODO: access DB here
             // then return
+            var salonScheduleBehavior = new SalonSchedule();
+            var startDate = new Date();
+            var endDate = startDate;
+            salonScheduleBehavior.getSchedule(startDate, endDate, function (err, code, data) {
+                res.statusCode = code;
+                if (err) {
+                    return res.json(err);
+                } else {
+                    return res.json(data);
+                }
+            });
+
+            
         }
 
         public static getEmployeeDailySchedule(req: express.Request, res: express.Response) {
@@ -97,13 +111,14 @@ module route {
         }
 
         public static insertSalonWeeklySchedule(req: express.Request, res: express.Response) {
-            var insertedSchedule = {
-                salon_id: req.body.salon_id,
-                status: req.body.status,
-                open: req.body.open_time,
-                close: req.body.close_time,
-                dayofweek: req.body.weekday,
-            };
+            // var insertedSchedule = {
+            //     salon_id: req.body.salon_id,
+            //     status: req.body.status,
+            //     open: req.body.open_time,
+            //     close: req.body.close_time,
+            //     dayofweek: req.body.weekday,
+            // };
+            let insertedSchedule = new WeeklySchedule(undefined, req.body.salon_id, req.body.open_time, req.body.close_time, req.body.status, req.body.weekday);
             var salonSchedule = new SalonSchedule();
             salonSchedule.insertWeekly(insertedSchedule, function(err, code, data){
                 res.statusCode = code;

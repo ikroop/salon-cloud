@@ -19,32 +19,35 @@ export const WeeklyScheduleSchema = new mongoose.Schema(
     }
 );
 
-export class SalonSchedule implements ScheduleBehavior {
+export class SalonSchedule extends ScheduleBehavior {
+
     /**
      * name
      */
-
-    constructor() {
-
-    }
-
-    public getSchedule(startDate: Date, endDate: Date): [DailySchedule] {
-        DailyScheduleModel.create
+    public getSchedule(startDate: Date, endDate: Date, callback): [DailySchedule] {
+        // DailyScheduleModel.
+        // Bear.findById(req.params.bear_id, function(err, bear) {
+        //     if (err)
+        //         res.send(err);
+        //     res.json(bear);
+        // });
+        DailyScheduleModel.create()
         return undefined;
     }
 
     /**
      * name
      */
-    public getWeeklySchedule(): [WeeklySchedule] {
+    public getWeeklySchedule(callback): [WeeklySchedule] {
         return undefined;
     }
 
     /**
      * name
      */
-    public insertWeekly(schedule: WeeklyScheduleProfile, callback) {
-        WeeklyScheduleModel.create(schedule, function(err: any, salonSchedule: WeeklyScheduleProfile){
+    public insertWeekly(schedule: WeeklySchedule, callback) {
+        let weeklyScheduleProfile = schedule.exportProfile() as WeeklyScheduleProfile;
+        WeeklyScheduleModel.create(weeklyScheduleProfile, function(err: any, salonSchedule: WeeklyScheduleProfile){
             if (err) {
                 callback(ErrorMessage.ServerError, 500, undefined);
             } else {
@@ -57,14 +60,14 @@ export class SalonSchedule implements ScheduleBehavior {
     /**
      * name
      */
-    public insertDaily(schedule: Schedule) {
+    public insertDaily(schedule: DailySchedule, callback) {
 
     }
 
     /**
      * name
      */
-    public validate(schedule: Schedule) {
+    public validate(schedule: Schedule, callback) {
 
     }
 }

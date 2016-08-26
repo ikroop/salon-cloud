@@ -1,4 +1,5 @@
 "use strict";
+const ScheduleBehavior_1 = require('./ScheduleBehavior');
 const DailyScheduleModel_1 = require('./models/DailyScheduleModel');
 const WeeklyScheduleModel_1 = require('./models/WeeklyScheduleModel');
 const mongoose = require("mongoose");
@@ -10,27 +11,32 @@ exports.WeeklyScheduleSchema = new mongoose.Schema({
     status: { type: Boolean, required: true },
     dayofweek: { type: Number, required: true },
 });
-class SalonSchedule {
+class SalonSchedule extends ScheduleBehavior_1.ScheduleBehavior {
     /**
      * name
      */
-    constructor() {
-    }
-    getSchedule(startDate, endDate) {
-        DailyScheduleModel_1.DailyScheduleModel.create;
+    getSchedule(startDate, endDate, callback) {
+        // DailyScheduleModel.
+        // Bear.findById(req.params.bear_id, function(err, bear) {
+        //     if (err)
+        //         res.send(err);
+        //     res.json(bear);
+        // });
+        DailyScheduleModel_1.DailyScheduleModel.create();
         return undefined;
     }
     /**
      * name
      */
-    getWeeklySchedule() {
+    getWeeklySchedule(callback) {
         return undefined;
     }
     /**
      * name
      */
     insertWeekly(schedule, callback) {
-        WeeklyScheduleModel_1.WeeklyScheduleModel.create(schedule, function (err, salonSchedule) {
+        let weeklyScheduleProfile = schedule.exportProfile();
+        WeeklyScheduleModel_1.WeeklyScheduleModel.create(weeklyScheduleProfile, function (err, salonSchedule) {
             if (err) {
                 callback(ErrorMessage.ServerError, 500, undefined);
             }
@@ -43,12 +49,12 @@ class SalonSchedule {
     /**
      * name
      */
-    insertDaily(schedule) {
+    insertDaily(schedule, callback) {
     }
     /**
      * name
      */
-    validate(schedule) {
+    validate(schedule, callback) {
     }
 }
 exports.SalonSchedule = SalonSchedule;

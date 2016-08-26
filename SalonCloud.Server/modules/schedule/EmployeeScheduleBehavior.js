@@ -1,31 +1,36 @@
 "use strict";
-class EmployeeSchedule {
+/**
+ *
+ *
+ */
+const ScheduleBehavior_1 = require('./ScheduleBehavior');
+class EmployeeSchedule extends ScheduleBehavior_1.ScheduleBehavior {
     /**
      * name
      */
-    getSchedule(startDate, endDate) {
+    getSchedule(startDate, endDate, callback) {
         return undefined;
     }
     /**
      * name
      */
-    getWeeklySchedule() {
+    getWeeklySchedule(callback) {
         return undefined;
     }
     /**
      * name
      */
-    insertWeekly(schedule) {
+    insertWeekly(schedule, callback) {
     }
     /**
      * name
      */
-    insertDaily(schedule) {
+    insertDaily(schedule, callback) {
     }
     /**
      * name
      */
-    validate(schedule) {
+    validate(schedule, callback) {
     }
 }
 exports.EmployeeSchedule = EmployeeSchedule;

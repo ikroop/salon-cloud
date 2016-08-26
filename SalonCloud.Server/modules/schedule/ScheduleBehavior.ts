@@ -9,29 +9,40 @@ import { DailySchedule } from './models/DailySchedule';
 import { WeeklySchedule } from './models/WeeklySchedule';
 import { WeeklyScheduleProfile} from './models/WeeklyScheduleModel';
 
-export interface ScheduleBehavior{
+export abstract class ScheduleBehavior{
     /**
      * name
      */
-    getSchedule(startDate: Date, endDate: Date): [DailySchedule];
+    public getSchedule(startDate: Date, endDate: Date, callback): [DailySchedule] {
+        return undefined;
+    }
 
     /**
      * name
      */
-    getWeeklySchedule(): [WeeklySchedule];
+    public getWeeklySchedule(callback): [WeeklySchedule] {
+        return undefined;
+    }
 
     /**
      * name
      */
-    insertWeekly(schedule: WeeklyScheduleProfile, callback);
+    abstract insertWeekly(schedule: WeeklySchedule, callback);
 
     /**
      * name
      */
-    insertDaily(schedule: Schedule);
+    abstract insertDaily(schedule: DailySchedule, callback);
 
     /**
      * name
      */
-    validate(schedule: Schedule);
+     public insert(schedule: Schedule, callback) {
+     }
+
+    /**
+     * name
+     */
+    public validate(schedule: Schedule, callback) {
+    }
 }
