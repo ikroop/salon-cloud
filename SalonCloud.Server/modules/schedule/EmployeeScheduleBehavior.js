@@ -15,7 +15,12 @@ class EmployeeSchedule {
     /**
      * name
      */
-    insert(schedule) {
+    insertWeekly(schedule) {
+    }
+    /**
+     * name
+     */
+    insertDaily(schedule) {
     }
     /**
      * name

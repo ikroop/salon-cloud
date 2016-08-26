@@ -2,7 +2,8 @@ import * as mongoose from "mongoose";
 // import {UserProfileSchema} from '../../user/UserProfile';
 
 export interface ScheduleProfile{
-    id: string,
+    _id?: string,
+    salon_id: string,
     // employee_id: string,
     // created_date: Date,
     // last_modified: Date,
@@ -13,7 +14,8 @@ export interface ScheduleProfile{
 }
 
 export const ScheduleSchema = new mongoose.Schema({
-    id: {type: String, required: true},
+    _id: String,
+    salon_id: {type: String, required: true},
     // employee_id: {type: String, required: true},
     // created_date: {type: Date, required: true},
     // last_modified: {type: Date, required: true},

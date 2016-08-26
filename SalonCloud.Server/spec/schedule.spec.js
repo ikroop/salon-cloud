@@ -468,7 +468,7 @@ describe('Schedule', function () {
     });
 
     describe('Insert Salon Weekly Schedule', function () {
-        var apiUrl = '/schedule/insertsalonweeklyschedules';
+        var apiUrl = '/schedule/insertsalonweeklyschedule';
 
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
@@ -866,7 +866,7 @@ describe('Schedule', function () {
                     }
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(200);
-                    !res.body.should.have.property('err');
+                    res.body.should.not.have.property('err');
                     done();
                 });
         });

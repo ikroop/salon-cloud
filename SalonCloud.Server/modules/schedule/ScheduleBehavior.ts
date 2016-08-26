@@ -4,9 +4,10 @@
 //
 //
 //
-import {Schedule} from './models/Schedule';
-import {DailySchedule} from './models/DailySchedule';
-import {WeeklySchedule} from './models/WeeklySchedule';
+import { Schedule } from './models/Schedule';
+import { DailySchedule } from './models/DailySchedule';
+import { WeeklySchedule } from './models/WeeklySchedule';
+import { WeeklyScheduleProfile} from './models/WeeklyScheduleModel';
 
 export interface ScheduleBehavior{
     /**
@@ -22,7 +23,12 @@ export interface ScheduleBehavior{
     /**
      * name
      */
-    insert(schedule: Schedule);
+    insertWeekly(schedule: WeeklyScheduleProfile, callback);
+
+    /**
+     * name
+     */
+    insertDaily(schedule: Schedule);
 
     /**
      * name

@@ -60,8 +60,8 @@ app.post('/salon/createinformation', AuthRoute.verifyToken, SalonRoute.createInf
 //Schedule
 app.get('/schedule/getsalondailyschedules', AuthRoute.verifyToken, ScheduleRoute.getSalonDailySchedule);
 app.get('/schedule/getemployeedailyschedules', AuthRoute.verifyToken, ScheduleRoute.getEmployeeDailySchedule);
-//app.post('/schedule/insertsalonweeklyschedule', AuthRoute.verifyToken, ScheduleRoute.InsertSalonWeeklySchedule);
-//app.post('/schedule/insertsalondailyschedule', AuthRoute.verifyToken, ScheduleRoute.InsertSalonDailySchedule);
+app.post('/schedule/insertsalonweeklyschedule', AuthRoute.verifyToken, ScheduleRoute.insertSalonWeeklySchedule);
+app.post('/schedule/insertsalondailyschedule', AuthRoute.verifyToken, ScheduleRoute.insertSalonDailySchedule);
 
 app.listen(3000, function () {
     console.log("SalonCloud server listening on port %d in %s mode", 3000, app.settings.env);

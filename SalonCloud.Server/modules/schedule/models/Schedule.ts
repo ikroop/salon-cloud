@@ -1,8 +1,10 @@
 // import * as mongoose from "mongoose";
 // import {UserProfileSchema} from '../../user/UserProfile';
 
+
 export class Schedule {
     private id: string;
+    private salon_id: string;
     private close: number;
     private open: number;
     private status: boolean;

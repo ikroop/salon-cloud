@@ -28,7 +28,14 @@ export class EmployeeSchedule implements ScheduleBehavior {
     /**
      * name
      */
-    public insert(schedule: Schedule) {
+    public insertWeekly(schedule: Schedule) {
+
+    }
+
+    /**
+     * name
+     */
+    public insertDaily(schedule: Schedule) {
 
     }
 

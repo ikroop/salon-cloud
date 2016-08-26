@@ -7,7 +7,7 @@ export interface WeeklyScheduleProfile extends ScheduleProfile {
 }
 
 export const WeeklyScheduleSchema = new mongoose.Schema({
-    id: {type: String, required: true},
+    salon_id: {type: String, required: true},
     // employee_id: {type: String, required: true},
     // created_date: {type: Date, required: true},
     // last_modified: {type: Date, required: true},
@@ -18,5 +18,6 @@ export const WeeklyScheduleSchema = new mongoose.Schema({
     dayofweek: {type: Number, required: true}
 });
 
-export const WeeklyScheduleModel = mongoose.model('WeeklySchedule', WeeklyScheduleSchema);
+export const WeeklyScheduleModel = mongoose.model<WeeklyScheduleProfile>('WeeklySchedule', WeeklyScheduleSchema);
+
 

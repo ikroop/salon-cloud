@@ -1,7 +1,8 @@
 "use strict";
 const mongoose = require("mongoose");
 exports.DailyScheduleSchema = new mongoose.Schema({
-    id: { type: String, required: true },
+    id: String,
+    salon_id: { type: String, required: true },
     // employee_id: {type: String, required: true},
     // created_date: {type: Date, required: true},
     // last_modified: {type: Date, required: true},

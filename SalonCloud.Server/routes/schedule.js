@@ -1,4 +1,5 @@
 "use strict";
+const SalonScheduleBehavior_1 = require('../modules/schedule/SalonScheduleBehavior');
 // import {SalonSchedule} from '../modules/schedules/SalonSchedule';
 // import {ScheduleProfile} from '../modules/schedules/ScheduleProfile';
 // import {DailyScheduleModel} from '../modules/schedules/models/DailyScheduleModel';
@@ -81,6 +82,34 @@ var route;
    */
             // TODO: access DB here
             // then return
+        }
+        static insertSalonWeeklySchedule(req, res) {
+            var insertedSchedule = {
+                salon_id: req.body.salon_id,
+                status: req.body.status,
+                open: req.body.open_time,
+                close: req.body.close_time,
+                dayofweek: req.body.weekday,
+            };
+            var salonSchedule = new SalonScheduleBehavior_1.SalonSchedule();
+            salonSchedule.insertWeekly(insertedSchedule, function (err, code, data) {
+                res.statusCode = code;
+                if (err) {
+                    return res.json(err);
+                }
+                else {
+                    return res.json(data);
+                }
+            });
+        }
+        static insertSalonDailySchedule(req, res) {
+            var insertedSchedule = {
+                salon_id: req.body.salon_id,
+                status: req.body.status,
+                open: req.body.open_time,
+                close: req.body.close_time,
+                date: req.body.date,
+            };
         }
     }
     route.ScheduleRoute = ScheduleRoute;
