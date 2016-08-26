@@ -1,12 +1,12 @@
 Schedule Module
 =================
 **File Structure**
-
- 1. ScheduleModel.ts
- 2. ScheduleData.ts
- 3. ScheduleBehavior.ts
- 4. SalonSchedule.ts
- 5. EmployeeSchedule.ts
+----/
+ |---- ScheduleModel.ts
+ |---- ScheduleData.ts
+ |---- ScheduleBehavior.ts
+ |---- SalonSchedule.ts
+ |---- EmployeeSchedule.ts
  
 **ScheduleModel.ts**
 ```
