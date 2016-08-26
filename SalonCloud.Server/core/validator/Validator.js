@@ -1,7 +1,8 @@
-"use strict";
 /**
  * Validator
  */
+"use strict";
+const mongoose = require("mongoose");
 class Validator {
     static IsEmail(email) {
         var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -55,6 +56,9 @@ class Validator {
     }
     static IsValidWeekDay(date) {
         return true;
+    }
+    static IsIdentifyString(Id) {
+        return mongoose.Types.ObjectId.isValid(Id);
     }
 }
 exports.Validator = Validator;

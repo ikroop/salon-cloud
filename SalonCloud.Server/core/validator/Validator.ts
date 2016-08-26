@@ -2,6 +2,8 @@
 /**
  * Validator
  */
+
+import * as mongoose from "mongoose";
 export class Validator {
     static IsEmail(email: string) {
         var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -62,5 +64,9 @@ export class Validator {
 
     static IsValidWeekDay(date: Date) {
         return true;
+    }
+
+    static IsIdentifyString(Id: string) {
+        return mongoose.Types.ObjectId.isValid(Id);
     }
 }

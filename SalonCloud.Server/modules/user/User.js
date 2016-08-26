@@ -3,10 +3,10 @@
  *
  */
 const mongoose = require("mongoose");
-const AuthenticationModel_1 = require("./../../core/authentication/AuthenticationModel");
 var ErrorMessage = require('./../../routes/ErrorMessage');
 const Validator_1 = require('../../core/validator/Validator');
-var UserModel = mongoose.model('User', AuthenticationModel_1.AuthenticationSchema);
+const salon_1 = require('../../modules/salon/salon');
+const UserModel = require("./../../core/authentication/AuthenticationModel");
 class User {
     constructor(SalonId, UserId) {
         this.UserId = UserId;
@@ -15,6 +15,10 @@ class User {
     createProfile(profileData, callback) {
         if (!profileData.salon_id) {
             callback(ErrorMessage.MissingSalonId, 400, undefined);
+            return;
+        }
+        else if (!Validator_1.Validator.IsIdentifyString(profileData.salon_id)) {
+            callback(ErrorMessage.WrongIdFormat, 400, undefined);
             return;
         }
         if (!profileData.status) {
@@ -46,16 +50,27 @@ class User {
             return;
         }
         var UserId = this.UserId;
+        var SalonId = mongoose.Types.ObjectId(this.SalonId);
         UserModel.findOne({ "_id": this.UserId, "profile.salon_id": this.SalonId }, function (err, docs) {
             if (err) {
                 callback(ErrorMessage.ServerError, 500, undefined);
             }
             else if (!docs) {
-                UserModel.findOne({ "_id": UserId }, function (err, docs) {
-                    docs.profile.push(profileData);
-                    docs.save();
-                    docs.profile = docs.profile.filter(profile => profile.salon_id == profileData.salon_id);
-                    callback(undefined, 200, docs);
+                salon_1.Salon.isExisting(profileData.salon_id, function (err, code, data) {
+                    if (err) {
+                        callback(err, code, undefined);
+                    }
+                    else if (data) {
+                        UserModel.findOne({ "_id": UserId }, function (err, docs) {
+                            docs.profile.push(profileData);
+                            docs.save();
+                            docs.profile = docs.profile.filter(profile => profile.salon_id == profileData.salon_id);
+                            callback(undefined, 200, docs);
+                        });
+                    }
+                    else {
+                        callback(ErrorMessage.SalonNotFound, 400, undefined);
+                    }
                 });
             }
             else {

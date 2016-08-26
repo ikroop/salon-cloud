@@ -72,7 +72,7 @@ export class Salon {
      * 
      */
     static isExisting(salon_id: string, callback) {
-        SalonModel.findOne({ "_id": salon_id }, function (err, docs) {
+        SalonModel.findOne({ "_id": salon_id }, function (err, docs) {            
             if (err) {
                 callback(ErrorMessage.ServerError, 500, undefined);
             } else if (!docs) {

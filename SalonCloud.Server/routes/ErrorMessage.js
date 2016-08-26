@@ -234,6 +234,12 @@ module.exports = {
             'message': 'Salon Id is required'
         }
     },
+    'WrongIdFormat': {
+        'err': {
+            'name': 'WrongIdFormat',
+            'message': ' Id must be a single String of 12 bytes or a string of 24 hex characters'
+        }
+    },
     'MissingStatus': {
         'err': {
             'name': 'MissingStatus',
