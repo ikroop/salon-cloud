@@ -20,13 +20,12 @@ export const DailySchema = new mongoose.Schema({
 })
 
 export const ScheduleSchema = new mongoose.Schema({
+	_id: <salon_id>
 	salon:{
-		salon_id: { type: String, required: true },
 		weekly: [WeeklySchema],
 		daily: [DailySchema]
 	},
 	employee:{
-		salon_id: { type: String, required: true },
 		employee_id: { type: String, required: true },
 		weekly: [WeeklySchema],
 		daily: [DailySchema]
