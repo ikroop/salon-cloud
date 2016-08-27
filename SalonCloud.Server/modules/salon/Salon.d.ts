@@ -1,4 +1,4 @@
 /// <reference path="Salon.ts" />
-/// <reference path="SalonProfile.ts" />
+/// <reference path="SalonData.ts" />
 /// <reference path="SalonModel.ts" />
 

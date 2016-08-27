@@ -3,7 +3,7 @@
  * 
  */
 import * as mongoose from "mongoose";
-import {SalonProfile} from './SalonProfile';
+import {SalonData} from './SalonData';
 
 export const SalonProfileSchema = new mongoose.Schema({
     setting: {
@@ -25,4 +25,4 @@ export const SalonProfileSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model<SalonProfile>('salon', SalonProfileSchema);
+module.exports = mongoose.model<SalonData>('salon', SalonProfileSchema);

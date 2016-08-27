@@ -4,7 +4,7 @@
 //
 //
 //
-export interface SalonProfile{
+export interface SalonData{
     _id?: string,
     information:{
         salon_name: string;

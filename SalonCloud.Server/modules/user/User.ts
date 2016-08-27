@@ -2,7 +2,7 @@
  * 
  */
 import * as mongoose from "mongoose";
-import {UserProfile} from "./UserProfile";
+import {UserData} from "./UserData";
 var ErrorMessage = require('./../../routes/ErrorMessage');
 import {Validator} from '../../core/validator/Validator';
 import {Salon} from '../../modules/salon/salon';
@@ -20,7 +20,7 @@ export class User {
         this.UserId = UserId;
         this.SalonId = SalonId;
     }
-    createProfile(profileData: UserProfile, callback) {
+    createProfile(profileData: UserData, callback) {
         if (!profileData.salon_id) {
             callback(ErrorMessage.MissingSalonId, 400, undefined);
             return;

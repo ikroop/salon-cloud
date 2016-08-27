@@ -2,7 +2,7 @@
 //
 //
 //
-import {UserProfile} from './UserProfile';
+import {UserData} from './UserData';
 
 export class SalonOwner {
     private UserId:string;
@@ -10,7 +10,7 @@ export class SalonOwner {
     constructor(SalonId:string, UserId:string) {
 
     }
-    createProfile(profile: UserProfile){
+    createProfile(profile: UserData){
 
     }
 }

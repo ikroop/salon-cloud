@@ -1,3 +1,9 @@
+/**
+ *
+ *
+ *
+ *
+ */
 "use strict";
 const mongoose = require("mongoose");
 exports.UserProfileSchema = new mongoose.Schema({
@@ -13,5 +19,5 @@ exports.UserProfileSchema = new mongoose.Schema({
     address: String,
     email: String
 });
-//export const UserModel = mongoose.model<UserProfile>('Profile', UserProfileSchema); 
-//# sourceMappingURL=UserProfile.js.map
+exports.UserModel = mongoose.model('Profile', exports.UserProfileSchema);
+//# sourceMappingURL=UserModel.js.map

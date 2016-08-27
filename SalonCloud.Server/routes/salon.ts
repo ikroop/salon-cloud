@@ -6,7 +6,7 @@ import passport = require('passport');
 import jwt = require('jsonwebtoken');
 import {Validator} from '../core/validator/Validator';
 import {Salon} from '../modules/salon/Salon';
-import {SalonProfile} from '../modules/salon/SalonProfile';
+import {SalonData} from '../modules/salon/SalonData';
 
 var ErrorMessage = require('./ErrorMessage');
 

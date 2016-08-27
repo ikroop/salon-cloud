@@ -10,7 +10,8 @@ import jwt = require('jsonwebtoken');
 import fs = require('fs');
 var ErrorMessage = require('./../../routes/ErrorMessage');
 
-import {UserProfileSchema, UserProfile} from '../../modules/user/UserProfile';
+import {UserData} from '../../modules/user/UserData';
+import {UserProfileSchema} from '../../modules/user/UserModel';
 import {Validator} from './../validator/validator';
 
 var AuthenticationModel = require ("./AuthenticationModel");

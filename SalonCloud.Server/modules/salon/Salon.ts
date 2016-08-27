@@ -3,7 +3,7 @@
  * 
  * 
  */
-import {SalonProfile} from './SalonProfile';
+import {SalonData} from './SalonData';
 import {User} from './../User/User';
 var ErrorMessage = require('./../../routes/ErrorMessage');
 import {Validator} from '../../core/validator/Validator';
@@ -15,7 +15,7 @@ export class Salon {
     constructor(UserId: string) {
         this.UserId = UserId;
     }
-    createSalonInformation(SalonProfileData: SalonProfile, callback) {
+    createSalonInformation(SalonProfileData: SalonData, callback) {
 
         if (!SalonProfileData.information.salon_name) {
             callback(ErrorMessage.MissingSalonName, 400, undefined);
@@ -47,7 +47,7 @@ export class Salon {
         }
 
         //create salon object in database
-        SalonModel.create(SalonProfileData, (err: any, salon: SalonProfile) => {
+        SalonModel.create(SalonProfileData, (err: any, salon: SalonData) => {
             if (err) {
                 callback(ErrorMessage.ServerError, 500, undefined);
             } else {

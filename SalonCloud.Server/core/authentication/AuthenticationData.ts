@@ -4,7 +4,7 @@
  * 
  * 
  */
-import {UserProfile} from '../../modules/user/UserProfile';
+import {UserData} from '../../modules/user/UserData';
 
 export interface AuthenticationData {
     username: string,
@@ -12,5 +12,5 @@ export interface AuthenticationData {
     status: boolean,
     is_verified: boolean,
     is_temporary: boolean,
-    profile?: [UserProfile]
+    profile?: [UserData]
 }
