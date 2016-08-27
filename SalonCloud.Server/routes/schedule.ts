@@ -7,7 +7,7 @@ import jwt = require('jsonwebtoken');
 import fs = require('fs');
 
 import {Validator} from '../core/validator/Validator';
-import {SalonSchedule} from '../modules/schedule/SalonScheduleBehavior';
+import {SalonSchedule} from '../modules/schedule/SalonSchedule';
 // import {ScheduleProfile} from '../modules/schedules/ScheduleProfile';
 import {DailySchedule} from '../modules/schedule/models/DailySchedule';
 import {DailyScheduleModel} from '../modules/schedule/models/DailyScheduleModel';

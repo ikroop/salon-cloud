@@ -1,6 +1,48 @@
 // import * as mongoose from "mongoose";
 import {ScheduleProfile} from './ScheduleModel';
 
+export interface WeeklyScheduleData{
+    // employee_id: string,
+    // created_date: Date,
+    // last_modified: Date,
+    // created_by: <UserProfile>,
+    close: number,
+    open: number,
+    status: boolean,
+    day_of_week: number
+};
+
+export interface DailyScheduleData{
+    // employee_id: string,
+    // created_date: Date,
+    // last_modified: Date,
+    // created_by: <UserProfile>,
+    close: number,
+    open: number,
+    status: boolean,
+    date: Date
+};
+
+export interface ScheduleData {
+    _id: string, //<salon_id>
+    // employee_id: {type: String, required: true},
+    // created_date: {type: Date, required: true},
+    // last_modified: {type: Date, required: true},
+    // created_by: {type: UserProfileSchema, required: true},
+    close: number,
+    open: number,
+    status: boolean,
+    salon:{
+        weekly: [WeeklyScheduleData],
+        daily: [DailyScheduleData]
+    },
+    employee:[{
+        employee_id: string,
+        weekly: [WeeklyScheduleData],
+        daily: [DailyScheduleData]
+    }]
+};
+
 
 export class Schedule {
     protected id: string;

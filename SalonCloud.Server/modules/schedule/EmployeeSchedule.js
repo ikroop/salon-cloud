@@ -1,10 +1,5 @@
 "use strict";
-/**
- *
- *
- */
-const ScheduleBehavior_1 = require('./ScheduleBehavior');
-class EmployeeSchedule extends ScheduleBehavior_1.ScheduleBehavior {
+class EmployeeSchedule {
     /**
      * name
      */
@@ -27,11 +22,6 @@ class EmployeeSchedule extends ScheduleBehavior_1.ScheduleBehavior {
      */
     insertDaily(schedule, callback) {
     }
-    /**
-     * name
-     */
-    validate(schedule, callback) {
-    }
 }
 exports.EmployeeSchedule = EmployeeSchedule;
-//# sourceMappingURL=EmployeeScheduleBehavior.js.map
+//# sourceMappingURL=EmployeeSchedule.js.map

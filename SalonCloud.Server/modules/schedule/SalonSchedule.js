@@ -1,7 +1,4 @@
 "use strict";
-const ScheduleBehavior_1 = require('./ScheduleBehavior');
-const DailyScheduleModel_1 = require('./models/DailyScheduleModel');
-const WeeklyScheduleModel_1 = require('./models/WeeklyScheduleModel');
 const mongoose = require("mongoose");
 var ErrorMessage = require('./../../routes/ErrorMessage');
 exports.WeeklyScheduleSchema = new mongoose.Schema({
@@ -11,7 +8,7 @@ exports.WeeklyScheduleSchema = new mongoose.Schema({
     status: { type: Boolean, required: true },
     dayofweek: { type: Number, required: true },
 });
-class SalonSchedule extends ScheduleBehavior_1.ScheduleBehavior {
+class SalonSchedule {
     /**
      * name
      */
@@ -22,7 +19,8 @@ class SalonSchedule extends ScheduleBehavior_1.ScheduleBehavior {
         //         res.send(err);
         //     res.json(bear);
         // });
-        DailyScheduleModel_1.DailyScheduleModel.create();
+        //COMMENTED BY DUE NGUYEN
+        //DailyScheduleModel.create()
         return undefined;
     }
     /**
@@ -35,27 +33,22 @@ class SalonSchedule extends ScheduleBehavior_1.ScheduleBehavior {
      * name
      */
     insertWeekly(schedule, callback) {
-        let weeklyScheduleProfile = schedule.exportProfile();
-        WeeklyScheduleModel_1.WeeklyScheduleModel.create(weeklyScheduleProfile, function (err, salonSchedule) {
+        //COMMENTED BY DUE NGUYENS
+        /*let weeklyScheduleProfile = schedule.exportProfile() as WeeklyScheduleProfile;
+        WeeklyScheduleModel.create(weeklyScheduleProfile, function(err: any, salonSchedule: WeeklyScheduleProfile){
             if (err) {
                 callback(ErrorMessage.ServerError, 500, undefined);
-            }
-            else {
+            } else {
                 console.log('why not?');
                 callback(undefined, 200, salonSchedule);
             }
-        });
+        });*/
     }
     /**
      * name
      */
     insertDaily(schedule, callback) {
     }
-    /**
-     * name
-     */
-    validate(schedule, callback) {
-    }
 }
 exports.SalonSchedule = SalonSchedule;
-//# sourceMappingURL=SalonScheduleBehavior.js.map
+//# sourceMappingURL=SalonSchedule.js.map

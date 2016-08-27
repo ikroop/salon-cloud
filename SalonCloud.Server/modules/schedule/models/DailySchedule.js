@@ -1,12 +1,16 @@
-"use strict";
-// import * as mongoose from "mongoose";
-const Schedule_1 = require('./Schedule');
-class DailySchedule extends Schedule_1.Schedule {
-    constructor(id, salonId, close, open, status, date) {
+/*import * as mongoose from "mongoose";
+import {Schedule} from './../ScheduleData';
+import {DailyScheduleProfile} from './DailyScheduleModel';
+
+export class DailySchedule extends Schedule {
+    private date: Date;
+
+    constructor(id: string, salonId: string, close: number, open:number, status: boolean, date: Date) {
         super(id, salonId, open, close, status);
         this.date = date;
     }
-    exportProfile() {
+
+    public exportProfile (): DailyScheduleProfile {
         let dailyScheduleProfile = {
             _id: this.id,
             salon_id: this.salon_id,
@@ -19,8 +23,8 @@ class DailySchedule extends Schedule_1.Schedule {
             status: this.status,
             date: this.date
         };
+
         return dailyScheduleProfile;
     }
-}
-exports.DailySchedule = DailySchedule;
+}*/ 
 //# sourceMappingURL=DailySchedule.js.map

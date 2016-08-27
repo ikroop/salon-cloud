@@ -4,9 +4,9 @@
 //
 //
 //
-import * as mongoose from "mongoose";
-import { DailyScheduleProfile, DailyScheduleSchema } from './models/DailyScheduleModel';
-import { WeeklyScheduleProfile, WeeklyScheduleSchema } from './models/WeeklyScheduleModel';
+/*import * as mongoose from "mongoose";
+//import { DailyScheduleProfile, DailyScheduleSchema } from './models/DailyScheduleModel';
+//import { WeeklyScheduleProfile, WeeklyScheduleSchema } from './models/WeeklyScheduleModel';
 
 export interface ScheduleNodeProfile{
     salon: {
@@ -37,3 +37,4 @@ export const ScheduleNodeSchema = new mongoose.Schema({
 });
 
 export const ScheduleNodeModel = mongoose.model('Schedule', ScheduleNodeSchema);
+*/

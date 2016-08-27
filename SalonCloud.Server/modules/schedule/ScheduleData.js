@@ -1,4 +1,7 @@
 "use strict";
+;
+;
+;
 class Schedule {
     /*
     constructor(public id, public salon_id, public close, public open, public status) {
@@ -39,4 +42,4 @@ class Schedule {
     }
 }
 exports.Schedule = Schedule;
-//# sourceMappingURL=Schedule.js.map
+//# sourceMappingURL=ScheduleData.js.map

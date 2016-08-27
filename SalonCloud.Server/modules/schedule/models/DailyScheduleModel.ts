@@ -1,5 +1,5 @@
-import * as mongoose from "mongoose";
-import {ScheduleProfile} from './ScheduleModel';
+/*import * as mongoose from "mongoose";
+//import {ScheduleProfile} from './ScheduleModel';
 // import {UserProfileSchema} from '../../user/UserProfile';
 
 export interface DailyScheduleProfile extends ScheduleProfile {
@@ -7,8 +7,6 @@ export interface DailyScheduleProfile extends ScheduleProfile {
 }
 
 export const DailyScheduleSchema = new mongoose.Schema({
-    id: String,
-    salon_id: {type: String, required: true},
     // employee_id: {type: String, required: true},
     // created_date: {type: Date, required: true},
     // last_modified: {type: Date, required: true},
@@ -20,3 +18,4 @@ export const DailyScheduleSchema = new mongoose.Schema({
 });
 
 export const DailyScheduleModel = mongoose.model('DailySchedule', DailyScheduleSchema);
+*/

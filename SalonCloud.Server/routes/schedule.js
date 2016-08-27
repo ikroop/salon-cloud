@@ -1,5 +1,5 @@
 "use strict";
-const SalonScheduleBehavior_1 = require('../modules/schedule/SalonScheduleBehavior');
+const SalonSchedule_1 = require('../modules/schedule/SalonSchedule');
 const WeeklySchedule_1 = require('../modules/schedule/models/WeeklySchedule');
 // import {WeeklyScheduleModel} from '../modules/schedules/models/WeeklyScheduleModel';
 var ErrorMessage = require('./ErrorMessage');
@@ -43,7 +43,7 @@ var route;
    */
             // TODO: access DB here
             // then return
-            var salonScheduleBehavior = new SalonScheduleBehavior_1.SalonSchedule();
+            var salonScheduleBehavior = new SalonSchedule_1.SalonSchedule();
             var startDate = new Date();
             var endDate = startDate;
             salonScheduleBehavior.getSchedule(startDate, endDate, function (err, code, data) {
@@ -102,7 +102,7 @@ var route;
             //     dayofweek: req.body.weekday,
             // };
             let insertedSchedule = new WeeklySchedule_1.WeeklySchedule(undefined, req.body.salon_id, req.body.open_time, req.body.close_time, req.body.status, req.body.weekday);
-            var salonSchedule = new SalonScheduleBehavior_1.SalonSchedule();
+            var salonSchedule = new SalonSchedule_1.SalonSchedule();
             salonSchedule.insertWeekly(insertedSchedule, function (err, code, data) {
                 res.statusCode = code;
                 if (err) {

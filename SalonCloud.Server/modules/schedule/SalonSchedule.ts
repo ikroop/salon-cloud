@@ -1,10 +1,16 @@
-import { ScheduleBehavior } from './ScheduleBehavior';
-import {Schedule} from './models/Schedule';
-import {DailyScheduleModel} from './models/DailyScheduleModel';
-import {WeeklyScheduleModel} from './models/WeeklyScheduleModel';
-import {WeeklyScheduleProfile} from './models/WeeklyScheduleModel';
-import {DailySchedule} from './models/DailySchedule';
-import {WeeklySchedule} from './models/WeeklySchedule';
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+import {ScheduleBehavior} from './ScheduleBehavior';
+//import {Schedule} from './models/Schedule';
+//import {DailyScheduleModel} from './models/DailyScheduleModel';
+import {ScheduleModel} from './ScheduleModel';
+//import {WeeklyScheduleProfile} from './models/WeeklyScheduleModel';
+import {WeeklyScheduleData, DailyScheduleData} from './ScheduleData';
 import * as mongoose from "mongoose";
 var ErrorMessage = require('./../../routes/ErrorMessage')
 
@@ -19,34 +25,37 @@ export const WeeklyScheduleSchema = new mongoose.Schema(
     }
 );
 
-export class SalonSchedule extends ScheduleBehavior {
+export class SalonSchedule implements ScheduleBehavior {
 
     /**
      * name
      */
-    public getSchedule(startDate: Date, endDate: Date, callback): [DailySchedule] {
+    public getSchedule(startDate: Date, endDate: Date, callback): [DailyScheduleData] {
         // DailyScheduleModel.
         // Bear.findById(req.params.bear_id, function(err, bear) {
         //     if (err)
         //         res.send(err);
         //     res.json(bear);
         // });
-        DailyScheduleModel.create()
+        
+        //COMMENTED BY DUE NGUYEN
+        //DailyScheduleModel.create()
         return undefined;
     }
 
     /**
      * name
      */
-    public getWeeklySchedule(callback): [WeeklySchedule] {
+    public getWeeklySchedule(callback): [WeeklyScheduleData] {
         return undefined;
     }
 
     /**
      * name
      */
-    public insertWeekly(schedule: WeeklySchedule, callback) {
-        let weeklyScheduleProfile = schedule.exportProfile() as WeeklyScheduleProfile;
+    public insertWeekly(schedule: WeeklyScheduleData, callback) {
+        //COMMENTED BY DUE NGUYENS
+        /*let weeklyScheduleProfile = schedule.exportProfile() as WeeklyScheduleProfile;
         WeeklyScheduleModel.create(weeklyScheduleProfile, function(err: any, salonSchedule: WeeklyScheduleProfile){
             if (err) {
                 callback(ErrorMessage.ServerError, 500, undefined);
@@ -54,20 +63,15 @@ export class SalonSchedule extends ScheduleBehavior {
                 console.log('why not?');
                 callback(undefined, 200, salonSchedule);
             }
-        });
+        });*/
     }
 
     /**
      * name
      */
-    public insertDaily(schedule: DailySchedule, callback) {
+    public insertDaily(schedule: DailyScheduleData, callback) {
 
     }
 
-    /**
-     * name
-     */
-    public validate(schedule: Schedule, callback) {
-
-    }
+    
 }

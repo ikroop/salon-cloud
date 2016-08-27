@@ -1,6 +1,6 @@
 // import * as mongoose from "mongoose";
-import {Schedule} from './Schedule';
-import {WeeklyScheduleProfile} from './WeeklyScheduleModel';
+//import {Schedule} from './Schedule';
+/*import {WeeklyScheduleProfile} from './WeeklyScheduleModel';
 
 
 export class WeeklySchedule extends Schedule {
@@ -28,4 +28,5 @@ export class WeeklySchedule extends Schedule {
         return weeklyScheduleProfile;
     }
 }
+*/
 

@@ -1,12 +1,17 @@
-"use strict";
 // import * as mongoose from "mongoose";
-const Schedule_1 = require('./Schedule');
-class WeeklySchedule extends Schedule_1.Schedule {
-    constructor(id, salonId, close, open, status, dayOfWeek) {
+//import {Schedule} from './Schedule';
+/*import {WeeklyScheduleProfile} from './WeeklyScheduleModel';
+
+
+export class WeeklySchedule extends Schedule {
+    dayofweek: number;
+
+    constructor(id: string, salonId: string, close: number, open:number, status: boolean, dayOfWeek: number) {
         super(id, salonId, open, close, status);
         this.dayofweek = dayOfWeek;
     }
-    exportProfile() {
+
+    public exportProfile (): WeeklyScheduleProfile {
         let weeklyScheduleProfile = {
             _id: this.id,
             salon_id: this.salon_id,
@@ -19,8 +24,9 @@ class WeeklySchedule extends Schedule_1.Schedule {
             status: this.status,
             dayofweek: this.dayofweek
         };
+
         return weeklyScheduleProfile;
     }
 }
-exports.WeeklySchedule = WeeklySchedule;
+*/
 //# sourceMappingURL=WeeklySchedule.js.map

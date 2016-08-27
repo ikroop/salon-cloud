@@ -1,10 +1,7 @@
-/// <reference path="ScheduleNodeModel.ts" />
+
 /// <reference path="ScheduleBehavior.ts" />
-/// <reference path="SalonScheduleBehavior.ts" />
-/// <reference path="EmployeeScheduleBehavior.ts" />
-/// <reference path="models/Schedule.ts" />
-/// <reference path="models/DailySchedule.ts" />
-/// <reference path="models/WeeklySchedule.ts" />
-/// <reference path="models/ScheduleModel.ts" />
-/// <reference path="models/DailyScheduleModel.ts" />
-/// <reference path="models/WeeklyScheduleModel.ts" />
+/// <reference path="SalonSchedule.ts" />
+/// <reference path="EmployeeSchedule.ts" />
+/// <reference path="ScheduleData.ts" />
+/// <reference path="ScheduleModel.ts" />
+
