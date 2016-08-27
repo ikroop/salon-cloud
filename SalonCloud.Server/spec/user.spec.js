@@ -38,7 +38,6 @@ describe('User', function () {
                         if (err) {
                             throw err;
                         }
-                        console.log('body:', res.body);
                         validToken = res.body.auth.token;
                         invalidToken = '1234455';
                         salon_id = "57c0afac9265a426237f6f5f"; //(new Date().getTime()).toString();
