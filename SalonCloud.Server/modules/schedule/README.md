@@ -25,11 +25,11 @@ export const ScheduleSchema = new mongoose.Schema({
 		weekly: [WeeklySchema],
 		daily: [DailySchema]
 	},
-	employee:{
+	employee:[{
 		employee_id: { type: String, required: true },
 		weekly: [WeeklySchema],
 		daily: [DailySchema]
-	}
+	}]
 }, { _id: false })
 module.exports = mongoose.model<ScheduleData>('schedule', ScheduleSchema);
 ```
