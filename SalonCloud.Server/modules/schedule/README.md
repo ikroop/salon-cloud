@@ -30,7 +30,7 @@ export const ScheduleSchema = new mongoose.Schema({
 		weekly: [WeeklySchema],
 		daily: [DailySchema]
 	}
-})
+}, { _id: false })
 module.exports = mongoose.model<ScheduleData>('schedule', ScheduleSchema);
 ```
 **ScheduleData.ts**
