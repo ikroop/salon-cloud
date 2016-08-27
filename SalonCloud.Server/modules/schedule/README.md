@@ -52,6 +52,14 @@ export interface ScheduleBehavior{
 **SalonSchedule.ts**
 ```
 class SalonSchedule implements ScheduleBehavior{
+    	private Schedule:ScheduleData;
+    	constructor(id:string){
+    		.....
+    		this.Schedule.id = id;
+    	}
+    	getSchedule(){
+    		return Schedule;
+    	}
 	.......
 }
 ```
