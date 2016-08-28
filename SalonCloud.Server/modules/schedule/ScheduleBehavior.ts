@@ -4,8 +4,8 @@
 //
 //
 //
-import { DailyScheduleData } from './models/ScheduleData';
-import { WeeklyScheduleData } from './models/ScheduleData';
+import { DailyScheduleData } from './ScheduleData';
+import { WeeklyScheduleData } from './ScheduleData';
 
 export interface ScheduleBehavior{
     /**
@@ -21,7 +21,7 @@ export interface ScheduleBehavior{
     /**
      * name
      */
-    insertWeekly(schedule: WeeklyScheduleData, callback);
+    insertWeekly(salonId: string, schedule: WeeklyScheduleData, callback);
 
     /**
      * name

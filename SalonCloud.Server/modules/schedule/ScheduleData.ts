@@ -6,6 +6,7 @@ export interface WeeklyScheduleData{
     // created_date: Date,
     // last_modified: Date,
     // created_by: <UserProfile>,
+    _id: number,
     close: number,
     open: number,
     status: boolean,
@@ -17,6 +18,7 @@ export interface DailyScheduleData{
     // created_date: Date,
     // last_modified: Date,
     // created_by: <UserProfile>,
+    _id: number,
     close: number,
     open: number,
     status: boolean,
@@ -40,7 +42,8 @@ export interface ScheduleData {
         employee_id: string,
         weekly: [WeeklyScheduleData],
         daily: [DailyScheduleData]
-    }]
+    }],
+    test: [WeeklyScheduleData]
 };
 
 
