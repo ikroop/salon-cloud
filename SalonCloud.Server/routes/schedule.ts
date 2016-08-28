@@ -9,9 +9,9 @@ import fs = require('fs');
 import {Validator} from '../core/validator/Validator';
 import {SalonSchedule} from '../modules/schedule/SalonSchedule';
 // import {ScheduleProfile} from '../modules/schedules/ScheduleProfile';
-import {DailySchedule} from '../modules/schedule/models/DailySchedule';
-import {DailyScheduleModel} from '../modules/schedule/models/DailyScheduleModel';
-import {WeeklySchedule} from '../modules/schedule/models/WeeklySchedule';
+//import {DailySchedule} from '../modules/schedule/models/DailySchedule';
+//import {DailyScheduleModel} from '../modules/schedule/models/DailyScheduleModel';
+import {WeeklyScheduleData} from '../modules/schedule/ScheduleData';
 // import {WeeklyScheduleModel} from '../modules/schedules/models/WeeklyScheduleModel';
 
 var ErrorMessage = require('./ErrorMessage');
@@ -118,9 +118,15 @@ module route {
             //     close: req.body.close_time,
             //     dayofweek: req.body.weekday,
             // };
-            let insertedSchedule = new WeeklySchedule(undefined, req.body.salon_id, req.body.open_time, req.body.close_time, req.body.status, req.body.weekday);
+            var insertedSchedule = {
+                 _id: req.body.day_of_week,
+                close: req.body.close,
+                open: req.body.open,
+                status: req.body.status,
+                day_of_week: req.body.day_of_week
+            };
             var salonSchedule = new SalonSchedule();
-            salonSchedule.insertWeekly(insertedSchedule, function(err, code, data){
+            salonSchedule.insertWeekly(req.body.salon_id ,insertedSchedule, function(err, code, data){
                 res.statusCode = code;
                 if (err) {
                     return res.json(err);

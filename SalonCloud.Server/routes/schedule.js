@@ -1,6 +1,5 @@
 "use strict";
 const SalonSchedule_1 = require('../modules/schedule/SalonSchedule');
-const WeeklySchedule_1 = require('../modules/schedule/models/WeeklySchedule');
 // import {WeeklyScheduleModel} from '../modules/schedules/models/WeeklyScheduleModel';
 var ErrorMessage = require('./ErrorMessage');
 // var Authentication = require('../modules/salon/Salon');
@@ -101,9 +100,15 @@ var route;
             //     close: req.body.close_time,
             //     dayofweek: req.body.weekday,
             // };
-            let insertedSchedule = new WeeklySchedule_1.WeeklySchedule(undefined, req.body.salon_id, req.body.open_time, req.body.close_time, req.body.status, req.body.weekday);
+            var insertedSchedule = {
+                _id: req.body.day_of_week,
+                close: req.body.close,
+                open: req.body.open,
+                status: req.body.status,
+                day_of_week: req.body.day_of_week
+            };
             var salonSchedule = new SalonSchedule_1.SalonSchedule();
-            salonSchedule.insertWeekly(insertedSchedule, function (err, code, data) {
+            salonSchedule.insertWeekly(req.body.salon_id, insertedSchedule, function (err, code, data) {
                 res.statusCode = code;
                 if (err) {
                     return res.json(err);
