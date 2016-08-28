@@ -269,6 +269,12 @@ module.exports = {
             'name': 'ProfileAlreadyExist',
             'message': 'Social Security Number is wrong format.'
         }
+    },
+    'NotEnoughDaysOfWeek': {
+        'err': {
+            'name': 'NotEnoughDaysOfWeek',
+            'message': 'A weekly schedule must have 7 days!'
+        }
     }
 };
 //# sourceMappingURL=ErrorMessage.js.map
