@@ -3,6 +3,7 @@
 //import {DailyScheduleModel} from './models/DailyScheduleModel';
 const ScheduleModel_1 = require('./ScheduleModel');
 const mongoose = require("mongoose");
+const validator_1 = require('./../../core/validator/validator');
 var ErrorMessage = require('./../../routes/ErrorMessage');
 exports.WeeklyScheduleSchema = new mongoose.Schema({
     salon_id: { type: String, required: true },
@@ -64,12 +65,12 @@ class SalonSchedule {
                 console.log(2);
                 return;
             }
-            if (!schedules[i].open) {
+            if (schedules[i].open == undefined) {
                 callback(ErrorMessage.MissingScheduleOpenTime, 400, undefined);
                 console.log(3);
                 return;
             }
-            if (!schedules[i].close) {
+            if (schedules[i].close == undefined) {
                 callback(ErrorMessage.MissingScheduleCloseTime, 400, undefined);
                 console.log(4);
                 return;
@@ -78,6 +79,22 @@ class SalonSchedule {
                 console.log(schedules[i]);
                 callback(ErrorMessage.MissingScheduleDayOfWeek, 400, undefined);
                 console.log(5);
+                return;
+            }
+            if (!validator_1.Validator.IsValidWeekDay(schedules[i].day_of_week)) {
+                callback(ErrorMessage.InvalidScheduleDayOfWeek, 400, undefined);
+                return;
+            }
+            if (!validator_1.Validator.IsValidScheduleTime(schedules[i].open)) {
+                callback(ErrorMessage.InvalidScheduleOpenTime, 400, undefined);
+                return;
+            }
+            if (!validator_1.Validator.IsValidScheduleTime(schedules[i].close)) {
+                callback(ErrorMessage.InvalidScheduleCloseTime, 400, undefined);
+                return;
+            }
+            if (!validator_1.Validator.IsValidCloseTimeForOpenTime(schedules[i].open, schedules[i].close)) {
+                callback(ErrorMessage.CloseTimeGreaterThanOpenTime, 400, undefined);
                 return;
             }
         }

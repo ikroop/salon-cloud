@@ -12,6 +12,7 @@ import {ScheduleModel} from './ScheduleModel';
 //import {WeeklyScheduleProfile} from './models/WeeklyScheduleModel';
 import {WeeklyScheduleData, DailyScheduleData} from './ScheduleData';
 import * as mongoose from "mongoose";
+import {Validator} from './../../core/validator/validator';
 var ErrorMessage = require('./../../routes/ErrorMessage')
 
 
@@ -86,12 +87,12 @@ export class SalonSchedule implements ScheduleBehavior {
 
                 return;
             }
-            if(!schedules[i].open){
+            if(schedules[i].open==undefined){
                 callback(ErrorMessage.MissingScheduleOpenTime, 400, undefined);
                 console.log(3);
                 return;
             }
-            if(!schedules[i].close){
+            if(schedules[i].close==undefined){
                 callback(ErrorMessage.MissingScheduleCloseTime, 400, undefined);
                 console.log(4);
 
@@ -103,6 +104,23 @@ export class SalonSchedule implements ScheduleBehavior {
                 console.log(5);
                 return;
             }
+            if(!Validator.IsValidWeekDay(schedules[i].day_of_week)){
+                callback(ErrorMessage.InvalidScheduleDayOfWeek, 400, undefined);
+                return;
+            }
+            if(!Validator.IsValidScheduleTime(schedules[i].open)){
+                callback(ErrorMessage.InvalidScheduleOpenTime, 400, undefined);
+                return;
+            }
+            if(!Validator.IsValidScheduleTime(schedules[i].close)){
+                callback(ErrorMessage.InvalidScheduleCloseTime, 400, undefined);
+                return;
+            }
+            if(!Validator.IsValidCloseTimeForOpenTime(schedules[i].open, schedules[i].close)){
+                callback(ErrorMessage.CloseTimeGreaterThanOpenTime, 400, undefined);
+                return;
+            }
+
         }
 
 
