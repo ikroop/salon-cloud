@@ -21,7 +21,7 @@ export interface ScheduleBehavior{
     /**
      * name
      */
-    insertWeekly(salonId: string, schedule: WeeklyScheduleData, callback);
+    insertWeekly(salonId: string, schedules: Array<WeeklyScheduleData>, callback);
 
     /**
      * name

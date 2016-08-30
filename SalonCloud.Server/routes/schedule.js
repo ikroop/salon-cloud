@@ -100,13 +100,17 @@ var route;
             //     close: req.body.close_time,
             //     dayofweek: req.body.weekday,
             // };
-            var insertedSchedule = {
-                _id: req.body.day_of_week,
-                close: req.body.close,
-                open: req.body.open,
-                status: req.body.status,
-                day_of_week: req.body.day_of_week
-            };
+            var insertedSchedule = [];
+            for (var i = 0; i < req.body.weekly_schedules.length; i++) {
+                var obj = {
+                    _id: req.body.weekly_schedules[i].day_of_week,
+                    close: req.body.weekly_schedules[i].close,
+                    open: req.body.weekly_schedules[i].open,
+                    status: req.body.weekly_schedules[i].status,
+                    day_of_week: req.body.weekly_schedules[i].day_of_week
+                };
+                insertedSchedule.push(obj);
+            }
             var salonSchedule = new SalonSchedule_1.SalonSchedule();
             salonSchedule.insertWeekly(req.body.salon_id, insertedSchedule, function (err, code, data) {
                 res.statusCode = code;
