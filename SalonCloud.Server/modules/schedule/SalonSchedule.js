@@ -38,7 +38,49 @@ class SalonSchedule {
     /**
      * name
      */
-    insertWeekly(salonId, schedule, callback) {
+    insertWeekly(salonId, schedules, callback) {
+        if (!salonId) {
+            callback(ErrorMessage.MissingSalonId, 400, undefined);
+            console.log(7);
+            return;
+        }
+        if (schedules.length != 7) {
+            callback(ErrorMessage.WrongNumberOfDaysOfWeek, 400, undefined);
+            console.log(6);
+            return;
+        }
+        var duplicateCheckList = [];
+        for (var i = 0; i <= 6; i++) {
+            if (duplicateCheckList.indexOf(schedules[i]._id) != -1) {
+                callback(ErrorMessage.DuplicateDaysOfWeek, 400, undefined);
+                console.log(1);
+                return;
+            }
+            else {
+                duplicateCheckList.push(schedules[i]._id);
+            }
+            if (schedules[i].status == undefined) {
+                callback(ErrorMessage.MissingScheduleStatus, 400, undefined);
+                console.log(2);
+                return;
+            }
+            if (!schedules[i].open) {
+                callback(ErrorMessage.MissingScheduleOpenTime, 400, undefined);
+                console.log(3);
+                return;
+            }
+            if (!schedules[i].close) {
+                callback(ErrorMessage.MissingScheduleCloseTime, 400, undefined);
+                console.log(4);
+                return;
+            }
+            if (schedules[i].day_of_week == undefined) {
+                console.log(schedules[i]);
+                callback(ErrorMessage.MissingScheduleDayOfWeek, 400, undefined);
+                console.log(5);
+                return;
+            }
+        }
         ScheduleModel_1.ScheduleModel.findOne({ "_id": salonId }, function (err, docs) {
             if (err) {
                 console.log(err);
@@ -53,13 +95,7 @@ class SalonSchedule {
                     // last_modified: {type: Date, required: true},
                     // created_by: {type: UserProfileSchema, required: true},
                     salon: {
-                        weekly: [{
-                                _id: schedule.day_of_week,
-                                close: schedule.close,
-                                open: schedule.open,
-                                status: schedule.status,
-                                day_of_week: schedule.day_of_week
-                            }],
+                        weekly: schedules,
                         daily: undefined
                     },
                     employee: undefined
@@ -67,36 +103,35 @@ class SalonSchedule {
                 ScheduleModel_1.ScheduleModel.create(newSchedule, function (err, newSchedule) {
                     if (err) {
                         callback(ErrorMessage.ServerError, 500, undefined);
+                        return;
                     }
                     else {
-                        callback(undefined, 200, schedule);
+                        callback(undefined, 200, schedules);
+                        return;
                     }
                 });
             }
             else {
-                var item = docs.salon.weekly.id(schedule.day_of_week);
-                console.log('BOOOOOOOOBBB ' + item);
-                var targetSchedule = docs.salon.weekly.filter(function (x) {
-                    return x._id == schedule.day_of_week;
-                });
-                /*if(targetSchedule.length == 0){
-                    docs.salon.weekly.push(schedule);
-                }else{
-
+                console.log('KKKKKK' + docs.salon.weekly[0]);
+                console.log('HHHHHHH' + schedules[0]);
+                docs.salon.weekly = schedules;
+                /*for(var i=0; i<=6; i++){
+                    docs.salon.weekly[i] = schedules[i];
                 }*/
-                console.log('CAAAAAAAAACCC' + targetSchedule);
+                console.log('HHHHHHHOOOOOO' + schedules[0]);
+                console.log('KKKKKKOOOOO' + docs.salon.weekly[0]);
+                docs.save(function (err) {
+                    if (err) {
+                        callback(err, 500, undefined);
+                        return;
+                    }
+                    else {
+                        callback(undefined, 200, schedules);
+                        return;
+                    }
+                });
             }
         });
-        //COMMENTED BY DUE NGUYENS
-        /*let weeklyScheduleProfile = schedule.exportProfile() as WeeklyScheduleProfile;
-        WeeklyScheduleModel.create(weeklyScheduleProfile, function(err: any, salonSchedule: WeeklyScheduleProfile){
-            if (err) {
-                callback(ErrorMessage.ServerError, 500, undefined);
-            } else {
-                console.log('why not?');
-                callback(undefined, 200, salonSchedule);
-            }
-        });*/
     }
     /**
      * name
