@@ -186,10 +186,10 @@ module.exports = {
             'message': 'Schedule close time is required!'
         }
     },
-    'MissingScheduleWeekday': {
+    'MissingScheduleDayOfWeek': {
         'err': {
-            'name': 'MissingScheduleWeekday',
-            'message': 'Schedule weekday is required!'
+            'name': 'MissingScheduleDayOfWeek',
+            'message': 'Schedule day of week is required!'
         }
     },
     'InvalidScheduleOpenTime': {
@@ -210,9 +210,9 @@ module.exports = {
             'message': 'Close time can not be greater than open time!'
         }
     },
-    'InvalidScheduleWeekday': {
+    'InvalidScheduleDayOfWeek': {
         'err': {
-            'name': 'InvalidScheduleWeekday',
+            'name': 'InvalidScheduleDayOfWeek',
             'message': 'Weekday must be integer and range from 0 to 6!'
         }
     },
@@ -270,11 +270,17 @@ module.exports = {
             'message': 'Social Security Number is wrong format.'
         }
     },
-    'NotEnoughDaysOfWeek':{
+    'WrongNumberOfDaysOfWeek':{
         'err': {
-                'name': 'NotEnoughDaysOfWeek',
+                'name': 'WrongNumberOfDaysOfWeek',
                 'message': 'A weekly schedule must have 7 days!'
            }
 
+    },
+    'DuplicateDaysOfWeek': {
+        'err': {
+                'name': 'DuplicateDaysOfWeek',
+                'message': 'day_of_week in schedules must be unique!'
+           }
     }
 };
