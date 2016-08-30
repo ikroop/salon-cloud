@@ -28,6 +28,7 @@ exports.DailyScheduleSchema = new mongoose.Schema({
     _id: false,
     timestamps: { createdAt: 'created_at', modifiedAt: 'modified_at' }
 });
+exports.DailyScheduleModel = mongoose.model('DailySchedule', exports.DailyScheduleSchema);
 exports.ScheduleSchema = new mongoose.Schema({
     _id: String,
     // employee_id: {type: String, required: true},

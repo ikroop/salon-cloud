@@ -8,11 +8,12 @@
 import {ScheduleBehavior} from './ScheduleBehavior';
 //import {Schedule} from './models/Schedule';
 //import {DailyScheduleModel} from './models/DailyScheduleModel';
-import {ScheduleModel} from './ScheduleModel';
+import {ScheduleModel, DailyScheduleModel} from './ScheduleModel';
 //import {WeeklyScheduleProfile} from './models/WeeklyScheduleModel';
 import {WeeklyScheduleData, DailyScheduleData} from './ScheduleData';
 import * as mongoose from "mongoose";
 var ErrorMessage = require('./../../routes/ErrorMessage')
+var Validator = require('./../../core/validator/Validator')
 
 
 export const WeeklyScheduleSchema = new mongoose.Schema(
@@ -34,15 +35,42 @@ export class SalonSchedule implements ScheduleBehavior {
 
     };
     public getSchedule(startDate: Date, endDate: Date, callback): [DailyScheduleData] {
-        // DailyScheduleModel.
-        // Bear.findById(req.params.bear_id, function(err, bear) {
-        //     if (err)
-        //         res.send(err);
-        //     res.json(bear);
-        // });
-        
-        //COMMENTED BY DUE NGUYEN
-        //DailyScheduleModel.create()
+        if (startDate == null) {
+            callback(ErrorMessage.MissingStartDate, 400, undefined);
+            return null;
+        } 
+
+        if (Validator.IsValidDate(startDate) == false) {
+            callback(ErrorMessage.InvalidStartDate, 400, undefined);
+            return null;
+        }
+
+        if (endDate == null) {
+            callback(ErrorMessage.MissingEndDate, 400, undefined);
+            return null;
+        } 
+
+        if (Validator.IsValidDate(endDate) == false) {
+            callback(ErrorMessage.InvalidEndDate, 400, undefined);
+            return null;
+        }
+
+        if (startDate.getTime() > endDate.getTime()) {
+            callback(ErrorMessage.InvalidEndDateForStartDate, 400, undefined);
+            return null;
+        }
+
+        let dateRangeCondition = {date: { $gte: startDate, $lt: endDate}};
+        DailyScheduleModel.find(dateRangeCondition, function(err, dailySchedules) {
+            if (err) {
+                // ToDo: throw error
+                callback(ErrorMessage.ServerError, 500, undefined);
+                return null;
+            }
+
+            return dailySchedules;
+        })
+
         return undefined;
     }
 
