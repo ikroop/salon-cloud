@@ -537,16 +537,11 @@ getDailyScheduleRecord(date, function(err, data){
             <elementDefinition Id="d5dc0dbc-255b-46cd-8765-691f0f4a1474" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="cbfaf077-2de9-40b2-899f-7ae302e81dad" direction="Return" isUnique="false">
-                  <elementDefinition Id="3057ca53-ea45-41f9-8cfe-d66e2a7754df" />
+                <parameter Id="6b8d8c12-8e35-47ed-b3ac-866ddd45b5e2" direction="Return" isUnique="false">
+                  <elementDefinition Id="a85e3ca9-3ab1-4a57-b221-5112dfc81de6" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="3257d118-53bd-4587-9e65-dfaae55728eb" LastKnownName="WeeklyScheduleData" />
+                    <referencedTypeMoniker Id="daa20b37-ae19-40a8-8ff5-a2e322a67bd1" LastKnownName="Array&lt;WeeklyScheduleData&gt;" />
                   </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="a8883b5b-9cc2-49d8-9f56-a200848df80c" name="callback" direction="In" isUnique="false">
-                  <elementDefinition Id="c2219b60-7688-4729-8a9e-a9a14f3c07c8" />
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
@@ -576,14 +571,6 @@ getDailyScheduleRecord(date, function(err, data){
             <elementDefinition Id="f1b3d660-ebd5-4077-a77a-487d87c92589" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="db53208d-da78-4508-a495-69d01080e236" name="weeklySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="2761d505-cd1c-4eb9-8762-6587750f6c76" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="3257d118-53bd-4587-9e65-dfaae55728eb" LastKnownName="WeeklyScheduleData" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
                 <parameter Id="4ca84a8d-e64b-4055-bd09-361b5e2db162" direction="Return" isUnique="false">
                   <elementDefinition Id="0948e8c1-9a52-4218-9160-8a8413b06bb7" />
                   <type_NamedElement>
@@ -597,18 +584,18 @@ getDailyScheduleRecord(date, function(err, data){
             <elementDefinition Id="62ed84a1-67d8-40f7-a5be-272cfcc21d17" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="812213d5-3115-4ee7-be37-a295ca746f3e" name="weeklySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="992ceb8f-78ed-4540-8d2c-f04b82c75503" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="3257d118-53bd-4587-9e65-dfaae55728eb" LastKnownName="WeeklyScheduleData" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
                 <parameter Id="d5f4310a-f88c-425f-ad71-b10434b989ff" direction="Return" isUnique="false">
                   <elementDefinition Id="5f6e55a3-3d36-4cab-ba3f-cafdf3bdddd8" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="a7c734bd-d47d-4bb2-9a3d-18f547397d2d" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="3274f74a-139d-4434-baf5-7039b88b0f70" name="weeklySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="f4c9efb5-12a8-4070-9312-3d71cf9849c3" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="daa20b37-ae19-40a8-8ff5-a2e322a67bd1" LastKnownName="Array&lt;WeeklyScheduleData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -618,18 +605,18 @@ getDailyScheduleRecord(date, function(err, data){
             <elementDefinition Id="96bb01c2-ebeb-4185-9f1d-f6a03adbbf13" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="04edc84d-1db7-4595-85e9-545e7546ffc1" name="weeklySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="6d9d34d5-44f5-4128-8998-c7b114e1d2aa" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="3257d118-53bd-4587-9e65-dfaae55728eb" LastKnownName="WeeklyScheduleData" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
                 <parameter Id="430db523-58cd-459d-b3bf-f12efd897d3d" direction="Return" isUnique="false">
                   <elementDefinition Id="fa28118e-f329-421a-833c-0a716fa87727" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="a7c734bd-d47d-4bb2-9a3d-18f547397d2d" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="5cd19adb-de65-4255-adb6-45a9b1abba56" name="weeklySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="cfdfaefb-f406-496c-a667-6a91824189ca" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="daa20b37-ae19-40a8-8ff5-a2e322a67bd1" LastKnownName="Array&lt;WeeklyScheduleData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -748,15 +735,10 @@ getDailyScheduleRecord(date, function(err, data){
             <elementDefinition Id="95038917-fca7-4c88-a7d7-76060e507b44" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="40881808-8128-4cbf-942c-035e0d51ba10" name="callback" direction="In" isUnique="false">
-                  <elementDefinition Id="22180477-b1f8-4ce9-86d5-a51aeaa86762" />
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="8e2bcae5-8adc-44e0-9d28-fb7d09861e33" direction="Return" isUnique="false">
-                  <elementDefinition Id="aef613aa-365a-443e-99d4-868669e7300c" />
+                <parameter Id="d91d3786-cac3-4e7b-a01b-338753bc88b9" direction="Return" isUnique="false">
+                  <elementDefinition Id="b4f13d1a-afc6-43e5-91c2-d9b4e6c79200" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="3257d118-53bd-4587-9e65-dfaae55728eb" LastKnownName="WeeklyScheduleData" />
+                    <referencedTypeMoniker Id="daa20b37-ae19-40a8-8ff5-a2e322a67bd1" LastKnownName="Array&lt;WeeklyScheduleData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -881,15 +863,10 @@ getDailyScheduleRecord(date, function(err, data){
             <elementDefinition Id="f1c0a7b1-333f-4552-ba19-08e67778e50b" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="86a82ab5-1c55-4c7e-9674-fcb83bf9da1f" name="callback" direction="In" isUnique="false">
-                  <elementDefinition Id="e4d2bcdb-58cd-451d-8011-ba8a4b2c2c03" />
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="10dbd6c8-d49e-4ec7-b6bd-bac8436acead" direction="Return" isUnique="false">
-                  <elementDefinition Id="97647e76-de89-41f7-9df5-6c6d64c5903b" />
+                <parameter Id="ad9bb16b-d845-4089-b456-08aab5373fa2" direction="Return" isUnique="false">
+                  <elementDefinition Id="70da423d-f4b3-4c54-aa40-dd8409bc1bff" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="3257d118-53bd-4587-9e65-dfaae55728eb" LastKnownName="WeeklyScheduleData" />
+                    <referencedTypeMoniker Id="daa20b37-ae19-40a8-8ff5-a2e322a67bd1" LastKnownName="Array&lt;WeeklyScheduleData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -972,11 +949,6 @@ getDailyScheduleRecord(date, function(err, data){
     <packageHasNamedElement>
       <referencedType Id="db5a99ae-f8ec-44a8-8c59-534ec37a0000" name="SalonCloudResponse&lt;boolean&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;boolean&gt;">
         <elementDefinition Id="4a6479c9-bc02-4d0d-b08b-e78e471e785d" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <referencedType Id="3257d118-53bd-4587-9e65-dfaae55728eb" name="WeeklyScheduleData" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::WeeklyScheduleData">
-        <elementDefinition Id="63ea496c-3671-4aeb-9bf8-84ce1d112310" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>
