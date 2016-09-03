@@ -7,11 +7,9 @@ import methodOverride = require("method-override");
 import * as mongoose from "mongoose";
 import * as passport from "passport";
 import * as passportLocal from "passport-local";
-var AuthRoute = require ("./routes/authentication");
-var SalonRoute = require("./routes/salon");
-var ScheduleRoute = require("./routes/schedule");
-var UserRoute = require ("./routes/user"); 
-var AuthenticationModel = require ("./core/authentication/AuthenticationModel");
+var AnomymousRoute = require ("./routes/Anomymous");
+var AuthenticationRoute = require("./routes/Authentication");
+var UserModel = require ("./core/user/UserModel");
 var app = express();
 
 // Configuration
@@ -29,9 +27,9 @@ app.use(passport.session());
 
 // passport config
 var LocalStrategy = passportLocal.Strategy;
-passport.use(new LocalStrategy(AuthenticationModel.authenticate()));
-passport.serializeUser(AuthenticationModel.serializeUser());
-passport.deserializeUser(AuthenticationModel.deserializeUser());
+passport.use(new LocalStrategy(UserModel.authenticate()));
+passport.serializeUser(UserModel.serializeUser());
+passport.deserializeUser(UserModel.deserializeUser());
 
 var env = process.env.NODE_ENV || 'development';
 
@@ -48,20 +46,20 @@ app.get('/', (req, res) => {
 });
 
 //Authentication
-app.post('/auth/signupwithemailandpassword', AuthRoute.signUpWithEmailAndPassword);
-app.post('/auth/SigninWithEmailAndPassword', AuthRoute.signInWithEmailAndPassword);
+app.post('/auth/signupwithemailandpassword', AnomymousRoute.signUpWithEmailAndPassword);
+app.post('/auth/SigninWithEmailAndPassword', AnomymousRoute.signInWithEmailAndPassword);
 
 //User
-app.post('/user/createProfile', AuthRoute.verifyToken, UserRoute.createProfile);
+//app.post('/user/createProfile', AuthenticationRoute.verifyToken, UserRoute.createProfile);
 
 //Salon
-app.post('/salon/createinformation', AuthRoute.verifyToken, SalonRoute.createInformation);
+//app.post('/salon/createinformation', AuthenticationRoute.verifyToken, SalonRoute.createInformation);
 
 //Schedule
-app.get('/schedule/getsalondailyschedules', AuthRoute.verifyToken, ScheduleRoute.getSalonDailySchedule);
-app.get('/schedule/getemployeedailyschedules', AuthRoute.verifyToken, ScheduleRoute.getEmployeeDailySchedule);
-app.post('/schedule/insertsalonweeklyschedule', AuthRoute.verifyToken, ScheduleRoute.insertSalonWeeklySchedule);
-app.post('/schedule/insertsalondailyschedule', AuthRoute.verifyToken, ScheduleRoute.insertSalonDailySchedule);
+//app.get('/schedule/getsalondailyschedules', AuthenticationRoute.verifyToken, ScheduleRoute.getSalonDailySchedule);
+//app.get('/schedule/getemployeedailyschedules', AuthenticationRoute.verifyToken, ScheduleRoute.getEmployeeDailySchedule);
+//app.post('/schedule/insertsalonweeklyschedule', AuthenticationRoute.verifyToken, ScheduleRoute.insertSalonWeeklySchedule);
+//app.post('/schedule/insertsalondailyschedule', AuthenticationRoute.verifyToken, ScheduleRoute.insertSalonDailySchedule);
 
 app.listen(3000, function () {
     console.log("SalonCloud server listening on port %d in %s mode", 3000, app.settings.env);

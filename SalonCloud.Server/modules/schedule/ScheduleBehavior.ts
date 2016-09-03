@@ -4,8 +4,7 @@
 //
 //
 //
-import { DailyScheduleData } from './models/ScheduleData';
-import { WeeklyScheduleData } from './models/ScheduleData';
+import { DailyScheduleData, WeeklyScheduleData } from './ScheduleData';
 
 export interface ScheduleBehavior{
     /**
