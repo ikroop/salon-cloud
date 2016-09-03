@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="71f2e351-2704-4088-ad50-9c2a0f1af32d" name="SalonCloud" linkedPackageId="25e24bed-cabc-41b8-ba77-d06335e7a448" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="71f2e351-2704-4088-ad50-9c2a0f1af32d" name="SalonCloud" linkedPackageId="25e24bed-cabc-41b8-ba77-d06335e7a448" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <ownedCommentsInternal>
     <comment Id="15ef1e70-2e8c-4510-bef2-d5a6eccc08fd">
       <elementDefinition Id="6b88ddab-6b30-4065-9908-60ddfc0c55c8" />
@@ -109,32 +109,6 @@ getDailyScheduleRecord(date, function(err, data){
       </propertyInstances>
     </stereotypeInstance>
   </appliedStereotypesInternal>
-  <profileInstances>
-    <packageHasProfileInstances Id="e71dd5d2-7ce1-43ca-a590-f1cfa7a763da">
-      <profileInstance Id="eb761096-334d-4325-ad68-922be027a40e" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="debe2de3-1725-43fc-8868-adc92e805b20">
-      <profileInstance Id="d24ca9ac-1c8a-471b-8d98-4a98eb2f1c76" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="f44bac62-f991-41a7-a30c-695d9ea1dd43">
-      <profileInstance Id="4e3ee30a-9f05-48ee-b445-ed9579167819" name="CSharpProfile">
-        <elementDefinition Id="642fa43c-7777-4048-8c3c-1cdc335cff26" />
-      </profileInstance>
-      <elementDefinition Id="911f7a69-85b8-429b-94b7-751ece6cd98a" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="10ae3dcf-9663-4185-bcb2-046362eefc6a">
-      <profileInstance Id="fa888c6a-b3ba-455f-ba62-c3134bba3f20" name="TextTemplateBindings">
-        <elementDefinition Id="75454b40-952d-479a-ad39-f0b93335dc6f" />
-      </profileInstance>
-      <elementDefinition Id="6f146c50-9d98-4021-9148-1e8d0b26731f" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <Interface Id="44856153-5b1a-4422-92c7-1a3480d1345a" name="ScheduleItemData" isAbstract="false" isLeaf="false">
@@ -896,41 +870,6 @@ getDailyScheduleRecord(date, function(err, data){
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <Interface Id="f2fe338a-42f6-4095-8921-de3f3816d044" name="SalonCloudResponse&lt;T&gt;" isAbstract="false" isLeaf="false">
-        <elementDefinition Id="57cde7af-59a0-4566-a1a8-444ef2c803c2" />
-        <ownedAttributes>
-          <property Id="b405ad4a-2f3b-41fc-b898-25382b877ba2" name="err" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="a4d0fd81-32f8-48a2-b04b-894c986422fd" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="911dff8a-b42d-4b70-9ab0-b4ed8c3fdc1d" LastKnownName="any" />
-            </type_NamedElement>
-          </property>
-          <property Id="4d3699d2-ce2a-46a6-af67-be2dc409e957" name="code" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="0bf5315d-6cd1-4ad1-84a3-8623da9a7079" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="d8b1d877-4521-4e72-b769-a61700fed5d7" LastKnownName="number" />
-            </type_NamedElement>
-          </property>
-          <property Id="5e0c5b92-2999-4ea8-a22b-5291b3f15544" name="data" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="4410174d-778d-4c64-950f-f010ba313377" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="5c18f842-ba99-4695-91b8-9d08db699230" LastKnownName="T" />
-            </type_NamedElement>
-          </property>
-        </ownedAttributes>
-      </Interface>
-    </logicalClassDesignerModelHasTypes>
-    <packageHasNamedElement>
-      <referencedType Id="911dff8a-b42d-4b70-9ab0-b4ed8c3fdc1d" name="any" isAbstract="false" isLeaf="false" cachedFullName="any">
-        <elementDefinition Id="e178b30b-b243-401e-adcb-f01cb955488f" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <referencedType Id="5c18f842-ba99-4695-91b8-9d08db699230" name="T" isAbstract="false" isLeaf="false" cachedFullName="T">
-        <elementDefinition Id="d78ec6b6-091b-4b7d-abe9-d03387cc5886" />
-      </referencedType>
-    </packageHasNamedElement>
     <packageHasNamedElement>
       <referencedType Id="ec1b14ff-8fa0-47f6-b133-2bdaa2e04ba8" name="SalonCloudResponse&lt;DailyScheduleData&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;DailyScheduleData&gt;">
         <elementDefinition Id="6311f3e8-201c-4356-a88a-084a12b8bb98" />
@@ -954,5 +893,31 @@ getDailyScheduleRecord(date, function(err, data){
   </packagedElements>
   <package Id="25e24bed-cabc-41b8-ba77-d06335e7a448" name="SalonCloud.Server.Design">
     <elementDefinition Id="2c899048-69c9-4895-a4a9-015718059e00" />
+    <profileInstances>
+      <packageHasProfileInstances Id="e71dd5d2-7ce1-43ca-a590-f1cfa7a763da">
+        <profileInstance Id="eb761096-334d-4325-ad68-922be027a40e" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="debe2de3-1725-43fc-8868-adc92e805b20">
+        <profileInstance Id="d24ca9ac-1c8a-471b-8d98-4a98eb2f1c76" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="f44bac62-f991-41a7-a30c-695d9ea1dd43">
+        <profileInstance Id="4e3ee30a-9f05-48ee-b445-ed9579167819" name="CSharpProfile">
+          <elementDefinition Id="642fa43c-7777-4048-8c3c-1cdc335cff26" />
+        </profileInstance>
+        <elementDefinition Id="911f7a69-85b8-429b-94b7-751ece6cd98a" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="10ae3dcf-9663-4185-bcb2-046362eefc6a">
+        <profileInstance Id="fa888c6a-b3ba-455f-ba62-c3134bba3f20" name="TextTemplateBindings">
+          <elementDefinition Id="75454b40-952d-479a-ad39-f0b93335dc6f" />
+        </profileInstance>
+        <elementDefinition Id="6f146c50-9d98-4021-9148-1e8d0b26731f" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </logicalClassDesignerModel>

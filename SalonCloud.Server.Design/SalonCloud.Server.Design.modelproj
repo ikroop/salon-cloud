@@ -22,12 +22,26 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <Content Include="SalonCloud.classdiagram">
+    <Content Include="Core.classdiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="SalonCloud.classdiagram.layout">
+    <Content Include="Core.classdiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>SalonCloud.classdiagram</DependentUpon>
+      <DependentUpon>Core.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Schedule.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Schedule.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Schedule.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Core.User.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Core.User.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Core.User.classdiagram</DependentUpon>
     </Content>
     <Folder Include="ModelDefinition\" />
     <Content Include="ModelDefinition\SalonCloud.Server.Design.uml">
