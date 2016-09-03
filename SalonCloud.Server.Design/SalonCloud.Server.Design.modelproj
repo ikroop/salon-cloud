@@ -29,6 +29,13 @@
       <SubType>Content</SubType>
       <DependentUpon>Core.classdiagram</DependentUpon>
     </Content>
+    <Content Include="SalonManagement.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SalonManagement.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>SalonManagement.classdiagram</DependentUpon>
+    </Content>
     <Content Include="Schedule.classdiagram">
       <SubType>Content</SubType>
     </Content>

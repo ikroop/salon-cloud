@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="1eb522e6-bc4f-4fb9-97eb-f17aac666c8f" name="SalonManagement" linkedPackageId="6a822355-c20f-437f-95e6-126c19d9785b" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <appliedStereotypesInternal>
+    <stereotypeInstance Id="aefae323-9b15-4e29-a48b-916ae9e57e4a" name="namespace" profile="CSharpProfile">
+      <elementDefinition Id="5119a86d-53ac-4402-95a7-056f66c40584" />
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="a799c324-86a7-4cff-81e3-4333b2edbcd9">
+          <propertyInstance Id="80d0353a-f294-4e20-b366-d0afee51025e" name="BaseName">
+            <elementDefinition Id="bbe7b240-d81b-4c14-ab87-231d0b2a1933" />
+          </propertyInstance>
+          <elementDefinition Id="5ff246de-d99d-4436-aae7-961dcf31d985" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="784ea0a7-3e0e-4df6-ad84-c6aace44cba2">
+          <propertyInstance Id="00ecc9b0-0905-4301-a349-31863205bcb9" name="ClrAttributes">
+            <elementDefinition Id="7ec6a41b-b601-4e94-9777-9be4be9fc5c1" />
+          </propertyInstance>
+          <elementDefinition Id="7b15e59e-9932-4a86-a19d-974c466ce23b" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="4b890b4b-7578-4e31-8a12-1062faf5e2de">
+          <propertyInstance Id="845f242b-2125-45bb-b56e-a24ffffc742a" name="Usings">
+            <elementDefinition Id="c778f11f-d414-4932-b26c-aa5697094ede" />
+          </propertyInstance>
+          <elementDefinition Id="d3a911a4-614e-4e12-8ef5-7063a9dfe467" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+    <stereotypeInstance Id="a6ff65c3-11fd-4759-b9ec-0b9814b9a941" name="TextTemplateBindings" profile="TextTemplateBindings">
+      <elementDefinition Id="2249fea9-500b-40f5-9ec6-91c33d9fb4ff" />
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="a5fcc7df-aea5-4df0-b8b7-3f505df4c1e1">
+          <propertyInstance Id="aaff7933-ff66-40a4-bc73-6a8a67919ea4" name="Alias" value="ClassTemplate|EnumTemplate|InterfaceTemplate|StructTemplate">
+            <elementDefinition Id="bfdb9ea4-f4cd-4de9-8a8f-190e7a527233" />
+          </propertyInstance>
+          <elementDefinition Id="21e9d7d5-287d-4c15-8f79-0ca66eccecfc" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="56e2d867-afd3-4aa7-8ede-1830474e165d">
+          <propertyInstance Id="802c7721-5149-4301-81f0-393a4b52ab45" name="TemplateFilePath" value="ClassTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4|EnumTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\EnumTemplate.t4|InterfaceTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4|StructTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4">
+            <elementDefinition Id="e91ff35b-8bb9-436d-afbe-8629ea9abf65" />
+          </propertyInstance>
+          <elementDefinition Id="9d2bca0b-7b01-451d-8e9c-3ed15e369219" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="42138794-65f7-4f02-ab33-0a30c153a8c1">
+          <propertyInstance Id="a6a89b84-0388-4056-9d27-1171ac14f3bd" name="ProjectPath" value="ClassTemplate=..\SalonCloud.Server.DesignLib\SalonCloud.Server.DesignLib.csproj|EnumTemplate=..\SalonCloud.Server.DesignLib\SalonCloud.Server.DesignLib.csproj|InterfaceTemplate=..\SalonCloud.Server.DesignLib\SalonCloud.Server.DesignLib.csproj|StructTemplate=..\SalonCloud.Server.DesignLib\SalonCloud.Server.DesignLib.csproj">
+            <elementDefinition Id="0290a594-da74-49b2-9d2b-b9f1980506e9" />
+          </propertyInstance>
+          <elementDefinition Id="5c4e31d2-7374-4796-b9a4-a15e8ea088fb" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="ea286d4b-8552-4274-9998-0607da02db81">
+          <propertyInstance Id="3b13f63a-dff7-43e3-b535-b90d25a85df6" name="TargetDirectory" value="ClassTemplate=GeneratedCode\{PackageStructure}|EnumTemplate=GeneratedCode\{PackageStructure}|InterfaceTemplate=GeneratedCode\{PackageStructure}|StructTemplate=GeneratedCode\{PackageStructure}">
+            <elementDefinition Id="5befd87c-8563-48eb-aa5d-00a92be8cc0d" />
+          </propertyInstance>
+          <elementDefinition Id="9e20b46f-0f58-46d9-a951-3db6f954c869" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="0320bc1e-d174-42ef-a406-44a24080c243">
+          <propertyInstance Id="beee8cce-33da-4127-a7b9-3e6b0ca7e665" name="TargetName" value="ClassTemplate={Name}|EnumTemplate={Name}|InterfaceTemplate={Name}|StructTemplate={Name}">
+            <elementDefinition Id="62732227-3052-4ce9-98e7-1df466c02407" />
+          </propertyInstance>
+          <elementDefinition Id="d7094a84-c0ad-47b3-9158-014f67a56279" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="7f407174-f565-4d10-90b3-bba1cd1e05f0">
+          <propertyInstance Id="34f6a56e-499b-4906-a51d-a5dac1868bad" name="Overwrite" value="ClassTemplate=True|EnumTemplate=True|InterfaceTemplate=True|StructTemplate=True">
+            <elementDefinition Id="28614822-bd61-48cb-bbc3-bda4e700574d" />
+          </propertyInstance>
+          <elementDefinition Id="eff1e5f8-57d3-4657-8054-2dbdb9c78fc5" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="8edf2002-da30-4eaa-b291-774f96651698">
+          <propertyInstance Id="922410b3-6676-4114-93f2-c6abe8fa3392" name="Parameters">
+            <elementDefinition Id="17e1e716-f589-4549-8a5f-a1b74f314370" />
+          </propertyInstance>
+          <elementDefinition Id="5da80d6d-7b0a-4d52-ab26-2dc3dc6f61a5" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+  </appliedStereotypesInternal>
+  <profileInstances>
+    <packageHasProfileInstances Id="9385e3a9-6d37-43ac-928b-291e64b5fd76">
+      <profileInstance Id="4eb8d4f1-e33f-40db-9a7d-6662ce05b279" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="e707c574-a35a-444b-8866-5588157e6a05">
+      <profileInstance Id="61b76223-8448-425b-9112-d073d2f23df6" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="3e690836-04c6-4dfb-a9a8-9c3c2f52f611">
+      <profileInstance Id="bf6a81e4-2a85-43b7-88df-a596f2bf4549" name="CSharpProfile">
+        <elementDefinition Id="642fa43c-7777-4048-8c3c-1cdc335cff26" />
+      </profileInstance>
+      <elementDefinition Id="911f7a69-85b8-429b-94b7-751ece6cd98a" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="cf0c8817-e044-400b-a320-cec200727fc4">
+      <profileInstance Id="2edb4f18-23f9-47d9-b767-f08e7eba907b" name="TextTemplateBindings">
+        <elementDefinition Id="75454b40-952d-479a-ad39-f0b93335dc6f" />
+      </profileInstance>
+      <elementDefinition Id="6f146c50-9d98-4021-9148-1e8d0b26731f" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="fc48255a-18d8-408f-b9cc-b77f7ea51ab2" name="SalonManagement" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="ee248327-2007-48f7-a411-788a2ec68eb3" />
+        <ownedOperations>
+          <operation Id="145248ac-6ee2-47b5-9b88-fa748dc769d9" name="createInformation" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f954b2a4-9866-44f3-9ecf-b5052bb28d51" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7f5029a9-f475-4200-89af-2aef812f1d6a" direction="Return" isUnique="false">
+                  <elementDefinition Id="865f88cf-708f-4df2-9f4e-3b3893469872" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3d41f23c-7c09-43e8-9b57-21ce08a5f2a8" LastKnownName="SalonCloudResponse&lt;string&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ed1ab029-2333-47b3-90a5-c72c6bc00023" name="data" direction="In" isUnique="false">
+                  <elementDefinition Id="a6952e2c-fafa-41ef-8961-ace3d493830f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="5b7369e1-b92c-42f3-98c0-1109e2329465" LastKnownName="SalonInformation" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="d335a2ff-ce74-4942-a8ec-226870a3dd17" name="active" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="426195d9-839b-4b90-a0da-b43118448fcd" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="18c7d1f7-b35b-4ef8-a9bc-a766ff0ec8cc" direction="Return" isUnique="false">
+                  <elementDefinition Id="cba0df41-a7d2-4ff3-97eb-014dec9bdb67" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="43c328cd-afa9-4c60-b25d-fdd54607cca5" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="0f8f447c-704b-47d2-947f-80a5df8e8b38" name="deactive" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="4b109403-5284-49f7-84d6-c188772999f5" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="58b6e79e-a237-4483-ad16-e6bdec3c944d" direction="Return" isUnique="false">
+                  <elementDefinition Id="39c77778-098f-4451-a5df-ebe75891ed88" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="43c328cd-afa9-4c60-b25d-fdd54607cca5" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="0d48727b-2ec9-498c-9f7f-608fa05483d6" name="updateInformation" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="2a819e4b-d10d-4821-af31-fe2c7f092557" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="36a6569a-b7fa-40c0-994e-9dec4ee498ef" name="data" direction="In" isUnique="false">
+                  <elementDefinition Id="9d959338-ff9c-48d3-bf96-fee8bbe45bea" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="5b7369e1-b92c-42f3-98c0-1109e2329465" LastKnownName="SalonInformation" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4fabf4b3-bbe7-4a45-84e7-9c8e12a50ab6" direction="Return" isUnique="false">
+                  <elementDefinition Id="5cda48c4-8732-42d0-aca8-6ca18f9399d8" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6a1006d7-3233-4792-ac55-6220be4a8c32" LastKnownName="SalonCloudRespoonse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="cedfad07-1926-41a9-a1d1-a016038a1691" name="createSetting" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="e20483c3-5870-4de4-9057-7f0d0befc022" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="91597d43-a1ba-46a7-ba32-55d2c349217b" name="setting" direction="In" isUnique="false">
+                  <elementDefinition Id="049a1cf4-baa8-43ae-92c3-dbd48bf24014" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="efb11988-8de0-4beb-99cc-9bf39e39b8dd" LastKnownName="SalonSetting" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="dc0fe0d8-76a2-4bc0-821c-2aa4f9caedd3" direction="Return" isUnique="false">
+                  <elementDefinition Id="b9a631ed-ab9b-4cef-a40f-958d8ce666c4" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="43c328cd-afa9-4c60-b25d-fdd54607cca5" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="e1455ecf-4e53-4670-a50b-ee8c8defda7e" name="updateSetting" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="dcc09637-1b6c-40c9-b636-860f0314bd0e" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="247a5f56-0937-4c97-be70-cf2859b81456" name="setting" direction="In" isUnique="false">
+                  <elementDefinition Id="0cdba5cb-03cc-4d5e-8e84-b1583988179d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="efb11988-8de0-4beb-99cc-9bf39e39b8dd" LastKnownName="SalonSetting" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="dbc3c87f-2391-4a56-b586-36bfcca71b1c" direction="Return" isUnique="false">
+                  <elementDefinition Id="ab93777f-a00d-4b0b-981f-5b3c3c0fbacf" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="43c328cd-afa9-4c60-b25d-fdd54607cca5" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="5b7369e1-b92c-42f3-98c0-1109e2329465" name="SalonInformation" isAbstract="false" isLeaf="false" cachedFullName="SalonInformation">
+        <elementDefinition Id="f1ab09cd-9794-4aa2-84cd-9159017319ff" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="3d41f23c-7c09-43e8-9b57-21ce08a5f2a8" name="SalonCloudResponse&lt;string&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;string&gt;">
+        <elementDefinition Id="e5853dd4-bad0-4f09-b277-778c8c856998" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="43c328cd-afa9-4c60-b25d-fdd54607cca5" name="SalonCloudResponse&lt;boolean&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;boolean&gt;">
+        <elementDefinition Id="4a6479c9-bc02-4d0d-b08b-e78e471e785d" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="6a1006d7-3233-4792-ac55-6220be4a8c32" name="SalonCloudRespoonse&lt;boolean&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudRespoonse&lt;boolean&gt;">
+        <elementDefinition Id="5247580d-5a7d-4219-a5e9-b0496e7aad17" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="efb11988-8de0-4beb-99cc-9bf39e39b8dd" name="SalonSetting" isAbstract="false" isLeaf="false" cachedFullName="SalonSetting">
+        <elementDefinition Id="6d767c44-74ee-4241-85f9-9eac324eba5f" />
+      </referencedType>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="6a822355-c20f-437f-95e6-126c19d9785b" name="SalonCloud.Server.Design">
+    <elementDefinition Id="2c899048-69c9-4895-a4a9-015718059e00" />
+  </package>
+</logicalClassDesignerModel>
