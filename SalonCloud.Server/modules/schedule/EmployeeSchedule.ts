@@ -5,7 +5,7 @@
 import { mongoose } from "../../services/database";
 import { Schedule } from "./Schedule";
 import { DailyScheduleData, WeeklyScheduleData } from "./ScheduleData";
-export class SalonSchedule extends Schedule {
+export class EmployeeSchedule extends Schedule {
     protected addDailySchedule(dailySchedule: DailyScheduleData): boolean {
         return false;
     }

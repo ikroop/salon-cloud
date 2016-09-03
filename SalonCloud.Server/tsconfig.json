@@ -8,11 +8,9 @@
   "files": [
     "./typings/tsd.d.ts",
     "./routes/routes.d.ts",
-    "./config/dev/database.ts",
-    "./core/user/user.d.ts",
     "./core/validator/Validator.ts",
-    //"./modules/salon/Salon.d.ts",
-    //"./modules/schedule/Schedule.d.ts",
+    "./core/core.d.ts",
+    "./modules/schedule/Schedule.d.ts",
     "./app.ts"
   ]
 }

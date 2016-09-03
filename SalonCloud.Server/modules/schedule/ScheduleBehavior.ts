@@ -5,26 +5,34 @@
 //
 //
 import { DailyScheduleData, WeeklyScheduleData } from './ScheduleData';
+import {SalonCloudResponse} from "../../core/SalonCloudResponse";
 
 export interface ScheduleBehavior{
     /**
-     * name
+     * getDailySchedule
+	 *
      */
-    getSchedule(startDate: Date, endDate: Date, callback): [DailyScheduleData]; 
+    getDailySchedule(date: Date): SalonCloudResponse<DailyScheduleData>;
 
     /**
      * name
      */
-    getWeeklySchedule(callback): [WeeklyScheduleData];
+    getWeeklySchedule(): SalonCloudResponse<[WeeklyScheduleData]>;
+	
+	/**
+	*
+	*/
+	getMonthlySchedule(month: number, year: number): SalonCloudResponse<[DailyScheduleData]>;
+	
 
     /**
      * name
      */
-    insertWeekly(schedule: WeeklyScheduleData, callback);
+    saveWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]) : SalonCloudResponse<boolean>;
 
     /**
      * name
      */
-    insertDaily(schedule: DailyScheduleData, callback);
+    saveDailySchedule(dailySchedule: DailyScheduleData): SalonCloudResponse<boolean>;
     
 }

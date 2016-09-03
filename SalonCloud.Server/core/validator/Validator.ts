@@ -58,12 +58,28 @@ export class Validator {
         return true;
     }
 
-    static IsValidEndDateForStartDate(endDate: Date, startDate: Date) {
-        return true;
+    static IsValidEndDateForStartDate(startDate: Date, endDate: Date) {
+        if(endDate < startDate){
+            return false;
+        }else{
+            return true;
+        }
     }
 
-    static IsValidWeekDay(date: Date) {
-        return true;
+    static IsValidCloseTimeForOpenTime(openTime: Number, closeTime: Number ){
+        if(openTime >= closeTime){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    static IsValidWeekDay(date: number) {
+        if(date >= 0 && date <= 6){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     static IsIdentifyString(Id: string) {

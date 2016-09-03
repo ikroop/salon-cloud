@@ -12,32 +12,32 @@ Schedule Module
  
 **ScheduleModel.ts**
 ```
-export const WeeklySchema = new mongoose.Schema({
+export const WeeklyScheduleSchema = new mongoose.Schema({
 .......
 });
-export const DailySchema = new mongoose.Schema({
+export const DailyScheduleSchema = new mongoose.Schema({
 .......
 })
 
 export const ScheduleSchema = new mongoose.Schema({
 	_id: <salon_id>
 	salon:{
-		weekly: [WeeklySchema],
-		daily: [DailySchema]
+		weekly: [WeeklyScheduleSchema],
+		daily: [DailyScheduleSchema]
 	},
 	employee:[{
 		employee_id: { type: String, required: true },
-		weekly: [WeeklySchema],
-		daily: [DailySchema]
+		weekly: [WeeklyScheduleSchema],
+		daily: [DailyScheduleSchema]
 	}]
 }, { _id: false })
 module.exports = mongoose.model<ScheduleData>('schedule', ScheduleSchema);
 ```
 **ScheduleData.ts**
 ```
-export interface WeeklyData{
+export interface WeeklyScheduleData{
 }
-export interface DailyData{
+export interface DailyScheduleData{
 }
 export interface ScheduleData{
 }

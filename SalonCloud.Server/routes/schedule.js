@@ -1,11 +1,13 @@
-/*
- * Schedule REST API
- */
-import passport = require('passport');
-import jwt = require('jsonwebtoken');
-import fs = require('fs');
-import { Router, Request, Response } from "express";
-
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator.throw(value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments)).next());
+    });
+};
+const express_1 = require("express");
 //import {Validator} from '../core/validator/Validator';
 //import {SalonSchedule} from '../modules/schedule/SalonSchedule';
 // import {ScheduleProfile} from '../modules/schedules/ScheduleProfile';
@@ -13,28 +15,23 @@ import { Router, Request, Response } from "express";
 //import {DailyScheduleModel} from '../modules/schedule/models/DailyScheduleModel';
 //import {WeeklyScheduleData} from '../modules/schedule/ScheduleData';
 // import {WeeklyScheduleModel} from '../modules/schedules/models/WeeklyScheduleModel';
-
 //var ErrorMessage = require('./ErrorMessage');
-
 // var Authentication = require('../modules/salon/Salon');
-
-export class ScheduleRouter {
-    private router: Router = Router();
-    
-    getRouter(): Router {
-
-        this.router.get("/testget", async(request: Request, response: Response) => {
-            response.json({"testget": "OK"})
-        });
-
-        this.router.post("/testpost", async(request: Request, response: Response) => {
-            response.status(200).json({"testpost":"OK"});
-        });
-
+class ScheduleRouter {
+    constructor() {
+        this.router = express_1.Router();
+    }
+    getRouter() {
+        this.router.get("/testget", (request, response) => __awaiter(this, void 0, void 0, function* () {
+            response.json({ "testget": "OK" });
+        }));
+        this.router.post("/testpost", (request, response) => __awaiter(this, void 0, void 0, function* () {
+            response.status(200).json({ "testpost": "OK" });
+        }));
         return this.router;
     }
 }
-
+exports.ScheduleRouter = ScheduleRouter;
 /*export class ScheduleRoute {
     public static getSalonDailySchedule(req: express.Request, res: express.Response) {
         
@@ -167,4 +164,4 @@ export class ScheduleRouter {
         };
     }
 }*/
-
+//# sourceMappingURL=schedule.js.map

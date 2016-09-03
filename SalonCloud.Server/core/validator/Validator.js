@@ -51,15 +51,33 @@ class Validator {
     static IsValidDate(date) {
         return true;
     }
-    static IsValidEndDateForStartDate(endDate, startDate) {
-        return true;
+    static IsValidEndDateForStartDate(startDate, endDate) {
+        if (endDate < startDate) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    static IsValidCloseTimeForOpenTime(openTime, closeTime) {
+        if (openTime >= closeTime) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
     static IsValidWeekDay(date) {
-        return true;
+        if (date >= 0 && date <= 6) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     static IsIdentifyString(Id) {
         return mongoose.Types.ObjectId.isValid(Id);
     }
 }
 exports.Validator = Validator;
-//# sourceMappingURL=validator.js.map
+//# sourceMappingURL=Validator.js.map

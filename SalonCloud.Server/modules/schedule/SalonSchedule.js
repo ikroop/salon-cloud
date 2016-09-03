@@ -1,6 +1,6 @@
 "use strict";
 const Schedule_1 = require("./Schedule");
-class EmployeeSchedule extends Schedule_1.Schedule {
+class SalonSchedule extends Schedule_1.Schedule {
     addDailySchedule(dailySchedule) {
         return false;
     }
@@ -31,5 +31,5 @@ class EmployeeSchedule extends Schedule_1.Schedule {
         return false;
     }
 }
-exports.EmployeeSchedule = EmployeeSchedule;
-//# sourceMappingURL=EmployeeSchedule.js.map
+exports.SalonSchedule = SalonSchedule;
+//# sourceMappingURL=SalonSchedule.js.map
