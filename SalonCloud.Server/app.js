@@ -16,13 +16,7 @@ app.use(passport.session());
 
 // passport config
 var LocalStrategy = passportLocal.Strategy;
-<<<<<<< HEAD
-passport.use(new LocalStrategy(UserModel.authenticate()));
-passport.serializeUser(UserModel.serializeUser());
-passport.deserializeUser(UserModel.deserializeUser());
 
-var env = process.env.NODE_ENV || 'development';
-=======
 passport.use(new LocalStrategy(AuthenticationModel.authenticate()));
 passport.serializeUser(AuthenticationModel.serializeUser());
 passport.deserializeUser(AuthenticationModel.deserializeUser());*/
