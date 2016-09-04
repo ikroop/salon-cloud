@@ -22,12 +22,19 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <Content Include="Authorization.classdiagram">
+    <Content Include="Core.Authentication.classdiagram">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="Authorization.classdiagram.layout">
+    <Content Include="Core.Authentication.classdiagram.layout">
       <SubType>Content</SubType>
-      <DependentUpon>Authorization.classdiagram</DependentUpon>
+      <DependentUpon>Core.Authentication.classdiagram</DependentUpon>
+    </Content>
+    <Content Include="Core.Authorization.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Core.Authorization.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Core.Authorization.classdiagram</DependentUpon>
     </Content>
     <Content Include="Core.classdiagram">
       <SubType>Content</SubType>

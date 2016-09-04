@@ -130,7 +130,7 @@
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="9824cdfd-f83f-4c73-b34a-d5c064413f3d" name="AuthorizationBehavior1" isAbstract="false" isLeaf="false">
+      <Interface Id="9824cdfd-f83f-4c73-b34a-d5c064413f3d" name="AuthorizationBehavior" isAbstract="false" isLeaf="false">
         <elementDefinition Id="0ddbec70-7d46-442c-a4cf-2fb182eca4d6" />
         <ownedOperations>
           <operation Id="45bd1a39-b5b1-4f6c-9f83-6a7a403c5135" name="signUpWithUsernamePassword" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
@@ -240,11 +240,32 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="82f774ca-0f5e-4ac1-981c-764937b3bf41" name="verifyToken" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f8cdbfce-c025-44c2-9db0-dc12c300e07d" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="43979749-3674-4c3c-9ea6-296160411084" name="token" direction="In" isUnique="false">
+                  <elementDefinition Id="8f4a8917-7182-45b8-8eaa-4fa5205061ce" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="84c17f42-6a68-467c-9afe-1ca1efa40741" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="2d9cba39-9f50-48ad-a574-21e83e97b562" direction="Return" isUnique="false">
+                  <elementDefinition Id="5f11445a-9b2a-4fac-890b-439f8615f26a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="00fd1d3e-379f-4b65-9caf-503d637e7b57" LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperations>
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="4ee0cb05-3016-4fe3-af4e-0c18b05dc08d" name="AuthorizationData1" isAbstract="false" isLeaf="false">
+      <Interface Id="4ee0cb05-3016-4fe3-af4e-0c18b05dc08d" name="AuthorizationData" isAbstract="false" isLeaf="false">
         <elementDefinition Id="d47bb92a-bf44-4754-8d29-9fd59b7a7a28" />
         <ownedAttributes>
           <property Id="1c7a6e06-5e10-40fb-808b-7e25e36f28d7" name="_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -278,7 +299,7 @@
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="31a93a27-5776-45ee-9ed8-24f32ea8402b" name="TokenData1" isAbstract="false" isLeaf="false">
+      <Interface Id="31a93a27-5776-45ee-9ed8-24f32ea8402b" name="TokenData" isAbstract="false" isLeaf="false">
         <elementDefinition Id="51c3c42a-57a4-4c22-aaf6-51c009897a86" />
         <ownedAttributes>
           <property Id="ed92a392-b53e-4975-be34-e7b1d4fb2ddd" name="token" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -303,11 +324,11 @@
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="08d87a11-02ad-4b05-83b7-713a1d589b5e" name="Authorization1" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="08d87a11-02ad-4b05-83b7-713a1d589b5e" name="Authorization" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="f5d84f0b-fcc2-47b1-b696-9fe1ddd78ae8" />
         <suppliersInternal>
           <interfaceRealization Id="a11bec7f-651e-4ef3-abae-c7a781a49571">
-            <interfaceMoniker Id="9824cdfd-f83f-4c73-b34a-d5c064413f3d" LastKnownName="AuthorizationBehavior1" />
+            <interfaceMoniker Id="9824cdfd-f83f-4c73-b34a-d5c064413f3d" LastKnownName="AuthorizationBehavior" />
             <elementDefinition Id="f1c6d745-03dd-4df4-83c5-4ee24b3d76bd" />
           </interfaceRealization>
         </suppliersInternal>
@@ -419,61 +440,20 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-        </ownedOperationsInternal>
-      </class>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <Interface Id="a41eaa2e-3335-4bd4-baed-b7e016c48a51" name="AuthorizationBehavior2" isAbstract="false" isLeaf="false">
-        <elementDefinition Id="eb2647f8-0e33-4780-8a51-0cd403f3594c" />
-        <ownedOperations>
-          <operation Id="a555251f-d1e2-4751-a9f2-094d2b69b622" name="verifyToken" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="cbd16aea-f62a-45f3-8b76-3325d2b83f3e" />
+          <operation Id="0856c582-fc44-4621-9739-6bd23eab432b" name="verifyToken" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d165e537-fd3b-4627-b31d-276ae2499eef" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="8c3f234b-3798-447c-b421-c99e9e96fdf3" name="token" direction="In" isUnique="false">
-                  <elementDefinition Id="fee905e5-9acd-4471-abaa-06d858f1fa42" />
+                <parameter Id="ff159873-89dc-483b-a1e1-1495dcf051ae" name="token" direction="In" isUnique="false">
+                  <elementDefinition Id="8a50eb92-d0a7-46bd-8b9e-b146c85d697f" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="50bb2cae-c43a-4561-9ca1-9120a4b1859f" LastKnownName="string" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="03fc0312-0f52-4f5b-9f7b-2ed8ac1697f3" direction="Return" isUnique="false">
-                  <elementDefinition Id="0f9dec9e-0d27-49a3-9bda-2f5fa992dfb9" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="2399f683-e7aa-43f3-a080-750ced96cf40" LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-        </ownedOperations>
-      </Interface>
-    </logicalClassDesignerModelHasTypes>
-    <logicalClassDesignerModelHasTypes>
-      <class Id="dfe388bc-9ebb-4d9e-b19d-9e70c6b45570" name="Authentication1" isAbstract="false" isLeaf="false" isActiveClass="false">
-        <elementDefinition Id="6405dae3-df01-4db6-8b6e-cfb38f93a685" />
-        <suppliersInternal>
-          <interfaceRealization Id="9a669348-d0c9-4ab6-a2cf-fc20b33313e4">
-            <interfaceMoniker Id="a41eaa2e-3335-4bd4-baed-b7e016c48a51" LastKnownName="AuthorizationBehavior2" />
-            <elementDefinition Id="95fb6be1-f560-47a0-a5c1-e315492a60e7" />
-          </interfaceRealization>
-        </suppliersInternal>
-        <ownedOperationsInternal>
-          <operation Id="d61dd9c2-558f-4a64-b0c4-8c1f9c4891a0" name="verifyToken" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="36f3c5f5-9a61-4a7e-86bc-db552c37d0f9" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="6cd83de2-358c-4cd0-99b5-51c393c18730" name="token" direction="In" isUnique="false">
-                  <elementDefinition Id="8567f516-d1a7-4c1f-aefd-b85ca07bc503" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="50bb2cae-c43a-4561-9ca1-9120a4b1859f" LastKnownName="string" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="d1fb7a58-ae72-4d02-b114-18b3f4424c56" direction="Return" isUnique="false">
-                  <elementDefinition Id="29e02e4a-e8a9-45c6-b077-9565de425a00" />
+                <parameter Id="95b192a0-526e-4517-a830-cde52f503a41" direction="Return" isUnique="false">
+                  <elementDefinition Id="a12be70d-f5c8-4f52-97d3-6f67a0134266" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="2399f683-e7aa-43f3-a080-750ced96cf40" LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;" />
                   </type_NamedElement>
@@ -484,6 +464,16 @@
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="84c17f42-6a68-467c-9afe-1ca1efa40741" name="string" isAbstract="false" isLeaf="false" cachedFullName="string">
+        <elementDefinition Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="00fd1d3e-379f-4b65-9caf-503d637e7b57" name="SalonCloudResponse&lt;AuthorizationData&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;AuthorizationData&gt;">
+        <elementDefinition Id="b3d823a7-9438-4bbc-a492-82eab1ba56c2" />
+      </referencedType>
+    </packageHasNamedElement>
   </packagedElements>
   <package Id="5f7880c9-756f-4179-bf79-f5b79a1c1f14" name="SalonCloud.Server.Design">
     <elementDefinition Id="2c899048-69c9-4895-a4a9-015718059e00" />

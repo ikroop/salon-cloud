@@ -2576,7 +2576,7 @@ getDailyScheduleRecord(date, function(err, data){
     <packageHasNamedElement>
       <Interface
         Id="0ddbec70-7d46-442c-a4cf-2fb182eca4d6"
-        name="AuthorizationBehavior1"
+        name="AuthorizationBehavior"
         isAbstract="false"
         isLeaf="false">
         <ownedOperations>
@@ -2767,13 +2767,51 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation
+            Id="f8cdbfce-c025-44c2-9db0-dc12c300e07d"
+            name="verifyToken"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8f4a8917-7182-45b8-8eaa-4fa5205061ce"
+                  name="token"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
+                      LastKnownName="string"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5f11445a-9b2a-4fac-890b-439f8615f26a"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="b3d823a7-9438-4bbc-a492-82eab1ba56c2"
+                      LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperations>
       </Interface>
     </packageHasNamedElement>
     <packageHasNamedElement>
       <Interface
         Id="d47bb92a-bf44-4754-8d29-9fd59b7a7a28"
-        name="AuthorizationData1"
+        name="AuthorizationData"
         isAbstract="false"
         isLeaf="false">
         <ownedAttributes>
@@ -2866,7 +2904,7 @@ getDailyScheduleRecord(date, function(err, data){
     <packageHasNamedElement>
       <Interface
         Id="51c3c42a-57a4-4c22-aaf6-51c009897a86"
-        name="TokenData1"
+        name="TokenData"
         isAbstract="false"
         isLeaf="false">
         <ownedAttributes>
@@ -2930,7 +2968,7 @@ getDailyScheduleRecord(date, function(err, data){
     <packageHasNamedElement>
       <class
         Id="f5d84f0b-fcc2-47b1-b696-9fe1ddd78ae8"
-        name="Authorization1"
+        name="Authorization"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -2939,7 +2977,7 @@ getDailyScheduleRecord(date, function(err, data){
             Id="f1c6d745-03dd-4df4-83c5-4ee24b3d76bd">
             <interfaceMoniker
               Id="0ddbec70-7d46-442c-a4cf-2fb182eca4d6"
-              LastKnownName="AuthorizationBehavior1"
+              LastKnownName="AuthorizationBehavior"
               LastKnownLocation="SalonCloud.Server.Design.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -3131,76 +3169,8 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-        </ownedOperationsInternal>
-      </class>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <Interface
-        Id="eb2647f8-0e33-4780-8a51-0cd403f3594c"
-        name="AuthorizationBehavior2"
-        isAbstract="false"
-        isLeaf="false">
-        <ownedOperations>
           <operation
-            Id="cbd16aea-f62a-45f3-8b76-3325d2b83f3e"
-            name="verifyToken"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="true"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="fee905e5-9acd-4471-abaa-06d858f1fa42"
-                  name="token"
-                  direction="In"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
-                      LastKnownName="string"
-                      LastKnownLocation="SalonCloud.Server.Design.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="0f9dec9e-0d27-49a3-9bda-2f5fa992dfb9"
-                  direction="Return"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="b3d823a7-9438-4bbc-a492-82eab1ba56c2"
-                      LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;"
-                      LastKnownLocation="SalonCloud.Server.Design.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-        </ownedOperations>
-      </Interface>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <class
-        Id="6405dae3-df01-4db6-8b6e-cfb38f93a685"
-        name="Authentication1"
-        isAbstract="false"
-        isLeaf="false"
-        isActiveClass="false">
-        <suppliersInternal>
-          <interfaceRealization
-            Id="95fb6be1-f560-47a0-a5c1-e315492a60e7">
-            <interfaceMoniker
-              Id="eb2647f8-0e33-4780-8a51-0cd403f3594c"
-              LastKnownName="AuthorizationBehavior2"
-              LastKnownLocation="SalonCloud.Server.Design.uml" />
-          </interfaceRealization>
-        </suppliersInternal>
-        <ownedOperationsInternal>
-          <operation
-            Id="36f3c5f5-9a61-4a7e-86bc-db552c37d0f9"
+            Id="d165e537-fd3b-4627-b31d-276ae2499eef"
             name="verifyToken"
             isLeaf="false"
             isStatic="false"
@@ -3210,7 +3180,7 @@ getDailyScheduleRecord(date, function(err, data){
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="8567f516-d1a7-4c1f-aefd-b85ca07bc503"
+                  Id="8a50eb92-d0a7-46bd-8b9e-b146c85d697f"
                   name="token"
                   direction="In"
                   isUnique="false">
@@ -3224,7 +3194,7 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="29e02e4a-e8a9-45c6-b077-9565de425a00"
+                  Id="a12be70d-f5c8-4f52-97d3-6f67a0134266"
                   direction="Return"
                   isUnique="false">
                   <type_NamedElement>
