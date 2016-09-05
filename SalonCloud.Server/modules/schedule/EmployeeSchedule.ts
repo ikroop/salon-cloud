@@ -2,43 +2,46 @@
  * 
  * 
  */
-import { ScheduleBehavior } from './ScheduleBehavior';
-//import {Schedule} from './models/Schedule';
-import {DailyScheduleModel, DailyScheduleProfile} from './models/DailyScheduleModel';
-import {WeeklyScheduleModel, WeeklyScheduleProfile} from './models/WeeklyScheduleModel';
-import {DailyScheduleData} from './ScheduleData';
-import {WeeklyScheduleData} from './ScheduleData';
-import * as mongoose from "mongoose";
-
-export class EmployeeSchedule implements ScheduleBehavior {
-    /**
-     * name
-     */
-    public getSchedule(startDate: Date, endDate: Date, callback): [DailyScheduleData] {
-        return undefined;
+import { mongoose } from "../../services/database";
+import { Schedule } from "./Schedule";
+import { DailyScheduleData, WeeklyScheduleData } from "./ScheduleData";
+export class EmployeeSchedule extends Schedule {
+    protected addDailySchedule(dailySchedule: DailyScheduleData): boolean {
+        return false;
     }
 
-    /**
-     * name
-     */
-    public getWeeklySchedule(callback): [WeeklyScheduleData] {
-        return undefined;
+    protected addWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]): boolean {
+        return false;
     }
 
-    /**
-     * name
-     */
-    public insertWeekly(schedule: WeeklyScheduleData, callback) {
-
+    protected checkDailySchedule(dailySchedule: DailyScheduleData): boolean {
+        return false;
     }
 
-    /**
-     * name
-     */
-    public insertDaily(schedule: DailyScheduleData, callback) {
-
+    protected checkWeeklySchedule(): boolean {
+        return false;
     }
 
-   
-   
+    protected getDailyScheduleRecord(date: Date): DailyScheduleData {
+        var dailySchedule: DailyScheduleData;
+        return dailySchedule;
+    }
+
+    protected getWeeklyScheduleRecord(): [WeeklyScheduleData] {
+        var weeklyScheduleList: [WeeklyScheduleData];
+
+        return weeklyScheduleList;
+    }
+
+    protected normalizeDailySchedule(dailySchedule: DailyScheduleData): DailyScheduleData {
+        return dailySchedule;
+    }
+
+    protected updateDailySchedule(dailySchedule: DailyScheduleData): boolean {
+        return false;
+    }
+    
+    protected updateWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]): boolean {
+        return false;
+    }
 }

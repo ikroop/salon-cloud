@@ -1,10 +1,8 @@
 /**
  * 
  * 
- * 
- * 
- * 
  */
+/*
 import {ScheduleBehavior} from './ScheduleBehavior';
 //import {Schedule} from './models/Schedule';
 //import {DailyScheduleModel} from './models/DailyScheduleModel';
@@ -23,41 +21,27 @@ export const WeeklyScheduleSchema = new mongoose.Schema(
         open: {type: Number, required: true},
         status: {type: Boolean, required: true},
         dayofweek: {type: Number, required: true},
+*/
+import { mongoose } from "../../services/database";
+import { Schedule } from "./Schedule";
+import { DailyScheduleData, WeeklyScheduleData } from "./ScheduleData";
+export class SalonSchedule extends Schedule {
+    protected addDailySchedule(dailySchedule: DailyScheduleData): boolean {
+        return false;
     }
-);
 
-export class SalonSchedule implements ScheduleBehavior {
+    protected addWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]): boolean {
+        return false;
+    }
 
-    /**
-     * name
-     */
-    constructor(){
-
-    };
-    public getSchedule(startDate: Date, endDate: Date, callback): [DailyScheduleData] {
-        // DailyScheduleModel.
-        // Bear.findById(req.params.bear_id, function(err, bear) {
-        //     if (err)
-        //         res.send(err);
-        //     res.json(bear);
-        // });
-        
-        //COMMENTED BY DUE NGUYEN
-        //DailyScheduleModel.create()
-        return undefined;
+    protected checkDailySchedule(dailySchedule: DailyScheduleData): boolean {
+        return false;
     }
 
     /**
      * name
      */
-    public getWeeklySchedule(callback): [WeeklyScheduleData] {
-        return undefined;
-    }
-
-    /**
-     * name
-     */
-    public insertWeekly(salonId: string, schedules: Array<WeeklyScheduleData>, callback) {
+ /*   public insertWeekly(salonId: string, schedules: Array<WeeklyScheduleData>, callback) {
 
         if(!salonId){
             callback(ErrorMessage.MissingSalonId, 400, undefined);
@@ -123,66 +107,31 @@ export class SalonSchedule implements ScheduleBehavior {
 
         }
 
-
-
-        ScheduleModel.findOne({"_id": salonId}, function(err, docs){
-            if(err){
-                console.log(err);
-                callback(ErrorMessage.ServerError, 500, undefined);
-            }else if(!docs){
-                //ToDo: create default Schedule Docs for Salon
-                var newSchedule ={
-                    _id: salonId, //<salon_id>
-                    // employee_id: {type: String, required: true},
-                    // created_date: {type: Date, required: true},
-                    // last_modified: {type: Date, required: true},
-                    // created_by: {type: UserProfileSchema, required: true},
-                    salon:{
-                        weekly: schedules,
-                        daily: undefined
-                    },
-                    employee: undefined
-                };
-                ScheduleModel.create(newSchedule, function(err, newSchedule){
-                    if(err){
-                        callback(ErrorMessage.ServerError, 500, undefined);
-                        return;
-                    }else {
-                        callback(undefined, 200, schedules);
-                        return;
-                    }
-                })
-
-            }else{
-                console.log('KKKKKK'+ docs.salon.weekly[0]);
-                console.log('HHHHHHH' + schedules[0]);
-                docs.salon.weekly = schedules;
-                /*for(var i=0; i<=6; i++){
-                    docs.salon.weekly[i] = schedules[i];
-                }*/
-                console.log('HHHHHHHOOOOOO' + schedules[0]);
-                console.log('KKKKKKOOOOO'+ docs.salon.weekly[0]);
-                docs.save(function(err){
-                    if(err){
-                        callback(err, 500, undefined);
-                        return;
-                    }else{
-                        callback(undefined, 200, schedules);
-                        return;
-                    }
-                });
-                
-            }
-        });
-        
+*/
+    protected checkWeeklySchedule(): boolean {
+        return false;
     }
 
-    /**
-     * name
-     */
-    public insertDaily(schedule: DailyScheduleData, callback) {
-
+    protected getDailyScheduleRecord(date: Date): DailyScheduleData {
+        var dailySchedule: DailyScheduleData;
+        return dailySchedule;
     }
 
+    protected getWeeklyScheduleRecord(): [WeeklyScheduleData] {
+        var weeklyScheduleList: [WeeklyScheduleData];
+
+        return weeklyScheduleList;
+    }
+
+    protected normalizeDailySchedule(dailySchedule: DailyScheduleData): DailyScheduleData {
+        return dailySchedule;
+    }
+
+    protected updateDailySchedule(dailySchedule: DailyScheduleData): boolean {
+        return false;
+    }
     
+    protected updateWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]): boolean {
+        return false;
+    }
 }

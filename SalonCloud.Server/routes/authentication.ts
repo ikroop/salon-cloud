@@ -7,35 +7,9 @@ import jwt = require('jsonwebtoken');
 import fs = require('fs');
 var ErrorMessage = require('./ErrorMessage');
 
-var AuthenticationModel = require('../core/authentication/AuthenticationModel');
-import {Authentication} from '../core/authentication/Authentication';
+import {Authentication} from '../core/user/Authentication';
 module route {
-    export class AuthenticationRoute {
-        public static signUpWithEmailAndPassword(req: express.Request, res: express.Response) {
-            var authentication = new Authentication();
-            authentication.signUpWithEmailAndPassword(req.body.username, req.body.password, function (err, code, data) {
-                if (err) {
-                    res.statusCode = code;
-                    return res.json(err);
-                } else {
-                    res.statusCode = code;
-                    return res.json(data);
-                }
-            });
-        }
-
-        public static signInWithEmailAndPassword(req: express.Request, res: express.Response, done) {
-            var authentication = new Authentication();
-            authentication.signInWithEmailAndPassword(req.body.username, req.body.password, function (err, code, data) {
-                if (err) {
-                    res.statusCode = code;
-                    return res.json(err);
-                } else {
-                    res.statusCode = code;
-                    return res.json(data);
-                }
-            });
-        }
+    export class AuthenticationRoute {        
 
         /**
          * Check access TOKEN in Request

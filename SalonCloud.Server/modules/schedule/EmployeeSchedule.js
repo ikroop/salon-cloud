@@ -1,26 +1,34 @@
 "use strict";
-class EmployeeSchedule {
-    /**
-     * name
-     */
-    getSchedule(startDate, endDate, callback) {
-        return undefined;
+const Schedule_1 = require("./Schedule");
+class EmployeeSchedule extends Schedule_1.Schedule {
+    addDailySchedule(dailySchedule) {
+        return false;
     }
-    /**
-     * name
-     */
-    getWeeklySchedule(callback) {
-        return undefined;
+    addWeeklySchedule(weeklyScheduleList) {
+        return false;
     }
-    /**
-     * name
-     */
-    insertWeekly(schedule, callback) {
+    checkDailySchedule(dailySchedule) {
+        return false;
     }
-    /**
-     * name
-     */
-    insertDaily(schedule, callback) {
+    checkWeeklySchedule() {
+        return false;
+    }
+    getDailyScheduleRecord(date) {
+        var dailySchedule;
+        return dailySchedule;
+    }
+    getWeeklyScheduleRecord() {
+        var weeklyScheduleList;
+        return weeklyScheduleList;
+    }
+    normalizeDailySchedule(dailySchedule) {
+        return dailySchedule;
+    }
+    updateDailySchedule(dailySchedule) {
+        return false;
+    }
+    updateWeeklySchedule(weeklyScheduleList) {
+        return false;
     }
 }
 exports.EmployeeSchedule = EmployeeSchedule;

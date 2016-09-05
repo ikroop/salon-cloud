@@ -7,7 +7,7 @@ import jwt = require('jsonwebtoken');
 import {Validator} from '../core/validator/Validator';
 import {Salon} from '../modules/salon/Salon';
 import {SalonData} from '../modules/salon/SalonData';
-import {User} from '../modules/User/User'
+import {User} from '../core/user/User';
 
 var ErrorMessage = require('./ErrorMessage');
 
