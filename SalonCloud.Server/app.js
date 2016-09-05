@@ -6,12 +6,8 @@ const passportLocal = require("passport-local");
 const schedule_1 = require("./routes/schedule");
 const authorization_1 = require("./routes/authorization");
 var UserModel = require("./core/user/UserModel");
-/*var AuthRoute = require ("./routes/authentication");
-var SalonRoute = require("./routes/salon");
-var ScheduleRoute = require("./routes/schedule");
-var UserRoute = require ("./routes/user");
-var AuthenticationModel = require ("./core/authentication/AuthenticationModel");*/
 const app = express();
+var authorizationRouter = new authorization_1.AuthorizationRouter();
 // Configuration
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

@@ -36,7 +36,8 @@ exports.ScheduleRouter = ScheduleRouter;
     public static getSalonDailySchedule(req: express.Request, res: express.Response) {
         
                res.statusCode = 400;
-               return res.json(ErrorMessage.SalonNotFound);
+               return res.json(ErrorMe
+               ssage.SalonNotFound);
            }
            if (!req.params.salon_id) {// TODO: salonId's' not found
                res.statusCode = 400;
