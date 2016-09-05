@@ -3,6 +3,7 @@
 *
 *
 */
+import { mongoose } from "../../services/database";
 import { Document } from "mongoose";
 
 export interface ScheduleItemData extends Document{

@@ -1,26 +1,30 @@
-/*
- *
- * Authentication Class
- *
- *
+/**
+ * 
+ * 
+ * 
+ * 
  */
 
-import passport = require('passport');
+import { SalonCloudResponse } from "./../SalonCloudResponse";
+import { AuthorizationData } from "./AuthorizationData";
+import { AuthorizationBehavior } from "./AuthorizationBehavior";
+import { Validator } from "./../validator/Validator";
+var ErrorMessage = require("./../ErrorMessage");
+var UserModel = require("./../user/UserModel");
 import jwt = require('jsonwebtoken');
 import fs = require('fs');
-var ErrorMessage = require('./../../routes/ErrorMessage');
 
-import {UserData} from './UserData';
-import {UserProfileSchema} from './UserModel';
-import {Validator} from './../validator/validator';
+export class Authorization implements AuthorizationBehavior {
+    changePassword(oldPasswords: string, newPassword: string, code: string, callback){
+     
+    }
 
-import {AuthenticationBehavior} from './AuthenticationBehavior';
-var UserModel = require ("./UserModel");
-/**
-* Authentication
-*/
-export class Authentication implements AuthenticationBehavior{
-    public signUpWithEmailAndPassword(username: string, password: string, callback) {
+    sendVerifyCode(username: string, callback) {
+        var response: SalonCloudResponse<boolean>;
+
+        return response;
+    }
+    public signUpWithUsernameAndPassword(username: string, password: string, callback) {
         //validate username;
         if (!username) {
             callback(ErrorMessage.MissingUsername, 400, undefined);
@@ -75,7 +79,7 @@ export class Authentication implements AuthenticationBehavior{
         });
     }
 
-    public signInWithEmailAndPassword(username: string, password: string, callback) {
+    public signInWithUsernameAndPassword(username: string, password: string, callback) {
             if (!username) {
                 callback(ErrorMessage.MissingUsername, 400, undefined);
                 return;             

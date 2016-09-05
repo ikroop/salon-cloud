@@ -2,7 +2,7 @@
  * Validator
  */
 "use strict";
-const mongoose = require("mongoose");
+const database_1 = require("../../services/database");
 class Validator {
     static IsEmail(email) {
         var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -76,7 +76,7 @@ class Validator {
         }
     }
     static IsIdentifyString(Id) {
-        return mongoose.Types.ObjectId.isValid(Id);
+        return database_1.mongoose.Types.ObjectId.isValid(Id);
     }
 }
 exports.Validator = Validator;

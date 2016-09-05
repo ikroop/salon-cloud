@@ -2596,15 +2596,15 @@ getDailyScheduleRecord(date, function(err, data){
                   isUnique="false">
                   <type_NamedElement>
                     <undefinedTypeMoniker
-                      Id="b3d823a7-9438-4bbc-a492-82eab1ba56c2"
-                      LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;"
+                      Id="4a6479c9-bc02-4d0d-b08b-e78e471e785d"
+                      LastKnownName="SalonCloudResponse&lt;boolean&gt;"
                       LastKnownLocation="SalonCloud.Server.Design.uml" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="9131ae82-3d42-43ef-9d8b-2014aebfc828"
+                  Id="8fa952a2-0db8-4c57-ab3e-f735b2fccc6a"
                   name="username"
                   direction="In"
                   isUnique="false">
@@ -2618,7 +2618,7 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="e7bfa972-ab94-42c0-aead-c9e46572e586"
+                  Id="6d00d35a-9bc9-4303-b1a5-9147362fa3fd"
                   name="password"
                   direction="In"
                   isUnique="false">
@@ -2700,15 +2700,15 @@ getDailyScheduleRecord(date, function(err, data){
                   isUnique="false">
                   <type_NamedElement>
                     <undefinedTypeMoniker
-                      Id="e5853dd4-bad0-4f09-b277-778c8c856998"
-                      LastKnownName="SalonCloudResponse&lt;string&gt;"
+                      Id="4a6479c9-bc02-4d0d-b08b-e78e471e785d"
+                      LastKnownName="SalonCloudResponse&lt;boolean&gt;"
                       LastKnownLocation="SalonCloud.Server.Design.uml" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="fc342160-9de8-4381-a3e9-88beacdf4536"
+                  Id="7cdc44c8-3efd-48c3-8a9f-6944dd3b3fd5"
                   name="username"
                   direction="In"
                   isUnique="false">
@@ -2853,7 +2853,7 @@ getDailyScheduleRecord(date, function(err, data){
           </property>
           <property
             Id="b55e92f6-13cb-42e7-8580-e5682ec079a1"
-            name="isVerified"
+            name="is_verified"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -2897,7 +2897,14 @@ getDailyScheduleRecord(date, function(err, data){
             isDerived="false"
             isDerivedUnion="false"
             aggregation="None"
-            isComposite="false" />
+            isComposite="false">
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="51c3c42a-57a4-4c22-aaf6-51c009897a86"
+                LastKnownName="TokenData"
+                LastKnownLocation="SalonCloud.Server.Design.uml" />
+            </type_NamedElement>
+          </property>
         </ownedAttributes>
       </Interface>
     </packageHasNamedElement>
@@ -3026,8 +3033,8 @@ getDailyScheduleRecord(date, function(err, data){
                   isUnique="false">
                   <type_NamedElement>
                     <undefinedTypeMoniker
-                      Id="b3d823a7-9438-4bbc-a492-82eab1ba56c2"
-                      LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;"
+                      Id="4a6479c9-bc02-4d0d-b08b-e78e471e785d"
+                      LastKnownName="SalonCloudResponse&lt;boolean&gt;"
                       LastKnownLocation="SalonCloud.Server.Design.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -3116,8 +3123,8 @@ getDailyScheduleRecord(date, function(err, data){
                   isUnique="false">
                   <type_NamedElement>
                     <undefinedTypeMoniker
-                      Id="e5853dd4-bad0-4f09-b277-778c8c856998"
-                      LastKnownName="SalonCloudResponse&lt;string&gt;"
+                      Id="4a6479c9-bc02-4d0d-b08b-e78e471e785d"
+                      LastKnownName="SalonCloudResponse&lt;boolean&gt;"
                       LastKnownLocation="SalonCloud.Server.Design.uml" />
                   </type_NamedElement>
                 </parameter>

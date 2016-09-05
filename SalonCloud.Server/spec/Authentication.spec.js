@@ -3,17 +3,15 @@ var assert = require('assert');
 var request = require('supertest');
 var mongoose = require('mongoose');
 var winston = require('winston');
-var configDB = require('./../config/dev/database.js');
 
 describe('Authentication', function () {
-    var url = 'http://localhost:3000';
+    var url = 'http://localhost:3000/api/v1/auth';
     var timestamp = new Date().getTime();
     var defaultPassword = '1234@1234'
     // within before() you can run all the operations that are needed to setup your tests. In this case
     // I want to create a connection with the database, and when I'm done, I call done().
     before(function (done) {
         // In our tests we use the test db
-        mongoose.connect(configDB.url);
         done();
     });
     // use describe to give a title to your test suite, in this case the tile is "User"
@@ -24,7 +22,7 @@ describe('Authentication', function () {
     // to specify when our test is completed, and that's what makes easy
     // to perform async test!
     describe('User SignUp with Username & Password', function () {
-        var apiUrl = '/auth/signupwithemailandpassword';
+        var apiUrl = '/signupwithusernameandpassword';
 
         it('should return "MissingUsername" error trying to register without username', function (done) {
             var user = {
@@ -34,6 +32,7 @@ describe('Authentication', function () {
             // we need to actually perform the action on the resource, in this case we want to 
             // POST on /api/auth/register and we want to send some info
             // We do this using the request object, requiring supertest!
+            console.log('apiUrl:', apiUrl);
             request(url)
                 .post(apiUrl)
                 .send(user)
@@ -202,7 +201,7 @@ describe('Authentication', function () {
     });
 
     describe('User Signin with Username & Password', function () {
-        var apiUrl = '/auth/signinwithemailandpassword';
+        var apiUrl = '/signinwithusernameandpassword';
 
         it('should return "MissingUsername" error trying to Signin without username', function (done) {
             var user = {
@@ -305,7 +304,7 @@ describe('Authentication', function () {
         });
     });
 
-    describe('Send password reset code to user by username(email or sms).', function () {
+    /*describe('Send password reset code to user by username(email or sms).', function () {
         var apiUrl = '/auth/sendpasswordreset';
 
         it('should return "MissingUsername" error trying to get password reset code without username', function (done) {
@@ -800,5 +799,5 @@ describe('Authentication', function () {
                     done();
                 });
         });
-    });
+    });*/
 });

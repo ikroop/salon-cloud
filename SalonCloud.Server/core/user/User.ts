@@ -1,7 +1,7 @@
 /**
  * 
  */
-import * as mongoose from "mongoose";
+import { mongoose } from "../../services/database";
 import {UserData, UserProfile} from "./UserData";
 var ErrorMessage = require('./../../routes/ErrorMessage');
 import {Validator} from '../../core/validator/Validator';
@@ -20,8 +20,8 @@ export class User {
         this.UserId = UserId;
         this.SalonId = SalonId;
     }
-    createProfile(profileData: UserProfile, callback) {
-        if (!profileData.salon_id) {
+    createPublicProfile(profileData: UserProfile, callback) {
+        if (!profileData.public.salon_id) {
             callback(ErrorMessage.MissingSalonId, 400, undefined);
             return;
         } else if (!Validator.IsIdentifyString(profileData.salon_id)) {

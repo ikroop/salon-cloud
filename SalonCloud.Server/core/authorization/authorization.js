@@ -1,20 +1,23 @@
-/*
+/**
  *
- * Authentication Class
+ *
  *
  *
  */
 "use strict";
+const Validator_1 = require("./../validator/Validator");
+var ErrorMessage = require("./../ErrorMessage");
+var UserModel = require("./../user/UserModel");
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-var ErrorMessage = require('./../../routes/ErrorMessage');
-const validator_1 = require('./../validator/validator');
-var UserModel = require("./UserModel");
-/**
-* Authentication
-*/
-class Authentication {
-    signUpWithEmailAndPassword(username, password, callback) {
+class Authorization {
+    changePassword(oldPasswords, newPassword, code, callback) {
+    }
+    sendVerifyCode(username, callback) {
+        var response;
+        return response;
+    }
+    signUpWithUsernameAndPassword(username, password, callback) {
         //validate username;
         if (!username) {
             callback(ErrorMessage.MissingUsername, 400, undefined);
@@ -24,11 +27,11 @@ class Authentication {
             var isPhonenumber = true;
             var isEmail = true;
             //case: username is phonenumber
-            if (!validator_1.Validator.IsPhoneNumber(username)) {
+            if (!Validator_1.Validator.IsPhoneNumber(username)) {
                 isPhonenumber = false;
             }
             //case: username is email
-            if (!validator_1.Validator.IsEmail(username)) {
+            if (!Validator_1.Validator.IsEmail(username)) {
                 isEmail = false;
             }
             if (!(isPhonenumber || isEmail)) {
@@ -64,7 +67,7 @@ class Authentication {
             }
         });
     }
-    signInWithEmailAndPassword(username, password, callback) {
+    signInWithUsernameAndPassword(username, password, callback) {
         if (!username) {
             callback(ErrorMessage.MissingUsername, 400, undefined);
             return;
@@ -125,5 +128,5 @@ class Authentication {
         }
     }
 }
-exports.Authentication = Authentication;
-//# sourceMappingURL=Authentication.js.map
+exports.Authorization = Authorization;
+//# sourceMappingURL=authorization.js.map

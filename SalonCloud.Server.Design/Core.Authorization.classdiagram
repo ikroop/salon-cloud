@@ -110,11 +110,6 @@
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="08d0d7e9-ed01-4a34-8b41-ce8eefd0637e" name="SalonCloudResponse&lt;string&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;string&gt;">
-        <elementDefinition Id="e5853dd4-bad0-4f09-b277-778c8c856998" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
       <referencedType Id="71c6a237-34db-4063-879a-dc080c155126" name="SalonCloudResponse&lt;boolean&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;boolean&gt;">
         <elementDefinition Id="4a6479c9-bc02-4d0d-b08b-e78e471e785d" />
       </referencedType>
@@ -140,21 +135,21 @@
                 <parameter Id="b1f82dfd-dd50-428f-9cac-2ce8f68e6446" direction="Return" isUnique="false">
                   <elementDefinition Id="f4d0fa9c-cef7-48ad-92be-e5af384d936c" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="2399f683-e7aa-43f3-a080-750ced96cf40" LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;" />
+                    <referencedTypeMoniker Id="71c6a237-34db-4063-879a-dc080c155126" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="da59597d-4ad3-4441-aee4-1c5ed80c5a5d" name="username" direction="In" isUnique="false">
-                  <elementDefinition Id="9131ae82-3d42-43ef-9d8b-2014aebfc828" />
+                <parameter Id="ef5f35b9-62d3-4384-ab8c-e55ca1d47339" name="username" direction="In" isUnique="false">
+                  <elementDefinition Id="8fa952a2-0db8-4c57-ab3e-f735b2fccc6a" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="50bb2cae-c43a-4561-9ca1-9120a4b1859f" LastKnownName="string" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="516923d0-60df-4c21-a90d-f651628196ea" name="password" direction="In" isUnique="false">
-                  <elementDefinition Id="e7bfa972-ab94-42c0-aead-c9e46572e586" />
+                <parameter Id="0a2d0cda-ba38-4a9f-b702-2cf8f67aba72" name="password" direction="In" isUnique="false">
+                  <elementDefinition Id="6d00d35a-9bc9-4303-b1a5-9147362fa3fd" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="50bb2cae-c43a-4561-9ca1-9120a4b1859f" LastKnownName="string" />
                   </type_NamedElement>
@@ -198,13 +193,13 @@
                 <parameter Id="7bb4b26b-6496-43ec-b245-9f4d0268e9f8" direction="Return" isUnique="false">
                   <elementDefinition Id="1407595d-2a90-4ebf-8af9-ec90ad1e712b" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="08d0d7e9-ed01-4a34-8b41-ce8eefd0637e" LastKnownName="SalonCloudResponse&lt;string&gt;" />
+                    <referencedTypeMoniker Id="71c6a237-34db-4063-879a-dc080c155126" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="988c1722-e1e9-44dd-8c94-5a36d912a67e" name="username" direction="In" isUnique="false">
-                  <elementDefinition Id="fc342160-9de8-4381-a3e9-88beacdf4536" />
+                <parameter Id="74e38694-f721-4da6-9f17-a3a60b52ca72" name="username" direction="In" isUnique="false">
+                  <elementDefinition Id="7cdc44c8-3efd-48c3-8a9f-6944dd3b3fd5" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="50bb2cae-c43a-4561-9ca1-9120a4b1859f" LastKnownName="string" />
                   </type_NamedElement>
@@ -280,10 +275,10 @@
               <referencedTypeMoniker Id="50bb2cae-c43a-4561-9ca1-9120a4b1859f" LastKnownName="string" />
             </type_NamedElement>
           </property>
-          <property Id="544b9037-45a5-4e36-9e63-e43978cbe1e6" name="isVerified" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="544b9037-45a5-4e36-9e63-e43978cbe1e6" name="is_verified" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="b55e92f6-13cb-42e7-8580-e5682ec079a1" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="75d8eb29-aa2b-4f32-841b-af04af2f3281" LastKnownName="boolean" />
+              <referencedTypeMoniker Id="118670c7-5e5c-49d7-b094-3184c2a75175" LastKnownName="boolean" />
             </type_NamedElement>
           </property>
           <property Id="24126002-b4d6-4a41-98ad-396318a02d44" name="status" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -294,6 +289,9 @@
           </property>
           <property Id="af0f62f5-db4f-4106-9e5c-463776334349" name="auth" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="88f55c0d-a3f6-4838-a93c-dcca0a31e484" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="c90904c0-8710-4ec4-94d4-074d73a2f96f" LastKnownName="TokenData" />
+            </type_NamedElement>
           </property>
         </ownedAttributes>
       </Interface>
@@ -356,7 +354,7 @@
                 <parameter Id="d69a3400-758f-45f0-8378-c1329e0f5fc6" direction="Return" isUnique="false">
                   <elementDefinition Id="7510ba3c-876e-4cb0-93b7-8b4e57ae09a5" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="2399f683-e7aa-43f3-a080-750ced96cf40" LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;" />
+                    <referencedTypeMoniker Id="71c6a237-34db-4063-879a-dc080c155126" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -406,7 +404,7 @@
                 <parameter Id="6b6a93fe-0c66-4dad-887f-4558bdb78f80" direction="Return" isUnique="false">
                   <elementDefinition Id="9d3338af-9864-4769-ae19-d127e1df6e87" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="08d0d7e9-ed01-4a34-8b41-ce8eefd0637e" LastKnownName="SalonCloudResponse&lt;string&gt;" />
+                    <referencedTypeMoniker Id="71c6a237-34db-4063-879a-dc080c155126" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -472,6 +470,16 @@
     <packageHasNamedElement>
       <referencedType Id="00fd1d3e-379f-4b65-9caf-503d637e7b57" name="SalonCloudResponse&lt;AuthorizationData&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;AuthorizationData&gt;">
         <elementDefinition Id="b3d823a7-9438-4bbc-a492-82eab1ba56c2" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="c90904c0-8710-4ec4-94d4-074d73a2f96f" name="TokenData" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::TokenData">
+        <elementDefinition Id="51c3c42a-57a4-4c22-aaf6-51c009897a86" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="118670c7-5e5c-49d7-b094-3184c2a75175" name="boolean" isAbstract="false" isLeaf="false" cachedFullName="boolean">
+        <elementDefinition Id="051e7997-f310-4d15-a48a-c3a7ec61badb" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>

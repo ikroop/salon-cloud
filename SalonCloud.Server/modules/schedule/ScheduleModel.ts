@@ -1,4 +1,4 @@
-import * as mongoose from "mongoose";
+import { mongoose } from "../../services/database";
 import {ScheduleData} from './ScheduleData'
 
 export const WeeklyScheduleSchema = new mongoose.Schema({

@@ -3,7 +3,7 @@
  * Validator
  */
 
-import * as mongoose from "mongoose";
+import { mongoose } from "../../services/database";
 export class Validator {
     static IsEmail(email: string) {
         var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
