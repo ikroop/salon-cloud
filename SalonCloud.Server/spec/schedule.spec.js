@@ -791,7 +791,7 @@ describe('Schedule', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
                     done();

@@ -74,6 +74,18 @@ export class Validator {
         }
     }
 
+    static IsValidScheduleTime(openTime: any){
+        if(typeof openTime !== "number"){
+            return false;
+        }
+        if(openTime <= 0 || openTime > 86400){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
     static IsValidWeekDay(date: number) {
         if(date >= 0 && date <= 6){
             return true;
