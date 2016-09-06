@@ -25,12 +25,14 @@ export const WeeklyScheduleSchema = new mongoose.Schema(
 import { mongoose } from "../../services/database";
 import { Schedule } from "./Schedule";
 import { DailyScheduleData, WeeklyScheduleData } from "./ScheduleData";
+import { ScheduleModel } from "./ScheduleModel";
 export class SalonSchedule extends Schedule {
     protected addDailySchedule(dailySchedule: DailyScheduleData): boolean {
         return false;
     }
 
     protected addWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]): boolean {
+        ScheduleModel.findOne(weeklyScheduleList[1]._id, function())
         return false;
     }
 
@@ -108,8 +110,21 @@ export class SalonSchedule extends Schedule {
         }
 
 */
-    protected checkWeeklySchedule(): boolean {
-        return false;
+    protected checkWeeklySchedule(salonId: String, callback){
+        this.checkScheduleDocsExistence(salonId, function(err, data){
+            if(err){
+                callback(err, undefined);
+                return;
+            }else{
+                if(data.salon.weekly === undefined){
+                    callback(undefined, false, data);
+                    return;
+                }else{
+                    callback(undefined, true, data);
+                }
+            }
+        });
+
     }
 
     protected getDailyScheduleRecord(date: Date): DailyScheduleData {

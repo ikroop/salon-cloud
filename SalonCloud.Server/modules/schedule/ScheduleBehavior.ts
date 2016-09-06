@@ -28,7 +28,7 @@ export interface ScheduleBehavior{
     /**
      * name
      */
-    saveWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]) : SalonCloudResponse<boolean>;
+    saveWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData], callback);
 
     /**
      * name

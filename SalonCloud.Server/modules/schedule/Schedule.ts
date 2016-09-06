@@ -5,6 +5,7 @@
 import { DailyScheduleData, WeeklyScheduleData } from './ScheduleData';
 import {SalonCloudResponse} from "../../core/SalonCloudResponse";
 import {ScheduleBehavior} from "./ScheduleBehavior";
+import {ScheduleModel} from "./ScheduleModel";
 var ErrorMessage = require('./../../routes/ErrorMessage');
 
 export abstract class Schedule implements ScheduleBehavior {
@@ -70,13 +71,13 @@ export abstract class Schedule implements ScheduleBehavior {
     /**
      * name
      */
-    public saveWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]): SalonCloudResponse<boolean> {
+    public saveWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData], callback) {
 
         var response: SalonCloudResponse<boolean>;
         var saveStatus;
 
         //TODO: implement validation
-        if (this.checkWeeklySchedule()) {
+        /*if (this.checkWeeklySchedule(weeklyScheduleList[1]._id)) {
             saveStatus = this.updateWeeklySchedule(weeklyScheduleList);
         } else {
             saveStatus = this.addWeeklySchedule(weeklyScheduleList);
@@ -89,8 +90,37 @@ export abstract class Schedule implements ScheduleBehavior {
             response.code = 500;
             response.err = ErrorMessage.ServerError;
         }
+        
 
         return response;
+        */
+
+        this.checkWeeklySchedule(weeklyScheduleList[1]._id, function(error, data){
+            if(error){
+                callback(error, 500, undefined);
+                return;
+            }else if(data==true){
+                this.updateWeeklySchedule(weeklyScheduleList, function(error, returnData){
+                    if(error){
+                        callback(error, 500, undefined);
+                        return;
+                    }else{
+                        callback(undefined, 200, returnData);
+                        return;
+                    }
+                });
+            }else{
+                this.addWeeklySchedule(weeklyScheduleList, function(error, returnData){
+                    if(error){
+                        callback(error, 500, undefined);
+                        return;
+                    }else{
+                        callback(undefined, 200, returnData);
+                        return;
+                    }
+                });
+            }
+        })
     }
 
     /**
@@ -119,10 +149,46 @@ export abstract class Schedule implements ScheduleBehavior {
         return response;
     }
 
+    protected checkScheduleDocsExistence(salonId: String, callback){
+        ScheduleModel.findOne({"_id": salonId}, function(err, docs){
+            if(err){
+                console.log(err);
+                callback(ErrorMessage.ServerError, 500, undefined);
+            }else if(!docs){
+                //ToDo: create default Schedule Docs for Salon
+                var newSchedule ={
+                    _id: salonId, //<salon_id>
+                    // employee_id: {type: String, required: true},
+                    // created_date: {type: Date, required: true},
+                    // last_modified: {type: Date, required: true},
+                    // created_by: {type: UserProfileSchema, required: true},
+                    salon:{
+                        weekly: undefined,
+                        daily: undefined
+                    },
+                    employee: undefined
+                };
+                ScheduleModel.create(newSchedule, function(err, newSchedule){
+                    if(err){
+                        callback(ErrorMessage.ServerError, undefined);
+                        return;
+                    }else {
+                        callback(undefined, newSchedule);
+                        return;
+                    }
+                })
+
+            }else{
+                    callback(undefined, docs);
+                    return;
+            }
+        });
+    }
+
     protected abstract addDailySchedule(dailySchedule: DailyScheduleData): boolean;
     protected abstract addWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]): boolean;
     protected abstract checkDailySchedule(dailySchedule: DailyScheduleData): boolean;
-    protected abstract checkWeeklySchedule(): boolean;
+    protected abstract checkWeeklySchedule(salonId: String, callback);
     protected abstract getDailyScheduleRecord(date: Date): DailyScheduleData;
     protected abstract getWeeklyScheduleRecord(): [WeeklyScheduleData];
     protected abstract normalizeDailySchedule(dailySchedule: DailyScheduleData): DailyScheduleData;
