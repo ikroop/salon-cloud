@@ -21,7 +21,7 @@ export class User {
         this.SalonId = SalonId;
     }
     createPublicProfile(profileData: UserProfile, callback) {
-        if (!profileData.public.salon_id) {
+        if (!profileData.salon_id) {
             callback(ErrorMessage.MissingSalonId, 400, undefined);
             return;
         } else if (!Validator.IsIdentifyString(profileData.salon_id)) {

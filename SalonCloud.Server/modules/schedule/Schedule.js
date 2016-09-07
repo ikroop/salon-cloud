@@ -1,4 +1,5 @@
 "use strict";
+const ScheduleModel_1 = require("./ScheduleModel");
 var ErrorMessage = require('./../../routes/ErrorMessage');
 class Schedule {
     /**
@@ -55,26 +56,57 @@ class Schedule {
     /**
      * name
      */
-    saveWeeklySchedule(weeklyScheduleList) {
+    saveWeeklySchedule(weeklyScheduleList, callback) {
         var response;
         var saveStatus;
         //TODO: implement validation
-        if (this.checkWeeklySchedule()) {
+        /*if (this.checkWeeklySchedule(weeklyScheduleList[1]._id)) {
             saveStatus = this.updateWeeklySchedule(weeklyScheduleList);
-        }
-        else {
+        } else {
             saveStatus = this.addWeeklySchedule(weeklyScheduleList);
         }
         response.data = saveStatus;
-        if (saveStatus) {
+        if (saveStatus){
             response.code = 200;
             response.err = undefined;
-        }
-        else {
+        }else{
             response.code = 500;
             response.err = ErrorMessage.ServerError;
         }
+        
+
         return response;
+        */
+        this.checkWeeklySchedule(weeklyScheduleList[1]._id, function (error, data) {
+            if (error) {
+                callback(error, 500, undefined);
+                return;
+            }
+            else if (data == true) {
+                this.updateWeeklySchedule(weeklyScheduleList, function (error, returnData) {
+                    if (error) {
+                        callback(error, 500, undefined);
+                        return;
+                    }
+                    else {
+                        callback(undefined, 200, returnData);
+                        return;
+                    }
+                });
+            }
+            else {
+                this.addWeeklySchedule(weeklyScheduleList, function (error, returnData) {
+                    if (error) {
+                        callback(error, 500, undefined);
+                        return;
+                    }
+                    else {
+                        callback(undefined, 200, returnData);
+                        return;
+                    }
+                });
+            }
+        });
     }
     /**
      * name
@@ -99,6 +131,43 @@ class Schedule {
             response.err = ErrorMessage.ServerError;
         }
         return response;
+    }
+    checkScheduleDocsExistence(salonId, callback) {
+        ScheduleModel_1.ScheduleModel.findOne({ "_id": salonId }, function (err, docs) {
+            if (err) {
+                console.log(err);
+                callback(ErrorMessage.ServerError, 500, undefined);
+            }
+            else if (!docs) {
+                //ToDo: create default Schedule Docs for Salon
+                var newSchedule = {
+                    _id: salonId,
+                    // employee_id: {type: String, required: true},
+                    // created_date: {type: Date, required: true},
+                    // last_modified: {type: Date, required: true},
+                    // created_by: {type: UserProfileSchema, required: true},
+                    salon: {
+                        weekly: undefined,
+                        daily: undefined
+                    },
+                    employee: undefined
+                };
+                ScheduleModel_1.ScheduleModel.create(newSchedule, function (err, newSchedule) {
+                    if (err) {
+                        callback(ErrorMessage.ServerError, undefined);
+                        return;
+                    }
+                    else {
+                        callback(undefined, newSchedule);
+                        return;
+                    }
+                });
+            }
+            else {
+                callback(undefined, docs);
+                return;
+            }
+        });
     }
 }
 exports.Schedule = Schedule;

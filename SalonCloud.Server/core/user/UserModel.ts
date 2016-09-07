@@ -12,21 +12,18 @@ import passportLocalMongoose = require('passport-local-mongoose');
 import Schema = mongoose.Schema;
 
 export const UserProfileSchema = new mongoose.Schema({
-    public: {
-        salon_id: { type: String, required: true },
-        status: { type: Boolean, required: true },
-        role: { type: Number, required: true },
-        fullname: String,
-        nickname: String
-    },
-    private: {
-        social_security_number: String,
-        salary_rate: Number,
-        cash_rate: Number,
-        birthday: String,
-        address: String,
-        email: String
-    }
+    salon_id: { type: String, required: true },
+    status: { type: Boolean, required: true },
+    role: { type: Number, required: true },
+    fullname: String,
+    nickname: String,
+    social_security_number: String,
+    salary_rate: Number,
+    cash_rate: Number,
+    birthday: String,
+    address: String,
+    email: String
+
 });
 
 export const UserSchema = new Schema({
