@@ -31,9 +31,24 @@ export class SalonSchedule extends Schedule {
         return false;
     }
 
-    protected addWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]): boolean {
-        ScheduleModel.findOne(weeklyScheduleList[1]._id, function())
-        return false;
+    protected addWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData], callback){
+        ScheduleModel.findOne(weeklyScheduleList[1]._id, function(error, docs){
+            if(error){
+                callback(error, undefined);
+                return;
+            }else{
+                docs.salon.weekly = weeklyScheduleList;
+                docs.save(function(error, updatedDocs){
+                    if(error){
+                        callback(error, undefined);
+                        return;
+                    }else{
+                        callback(undefined, updatedDocs);
+                        return;
+                    }
+                });
+            }
+        });
     }
 
     protected checkDailySchedule(dailySchedule: DailyScheduleData): boolean {
@@ -146,7 +161,23 @@ export class SalonSchedule extends Schedule {
         return false;
     }
     
-    protected updateWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]): boolean {
-        return false;
+    protected updateWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData], callback) {
+        ScheduleModel.findOne(weeklyScheduleList[1]._id, function(error, docs){
+            if(error){
+                callback(error, undefined);
+                return;
+            }else{
+                docs.salon.weekly = weeklyScheduleList;
+                docs.save(function(error, updatedDocs){
+                    if(error){
+                        callback(error, undefined);
+                        return;
+                    }else{
+                        callback(undefined, updatedDocs);
+                        return;
+                    }
+                });
+            }
+        });
     }
 }
