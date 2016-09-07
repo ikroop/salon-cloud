@@ -11,18 +11,16 @@ use UTC.
   |     |----is_verified: boolean                 
   |     |----is_temporary: boolean (account is created automatic after customer books appointment)
   |     |----profile: Array
-  |           |----public
-  |           |     |----salon_id: string
-  |           |     |----status: boolean
-  |           |     |----role: number
-  |           |     |----fullname: string
-  |           |     |----nickname: string
-  |           |----private
-  |                 |----social_security_number: string (optional)
-  |                 |----salary_rate: double (optional)
-  |                 |----cash_rate: double (optional)
-  |                 |----birthday: string (optional)
-  |                 |----address: string (optional)
+  |           |----salon_id: string
+  |           |----status: boolean
+  |           |----role: number
+  |           |----fullname: string
+  |           |----nickname: string
+  |           |----social_security_number: string (optional)
+  |           |----salary_rate: double (optional)
+  |           |----cash_rate: double (optional)
+  |           |----birthday: string (optional)
+  |           |----address: string (optional)
   |----appointment
   |     |----id: string
   |     |----salon_id: string
