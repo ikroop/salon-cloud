@@ -204,10 +204,10 @@ module.exports = {
             'message': 'Close time value must range from 0 to 24*3600 = 86400!'
         }
     },
-    'CloseTimeGreaterThanOpenTime': {
+    'OpenTimeGreaterThanCloseTime': {
         'err': {
-            'name': 'CloseTimeGreaterThanOpenTime',
-            'message': 'Close time can not be greater than open time!'
+            'name': 'OpenTimeGreaterThanCloseTime',
+            'message': 'Close time must be greater than open time!'
         }
     },
     'InvalidScheduleDayOfWeek': {
