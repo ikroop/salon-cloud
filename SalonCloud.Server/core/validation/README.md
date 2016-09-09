@@ -5,7 +5,12 @@ Validation using decorator pattern
 
 - Import BaseValidator and ValidationDecorators.
 - First, instantiate a base validator with the to-be-validated element and a Missing-type error type (This must be Missing-type error).
-- Then you can add decorators on top of the base validator for various error.
+- Then you can wrap decorating validator on top of another validator.
+- A specific error type need to be provided in the constructor. 
+- After the last decorating validator added, run method validate().
+- The validate() method return the error that the validation catch. If it's undefined, the validtion passed.
+
+
 
 - Example: 
 
