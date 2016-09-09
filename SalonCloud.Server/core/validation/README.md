@@ -4,8 +4,7 @@ Validation using decorator pattern
 **Usage**
 
 - Import BaseValidator and ValidationDecorators.
-- First, instantiate a base validator with the to-be-validated element and 
-a Missing-type error type (This must be Missing-type error).
+- First, instantiate a base validator with the to-be-validated element and a Missing-type error type (This must be Missing-type error).
 - Then you can add decorators on top of the base validator for various error.
 
 - Example: 
