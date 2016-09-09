@@ -38,7 +38,7 @@ import ErrorMessage
 ***List Of Decorators***
 - IsString(WO, Err)
 - IsNumber(WO, Err)
-- IsInRange(OW, Err, 2nd, 3rd)
+- IsInRange(OW, Err, floor, ceiling)
 - IsGreatorThan(OW, Err, 2nd)
 - IsLessThan (OW, Err, 2nd)
 - IsEmail (OW, Err)
