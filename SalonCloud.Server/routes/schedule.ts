@@ -22,44 +22,12 @@ var ErrorMessage = require('./ErrorMessage');
 module route {
     export class ScheduleRoute {
         public static getSalonDailySchedule(req: express.Request, res: express.Response) {
-         /*
-                res.statusCode = 400;
-                return res.json(ErrorMessage.SalonNotFound);
-            }
-            if (!req.params.salon_id) {// TODO: salonId's' not found
-                res.statusCode = 400;
-                return res.json(ErrorMessage.SalonNotFound);
-            }
 
-            if (!req.param.start_date) {
-                res.statusCode = 400;
-                return res.json(ErrorMessage.MissingStartDate);
-            } else {
-                if (!Validator.IsValidDate(req.param.start_date)) {
-                    res.statusCode = 400;
-                    return res.json(ErrorMessage.InvalidStartDate);
-                }
-            }
-
-            if (!req.param.end_date) {
-                res.statusCode = 400;
-                return res.json(ErrorMessage.MissingEndDate);
-            } else {
-                if (!Validator.IsValidDate(req.param.end_date)) {
-                    res.statusCode = 400;
-                    return res.json(ErrorMessage.InvalidEndDate);
-                }
-                if (!Validator.IsValidEndDateForStartDate(req.param.end_date, req.param.start_date)) {
-                    res.statusCode = 400;
-                    return res.json(ErrorMessage.InvalidEndDateForStartDate);
-                }
-            }
-*/
             // TODO: access DB here
             // then return
             var salonScheduleBehavior = new SalonSchedule();
-            var startDate = new Date();
-            var endDate = startDate;
+            var startDate = new Date(req.params.start_date);
+            var endDate = new Date(req.params.end_date);
             salonScheduleBehavior.getSchedule(startDate, endDate, function (err, code, data) {
                 res.statusCode = code;
                 if (err) {

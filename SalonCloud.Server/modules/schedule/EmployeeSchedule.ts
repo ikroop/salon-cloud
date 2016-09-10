@@ -3,9 +3,8 @@
  * 
  */
 import { ScheduleBehavior } from './ScheduleBehavior';
-//import {Schedule} from './models/Schedule';
-import {DailyScheduleModel, DailyScheduleProfile} from './models/DailyScheduleModel';
-import {WeeklyScheduleModel, WeeklyScheduleProfile} from './models/WeeklyScheduleModel';
+import {DailyScheduleModel} from './ScheduleModel';
+// import {WeeklyScheduleModel, WeeklyScheduleProfile} from './ScheduleModel';
 import {DailyScheduleData} from './ScheduleData';
 import {WeeklyScheduleData} from './ScheduleData';
 import * as mongoose from "mongoose";
@@ -28,7 +27,7 @@ export class EmployeeSchedule implements ScheduleBehavior {
     /**
      * name
      */
-    public insertWeekly(schedule: WeeklyScheduleData, callback) {
+    public insertWeekly(salonId: string, schedule: WeeklyScheduleData, callback) {
 
     }
 

@@ -15,7 +15,7 @@ class EmployeeSchedule {
     /**
      * name
      */
-    insertWeekly(schedule, callback) {
+    insertWeekly(salonId, schedule, callback) {
     }
     /**
      * name
