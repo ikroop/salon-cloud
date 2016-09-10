@@ -1,3 +1,4 @@
+
 import { mongoose } from "../../services/database";
 import {ScheduleData} from './ScheduleData'
 
@@ -22,6 +23,7 @@ export const DailyScheduleSchema = new mongoose.Schema({
     _id: false,
     timestamps: {createdAt: 'created_at', modifiedAt: 'modified_at'}
 });
+export const DailyScheduleModel = mongoose.model<DailyScheduleData>('DailySchedule', DailyScheduleSchema);
 
 export const ScheduleSchema = new mongoose.Schema({
     _id: String, //<salon_id>

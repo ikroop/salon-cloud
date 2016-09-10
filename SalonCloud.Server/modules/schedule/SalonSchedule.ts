@@ -12,6 +12,7 @@ export class SalonSchedule extends Schedule {
         return false;
     }
 
+
     protected addWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]): boolean{
         return true;
     }

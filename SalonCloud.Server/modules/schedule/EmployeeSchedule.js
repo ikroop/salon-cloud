@@ -1,4 +1,5 @@
 "use strict";
+
 const Schedule_1 = require("./Schedule");
 class EmployeeSchedule extends Schedule_1.Schedule {
     addDailySchedule(dailySchedule) {
