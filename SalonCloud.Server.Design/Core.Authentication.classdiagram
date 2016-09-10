@@ -1,1 +1,157 @@
-﻿ 
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="f97c5917-6d4c-4a8d-813f-345ae712f682" name="Core.Authentication" linkedPackageId="e2959bc2-16ec-4ea3-b6c7-671f43d54631" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <appliedStereotypesInternal>
+    <stereotypeInstance Id="742d461f-f5f8-4561-8e09-cbc79756f867" name="namespace" profile="CSharpProfile">
+      <elementDefinition Id="5119a86d-53ac-4402-95a7-056f66c40584" />
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="90703a70-348f-4fbb-b62f-8107495505d8">
+          <propertyInstance Id="70db0297-8851-4413-913a-46c83bffdc98" name="BaseName">
+            <elementDefinition Id="bbe7b240-d81b-4c14-ab87-231d0b2a1933" />
+          </propertyInstance>
+          <elementDefinition Id="5ff246de-d99d-4436-aae7-961dcf31d985" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="0ca8cce3-6771-4154-9e20-9764e585e7bd">
+          <propertyInstance Id="c272aaa5-20aa-4861-8249-90806416f513" name="ClrAttributes">
+            <elementDefinition Id="7ec6a41b-b601-4e94-9777-9be4be9fc5c1" />
+          </propertyInstance>
+          <elementDefinition Id="7b15e59e-9932-4a86-a19d-974c466ce23b" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="9bcf2181-82d8-4d93-9ecd-6f2e2fff09fc">
+          <propertyInstance Id="6f33ccf1-a3b3-47a7-8792-097503cf95e6" name="Usings">
+            <elementDefinition Id="c778f11f-d414-4932-b26c-aa5697094ede" />
+          </propertyInstance>
+          <elementDefinition Id="d3a911a4-614e-4e12-8ef5-7063a9dfe467" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+    <stereotypeInstance Id="5bc83b0c-c9f0-4d47-92a6-ed01a8d1638e" name="TextTemplateBindings" profile="TextTemplateBindings">
+      <elementDefinition Id="2249fea9-500b-40f5-9ec6-91c33d9fb4ff" />
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="5f030799-dddf-4461-9f5b-c70abd14283d">
+          <propertyInstance Id="e2598867-3690-4c48-95a6-95082aa1bb05" name="Alias" value="ClassTemplate|EnumTemplate|InterfaceTemplate|StructTemplate">
+            <elementDefinition Id="bfdb9ea4-f4cd-4de9-8a8f-190e7a527233" />
+          </propertyInstance>
+          <elementDefinition Id="21e9d7d5-287d-4c15-8f79-0ca66eccecfc" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="d475c739-d023-4379-a680-835843f1184f">
+          <propertyInstance Id="77ff9220-5006-4bc3-a480-e88726fcb91e" name="TemplateFilePath" value="ClassTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4|EnumTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\EnumTemplate.t4|InterfaceTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4|StructTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4">
+            <elementDefinition Id="e91ff35b-8bb9-436d-afbe-8629ea9abf65" />
+          </propertyInstance>
+          <elementDefinition Id="9d2bca0b-7b01-451d-8e9c-3ed15e369219" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="f858f621-cb64-4137-b483-738ebb2a1e41">
+          <propertyInstance Id="7718f459-e96d-49f2-81b4-370563fed733" name="ProjectPath" value="ClassTemplate=..\SalonCloud.Server.DesignLib\SalonCloud.Server.DesignLib.csproj|EnumTemplate=..\SalonCloud.Server.DesignLib\SalonCloud.Server.DesignLib.csproj|InterfaceTemplate=..\SalonCloud.Server.DesignLib\SalonCloud.Server.DesignLib.csproj|StructTemplate=..\SalonCloud.Server.DesignLib\SalonCloud.Server.DesignLib.csproj">
+            <elementDefinition Id="0290a594-da74-49b2-9d2b-b9f1980506e9" />
+          </propertyInstance>
+          <elementDefinition Id="5c4e31d2-7374-4796-b9a4-a15e8ea088fb" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="8969df16-e153-4a18-b62e-6ce229e25d60">
+          <propertyInstance Id="cb086dd2-df49-4351-8cb4-87daff623da4" name="TargetDirectory" value="ClassTemplate=GeneratedCode\{PackageStructure}|EnumTemplate=GeneratedCode\{PackageStructure}|InterfaceTemplate=GeneratedCode\{PackageStructure}|StructTemplate=GeneratedCode\{PackageStructure}">
+            <elementDefinition Id="5befd87c-8563-48eb-aa5d-00a92be8cc0d" />
+          </propertyInstance>
+          <elementDefinition Id="9e20b46f-0f58-46d9-a951-3db6f954c869" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="fe06cebe-a783-4097-b73e-2aece6cf0cfd">
+          <propertyInstance Id="41e7677c-3943-4cf1-9426-433eba0af417" name="TargetName" value="ClassTemplate={Name}|EnumTemplate={Name}|InterfaceTemplate={Name}|StructTemplate={Name}">
+            <elementDefinition Id="62732227-3052-4ce9-98e7-1df466c02407" />
+          </propertyInstance>
+          <elementDefinition Id="d7094a84-c0ad-47b3-9158-014f67a56279" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="9a3dea88-c457-474a-8f2b-d9ec8351c441">
+          <propertyInstance Id="ab4e9adc-6249-4c31-9a8f-1c1c27f7825b" name="Overwrite" value="ClassTemplate=True|EnumTemplate=True|InterfaceTemplate=True|StructTemplate=True">
+            <elementDefinition Id="28614822-bd61-48cb-bbc3-bda4e700574d" />
+          </propertyInstance>
+          <elementDefinition Id="eff1e5f8-57d3-4657-8054-2dbdb9c78fc5" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="057b51a0-baac-4737-916f-9b5b5c3b89e8">
+          <propertyInstance Id="e9f4dc6b-ae6a-46d3-abc5-5c5fd1a82ce9" name="Parameters">
+            <elementDefinition Id="17e1e716-f589-4549-8a5f-a1b74f314370" />
+          </propertyInstance>
+          <elementDefinition Id="5da80d6d-7b0a-4d52-ab26-2dc3dc6f61a5" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+  </appliedStereotypesInternal>
+  <profileInstances>
+    <packageHasProfileInstances Id="5a5a8405-b5c0-4e0b-8a60-17320ad55e42">
+      <profileInstance Id="c697781f-7ea9-4c40-ac7e-567c31497bbf" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="92c0d79b-4c7c-4515-987e-2fd7bc83fdd6">
+      <profileInstance Id="17ee16f4-eae1-473e-b580-87a03b11d75f" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="c67e0b43-1cf5-403d-a51c-fe3a939a52d2">
+      <profileInstance Id="504f4779-9270-408d-84d4-66db5e04e2af" name="CSharpProfile">
+        <elementDefinition Id="642fa43c-7777-4048-8c3c-1cdc335cff26" />
+      </profileInstance>
+      <elementDefinition Id="911f7a69-85b8-429b-94b7-751ece6cd98a" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="bbedf38d-3724-4df8-8c33-f6a6b6b5a451">
+      <profileInstance Id="08e3075c-a576-4403-906e-7b04883c2cbb" name="TextTemplateBindings">
+        <elementDefinition Id="75454b40-952d-479a-ad39-f0b93335dc6f" />
+      </profileInstance>
+      <elementDefinition Id="6f146c50-9d98-4021-9148-1e8d0b26731f" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="8ddebee5-fdde-457e-a95f-fe3d7d2acf97" name="Authentication" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="e2c22e8f-96f7-4fce-98fb-33edde933ae0" />
+        <ownedOperations>
+          <operation Id="c3e77e0d-3d7a-4b09-888b-fb5b46b95e25" name="checkPermission" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="297391ca-9823-467a-a450-4ceb4c4b1824" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="9dd369ff-c16b-4180-9284-34e41f6c4bfa" direction="Return" isUnique="false">
+                  <elementDefinition Id="c930fd83-773a-49a5-aee5-8611ed7dd5cd" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3fadd995-1cc1-4f0f-bf83-83772da3d746" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="3fadd995-1cc1-4f0f-bf83-83772da3d746" name="SalonCloudResponse&lt;boolean&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;boolean&gt;">
+        <elementDefinition Id="4a6479c9-bc02-4d0d-b08b-e78e471e785d" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="032bc291-7de7-4e2e-a3ff-6ef83afd5c10" name="Authentication" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="07243c3b-19c2-4ca2-bbb3-2214d688dc8b" />
+        <suppliersInternal>
+          <interfaceRealization Id="f0735c61-5d7c-4168-b84e-e1d913c2d3f8">
+            <interfaceMoniker Id="8ddebee5-fdde-457e-a95f-fe3d7d2acf97" LastKnownName="Authentication" />
+            <elementDefinition Id="11442bb8-dfd1-45b5-8415-738586481743" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation Id="bf793aa1-fa99-4a3b-9bf2-c40f68d3ac36" name="checkPermission" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ef7fe2ce-b434-4d12-9208-1c52940a2354" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ca1dd4b6-8094-4e22-a9b4-b55377921b19" direction="Return" isUnique="false">
+                  <elementDefinition Id="eb05d03b-da48-445d-8a5c-03a1418e3b4f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3fadd995-1cc1-4f0f-bf83-83772da3d746" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="e2959bc2-16ec-4ea3-b6c7-671f43d54631" name="SalonCloud.Server.Design">
+    <elementDefinition Id="2c899048-69c9-4895-a4a9-015718059e00" />
+  </package>
+</logicalClassDesignerModel>

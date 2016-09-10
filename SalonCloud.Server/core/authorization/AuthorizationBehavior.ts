@@ -2,15 +2,10 @@
  * 
  * 
  * 
- * 
  */
-
 import { SalonCloudResponse } from "./../SalonCloudResponse";
-import { AuthorizationData } from "./AuthorizationData";
-export interface AuthorizationBehavior {
-    changePassword(oldPasswords: string, newPassword: string, code: string, callback);
-    sendVerifyCode(username: string, callback);
-    signInWithUsernameAndPassword(username: string, password: string, callback);
-    signUpWithUsernameAndPassword(username: string, password: string, callback);
-    verifyToken(token: string, callback);
+export interface AuthenticationBehavior {
+    checkPermission(userId: string, functionName: string): SalonCloudResponse<boolean>;
+    //addPermission(apiFunction: string, id:string, status: boolean): SalonCloudResponse<boolean>;
+    //removePermission(apiFunction: string, id:string): SalonCloudResponse<boolean>;
 }
