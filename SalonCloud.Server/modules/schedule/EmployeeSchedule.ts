@@ -2,14 +2,6 @@
  * 
  * 
  */
-<<<<<<< HEAD
-import { ScheduleBehavior } from './ScheduleBehavior';
-import {DailyScheduleModel} from './ScheduleModel';
-// import {WeeklyScheduleModel, WeeklyScheduleProfile} from './ScheduleModel';
-import {DailyScheduleData} from './ScheduleData';
-import {WeeklyScheduleData} from './ScheduleData';
-import * as mongoose from "mongoose";
-=======
 import { mongoose } from "../../services/database";
 import { Schedule } from "./Schedule";
 import { DailyScheduleData, WeeklyScheduleData } from "./ScheduleData";
@@ -17,7 +9,6 @@ export class EmployeeSchedule extends Schedule {
     protected addDailySchedule(dailySchedule: DailyScheduleData): boolean {
         return false;
     }
->>>>>>> origin/master
 
     protected addWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]): boolean {
         return false;
@@ -27,16 +18,9 @@ export class EmployeeSchedule extends Schedule {
         return false;
     }
 
-<<<<<<< HEAD
-    /**
-     * name
-     */
-    public insertWeekly(salonId: string, schedule: WeeklyScheduleData, callback) {
-=======
     protected checkWeeklySchedule(): boolean {
         return false;
     }
->>>>>>> origin/master
 
     protected getDailyScheduleRecord(date: Date): DailyScheduleData {
         var dailySchedule: DailyScheduleData;

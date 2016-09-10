@@ -1,25 +1,6 @@
-<<<<<<< HEAD
-import * as mongoose from "mongoose";
-import {ScheduleData, DailyScheduleData, WeeklyScheduleData} from './ScheduleData'
-// import {UserProfileSchema} from '../../user/UserProfile';
 
-export interface ScheduleProfile{
-    _id?: string,
-    salon_id: string,
-    // employee_id: string,
-    // created_date: Date,
-    // last_modified: Date,
-    // created_by: <UserProfile>,
-    close: number,
-    open: number,
-    status: boolean
-}
-
-
-=======
 import { mongoose } from "../../services/database";
 import {ScheduleData} from './ScheduleData'
->>>>>>> origin/master
 
 export const WeeklyScheduleSchema = new mongoose.Schema({
     _id: {type: Number, required: true},

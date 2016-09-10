@@ -23,28 +23,6 @@ export class ScheduleRouter {
     
     getRouter(): Router {
 
-<<<<<<< HEAD
-module route {
-    export class ScheduleRoute {
-        public static getSalonDailySchedule(req: express.Request, res: express.Response) {
-
-            // TODO: access DB here
-            // then return
-            var salonScheduleBehavior = new SalonSchedule();
-            var startDate = new Date(req.params.start_date);
-            var endDate = new Date(req.params.end_date);
-            salonScheduleBehavior.getSchedule(startDate, endDate, function (err, code, data) {
-                res.statusCode = code;
-                if (err) {
-                    return res.json(err);
-                } else {
-                    return res.json(data);
-                }
-            });
-
-            
-        }
-=======
         this.router.get("/testget", async(request: Request, response: Response) => {
             response.json({"testget": "OK"})
         });
@@ -56,7 +34,6 @@ module route {
         return this.router;
     }
 }
->>>>>>> origin/master
 
 /*export class ScheduleRoute {
     public static getSalonDailySchedule(req: express.Request, res: express.Response) {

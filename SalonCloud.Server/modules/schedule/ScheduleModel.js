@@ -20,12 +20,7 @@ exports.DailyScheduleSchema = new database_1.mongoose.Schema({
     _id: false,
     timestamps: { createdAt: 'created_at', modifiedAt: 'modified_at' }
 });
-<<<<<<< HEAD
-exports.DailyScheduleModel = mongoose.model('DailySchedule', exports.DailyScheduleSchema);
-exports.ScheduleSchema = new mongoose.Schema({
-=======
 exports.ScheduleSchema = new database_1.mongoose.Schema({
->>>>>>> origin/master
     _id: String,
     salon: {
         weekly: [exports.WeeklyScheduleSchema],
