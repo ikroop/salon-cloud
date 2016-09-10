@@ -14,6 +14,7 @@ describe('Schedule', function () {
     var invalidSalonId;
     var validInsertDate;
     var invalidInsertDate;
+    var validWS1, validWS2,  validWS3, validWS4, validWS5, validWS6;
     var defaultPassword = '1234@1234'
 
     // within before() you can run all the operations that are needed to setup your tests. In this case
@@ -39,6 +40,43 @@ describe('Schedule', function () {
                 invalidSalonId = 'invaliddddd';
                 validInsertDate = (new Date()) + 10000;
                 invalidInsertDate = (new Date()) - 10000;
+                validWS1 = {
+                     'status': true,
+                     'day_of_week': 1,
+                     'open': 32000,
+                     'close': 72000,
+                };
+                validWS2 = {
+                     'status': true,
+                     'day_of_week': 2,
+                     'open': 32000,
+                     'close': 72000,
+                };
+                validWS3 = {
+                     'status': true,
+                     'day_of_week': 3,
+                     'open': 32000,
+                     'close': 72000,
+                };
+                validWS4 = {
+                     'status': true,
+                     'day_of_week': 4,
+                     'open': 32000,
+                     'close': 72000,
+                };
+                validWS5 = {
+                     'status': true,
+                     'day_of_week': 5,
+                     'open': 32000,
+                     'close': 72000,
+                };                
+                validWS6 = {
+                     'status': true,
+                     'day_of_week': 6,
+                     'open': 32000,
+                     'close': 72000,
+                };
+                
                 done();
             });
 
@@ -476,10 +514,13 @@ describe('Schedule', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'day_of_week': 1,
-                'open': 36000,
-                'close': 72000,
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'open': 36000,
+                    'close': 72000,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
+                
             };
             request(url)
                 .post(apiUrl)
@@ -502,10 +543,12 @@ describe('Schedule', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'status': true,
-                'day_of_week': 1,
-                'open': 36000,
-                'close': 72000,
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'open': 36000,
+                    'close': 72000,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
             };
             request(url)
                 .post(apiUrl)
@@ -529,10 +572,12 @@ describe('Schedule', function () {
             var salonId = invalidSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'day_of_week': 1,
-                'open': 36000,
-                'close': 72000,
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'open': 36000,
+                    'close': 72000,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
             };
             request(url)
                 .post(apiUrl)
@@ -544,9 +589,36 @@ describe('Schedule', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
+        it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to request without salonId', function (done) {
+            var token = validToken;
+            var salonId = invalidSalonId;
+            var bodyRequest = {
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'open': 36000,
+                    'close': 72000,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
                     done();
                 });
         });
@@ -556,9 +628,11 @@ describe('Schedule', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'day_of_week': 1,
-                'close': 72000,
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'close': 72000,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
             };
             request(url)
                 .post(apiUrl)
@@ -570,7 +644,7 @@ describe('Schedule', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleOpenTime.err.name);
                     done();
@@ -582,10 +656,12 @@ describe('Schedule', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'day_of_week': 2,
-                'open': -98,
-                'close': 72000,
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'open': -98,
+                    'close': 72000,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
             };
             request(url)
                 .post(apiUrl)
@@ -597,7 +673,7 @@ describe('Schedule', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
                     done();
@@ -609,10 +685,12 @@ describe('Schedule', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'day_of_week': 2,
-                'open': 'string is not an integer',
-                'close': 72000,
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'open': 'string is not an integer',
+                    'close': 72000,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
             };
             request(url)
                 .post(apiUrl)
@@ -624,7 +702,7 @@ describe('Schedule', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
                     done();
@@ -636,10 +714,13 @@ describe('Schedule', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'day_of_week': 2,
-                'open': 86401,
-                'close': 72000,
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'open': 86401,
+                    'close': 72000,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
+
             };
             request(url)
                 .post(apiUrl)
@@ -651,7 +732,7 @@ describe('Schedule', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
                     done();
@@ -663,9 +744,12 @@ describe('Schedule', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'day_of_week': 2,
-                'open': 32000,
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'open': 36000,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
+
             };
             request(url)
                 .post(apiUrl)
@@ -677,7 +761,7 @@ describe('Schedule', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleCloseTime.err.name);
                     done();
@@ -689,10 +773,13 @@ describe('Schedule', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'day_of_week': 1,
-                'open': 72000,
-                'close': -98,
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'open': 36000,
+                    'close': -98,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
+
             };
             request(url)
                 .post(apiUrl)
@@ -704,7 +791,7 @@ describe('Schedule', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
                     done();
@@ -716,10 +803,12 @@ describe('Schedule', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'day_of_week': 1,
-                'open': 72000,
-                'close': 'string is not an integer',
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'open': 36000,
+                    'close': 'string is not an integer',
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
             };
             request(url)
                 .post(apiUrl)
@@ -731,7 +820,7 @@ describe('Schedule', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
                     done();
@@ -743,10 +832,13 @@ describe('Schedule', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'day_of_week': 1,
-                'open': 32000,
-                'close': 86401,
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'open': 36000,
+                    'close': 86401,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
+
             };
             request(url)
                 .post(apiUrl)
@@ -758,7 +850,7 @@ describe('Schedule', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
                     done();
@@ -770,10 +862,13 @@ describe('Schedule', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'day_of_week': 1,
-                'open': 86000,
-                'close': 32000,
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'open': 72000,
+                    'close': 36000,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
+
             };
             request(url)
                 .post(apiUrl)
@@ -785,21 +880,24 @@ describe('Schedule', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.CloseTimeGreaterThanOpenTime.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingScheduleWeekday.err.name + ' error trying to request without day_of_week', function (done) {
+        it('should return ' + ErrorMessage.MissingScheduleDayOfWeek.err.name + ' error trying to request without day_of_week', function (done) {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'open': 32000,
-                'close': 72000,
+                'weekly_schedules': [{
+                    'status': true,
+                    'open': 36000,
+                    'close': 72000,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
+
             };
             request(url)
                 .post(apiUrl)
@@ -811,22 +909,25 @@ describe('Schedule', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleWeekday.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleDayOfWeek.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.InvalidScheduleWeekday.err.name + ' error trying to request with day_of_week equal 7', function (done) {
+        it('should return ' + ErrorMessage.InvalidScheduleDayOfWeek.err.name + ' error trying to request with day_of_week equal 7', function (done) {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'day_of_week': 7,
-                'open': 32000,
-                'close': 72000,
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 7,
+                    'open': 36000,
+                    'close': 72000,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
+
             };
             request(url)
                 .post(apiUrl)
@@ -838,22 +939,76 @@ describe('Schedule', function () {
                         throw err;
                     }
                     // this is should.js syntax, very clear
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleWeekday.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleDayOfWeek.err.name);
                     done();
                 });
         });
+
+        it('should return ' + ErrorMessage.WrongNumberOfDaysOfWeek.err.name + ' error trying to request with only 6 schedules', function (done) {
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'weekly_schedules': [validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
+
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongNumberOfDaysOfWeek.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.DuplicateDaysOfWeek.err.name + ' error trying to request with 2 identical day_of_week', function (done) {
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'weekly_schedules': [validWS1, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
+
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                // end handles the response
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    // this is should.js syntax, very clear
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.DuplicateDaysOfWeek.err.name);
+                    done();
+                });
+        });
+
 
         it('should return code 200 when schedule inserted successfully', function (done) {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'status': true,
-                'day_of_week': 5,
-                'open': 32000,
-                'close': 72000,
+                'weekly_schedules': [{
+                    'status': true,
+                    'day_of_week': 0,
+                    'open': 35900,
+                    'close': 72000,
+                }, validWS1, validWS2, validWS3, validWS4, validWS5, validWS6]
+
             };
             request(url)
                 .post(apiUrl)

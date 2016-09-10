@@ -10,8 +10,7 @@ use UTC.
   |     |----status: boolean
   |     |----is_verified: boolean                 
   |     |----is_temporary: boolean (account is created automatic after customer books appointment)
-  |     |----profile:
-  |           |----id: string
+  |     |----profile: Array
   |           |----salon_id: string
   |           |----status: boolean
   |           |----role: number

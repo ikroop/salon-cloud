@@ -1,0 +1,23 @@
+{
+    "anonymous":{
+        "allow":[
+
+        ]
+    },
+    "customer":{
+        "allow":[
+
+        ]        
+    },
+    "technician":{
+        "allow":[
+            
+        ]
+    },
+    "manager":{
+        "extends": "technician",
+        "allow":[
+
+        ]
+    }
+}

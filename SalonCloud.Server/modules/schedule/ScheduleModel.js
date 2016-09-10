@@ -1,10 +1,6 @@
 "use strict";
-const mongoose = require("mongoose");
-exports.WeeklyScheduleSchema = new mongoose.Schema({
-    // employee_id: {type: String, required: true},
-    // created_date: {type: Date, required: true},
-    // last_modified: {type: Date, required: true},
-    // created_by: {type: UserProfileSchema, required: true},
+const database_1 = require("../../services/database");
+exports.WeeklyScheduleSchema = new database_1.mongoose.Schema({
     _id: { type: Number, required: true },
     close: { type: Number, required: true },
     open: { type: Number, required: true },
@@ -14,11 +10,7 @@ exports.WeeklyScheduleSchema = new mongoose.Schema({
     _id: false,
     timestamps: { createdAt: 'created_at', modifiedAt: 'modified_at' }
 });
-exports.DailyScheduleSchema = new mongoose.Schema({
-    // employee_id: {type: String, required: true},
-    // created_date: {type: Date, required: true},
-    // last_modified: {type: Date, required: true},
-    // created_by: {type: UserProfileSchema, required: true},
+exports.DailyScheduleSchema = new database_1.mongoose.Schema({
     _id: { type: Number, required: true },
     close: { type: Number, required: true },
     open: { type: Number, required: true },
@@ -28,13 +20,13 @@ exports.DailyScheduleSchema = new mongoose.Schema({
     _id: false,
     timestamps: { createdAt: 'created_at', modifiedAt: 'modified_at' }
 });
+<<<<<<< HEAD
 exports.DailyScheduleModel = mongoose.model('DailySchedule', exports.DailyScheduleSchema);
 exports.ScheduleSchema = new mongoose.Schema({
+=======
+exports.ScheduleSchema = new database_1.mongoose.Schema({
+>>>>>>> origin/master
     _id: String,
-    // employee_id: {type: String, required: true},
-    // created_date: {type: Date, required: true},
-    // last_modified: {type: Date, required: true},
-    // created_by: {type: UserProfileSchema, required: true},
     salon: {
         weekly: [exports.WeeklyScheduleSchema],
         daily: [exports.DailyScheduleSchema]
@@ -48,5 +40,5 @@ exports.ScheduleSchema = new mongoose.Schema({
     _id: false,
     timestamps: { createdAt: 'created_at', modifiedAt: 'modified_at' }
 });
-exports.ScheduleModel = mongoose.model('Schedule', exports.ScheduleSchema);
+exports.ScheduleModel = database_1.mongoose.model('Schedule', exports.ScheduleSchema);
 //# sourceMappingURL=ScheduleModel.js.map

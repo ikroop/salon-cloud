@@ -3,7 +3,7 @@
  * Validator
  */
 
-import * as mongoose from "mongoose";
+import { mongoose } from "../../services/database";
 export class Validator {
     static IsEmail(email: string) {
         var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -58,12 +58,40 @@ export class Validator {
         return true;
     }
 
-    static IsValidEndDateForStartDate(endDate: Date, startDate: Date) {
-        return true;
+    static IsValidEndDateForStartDate(startDate: Date, endDate: Date) {
+        if(endDate < startDate){
+            return false;
+        }else{
+            return true;
+        }
     }
 
-    static IsValidWeekDay(date: Date) {
-        return true;
+    static IsValidCloseTimeForOpenTime(openTime: Number, closeTime: Number ){
+        if(openTime >= closeTime){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    static IsValidScheduleTime(openTime: any){
+        if(typeof openTime !== "number"){
+            return false;
+        }
+        if(openTime <= 0 || openTime > 86400){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
+    static IsValidWeekDay(date: number) {
+        if(date >= 0 && date <= 6){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     static IsIdentifyString(Id: string) {

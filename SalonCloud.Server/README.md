@@ -149,3 +149,12 @@ Use Postman to get access token
  2. Read data structure file: [modules/salon/ISalon.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/modules/salon/ISalon.ts)
  3. Read Logic Class: [modules/salon/Salon.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/modules/salon/Salon.ts)
  4. Expert: [How to add Sub Docs](http://mongoosejs.com/docs/subdocs.html)
+
+## How to async/await instead of callback function ##
+ ```
+ async public getSchedule(): ScheduleData {
+    var Schedule = await ScheduleModel.find({}).lean().exec();
+    return Schedule;
+ }
+ ```
+ 

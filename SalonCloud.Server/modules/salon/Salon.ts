@@ -4,7 +4,7 @@
  * 
  */
 import {SalonData} from './SalonData';
-import {User} from './../User/User';
+import {User} from './../../Core/user/User';
 var ErrorMessage = require('./../../routes/ErrorMessage');
 import {Validator} from '../../core/validator/Validator';
 import SalonModel = require("./SalonModel");

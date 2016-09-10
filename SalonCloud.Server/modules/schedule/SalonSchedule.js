@@ -1,4 +1,9 @@
+/**
+ *
+ *
+ */
 "use strict";
+<<<<<<< HEAD
 //import {Schedule} from './models/Schedule';
 //import {DailyScheduleModel} from './models/DailyScheduleModel';
 const ScheduleModel_1 = require('./ScheduleModel');
@@ -50,80 +55,38 @@ class SalonSchedule {
             return dailySchedules;
         });
         return undefined;
+=======
+const Schedule_1 = require("./Schedule");
+class SalonSchedule extends Schedule_1.Schedule {
+    addDailySchedule(dailySchedule) {
+        return false;
     }
-    /**
-     * name
-     */
-    getWeeklySchedule(callback) {
-        return undefined;
+    addWeeklySchedule(weeklyScheduleList) {
+        return true;
+>>>>>>> origin/master
     }
-    /**
-     * name
-     */
-    insertWeekly(salonId, schedule, callback) {
-        ScheduleModel_1.ScheduleModel.findOne({ "_id": salonId }, function (err, docs) {
-            if (err) {
-                console.log(err);
-                callback(ErrorMessage.ServerError, 500, undefined);
-            }
-            else if (!docs) {
-                //ToDo: create default Schedule Docs for Salon
-                var newSchedule = {
-                    _id: salonId,
-                    // employee_id: {type: String, required: true},
-                    // created_date: {type: Date, required: true},
-                    // last_modified: {type: Date, required: true},
-                    // created_by: {type: UserProfileSchema, required: true},
-                    salon: {
-                        weekly: [{
-                                _id: schedule.day_of_week,
-                                close: schedule.close,
-                                open: schedule.open,
-                                status: schedule.status,
-                                day_of_week: schedule.day_of_week
-                            }],
-                        daily: undefined
-                    },
-                    employee: undefined
-                };
-                ScheduleModel_1.ScheduleModel.create(newSchedule, function (err, newSchedule) {
-                    if (err) {
-                        callback(ErrorMessage.ServerError, 500, undefined);
-                    }
-                    else {
-                        callback(undefined, 200, schedule);
-                    }
-                });
-            }
-            else {
-                var item = docs.salon.weekly.id(schedule.day_of_week);
-                console.log('BOOOOOOOOBBB ' + item);
-                var targetSchedule = docs.salon.weekly.filter(function (x) {
-                    return x._id == schedule.day_of_week;
-                });
-                /*if(targetSchedule.length == 0){
-                    docs.salon.weekly.push(schedule);
-                }else{
-
-                }*/
-                console.log('CAAAAAAAAACCC' + targetSchedule);
-            }
-        });
-        //COMMENTED BY DUE NGUYENS
-        /*let weeklyScheduleProfile = schedule.exportProfile() as WeeklyScheduleProfile;
-        WeeklyScheduleModel.create(weeklyScheduleProfile, function(err: any, salonSchedule: WeeklyScheduleProfile){
-            if (err) {
-                callback(ErrorMessage.ServerError, 500, undefined);
-            } else {
-                console.log('why not?');
-                callback(undefined, 200, salonSchedule);
-            }
-        });*/
+    checkDailySchedule(dailySchedule) {
+        return false;
     }
-    /**
-     * name
-     */
-    insertDaily(schedule, callback) {
+    checkWeeklySchedule(salonId) {
+        return true;
+    }
+    getDailyScheduleRecord(date) {
+        var dailySchedule;
+        return dailySchedule;
+    }
+    getWeeklyScheduleRecord() {
+        var weeklyScheduleList;
+        return weeklyScheduleList;
+    }
+    normalizeDailySchedule(dailySchedule) {
+        return dailySchedule;
+    }
+    updateDailySchedule(dailySchedule) {
+        return false;
+    }
+    updateWeeklySchedule(weeklyScheduleList) {
+        return true;
     }
 }
 exports.SalonSchedule = SalonSchedule;
