@@ -4,6 +4,25 @@
 */
 import {Validator, DecoratingValidator} from "./BaseValidator";
 
+//Validate if target element is missing.
+//To pass the test: Target Element must not be undefined.
+export class MissingCheck extends DecoratingValidator {
+
+    public errorType: any;
+
+    public MissingCheck (wrapedValidator: Validator, errorType: any){
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+    }
+
+    public validatingOperation(){
+        if(this.targetElement===undefined){
+            return this.errorType;
+        }else{
+            return undefined;
+        }
+    }
+}
 
 //Validate if target element has type of string.
 //To pass the test: Target Element has to be string type.

@@ -22,11 +22,8 @@ export class BaseValidator extends Validator {
 
     }
     public validate (): any{
-        let error: any;
-        if(this.targetElement===undefined){
-            error = this.errorType;
-        }
-        return error;
+        
+        return undefined;
 
     }
 }
