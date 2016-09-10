@@ -4,18 +4,33 @@ Validation using decorator pattern
 **Usage**
 
 - Import BaseValidator and ValidationDecorators.
-- First, instantiate a base validator with the to-be-validated element and a Missing-type error type (This must be Missing-type error).
+- First, instantiate a base validator with the to-be-validated element:
+
+        let validationObject = new BaseValidator(targetElement);
+
 - Then you can wrap decorating validator on top of another validator.
-- A specific error type need to be provided in the constructor. 
+- A specific error type need to be provided in the constructor: 
+
+        validationObject = new CheckMissing(validationObject, ErrorMessage.MissingOpenTime);
+        validationObject = new IsNumber(validationObject, ErrorMessage.InvalidOpenTime);
+
 - After the last decorating validator added, run method validate().
 - The validate() method return the error that the validation catch. If it's undefined, the validtion passed.
 
+        let result = validationObject.validate();
+        if(result === undefined){
+            //pass validation;
+        }else{
+            //fail validation, var contain the return error;
+        }
 
 
-- Example: 
+
+
+- Full Example: 
 
 import BaseValidator from BaseValidator
-import IsNumber, IsInRange, IsLessThan from ValidationDecorators
+import CheckMissing, IsNumber, IsInRange, IsLessThan from ValidationDecorators
 import ErrorMessage
 ...
     //some code here
@@ -36,11 +51,12 @@ import ErrorMessage
     let result = validationObject.validate(); 
     
     if(result!=undefined){
-        return result;
+        ErrorHandler(result); 
     }
 
 
 ***List Of Decorators***
+- CheckMissing(WO, Err)
 - IsString(WO, Err)
 - IsNumber(WO, Err)
 - IsInRange(OW, Err, floor, ceiling)
