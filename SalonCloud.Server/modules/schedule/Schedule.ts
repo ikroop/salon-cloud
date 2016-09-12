@@ -6,7 +6,7 @@ import { DailyScheduleData, WeeklyScheduleData } from './ScheduleData';
 import {SalonCloudResponse} from "../../core/SalonCloudResponse";
 import {ScheduleBehavior} from "./ScheduleBehavior";
 import {ScheduleModel} from "./ScheduleModel";
-var ErrorMessage = require('./../../routes/ErrorMessage');
+var ErrorMessage = require('./../../core/ErrorMessage');
 
 export abstract class Schedule implements ScheduleBehavior {
 	/**
@@ -71,19 +71,37 @@ export abstract class Schedule implements ScheduleBehavior {
     /**
      * name
      */
-    public saveWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData], callback) {
+    public async saveWeeklySchedule(salonId: String, weeklyScheduleList: [WeeklyScheduleData]){
 
-        var response: SalonCloudResponse<boolean>;
+        var response: SalonCloudResponse<boolean> = {
+            code: null,
+            data: null,
+            err: null
+        };
         var saveStatus;
 
+        /*var test = await this.checkWeeklySchedule(salonId);
+        console.log('test', test);
+        return test;
+        */
         //TODO: implement validation
-        /*if (this.checkWeeklySchedule(weeklyScheduleList[1]._id)) {
-            saveStatus = this.updateWeeklySchedule(weeklyScheduleList);
+        var k = await this.checkWeeklySchedule(salonId);
+        if(k.err){
+            console.log('taoloa');
+            saveStatus = undefined;
+        }else{
+            if (k.data) {
+            console.log('1');
+            saveStatus = await this.updateWeeklySchedule(salonId, weeklyScheduleList);
+            console.log('k',saveStatus);
         } else {
-            saveStatus = this.addWeeklySchedule(weeklyScheduleList);
+            console.log('ki');
+            saveStatus = await this.addWeeklySchedule(salonId, weeklyScheduleList);
         }
-        response.data = saveStatus;
-        if (saveStatus){
+        }
+        
+        response.data = saveStatus.data;
+        if (!saveStatus.err){
             response.code = 200;
             response.err = undefined;
         }else{
@@ -93,9 +111,9 @@ export abstract class Schedule implements ScheduleBehavior {
         
 
         return response;
-        */
+        
 
-        this.checkWeeklySchedule(weeklyScheduleList[1]._id, function(error, data){
+        /*this.checkWeeklySchedule(weeklyScheduleList[1]._id, function(error, data){
             if(error){
                 callback(error, 500, undefined);
                 return;
@@ -120,7 +138,7 @@ export abstract class Schedule implements ScheduleBehavior {
                     }
                 });
             }
-        })
+        })*/
     }
 
     /**
@@ -138,6 +156,7 @@ export abstract class Schedule implements ScheduleBehavior {
             saveStatus = this.addDailySchedule(dailySchedule);
         }
         response.data = saveStatus;
+        console.log(saveStatus);
         if (saveStatus){
             response.code = 200;
             response.err = undefined;
@@ -186,12 +205,12 @@ export abstract class Schedule implements ScheduleBehavior {
     }
 
     protected abstract addDailySchedule(dailySchedule: DailyScheduleData): boolean;
-    protected abstract addWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]): boolean;
+    protected abstract addWeeklySchedule(salonId: String,weeklyScheduleList: [WeeklyScheduleData]);
     protected abstract checkDailySchedule(dailySchedule: DailyScheduleData): boolean;
-    protected abstract checkWeeklySchedule(salonId: String, callback);
+    protected abstract checkWeeklySchedule(salonId: String);
     protected abstract getDailyScheduleRecord(date: Date): DailyScheduleData;
     protected abstract getWeeklyScheduleRecord(): [WeeklyScheduleData];
     protected abstract normalizeDailySchedule(dailySchedule: DailyScheduleData): DailyScheduleData;
     protected abstract updateDailySchedule(dailySchedule: DailyScheduleData): boolean;
-    protected abstract updateWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData]): boolean;
+    protected abstract updateWeeklySchedule(salonId: String, weeklyScheduleList: [WeeklyScheduleData]);
 }

@@ -1,6 +1,14 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator.throw(value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments)).next());
+    });
+};
 const ScheduleModel_1 = require("./ScheduleModel");
-var ErrorMessage = require('./../../routes/ErrorMessage');
+var ErrorMessage = require('./../../core/ErrorMessage');
 class Schedule {
     /**
      * getDailySchedule
@@ -56,56 +64,71 @@ class Schedule {
     /**
      * name
      */
-    saveWeeklySchedule(weeklyScheduleList, callback) {
-        var response;
-        var saveStatus;
-        //TODO: implement validation
-        /*if (this.checkWeeklySchedule(weeklyScheduleList[1]._id)) {
-            saveStatus = this.updateWeeklySchedule(weeklyScheduleList);
-        } else {
-            saveStatus = this.addWeeklySchedule(weeklyScheduleList);
-        }
-        response.data = saveStatus;
-        if (saveStatus){
-            response.code = 200;
-            response.err = undefined;
-        }else{
-            response.code = 500;
-            response.err = ErrorMessage.ServerError;
-        }
-        
-
-        return response;
-        */
-        this.checkWeeklySchedule(weeklyScheduleList[1]._id, function (error, data) {
-            if (error) {
-                callback(error, 500, undefined);
-                return;
-            }
-            else if (data == true) {
-                this.updateWeeklySchedule(weeklyScheduleList, function (error, returnData) {
-                    if (error) {
-                        callback(error, 500, undefined);
-                        return;
-                    }
-                    else {
-                        callback(undefined, 200, returnData);
-                        return;
-                    }
-                });
+    saveWeeklySchedule(salonId, weeklyScheduleList) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var response = {
+                code: null,
+                data: null,
+                err: null
+            };
+            var saveStatus;
+            /*var test = await this.checkWeeklySchedule(salonId);
+            console.log('test', test);
+            return test;
+            */
+            //TODO: implement validation
+            var k = yield this.checkWeeklySchedule(salonId);
+            if (k.err) {
+                console.log('taoloa');
+                saveStatus = undefined;
             }
             else {
-                this.addWeeklySchedule(weeklyScheduleList, function (error, returnData) {
-                    if (error) {
-                        callback(error, 500, undefined);
-                        return;
-                    }
-                    else {
-                        callback(undefined, 200, returnData);
-                        return;
-                    }
-                });
+                if (k.data) {
+                    console.log('1');
+                    saveStatus = yield this.updateWeeklySchedule(salonId, weeklyScheduleList);
+                    console.log('k', saveStatus);
+                }
+                else {
+                    console.log('ki');
+                    saveStatus = yield this.addWeeklySchedule(salonId, weeklyScheduleList);
+                }
             }
+            response.data = saveStatus.data;
+            if (!saveStatus.err) {
+                response.code = 200;
+                response.err = undefined;
+            }
+            else {
+                response.code = 500;
+                response.err = ErrorMessage.ServerError;
+            }
+            return response;
+            /*this.checkWeeklySchedule(weeklyScheduleList[1]._id, function(error, data){
+                if(error){
+                    callback(error, 500, undefined);
+                    return;
+                }else if(data==true){
+                    this.updateWeeklySchedule(weeklyScheduleList, function(error, returnData){
+                        if(error){
+                            callback(error, 500, undefined);
+                            return;
+                        }else{
+                            callback(undefined, 200, returnData);
+                            return;
+                        }
+                    });
+                }else{
+                    this.addWeeklySchedule(weeklyScheduleList, function(error, returnData){
+                        if(error){
+                            callback(error, 500, undefined);
+                            return;
+                        }else{
+                            callback(undefined, 200, returnData);
+                            return;
+                        }
+                    });
+                }
+            })*/
         });
     }
     /**
@@ -122,6 +145,7 @@ class Schedule {
             saveStatus = this.addDailySchedule(dailySchedule);
         }
         response.data = saveStatus;
+        console.log(saveStatus);
         if (saveStatus) {
             response.code = 200;
             response.err = undefined;
