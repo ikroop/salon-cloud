@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const express_1 = require("express");
+const SalonSchedule_1 = require('./../modules/schedule/SalonSchedule');
 //import {Validator} from '../core/validator/Validator';
 //import {SalonSchedule} from '../modules/schedule/SalonSchedule';
 // import {ScheduleProfile} from '../modules/schedules/ScheduleProfile';
@@ -22,8 +23,11 @@ class ScheduleRouter {
         this.router = express_1.Router();
     }
     getRouter() {
-        this.router.get("/testget", (request, response) => __awaiter(this, void 0, void 0, function* () {
-            response.json({ "testget": "OK" });
+        this.router.post("/testget", (request, response) => __awaiter(this, void 0, void 0, function* () {
+            let testObject = new SalonSchedule_1.SalonSchedule();
+            let test = yield testObject.saveWeeklySchedule(request.body.salon_id, request.body.weekly_schedules);
+            console.log(test);
+            response.status(200).json(test);
         }));
         this.router.post("/testpost", (request, response) => __awaiter(this, void 0, void 0, function* () {
             response.status(200).json({ "testpost": "OK" });
