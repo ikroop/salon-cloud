@@ -28,7 +28,6 @@ export class ScheduleRouter {
         this.router.post("/testget", async(request: Request, response: Response) => {
             let testObject = new SalonSchedule();
             let test  = await testObject.saveWeeklySchedule(request.body.salon_id, request.body.weekly_schedules);
-            console.log(test);
             response.status(200).json(test)
         });
 

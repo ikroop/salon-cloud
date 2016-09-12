@@ -48,9 +48,9 @@ export class SalonSchedule extends Schedule {
     }
     protected async checkWeeklySchedule(salonId: String){
         var k: SalonCloudResponse<boolean> = {
-                err: null,
-                code: null,
-                data: false
+                err: undefined,
+                code: undefined,
+                data: undefined
             };
         var result = await ScheduleModel.findOne({ "_id": salonId}).exec( function(err, docs){
             if(err){
@@ -91,44 +91,26 @@ export class SalonSchedule extends Schedule {
     
     protected async updateWeeklySchedule(salonId: String, weeklyScheduleList: [WeeklyScheduleData]){
         var k: SalonCloudResponse<boolean> = {
-            code: null,
-            data: null,
-            err: null
+            code: undefined,
+            data: undefined,
+            err: undefined
         };
-        var l = await ScheduleModel.findOne({"_id": salonId}).exec();
-        console.log('l',l);
-        weeklyScheduleList[0].close = 44455;
-        l.salon.weekly = weeklyScheduleList;
-        var f = await l.save();
-        console.log('f', f.salon.weekly);
-        if(f){
-            k.data = true;
-        }else{
-            k.err = ErrorMessage.ServerError;
-        }
-        /*l.then(async function(err, docs){
-            if(err){
-                return k.err = err;
-            }else if(!docs){
+        var docsFound = await ScheduleModel.findOne({"_id": salonId}).exec();
+        
+        docsFound.salon.weekly = weeklyScheduleList;
 
-                //Todo: return error or create default docs;
-                return; 
-            }else{
-                docs.salon.weekly = weeklyScheduleList;
-                console.log('2');
-                 var test =  await docs.save(function(err, updatedDocs){
-                    if(err){
-                       return k.err = err;
-                    }else{
-                        console.log('3');
-                        return k.data = true;
-                    }
-                });
-                console.log('4',test);
-                return test;
-            }
-        });*/
-            return k;
+        var saveAction = docsFound.save();
+        //saveAction is a promise returned by mongoose so we must use 'await' on its resolution.
+        await saveAction.then(function(docs){
+
+            k.data = true;
+
+        }, function(err){
+
+            k.err = err;
+
+        })
+        return k;
         
     }
 }

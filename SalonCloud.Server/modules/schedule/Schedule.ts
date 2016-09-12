@@ -7,6 +7,8 @@ import {SalonCloudResponse} from "../../core/SalonCloudResponse";
 import {ScheduleBehavior} from "./ScheduleBehavior";
 import {ScheduleModel} from "./ScheduleModel";
 var ErrorMessage = require('./../../core/ErrorMessage');
+import {BaseValidator} from "./../../core/validation/BaseValidator";
+import {MissingCheck, IsInRange, IsNumber, IsGreaterThan, IsLessThan} from "./../../core/validation/ValidationDecorators";
 
 export abstract class Schedule implements ScheduleBehavior {
 	/**
@@ -74,28 +76,47 @@ export abstract class Schedule implements ScheduleBehavior {
     public async saveWeeklySchedule(salonId: String, weeklyScheduleList: [WeeklyScheduleData]){
 
         var response: SalonCloudResponse<boolean> = {
-            code: null,
-            data: null,
-            err: null
+            code: undefined,
+            data: undefined,
+            err: undefined
         };
         var saveStatus;
 
-        /*var test = await this.checkWeeklySchedule(salonId);
-        console.log('test', test);
-        return test;
-        */
         //TODO: implement validation
+        for(let i = 0; i<=6; i++){
+            var openTimeValidator = new BaseValidator(weeklyScheduleList[i].open);
+            openTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
+            openTimeValidator = new IsNumber(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime);
+            openTimeValidator = new IsInRange(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
+            openTimeValidator = new IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, weeklyScheduleList[i].close);
+            var openTimeResult = openTimeValidator.validate();
+            if(openTimeResult){
+                response.err = openTimeResult;
+                response.code = 400;
+                return response;
+            }
+
+            var closeTimeValidator = new BaseValidator(weeklyScheduleList[i].close);
+            closeTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
+            closeTimeValidator = new IsNumber(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime);
+            closeTimeValidator = new IsInRange(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
+            var closeTimeResult = closeTimeValidator.validate();
+            if(closeTimeResult){
+                response.err = openTimeResult;
+                response.code = 400;
+                return response;
+            }
+
+
+        }
+
         var k = await this.checkWeeklySchedule(salonId);
         if(k.err){
-            console.log('taoloa');
             saveStatus = undefined;
         }else{
             if (k.data) {
-            console.log('1');
             saveStatus = await this.updateWeeklySchedule(salonId, weeklyScheduleList);
-            console.log('k',saveStatus);
         } else {
-            console.log('ki');
             saveStatus = await this.addWeeklySchedule(salonId, weeklyScheduleList);
         }
         }
@@ -113,32 +134,6 @@ export abstract class Schedule implements ScheduleBehavior {
         return response;
         
 
-        /*this.checkWeeklySchedule(weeklyScheduleList[1]._id, function(error, data){
-            if(error){
-                callback(error, 500, undefined);
-                return;
-            }else if(data==true){
-                this.updateWeeklySchedule(weeklyScheduleList, function(error, returnData){
-                    if(error){
-                        callback(error, 500, undefined);
-                        return;
-                    }else{
-                        callback(undefined, 200, returnData);
-                        return;
-                    }
-                });
-            }else{
-                this.addWeeklySchedule(weeklyScheduleList, function(error, returnData){
-                    if(error){
-                        callback(error, 500, undefined);
-                        return;
-                    }else{
-                        callback(undefined, 200, returnData);
-                        return;
-                    }
-                });
-            }
-        })*/
     }
 
     /**

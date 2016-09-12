@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const ScheduleModel_1 = require("./ScheduleModel");
 var ErrorMessage = require('./../../core/ErrorMessage');
+const BaseValidator_1 = require("./../../core/validation/BaseValidator");
 class Schedule {
     /**
      * getDailySchedule
@@ -67,29 +68,24 @@ class Schedule {
     saveWeeklySchedule(salonId, weeklyScheduleList) {
         return __awaiter(this, void 0, void 0, function* () {
             var response = {
-                code: null,
-                data: null,
-                err: null
+                code: undefined,
+                data: undefined,
+                err: undefined
             };
             var saveStatus;
-            /*var test = await this.checkWeeklySchedule(salonId);
-            console.log('test', test);
-            return test;
-            */
             //TODO: implement validation
+            for (let i = 0; i <= 6; i++) {
+                var openTimeValidator = new BaseValidator_1.BaseValidator(weeklyScheduleList[i].open);
+            }
             var k = yield this.checkWeeklySchedule(salonId);
             if (k.err) {
-                console.log('taoloa');
                 saveStatus = undefined;
             }
             else {
                 if (k.data) {
-                    console.log('1');
                     saveStatus = yield this.updateWeeklySchedule(salonId, weeklyScheduleList);
-                    console.log('k', saveStatus);
                 }
                 else {
-                    console.log('ki');
                     saveStatus = yield this.addWeeklySchedule(salonId, weeklyScheduleList);
                 }
             }
@@ -103,32 +99,6 @@ class Schedule {
                 response.err = ErrorMessage.ServerError;
             }
             return response;
-            /*this.checkWeeklySchedule(weeklyScheduleList[1]._id, function(error, data){
-                if(error){
-                    callback(error, 500, undefined);
-                    return;
-                }else if(data==true){
-                    this.updateWeeklySchedule(weeklyScheduleList, function(error, returnData){
-                        if(error){
-                            callback(error, 500, undefined);
-                            return;
-                        }else{
-                            callback(undefined, 200, returnData);
-                            return;
-                        }
-                    });
-                }else{
-                    this.addWeeklySchedule(weeklyScheduleList, function(error, returnData){
-                        if(error){
-                            callback(error, 500, undefined);
-                            return;
-                        }else{
-                            callback(undefined, 200, returnData);
-                            return;
-                        }
-                    });
-                }
-            })*/
         });
     }
     /**

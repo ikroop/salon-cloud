@@ -52,9 +52,9 @@ class SalonSchedule extends Schedule_1.Schedule {
     checkWeeklySchedule(salonId) {
         return __awaiter(this, void 0, void 0, function* () {
             var k = {
-                err: null,
-                code: null,
-                data: false
+                err: undefined,
+                code: undefined,
+                data: undefined
             };
             var result = yield ScheduleModel_1.ScheduleModel.findOne({ "_id": salonId }).exec(function (err, docs) {
                 if (err) {
@@ -94,44 +94,19 @@ class SalonSchedule extends Schedule_1.Schedule {
     updateWeeklySchedule(salonId, weeklyScheduleList) {
         return __awaiter(this, void 0, void 0, function* () {
             var k = {
-                code: null,
-                data: null,
-                err: null
+                code: undefined,
+                data: undefined,
+                err: undefined
             };
-            var l = yield ScheduleModel_1.ScheduleModel.findOne({ "_id": salonId }).exec();
-            console.log('l', l);
-            weeklyScheduleList[0].close = 44455;
-            l.salon.weekly = weeklyScheduleList;
-            var f = yield l.save();
-            console.log('f', f.salon.weekly);
-            if (f) {
+            var docsFound = yield ScheduleModel_1.ScheduleModel.findOne({ "_id": salonId }).exec();
+            docsFound.salon.weekly = weeklyScheduleList;
+            var saveAction = docsFound.save();
+            //saveAction is a promise returned by mongoose so we must use 'await' on its resolution.
+            yield saveAction.then(function (docs) {
                 k.data = true;
-            }
-            else {
-                k.err = ErrorMessage.ServerError;
-            }
-            /*l.then(async function(err, docs){
-                if(err){
-                    return k.err = err;
-                }else if(!docs){
-    
-                    //Todo: return error or create default docs;
-                    return;
-                }else{
-                    docs.salon.weekly = weeklyScheduleList;
-                    console.log('2');
-                     var test =  await docs.save(function(err, updatedDocs){
-                        if(err){
-                           return k.err = err;
-                        }else{
-                            console.log('3');
-                            return k.data = true;
-                        }
-                    });
-                    console.log('4',test);
-                    return test;
-                }
-            });*/
+            }, function (err) {
+                k.err = err;
+            });
             return k;
         });
     }
