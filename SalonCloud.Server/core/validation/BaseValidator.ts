@@ -16,9 +16,9 @@ export class BaseValidator extends Validator {
 
     public errorType: any;    //The error that method validate() will return if validation fails.
 
-    public BaseValidator(targetElement: any, errorType: any){
+    constructor (targetElement: any){
+        super();
         this.targetElement = targetElement;
-        this.errorType = errorType;
 
     }
     public validate (): any{
