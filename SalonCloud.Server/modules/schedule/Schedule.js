@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const ScheduleModel_1 = require("./ScheduleModel");
 var ErrorMessage = require('./../../core/ErrorMessage');
 const BaseValidator_1 = require("./../../core/validation/BaseValidator");
+const ValidationDecorators_1 = require("./../../core/validation/ValidationDecorators");
 class Schedule {
     /**
      * getDailySchedule
@@ -76,6 +77,26 @@ class Schedule {
             //TODO: implement validation
             for (let i = 0; i <= 6; i++) {
                 var openTimeValidator = new BaseValidator_1.BaseValidator(weeklyScheduleList[i].open);
+                openTimeValidator = new ValidationDecorators_1.MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
+                openTimeValidator = new ValidationDecorators_1.IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime);
+                openTimeValidator = new ValidationDecorators_1.IsInRange(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
+                openTimeValidator = new ValidationDecorators_1.IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, weeklyScheduleList[i].close);
+                var openTimeResult = openTimeValidator.validate();
+                if (openTimeResult) {
+                    response.err = openTimeResult;
+                    response.code = 400;
+                    return response;
+                }
+                var closeTimeValidator = new BaseValidator_1.BaseValidator(weeklyScheduleList[i].close);
+                closeTimeValidator = new ValidationDecorators_1.MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleCloseTime);
+                closeTimeValidator = new ValidationDecorators_1.IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleCloseTime);
+                closeTimeValidator = new ValidationDecorators_1.IsInRange(openTimeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
+                var closeTimeResult = closeTimeValidator.validate();
+                if (closeTimeResult) {
+                    response.err = openTimeResult;
+                    response.code = 400;
+                    return response;
+                }
             }
             var k = yield this.checkWeeklySchedule(salonId);
             if (k.err) {

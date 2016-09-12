@@ -97,9 +97,9 @@ export abstract class Schedule implements ScheduleBehavior {
             }
 
             var closeTimeValidator = new BaseValidator(weeklyScheduleList[i].close);
-            closeTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
-            closeTimeValidator = new IsNumber(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime);
-            closeTimeValidator = new IsInRange(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
+            closeTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleCloseTime);
+            closeTimeValidator = new IsNumber(openTimeValidator,ErrorMessage.InvalidScheduleCloseTime);
+            closeTimeValidator = new IsInRange(openTimeValidator,ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
             var closeTimeResult = closeTimeValidator.validate();
             if(closeTimeResult){
                 response.err = openTimeResult;
