@@ -3,8 +3,8 @@ var assert = require('assert');
 var request = require('supertest');
 var mongoose = require('mongoose');
 var winston = require('winston');
-var configDB = require('./../config/dev/database.js');
-var ErrorMessage = require('./../routes/ErrorMessage');
+var configDB = require('./../services/database.js');
+var ErrorMessage = require('./../core/ErrorMessage');
 
 describe('Schedule', function () {
     var url = 'http://localhost:3000';
@@ -21,7 +21,7 @@ describe('Schedule', function () {
     // I want to create a connection with the database, and when I'm done, I call done().
     before(function (done) {
         // In our tests we use the test db
-        mongoose.connect(configDB.url);
+        //mongoose.connect(configDB.url);
         var user = {
             username: 'unittest1472245629435@gmail.com',
             password: defaultPassword
@@ -857,7 +857,7 @@ describe('Schedule', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.CloseTimeGreaterThanOpenTime.err.name + ' error trying to request with close time greater than 24*3600 = 86400', function (done) {
+        it('should return ' + ErrorMessage.OpenTimeGreaterThanCloseTime.err.name + ' error trying to request with close time greater than 24*3600 = 86400', function (done) {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
@@ -1340,7 +1340,7 @@ describe('Schedule', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.CloseTimeGreaterThanOpenTime.err.name + ' error trying to request with close time greater than 24*3600 = 86400', function (done) {
+        it('should return ' + ErrorMessage.OpenTimeGreaterThanCloseTime.err.name + ' error trying to request with close time greater than 24*3600 = 86400', function (done) {
             var token = validToken;
             var salonId = validSalonId;
             var date = validInsertDate;
