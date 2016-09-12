@@ -5,6 +5,8 @@ import passport = require('passport');
 import jwt = require('jsonwebtoken');
 import fs = require('fs');
 import { Router, Request, Response } from "express";
+import {Schedule} from './../modules/schedule/Schedule';
+import {SalonSchedule} from './../modules/schedule/SalonSchedule';
 
 //import {Validator} from '../core/validator/Validator';
 //import {SalonSchedule} from '../modules/schedule/SalonSchedule';
@@ -23,8 +25,11 @@ export class ScheduleRouter {
     
     getRouter(): Router {
 
-        this.router.get("/testget", async(request: Request, response: Response) => {
-            response.json({"testget": "OK"})
+        this.router.post("/testget", async(request: Request, response: Response) => {
+            let testObject = new SalonSchedule();
+            let test  = await testObject.saveWeeklySchedule(request.body.salon_id, request.body.weekly_schedules);
+            console.log(test);
+            response.status(200).json(test)
         });
 
         this.router.post("/testpost", async(request: Request, response: Response) => {
