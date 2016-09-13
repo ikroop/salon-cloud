@@ -195,13 +195,13 @@ module.exports = {
     'InvalidScheduleOpenTime': {
         'err': {
             'name': 'InvalidScheduleOpenTime',
-            'message': 'Open time value must range from 0 to 24*3600 = 86400!'
+            'message': 'Open time value must be number range from 0 to 24*3600 = 86400!'
         }
     },
     'InvalidScheduleCloseTime': {
         'err': {
             'name': 'InvalidScheduleCloseTime',
-            'message': 'Close time value must range from 0 to 24*3600 = 86400!'
+            'message': 'Close time value must be number range from 0 to 24*3600 = 86400!'
         }
     },
     'OpenTimeGreaterThanCloseTime': {
