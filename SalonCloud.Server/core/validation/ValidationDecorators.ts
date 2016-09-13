@@ -3,17 +3,19 @@
 
 */
 import {Validator, DecoratingValidator} from "./BaseValidator";
-
+import SalonModel = require("./../../modules/salon/SalonModel");
 //Validate if target element is missing.
 //To pass the test: Target Element must not be undefined.
 export class MissingCheck extends DecoratingValidator {
 
     public errorType: any;
+    public targetElement: any;
 
     constructor (wrapedValidator: Validator, errorType: any){
         super();
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
     }
 
     public validatingOperation(){
@@ -30,15 +32,17 @@ export class MissingCheck extends DecoratingValidator {
 export class IsString extends DecoratingValidator {
 
     public errorType: any;
+    public targetElement: any;
 
     constructor (wrapedValidator: Validator, errorType: any){
         super();
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
     }
 
     public validatingOperation(){
-        if(typeof this.wrapedValidator.targetElement !== "string"){
+        if(typeof this.targetElement !== "string"){
             return this.errorType;
         }else{
             return undefined;
@@ -51,15 +55,17 @@ export class IsString extends DecoratingValidator {
 export class IsNumber extends DecoratingValidator {
 
     public errorType: any;
+    public targetElement: any;
 
     constructor (wrapedValidator: Validator, errorType: any){
         super();
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
     }
 
     public validatingOperation(){
-        if(typeof this.wrapedValidator.targetElement !== "number"){
+        if(typeof this.targetElement !== "number"){
             return this.errorType;
         }else{
             return undefined;
@@ -74,6 +80,7 @@ export class IsInRange extends DecoratingValidator {
     public errorType: any;
     public floor: number;
     public ceiling: number;
+    public targetElement: any;
 
     constructor (wrapedValidator: Validator, errorType: any, floor: number, ceiling: number){
         super();
@@ -81,10 +88,12 @@ export class IsInRange extends DecoratingValidator {
         this.errorType = errorType;
         this.floor = floor;
         this.ceiling = ceiling;
+        this.targetElement = this.wrapedValidator.targetElement;
+
     }
 
     public validatingOperation(){
-        if(typeof this.wrapedValidator.targetElement !== "string"){
+        if(this.targetElement<this.floor||this.targetElement>this.ceiling){
             return this.errorType;
         }else{
             return undefined;
@@ -98,16 +107,18 @@ export class IsGreaterThan extends DecoratingValidator {
  
     public errorType: any;
     public secondElement: any;      //This secondElement is specially extra for this decorator. Not all decorators have this.
-
+    public targetElement: any;
 
     constructor (wrapedValidator: Validator, errorType: any, secondElement: any){
         super();
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
         this.secondElement = secondElement;
+        this.targetElement = this.wrapedValidator.targetElement;
+
     }
     public validatingOperation (){
-       if(this.wrapedValidator.targetElement<= this.secondElement){
+       if(this.targetElement<= this.secondElement){
             return this.errorType;
         }else{
             return undefined;
@@ -121,16 +132,17 @@ export class IsLessThan extends DecoratingValidator {
  
     public errorType: any;
     public secondElement: any;      //This secondElement is specially extra for this decorator. Not all decorators have this.
-
+    public targetElement: any;
 
     constructor (wrapedValidator: Validator, errorType: any, secondElement: any){
         super();
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
         this.secondElement = secondElement;
+        this.targetElement = this.wrapedValidator.targetElement;
     }
     public validatingOperation (){
-       if(this.wrapedValidator.targetElement >= this.secondElement){
+       if(this.targetElement >= this.secondElement){
             return this.errorType;
         }else{
             return undefined;
@@ -143,16 +155,18 @@ export class IsLessThan extends DecoratingValidator {
 export class IsEmail extends DecoratingValidator {
 
     public errorType: any;
+    public targetElement: any;
 
     constructor (wrapedValidator: Validator, errorType: any){
         super();
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
     }
 
     public validatingOperation(){
         var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (!this.wrapedValidator.targetElement.match(emailReg)) {
+        if (!this.targetElement.match(emailReg)) {
             return this.errorType;
         }else{
             return undefined;
@@ -165,16 +179,18 @@ export class IsEmail extends DecoratingValidator {
 export class IsPhoneNumber extends DecoratingValidator {
 
     public errorType: any;
+    public targetElement: any;
 
     constructor (wrapedValidator: Validator, errorType: any){
         super();
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
     }
 
     public validatingOperation(){
         var phoneReg = /^\d{10}$/;
-        if (!this.wrapedValidator.targetElement.match(phoneReg)) {
+        if (!this.targetElement.match(phoneReg)) {
             return this.errorType;
         }else{
             return undefined;
@@ -187,16 +203,65 @@ export class IsPhoneNumber extends DecoratingValidator {
 export class IsSSN extends DecoratingValidator {
 
     public errorType: any;
+    public targetElement: any;
 
     constructor (wrapedValidator: Validator, errorType: any){
         super();
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
     }
 
     public validatingOperation(){
         var SSNReg = /^\d{9}$/;
-        if (!this.wrapedValidator.targetElement.match(SSNReg)) {
+        if (!this.targetElement.match(SSNReg)) {
+            return this.errorType;
+        }else{
+            return undefined;
+        }
+    }
+}
+
+//Validate if target element is in the array.
+//To pass the test: The array contains the target element.
+export class IsInArray extends DecoratingValidator {
+    public errorType: any;
+    public usedArray: [any];
+    public targetElement: any;
+
+    constructor (wrapedValidator: Validator, errorType: any, usedArray: [any]){
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.usedArray = usedArray;
+        this.targetElement = this.wrapedValidator.targetElement;
+    }
+
+    public validatingOperation(){
+        if(this.usedArray.indexOf(this.targetElement)==-1){
+            return this.errorType;
+        }else{
+            return undefined;
+        }
+    }
+}
+
+//Validate if target element is in the array.
+//To pass the test: The array DOES NOT contain the target element.
+export class IsNotInArray extends DecoratingValidator {
+    public errorType: any;
+    public usedArray: [any];
+    public targetElement: any;
+    constructor (wrapedValidator: Validator, errorType: any, usedArray: [any]){
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.usedArray = usedArray;
+        this.targetElement = this.wrapedValidator.targetElement;
+    }
+
+    public validatingOperation(){
+        if(this.usedArray.indexOf(this.targetElement)!==-1){
             return this.errorType;
         }else{
             return undefined;
@@ -227,6 +292,27 @@ export class IsSSN extends DecoratingValidator {
         }
     }
 }*/
+
+export class IsValidSalonId extends DecoratingValidator{
+    public errorType: any;
+    public targetElement: any;
+    constructor (wrapedValidator: Validator, errorType: any){
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+    };
+
+    public async validatingOperation(){
+       var k = SalonModel.findOne({'_id': this.targetElement}).exec();
+       await k.then(function(docs){
+           return undefined;
+       }, function(err){
+           return this.errorType;
+       });
+    }
+
+}
 
 
 
