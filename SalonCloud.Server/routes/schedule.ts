@@ -25,12 +25,21 @@ export class ScheduleRouter {
     
     getRouter(): Router {
 
-        this.router.post("/testget", async(request: Request, response: Response) => {
+        this.router.post("/saveWeeklySchedule", async(request: Request, response: Response) => {
             let testObject = new SalonSchedule();
             let test  = await testObject.saveWeeklySchedule(request.body.salon_id, request.body.weekly_schedules);
             response.status(200).json(test)
         });
+        this.router.post("/saveDailySchedule", async(request: Request, response: Response) => {
+            console.log('testk');
 
+            let testObject = new SalonSchedule();
+            console.log('test');
+
+            let test  = await testObject.saveDailySchedule(request.body.salon_id, request.body.daily_schedules);
+            console.log('test', test);
+            response.status(200).json(test)
+        });
         this.router.post("/testpost", async(request: Request, response: Response) => {
             response.status(200).json({"testpost":"OK"});
         });

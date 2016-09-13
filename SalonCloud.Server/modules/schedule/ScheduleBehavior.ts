@@ -28,11 +28,11 @@ export interface ScheduleBehavior{
     /**
      * name
      */
-    saveWeeklySchedule(weeklyScheduleList: [WeeklyScheduleData], callback);
+    saveWeeklySchedule(salonId: String, weeklyScheduleList: [WeeklyScheduleData]);
 
     /**
      * name
      */
-    saveDailySchedule(dailySchedule: DailyScheduleData): SalonCloudResponse<boolean>;
+    saveDailySchedule(salonId: String, dailySchedule: DailyScheduleData);
     
 }

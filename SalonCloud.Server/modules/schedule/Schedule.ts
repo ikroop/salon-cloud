@@ -70,7 +70,81 @@ export abstract class Schedule implements ScheduleBehavior {
         return response;
     }
 
+    public async saveDailySchedule(salonId: String, dailySchedule: DailyScheduleData){
 
+        var response: SalonCloudResponse<boolean>={
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
+        var saveStatus;
+
+        var salonIdValidator = new BaseValidator(salonId);
+        salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId);
+        salonIdValidator = new IsString(salonIdValidator, ErrorMessage.InvalidSalonId);
+        //TODO: validate salon Id;
+        salonIdValidator = new IsValidSalonId(salonIdValidator, ErrorMessage.InvalidSalonId);
+        var salonIdResult = await salonIdValidator.validate();
+        if(salonIdResult){
+            response.err = salonIdResult;
+            response.code = 400;
+            return response;
+        }
+
+        var openTimeValidator = new BaseValidator(dailySchedule.open);
+            openTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
+            openTimeValidator = new IsNumber(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime);
+            openTimeValidator = new IsInRange(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
+            openTimeValidator = new IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, dailySchedule.close);
+            var openTimeResult = await openTimeValidator.validate();
+            if(openTimeResult){
+                response.err = openTimeResult;
+                response.code = 400;
+                return response;
+            }
+        
+        var closeTimeValidator = new BaseValidator(dailySchedule.close);
+            closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
+            closeTimeValidator = new IsNumber(closeTimeValidator,ErrorMessage.InvalidScheduleCloseTime);
+            closeTimeValidator = new IsInRange(closeTimeValidator,ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
+            var closeTimeResult = await closeTimeValidator.validate();
+            if(closeTimeResult){
+                response.err = openTimeResult;
+                response.code = 400;
+                return response;
+            }
+        //Todo: validate date;
+
+
+        var k = await this.checkDailySchedule(salonId, dailySchedule);
+        if(k.err){
+            saveStatus = undefined;
+        }else{
+            if (k.data) {
+                saveStatus = await this.updateDailySchedule(salonId, dailySchedule);
+                console.log('1',saveStatus );
+          } else {
+                saveStatus = await this.addDailySchedule(salonId, dailySchedule);
+                console.log('2',saveStatus );
+            }
+        }
+        response.data = saveStatus.data;
+        console.log('rrrre', response);
+
+        if (!saveStatus.err){
+            console.log('200', saveStatus);
+            response.code = 200;
+            response.err = undefined;
+        }else{
+            console.log('500', saveStatus);
+            response.code = 500;
+            response.err = ErrorMessage.ServerError;
+        }
+        console.log('rrrr', response);
+        
+
+        return response;
+    }
     /**
      * name
      */
@@ -82,7 +156,6 @@ export abstract class Schedule implements ScheduleBehavior {
             err: undefined
         };
 
-        console.log(salonId, weeklyScheduleList);
         var saveStatus;
 
         //TODO: implement validation
@@ -93,7 +166,6 @@ export abstract class Schedule implements ScheduleBehavior {
         salonIdValidator = new IsValidSalonId(salonIdValidator, ErrorMessage.InvalidSalonId);
         var salonIdResult = await salonIdValidator.validate();
         if(salonIdResult){
-            console.log('1', salonIdResult);
             response.err = salonIdResult;
             response.code = 400;
             return response;
@@ -106,9 +178,8 @@ export abstract class Schedule implements ScheduleBehavior {
             openTimeValidator = new IsNumber(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime);
             openTimeValidator = new IsInRange(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
             openTimeValidator = new IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, weeklyScheduleList[i].close);
-            var openTimeResult = openTimeValidator.validate();
+            var openTimeResult = await openTimeValidator.validate();
             if(openTimeResult){
-                console.log('2', openTimeResult);
                 response.err = openTimeResult;
                 response.code = 400;
                 return response;
@@ -118,9 +189,8 @@ export abstract class Schedule implements ScheduleBehavior {
             closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
             closeTimeValidator = new IsNumber(closeTimeValidator,ErrorMessage.InvalidScheduleCloseTime);
             closeTimeValidator = new IsInRange(closeTimeValidator,ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
-            var closeTimeResult = closeTimeValidator.validate();
+            var closeTimeResult = await closeTimeValidator.validate();
             if(closeTimeResult){
-                console.log('3', closeTimeResult);
                 response.err = openTimeResult;
                 response.code = 400;
                 return response;
@@ -131,9 +201,8 @@ export abstract class Schedule implements ScheduleBehavior {
             dayOfWeekValidator = new IsNumber(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek);
             dayOfWeekValidator = new IsInRange(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek, 0, 6);
             dayOfWeekValidator = new IsNotInArray(dayOfWeekValidator, ErrorMessage.DuplicateDayOfWeek, tempArray);
-            var dayOfWeekResult = dayOfWeekValidator.validate();
+            var dayOfWeekResult = await dayOfWeekValidator.validate();
             if(dayOfWeekResult){
-                console.log('4', dayOfWeekResult);
                 response.err = dayOfWeekResult;
                 response.code = 400;
                 return response;
@@ -175,30 +244,7 @@ export abstract class Schedule implements ScheduleBehavior {
     /**
      * name
      */
-    public saveDailySchedule(dailySchedule: DailyScheduleData): SalonCloudResponse<boolean> {
-
-        var response: SalonCloudResponse<boolean>;
-        var saveStatus;
-
-        //TODO: implement validation
-        if (this.checkDailySchedule(dailySchedule)) {
-            saveStatus = this.updateDailySchedule(dailySchedule);
-        } else {
-            saveStatus = this.addDailySchedule(dailySchedule);
-        }
-        response.data = saveStatus;
-        console.log(saveStatus);
-        if (saveStatus){
-            response.code = 200;
-            response.err = undefined;
-        }else{
-            response.code = 500;
-            response.err = ErrorMessage.ServerError;
-        }
-
-        return response;
-    }
-
+   
     protected checkScheduleDocsExistence(salonId: String, callback){
         ScheduleModel.findOne({"_id": salonId}, function(err, docs){
             if(err){
@@ -235,13 +281,13 @@ export abstract class Schedule implements ScheduleBehavior {
         });
     }
 
-    protected abstract addDailySchedule(dailySchedule: DailyScheduleData): boolean;
+    protected abstract addDailySchedule(salonId: String, dailySchedule: DailyScheduleData);
     protected abstract addWeeklySchedule(salonId: String,weeklyScheduleList: [WeeklyScheduleData]);
-    protected abstract checkDailySchedule(dailySchedule: DailyScheduleData): boolean;
+    protected abstract checkDailySchedule(salonId: String, dailySchedule: DailyScheduleData);
     protected abstract checkWeeklySchedule(salonId: String);
     protected abstract getDailyScheduleRecord(date: Date): DailyScheduleData;
     protected abstract getWeeklyScheduleRecord(): [WeeklyScheduleData];
     protected abstract normalizeDailySchedule(dailySchedule: DailyScheduleData): DailyScheduleData;
-    protected abstract updateDailySchedule(dailySchedule: DailyScheduleData): boolean;
+    protected abstract updateDailySchedule(salonId: String, dailySchedule: DailyScheduleData);
     protected abstract updateWeeklySchedule(salonId: String, weeklyScheduleList: [WeeklyScheduleData]);
 }

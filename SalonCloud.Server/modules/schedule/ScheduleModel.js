@@ -1,7 +1,7 @@
 "use strict";
 const database_1 = require("../../services/database");
 exports.WeeklyScheduleSchema = new database_1.mongoose.Schema({
-    //_id: {type: String, required: true},
+    _id: { type: String, required: true },
     close: { type: Number, required: true },
     open: { type: Number, required: true },
     status: { type: Boolean, required: true },

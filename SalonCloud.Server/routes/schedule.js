@@ -23,9 +23,17 @@ class ScheduleRouter {
         this.router = express_1.Router();
     }
     getRouter() {
-        this.router.post("/testget", (request, response) => __awaiter(this, void 0, void 0, function* () {
+        this.router.post("/saveWeeklySchedule", (request, response) => __awaiter(this, void 0, void 0, function* () {
             let testObject = new SalonSchedule_1.SalonSchedule();
             let test = yield testObject.saveWeeklySchedule(request.body.salon_id, request.body.weekly_schedules);
+            response.status(200).json(test);
+        }));
+        this.router.post("/saveDailySchedule", (request, response) => __awaiter(this, void 0, void 0, function* () {
+            console.log('testk');
+            let testObject = new SalonSchedule_1.SalonSchedule();
+            console.log('test');
+            let test = yield testObject.saveDailySchedule(request.body.salon_id, request.body.daily_schedules);
+            console.log('test', test);
             response.status(200).json(test);
         }));
         this.router.post("/testpost", (request, response) => __awaiter(this, void 0, void 0, function* () {

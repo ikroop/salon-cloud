@@ -11,12 +11,35 @@ import {SalonCloudResponse} from "../../core/SalonCloudResponse";
 var ErrorMessage = require  ("../../core/ErrorMessage");
 
 export class SalonSchedule extends Schedule {
-    protected addDailySchedule(dailySchedule: DailyScheduleData): boolean {
-        return false;
+    protected async addDailySchedule(salonId: String,dailySchedule: DailyScheduleData){
+            var k: SalonCloudResponse<boolean> = {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
+        var docsFound = await ScheduleModel.findOne({"_id": salonId}).exec();
+        
+        docsFound.salon.daily.push(dailySchedule);
+        var saveAction = docsFound.save();
+        //saveAction is a promise returned by mongoose so we must use 'await' on its resolution.
+        await saveAction.then(function(docs){
+            console.log('dd', docs);
+            k.data = true;
+
+        }, function(err){
+            console.log('ee', err);
+            k.err = err;
+
+        })
+        return k;
+
     }
 
 
     protected async addWeeklySchedule(salonId: String, weeklyScheduleList: [WeeklyScheduleData]){
+       
+       //Todo: DISCUSS IF CAN DO THIS??
+
         /*var k: SalonCloudResponse<boolean>;
         await ScheduleModel.findOne({"_id": salonId}).exec(function(err, docs){
             if(err){
@@ -43,8 +66,28 @@ export class SalonSchedule extends Schedule {
         return await this.updateWeeklySchedule(salonId, weeklyScheduleList);
     }
 
-    protected checkDailySchedule(dailySchedule: DailyScheduleData): boolean {
-        return false;
+    protected async checkDailySchedule(salonId: String, dailySchedule: DailyScheduleData){
+        var k: SalonCloudResponse<boolean> = {
+            err: undefined,
+            code: undefined,
+            data:undefined
+        }
+
+        var result = await ScheduleModel.findOne({"_id": salonId}).exec( function(err, docs){
+            if(err){
+                return k.err = err;
+            }else if(docs){
+                if(docs.salon.daily.id(dailySchedule._id)){
+                    return k.data = true;
+                }else{
+                    return k.data = false;
+                }
+            }else{
+                //Todo: return error or created default docs;
+                return;
+            }
+            })
+        return k;
     }
     protected async checkWeeklySchedule(salonId: String){
         var k: SalonCloudResponse<boolean> = {
@@ -66,7 +109,6 @@ export class SalonSchedule extends Schedule {
                 return;
             }
         });
-        console.log(k);
         return k;
     }
 
@@ -85,9 +127,22 @@ export class SalonSchedule extends Schedule {
         return dailySchedule;
     }
 
-    protected updateDailySchedule(dailySchedule: DailyScheduleData): boolean {
-        return false;
-    }
+    protected async updateDailySchedule(salonId: String, dailySchedule: DailyScheduleData) {
+        var k: SalonCloudResponse<boolean> = {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
+        var docsFound =await  ScheduleModel.findOne({ "_id": salonId}).exec();
+        docsFound.salon.daily.id(dailySchedule._id).status = dailySchedule.status ;
+            console.log(docsFound.salon.daily.id(dailySchedule._id));
+            await docsFound.save().then(function(docs){
+                return k.data = true;
+            }, function(err){
+                return k.err = err;
+            });
+        return k;
+            }
     
     protected async updateWeeklySchedule(salonId: String, weeklyScheduleList: [WeeklyScheduleData]){
         var k: SalonCloudResponse<boolean> = {
