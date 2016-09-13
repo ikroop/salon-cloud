@@ -15,9 +15,9 @@ Validation using decorator pattern
         validationObject = new IsNumber(validationObject, ErrorMessage.InvalidOpenTime);
 
 - After the last decorating validator added, run method validate().
-- The validate() method return the error that the validation catch. If it's undefined, the validtion passed.
+- The validate() method returns *a promise* resolving the error the validation catch. If its resovled value is undefined, the validtion passed.
 
-        let result = validationObject.validate();
+        let result = await validationObject.validate();
         if(result === undefined){
             //pass validation;
         }else{
@@ -48,7 +48,7 @@ import ErrorMessage
     //wrap validationObject with IsLessThan to validate if open time is smaller than close time.
     validationObject = new IsLessThan(validationObject, ErrorMessage.OpenTimeGreatorThanCloseTime, closeTime);
 
-    let result = validationObject.validate(); 
+    let result = await validationObject.validate(); 
     
     if(result!=undefined){
         ErrorHandler(result); 
