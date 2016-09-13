@@ -32,8 +32,8 @@ export class BaseValidator extends Validator {
 export abstract class DecoratingValidator extends Validator {
     public wrapedValidator: Validator;
 
-    public validate (){
-         let error: any = this.wrapedValidator.validate();
+    public async validate (){
+         let error: any = await this.wrapedValidator.validate();
         if(error!==undefined){
             return error;
         }else{
