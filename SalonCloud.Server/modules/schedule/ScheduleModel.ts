@@ -3,7 +3,7 @@ import { mongoose } from "../../services/database";
 import {ScheduleData} from './ScheduleData'
 
 export const WeeklyScheduleSchema = new mongoose.Schema({
-    _id: {type: Number, required: true},
+    //_id: {type: String, required: true},
     close: {type: Number, required: true},
     open: {type: Number, required: true},
     status: {type: Boolean, required: true},
@@ -14,7 +14,7 @@ export const WeeklyScheduleSchema = new mongoose.Schema({
 });
 
 export const DailyScheduleSchema = new mongoose.Schema({
-    _id: {type: Number, required: true},
+    _id: {type: String, required: true},
     close: {type: Number, required: true},
     open: {type: Number, required: true},
     status: {type: Boolean, required: true},

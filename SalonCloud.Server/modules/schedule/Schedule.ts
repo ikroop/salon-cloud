@@ -8,7 +8,8 @@ import {ScheduleBehavior} from "./ScheduleBehavior";
 import {ScheduleModel} from "./ScheduleModel";
 var ErrorMessage = require('./../../core/ErrorMessage');
 import {BaseValidator} from "./../../core/validation/BaseValidator";
-import {MissingCheck, IsInRange, IsNumber, IsGreaterThan, IsLessThan} from "./../../core/validation/ValidationDecorators";
+import {MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId}
+ from "./../../core/validation/ValidationDecorators";
 
 export abstract class Schedule implements ScheduleBehavior {
 	/**
@@ -80,9 +81,25 @@ export abstract class Schedule implements ScheduleBehavior {
             data: undefined,
             err: undefined
         };
+
+        console.log(salonId, weeklyScheduleList);
         var saveStatus;
 
         //TODO: implement validation
+        var salonIdValidator = new BaseValidator(salonId);
+        salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId);
+        salonIdValidator = new IsString(salonIdValidator, ErrorMessage.InvalidSalonId);
+        //TODO: validate salon Id;
+        salonIdValidator = new IsValidSalonId(salonIdValidator, ErrorMessage.InvalidSalonId);
+        var salonIdResult = await salonIdValidator.validate();
+        if(salonIdResult){
+            console.log('1', salonIdResult);
+            response.err = salonIdResult;
+            response.code = 400;
+            return response;
+        }
+
+        var tempArray:[any] = <any>[];
         for(let i = 0; i<=6; i++){
             var openTimeValidator = new BaseValidator(weeklyScheduleList[i].open);
             openTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
@@ -91,21 +108,40 @@ export abstract class Schedule implements ScheduleBehavior {
             openTimeValidator = new IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, weeklyScheduleList[i].close);
             var openTimeResult = openTimeValidator.validate();
             if(openTimeResult){
+                console.log('2', openTimeResult);
                 response.err = openTimeResult;
                 response.code = 400;
                 return response;
             }
 
             var closeTimeValidator = new BaseValidator(weeklyScheduleList[i].close);
-            closeTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleCloseTime);
-            closeTimeValidator = new IsNumber(openTimeValidator,ErrorMessage.InvalidScheduleCloseTime);
-            closeTimeValidator = new IsInRange(openTimeValidator,ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
+            closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
+            closeTimeValidator = new IsNumber(closeTimeValidator,ErrorMessage.InvalidScheduleCloseTime);
+            closeTimeValidator = new IsInRange(closeTimeValidator,ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
             var closeTimeResult = closeTimeValidator.validate();
             if(closeTimeResult){
+                console.log('3', closeTimeResult);
                 response.err = openTimeResult;
                 response.code = 400;
                 return response;
             }
+
+            var dayOfWeekValidator = new BaseValidator(weeklyScheduleList[i].day_of_week);
+            dayOfWeekValidator = new MissingCheck(dayOfWeekValidator, ErrorMessage.MissingDayOfWeek);
+            dayOfWeekValidator = new IsNumber(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek);
+            dayOfWeekValidator = new IsInRange(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek, 0, 6);
+            dayOfWeekValidator = new IsNotInArray(dayOfWeekValidator, ErrorMessage.DuplicateDayOfWeek, tempArray);
+            var dayOfWeekResult = dayOfWeekValidator.validate();
+            if(dayOfWeekResult){
+                console.log('4', dayOfWeekResult);
+                response.err = dayOfWeekResult;
+                response.code = 400;
+                return response;
+            }
+
+            tempArray.push(weeklyScheduleList[i].day_of_week);
+
+
 
 
         }
