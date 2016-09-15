@@ -56,12 +56,14 @@ import ErrorMessage
 
 
 ***List Of Decorators***
-- CheckMissing(WO, Err)
-- IsString(WO, Err)
-- IsNumber(WO, Err)
-- IsInRange(OW, Err, floor, ceiling)
-- IsGreatorThan(OW, Err, 2nd)
+- CheckMissing (WO, Err)
+- IsString (WO, Err)
+- IsNumber (WO, Err)
+- IsInRange (OW, Err, floor, ceiling)
+- IsGreatorThan (OW, Err, 2nd)
 - IsLessThan (OW, Err, 2nd)
 - IsEmail (OW, Err)
 - IsPhoneNumber (OW, Err)
 - IsSSn (OW, Err)
+- IsInArray (OW, Err, Array)
+- IsNotInArray ( OW, Err, Array)

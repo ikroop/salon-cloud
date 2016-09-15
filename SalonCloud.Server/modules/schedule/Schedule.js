@@ -7,10 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments)).next());
     });
 };
-const ScheduleModel_1 = require("./ScheduleModel");
 var ErrorMessage = require('./../../core/ErrorMessage');
-const BaseValidator_1 = require("./../../core/validation/BaseValidator");
-const ValidationDecorators_1 = require("./../../core/validation/ValidationDecorators");
 class Schedule {
     /**
      * getDailySchedule
@@ -63,7 +60,7 @@ class Schedule {
         //TODO: use getDailyScheduleRecord(date)
         return response;
     }
-    saveDailySchedule(salonId, dailySchedule) {
+    saveDailySchedule(dailySchedule) {
         return __awaiter(this, void 0, void 0, function* () {
             var response = {
                 code: undefined,
@@ -71,50 +68,25 @@ class Schedule {
                 err: undefined
             };
             var saveStatus;
-            var salonIdValidator = new BaseValidator_1.BaseValidator(salonId);
-            salonIdValidator = new ValidationDecorators_1.MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId);
-            salonIdValidator = new ValidationDecorators_1.IsString(salonIdValidator, ErrorMessage.InvalidSalonId);
-            //TODO: validate salon Id;
-            salonIdValidator = new ValidationDecorators_1.IsValidSalonId(salonIdValidator, ErrorMessage.InvalidSalonId);
-            var salonIdResult = yield salonIdValidator.validate();
-            if (salonIdResult) {
-                response.err = salonIdResult;
+            //validation
+            var errorReturn = yield this.dailyScheduleValidation(dailySchedule);
+            if (errorReturn) {
                 response.code = 400;
+                response.err = errorReturn;
                 return response;
             }
-            var openTimeValidator = new BaseValidator_1.BaseValidator(dailySchedule.open);
-            openTimeValidator = new ValidationDecorators_1.MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
-            openTimeValidator = new ValidationDecorators_1.IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime);
-            openTimeValidator = new ValidationDecorators_1.IsInRange(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
-            openTimeValidator = new ValidationDecorators_1.IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, dailySchedule.close);
-            var openTimeResult = yield openTimeValidator.validate();
-            if (openTimeResult) {
-                response.err = openTimeResult;
-                response.code = 400;
-                return response;
-            }
-            var closeTimeValidator = new BaseValidator_1.BaseValidator(dailySchedule.close);
-            closeTimeValidator = new ValidationDecorators_1.MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
-            closeTimeValidator = new ValidationDecorators_1.IsNumber(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime);
-            closeTimeValidator = new ValidationDecorators_1.IsInRange(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
-            var closeTimeResult = yield closeTimeValidator.validate();
-            if (closeTimeResult) {
-                response.err = openTimeResult;
-                response.code = 400;
-                return response;
-            }
-            //Todo: validate date;
-            var k = yield this.checkDailySchedule(salonId, dailySchedule);
+            //check docs existence: yes>>>> process update, no>>>>> process add
+            var k = yield this.checkDailySchedule(dailySchedule);
             if (k.err) {
                 saveStatus = undefined;
             }
             else {
                 if (k.data) {
-                    saveStatus = yield this.updateDailySchedule(salonId, dailySchedule);
+                    saveStatus = yield this.updateDailySchedule(dailySchedule);
                     console.log('1', saveStatus);
                 }
                 else {
-                    saveStatus = yield this.addDailySchedule(salonId, dailySchedule);
+                    saveStatus = yield this.addDailySchedule(dailySchedule);
                     console.log('2', saveStatus);
                 }
             }
@@ -137,7 +109,7 @@ class Schedule {
     /**
      * name
      */
-    saveWeeklySchedule(salonId, weeklyScheduleList) {
+    saveWeeklySchedule(weeklyScheduleList) {
         return __awaiter(this, void 0, void 0, function* () {
             var response = {
                 code: undefined,
@@ -145,64 +117,28 @@ class Schedule {
                 err: undefined
             };
             var saveStatus;
-            //TODO: implement validation
-            var salonIdValidator = new BaseValidator_1.BaseValidator(salonId);
-            salonIdValidator = new ValidationDecorators_1.MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId);
-            salonIdValidator = new ValidationDecorators_1.IsString(salonIdValidator, ErrorMessage.InvalidSalonId);
-            //TODO: validate salon Id;
-            salonIdValidator = new ValidationDecorators_1.IsValidSalonId(salonIdValidator, ErrorMessage.InvalidSalonId);
-            var salonIdResult = yield salonIdValidator.validate();
-            if (salonIdResult) {
-                response.err = salonIdResult;
+            //validation
+            var errorReturn = yield this.weeklyScheduleValidation(weeklyScheduleList);
+            if (errorReturn) {
                 response.code = 400;
+                response.err = errorReturn;
                 return response;
             }
-            var tempArray = [];
-            for (let i = 0; i <= 6; i++) {
-                var openTimeValidator = new BaseValidator_1.BaseValidator(weeklyScheduleList[i].open);
-                openTimeValidator = new ValidationDecorators_1.MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
-                openTimeValidator = new ValidationDecorators_1.IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime);
-                openTimeValidator = new ValidationDecorators_1.IsInRange(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
-                openTimeValidator = new ValidationDecorators_1.IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, weeklyScheduleList[i].close);
-                var openTimeResult = yield openTimeValidator.validate();
-                if (openTimeResult) {
-                    response.err = openTimeResult;
-                    response.code = 400;
-                    return response;
-                }
-                var closeTimeValidator = new BaseValidator_1.BaseValidator(weeklyScheduleList[i].close);
-                closeTimeValidator = new ValidationDecorators_1.MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
-                closeTimeValidator = new ValidationDecorators_1.IsNumber(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime);
-                closeTimeValidator = new ValidationDecorators_1.IsInRange(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
-                var closeTimeResult = yield closeTimeValidator.validate();
-                if (closeTimeResult) {
-                    response.err = openTimeResult;
-                    response.code = 400;
-                    return response;
-                }
-                var dayOfWeekValidator = new BaseValidator_1.BaseValidator(weeklyScheduleList[i].day_of_week);
-                dayOfWeekValidator = new ValidationDecorators_1.MissingCheck(dayOfWeekValidator, ErrorMessage.MissingDayOfWeek);
-                dayOfWeekValidator = new ValidationDecorators_1.IsNumber(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek);
-                dayOfWeekValidator = new ValidationDecorators_1.IsInRange(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek, 0, 6);
-                dayOfWeekValidator = new ValidationDecorators_1.IsNotInArray(dayOfWeekValidator, ErrorMessage.DuplicateDayOfWeek, tempArray);
-                var dayOfWeekResult = yield dayOfWeekValidator.validate();
-                if (dayOfWeekResult) {
-                    response.err = dayOfWeekResult;
-                    response.code = 400;
-                    return response;
-                }
-                tempArray.push(weeklyScheduleList[i].day_of_week);
-            }
-            var k = yield this.checkWeeklySchedule(salonId);
+            console.log('3');
+            //check docs existence: yes>>>process update, no>>>> procee add
+            var k = yield this.checkWeeklySchedule();
+            console.log('4', k);
             if (k.err) {
                 saveStatus = undefined;
             }
             else {
                 if (k.data) {
-                    saveStatus = yield this.updateWeeklySchedule(salonId, weeklyScheduleList);
+                    saveStatus = yield this.updateWeeklySchedule(weeklyScheduleList);
+                    console.log('5', saveStatus);
                 }
                 else {
-                    saveStatus = yield this.addWeeklySchedule(salonId, weeklyScheduleList);
+                    saveStatus = yield this.addWeeklySchedule(weeklyScheduleList);
+                    console.log('6', saveStatus);
                 }
             }
             response.data = saveStatus.data;
@@ -215,46 +151,6 @@ class Schedule {
                 response.err = ErrorMessage.ServerError;
             }
             return response;
-        });
-    }
-    /**
-     * name
-     */
-    checkScheduleDocsExistence(salonId, callback) {
-        ScheduleModel_1.ScheduleModel.findOne({ "_id": salonId }, function (err, docs) {
-            if (err) {
-                console.log(err);
-                callback(ErrorMessage.ServerError, 500, undefined);
-            }
-            else if (!docs) {
-                //ToDo: create default Schedule Docs for Salon
-                var newSchedule = {
-                    _id: salonId,
-                    // employee_id: {type: String, required: true},
-                    // created_date: {type: Date, required: true},
-                    // last_modified: {type: Date, required: true},
-                    // created_by: {type: UserProfileSchema, required: true},
-                    salon: {
-                        weekly: undefined,
-                        daily: undefined
-                    },
-                    employee: undefined
-                };
-                ScheduleModel_1.ScheduleModel.create(newSchedule, function (err, newSchedule) {
-                    if (err) {
-                        callback(ErrorMessage.ServerError, undefined);
-                        return;
-                    }
-                    else {
-                        callback(undefined, newSchedule);
-                        return;
-                    }
-                });
-            }
-            else {
-                callback(undefined, docs);
-                return;
-            }
         });
     }
 }

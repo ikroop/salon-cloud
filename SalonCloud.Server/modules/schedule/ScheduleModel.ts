@@ -1,44 +1,38 @@
 
 import { mongoose } from "../../services/database";
-import {ScheduleData} from './ScheduleData'
+import {WeeklyScheduleData, DailyScheduleData} from './ScheduleData'
 
-export const WeeklyScheduleSchema = new mongoose.Schema({
-    _id: {type: String, required: true}, //day_of_week
+export const WeeklyDaySchema = new mongoose.Schema({
     close: {type: Number, required: true},
     open: {type: Number, required: true},
     status: {type: Boolean, required: true},
     day_of_week: {type: Number, required: true}
 },{
-    _id: false,
     timestamps: {createdAt: 'created_at', modifiedAt: 'modified_at'}
 });
 
-export const DailyScheduleSchema = new mongoose.Schema({
-    _id: {type: String, required: true}, //date
+export const DailyDaySchema = new mongoose.Schema({
     close: {type: Number, required: true},
     open: {type: Number, required: true},
     status: {type: Boolean, required: true},
     date: {type: Date, required: true}
 }, {
-    _id: false,
     timestamps: {createdAt: 'created_at', modifiedAt: 'modified_at'}
 });
-export const DailyScheduleModel = mongoose.model<DailyScheduleData>('DailySchedule', DailyScheduleSchema);
 
-export const ScheduleSchema = new mongoose.Schema({
-    _id: String, //<salon_id>
-    salon:{
-        weekly: [WeeklyScheduleSchema],
-        daily: [DailyScheduleSchema]
-    },
-    employee:[{
-        employee_id: { type: String, required: true },
-        weekly: [WeeklyScheduleSchema],
-        daily: [DailyScheduleSchema]
-    }]
+export const WeeklyScheduleSchema = new mongoose.Schema({
+    salon_id: String, //<salon_id>
+    employee_id: String, //employee_id
+    week: [WeeklyDaySchema],
+
 },{
-    _id: false,
     timestamps: {createdAt: 'created_at', modifiedAt: 'modified_at'}
 });
-export const ScheduleModel = mongoose.model<ScheduleData>('Schedule', ScheduleSchema);
 
+export const DailyScheduleSchema = new mongoose.Schema({
+    salon_id: String, //<salon_id>
+    employee_id: String,
+    day: DailyDaySchema,
+})
+export const WeeklyScheduleModel = mongoose.model<WeeklyScheduleData>('WeeklySchedule', WeeklyScheduleSchema);
+export const DailyScheduleModel = mongoose.model<DailyScheduleData>('DailySchedule', DailyScheduleSchema);

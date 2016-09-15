@@ -26,17 +26,20 @@ export class ScheduleRouter {
     getRouter(): Router {
 
         this.router.post("/saveWeeklySchedule", async(request: Request, response: Response) => {
-            let testObject = new SalonSchedule();
-            let test  = await testObject.saveWeeklySchedule(request.body.salon_id, request.body.weekly_schedules);
+            //Todo: call Salon static validation
+            let testObject = new SalonSchedule(request.body.salon_id);
+            console.log('1',testObject);
+            let test  = await testObject.saveWeeklySchedule(request.body.weekly_schedules);
+            console.log('2', test);
             response.status(200).json(test)
         });
         this.router.post("/saveDailySchedule", async(request: Request, response: Response) => {
             console.log('testk');
 
-            let testObject = new SalonSchedule();
+            let testObject = new SalonSchedule(request.body.salon_id);
             console.log('test');
 
-            let test  = await testObject.saveDailySchedule(request.body.salon_id, request.body.daily_schedules);
+            let test  = await testObject.saveDailySchedule(request.body.daily_schedules);
             console.log('test', test);
             response.status(200).json(test)
         });

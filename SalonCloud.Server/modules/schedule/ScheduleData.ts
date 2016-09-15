@@ -7,29 +7,27 @@ import { mongoose } from "../../services/database";
 import { Document } from "mongoose";
 
 export interface ScheduleItemData extends Document{
-	_id: string,
 	close: number,
 	open: number,
 	status: boolean
 };
 
-export interface WeeklyScheduleData extends ScheduleItemData{
+export interface WeeklyDayData extends ScheduleItemData{
     day_of_week: number
 };
 
-export interface DailyScheduleData extends ScheduleItemData{
+export interface DailyDayData extends ScheduleItemData{
     date: Date
 };
 
-export interface ScheduleData {
-    _id: string, //<salon_id>
-    salon:{
-        weekly: [WeeklyScheduleData],
-        daily: [DailyScheduleData]
-    },
-    employee:[{
-        employee_id: string,
-        weekly: [WeeklyScheduleData],
-        daily: [DailyScheduleData]
-    }]
+export interface WeeklyScheduleData {
+    salon_id: string, //<salon_id>
+    employee_id: string,
+    week: [WeeklyDayData]
 };
+
+export interface DailyScheduleData {
+    salon_id: string,
+    employee_id: string,
+    day: DailyDayData
+}

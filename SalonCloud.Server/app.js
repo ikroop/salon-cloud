@@ -4,10 +4,9 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const passportLocal = require("passport-local");
 const schedule_1 = require("./routes/schedule");
-const authorization_1 = require("./routes/authorization");
 var UserModel = require("./core/user/UserModel");
 const app = express();
-var authorizationRouter = new authorization_1.AuthorizationRouter();
+//var authorizationRouter: AuthorizationRouter = new AuthorizationRouter();
 // Configuration
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -28,7 +27,7 @@ app.use((err, request, response, next) => {
     });
 });
 app.use("/api/v1/schedule", new schedule_1.ScheduleRouter().getRouter());
-app.use("/api/v1/auth", new authorization_1.AuthorizationRouter().getRouter());
+//app.use("/api/v1/auth", new AuthorizationRouter().getRouter());
 const server = app.listen(3000, function () {
     console.log("OMG!!! NO BUGS! SalonCloud server listening on port %d in %s mode", 3000, app.settings.env);
 });

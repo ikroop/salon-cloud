@@ -9,7 +9,7 @@ import { AuthorizationRouter } from "./routes/authorization";
 var UserModel = require ("./core/user/UserModel");
 
 const app: express.Application = express();
-var authorizationRouter: AuthorizationRouter = new AuthorizationRouter();
+//var authorizationRouter: AuthorizationRouter = new AuthorizationRouter();
 // Configuration
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -38,7 +38,7 @@ app.use((err: Error & { status: number }, request: express.Request, response: ex
 });
 
 app.use("/api/v1/schedule", new ScheduleRouter().getRouter());
-app.use("/api/v1/auth", new AuthorizationRouter().getRouter());
+//app.use("/api/v1/auth", new AuthorizationRouter().getRouter());
 
 const server: http.Server = app.listen(3000, function () {
     console.log("OMG!!! NO BUGS! SalonCloud server listening on port %d in %s mode", 3000, app.settings.env);
