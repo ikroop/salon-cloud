@@ -10,11 +10,11 @@ import { WeeklyScheduleModel, DailyScheduleModel } from "./ScheduleModel";
 import {SalonCloudResponse} from "../../core/SalonCloudResponse";
 import {BaseValidator} from "./../../core/validation/BaseValidator";
 import {MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId}
-    from "./../../core/validation/ValidationDecorators"
+    from "./../../core/validation/ValidationDecorators";
 var ErrorMessage = require  ("../../core/ErrorMessage");
 
 export class SalonSchedule extends Schedule {
-    public salonId: string;
+    protected salonId: string;
     constructor (salonId: string){
         super();
         this.salonId = salonId;
@@ -116,12 +116,12 @@ export class SalonSchedule extends Schedule {
     }
 
     protected getWeeklyScheduleRecord(): [WeeklyDayData] {
-        var weeklyScheduleList: [WeeklyScheduleData];
+        var weeklyScheduleList: [WeeklyDayData];
 
         return weeklyScheduleList;
     }
 
-    protected normalizeDailySchedule(dailySchedule: DailyScheduleData): DailyDayData {
+    protected normalizeDailySchedule(dailySchedule: DailyDayData): DailyDayData {
         return dailySchedule;
     }
 

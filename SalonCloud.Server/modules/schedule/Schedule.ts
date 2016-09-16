@@ -17,7 +17,7 @@ export abstract class Schedule implements ScheduleBehavior {
 	 *
      */
     public getDailySchedule(date: Date): SalonCloudResponse<DailyDayData> {
-        var response: SalonCloudResponse<DailyScheduleData>;
+        var response: SalonCloudResponse<DailyDayData>;
         //TODO: implement validation
 
         var dailySchedule = this.getDailyScheduleRecord(date);
@@ -44,7 +44,7 @@ export abstract class Schedule implements ScheduleBehavior {
       * name
       */
     public getWeeklySchedule(): SalonCloudResponse<[WeeklyDayData]> {
-        var response: SalonCloudResponse<[WeeklyScheduleData]>;
+        var response: SalonCloudResponse<[WeeklyDayData]>;
         //TODO: implement validation
 
         var weeklySchedule = this.getWeeklyScheduleRecord();
@@ -64,7 +64,7 @@ export abstract class Schedule implements ScheduleBehavior {
 	*
 	*/
     public getMonthlySchedule(month: number, year: number): SalonCloudResponse<[DailyDayData]> {
-        var response: SalonCloudResponse<[DailyScheduleData]>;
+        var response: SalonCloudResponse<[DailyDayData]>;
         //TODO: use getDailyScheduleRecord(date)
 
         return response;
@@ -177,7 +177,7 @@ export abstract class Schedule implements ScheduleBehavior {
     protected abstract checkWeeklySchedule();
     protected abstract getDailyScheduleRecord(date: Date): DailyDayData;
     protected abstract getWeeklyScheduleRecord(): [WeeklyDayData];
-    protected abstract normalizeDailySchedule(dailySchedule: DailyScheduleData): DailyDayData;
+    protected abstract normalizeDailySchedule(dailySchedule: DailyDayData): DailyDayData;
     protected abstract updateDailySchedule(dailySchedule: DailyDayData);
     protected abstract updateWeeklySchedule(weeklyScheduleList: [WeeklyDayData]);
     protected abstract weeklyScheduleValidation(weeklyScheduleList: [WeeklyDayData]);

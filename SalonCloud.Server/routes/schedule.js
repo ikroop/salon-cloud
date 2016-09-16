@@ -24,6 +24,7 @@ class ScheduleRouter {
     }
     getRouter() {
         this.router.post("/saveWeeklySchedule", (request, response) => __awaiter(this, void 0, void 0, function* () {
+            //Todo: call Salon static validation
             let testObject = new SalonSchedule_1.SalonSchedule(request.body.salon_id);
             console.log('1', testObject);
             let test = yield testObject.saveWeeklySchedule(request.body.weekly_schedules);
