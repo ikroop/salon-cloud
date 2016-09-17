@@ -106,6 +106,7 @@ use UTC.
   |           |----location
   |           |     |----address: string
   |           |     |----is_verified: boolean
+  |           |     |----timezone: number
   |           |----email: string
   |----domain
 ```
