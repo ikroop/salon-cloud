@@ -314,6 +314,12 @@
               <referencedTypeMoniker Id="88f66676-4097-4a81-a0a9-d16446cced20" LastKnownName="Authorization" />
             </type_NamedElement>
           </property>
+          <property Id="e0ceb028-436a-401c-80fe-32e063cef808" name="SalonPublicDP" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="38c26eb1-d115-4fb6-94b3-d4d99336a5fd" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="14987d81-2b9a-41f4-9198-d6d04b3805ae" LastKnownName="SalonPublicDisplay" />
+            </type_NamedElement>
+          </property>
         </ownedAttributes>
         <ownedOperations>
           <operation Id="d4795db3-1ebf-4b1b-893b-3bc8ed8b1668" name="signUpWithUserAndPassword" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
@@ -418,72 +424,29 @@
     <logicalClassDesignerModelHasTypes>
       <class Id="4fe46463-d8e9-4931-8ac6-b26264b3303c" name="Technician" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="1ab9471d-9442-4a0b-95f8-5b651d123175" />
-        <suppliersInternal>
-          <interfaceRealization Id="59eb203e-38d1-4f7f-a822-a5254d8a751d">
-            <interfaceMoniker Id="42e7d7af-fe64-4a51-bec3-74bc75e526b6" LastKnownName="EmployeeBehavior" />
-            <elementDefinition Id="830bba35-70f7-4c4f-835e-cd68bfc9d0ff" />
-          </interfaceRealization>
-        </suppliersInternal>
         <generalsInternal>
-          <generalization Id="f320290b-ad5b-4214-9d3e-72be75a92ff3" isSubstitutable="false">
-            <classMoniker Id="476810ca-0c7f-4285-8d24-47c18b79274e" LastKnownName="SalonUser" />
-            <elementDefinition Id="d4ff4a07-26dc-4f76-b379-3e0b176706d1" />
+          <generalization Id="1483524b-9f32-409d-a6da-93866a54dce0" isSubstitutable="false">
+            <classMoniker Id="1900e5bf-4ae3-41ed-bd5b-50e1b6146b75" LastKnownName="AbstractEmployee" />
+            <elementDefinition Id="8d6bd4e6-3192-4cf9-9e87-06c3ab9b5230" />
           </generalization>
         </generalsInternal>
         <ownedOperationsInternal>
-          <operation Id="7aa19a04-0693-42aa-91bb-59d46a529372" name="getSchedule" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="67419f16-b377-4aad-ab86-8047075f3213" />
+          <operation Id="f10ac98b-86c6-448e-a2a8-7e911395119d" name="filterAppointmentFields" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="730b5ea3-992d-438c-8b93-727fde602b78" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="3b749b20-9c7d-4f86-9840-3b18fcf6c742" direction="Return" isUnique="false">
-                  <elementDefinition Id="82287930-83d4-4c2c-b080-0e70e58d7db0" />
+                <parameter Id="e8013ecd-e9c4-4bd0-83e2-d5bb4ecfa6ea" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="53d212bf-bfca-4aa8-9c03-a1c92dc404c3" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="763bbf1d-d7c9-4a87-9668-21a8423cb606" LastKnownName="SalonCloudResponse&lt;Array&lt;DailySchedule&gt;&gt;" />
+                    <referencedTypeMoniker Id="0c4c948b-7cc7-4f9a-82fb-6ec430781cf9" LastKnownName="Appointment" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="b94cdb22-5acc-487a-8e6e-28b556823ffa" name="start" direction="In" isUnique="false">
-                  <elementDefinition Id="65a49dec-df13-49ec-a88d-748a6fb089ce" />
+                <parameter Id="67764a77-e65c-468a-92c4-fb8bfadff4fd" direction="Return" isUnique="false">
+                  <elementDefinition Id="6e48fda0-c762-43a8-9627-8844633deaf9" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="a5f04959-852c-4f41-bbf9-38d96411553f" LastKnownName="Date" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="51740d79-5237-47be-ac9f-0368ceccac4c" name="end" direction="In" isUnique="false">
-                  <elementDefinition Id="3c5a334a-f982-4f8f-b53b-1844c3764fdc" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="a5f04959-852c-4f41-bbf9-38d96411553f" LastKnownName="Date" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="640a2daa-6faa-457a-b671-e6aa947d434c" name="getSalonSchedule" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="171b7cc5-0533-4b74-9957-754f15297758" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="ac5a244b-da8e-4d90-8067-63241ae57696" name="start" direction="In" isUnique="false">
-                  <elementDefinition Id="0a8e909c-b830-4e01-831c-1613ff09972c" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="a5f04959-852c-4f41-bbf9-38d96411553f" LastKnownName="Date" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="bf9afa9a-9764-45ee-ab08-20c7054174cf" name="end" direction="In" isUnique="false">
-                  <elementDefinition Id="bed6efa5-66ad-44bb-a4be-a09130b9bae4" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="a5f04959-852c-4f41-bbf9-38d96411553f" LastKnownName="Date" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="75c685b5-531c-4a45-b2e0-e5864d50bf0b" direction="Return" isUnique="false">
-                  <elementDefinition Id="f47e39d5-59c5-446c-b92e-40a145bdda62" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="1c4f1d69-be1e-4129-8765-b35ae13f9269" LastKnownName="SalonCloudResopnse&lt;Array&lt;DailySchedule&gt;&gt;" />
+                    <referencedTypeMoniker Id="0c4c948b-7cc7-4f9a-82fb-6ec430781cf9" LastKnownName="Appointment" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -496,22 +459,279 @@
       <class Id="3fdd094c-3753-4b3f-b73a-a9bd0d3fcd37" name="Manager" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="56c2c007-004c-4546-86f2-1f94c0b947f7" />
         <generalsInternal>
-          <generalization Id="644885ed-52d6-4d3a-9522-b4b1b5e2d7dc" isSubstitutable="false">
-            <classMoniker Id="4fe46463-d8e9-4931-8ac6-b26264b3303c" LastKnownName="Technician" />
-            <elementDefinition Id="2a50b27d-a32a-4b43-8dda-50a5a153ba9a" />
+          <generalization Id="f0d65b5a-3c6f-4a90-b992-e0002754c40a" isSubstitutable="false">
+            <classMoniker Id="47c152a8-64f1-4fa2-a327-ccb8631d5784" LastKnownName="AbstractAdministrator" />
+            <elementDefinition Id="ba1ea25d-eeb4-40a1-bd1e-48212f4d577a" />
           </generalization>
         </generalsInternal>
+        <ownedOperationsInternal>
+          <operation Id="f5fa70eb-7a2c-42a5-9d48-e1f27570ba77" name="filterProfileData" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="df382481-7872-437a-abc8-25a69465f639" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="96f88804-67c6-4db1-856f-a7692581e301" name="user" direction="In" isUnique="false">
+                  <elementDefinition Id="8d01cc97-2622-4253-a3a4-4e404084516f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb5649de-fb04-4013-a127-b194592d4cb8" LastKnownName="UserProfile" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="12f5eb0d-5b53-439d-9386-002bd19801ee" direction="Return" isUnique="false">
+                  <elementDefinition Id="e3c2cf8f-b94c-4266-ae87-8cfb5128c090" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb5649de-fb04-4013-a127-b194592d4cb8" LastKnownName="UserProfile" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
       <class Id="f29563cc-157a-4300-8dc4-8bf8b13a59e6" name="Owner" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="5c39f658-d586-43cc-a72f-4b1db0bb0ebc" />
         <generalsInternal>
-          <generalization Id="3df98919-f56a-4dd1-b541-1286cd78fef6" isSubstitutable="false">
-            <classMoniker Id="3fdd094c-3753-4b3f-b73a-a9bd0d3fcd37" LastKnownName="Manager" />
-            <elementDefinition Id="08e14c4e-7ea2-4b47-9638-7d4d2f5b2bfb" />
+          <generalization Id="207b0159-25c0-4c5e-9df6-b9b0816d8282" isSubstitutable="false">
+            <classMoniker Id="47c152a8-64f1-4fa2-a327-ccb8631d5784" LastKnownName="AbstractAdministrator" />
+            <elementDefinition Id="240aeb3d-e88f-4b6d-b94f-b806b00616e4" />
           </generalization>
         </generalsInternal>
+        <ownedOperationsInternal>
+          <operation Id="1a66c0dc-e25e-4d63-92ab-803803bc4d90" name="getSchedule" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f64890fd-220f-4b8c-abdc-a7a7f8f67480" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="11ac4b4d-0ba0-404f-a148-a885917dc0a5" name="start" direction="In" isUnique="false">
+                  <elementDefinition Id="5b62984e-3a37-4512-9e4e-14f418c5d741" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="a5f04959-852c-4f41-bbf9-38d96411553f" LastKnownName="Date" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="9591c415-0771-403d-906c-0122a267709a" name="end" direction="In" isUnique="false">
+                  <elementDefinition Id="6aaa28f3-dc4d-4c12-9aa9-36480a52dba8" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="a5f04959-852c-4f41-bbf9-38d96411553f" LastKnownName="Date" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1e6f1dce-794d-4d9c-82b8-c66c46d05201" direction="Return" isUnique="false">
+                  <elementDefinition Id="56ebdad1-355f-4064-907a-485464dbbf0e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="763bbf1d-d7c9-4a87-9668-21a8423cb606" LastKnownName="SalonCloudResponse&lt;Array&lt;DailySchedule&gt;&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="13427301-c652-4fa3-a463-254c10c168ad" name="updateSalonDailySchedule" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c4bcf277-de28-4a9e-a3c0-9d7b883c4905" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="fac09ee0-d65b-4371-9950-351e9ce99347" name="dailySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="da788e63-acb2-4b66-ad0b-d92db0d618ad" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="4ac60574-1bc0-4362-a0b2-3ddbf8121b2e" LastKnownName="DailySchedule" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="d068dc02-9051-4552-85fe-934c65b50e35" name="updateSalonWeeklySchedule" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b194419f-6cef-4e10-80c9-628b1eae4b34" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0c7f603b-ac22-4ffc-b5cc-f8857f056760" name="weeklySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="4705909b-337c-4069-ac55-9a5f09b922ca" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3552656d-c2c3-4365-bfd0-1adafcc03617" LastKnownName="WeeklySchedule" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="51ced04b-0266-4ec2-b700-0bea20fd11b0" name="filterProfileData" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f24e3b08-8899-4599-8de0-36ea8c00b4c7" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1c6d3ef0-2002-4119-aba1-36a65fc2a3d3" name="user" direction="In" isUnique="false">
+                  <elementDefinition Id="633b8d87-d95f-417d-b9f1-3d3f5925144d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb5649de-fb04-4013-a127-b194592d4cb8" LastKnownName="UserProfile" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="a91feaf5-234e-4403-8d3a-06a005a5bd93" direction="Return" isUnique="false">
+                  <elementDefinition Id="9447e2b4-ee9b-4f29-8732-b04b8cb43890" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb5649de-fb04-4013-a127-b194592d4cb8" LastKnownName="UserProfile" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="f775b459-e3dd-468b-be55-e5941d243b69" name="deactivateEmployee" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="870b4e56-da42-4114-af1d-5e2319f293e7" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="c33cc63e-7a18-427f-b8ea-89a08c8ede6f" direction="Return" isUnique="false">
+                  <elementDefinition Id="9bc11be6-460a-4472-a07b-68eb1585ed11" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="1061a28b-629b-402b-a7f3-8cac0d52128f" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d88f957a-1d56-48b4-bd01-a6cf7d101eb1" name="emplpoyeeId" direction="In" isUnique="false">
+                  <elementDefinition Id="70b19e25-1ea0-4432-8eda-db6de57ec0b5" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="fd89a4a9-ae1b-4416-bd7e-4deed3c70636" name="updateEmployeeProfile" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ee412231-82be-432d-9c6a-1451d691e2d9" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="a3f46f47-f07f-47b0-a333-42103a9741a5" name="employee" direction="In" isUnique="false">
+                  <elementDefinition Id="4ed93521-eaae-4933-bb3d-eb136fa6f7b3" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb5649de-fb04-4013-a127-b194592d4cb8" LastKnownName="UserProfile" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ba24a836-717e-4252-ae35-91f6a1c38baa" direction="Return" isUnique="false">
+                  <elementDefinition Id="cae2c509-8237-4463-84a7-068962d20965" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="ffda3a17-3fad-45f8-a8ba-3e227159068f" LastKnownName="boolean)" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="561937be-5b74-49d0-92ae-a58eaf3b9d7c" name="activateEmployee" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c71abda3-f790-4e90-b6db-294ddb29049f" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="9cea8960-f141-44a7-9e39-b501d40a588c" name="employeeId" direction="In" isUnique="false">
+                  <elementDefinition Id="c6c541db-3238-410b-a2a8-80d71eb1014d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="2a1e465e-0c72-4309-9ceb-cbb6cd7b133d" direction="Return" isUnique="false">
+                  <elementDefinition Id="7623306e-4f88-4aba-88d2-acaa0f3f8b20" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="1061a28b-629b-402b-a7f3-8cac0d52128f" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="3725ca4c-5d4f-4ea3-be88-53e54771845b" name="updateSalonSetting" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="0aa1026d-7fea-40b5-95a5-5f003b0bb824" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7b4d811c-70b4-4a6b-a7ce-2dd3176cd3df" name="setting" direction="In" isUnique="false">
+                  <elementDefinition Id="1cf9333c-3957-43c0-9887-b057d20fffaf" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="89631c46-7c0b-4e79-83d9-ed46a34a8abf" LastKnownName="SalonSetting" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b6019b4e-cce6-4e74-b4ed-9cf8622bd308" direction="Return" isUnique="false">
+                  <elementDefinition Id="91d2f244-b05d-44ea-993b-1c956aa98001" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="1061a28b-629b-402b-a7f3-8cac0d52128f" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="42c8c81c-9049-42a0-81e1-b86c7fbe3881" name="updateSalonInformation" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="59c9dc85-2878-4a8c-9aa3-1dc0f0894cf4" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0807ce29-a099-4ef9-af44-8f9e1cb1e9a6" name="info" direction="In" isUnique="false">
+                  <elementDefinition Id="fa3b7d49-338b-4bd6-b0eb-70889f7236bd" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="5e510ce7-4a79-4682-b7d1-9192f656bcf7" LastKnownName="SalonInformation" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="6f4e7523-10bb-4067-a06f-98990516b92f" direction="Return" isUnique="false">
+                  <elementDefinition Id="b36bbb85-d26a-41cb-b884-852d4f34eecc" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="1061a28b-629b-402b-a7f3-8cac0d52128f" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="1bd2c65b-92d3-4b0f-9fce-742c60a3beb5" name="deativateSalon" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="2e95ea00-b9cc-4f74-a5ea-37f7a9fb546b" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="c77a8b09-fa64-443f-a2f7-009166ee69e2" direction="Return" isUnique="false">
+                  <elementDefinition Id="15bb1b47-13ba-4c0d-92a5-43710c9ed3ad" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="1061a28b-629b-402b-a7f3-8cac0d52128f" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="240cd65c-a6bd-44ea-8d3d-23b3c9139116" name="salonId" direction="In" isUnique="false">
+                  <elementDefinition Id="6ea65270-32af-46b7-a273-6745a4af9c29" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="bca49819-8245-4fd1-9fc0-abfd7c85449d" name="activateSalon" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ec31e479-90cc-46f7-a37a-7b1f590277bc" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="fff45aca-513b-442f-a049-a34f57b9cfbd" direction="Return" isUnique="false">
+                  <elementDefinition Id="61141feb-bbc7-448a-a858-90c2e8ece625" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="1061a28b-629b-402b-a7f3-8cac0d52128f" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ee61fecf-471d-4301-bb1e-6bf11319f9b4" name="salonId" direction="In" isUnique="false">
+                  <elementDefinition Id="73178303-f6e0-427a-a51c-a2c8baf78ecb" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="ebe6899e-adcd-46d7-a645-d9ef25660394" name="addService" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="759f8347-8f21-4a86-ae16-87070b8cd5d5" />
+          </operation>
+          <operation Id="9ff12fdf-2a5c-47b2-85f8-6ac7acd1c79b" name="updateService" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ffa5a765-6bba-45e9-84d9-769ae2639a31" />
+          </operation>
+          <operation Id="3f98db3f-b46a-41ea-92b2-2c2a1b467834" name="removeService" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="2246c6bf-baaa-4ee0-a710-a506a90d054b" />
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -626,6 +846,14 @@
             <elementDefinition Id="c8759268-f537-4ec9-8d37-9de27c91d8ff" />
           </generalization>
         </generalsInternal>
+        <ownedOperationsInternal>
+          <operation Id="880e6f54-7259-4937-95c5-9aa712428828" name="disableSubscription" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="8aa8596f-fad1-4479-b84d-6772f0115e3b" />
+          </operation>
+          <operation Id="c2780a2b-c42c-47c4-91de-65de53c7e429" name="enableSubscription" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="bf5ae185-681a-4817-8244-c30611c9577c" />
+          </operation>
+        </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
@@ -1042,6 +1270,14 @@
             <elementDefinition Id="d6d2efb0-3261-402b-aee5-73bc963429c5" />
           </generalization>
         </generalsInternal>
+        <ownedAttributesInternal>
+          <property Id="1dfc0e50-3c89-4f09-9495-cfd362d30a76" name="SalonPublicDP" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="bd0b6edb-9a14-49d8-ad86-b1f486dea083" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="c8364cd8-66a0-46fc-9333-0b799e0013b5" LastKnownName="SalonPublicDisplay" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="310359f1-6c67-4271-abca-fa6eb5520ffa" name="updateProfile" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="5d99fc1a-5f32-4427-9ac0-76460766c03e" />
@@ -1118,7 +1354,7 @@
                 <parameter Id="3c1d55b0-ed22-4b9d-90b1-a0ae71d5d062" direction="Return" isUnique="false">
                   <elementDefinition Id="fffc0a70-18db-4dc1-a2fd-736944e7ce89" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="adfcea1b-325a-452f-894b-5f8f792b7932" LastKnownName="SalonCloudResponse&lt;UserPublicProfile&gt;" />
+                    <referencedTypeMoniker Id="c1dc6a9b-cee9-40fa-b075-e6c45c71a107" LastKnownName="SalonCloudResponse&lt;UserProfile&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -1229,6 +1465,511 @@
     <packageHasNamedElement>
       <referencedType Id="1c4f1d69-be1e-4129-8765-b35ae13f9269" name="SalonCloudResopnse&lt;Array&lt;DailySchedule&gt;&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResopnse&lt;Array&lt;DailySchedule&gt;&gt;">
         <elementDefinition Id="9fcbbebf-d692-4dd4-b5f6-6fef6c853b85" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="47c152a8-64f1-4fa2-a327-ccb8631d5784" name="AbstractAdministrator" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="1a35f51f-97af-4fbc-8251-d9ab27748c4e" />
+        <generalsInternal>
+          <generalization Id="a8c09bfa-db7c-40f1-8a46-9b36b55a8d04" isSubstitutable="false">
+            <classMoniker Id="1900e5bf-4ae3-41ed-bd5b-50e1b6146b75" LastKnownName="AbstractEmployee" />
+            <elementDefinition Id="534dd999-6bc3-4fbc-aae5-49dd87af9ece" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation Id="44d7cd67-ef5d-45a6-9a6f-b3682c77b268" name="updateWeeklySchedule" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="1bf21366-9f26-46cb-8a2e-50503955eb90" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="de412a4b-d2c7-4305-b26d-c548d8867893" name="employeeId" direction="In" isUnique="false">
+                  <elementDefinition Id="270ecc38-a1fa-400c-b78a-3a4e7b8f9b58" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="3b5a0e1d-8eab-48d5-a711-a33ea4fb5e7f" name="weeklySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="352e11b4-90a2-4216-90d5-a48a57ab9d08" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3552656d-c2c3-4365-bfd0-1adafcc03617" LastKnownName="WeeklySchedule" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="487dcc29-938d-4213-80fd-321dc2a371a4" name="updateDailySchedule" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="27b16e02-1bd3-4e40-b321-19eb3f2a253b" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d420bc25-93fd-4ec2-b904-c98e5ea90040" name="employeeId" direction="In" isUnique="false">
+                  <elementDefinition Id="7bc0382a-2abe-4936-88bb-ea10c2029eb1" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="2d066088-c14b-41d8-a900-4face5dfb158" name="dailySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="3707b5ca-2ebe-424c-8c6c-a7dacd9caf78" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="4ac60574-1bc0-4362-a0b2-3ddbf8121b2e" LastKnownName="DailySchedule" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="d6594c53-32d5-4ef3-b9cd-dfe75f900be9" name="saveAppointment" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="07e13a48-53fb-48c7-a555-4bcc4a2f76ea" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="3714070e-bd2c-4ed2-9a53-20477832f2b0" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="486b8831-af92-4e12-99ff-673084514682" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0c4c948b-7cc7-4f9a-82fb-6ec430781cf9" LastKnownName="Appointment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="9f9a6c48-1bbe-4694-b4c0-cc7f2e300925" name="updateAppointment" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="115e7cef-d3bc-4a38-9155-d475120eb311" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="e7afce10-4c26-4207-ad75-095a2114f531" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="b1cf4103-da58-4747-9ad3-c77da19debd1" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0c4c948b-7cc7-4f9a-82fb-6ec430781cf9" LastKnownName="Appointment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="f7b95f47-8fe2-484b-bae1-08bd87e52455" name="cancelAppointment" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a6265523-1343-4d30-95fe-fca5e88d8aea" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="da8c1476-4e91-430c-9685-4a131378d947" name="appointmentId" direction="In" isUnique="false">
+                  <elementDefinition Id="b19ab8fa-fa7d-45f0-a437-f292cf4a60c0" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="7cdf235c-4968-4715-bf3e-858887a5bd68" name="getEmployeeProfile" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="51e0f3eb-64b8-4ae4-8bc6-5da0d0bad45d" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="88ea775c-f624-4cc3-8a69-08ea71d1b699" name="employeeId" direction="In" isUnique="false">
+                  <elementDefinition Id="5d9a7689-2b83-4770-958e-1368e05eb7cc" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="9996a95e-8eb7-469f-a071-b6a929777d85" direction="Return" isUnique="false">
+                  <elementDefinition Id="fc1d59f8-47d0-42ce-928e-be56b793be54" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb5649de-fb04-4013-a127-b194592d4cb8" LastKnownName="UserProfile" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="27a9d192-b8c7-4806-b12e-4c4ea6d93e90" name="filterProfileData" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="acaa878b-d4e0-411f-8ca4-2f19f4f5239f" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="3f229ec0-b801-4112-b0d1-7e7309f5f6b6" name="user" direction="In" isUnique="false">
+                  <elementDefinition Id="54503757-2894-428d-80f9-eefe382e8fd6" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb5649de-fb04-4013-a127-b194592d4cb8" LastKnownName="UserProfile" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d4d1cbda-86c9-4908-8ce7-24e400cd730f" direction="Return" isUnique="false">
+                  <elementDefinition Id="0686477f-61b5-4866-9dfe-d9fb8c92db03" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb5649de-fb04-4013-a127-b194592d4cb8" LastKnownName="UserProfile" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="204bc0d6-3eef-4100-8356-b0ddaf5ee4e3" name="getAllEmployeeProfile" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="13205e16-b55e-45e9-881a-4247a4d74d67" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0d6270b5-60fd-4dfb-804b-49984073e32f" direction="Return" isUnique="false">
+                  <elementDefinition Id="887cd066-eae6-461c-a543-384bfbd4dd9f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d61487f1-977c-4932-a2a8-fc070f91d5a4" LastKnownName="Array&lt;UserProfile&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="f3b392c0-1efb-400d-81da-6eb951c299ec" name="filterAppointmentFields" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f0f125de-e959-4df8-8a3d-16efb28f91ad" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b92b7802-22d0-47ef-b3c3-33900ca4a1ee" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="3450d2f2-a66b-423d-bfd5-eec1113b4807" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0c4c948b-7cc7-4f9a-82fb-6ec430781cf9" LastKnownName="Appointment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="381427bc-2a8d-41a7-84d7-c4435a78402e" direction="Return" isUnique="false">
+                  <elementDefinition Id="c9a71452-7dd5-4820-91f9-ab18f3cd49a0" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0c4c948b-7cc7-4f9a-82fb-6ec430781cf9" LastKnownName="Appointment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="0e38c610-79cf-41cc-8f74-0e8f9a1c1db8" name="getCustomerById" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a616a2c8-dd29-47c2-b0bb-3e5450722dd0" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="e1eac2ff-5497-4452-9776-218d53b1091b" name="customerId" direction="In" isUnique="false">
+                  <elementDefinition Id="40aeed1b-8741-4272-9233-40315bd056f2" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="52a6661c-0479-43aa-badf-c2a49d19e81a" direction="Return" isUnique="false">
+                  <elementDefinition Id="3da8ac1b-8000-4719-8b0e-fb896bf398dc" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="bb5649de-fb04-4013-a127-b194592d4cb8" LastKnownName="UserProfile" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="4b690d5d-b367-4995-b849-26bc6dd71e63" name="getAllCustomer" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="cb6180e6-8acf-423f-8d56-dca838358137" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="89e2b1fa-bf32-48c8-9b6b-b11bccb48a4a" direction="Return" isUnique="false">
+                  <elementDefinition Id="55efa99a-0bca-4415-bc50-c8f77888a9c6" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d61487f1-977c-4932-a2a8-fc070f91d5a4" LastKnownName="Array&lt;UserProfile&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="1900e5bf-4ae3-41ed-bd5b-50e1b6146b75" name="AbstractEmployee" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="faf6eee9-1113-438f-9319-b8902ecbf9a0" />
+        <suppliersInternal>
+          <interfaceRealization Id="6f33b174-8d0f-4382-936d-843a5a135855">
+            <interfaceMoniker Id="42e7d7af-fe64-4a51-bec3-74bc75e526b6" LastKnownName="EmployeeBehavior" />
+            <elementDefinition Id="10d454fc-0868-456f-805a-6f4bb8fc6ecb" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization Id="ac90f650-9eab-478e-91db-9a09452c1b5b" isSubstitutable="false">
+            <classMoniker Id="476810ca-0c7f-4285-8d24-47c18b79274e" LastKnownName="SalonUser" />
+            <elementDefinition Id="926edfa4-f456-4a96-a73f-c21a249325cd" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation Id="b52939e9-0a48-4967-9758-71317711f7ab" name="getSchedule" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="774affdb-dc28-4969-b87a-97cf5118130f" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="c328925f-552b-44cd-a297-ce097f8693c9" name="start" direction="In" isUnique="false">
+                  <elementDefinition Id="49ec73d5-5a88-452f-8b96-222c4e7cfd03" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="a5f04959-852c-4f41-bbf9-38d96411553f" LastKnownName="Date" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="59ca7308-5197-495c-aa0f-be73f6f004c0" name="end" direction="In" isUnique="false">
+                  <elementDefinition Id="b86f9759-be50-4310-be10-a5232b7ceeb0" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="a5f04959-852c-4f41-bbf9-38d96411553f" LastKnownName="Date" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="3d035d64-9719-4d59-8354-7710e0592820" direction="Return" isUnique="false">
+                  <elementDefinition Id="1f816a53-6529-423b-88cd-269620169d76" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="763bbf1d-d7c9-4a87-9668-21a8423cb606" LastKnownName="SalonCloudResponse&lt;Array&lt;DailySchedule&gt;&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="58ebd96e-8d2a-42be-a62f-142e53ba872d" name="getSalonSchedule" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="7bd5d775-0472-4af2-9a2d-b0d32ea69cbc" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b03f259f-6652-4162-ab84-70d335b5587c" name="start" direction="In" isUnique="false">
+                  <elementDefinition Id="74de4f57-5f4d-4a32-8675-737448f737d7" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="a5f04959-852c-4f41-bbf9-38d96411553f" LastKnownName="Date" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ac581f6d-33ea-407f-8116-9e04a962ec69" name="end" direction="In" isUnique="false">
+                  <elementDefinition Id="7da0905f-b17e-4127-aa0e-5b4b3652c4cb" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="a5f04959-852c-4f41-bbf9-38d96411553f" LastKnownName="Date" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="627f2891-d036-465f-ad7e-ce2b80692b2a" direction="Return" isUnique="false">
+                  <elementDefinition Id="89f9a813-48a8-4cdb-8bf6-845de8a49184" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="1c4f1d69-be1e-4129-8765-b35ae13f9269" LastKnownName="SalonCloudResopnse&lt;Array&lt;DailySchedule&gt;&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="c5cd0610-8617-4fb7-ab59-51a3078831fd" name="updateAppointmentStatus" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="771798fa-b688-4cbe-a310-650c3e36b274" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="5f03bf28-0e08-44ee-9ea4-fd2cc86bbf2a" name="appointmentId" direction="In" isUnique="false">
+                  <elementDefinition Id="50cc9a59-dfb4-4f3f-acbc-dfe94e9a9450" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="c0fdc59a-1410-4382-bbc2-ddfffd1f151e" name="status" direction="In" isUnique="false">
+                  <elementDefinition Id="cdcfe6e3-b3bf-4f87-8f14-66e5d29b35db" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="b8075dd0-4703-4e20-859a-b0c5713b4eee" LastKnownName="number" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="6a55711f-f97f-4923-8944-e82be15b43e7" direction="Return" isUnique="false">
+                  <elementDefinition Id="7a8e80d4-9bb5-43cf-8eef-f5532692048f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6877488a-efc6-4bfc-84f7-40f0305f2faa" LastKnownName="SalonCloudResponse&lt;Appointment&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="1a269bd6-8b33-4f2a-968b-4593e96e00e8" name="getAppointmentByDate" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d04d2bd1-78ad-4ec5-ba47-04a3a17e78a2" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="3d1bc1dd-e738-4c9a-8c91-a6abfed14774" direction="Return" isUnique="false">
+                  <elementDefinition Id="81d3edc5-3dbd-4a1f-b5cc-fcf1030ab772" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="16c4de6b-3557-4169-a886-252def078149" LastKnownName="Array&lt;Appointment&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="9bf17bdd-ff54-4562-8ad4-1563d0326864" name="date" direction="In" isUnique="false">
+                  <elementDefinition Id="a9ee9611-d47c-443c-8d5d-354694929bae" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="a5f04959-852c-4f41-bbf9-38d96411553f" LastKnownName="Date" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="283b17f0-4dde-468b-9765-901ad8c29783" name="getAppointmentById" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="eb399323-13d2-4ec8-8dbd-1ef44818f169" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d9c94352-82cb-42aa-afbc-6c7534f17641" name="appointmentId" direction="In" isUnique="false">
+                  <elementDefinition Id="19e1101e-f7cf-4f96-9387-526c9a176f17" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="698f5c7f-bf9a-40ff-8263-039388bc00b9" direction="Return" isUnique="false">
+                  <elementDefinition Id="498945e1-9e62-4ce4-9a87-722e6749562f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0c4c948b-7cc7-4f9a-82fb-6ec430781cf9" LastKnownName="Appointment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="0844fd4e-9201-4f12-8978-1ea882c28dea" name="filterAppointmentFields" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="31b54e13-7507-4144-9c1a-7ab9561012c7" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d4195c9f-32dc-4589-9234-17a5faa01c1f" direction="Return" isUnique="false">
+                  <elementDefinition Id="82c358e4-7afb-4f1d-bba4-a9089302aa0f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0c4c948b-7cc7-4f9a-82fb-6ec430781cf9" LastKnownName="Appointment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4f1ee3ec-d5bf-4bfc-a855-35be4470e4ce" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="fbf3b1e3-1b3c-4db6-b494-44194d4b736c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0c4c948b-7cc7-4f9a-82fb-6ec430781cf9" LastKnownName="Appointment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="02e08ad2-2264-440b-a104-44276b0e6f1c" name="AdministratorBehavior" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="5d626028-a23f-4f4d-9001-988872a9bd40" />
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="3552656d-c2c3-4365-bfd0-1adafcc03617" name="WeeklySchedule" isAbstract="false" isLeaf="false" cachedFullName="WeeklySchedule">
+        <elementDefinition Id="61b132c2-adc5-41c3-8bf1-66bd069f2bd4" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="4ac60574-1bc0-4362-a0b2-3ddbf8121b2e" name="DailySchedule" isAbstract="false" isLeaf="false" cachedFullName="DailySchedule">
+        <elementDefinition Id="533da7d3-d0e5-4567-b979-9a45d38927e5" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="b8075dd0-4703-4e20-859a-b0c5713b4eee" name="number" isAbstract="false" isLeaf="false" cachedFullName="number">
+        <elementDefinition Id="725b7863-09dc-4804-a657-1800269b1e70" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="c1dc6a9b-cee9-40fa-b075-e6c45c71a107" name="SalonCloudResponse&lt;UserProfile&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;UserProfile&gt;">
+        <elementDefinition Id="b800f2a0-e925-4bf2-8032-176fc53a0ede" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="d61487f1-977c-4932-a2a8-fc070f91d5a4" name="Array&lt;UserProfile&gt;" isAbstract="false" isLeaf="false" cachedFullName="Array&lt;UserProfile&gt;">
+        <elementDefinition Id="44135f5d-e9cd-438e-927b-81af6351edd2" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="ffda3a17-3fad-45f8-a8ba-3e227159068f" name="boolean)" isAbstract="false" isLeaf="false" cachedFullName="boolean)">
+        <elementDefinition Id="295f085c-06c0-402e-81ef-de516dbc7fb5" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="16c4de6b-3557-4169-a886-252def078149" name="Array&lt;Appointment&gt;" isAbstract="false" isLeaf="false" cachedFullName="Array&lt;Appointment&gt;">
+        <elementDefinition Id="30a1813e-d049-47bf-b0e1-d224d53d68a6" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="89631c46-7c0b-4e79-83d9-ed46a34a8abf" name="SalonSetting" isAbstract="false" isLeaf="false" cachedFullName="SalonSetting">
+        <elementDefinition Id="6d767c44-74ee-4241-85f9-9eac324eba5f" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="f140198d-adaf-4761-8057-12a0c70923fa" name="SalonPublicDisplay" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="5e1c1703-a0f1-464d-92b6-08c6664a97fc" />
+        <ownedAttributesInternal>
+          <property Id="3ff9a326-703e-4eee-afa9-95b8405bcc8f" name="SalonManagement" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="53ed6a7b-6d9e-44bb-961b-ecaf097203cc" />
+          </property>
+          <property Id="d5b7a2f8-460e-4e3d-9c87-0cb682780587" name="ServiceManagement" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="19f40c5a-dd9c-478a-ae0f-53fc8d888ce9" />
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="38887916-6fe2-40bc-af23-f2df972af6fe" name="getServices" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="5878b097-5ddb-4677-a191-92c9c32d3077" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7478d6e4-8487-4e6c-9603-04327d82c9c4" direction="Return" isUnique="false">
+                  <elementDefinition Id="946c1bda-fc07-47e7-a6ac-5dc148576d3e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="491173a3-647b-4241-97bb-0eb304ca2342" LastKnownName="Services" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="10990628-45cf-42af-929c-cdafda66198f" name="getSalonInformation" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="4d39ee67-fb42-4bc1-9c0e-e20161aacd3e" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="9740a32c-1408-4ecf-a95e-5dcf8e834d21" direction="Return" isUnique="false">
+                  <elementDefinition Id="9956785c-8907-4421-a49c-075e1825d6b0" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="5e510ce7-4a79-4682-b7d1-9192f656bcf7" LastKnownName="SalonInformation" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="13cc1907-5a6d-4256-9595-047eac8c4dff" name="getSalonSchedule" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b6f51876-dae3-4284-9d81-9202c17224bd" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8c0e39f6-cc73-4ea1-8f52-b7ae28e10d02" direction="Return" isUnique="false">
+                  <elementDefinition Id="205d55ba-e629-4bf2-a619-3e1c4248f847" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="20dd0408-da8e-4ca0-b26a-bcc65bc94d11" LastKnownName="Array&lt;DailySchedule&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="956058d0-e11b-408d-a014-23371d6bc9db" name="constructor" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="48c29a23-486c-4b00-94b4-c23c70271716" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="aec239b1-4869-4ffa-95cc-93f2de6e2bfc" name="salonId" direction="In" isUnique="false">
+                  <elementDefinition Id="3a016861-82db-4fbe-b8fc-2d4baf4fca0d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="20dd0408-da8e-4ca0-b26a-bcc65bc94d11" name="Array&lt;DailySchedule&gt;" isAbstract="false" isLeaf="false" cachedFullName="Array&lt;DailySchedule&gt;">
+        <elementDefinition Id="cf61ba16-2c69-49b0-b31e-b6103d6432be" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="491173a3-647b-4241-97bb-0eb304ca2342" name="Services" isAbstract="false" isLeaf="false" cachedFullName="Services">
+        <elementDefinition Id="7687c987-fc6d-41fd-a561-a5c16607ea37" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="14987d81-2b9a-41f4-9198-d6d04b3805ae" name="SalonPublicDisplay" isAbstract="false" isLeaf="false" cachedFullName="SalonPublicDisplay">
+        <elementDefinition Id="10b93ff8-b70e-4550-9e88-e85de3e1e220" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="c8364cd8-66a0-46fc-9333-0b799e0013b5" name="SalonPublicDisplay" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::SalonPublicDisplay">
+        <elementDefinition Id="5e1c1703-a0f1-464d-92b6-08c6664a97fc" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>
