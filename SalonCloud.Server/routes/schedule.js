@@ -24,19 +24,17 @@ class ScheduleRouter {
     }
     getRouter() {
         this.router.post("/saveWeeklySchedule", (request, response) => __awaiter(this, void 0, void 0, function* () {
-            //Todo: call Salon static validation
+            //Todo: call Salon (and employee if needed) static validation
+            //Todo: build a factory for schedule;
             let testObject = new SalonSchedule_1.SalonSchedule(request.body.salon_id);
-            console.log('1', testObject);
             let test = yield testObject.saveWeeklySchedule(request.body.weekly_schedules);
-            console.log('2', test);
             response.status(200).json(test);
         }));
         this.router.post("/saveDailySchedule", (request, response) => __awaiter(this, void 0, void 0, function* () {
-            console.log('testk');
+            //Todo: call Salon (and employee if needed) static validation
+            //Todo: build a factory for schedule;
             let testObject = new SalonSchedule_1.SalonSchedule(request.body.salon_id);
-            console.log('test');
             let test = yield testObject.saveDailySchedule(request.body.daily_schedules);
-            console.log('test', test);
             response.status(200).json(test);
         }));
         this.router.post("/testpost", (request, response) => __awaiter(this, void 0, void 0, function* () {
