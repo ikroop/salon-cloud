@@ -16,6 +16,16 @@ export abstract class Schedule implements ScheduleBehavior {
      * getDailySchedule
 	 *
      */
+    protected salonId: string;
+    protected employeeId: string;
+    
+    //this constructor will only be called in subclass contructors;
+    //we defer the identification of salonId and employeeId to subclass.
+    constructor (salonId: string, employeeId: string){
+        this.salonId = salonId;
+        this.employeeId = employeeId;
+    };
+
     public getDailySchedule(date: Date): SalonCloudResponse<DailyDayData> {
         var response: SalonCloudResponse<DailyDayData>;
         //TODO: implement validation
@@ -94,25 +104,19 @@ export abstract class Schedule implements ScheduleBehavior {
         }else{
             if (k.data) {
                 saveStatus = await this.updateDailySchedule(dailySchedule);
-                console.log('1',saveStatus );
           } else {
                 saveStatus = await this.addDailySchedule(dailySchedule);
-                console.log('2',saveStatus );
             }
         }
         response.data = saveStatus.data;
-        console.log('rrrre', response);
 
         if (!saveStatus.err){
-            console.log('200', saveStatus);
             response.code = 200;
             response.err = undefined;
         }else{
-            console.log('500', saveStatus);
             response.code = 500;
             response.err = ErrorMessage.ServerError;
         }
-        console.log('rrrr', response);
         
 
         return response;
@@ -168,19 +172,229 @@ export abstract class Schedule implements ScheduleBehavior {
 
     }
 
-   
-    
+    /**
+     * name
+     */
+    private async checkWeeklySchedule(){
+        var returnResult : SalonCloudResponse<boolean> = {
+                err: undefined,
+                code: undefined,
+                data: undefined
+            };
+        var result = await WeeklyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId}).exec( function(err, docs){
+            if(err){
+                return returnResult.err = err;
+            }else if(docs){
+                return returnResult.data = true;
+            }else{
+                return returnResult.data = false;
+            }
+        });
+        return returnResult;    
+    };
 
-    protected abstract addDailySchedule(dailySchedule: DailyDayData);
-    protected abstract addWeeklySchedule(weeklyScheduleList: [WeeklyDayData]);
-    protected abstract checkDailySchedule(dailySchedule: DailyDayData);
-    protected abstract checkWeeklySchedule();
+    /**
+     * name
+     */
+    private async addWeeklySchedule(weeklyScheduleList: [WeeklyDayData]){
+         var returnResult: SalonCloudResponse<boolean>={
+            code: undefined,
+            err: undefined,
+            data: undefined,
+        };
+        
+        var dataCreation = WeeklyScheduleModel.create({
+            salon_id: this.salonId,
+            employee_id: this.employeeId,
+            week: weeklyScheduleList,
+        })
+        await dataCreation.then(function(docs){
+            returnResult.data = true;
+            return;
+        },function(error){
+            returnResult.err = error
+            return;
+        })
+
+        
+
+        return returnResult; 
+    };
+
+    /**
+     * name
+     */
+    private async updateWeeklySchedule(weeklyScheduleList: [WeeklyDayData]){
+        var returnResult: SalonCloudResponse<boolean> = {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
+        var docsFound = await WeeklyScheduleModel.findOne({salon_id:this.salonId, employee_id: this.employeeId}).exec();
+        
+        docsFound.week = weeklyScheduleList;
+
+        var saveAction = docsFound.save();
+        //saveAction is a promise returned by mongoose so we must use 'await' on its resolution.
+        await saveAction.then(function(docs){
+
+            returnResult.data = true;
+
+        }, function(err){
+
+            returnResult.err = err;
+
+        })
+        return returnResult;
+    };
+
+    /**
+     * name
+     */
+    private async weeklyScheduleValidation(weeklyScheduleList: [WeeklyDayData]){
+        var errorReturn: any = undefined;
+
+        var tempArray:[any] = <any>[];
+        for(let i = 0; i<=6; i++){
+            var openTimeValidator = new BaseValidator(weeklyScheduleList[i].open);
+            openTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
+            openTimeValidator = new IsNumber(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime);
+            openTimeValidator = new IsInRange(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
+            openTimeValidator = new IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, weeklyScheduleList[i].close);
+            var openTimeResult = await openTimeValidator.validate();
+            if(openTimeResult){
+                return errorReturn = openTimeResult;
+            }
+
+            var closeTimeValidator = new BaseValidator(weeklyScheduleList[i].close);
+            closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
+            closeTimeValidator = new IsNumber(closeTimeValidator,ErrorMessage.InvalidScheduleCloseTime);
+            closeTimeValidator = new IsInRange(closeTimeValidator,ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
+            var closeTimeResult = await closeTimeValidator.validate();
+            if(closeTimeResult){
+                return errorReturn = openTimeResult;
+            }
+
+            var dayOfWeekValidator = new BaseValidator(weeklyScheduleList[i].day_of_week);
+            dayOfWeekValidator = new MissingCheck(dayOfWeekValidator, ErrorMessage.MissingDayOfWeek);
+            dayOfWeekValidator = new IsNumber(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek);
+            dayOfWeekValidator = new IsInRange(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek, 0, 6);
+            dayOfWeekValidator = new IsNotInArray(dayOfWeekValidator, ErrorMessage.DuplicateDayOfWeek, tempArray);
+            var dayOfWeekResult = await dayOfWeekValidator.validate();
+            if(dayOfWeekResult){
+                return errorReturn = dayOfWeekResult;
+            }
+
+            tempArray.push(weeklyScheduleList[i].day_of_week);
+        }
+        return errorReturn;
+    };
+
+    /**
+     * name
+     */
+    private async checkDailySchedule(dailySchedule: DailyDayData){
+        var returnResult: SalonCloudResponse<boolean> = {
+            err: undefined,
+            code: undefined,
+            data:undefined
+        }
+
+        var result = await DailyScheduleModel.findOne({salon_id: this.salonId, employee_id: this.employeeId, "day.date": dailySchedule._id}).exec( function(err, docs){
+            if(err){
+                return returnResult.err = err;
+            }else if(docs){
+                return returnResult.data = true;
+            }else{
+                return returnResult.data = false;
+            }
+            })
+        return returnResult;  
+    };
+
+    /**
+     * name
+     */
+    private async addDailySchedule(dailySchedule: DailyDayData){
+        var returnResult: SalonCloudResponse<boolean>={
+            code: undefined,
+            err: undefined,
+            data: undefined,
+        };
+        
+        var dataCreation = DailyScheduleModel.create({
+            salon_id: this.salonId,
+            employee_id: this.employeeId,
+            day: dailySchedule,
+        })
+        await dataCreation.then(function(docs){
+            returnResult.data = true;
+            return;
+        },function(error){
+            returnResult.err = error
+            return;
+        })
+        return returnResult;
+    };
+
+    /**
+     * name
+     */
+    private async updateDailySchedule(dailySchedule: DailyDayData){
+        var returnResult: SalonCloudResponse<boolean> = {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
+        var docsFound = await DailyScheduleModel.findOne({salon_id:this.salonId, employee_id: this.employeeId}).exec();
+        
+        docsFound.day = dailySchedule;
+
+        var saveAction = docsFound.save();
+        //saveAction is a promise returned by mongoose so we must use 'await' on its resolution.
+        await saveAction.then(function(docs){
+
+            returnResult.data = true;
+
+        }, function(err){
+
+            returnResult.err = err;
+
+        })
+        return returnResult;
+    };
+
+    /**
+     * name
+     */
+    private async dailyScheduleValidation(dailySchedule: DailyDayData){
+        var errorReturn: any = undefined;
+
+        var openTimeValidator = new BaseValidator(dailySchedule.open);
+            openTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
+            openTimeValidator = new IsNumber(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime);
+            openTimeValidator = new IsInRange(openTimeValidator,ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
+            openTimeValidator = new IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, dailySchedule.close);
+            var openTimeResult = await openTimeValidator.validate();
+            if(openTimeResult){
+                return errorReturn = openTimeResult;
+            }
+        
+        var closeTimeValidator = new BaseValidator(dailySchedule.close);
+            closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
+            closeTimeValidator = new IsNumber(closeTimeValidator,ErrorMessage.InvalidScheduleCloseTime);
+            closeTimeValidator = new IsInRange(closeTimeValidator,ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
+            var closeTimeResult = await closeTimeValidator.validate();
+            if(closeTimeResult){
+                return errorReturn = openTimeResult;
+            }
+        //Todo: validate date;
+
+        return errorReturn;
+    };
+
     protected abstract getDailyScheduleRecord(date: Date): DailyDayData;
     protected abstract getWeeklyScheduleRecord(): [WeeklyDayData];
     protected abstract normalizeDailySchedule(dailySchedule: DailyDayData): DailyDayData;
-    protected abstract updateDailySchedule(dailySchedule: DailyDayData);
-    protected abstract updateWeeklySchedule(weeklyScheduleList: [WeeklyDayData]);
-    protected abstract weeklyScheduleValidation(weeklyScheduleList: [WeeklyDayData]);
-    protected abstract dailyScheduleValidation(dailySchedule: DailyDayData);
 
 }

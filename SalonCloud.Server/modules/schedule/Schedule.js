@@ -7,12 +7,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments)).next());
     });
 };
+const ScheduleModel_1 = require("./ScheduleModel");
 var ErrorMessage = require('./../../core/ErrorMessage');
+const BaseValidator_1 = require("./../../core/validation/BaseValidator");
+const ValidationDecorators_1 = require("./../../core/validation/ValidationDecorators");
 class Schedule {
-    /**
-     * getDailySchedule
-     *
-     */
+    //this constructor will only be called in subclass contructors;
+    //we defer the identification of salonId and employeeId to subclass.
+    constructor(salonId, employeeId) {
+        this.salonId = salonId;
+        this.employeeId = employeeId;
+    }
+    ;
     getDailySchedule(date) {
         var response;
         //TODO: implement validation
@@ -83,26 +89,20 @@ class Schedule {
             else {
                 if (k.data) {
                     saveStatus = yield this.updateDailySchedule(dailySchedule);
-                    console.log('1', saveStatus);
                 }
                 else {
                     saveStatus = yield this.addDailySchedule(dailySchedule);
-                    console.log('2', saveStatus);
                 }
             }
             response.data = saveStatus.data;
-            console.log('rrrre', response);
             if (!saveStatus.err) {
-                console.log('200', saveStatus);
                 response.code = 200;
                 response.err = undefined;
             }
             else {
-                console.log('500', saveStatus);
                 response.code = 500;
                 response.err = ErrorMessage.ServerError;
             }
-            console.log('rrrr', response);
             return response;
         });
     }
@@ -153,6 +153,222 @@ class Schedule {
             return response;
         });
     }
+    /**
+     * name
+     */
+    checkWeeklySchedule() {
+        return __awaiter(this, void 0, void 0, function* () {
+            var returnResult = {
+                err: undefined,
+                code: undefined,
+                data: undefined
+            };
+            var result = yield ScheduleModel_1.WeeklyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId }).exec(function (err, docs) {
+                if (err) {
+                    return returnResult.err = err;
+                }
+                else if (docs) {
+                    return returnResult.data = true;
+                }
+                else {
+                    return returnResult.data = false;
+                }
+            });
+            return returnResult;
+        });
+    }
+    ;
+    /**
+     * name
+     */
+    addWeeklySchedule(weeklyScheduleList) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var returnResult = {
+                code: undefined,
+                err: undefined,
+                data: undefined,
+            };
+            var dataCreation = ScheduleModel_1.WeeklyScheduleModel.create({
+                salon_id: this.salonId,
+                employee_id: this.employeeId,
+                week: weeklyScheduleList,
+            });
+            yield dataCreation.then(function (docs) {
+                returnResult.data = true;
+                return;
+            }, function (error) {
+                returnResult.err = error;
+                return;
+            });
+            return returnResult;
+        });
+    }
+    ;
+    /**
+     * name
+     */
+    updateWeeklySchedule(weeklyScheduleList) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var returnResult = {
+                code: undefined,
+                data: undefined,
+                err: undefined
+            };
+            var docsFound = yield ScheduleModel_1.WeeklyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId }).exec();
+            docsFound.week = weeklyScheduleList;
+            var saveAction = docsFound.save();
+            //saveAction is a promise returned by mongoose so we must use 'await' on its resolution.
+            yield saveAction.then(function (docs) {
+                returnResult.data = true;
+            }, function (err) {
+                returnResult.err = err;
+            });
+            return returnResult;
+        });
+    }
+    ;
+    /**
+     * name
+     */
+    weeklyScheduleValidation(weeklyScheduleList) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var errorReturn = undefined;
+            var tempArray = [];
+            for (let i = 0; i <= 6; i++) {
+                var openTimeValidator = new BaseValidator_1.BaseValidator(weeklyScheduleList[i].open);
+                openTimeValidator = new ValidationDecorators_1.MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
+                openTimeValidator = new ValidationDecorators_1.IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime);
+                openTimeValidator = new ValidationDecorators_1.IsInRange(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
+                openTimeValidator = new ValidationDecorators_1.IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, weeklyScheduleList[i].close);
+                var openTimeResult = yield openTimeValidator.validate();
+                if (openTimeResult) {
+                    return errorReturn = openTimeResult;
+                }
+                var closeTimeValidator = new BaseValidator_1.BaseValidator(weeklyScheduleList[i].close);
+                closeTimeValidator = new ValidationDecorators_1.MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
+                closeTimeValidator = new ValidationDecorators_1.IsNumber(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime);
+                closeTimeValidator = new ValidationDecorators_1.IsInRange(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
+                var closeTimeResult = yield closeTimeValidator.validate();
+                if (closeTimeResult) {
+                    return errorReturn = openTimeResult;
+                }
+                var dayOfWeekValidator = new BaseValidator_1.BaseValidator(weeklyScheduleList[i].day_of_week);
+                dayOfWeekValidator = new ValidationDecorators_1.MissingCheck(dayOfWeekValidator, ErrorMessage.MissingDayOfWeek);
+                dayOfWeekValidator = new ValidationDecorators_1.IsNumber(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek);
+                dayOfWeekValidator = new ValidationDecorators_1.IsInRange(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek, 0, 6);
+                dayOfWeekValidator = new ValidationDecorators_1.IsNotInArray(dayOfWeekValidator, ErrorMessage.DuplicateDayOfWeek, tempArray);
+                var dayOfWeekResult = yield dayOfWeekValidator.validate();
+                if (dayOfWeekResult) {
+                    return errorReturn = dayOfWeekResult;
+                }
+                tempArray.push(weeklyScheduleList[i].day_of_week);
+            }
+            return errorReturn;
+        });
+    }
+    ;
+    /**
+     * name
+     */
+    checkDailySchedule(dailySchedule) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var returnResult = {
+                err: undefined,
+                code: undefined,
+                data: undefined
+            };
+            var result = yield ScheduleModel_1.DailyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId, "day.date": dailySchedule._id }).exec(function (err, docs) {
+                if (err) {
+                    return returnResult.err = err;
+                }
+                else if (docs) {
+                    return returnResult.data = true;
+                }
+                else {
+                    return returnResult.data = false;
+                }
+            });
+            return returnResult;
+        });
+    }
+    ;
+    /**
+     * name
+     */
+    addDailySchedule(dailySchedule) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var returnResult = {
+                code: undefined,
+                err: undefined,
+                data: undefined,
+            };
+            var dataCreation = ScheduleModel_1.DailyScheduleModel.create({
+                salon_id: this.salonId,
+                employee_id: this.employeeId,
+                day: dailySchedule,
+            });
+            yield dataCreation.then(function (docs) {
+                returnResult.data = true;
+                return;
+            }, function (error) {
+                returnResult.err = error;
+                return;
+            });
+            return returnResult;
+        });
+    }
+    ;
+    /**
+     * name
+     */
+    updateDailySchedule(dailySchedule) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var returnResult = {
+                code: undefined,
+                data: undefined,
+                err: undefined
+            };
+            var docsFound = yield ScheduleModel_1.DailyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId }).exec();
+            docsFound.day = dailySchedule;
+            var saveAction = docsFound.save();
+            //saveAction is a promise returned by mongoose so we must use 'await' on its resolution.
+            yield saveAction.then(function (docs) {
+                returnResult.data = true;
+            }, function (err) {
+                returnResult.err = err;
+            });
+            return returnResult;
+        });
+    }
+    ;
+    /**
+     * name
+     */
+    dailyScheduleValidation(dailySchedule) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var errorReturn = undefined;
+            var openTimeValidator = new BaseValidator_1.BaseValidator(dailySchedule.open);
+            openTimeValidator = new ValidationDecorators_1.MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
+            openTimeValidator = new ValidationDecorators_1.IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime);
+            openTimeValidator = new ValidationDecorators_1.IsInRange(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
+            openTimeValidator = new ValidationDecorators_1.IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, dailySchedule.close);
+            var openTimeResult = yield openTimeValidator.validate();
+            if (openTimeResult) {
+                return errorReturn = openTimeResult;
+            }
+            var closeTimeValidator = new BaseValidator_1.BaseValidator(dailySchedule.close);
+            closeTimeValidator = new ValidationDecorators_1.MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
+            closeTimeValidator = new ValidationDecorators_1.IsNumber(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime);
+            closeTimeValidator = new ValidationDecorators_1.IsInRange(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
+            var closeTimeResult = yield closeTimeValidator.validate();
+            if (closeTimeResult) {
+                return errorReturn = openTimeResult;
+            }
+            //Todo: validate date;
+            return errorReturn;
+        });
+    }
+    ;
 }
 exports.Schedule = Schedule;
 //# sourceMappingURL=Schedule.js.map
