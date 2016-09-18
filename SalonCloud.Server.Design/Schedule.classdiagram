@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="71f2e351-2704-4088-ad50-9c2a0f1af32d" name="SalonCloud" linkedPackageId="25e24bed-cabc-41b8-ba77-d06335e7a448" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="71f2e351-2704-4088-ad50-9c2a0f1af32d" name="SalonCloud" linkedPackageId="25e24bed-cabc-41b8-ba77-d06335e7a448" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
   <ownedCommentsInternal>
     <comment Id="15ef1e70-2e8c-4510-bef2-d5a6eccc08fd">
       <elementDefinition Id="6b88ddab-6b30-4065-9908-60ddfc0c55c8" />
       <body>function saveDailySchedule
+
+validateDailySchedule(dailySchedule);
+
 checkDailySchedule(dailySchedule, function(err, data)){
     if (data)
         updateDailySchedule(DailySchedule, callback)
@@ -15,7 +18,9 @@ checkDailySchedule(dailySchedule, function(err, data)){
       <elementDefinition Id="9527653c-98dc-4a25-83d6-e182be0d685e" />
       <body>function saveWeeklySchedule
 
-checkWeeklySchedule(dailySchedule, function(err, data){
+
+validateWeeklySchedule(weeklySchedule);
+checkWeeklySchedule(function(err, data){
     if (data)
         updateWeeklySchedule(DailySchedule, callback)
     else
@@ -110,45 +115,9 @@ getDailyScheduleRecord(date, function(err, data){
     </stereotypeInstance>
   </appliedStereotypesInternal>
   <packagedElements>
-    <logicalClassDesignerModelHasTypes>
-      <Interface Id="44856153-5b1a-4422-92c7-1a3480d1345a" name="ScheduleItemData" isAbstract="false" isLeaf="false">
-        <elementDefinition Id="ee583a84-370d-4d2c-b8a6-581f310e84cd" />
-        <ownedAttributes>
-          <property Id="b614569d-b968-47dd-83cf-33cfcb384cab" name="_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="72f4ae6c-d5c9-4e53-8294-82a3bf90276c" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="edde749d-549c-4c2a-bf79-7bf68e972079" LastKnownName="string" />
-            </type_NamedElement>
-          </property>
-          <property Id="be52c208-28cd-4617-9f0f-779cb8158fef" name="close" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="f7495545-e27d-4f17-a042-36ab4e719a53" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="d8b1d877-4521-4e72-b769-a61700fed5d7" LastKnownName="number" />
-            </type_NamedElement>
-          </property>
-          <property Id="8457dfd2-b217-434e-967b-4fbf56089baa" name="open" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="5b3349f0-cad4-4b3b-8abd-804821550ba5" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="d8b1d877-4521-4e72-b769-a61700fed5d7" LastKnownName="number" />
-            </type_NamedElement>
-          </property>
-          <property Id="56867590-3932-4187-a531-558ee20524b2" name="status" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="080db0af-943f-403f-a7e5-b2bac8a1497f" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="a7c734bd-d47d-4bb2-9a3d-18f547397d2d" LastKnownName="boolean" />
-            </type_NamedElement>
-          </property>
-        </ownedAttributes>
-      </Interface>
-    </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
       <referencedType Id="d8b1d877-4521-4e72-b769-a61700fed5d7" name="number" isAbstract="false" isLeaf="false" cachedFullName="number">
         <elementDefinition Id="725b7863-09dc-4804-a657-1800269b1e70" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <referencedType Id="edde749d-549c-4c2a-bf79-7bf68e972079" name="string" isAbstract="false" isLeaf="false" cachedFullName="string">
-        <elementDefinition Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1" />
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -157,17 +126,29 @@ getDailyScheduleRecord(date, function(err, data){
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="9f9d816a-c8a9-4cb8-9570-6f5c1730f57d" name="WeeklyScheduleData" isAbstract="false" isLeaf="false">
+      <Interface Id="9f9d816a-c8a9-4cb8-9570-6f5c1730f57d" name="WeeklyDayData" isAbstract="false" isLeaf="false">
         <elementDefinition Id="63ea496c-3671-4aeb-9bf8-84ce1d112310" />
-        <generalsInternal>
-          <generalization Id="a311fd60-ada4-4619-b4ab-6e3a23d93c98" isSubstitutable="false">
-            <interfaceMoniker Id="44856153-5b1a-4422-92c7-1a3480d1345a" LastKnownName="ScheduleItemData" />
-            <elementDefinition Id="89060b72-ae74-49a8-b79b-f971d66c6743" />
-          </generalization>
-        </generalsInternal>
         <ownedAttributes>
           <property Id="299b485d-32ac-4b20-9bf9-e491d56c831b" name="day_of_week" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="074052ea-9198-4488-9f3a-969c50b9d1f4" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="d8b1d877-4521-4e72-b769-a61700fed5d7" LastKnownName="number" />
+            </type_NamedElement>
+          </property>
+          <property Id="7e79deab-9cce-4e9b-8320-7425a46c82b3" name="close" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="8c968a50-f925-4ce1-b54c-ecae84ae8d23" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="d8b1d877-4521-4e72-b769-a61700fed5d7" LastKnownName="number" />
+            </type_NamedElement>
+          </property>
+          <property Id="85eee041-0e23-49cb-8bf0-9fc65a8d725b" name="open" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="9968850d-026e-4bb2-945b-fdd4f1d7956b" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="d8b1d877-4521-4e72-b769-a61700fed5d7" LastKnownName="number" />
+            </type_NamedElement>
+          </property>
+          <property Id="f1f0c98b-5993-43fd-9779-800108067a86" name="status" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="16729ecd-0a39-42a9-8f45-aa9f89b9b964" />
             <type_NamedElement>
               <referencedTypeMoniker Id="d8b1d877-4521-4e72-b769-a61700fed5d7" LastKnownName="number" />
             </type_NamedElement>
@@ -176,20 +157,29 @@ getDailyScheduleRecord(date, function(err, data){
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="9adb3544-a980-47b3-9a61-4501f48baa26" name="DailyScheduleData" isAbstract="false" isLeaf="false">
+      <Interface Id="9adb3544-a980-47b3-9a61-4501f48baa26" name="DailyDayData" isAbstract="false" isLeaf="false">
         <elementDefinition Id="3f8411bc-bc2f-4040-b356-5a0698a33062" />
-        <generalsInternal>
-          <generalization Id="66d73636-238b-4151-9532-4367041b79ac" isSubstitutable="false">
-            <interfaceMoniker Id="44856153-5b1a-4422-92c7-1a3480d1345a" LastKnownName="ScheduleItemData" />
-            <elementDefinition Id="cdf27a5c-ee97-44fd-aac3-4cf3312abced" />
-          </generalization>
-        </generalsInternal>
         <ownedAttributes>
           <property Id="6bbbab5c-36d4-4ccd-b8dd-161f87d88f71" name="date" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="3ced1523-1754-4ee8-b8f4-917d9e2078bf" />
             <type_NamedElement>
               <referencedTypeMoniker Id="060b11fc-2ceb-4998-918f-deee6f7882c9" LastKnownName="Date" />
             </type_NamedElement>
+          </property>
+          <property Id="8e4e6e15-264d-48fe-9dab-c1c032f3269f" name="close" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="393f1073-353f-4513-b3c3-419629ffe77f" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="d8b1d877-4521-4e72-b769-a61700fed5d7" LastKnownName="number" />
+            </type_NamedElement>
+          </property>
+          <property Id="87bd16c5-cc28-4aca-81af-f7de2a8f8d28" name="open" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="25f739f6-e075-4ace-9ccb-7a8b6b0c3ed2" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="d8b1d877-4521-4e72-b769-a61700fed5d7" LastKnownName="number" />
+            </type_NamedElement>
+          </property>
+          <property Id="b7d6ca00-8083-4783-a812-1d6b6e57e23d" name="status" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="22c8f2f3-b5bb-44de-80c8-8c1dd6e39a8b" />
           </property>
         </ownedAttributes>
       </Interface>
@@ -215,10 +205,10 @@ getDailyScheduleRecord(date, function(err, data){
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="a8ac06d9-9e37-454a-9bbb-9db4ce77fb6f" name="weeklySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="faef717d-ff7a-4b22-963e-a76cf45e2340" />
+                <parameter Id="da5545e3-4f94-42d3-bc09-54cd48fb61c0" name="weeklySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="cfba104a-12be-4f97-b361-76590830ed9f" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="daa20b37-ae19-40a8-8ff5-a2e322a67bd1" LastKnownName="Array&lt;WeeklyScheduleData&gt;" />
+                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -239,7 +229,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="b28d40a4-ced0-44b9-8c4a-2a342dc6d390" name="dailySchedule" direction="In" isUnique="false">
                   <elementDefinition Id="d07a4a84-d47d-4224-a282-2ab6f78c452b" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -252,13 +242,13 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="c78e8f1d-1f40-4a41-b0e0-e9ad6dcfa8d8" direction="Return" isUnique="false">
                   <elementDefinition Id="f8c0dec0-f618-4a08-84f0-8d8239ce1767" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="ec1b14ff-8fa0-47f6-b133-2bdaa2e04ba8" LastKnownName="SalonCloudResponse&lt;DailyScheduleData&gt;" />
+                    <referencedTypeMoniker Id="0893d29e-73c9-4852-abf2-37342b8c866f" LastKnownName="SalonCloudResponse&lt;DailyScheduleData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="9185ca0c-b041-47a7-9900-dd137e97a3c2" name="date" direction="In" isUnique="false">
-                  <elementDefinition Id="79585c95-6fb9-4551-a5f5-e48cbd886f91" />
+                <parameter Id="95df44e0-8d63-4169-9bac-6c0b8d5c9ddd" name="date" direction="In" isUnique="false">
+                  <elementDefinition Id="ad1b90a7-ca73-488c-acbc-9bbffff8bd31" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="060b11fc-2ceb-4998-918f-deee6f7882c9" LastKnownName="Date" />
                   </type_NamedElement>
@@ -273,21 +263,21 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="b1162187-dd68-4e0a-9604-ee21198e305b" direction="Return" isUnique="false">
                   <elementDefinition Id="572de264-48bb-4946-a5a6-bc0d5959d413" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="16d8e96a-2621-4f47-9e27-ef6acf244b19" LastKnownName="SalonCloudResponse&lt;Array&lt;DailyScheduleData&gt;&gt;" />
+                    <referencedTypeMoniker Id="1283bf68-f692-492e-bb1f-b7ad6fb54f8e" LastKnownName="SalonCloudResponse&lt;Array&lt;DailyScheduleData&gt;&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="22bff0c9-aa9b-4c06-aa82-d73cfb63ebb9" name="month" direction="In" isUnique="false">
-                  <elementDefinition Id="d78b01e4-157a-4a57-8660-b99b56564225" />
+                <parameter Id="3c24409a-7108-4151-92be-b7b108e550eb" name="month" direction="In" isUnique="false">
+                  <elementDefinition Id="95a8047b-e980-4634-bf59-1536cb44de57" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="e95bd463-1d62-4df4-9f06-7bd927223cf0" LastKnownName="Int" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="2c342c22-b603-4023-81cd-a67cda35d148" name="year" direction="In" isUnique="false">
-                  <elementDefinition Id="675cd322-ed77-4648-a57a-a56dc0810100" />
+                <parameter Id="89dc5740-2930-435c-9f11-2dd6a4a9adf6" name="year" direction="In" isUnique="false">
+                  <elementDefinition Id="7d4353e0-1149-420d-9713-2db33dde316d" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="e95bd463-1d62-4df4-9f06-7bd927223cf0" LastKnownName="Int" />
                   </type_NamedElement>
@@ -325,18 +315,18 @@ getDailyScheduleRecord(date, function(err, data){
             <elementDefinition Id="0e407f49-7934-416c-920c-8fa9b6410bea" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="b4bd0fcb-0161-4709-a3ee-352386475caf" name="weeklySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="7a308f9f-a0f3-4d63-a9a9-cba284a23fba" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="daa20b37-ae19-40a8-8ff5-a2e322a67bd1" LastKnownName="Array&lt;WeeklyScheduleData&gt;" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
                 <parameter Id="21a12466-6055-4061-93e9-ca225ea416ec" direction="Return" isUnique="false">
                   <elementDefinition Id="4991ce39-07d6-4522-84bb-a7376275c05f" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="db5a99ae-f8ec-44a8-8c59-534ec37a0000" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7905f098-9f5b-4c80-8357-9d6edc5092f5" name="weeklySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="8d0aaceb-48bb-41de-9bfc-01af6db61f5c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -349,7 +339,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="7192e5be-c632-441c-8735-a62a784f973e" name="dailySchedule" direction="In" isUnique="false">
                   <elementDefinition Id="965a7e29-8900-42a8-9fdb-2ac50c0a5b06" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -378,7 +368,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="a5a8ef88-e886-4a96-a4eb-daf59d899954" direction="Return" isUnique="false">
                   <elementDefinition Id="cc6364c2-b4a8-479f-b4a7-430ba0932193" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="ec1b14ff-8fa0-47f6-b133-2bdaa2e04ba8" LastKnownName="SalonCloudResponse&lt;DailyScheduleData&gt;" />
+                    <referencedTypeMoniker Id="0893d29e-73c9-4852-abf2-37342b8c866f" LastKnownName="SalonCloudResponse&lt;DailyScheduleData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -388,26 +378,26 @@ getDailyScheduleRecord(date, function(err, data){
             <elementDefinition Id="3941c2d3-86cb-4537-8673-f59ec13968d3" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="23668326-8082-4460-a55b-b5b665511a85" name="month" direction="In" isUnique="false">
-                  <elementDefinition Id="58503847-b3b7-4b5f-a739-9987eef60d32" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="e95bd463-1d62-4df4-9f06-7bd927223cf0" LastKnownName="Int" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="ae57ca61-df97-498c-a2fd-ca0a9308c70b" name="year" direction="In" isUnique="false">
-                  <elementDefinition Id="9c18c20c-0561-494f-b010-29197b42312c" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="e95bd463-1d62-4df4-9f06-7bd927223cf0" LastKnownName="Int" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
                 <parameter Id="13546b59-a783-4573-a96d-0db1c1d00c64" direction="Return" isUnique="false">
                   <elementDefinition Id="58324b82-a4cb-4302-bde7-32333c0cd1ec" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="16d8e96a-2621-4f47-9e27-ef6acf244b19" LastKnownName="SalonCloudResponse&lt;Array&lt;DailyScheduleData&gt;&gt;" />
+                    <referencedTypeMoniker Id="1283bf68-f692-492e-bb1f-b7ad6fb54f8e" LastKnownName="SalonCloudResponse&lt;Array&lt;DailyScheduleData&gt;&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="969163ff-5d15-4f74-92fe-ec83475a8596" name="month" direction="In" isUnique="false">
+                  <elementDefinition Id="db9a807e-a7a2-4c78-92dd-e90e7cf685ca" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e95bd463-1d62-4df4-9f06-7bd927223cf0" LastKnownName="Int" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="cc29267b-b7f3-4e78-a06a-0cf52300a315" name="year" direction="In" isUnique="false">
+                  <elementDefinition Id="5850bfd3-9f19-495e-807c-8fab86ef37cd" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e95bd463-1d62-4df4-9f06-7bd927223cf0" LastKnownName="Int" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -426,7 +416,7 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="1590d63f-0d4d-449e-8bd9-812e4f15d1b0" name="checkDailySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+          <operation Id="1590d63f-0d4d-449e-8bd9-812e4f15d1b0" name="checkDailySchedule" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="f327e2c6-c5b0-4f86-ac30-6b53dd5bf8e5" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -441,13 +431,13 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="66b2eb95-8fac-4b6d-9cec-b7a6a8de41d9" name="dailySchedule" direction="In" isUnique="false">
                   <elementDefinition Id="d319cf1a-c37d-4a1c-911f-9c22bd69457e" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="66d59d43-0d54-4672-af97-0d6c88623940" name="addDailySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+          <operation Id="66d59d43-0d54-4672-af97-0d6c88623940" name="addDailySchedule" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="0267ec71-2274-4fe5-b719-2420e7108a71" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -462,13 +452,13 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="2696f2ce-328a-4235-856a-7936544b64ab" name="dailySchedule" direction="In" isUnique="false">
                   <elementDefinition Id="72f40cd0-c792-4004-8ba0-33eb3bfcc674" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="08e38103-f5ec-43c4-a874-da40eedc5403" name="updateDailySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+          <operation Id="08e38103-f5ec-43c4-a874-da40eedc5403" name="updateDailySchedule" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="232a83b8-e46a-41d0-974b-d11a73d4604e" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -493,7 +483,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="60b888af-c277-4fb2-8363-54aeb8868cec" direction="Return" isUnique="false">
                   <elementDefinition Id="ee5e8d7d-8745-470b-92eb-0d96605f0a3b" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -514,7 +504,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="6b8d8c12-8e35-47ed-b3ac-866ddd45b5e2" direction="Return" isUnique="false">
                   <elementDefinition Id="a85e3ca9-3ab1-4a57-b221-5112dfc81de6" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="daa20b37-ae19-40a8-8ff5-a2e322a67bd1" LastKnownName="Array&lt;WeeklyScheduleData&gt;" />
+                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -527,7 +517,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="01261fdb-396f-47aa-86fb-2d421d596030" direction="Return" isUnique="false">
                   <elementDefinition Id="edc03f21-6995-4def-98fb-216492bd1734" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -535,13 +525,13 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="ed2defe4-1787-48cf-953a-24f130848e1f" name="dailySchedule" direction="In" isUnique="false">
                   <elementDefinition Id="e0b82b44-ab32-4ecf-a33f-f3ceb3d6389f" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="98f2a394-817d-4842-9136-7c468fc96c49" name="checkWeeklySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+          <operation Id="98f2a394-817d-4842-9136-7c468fc96c49" name="checkWeeklySchedule" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="f1b3d660-ebd5-4077-a77a-487d87c92589" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -554,7 +544,7 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="9bc3f08d-ebf4-4dda-a571-11836f2b0e8a" name="updateWeeklySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+          <operation Id="9bc3f08d-ebf4-4dda-a571-11836f2b0e8a" name="updateWeeklySchedule" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="62ed84a1-67d8-40f7-a5be-272cfcc21d17" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -566,16 +556,16 @@ getDailyScheduleRecord(date, function(err, data){
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="3274f74a-139d-4434-baf5-7039b88b0f70" name="weeklySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="f4c9efb5-12a8-4070-9312-3d71cf9849c3" />
+                <parameter Id="fc7cd57e-527d-4865-9f9a-5925e5036ee5" name="weeklySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="af7a3da3-0e0b-4b9c-be6c-8665f24a8e72" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="daa20b37-ae19-40a8-8ff5-a2e322a67bd1" LastKnownName="Array&lt;WeeklyScheduleData&gt;" />
+                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="277f9694-b253-416d-8169-becaf38c280d" name="addWeeklySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+          <operation Id="277f9694-b253-416d-8169-becaf38c280d" name="addWeeklySchedule" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="96bb01c2-ebeb-4185-9f1d-f6a03adbbf13" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -587,10 +577,52 @@ getDailyScheduleRecord(date, function(err, data){
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="5cd19adb-de65-4255-adb6-45a9b1abba56" name="weeklySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="cfdfaefb-f406-496c-a667-6a91824189ca" />
+                <parameter Id="2ebb0cd3-2a03-4b6a-89e2-53a31d53a657" name="weeklySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="8244aca3-2fcc-49ed-a383-58912f6b9fc2" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="daa20b37-ae19-40a8-8ff5-a2e322a67bd1" LastKnownName="Array&lt;WeeklyScheduleData&gt;" />
+                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="8c90b639-2b5d-4ba9-9450-cc2a40c7e0a3" name="validateWeeklySchedule" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a33057e6-ac94-4ae1-a751-d0797f74eea7" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="03a6d43a-fb42-4ef3-a6e6-788a8edc9296" name="weeklySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="46751729-6b7c-4acd-a7a9-3c90a0443790" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0a160002-813f-4aab-bff5-e0587f06a670" direction="Return" isUnique="false">
+                  <elementDefinition Id="0b1e1bad-50dc-4264-8919-73324ff642e4" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="fae15c35-da36-41bd-af28-328874f97882" LastKnownName="error" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="6ec56fa0-c7b0-4d2b-a381-abf10adbddeb" name="validatedDailySchedule" visibility="Private" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="5adbd5e2-e0fe-4fc7-9449-1681d37c4e82" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7556f197-59c7-43a3-9d99-073bd84b7b90" name="dailySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="5a98e1c4-9d93-46cd-9541-a198c670b07e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="081ff727-ea84-4d7f-a5ce-93d048473bd9" direction="Return" isUnique="false">
+                  <elementDefinition Id="3e60b07c-eabb-49e4-bace-fda5ca25bc33" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="fae15c35-da36-41bd-af28-328874f97882" LastKnownName="error" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -600,13 +632,8 @@ getDailyScheduleRecord(date, function(err, data){
       </class>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
-      <referencedType Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" name="DailyScheduleData" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::DailyScheduleData">
+      <referencedType Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" name="DailyDayData" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::DailyDayData">
         <elementDefinition Id="3f8411bc-bc2f-4040-b356-5a0698a33062" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <referencedType Id="daa20b37-ae19-40a8-8ff5-a2e322a67bd1" name="Array&lt;WeeklyScheduleData&gt;" isAbstract="false" isLeaf="false" cachedFullName="Array&lt;WeeklyScheduleData&gt;">
-        <elementDefinition Id="c828dfd0-a87d-4e03-bcc5-b1760603f8a6" />
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
@@ -624,66 +651,6 @@ getDailyScheduleRecord(date, function(err, data){
           </generalization>
         </generalsInternal>
         <ownedOperationsInternal>
-          <operation Id="511be505-781a-4e55-850f-8b36a5910f91" name="checkDailySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="5085d1b6-791e-4c99-846c-2b433fa10229" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="d72cfe93-7e58-4c16-88bd-c71a1ce257bd" name="dailySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="20097caf-c161-4640-84d3-c2d2eadfed3f" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="a4366bd4-8a0e-4896-abfd-af0bfe9a1a12" direction="Return" isUnique="false">
-                  <elementDefinition Id="6e0c62ab-1f08-49c4-a72b-1516b34416f0" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="a7c734bd-d47d-4bb2-9a3d-18f547397d2d" LastKnownName="boolean" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="a1ddca92-7859-4f5a-8c1d-19eb3b59eccb" name="addDailySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="3e1fab48-9e7d-4130-9059-99efbbf6f752" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="0d79c838-4b49-40aa-91fd-f3f4dc760f3f" name="dailySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="cb59f836-68b6-42af-9b22-4b8ec1b0b2d1" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="89b29bf6-a0e7-4dc1-b9be-6a76889e2044" direction="Return" isUnique="false">
-                  <elementDefinition Id="4bc9dabc-4a57-4e00-bf4b-449c4e21b736" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="a7c734bd-d47d-4bb2-9a3d-18f547397d2d" LastKnownName="boolean" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="f877cf80-743d-4c8c-80c5-77ee061835bc" name="updateDailySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="9a867807-ad94-4684-8116-e4a2a5c95246" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="3dd7305b-8625-41b3-9d5f-14dc73137350" name="dailySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="f85cb378-7b24-49b7-974d-1ddab7c78faa" />
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="71b9e6c5-e776-4d23-9e41-ea8cd36e07b7" direction="Return" isUnique="false">
-                  <elementDefinition Id="2bbddaad-5a91-4656-b378-e7b95d0fdbcf" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="a7c734bd-d47d-4bb2-9a3d-18f547397d2d" LastKnownName="boolean" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
           <operation Id="e2e37907-4d87-491d-9b07-65498e48a19e" name="getDailyScheduleRecord" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="4758b951-534c-49b9-af19-e98ded9e433b" />
             <ownedParameters>
@@ -699,7 +666,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="7e85bb2d-4862-49b0-a5ea-b363235acb54" direction="Return" isUnique="false">
                   <elementDefinition Id="d22da4c2-dc4f-422b-b1aa-14f669ff031e" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -712,7 +679,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="d91d3786-cac3-4e7b-a01b-338753bc88b9" direction="Return" isUnique="false">
                   <elementDefinition Id="b4f13d1a-afc6-43e5-91c2-d9b4e6c79200" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="daa20b37-ae19-40a8-8ff5-a2e322a67bd1" LastKnownName="Array&lt;WeeklyScheduleData&gt;" />
+                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -725,7 +692,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="68f1d3cb-86d6-483c-9d28-e565f52c141d" name="dailySchedule" direction="In" isUnique="false">
                   <elementDefinition Id="6e94cb28-458b-46ca-bb33-37e42a0e9a60" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -733,7 +700,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="da7fbaad-2f70-4830-a4fa-237dc416de2e" direction="Return" isUnique="false">
                   <elementDefinition Id="a3442658-57ff-4928-a7fb-27397136a4ed" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -752,66 +719,6 @@ getDailyScheduleRecord(date, function(err, data){
           </generalization>
         </generalsInternal>
         <ownedOperationsInternal>
-          <operation Id="621af349-1f3d-43fb-9742-41fd4af956cf" name="checkDailySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="9ada0f44-4094-404e-bf42-a9a0646d53a7" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="d46dc08a-15c0-43e1-a72b-552baf0ad5ab" name="dailySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="c1719cfb-a0fa-4c5c-b849-6eeef11a936a" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="2ecb85f8-794f-48dd-b489-48321803ca6a" direction="Return" isUnique="false">
-                  <elementDefinition Id="c09a6c55-2c47-4e56-b5c9-43e1c10d6340" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="a7c734bd-d47d-4bb2-9a3d-18f547397d2d" LastKnownName="boolean" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="6ee730ec-21c0-4477-b009-6955ad83cd2f" name="addDailySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="599558f6-f910-4b2f-9cdb-fb56d0025913" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="1e56cee0-045a-4920-a54e-39d28484981f" name="dailySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="2ceb279c-bb8d-496f-8fdb-e598b68e1ca5" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="2a09124b-c92e-4afe-8d25-dc410532e06c" direction="Return" isUnique="false">
-                  <elementDefinition Id="805ae6d1-98e9-4744-930e-64b6ac1a49e6" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="a7c734bd-d47d-4bb2-9a3d-18f547397d2d" LastKnownName="boolean" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="d57b092c-fd00-4a24-b177-d4ae8cbad3db" name="updateDailySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="3769d742-c313-4d4e-8408-72d87a093a73" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="44ccf304-5514-4ab1-b679-ad4060094844" name="dailySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="ab8efb99-1364-48c2-9eb6-19cbcd911013" />
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="ca14f0ac-3d5e-4b5c-8008-f7ad5f0d2683" direction="Return" isUnique="false">
-                  <elementDefinition Id="8cfe9cd3-4741-4b5e-8266-8652106df839" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="a7c734bd-d47d-4bb2-9a3d-18f547397d2d" LastKnownName="boolean" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
           <operation Id="c2b5ac7d-39b4-4d58-929d-4ea2bf3b482d" name="getDailyScheduleRecord" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="ed708d95-6dd9-4884-b276-093d8888e952" />
             <ownedParameters>
@@ -827,7 +734,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="7167a946-8b15-4c19-b5bb-88668e7ffa39" direction="Return" isUnique="false">
                   <elementDefinition Id="63968cd6-5a19-405e-97fa-d423bc466608" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -840,7 +747,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="ad9bb16b-d845-4089-b456-08aab5373fa2" direction="Return" isUnique="false">
                   <elementDefinition Id="70da423d-f4b3-4c54-aa40-dd8409bc1bff" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="daa20b37-ae19-40a8-8ff5-a2e322a67bd1" LastKnownName="Array&lt;WeeklyScheduleData&gt;" />
+                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -853,7 +760,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="a041ceb9-1105-49ad-a426-6d47b52b3729" name="dailySchedule" direction="In" isUnique="false">
                   <elementDefinition Id="d4339433-1b50-4d17-8afc-8454f51c50a9" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -861,7 +768,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="c38cfc6e-5072-4843-b395-92939bac3b4f" direction="Return" isUnique="false">
                   <elementDefinition Id="5fa5ea40-5b39-475b-96e2-3731f5b1912e" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyScheduleData" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -871,16 +778,6 @@ getDailyScheduleRecord(date, function(err, data){
       </class>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
-      <referencedType Id="ec1b14ff-8fa0-47f6-b133-2bdaa2e04ba8" name="SalonCloudResponse&lt;DailyScheduleData&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;DailyScheduleData&gt;">
-        <elementDefinition Id="6311f3e8-201c-4356-a88a-084a12b8bb98" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <referencedType Id="16d8e96a-2621-4f47-9e27-ef6acf244b19" name="SalonCloudResponse&lt;Array&lt;DailyScheduleData&gt;&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;Array&lt;DailyScheduleData&gt;&gt;">
-        <elementDefinition Id="0d99fcde-ed4c-407e-8c75-b978b569a6de" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
       <referencedType Id="9acb9270-bb93-4b06-bbc5-652cc60a14ec" name="SalonCloudResponse&lt;Array&lt;WeeklySchdeduleData&gt;&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;Array&lt;WeeklySchdeduleData&gt;&gt;">
         <elementDefinition Id="1b1963b1-d22a-4363-bd88-678c1c55d855" />
       </referencedType>
@@ -888,6 +785,113 @@ getDailyScheduleRecord(date, function(err, data){
     <packageHasNamedElement>
       <referencedType Id="db5a99ae-f8ec-44a8-8c59-534ec37a0000" name="SalonCloudResponse&lt;boolean&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;boolean&gt;">
         <elementDefinition Id="4a6479c9-bc02-4d0d-b08b-e78e471e785d" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="b51d7b43-4b61-4f4b-8ea6-8b263ba2ba95" name="WeeklyScheduleData" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="1c31c81b-62f9-4916-a213-694283503875" />
+        <ownedAttributes>
+          <property Id="fb80da55-54ac-463d-9fee-1ee5c678d814" name="salonId" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="4fce79b2-67da-4f71-84d6-e89f4323c330" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="35544dbd-af6b-41cf-9110-55b93dd00e0f" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="9fc729c5-a4bf-4703-919d-84a56550a1a3" name="employeeId" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="d18af1a6-61db-4679-9508-b5d92ab9e7ae" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="35544dbd-af6b-41cf-9110-55b93dd00e0f" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="734df5fb-1fa2-4905-8217-70820f290f34" name="_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="7406b17e-305f-4723-8da2-0b9b5d42e798" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="35544dbd-af6b-41cf-9110-55b93dd00e0f" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="4eb0b32f-d645-4ebd-9f6e-c7cad7f6d68e" name="week" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <lowerValueInternal>
+              <literalString Id="7e14d8bb-854b-40fe-a819-1b5e2c7078cd" name="Lower" value="1">
+                <elementDefinition Id="127111dc-a6de-48e9-a043-05332c9557c0" />
+              </literalString>
+            </lowerValueInternal>
+            <upperValueInternal>
+              <literalString Id="a1b86c38-b54e-4a3e-ac93-5e83e2d07aef" name="Upper" value="1">
+                <elementDefinition Id="b20399ab-e8d9-46b0-85a7-f081ccffa9b1" />
+              </literalString>
+            </upperValueInternal>
+            <elementDefinition Id="9b105453-4830-4f21-a1d8-43a0f53f10fb" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributes>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="35544dbd-af6b-41cf-9110-55b93dd00e0f" name="string" isAbstract="false" isLeaf="false" cachedFullName="string">
+        <elementDefinition Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="f6611134-0f4d-4f2f-9111-206af95eae9c" name="Array&lt;WeeklyDayData&gt;" isAbstract="false" isLeaf="false" cachedFullName="Array&lt;WeeklyDayData&gt;">
+        <elementDefinition Id="3f65fd68-71f5-470d-aa9f-b8f527b8aa3b" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="3b1e896b-3e2d-42d9-9715-1d9c55685349" name="Interface1" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="77577a01-e8d3-4e38-8af8-deb2ef7e9789" />
+        <ownedAttributes>
+          <property Id="e2606912-b4a1-426a-945c-d95e8b296f3e" name="_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="20384645-e64e-453e-b906-75731d2104c2" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="889da747-b7ef-4e78-9667-70267abe38ee" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="a355e6ba-536c-4225-ba88-8aaf38016be4" name="employeeId" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="a2aa3e3d-01c2-4802-98fc-edf4f741f746" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="35544dbd-af6b-41cf-9110-55b93dd00e0f" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="608489a9-c30e-410b-86ed-9befc6503eb2" name="salonId" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="bfbb204f-34f8-4c63-a906-d79534c0c58f" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="35544dbd-af6b-41cf-9110-55b93dd00e0f" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="4ad4130f-9099-46c4-8615-52fffd35e31f" name="day" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="94190902-8a25-4bf2-af2d-5a7bf45e3c37" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="635845a4-1bb8-4e38-9bec-5fb81d2c7d16" LastKnownName="DailyDayData" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributes>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="889da747-b7ef-4e78-9667-70267abe38ee" name="string" isAbstract="false" isLeaf="false" cachedFullName="string">
+        <elementDefinition Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="635845a4-1bb8-4e38-9bec-5fb81d2c7d16" name="DailyDayData" isAbstract="false" isLeaf="false" cachedFullName="DailyDayData">
+        <elementDefinition Id="7c41e7e3-5ff9-4b11-876b-501de1ea4677" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="fae15c35-da36-41bd-af28-328874f97882" name="error" isAbstract="false" isLeaf="false" cachedFullName="error">
+        <elementDefinition Id="f174aa12-60e9-4159-8601-3964e0fd8dae" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="0893d29e-73c9-4852-abf2-37342b8c866f" name="SalonCloudResponse&lt;DailyScheduleData&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;DailyScheduleData&gt;">
+        <elementDefinition Id="6311f3e8-201c-4356-a88a-084a12b8bb98" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="1283bf68-f692-492e-bb1f-b7ad6fb54f8e" name="SalonCloudResponse&lt;Array&lt;DailyScheduleData&gt;&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;Array&lt;DailyScheduleData&gt;&gt;">
+        <elementDefinition Id="0d99fcde-ed4c-407e-8c75-b978b569a6de" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>
