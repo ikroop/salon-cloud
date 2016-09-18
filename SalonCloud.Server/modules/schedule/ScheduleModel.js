@@ -6,6 +6,7 @@ exports.WeeklyDaySchema = new database_1.mongoose.Schema({
     status: { type: Boolean, required: true },
     day_of_week: { type: Number, required: true }
 }, {
+    _id: false,
     timestamps: { createdAt: 'created_at', modifiedAt: 'modified_at' }
 });
 exports.DailyDaySchema = new database_1.mongoose.Schema({
@@ -14,6 +15,7 @@ exports.DailyDaySchema = new database_1.mongoose.Schema({
     status: { type: Boolean, required: true },
     date: { type: Date, required: true }
 }, {
+    _id: false,
     timestamps: { createdAt: 'created_at', modifiedAt: 'modified_at' }
 });
 exports.WeeklyScheduleSchema = new database_1.mongoose.Schema({
