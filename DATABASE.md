@@ -51,38 +51,25 @@ use UTC.
   |----discount
   |----finance
   |----giftcard
-  |----schedule
-  |     |----salon
+  |----weeklySchedule
+  |     |     |----_id: string //db id
   |     |     |----salon_id: string
-  |     |     |----weekly
-  |     |     |     |----id: 0 (1,2,3,4,5,6)
+  |     |     |----employee_id: string
+  |     |     |----week: array
   |     |     |     |----close: number
   |     |     |     |----open: number
   |     |     |     |----status: boolean
-  |     |     |     |----dayofweek: number
-  |     |     |     .............
-  |     |     |----daily
-  |     |           |----id: string
+  |     |     |     |----day_of_week: number
+  |----dailySchedule
+  |     |     |----_id: string //db id
+  |     |     |----salon_id: string
+  |     |     |----employee_id: string
+  |     |     |----day
   |     |           |----close: number
   |     |           |----open: number
   |     |           |----status: boolean
   |     |           |----date: number
   |     |             
-  |     |----emplopyee
-  |           |----employee_id(uid): string
-  |           |----salon_id: string
-  |           |----weekly
-  |           |     |----id: 0(1,2,3,4,5,6)
-  |           |     |----close: number
-  |           |     |----open: number
-  |           |     |----status: boolean
-  |           |     |----dayofweek: number
-  |           |----daily
-  |                 |----id: string
-  |                 |----close: number
-  |                 |----open: number
-  |                 |----status: boolean
-  |                 |----date: number            
   |----service
   |     |----id: string
   |     |----group_name: string
