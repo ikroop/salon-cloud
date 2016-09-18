@@ -23,14 +23,14 @@ class ScheduleRouter {
         this.router = express_1.Router();
     }
     getRouter() {
-        this.router.post("/saveWeeklySchedule", (request, response) => __awaiter(this, void 0, void 0, function* () {
+        this.router.post("/saveSalonWeeklySchedule", (request, response) => __awaiter(this, void 0, void 0, function* () {
             //Todo: call Salon (and employee if needed) static validation
             //Todo: build a factory for schedule;
             let testObject = new SalonSchedule_1.SalonSchedule(request.body.salon_id);
             let test = yield testObject.saveWeeklySchedule(request.body.weekly_schedules);
             response.status(200).json(test);
         }));
-        this.router.post("/saveDailySchedule", (request, response) => __awaiter(this, void 0, void 0, function* () {
+        this.router.post("/saveSalonDailySchedule", (request, response) => __awaiter(this, void 0, void 0, function* () {
             //Todo: call Salon (and employee if needed) static validation
             //Todo: build a factory for schedule;
             let testObject = new SalonSchedule_1.SalonSchedule(request.body.salon_id);
