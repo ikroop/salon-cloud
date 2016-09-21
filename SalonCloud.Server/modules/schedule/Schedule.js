@@ -87,7 +87,7 @@ class Schedule {
                 resultReturn.employee_id = this.employeeId;
                 response.err = undefined;
                 response.code = 200;
-                response.data = weeklySchedule.data;
+                response.data = resultReturn;
             }
             else {
                 response.err = ErrorMessage.ServerError;
