@@ -476,7 +476,7 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="43ded2ee-66dd-4f8b-ab20-2085d5a3ddeb" name="getDailyScheduleRecord" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+          <operation Id="43ded2ee-66dd-4f8b-ab20-2085d5a3ddeb" name="getDailyScheduleRecord" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="08762ae9-14c3-4b7e-9e9e-0ec852105a91" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -497,7 +497,7 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="538af7af-2065-45cb-ac10-cf424c4d6dc5" name="getWeeklyScheduleRecord" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+          <operation Id="538af7af-2065-45cb-ac10-cf424c4d6dc5" name="getWeeklyScheduleRecord" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="d5dc0dbc-255b-46cd-8765-691f0f4a1474" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -522,8 +522,8 @@ getDailyScheduleRecord(date, function(err, data){
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="ed2defe4-1787-48cf-953a-24f130848e1f" name="dailySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="e0b82b44-ab32-4ecf-a33f-f3ceb3d6389f" />
+                <parameter Id="e5aa832c-3260-4a51-b570-9266405c2948" name="dailySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="5ce28855-e2eb-4d99-a33f-0483d969960f" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
@@ -548,16 +548,8 @@ getDailyScheduleRecord(date, function(err, data){
             <elementDefinition Id="62ed84a1-67d8-40f7-a5be-272cfcc21d17" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="d5f4310a-f88c-425f-ad71-b10434b989ff" direction="Return" isUnique="false">
-                  <elementDefinition Id="5f6e55a3-3d36-4cab-ba3f-cafdf3bdddd8" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="a7c734bd-d47d-4bb2-9a3d-18f547397d2d" LastKnownName="boolean" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="fc7cd57e-527d-4865-9f9a-5925e5036ee5" name="weeklySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="af7a3da3-0e0b-4b9c-be6c-8665f24a8e72" />
+                <parameter Id="8781290a-ee5c-466b-8a28-8f3f35fa3b38" name="weeklySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="be45261a-87df-4896-bcad-3a3cc51d3ae4" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
                   </type_NamedElement>
@@ -628,6 +620,27 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="4e7f0d4f-a70d-40bc-84e6-cebb55ac5a4d" name="normalizeWeeklySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="0586cec1-9064-416b-9b7c-20cbc4f9bdc6" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="46952dab-ab08-431f-9b37-fe2b8c3e28ae" name="weeklySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="3102bf29-53b0-440a-9836-97618b9db694" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4b551bae-f491-48be-aedc-80910afcc76f" direction="Return" isUnique="false">
+                  <elementDefinition Id="8abbd098-39be-480c-93bc-a96995084932" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -645,26 +658,26 @@ getDailyScheduleRecord(date, function(err, data){
       <class Id="2921db4d-1364-49fe-a791-f13e28cb704d" name="EmployeeSchedule" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="116521da-63f3-4cf3-9917-f41fa249f027" />
         <generalsInternal>
-          <generalization Id="26d8faae-cbad-4120-b27f-307cebff1ea8" isSubstitutable="false">
+          <generalization Id="6f2e44eb-43e8-4ffa-ad0e-483388a3b6fc" isSubstitutable="false">
             <classMoniker Id="a974c0a2-f2eb-492e-a997-bf1aa1bb4049" LastKnownName="Schedule" />
-            <elementDefinition Id="451b97e9-5476-4f85-a117-0a43443169a6" />
+            <elementDefinition Id="9de34314-c2a4-417c-a7cf-4ec9c9f20b75" />
           </generalization>
         </generalsInternal>
         <ownedOperationsInternal>
-          <operation Id="e2e37907-4d87-491d-9b07-65498e48a19e" name="getDailyScheduleRecord" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="4758b951-534c-49b9-af19-e98ded9e433b" />
+          <operation Id="65c80346-2c4c-457e-845d-226542ffa3fd" name="normalizeDailySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="7bf7cda7-61e9-4a3a-8635-0841b734ad94" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="b209aa05-0bca-4fbe-8904-0bfde6610a6c" name="date" direction="In" isUnique="false">
-                  <elementDefinition Id="4e6ade99-5867-4d42-a780-48ed49a22025" />
+                <parameter Id="9202ab37-cbc3-4640-913e-f5f043255eeb" name="dailySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="2dafa237-a0aa-4fdc-9da8-9d7b78d2c8b3" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="060b11fc-2ceb-4998-918f-deee6f7882c9" LastKnownName="Date" />
+                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="7e85bb2d-4862-49b0-a5ea-b363235acb54" direction="Return" isUnique="false">
-                  <elementDefinition Id="d22da4c2-dc4f-422b-b1aa-14f669ff031e" />
+                <parameter Id="5f023908-967b-4103-8459-c71373b545af" direction="Return" isUnique="false">
+                  <elementDefinition Id="ada26522-c250-45a3-afa9-bf2a8f04dde3" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
                   </type_NamedElement>
@@ -672,35 +685,22 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="d9fa2374-e394-41d2-b40b-0156153bb179" name="getWeeklyScheduleRecord" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="95038917-fca7-4c88-a7d7-76060e507b44" />
+          <operation Id="55fab3eb-0c5b-4c14-870d-f05593dfb0ee" name="normalizeWeeklySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="666f9373-3720-44f6-bab2-35e67cf4e329" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="d91d3786-cac3-4e7b-a01b-338753bc88b9" direction="Return" isUnique="false">
-                  <elementDefinition Id="b4f13d1a-afc6-43e5-91c2-d9b4e6c79200" />
+                <parameter Id="a105fd57-242c-4b10-9909-db802294efaa" name="weeklySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="c65554c6-86e9-4534-a752-c88df3c790ae" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="2ab75394-e854-4b03-bdc1-c2a9f82c4b5c" name="normalizeDailySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="185919e6-47a6-4411-bdf3-f5aad6cc1531" />
-            <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="68f1d3cb-86d6-483c-9d28-e565f52c141d" name="dailySchedule" direction="In" isUnique="false">
-                  <elementDefinition Id="6e94cb28-458b-46ca-bb33-37e42a0e9a60" />
+                <parameter Id="1ed53772-4bf7-4b63-92e8-5f79bb68a9d3" direction="Return" isUnique="false">
+                  <elementDefinition Id="fc03540c-d04b-421a-9bef-4ec192ff4ff5" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="da7fbaad-2f70-4830-a4fa-237dc416de2e" direction="Return" isUnique="false">
-                  <elementDefinition Id="a3442658-57ff-4928-a7fb-27397136a4ed" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
+                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -719,40 +719,6 @@ getDailyScheduleRecord(date, function(err, data){
           </generalization>
         </generalsInternal>
         <ownedOperationsInternal>
-          <operation Id="c2b5ac7d-39b4-4d58-929d-4ea2bf3b482d" name="getDailyScheduleRecord" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="ed708d95-6dd9-4884-b276-093d8888e952" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="79a03573-de2d-4904-ac64-00c7d01cb881" name="date" direction="In" isUnique="false">
-                  <elementDefinition Id="1494f4fc-4dd8-46c3-95bd-0e486cb15b3d" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="060b11fc-2ceb-4998-918f-deee6f7882c9" LastKnownName="Date" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="7167a946-8b15-4c19-b5bb-88668e7ffa39" direction="Return" isUnique="false">
-                  <elementDefinition Id="63968cd6-5a19-405e-97fa-d423bc466608" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation Id="f4279bc5-705a-46ee-b6bb-9c75b918665b" name="getWeeklyScheduleRecord" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="f1c0a7b1-333f-4552-ba19-08e67778e50b" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="ad9bb16b-d845-4089-b456-08aab5373fa2" direction="Return" isUnique="false">
-                  <elementDefinition Id="70da423d-f4b3-4c54-aa40-dd8409bc1bff" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
           <operation Id="d867e6a6-5c24-4d9e-bf95-34d5c4b7fdd2" name="normalizeDailySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="2aa4a75c-e78d-44e7-b7ba-09f9db15d1ef" />
             <ownedParameters>
@@ -769,6 +735,27 @@ getDailyScheduleRecord(date, function(err, data){
                   <elementDefinition Id="5fa5ea40-5b39-475b-96e2-3731f5b1912e" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="dcb125fc-af89-4f69-b0e9-e8bdf7d4d265" LastKnownName="DailyDayData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="4f3f0424-450d-4eec-8e88-b35e8d4c76ad" name="normalizeWeeklySchedule" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="9645c239-bd55-4843-a645-d274438a6dcc" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="965b42db-07d9-46a1-9cb7-df9616791f36" name="weeklySchedule" direction="In" isUnique="false">
+                  <elementDefinition Id="dfacdb95-3ab0-4888-94e9-854fb4f39a11" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7e972af8-a18a-4dbe-8caf-7f99d4ae12b9" direction="Return" isUnique="false">
+                  <elementDefinition Id="eacedb94-f78c-4a3f-868c-db2a286c75bd" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="f6611134-0f4d-4f2f-9111-206af95eae9c" LastKnownName="Array&lt;WeeklyDayData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -839,7 +826,7 @@ getDailyScheduleRecord(date, function(err, data){
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="3b1e896b-3e2d-42d9-9715-1d9c55685349" name="Interface1" isAbstract="false" isLeaf="false">
+      <Interface Id="3b1e896b-3e2d-42d9-9715-1d9c55685349" name="DailyScheduleData" isAbstract="false" isLeaf="false">
         <elementDefinition Id="77577a01-e8d3-4e38-8af8-deb2ef7e9789" />
         <ownedAttributes>
           <property Id="e2606912-b4a1-426a-945c-d95e8b296f3e" name="_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">

@@ -941,7 +941,7 @@ getDailyScheduleRecord(date, function(err, data){
             visibility="Protected"
             isLeaf="false"
             isStatic="false"
-            isAbstract="true"
+            isAbstract="false"
             concurrency="Sequential"
             isQuery="false">
             <ownedParameters>
@@ -980,7 +980,7 @@ getDailyScheduleRecord(date, function(err, data){
             visibility="Protected"
             isLeaf="false"
             isStatic="false"
-            isAbstract="true"
+            isAbstract="false"
             concurrency="Sequential"
             isQuery="false">
             <ownedParameters>
@@ -1024,7 +1024,7 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="e0b82b44-ab32-4ecf-a33f-f3ceb3d6389f"
+                  Id="5ce28855-e2eb-4d99-a33f-0483d969960f"
                   name="dailySchedule"
                   direction="In"
                   isUnique="false">
@@ -1075,20 +1075,7 @@ getDailyScheduleRecord(date, function(err, data){
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="5f6e55a3-3d36-4cab-ba3f-cafdf3bdddd8"
-                  direction="Return"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="051e7997-f310-4d15-a48a-c3a7ec61badb"
-                      LastKnownName="boolean"
-                      LastKnownLocation="SalonCloud.Server.Design.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="af7a3da3-0e0b-4b9c-be6c-8665f24a8e72"
+                  Id="be45261a-87df-4896-bcad-3a3cc51d3ae4"
                   name="weeklySchedule"
                   direction="In"
                   isUnique="false">
@@ -1219,6 +1206,45 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation
+            Id="0586cec1-9064-416b-9b7c-20cbc4f9bdc6"
+            name="normalizeWeeklySchedule"
+            visibility="Protected"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="3102bf29-53b0-440a-9836-97618b9db694"
+                  name="weeklySchedule"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="3f65fd68-71f5-470d-aa9f-b8f527b8aa3b"
+                      LastKnownName="Array&lt;WeeklyDayData&gt;"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8abbd098-39be-480c-93bc-a96995084932"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="3f65fd68-71f5-470d-aa9f-b8f527b8aa3b"
+                      LastKnownName="Array&lt;WeeklyDayData&gt;"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>
@@ -1256,7 +1282,7 @@ getDailyScheduleRecord(date, function(err, data){
         isActiveClass="false">
         <generalsInternal>
           <generalization
-            Id="451b97e9-5476-4f85-a117-0a43443169a6"
+            Id="9de34314-c2a4-417c-a7cf-4ec9c9f20b75"
             isSubstitutable="false">
             <classMoniker
               Id="f73703ad-a7b6-4bce-9dc0-454d1c6dd659"
@@ -1266,71 +1292,7 @@ getDailyScheduleRecord(date, function(err, data){
         </generalsInternal>
         <ownedOperationsInternal>
           <operation
-            Id="4758b951-534c-49b9-af19-e98ded9e433b"
-            name="getDailyScheduleRecord"
-            visibility="Protected"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="4e6ade99-5867-4d42-a780-48ed49a22025"
-                  name="date"
-                  direction="In"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="d5101847-a7de-43e3-8ef0-5336a70dbb80"
-                      LastKnownName="Date"
-                      LastKnownLocation="SalonCloud.Server.Design.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="d22da4c2-dc4f-422b-b1aa-14f669ff031e"
-                  direction="Return"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <interfaceMoniker
-                      Id="3f8411bc-bc2f-4040-b356-5a0698a33062"
-                      LastKnownName="DailyDayData"
-                      LastKnownLocation="SalonCloud.Server.Design.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="95038917-fca7-4c88-a7d7-76060e507b44"
-            name="getWeeklyScheduleRecord"
-            visibility="Protected"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="b4f13d1a-afc6-43e5-91c2-d9b4e6c79200"
-                  direction="Return"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="3f65fd68-71f5-470d-aa9f-b8f527b8aa3b"
-                      LastKnownName="Array&lt;WeeklyDayData&gt;"
-                      LastKnownLocation="SalonCloud.Server.Design.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="185919e6-47a6-4411-bdf3-f5aad6cc1531"
+            Id="7bf7cda7-61e9-4a3a-8635-0841b734ad94"
             name="normalizeDailySchedule"
             visibility="Protected"
             isLeaf="false"
@@ -1341,7 +1303,7 @@ getDailyScheduleRecord(date, function(err, data){
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="6e94cb28-458b-46ca-bb33-37e42a0e9a60"
+                  Id="2dafa237-a0aa-4fdc-9da8-9d7b78d2c8b3"
                   name="dailySchedule"
                   direction="In"
                   isUnique="false">
@@ -1355,13 +1317,52 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="a3442658-57ff-4928-a7fb-27397136a4ed"
+                  Id="ada26522-c250-45a3-afa9-bf2a8f04dde3"
                   direction="Return"
                   isUnique="false">
                   <type_NamedElement>
                     <interfaceMoniker
                       Id="3f8411bc-bc2f-4040-b356-5a0698a33062"
                       LastKnownName="DailyDayData"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="666f9373-3720-44f6-bab2-35e67cf4e329"
+            name="normalizeWeeklySchedule"
+            visibility="Protected"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c65554c6-86e9-4534-a752-c88df3c790ae"
+                  name="weeklySchedule"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="3f65fd68-71f5-470d-aa9f-b8f527b8aa3b"
+                      LastKnownName="Array&lt;WeeklyDayData&gt;"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="fc03540c-d04b-421a-9bef-4ec192ff4ff5"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="3f65fd68-71f5-470d-aa9f-b8f527b8aa3b"
+                      LastKnownName="Array&lt;WeeklyDayData&gt;"
                       LastKnownLocation="SalonCloud.Server.Design.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -1389,70 +1390,6 @@ getDailyScheduleRecord(date, function(err, data){
           </generalization>
         </generalsInternal>
         <ownedOperationsInternal>
-          <operation
-            Id="ed708d95-6dd9-4884-b276-093d8888e952"
-            name="getDailyScheduleRecord"
-            visibility="Protected"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="1494f4fc-4dd8-46c3-95bd-0e486cb15b3d"
-                  name="date"
-                  direction="In"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="d5101847-a7de-43e3-8ef0-5336a70dbb80"
-                      LastKnownName="Date"
-                      LastKnownLocation="SalonCloud.Server.Design.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="63968cd6-5a19-405e-97fa-d423bc466608"
-                  direction="Return"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <interfaceMoniker
-                      Id="3f8411bc-bc2f-4040-b356-5a0698a33062"
-                      LastKnownName="DailyDayData"
-                      LastKnownLocation="SalonCloud.Server.Design.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
-          <operation
-            Id="f1c0a7b1-333f-4552-ba19-08e67778e50b"
-            name="getWeeklyScheduleRecord"
-            visibility="Protected"
-            isLeaf="false"
-            isStatic="false"
-            isAbstract="false"
-            concurrency="Sequential"
-            isQuery="false">
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="70da423d-f4b3-4c54-aa40-dd8409bc1bff"
-                  direction="Return"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="3f65fd68-71f5-470d-aa9f-b8f527b8aa3b"
-                      LastKnownName="Array&lt;WeeklyDayData&gt;"
-                      LastKnownLocation="SalonCloud.Server.Design.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
           <operation
             Id="2aa4a75c-e78d-44e7-b7ba-09f9db15d1ef"
             name="normalizeDailySchedule"
@@ -1486,6 +1423,45 @@ getDailyScheduleRecord(date, function(err, data){
                     <interfaceMoniker
                       Id="3f8411bc-bc2f-4040-b356-5a0698a33062"
                       LastKnownName="DailyDayData"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="9645c239-bd55-4843-a645-d274438a6dcc"
+            name="normalizeWeeklySchedule"
+            visibility="Protected"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="dfacdb95-3ab0-4888-94e9-854fb4f39a11"
+                  name="weeklySchedule"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="3f65fd68-71f5-470d-aa9f-b8f527b8aa3b"
+                      LastKnownName="Array&lt;WeeklyDayData&gt;"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="eacedb94-f78c-4a3f-868c-db2a286c75bd"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="3f65fd68-71f5-470d-aa9f-b8f527b8aa3b"
+                      LastKnownName="Array&lt;WeeklyDayData&gt;"
                       LastKnownLocation="SalonCloud.Server.Design.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -6292,7 +6268,7 @@ getDailyScheduleRecord(date, function(err, data){
     <packageHasNamedElement>
       <Interface
         Id="77577a01-e8d3-4e38-8af8-deb2ef7e9789"
-        name="Interface1"
+        name="DailyScheduleData"
         isAbstract="false"
         isLeaf="false">
         <ownedAttributes>
