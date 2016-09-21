@@ -427,7 +427,7 @@ export abstract class Schedule implements ScheduleBehavior {
                 code: undefined,
                 data: undefined
             };
-        var dailyDocsReturn = await DailyScheduleModel.findOne({salonId: this.salonId, employeeId: null, 'day.date': date}).exec(function(err, docs){
+        var dailyDocsReturn = await DailyScheduleModel.findOne({salonId: this.salonId, employeeId: this.employeeId, 'day.date': date}).exec(function(err, docs){
             if(err){
                 returnResult.err = err;
             }else{
@@ -450,7 +450,7 @@ export abstract class Schedule implements ScheduleBehavior {
                 code: undefined,
                 data: undefined
             };
-        var weeklyDocsReturn = await WeeklyScheduleModel.findOne({salonId: this.salonId, employeeId: null}).exec(function(err, docs){
+        var weeklyDocsReturn = await WeeklyScheduleModel.findOne({salonId: this.salonId, employeeId: this.employeeId}).exec(function(err, docs){
             if(err){
                 returnResult.err = err;
             }else{

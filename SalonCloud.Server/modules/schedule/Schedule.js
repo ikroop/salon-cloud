@@ -406,7 +406,7 @@ class Schedule {
                 code: undefined,
                 data: undefined
             };
-            var dailyDocsReturn = yield ScheduleModel_1.DailyScheduleModel.findOne({ salonId: this.salonId, employeeId: null, 'day.date': date }).exec(function (err, docs) {
+            var dailyDocsReturn = yield ScheduleModel_1.DailyScheduleModel.findOne({ salonId: this.salonId, employeeId: this.employeeId, 'day.date': date }).exec(function (err, docs) {
                 if (err) {
                     returnResult.err = err;
                 }
@@ -432,7 +432,7 @@ class Schedule {
                 code: undefined,
                 data: undefined
             };
-            var weeklyDocsReturn = yield ScheduleModel_1.WeeklyScheduleModel.findOne({ salonId: this.salonId, employeeId: null }).exec(function (err, docs) {
+            var weeklyDocsReturn = yield ScheduleModel_1.WeeklyScheduleModel.findOne({ salonId: this.salonId, employeeId: this.employeeId }).exec(function (err, docs) {
                 if (err) {
                     returnResult.err = err;
                 }
