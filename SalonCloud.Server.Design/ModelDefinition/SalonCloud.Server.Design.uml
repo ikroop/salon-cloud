@@ -602,8 +602,8 @@ getDailyScheduleRecord(date, function(err, data){
                   isUnique="false">
                   <type_NamedElement>
                     <undefinedTypeMoniker
-                      Id="1b1963b1-d22a-4363-bd88-678c1c55d855"
-                      LastKnownName="SalonCloudResponse&lt;Array&lt;WeeklySchdeduleData&gt;&gt;"
+                      Id="2b4bb0ca-4886-4b3e-8271-859c81798ab0"
+                      LastKnownName="SalonCloudResponse&lt;WeeklySchdeduleData&gt;"
                       LastKnownLocation="SalonCloud.Server.Design.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -817,8 +817,8 @@ getDailyScheduleRecord(date, function(err, data){
                   isUnique="false">
                   <type_NamedElement>
                     <undefinedTypeMoniker
-                      Id="1b1963b1-d22a-4363-bd88-678c1c55d855"
-                      LastKnownName="SalonCloudResponse&lt;Array&lt;WeeklySchdeduleData&gt;&gt;"
+                      Id="2b4bb0ca-4886-4b3e-8271-859c81798ab0"
+                      LastKnownName="SalonCloudResponse&lt;WeeklySchdeduleData&gt;"
                       LastKnownLocation="SalonCloud.Server.Design.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -6371,6 +6371,11 @@ getDailyScheduleRecord(date, function(err, data){
       <undefinedType
         Id="dc3f31e6-8387-4358-be08-1ad5f170dba9"
         name="SalonCloudResponse&lt;DailyDayData&gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="2b4bb0ca-4886-4b3e-8271-859c81798ab0"
+        name="SalonCloudResponse&lt;WeeklySchdeduleData&gt;" />
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

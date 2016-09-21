@@ -27,11 +27,12 @@ class Schedule {
                 err: undefined
             };
             //TODO: implement validation
+            var resultReturn;
             var targetSchedule;
             var dailySchedule = yield this.getDailyScheduleRecord(date);
             if (!dailySchedule.data) {
                 var weeklySchedule = yield this.getWeeklyScheduleRecord();
-                //start: get dailySchedule from weeklySchedule
+                //get dailySchedule from weeklySchedule
                 var indexDay = date.getDay();
                 for (var i = 0; i <= 6; i++) {
                     if (weeklySchedule.data[i].day_of_week == indexDay) {
@@ -46,9 +47,14 @@ class Schedule {
                 targetSchedule = dailySchedule.data;
             }
             if (targetSchedule) {
+                //normalize to get the best schedule
                 targetSchedule = yield this.normalizeDailySchedule(targetSchedule);
+                //parse data into resultReturn : dailyScheduleData 
+                resultReturn.day = targetSchedule;
+                resultReturn.salon_id = this.salonId;
+                resultReturn.employee_id = this.employeeId;
                 response.err = undefined;
-                response.data = targetSchedule;
+                response.data = resultReturn;
                 response.code = 200;
             }
             else {
@@ -70,9 +76,15 @@ class Schedule {
                 err: undefined
             };
             //TODO: implement validation
+            var resultReturn;
             var weeklySchedule = yield this.getWeeklyScheduleRecord();
             if (weeklySchedule.data) {
+                //normalize to get the best schedule
                 weeklySchedule.data = yield this.normalizeWeeklySchedule(weeklySchedule.data);
+                //parse data into resultReturn : weeklyScheduleData 
+                resultReturn.week = weeklySchedule.data;
+                resultReturn.salon_id = this.salonId;
+                resultReturn.employee_id = this.employeeId;
                 response.err = undefined;
                 response.code = 200;
                 response.data = weeklySchedule.data;

@@ -27,19 +27,19 @@ export abstract class Schedule implements ScheduleBehavior {
     };
 
     public async getDailySchedule(date: Date) {
-        var response: SalonCloudResponse<DailyDayData> = {
+        var response: SalonCloudResponse<DailyScheduleData> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
         //TODO: implement validation
-
+        var resultReturn: DailyScheduleData;
         var targetSchedule:DailyDayData;
         var dailySchedule = await this.getDailyScheduleRecord(date);
         if (!dailySchedule.data) {
             var weeklySchedule = await this.getWeeklyScheduleRecord();
             
-            //start: get dailySchedule from weeklySchedule
+            //get dailySchedule from weeklySchedule
             var indexDay = date.getDay();
             for(var i=0; i<=6; i++){
                 if(weeklySchedule.data[i].day_of_week == indexDay){
@@ -50,16 +50,22 @@ export abstract class Schedule implements ScheduleBehavior {
                 }
             }
 
-            //end: get dailySchedule from weeklySchedule
         }else{
             targetSchedule = dailySchedule.data;
         }
 
 
         if (targetSchedule) {
+            //normalize to get the best schedule
             targetSchedule = await this.normalizeDailySchedule(targetSchedule);
+           
+            //parse data into resultReturn : dailyScheduleData 
+            resultReturn.day = targetSchedule;
+            resultReturn.salon_id = this.salonId;
+            resultReturn.employee_id = this.employeeId;
+            
             response.err = undefined;
-            response.data = targetSchedule;
+            response.data = resultReturn;
             response.code = 200;
         } else {
             response.err = ErrorMessage.ServerError;
@@ -74,16 +80,23 @@ export abstract class Schedule implements ScheduleBehavior {
       * name
       */
     public async getWeeklySchedule(){
-        var response: SalonCloudResponse<[WeeklyDayData]>={
+        var response: SalonCloudResponse<WeeklyScheduleData>={
             code: undefined,
             data: undefined,
             err: undefined
         };
         //TODO: implement validation
-
+        var resultReturn: WeeklyScheduleData
         var weeklySchedule = await this.getWeeklyScheduleRecord();
         if (weeklySchedule.data) {
+            //normalize to get the best schedule
             weeklySchedule.data = await this.normalizeWeeklySchedule(weeklySchedule.data);
+
+            //parse data into resultReturn : weeklyScheduleData 
+            resultReturn.week = weeklySchedule.data;
+            resultReturn.salon_id = this.salonId;
+            resultReturn.employee_id = this.employeeId;
+            
             response.err = undefined;
             response.code = 200;
             response.data = weeklySchedule.data;

@@ -292,7 +292,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="9d97706b-0bcd-4dd4-bc1f-b9aacf486da9" direction="Return" isUnique="false">
                   <elementDefinition Id="bb49832a-fa74-4967-a2d3-c950f02cdcc4" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="9acb9270-bb93-4b06-bbc5-652cc60a14ec" LastKnownName="SalonCloudResponse&lt;Array&lt;WeeklySchdeduleData&gt;&gt;" />
+                    <referencedTypeMoniker Id="c6f6fcf6-083b-44d9-9c49-d438d0b409d9" LastKnownName="SalonCloudResponse&lt;WeeklySchdeduleData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -410,7 +410,7 @@ getDailyScheduleRecord(date, function(err, data){
                 <parameter Id="7b3b39b9-947e-4988-b2fb-4b9147344a98" direction="Return" isUnique="false">
                   <elementDefinition Id="85b69430-5cd0-48ca-887a-b57afc60fc0c" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="9acb9270-bb93-4b06-bbc5-652cc60a14ec" LastKnownName="SalonCloudResponse&lt;Array&lt;WeeklySchdeduleData&gt;&gt;" />
+                    <referencedTypeMoniker Id="c6f6fcf6-083b-44d9-9c49-d438d0b409d9" LastKnownName="SalonCloudResponse&lt;WeeklySchdeduleData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -765,11 +765,6 @@ getDailyScheduleRecord(date, function(err, data){
       </class>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
-      <referencedType Id="9acb9270-bb93-4b06-bbc5-652cc60a14ec" name="SalonCloudResponse&lt;Array&lt;WeeklySchdeduleData&gt;&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;Array&lt;WeeklySchdeduleData&gt;&gt;">
-        <elementDefinition Id="1b1963b1-d22a-4363-bd88-678c1c55d855" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
       <referencedType Id="db5a99ae-f8ec-44a8-8c59-534ec37a0000" name="SalonCloudResponse&lt;boolean&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;boolean&gt;">
         <elementDefinition Id="4a6479c9-bc02-4d0d-b08b-e78e471e785d" />
       </referencedType>
@@ -879,6 +874,11 @@ getDailyScheduleRecord(date, function(err, data){
     <packageHasNamedElement>
       <referencedType Id="1283bf68-f692-492e-bb1f-b7ad6fb54f8e" name="SalonCloudResponse&lt;Array&lt;DailyScheduleData&gt;&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;Array&lt;DailyScheduleData&gt;&gt;">
         <elementDefinition Id="0d99fcde-ed4c-407e-8c75-b978b569a6de" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="c6f6fcf6-083b-44d9-9c49-d438d0b409d9" name="SalonCloudResponse&lt;WeeklySchdeduleData&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;WeeklySchdeduleData&gt;">
+        <elementDefinition Id="2b4bb0ca-4886-4b3e-8271-859c81798ab0" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>
