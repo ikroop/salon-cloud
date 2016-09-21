@@ -11,6 +11,7 @@
     "./core/validator/Validator.ts",
     "./core/core.d.ts",
     "./modules/schedule/Schedule.d.ts",
-    "./app.ts"
+    "./app.ts",
+    "./core/observer/Observer.d.ts"
   ]
 }
