@@ -19,18 +19,12 @@ export class SalonSchedule extends Schedule {
         super(salonId, null);
     }
 
-    protected getDailyScheduleRecord(date: Date): DailyDayData {
-        var dailySchedule: DailyDayData;
+    protected normalizeDailySchedule(dailySchedule: DailyDayData){
+        //do nothing, dummy method
         return dailySchedule;
     }
-
-    protected getWeeklyScheduleRecord(): [WeeklyDayData] {
-        var weeklyScheduleList: [WeeklyDayData];
-
-        return weeklyScheduleList;
-    }
-
-    protected normalizeDailySchedule(dailySchedule: DailyDayData): DailyDayData {
-        return dailySchedule;
+    protected normalizeWeeklySchedule(weeklySchedule: [WeeklyDayData]){
+        //do nothing, dummy method
+        return weeklySchedule
     }
 }

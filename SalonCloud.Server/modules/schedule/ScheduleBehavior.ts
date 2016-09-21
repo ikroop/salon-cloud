@@ -12,17 +12,17 @@ export interface ScheduleBehavior{
      * getDailySchedule
 	 *
      */
-    getDailySchedule(date: Date): SalonCloudResponse<DailyDayData>;
+    getDailySchedule(date: Date);
 
     /**
      * name
      */
-    getWeeklySchedule(): SalonCloudResponse<[WeeklyDayData]>;
+    getWeeklySchedule();
 	
 	/**
 	*
 	*/
-	getMonthlySchedule(month: number, year: number): SalonCloudResponse<[DailyDayData]>;
+	getMonthlySchedule(month: number, year: number);
 	
 
     /**

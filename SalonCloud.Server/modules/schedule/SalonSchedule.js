@@ -9,16 +9,13 @@ class SalonSchedule extends Schedule_1.Schedule {
     constructor(salonId) {
         super(salonId, null);
     }
-    getDailyScheduleRecord(date) {
-        var dailySchedule;
-        return dailySchedule;
-    }
-    getWeeklyScheduleRecord() {
-        var weeklyScheduleList;
-        return weeklyScheduleList;
-    }
     normalizeDailySchedule(dailySchedule) {
+        //do nothing, dummy method
         return dailySchedule;
+    }
+    normalizeWeeklySchedule(weeklySchedule) {
+        //do nothing, dummy method
+        return weeklySchedule;
     }
 }
 exports.SalonSchedule = SalonSchedule;

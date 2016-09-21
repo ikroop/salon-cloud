@@ -20,43 +20,70 @@ class Schedule {
     }
     ;
     getDailySchedule(date) {
-        var response;
-        //TODO: implement validation
-        var dailySchedule = this.getDailyScheduleRecord(date);
-        if (!dailySchedule) {
-            var weeklySchedule = this.getWeeklyScheduleRecord();
-        }
-        if (dailySchedule) {
-            dailySchedule = this.normalizeDailySchedule(dailySchedule);
-            response.err = undefined;
-            response.data = dailySchedule;
-            response.code = 200;
-        }
-        else {
-            response.err = ErrorMessage.ServerError;
-            response.data = undefined;
-            response.code = 500;
-        }
-        return response;
+        return __awaiter(this, void 0, void 0, function* () {
+            var response = {
+                code: undefined,
+                data: undefined,
+                err: undefined
+            };
+            //TODO: implement validation
+            var targetSchedule;
+            var dailySchedule = yield this.getDailyScheduleRecord(date);
+            if (!dailySchedule.data) {
+                var weeklySchedule = yield this.getWeeklyScheduleRecord();
+                //start: get dailySchedule from weeklySchedule
+                var indexDay = date.getDay();
+                for (var i = 0; i <= 6; i++) {
+                    if (weeklySchedule.data[i].day_of_week == indexDay) {
+                        targetSchedule.open = weeklySchedule.data[i].open;
+                        targetSchedule.close = weeklySchedule.data[i].close;
+                        targetSchedule.status = weeklySchedule.data[i].status;
+                        targetSchedule.date = date;
+                    }
+                }
+            }
+            else {
+                targetSchedule = dailySchedule.data;
+            }
+            if (targetSchedule) {
+                targetSchedule = yield this.normalizeDailySchedule(targetSchedule);
+                response.err = undefined;
+                response.data = targetSchedule;
+                response.code = 200;
+            }
+            else {
+                response.err = ErrorMessage.ServerError;
+                response.data = undefined;
+                response.code = 500;
+            }
+            return response;
+        });
     }
     /**
       * name
       */
     getWeeklySchedule() {
-        var response;
-        //TODO: implement validation
-        var weeklySchedule = this.getWeeklyScheduleRecord();
-        if (weeklySchedule) {
-            response.err = undefined;
-            response.code = 200;
-            response.data = weeklySchedule;
-        }
-        else {
-            response.err = ErrorMessage.ServerError;
-            response.code = 500;
-            response.data = undefined;
-        }
-        return response;
+        return __awaiter(this, void 0, void 0, function* () {
+            var response = {
+                code: undefined,
+                data: undefined,
+                err: undefined
+            };
+            //TODO: implement validation
+            var weeklySchedule = yield this.getWeeklyScheduleRecord();
+            if (weeklySchedule.data) {
+                weeklySchedule.data = yield this.normalizeWeeklySchedule(weeklySchedule.data);
+                response.err = undefined;
+                response.code = 200;
+                response.data = weeklySchedule.data;
+            }
+            else {
+                response.err = ErrorMessage.ServerError;
+                response.code = 500;
+                response.data = undefined;
+            }
+            return response;
+        });
     }
     /**
     *
@@ -369,6 +396,58 @@ class Schedule {
         });
     }
     ;
+    /**
+     * name
+     */
+    getDailyScheduleRecord(date) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var returnResult = {
+                err: undefined,
+                code: undefined,
+                data: undefined
+            };
+            var dailyDocsReturn = yield ScheduleModel_1.DailyScheduleModel.findOne({ salonId: this.salonId, employeeId: null, 'day.date': date }).exec(function (err, docs) {
+                if (err) {
+                    returnResult.err = err;
+                }
+                else {
+                    if (!docs) {
+                        returnResult.data = undefined;
+                    }
+                    else {
+                        returnResult.data = docs.day;
+                    }
+                }
+            });
+            return returnResult;
+        });
+    }
+    /**
+     * name
+     */
+    getWeeklyScheduleRecord() {
+        return __awaiter(this, void 0, void 0, function* () {
+            var returnResult = {
+                err: undefined,
+                code: undefined,
+                data: undefined
+            };
+            var weeklyDocsReturn = yield ScheduleModel_1.WeeklyScheduleModel.findOne({ salonId: this.salonId, employeeId: null }).exec(function (err, docs) {
+                if (err) {
+                    returnResult.err = err;
+                }
+                else {
+                    if (!docs) {
+                        returnResult.data = undefined;
+                    }
+                    else {
+                        returnResult.data = docs.week;
+                    }
+                }
+            });
+            return returnResult;
+        });
+    }
 }
 exports.Schedule = Schedule;
 //# sourceMappingURL=Schedule.js.map

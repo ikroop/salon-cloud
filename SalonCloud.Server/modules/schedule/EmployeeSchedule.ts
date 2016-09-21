@@ -17,22 +17,14 @@ export class EmployeeSchedule extends Schedule {
         super(salonId, employeeId);
     }
 
-
-
-
-    protected getDailyScheduleRecord(date: Date): DailyDayData {
-        var dailySchedule: DailyDayData;
+    protected normalizeDailySchedule(dailySchedule: DailyDayData){
+        //Todo: implementation >>> compare with salon to get the best schedule
         return dailySchedule;
     }
 
-    protected getWeeklyScheduleRecord(): [WeeklyDayData] {
-        var weeklyScheduleList: [WeeklyDayData];
-
-        return weeklyScheduleList;
-    }
-
-    protected normalizeDailySchedule(dailySchedule: DailyDayData): DailyDayData {
-        return dailySchedule;
-    }
+    protected normalizeWeeklySchedule(WeeklySchedule: [WeeklyDayData]){
+        //Todo: implementation >>>> compare with salon to get the best schedules
+        return WeeklySchedule;
+    };
 
 }

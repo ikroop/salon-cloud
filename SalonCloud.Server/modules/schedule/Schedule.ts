@@ -26,20 +26,40 @@ export abstract class Schedule implements ScheduleBehavior {
         this.employeeId = employeeId;
     };
 
-    public getDailySchedule(date: Date): SalonCloudResponse<DailyDayData> {
-        var response: SalonCloudResponse<DailyDayData>;
+    public async getDailySchedule(date: Date) {
+        var response: SalonCloudResponse<DailyDayData> = {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
         //TODO: implement validation
 
-        var dailySchedule = this.getDailyScheduleRecord(date);
-        if (!dailySchedule) {
-            var weeklySchedule = this.getWeeklyScheduleRecord();
+        var targetSchedule:DailyDayData;
+        var dailySchedule = await this.getDailyScheduleRecord(date);
+        if (!dailySchedule.data) {
+            var weeklySchedule = await this.getWeeklyScheduleRecord();
+            
+            //start: get dailySchedule from weeklySchedule
+            var indexDay = date.getDay();
+            for(var i=0; i<=6; i++){
+                if(weeklySchedule.data[i].day_of_week == indexDay){
+                        targetSchedule.open = weeklySchedule.data[i].open;
+                        targetSchedule.close = weeklySchedule.data[i].close;
+                        targetSchedule.status = weeklySchedule.data[i].status;
+                        targetSchedule.date = date;
+                }
+            }
 
-            //TODO: get dailySchedule from weeklySchedule
+            //end: get dailySchedule from weeklySchedule
+        }else{
+            targetSchedule = dailySchedule.data;
         }
-        if (dailySchedule) {
-            dailySchedule = this.normalizeDailySchedule(dailySchedule);
+
+
+        if (targetSchedule) {
+            targetSchedule = await this.normalizeDailySchedule(targetSchedule);
             response.err = undefined;
-            response.data = dailySchedule;
+            response.data = targetSchedule;
             response.code = 200;
         } else {
             response.err = ErrorMessage.ServerError;
@@ -53,15 +73,20 @@ export abstract class Schedule implements ScheduleBehavior {
     /**
       * name
       */
-    public getWeeklySchedule(): SalonCloudResponse<[WeeklyDayData]> {
-        var response: SalonCloudResponse<[WeeklyDayData]>;
+    public async getWeeklySchedule(){
+        var response: SalonCloudResponse<[WeeklyDayData]>={
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
         //TODO: implement validation
 
-        var weeklySchedule = this.getWeeklyScheduleRecord();
-        if (weeklySchedule) {
+        var weeklySchedule = await this.getWeeklyScheduleRecord();
+        if (weeklySchedule.data) {
+            weeklySchedule.data = await this.normalizeWeeklySchedule(weeklySchedule.data);
             response.err = undefined;
             response.code = 200;
-            response.data = weeklySchedule;
+            response.data = weeklySchedule.data;
         } else {
             response.err = ErrorMessage.ServerError;
             response.code = 500;
@@ -393,8 +418,52 @@ export abstract class Schedule implements ScheduleBehavior {
         return errorReturn;
     };
 
-    protected abstract getDailyScheduleRecord(date: Date): DailyDayData;
-    protected abstract getWeeklyScheduleRecord(): [WeeklyDayData];
-    protected abstract normalizeDailySchedule(dailySchedule: DailyDayData): DailyDayData;
+    /**
+     * name
+     */
+    protected async getDailyScheduleRecord(date: Date){
+        var returnResult : SalonCloudResponse<DailyDayData> = {
+                err: undefined,
+                code: undefined,
+                data: undefined
+            };
+        var dailyDocsReturn = await DailyScheduleModel.findOne({salonId: this.salonId, employeeId: null, 'day.date': date}).exec(function(err, docs){
+            if(err){
+                returnResult.err = err;
+            }else{
+                if(!docs){
+                    returnResult.data = undefined;
+                }else{
+                    returnResult.data = docs.day;
+                }
+            }
+        });
+        return returnResult;
+    }
+
+    /**
+     * name
+     */
+    protected async getWeeklyScheduleRecord(){
+        var returnResult : SalonCloudResponse<[WeeklyDayData]> = {
+                err: undefined,
+                code: undefined,
+                data: undefined
+            };
+        var weeklyDocsReturn = await WeeklyScheduleModel.findOne({salonId: this.salonId, employeeId: null}).exec(function(err, docs){
+            if(err){
+                returnResult.err = err;
+            }else{
+                if(!docs){
+                    returnResult.data = undefined;
+                }else{
+                    returnResult.data = docs.week;
+                }
+            }
+        });
+        return returnResult;
+    }
+    protected abstract normalizeDailySchedule(dailySchedule: DailyDayData);
+    protected abstract normalizeWeeklySchedule(weeklySchedule: [WeeklyDayData]);
 
 }
