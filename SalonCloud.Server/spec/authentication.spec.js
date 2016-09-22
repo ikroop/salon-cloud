@@ -1,8 +1,11 @@
-﻿import * as supertest from "supertest";
-
+﻿/**
+ * 
+ * 
+ * 
+ */
 var should = require('should');
 var assert = require('assert');
-//var request = require('supertest');
+var request = require('supertest');
 
 describe('Authentication', function () {
     var url = 'http://localhost:3000/api/v1/authentication';

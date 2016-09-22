@@ -245,4 +245,8 @@ ModelManifest.xml
 .fake/
 
 #DefinitelyTyped 
-typings
+typings/
+
+#Javascript file
+*.js
+!SalonCloud.Server/spec/*.js
