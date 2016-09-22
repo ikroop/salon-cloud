@@ -1,5 +1,5 @@
 "use strict";
-class Authentication {
+class Authorization {
     checkPermission(userId, functionName) {
         var response;
         response.code = 200;
@@ -8,5 +8,5 @@ class Authentication {
         return response;
     }
 }
-exports.Authentication = Authentication;
+exports.Authorization = Authorization;
 //# sourceMappingURL=authorization.js.map

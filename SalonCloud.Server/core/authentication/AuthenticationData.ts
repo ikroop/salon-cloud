@@ -10,7 +10,7 @@ export interface TokenData {
     iat: Date
 }
 
-export interface AuthorizationData {
+export interface AuthenticationData {
     auth: TokenData,
     is_verified: boolean,
     status: boolean,

@@ -1,43 +1,60 @@
-﻿/*
+/*
  * GET users listing.
  */
 
 
-import jwt = require('jsonwebtoken');
 import { Router, Request, Response } from "express";
-import { AuthenticationRouter } from "./authentication";
-import { Authorization } from '../core/authorization/authorization';
+import { SalonCloudResponse } from "../core/SalonCloudResponse";
+import { Authentication } from '../core/authentication/authentication';
+import { Authorization } from "../core/authorization/authorization";
 export class AuthorizationRouter {
     private router: Router = Router();
-    private authorization: Authorization = new Authorization();
-    private authenticationRouter: AuthenticationRouter = new AuthenticationRouter();
+
+    public checkPermission(request: Request, response: Response, next) {
+        var token = request.headers.authorization;
+        var authentication = new Authentication();
+        var authorization = new Authorization();
+        /*authentication.verifyToken(token, function (err, code, data) {
+            if (err) {
+                response.statusCode = code;
+                return response.json(err);
+            } else {
+                var UserId: string = request.user._id;
+                var url: string = request.url;
+                var permissionResponse: SalonCloudResponse<boolean> = authorization.checkPermission(UserId, url);
+                response.statusCode = permissionResponse.code;
+                if (permissionResponse.err) {
+                    response.statusCode = permissionResponse.code;
+                    response.json(permissionResponse.err);
+                } else if (permissionResponse.data){
+                    next();
+                } else {
+                    response.statusCode = permissionResponse.code;
+                    response.json(permissionResponse.data);
+                }
+            }
+        });*/
+        next();
+    }
+
     getRouter(): Router {
+        var auhthorization = new Authorization();
 
-        this.router.post("/signupwithusernameandpassword", this.authenticationRouter.checkPermission, function (request: Request, response: Response) {
-            this.authorization.signUpWithUsernameAndPassword(request.body.username, request.body.password, function (err, code, data) {
-                response.statusCode = code;
-                if (err) {
-                    response.json(err);
-                } else if (data) {
-                    response.json(data);
-                }
-            });
-        });
-
-        this.router.post("/signinwithusernameandpassword", this.authenticationRouter.checkPermission, function (request: Request, response: Response) {
-            var auth = new Authorization();
-            this.authorization.signInWithUsernameAndPassword(request.body.username, request.body.password, function (err, code, data) {
-                response.statusCode = code;
-                if (err) {
-                    response.json(err);
-                } else if (data) {
-                    response.json(data);
-                }
-            });
+        this.router.post("/checkpermission", function (request: Request, response: Response) {
+            /*var UserId: string = request.user._id;
+            var url: string = request.url;
+            var permissionResponse: SalonCloudResponse<boolean> = auhthorization.checkPermission(UserId, url);
+            response.statusCode = permissionResponse.code;
+            if (permissionResponse.err) {
+                response.json(permissionResponse.err);
+            } else {
+                response.json(permissionResponse.data);
+                next();
+            }*/
+            console.log("request.body:", request.body);
         });
 
         return this.router;
-
     }
 }
 

@@ -5,7 +5,7 @@ import * as passportLocal from "passport-local";
 import * as http from "http";
 
 import { ScheduleRouter } from "./routes/schedule";
-import { AuthorizationRouter } from "./routes/authorization";
+import { AuthenticationRouter } from "./routes/authentication";
 var UserModel = require ("./core/user/UserModel");
 
 const app: express.Application = express();
@@ -38,7 +38,7 @@ app.use((err: Error & { status: number }, request: express.Request, response: ex
 });
 
 app.use("/api/v1/schedule", new ScheduleRouter().getRouter());
-//app.use("/api/v1/auth", new AuthorizationRouter().getRouter());
+app.use("/api/v1/authentication", new AuthenticationRouter().getRouter());
 
 const server: http.Server = app.listen(3000, function () {
     console.log("OMG!!! NO BUGS! SalonCloud server listening on port %d in %s mode", 3000, app.settings.env);

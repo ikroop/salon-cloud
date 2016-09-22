@@ -3,52 +3,36 @@
  */
 "use strict";
 const express_1 = require("express");
+const authorization_1 = require("./authorization");
 const authentication_1 = require('../core/authentication/authentication');
-const authorization_1 = require("../core/authorization/authorization");
 class AuthenticationRouter {
     constructor() {
         this.router = express_1.Router();
-        this.authentication = new authentication_1.Authentication();
-        this.auhthorization = new authorization_1.Authorization();
-    }
-    checkPermission(request, response, next) {
-        var token = request.headers.authorization;
-        this.auhthorization.verifyToken(token, function (err, code, data) {
-            if (err) {
-                response.statusCode = code;
-                return response.json(err);
-            }
-            else {
-                var UserId = request.user._id;
-                var url = request.url;
-                var permissionResponse = this.authentication.checkPermission(UserId, url);
-                response.statusCode = permissionResponse.code;
-                if (permissionResponse.err) {
-                    response.statusCode = permissionResponse.code;
-                    response.json(permissionResponse.err);
-                }
-                else if (permissionResponse.data) {
-                    next();
-                }
-                else {
-                    response.statusCode = permissionResponse.code;
-                    response.json(permissionResponse.data);
-                }
-            }
-        });
     }
     getRouter() {
-        this.router.post("/checkpermission", function (request, response) {
-            var UserId = request.user._id;
-            var url = request.url;
-            var permissionResponse = this.authentication.checkPermission(UserId, url);
-            response.statusCode = permissionResponse.code;
-            if (permissionResponse.err) {
-                response.json(permissionResponse.err);
-            }
-            else {
-                response.json(permissionResponse.data);
-            }
+        var authentication = new authentication_1.Authentication();
+        var authorizationRouter = new authorization_1.AuthorizationRouter();
+        this.router.post("/signupwithusernameandpassword", authorizationRouter.checkPermission, function (request, response) {
+            authentication.signUpWithUsernameAndPassword(request.body.username, request.body.password, function (err, code, data) {
+                response.statusCode = code;
+                if (err) {
+                    response.json(err);
+                }
+                else if (data) {
+                    response.json(data);
+                }
+            });
+        });
+        this.router.post("/signinwithusernameandpassword", authorizationRouter.checkPermission, function (request, response) {
+            authentication.signInWithUsernameAndPassword(request.body.username, request.body.password, function (err, code, data) {
+                response.statusCode = code;
+                if (err) {
+                    response.json(err);
+                }
+                else if (data) {
+                    response.json(data);
+                }
+            });
         });
         return this.router;
     }

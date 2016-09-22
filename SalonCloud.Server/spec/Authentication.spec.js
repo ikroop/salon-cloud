@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var winston = require('winston');
 
 describe('Authentication', function () {
-    var url = 'http://localhost:3000/api/v1/auth';
+    var url = 'http://localhost:3000/api/v1/authentication';
     var timestamp = new Date().getTime();
     var defaultPassword = '1234@1234'
     // within before() you can run all the operations that are needed to setup your tests. In this case

@@ -10,7 +10,7 @@ var ErrorMessage = require("./../ErrorMessage");
 var UserModel = require("./../user/UserModel");
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-class Authorization {
+class Authentication {
     changePassword(oldPasswords, newPassword, code, callback) {
     }
     sendVerifyCode(username, callback) {
@@ -128,5 +128,5 @@ class Authorization {
         }
     }
 }
-exports.Authorization = Authorization;
+exports.Authentication = Authentication;
 //# sourceMappingURL=authentication.js.map

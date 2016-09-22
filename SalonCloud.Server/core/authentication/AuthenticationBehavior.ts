@@ -6,8 +6,8 @@
  */
 
 import { SalonCloudResponse } from "./../SalonCloudResponse";
-import { AuthorizationData } from "./AuthorizationData";
-export interface AuthorizationBehavior {
+import { AuthenticationData } from "./AuthenticationData";
+export interface AuthenticationBehavior {
     changePassword(oldPasswords: string, newPassword: string, code: string, callback);
     sendVerifyCode(username: string, callback);
     signInWithUsernameAndPassword(username: string, password: string, callback);

@@ -6,15 +6,15 @@
  */
 
 import { SalonCloudResponse } from "./../SalonCloudResponse";
-import { AuthorizationData } from "./AuthorizationData";
-import { AuthorizationBehavior } from "./AuthorizationBehavior";
+import { AuthenticationData } from "./AuthenticationData";
+import { AuthenticationBehavior } from "./AuthenticationBehavior";
 import { Validator } from "./../validator/Validator";
 var ErrorMessage = require("./../ErrorMessage");
 var UserModel = require("./../user/UserModel");
 import jwt = require('jsonwebtoken');
 import fs = require('fs');
 
-export class Authorization implements AuthorizationBehavior {
+export class Authentication implements AuthenticationBehavior {
     changePassword(oldPasswords: string, newPassword: string, code: string, callback){
      
     }
