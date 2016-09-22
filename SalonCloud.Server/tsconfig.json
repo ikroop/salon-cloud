@@ -12,6 +12,7 @@
     "./core/core.d.ts",
     "./modules/schedule/Schedule.d.ts",
     "./app.ts",
-    "./core/observer/Observer.d.ts"
+    "./core/observer/Observer.d.ts",
+    "./spec/spec.d.ts"
   ]
 }

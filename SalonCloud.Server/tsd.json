@@ -49,6 +49,9 @@
     },
     "jsonwebtoken/jsonwebtoken.d.ts":{
       "commit": "150227f1870c71ff602da2cf1281878ed925a44c"
+    },
+    "mocha/mocha.d.ts":{
+      "commit": "a361a8ab3c327f208d3f82ad206971d4a63d8c25"
     }
   }
 }
