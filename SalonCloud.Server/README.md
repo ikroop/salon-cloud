@@ -142,7 +142,7 @@ add access token to header if it is required.
 ```
 ## How to get access token ##
 Use Postman to get access token
-[Signin with email & password documentation](https://smisyteam.atlassian.net/wiki/display/SC/Authentication#Authentication-SigninWithEmail&Password)
+[Signin with email & password documentation](https://github.com/thanhtruong0315/salon-cloud/wiki/Authentication#signin-with-email--password)
 ## How to use mongoose ##
 
  1. Read [Getting Started](http://mongoosejs.com/docs/index.html)
