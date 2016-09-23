@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
   dslVersion="1.0.0.0"
   Id="2c899048-69c9-4895-a4a9-015718059e00"
   name="SalonCloud.Server.Design" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
@@ -3033,9 +3033,9 @@ getDailyScheduleRecord(date, function(err, data){
             aggregation="None"
             isComposite="false">
             <type_NamedElement>
-              <undefinedTypeMoniker
-                Id="10b93ff8-b70e-4550-9e88-e85de3e1e220"
-                LastKnownName="SalonPublicDisplay"
+              <classMoniker
+                Id="5e1c1703-a0f1-464d-92b6-08c6664a97fc"
+                LastKnownName="SalonPublicService"
                 LastKnownLocation="SalonCloud.Server.Design.uml" />
             </type_NamedElement>
           </property>
@@ -4735,7 +4735,7 @@ getDailyScheduleRecord(date, function(err, data){
             <type_NamedElement>
               <classMoniker
                 Id="5e1c1703-a0f1-464d-92b6-08c6664a97fc"
-                LastKnownName="SalonPublicDisplay"
+                LastKnownName="SalonPublicService"
                 LastKnownLocation="SalonCloud.Server.Design.uml" />
             </type_NamedElement>
           </property>
@@ -6020,7 +6020,7 @@ getDailyScheduleRecord(date, function(err, data){
     <packageHasNamedElement>
       <class
         Id="5e1c1703-a0f1-464d-92b6-08c6664a97fc"
-        name="SalonPublicDisplay"
+        name="SalonPublicService"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
