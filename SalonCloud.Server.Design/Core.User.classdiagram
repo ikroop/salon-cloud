@@ -258,37 +258,6 @@
         <elementDefinition Id="4a6479c9-bc02-4d0d-b08b-e78e471e785d" />
       </referencedType>
     </packageHasNamedElement>
-    <logicalClassDesignerModelHasTypes>
-      <Interface Id="dc266e12-ad38-4c5e-a7af-62e510078626" name="UserData" isAbstract="false" isLeaf="false">
-        <elementDefinition Id="878a9a92-b71c-410e-8f11-3b0bdfc183f8" />
-        <ownedAttributes>
-          <property Id="8bb38393-0668-4674-9531-84124fcb5c9d" name="username" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="145d6301-cc11-4e2c-b5ad-da1b1970cd31" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
-            </type_NamedElement>
-          </property>
-          <property Id="ab4f2d96-b8d8-465d-8257-72ab29a4b52b" name="password" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="ace3af38-9669-49ef-8115-9220e54bc041" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
-            </type_NamedElement>
-          </property>
-          <property Id="146e334b-63a8-44af-be8a-0b828e026b37" name="status" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="97c71e39-fb09-480c-9b05-41fa57db2274" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
-            </type_NamedElement>
-          </property>
-          <property Id="17ff2ee1-0ce9-4660-bb63-f41a0840dc58" name="is_verified" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="4a0dcbfd-bd9a-4996-a3b6-5983e45b96e9" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="1061a28b-629b-402b-a7f3-8cac0d52128f" LastKnownName="boolean" />
-            </type_NamedElement>
-          </property>
-        </ownedAttributes>
-      </Interface>
-    </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
       <referencedType Id="adfcea1b-325a-452f-894b-5f8f792b7932" name="SalonCloudResponse&lt;UserPublicProfile&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;UserPublicProfile&gt;">
         <elementDefinition Id="fee13505-5f62-403c-9977-89b1b9cd668e" />
