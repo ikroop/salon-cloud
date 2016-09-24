@@ -10,6 +10,7 @@ import {SalonCloudResponse} from "../../core/SalonCloudResponse";
 import {BaseValidator} from "./../../core/validation/BaseValidator";
 import {MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId}
     from "./../../core/validation/ValidationDecorators";
+import {SalonSchedule} from "./SalonSchedule"
 var ErrorMessage = require  ("../../core/ErrorMessage");
 export class EmployeeSchedule extends Schedule {
 
@@ -17,9 +18,37 @@ export class EmployeeSchedule extends Schedule {
         super(salonId, employeeId);
     }
 
-    protected normalizeDailySchedule(dailySchedule: DailyDayData){
+    /**
+     * normalizeDailySchedule
+	 * If Salon has no schedule for a date --> Employee has no schedule on that date too
+     * Employee.DailySchedule(date).open >= Salon.DailySchedule(date).open
+     * Employee.DailySchedule(date).close <= Salon.DailySchedule(date).close
+     */
+    protected async normalizeDailySchedule(dailySchedule: DailyDayData){
         //Todo: implementation >>> compare with salon to get the best schedule
-        return dailySchedule;
+        var employeeDailyScheduleData = dailySchedule;
+
+        var resultReturn: DailyDayData;
+        
+        let salonSchedule = new SalonSchedule(this.salonId);
+        let promiseSalonDailyScheduleData = await salonSchedule.getDailySchedule(dailySchedule.date);
+        let salonDailyScheduleData = promiseSalonDailyScheduleData.data;
+
+        if (salonDailyScheduleData) {
+            
+            if (employeeDailyScheduleData.open < salonDailyScheduleData.day.open) {
+                employeeDailyScheduleData.open = salonDailyScheduleData.day.open;
+            }
+
+            if (employeeDailyScheduleData.close > salonDailyScheduleData.day.close) {
+                employeeDailyScheduleData.close = salonDailyScheduleData.day.open;
+            }
+        } else {
+            employeeDailyScheduleData = null;
+        }
+
+
+        return employeeDailyScheduleData;
     }
 
     protected normalizeWeeklySchedule(WeeklySchedule: [WeeklyDayData]){
