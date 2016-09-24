@@ -27,36 +27,23 @@ export class EmployeeSchedule extends Schedule {
      */
     protected async normalizeDailySchedule(dailySchedule: DailyDayData){
         //Todo: implementation >>> compare with salon to get the best schedule
-        var employeeDailyScheduleData = dailySchedule;
-
-        var resultReturn: DailyDayData;
+        var employeeDailyData = dailySchedule;
         
         let salonSchedule = new SalonSchedule(this.salonId);
         let promiseSalonDailyScheduleData = await salonSchedule.getDailySchedule(dailySchedule.date);
         let salonDailyScheduleData = promiseSalonDailyScheduleData.data;
 
         if (salonDailyScheduleData) {
-
-            if (salonDailyScheduleData.day.status == false) {
-                employeeDailyScheduleData.status = false;
-            }
-            
-            if (employeeDailyScheduleData.open < salonDailyScheduleData.day.open) {
-                employeeDailyScheduleData.open = salonDailyScheduleData.day.open;
-            }
-
-            if (employeeDailyScheduleData.close > salonDailyScheduleData.day.close) {
-                employeeDailyScheduleData.close = salonDailyScheduleData.day.open;
-            }
+            employeeDailyData = this.updateDailyDayDataAccordingToSalon(employeeDailyData, salonDailyScheduleData.day);
         } else {
-            employeeDailyScheduleData = null;
+            employeeDailyData = null;
         }
 
 
-        return employeeDailyScheduleData;
+        return employeeDailyData;
     }
 
-    protected normalizeWeeklySchedule(WeeklySchedule: [WeeklyDayData]){
+    protected async normalizeWeeklySchedule(WeeklySchedule: [WeeklyDayData]){
         //Need to use async/await
         //Todo: implementation >>>> compare with salon to get the best schedules
         //Step 1: get salon's [WeeklyDayData] (look at getWeeklyScheduleRecord() in parent class for similar implementation);
@@ -65,7 +52,34 @@ export class EmployeeSchedule extends Schedule {
         //          On that day, operation time is 10am-6pm for employee but 11am-8pm for salon, we choose '11am-6pm'
         //          (There are many cases, try to catch all)
         //Step 3: return the resulted array<WeeklyDayData>
-        return WeeklySchedule;
+
+        var employeeWeeklyData = WeeklySchedule;
+        
+        let salonSchedule = new SalonSchedule(this.salonId);
+        let promiseSalonWeeklyScheduleData = await salonSchedule.getWeeklySchedule();
+        let salonWeeklyScheduleData = promiseSalonWeeklyScheduleData.data;
+
+        employeeWeeklyData.forEach(element => {
+            
+        });
+
+        return employeeWeeklyData;
     };
 
+    private updateDailyDayDataAccordingToSalon(employeeDailyDayData: DailyDayData, salonDailyDayData: DailyDayData) {
+
+        if (salonDailyDayData.status == false) {
+            employeeDailyDayData.status = false;
+        }
+        
+        if (employeeDailyDayData.open < salonDailyDayData.open) {
+            employeeDailyDayData.open = salonDailyDayData.open;
+        }
+
+        if (employeeDailyDayData.close > salonDailyDayData.close) {
+            employeeDailyDayData.close = salonDailyDayData.open;
+        }
+
+        return employeeDailyDayData;
+    }
 }
