@@ -21,6 +21,7 @@ export class EmployeeSchedule extends Schedule {
     /**
      * normalizeDailySchedule
 	 * If Salon has no schedule for a date --> Employee has no schedule on that date too
+     * If Salon OFF --> Employee OFF
      * Employee.DailySchedule(date).open >= Salon.DailySchedule(date).open
      * Employee.DailySchedule(date).close <= Salon.DailySchedule(date).close
      */
@@ -35,6 +36,10 @@ export class EmployeeSchedule extends Schedule {
         let salonDailyScheduleData = promiseSalonDailyScheduleData.data;
 
         if (salonDailyScheduleData) {
+
+            if (salonDailyScheduleData.day.status == false) {
+                employeeDailyScheduleData.status = false;
+            }
             
             if (employeeDailyScheduleData.open < salonDailyScheduleData.day.open) {
                 employeeDailyScheduleData.open = salonDailyScheduleData.day.open;
