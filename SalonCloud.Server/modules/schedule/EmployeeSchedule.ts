@@ -58,13 +58,19 @@ export class EmployeeSchedule extends Schedule {
         let salonSchedule = new SalonSchedule(this.salonId);
         let promiseSalonWeeklyScheduleData = await salonSchedule.getWeeklySchedule();
         let salonWeeklyScheduleData = promiseSalonWeeklyScheduleData.data;
-        let salonWeeklyDayDataArray = salonWeeklyScheduleData.week;
 
-        for (var i = 0; i < employeeWeeklyDayDataArray.length; i++) {
-            var employeeWeeklyDayData = employeeWeeklyDayDataArray[i];
-            var salonWeeklyDayData = salonWeeklyDayDataArray[i];
+        if (salonWeeklyScheduleData) {
 
-            employeeWeeklyDayData = this.updateDailyDayDataAccordingToSalon(employeeWeeklyDayData, salonWeeklyDayData);
+            let salonWeeklyDayDataArray = salonWeeklyScheduleData.week;
+
+            for (var i = 0; i < employeeWeeklyDayDataArray.length; i++) {
+                var employeeWeeklyDayData = employeeWeeklyDayDataArray[i];
+                var salonWeeklyDayData = salonWeeklyDayDataArray[i];
+
+                employeeWeeklyDayData = this.updateDailyDayDataAccordingToSalon(employeeWeeklyDayData, salonWeeklyDayData);
+            }
+        } else {
+            employeeWeeklyDayDataArray = null;
         }
 
         return employeeWeeklyDayDataArray;
