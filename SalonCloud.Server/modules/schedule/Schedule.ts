@@ -505,4 +505,29 @@ export abstract class Schedule implements ScheduleBehavior {
     protected abstract normalizeDailySchedule(dailySchedule: DailyDayData);
     protected abstract normalizeWeeklySchedule(weeklySchedule: [WeeklyDayData]);
 
+    /**
+     * sortWeeklyDayData
+     * Sort a given array of WeeklyDayDatas in order ASC or DESC
+     * @param {[WeeklyDayData]} weeklyDayDataArray
+     * @param {boolean} ascending: true -> sort in ASC order, false -> sort in DESC order
+     * @returns {[WeeklyDayData]} sorted array of WeeklyDayDatas
+     */
+    protected sortWeeklyDayDataArray(weeklyDayDataArray: [WeeklyDayData], ascending: boolean) {
+        let asc = (ascending) ? 1 : -1;
+
+        var sortedArray = weeklyDayDataArray.sort((n1, n2) => {
+            if (n1.day_of_week > n2.day_of_week) {
+                return 1 * asc;
+            }
+
+            if (n1.day_of_week < n2.day_of_week) {
+                return -1 * asc;
+            }
+
+            return 0;
+        });
+
+        return sortedArray;
+    }
+
 }

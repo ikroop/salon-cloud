@@ -20,10 +20,13 @@ export class EmployeeSchedule extends Schedule {
 
     /**
      * normalizeDailySchedule
+     * Compare with salon to get the best schedule
 	 * If Salon has no schedule for a date --> Employee has no schedule on that date too
      * If Salon OFF --> Employee OFF
      * Employee.DailySchedule(date).open >= Salon.DailySchedule(date).open
      * Employee.DailySchedule(date).close <= Salon.DailySchedule(date).close
+     * @param {DailyDayData} dailySchedule: DailyDayData of employee
+     * @returns {DailyDayData}
      */
     protected async normalizeDailySchedule(dailySchedule: DailyDayData){
         //Todo: implementation >>> compare with salon to get the best schedule
@@ -43,6 +46,16 @@ export class EmployeeSchedule extends Schedule {
         return employeeDailyDayData;
     }
 
+    /**
+     * normalizeWeeklySchedule
+     * Compare with salon to get the best schedules
+	 * If Salon has no schedule for a date --> Employee has no schedule on that date too
+     * If Salon OFF --> Employee OFF
+     * Employee.DailySchedule(date).open >= Salon.DailySchedule(date).open
+     * Employee.DailySchedule(date).close <= Salon.DailySchedule(date).close
+     * @param {[WeeklyDayData]} WeeklySchedule: array of WeeklyDayDatas of employee
+     * @returns {[WeeklyDayData]}
+     */
     protected async normalizeWeeklySchedule(WeeklySchedule: [WeeklyDayData]){
         //Need to use async/await
         //Todo: implementation >>>> compare with salon to get the best schedules
@@ -53,15 +66,17 @@ export class EmployeeSchedule extends Schedule {
         //          (There are many cases, try to catch all)
         //Step 3: return the resulted array<WeeklyDayData>
 
-        var employeeWeeklyDayDataArray = WeeklySchedule;
+        // Sort [WeekyDayData] of employee, ascending = true
+        let asc = true;
+        var employeeWeeklyDayDataArray = this.sortWeeklyDayDataArray(WeeklySchedule, asc);
         
         let salonSchedule = new SalonSchedule(this.salonId);
         let promiseSalonWeeklyScheduleData = await salonSchedule.getWeeklySchedule();
         let salonWeeklyScheduleData = promiseSalonWeeklyScheduleData.data;
 
         if (salonWeeklyScheduleData) {
-
-            let salonWeeklyDayDataArray = salonWeeklyScheduleData.week;
+            // Sort [WeekyDayData] of salon, ascending = true
+            let salonWeeklyDayDataArray = this.sortWeeklyDayDataArray(salonWeeklyScheduleData.week, asc);
 
             for (var i = 0; i < employeeWeeklyDayDataArray.length; i++) {
                 var employeeWeeklyDayData = employeeWeeklyDayDataArray[i];
@@ -78,12 +93,27 @@ export class EmployeeSchedule extends Schedule {
 
     /**
      * updateDailyDayDataAccordingToSalon
+     * Compares Employee's ScheduleItemData with correspond salon's one to get the best schedule
+     * If Employee
 	 * If Salon has no schedule for a date --> Employee has no schedule on that date too
      * If Salon OFF --> Employee OFF
      * If Employee.DailySchedule(date).open < Salon.DailySchedule(date).open, must re-assign Employee.DailySchedule(date).open = Salon.DailySchedule(date).open
      * If Employee.DailySchedule(date).close > Salon.DailySchedule(date).close, must re-assign Employee.DailySchedule(date).close = Salon.DailySchedule(date).close
+     * @param {<T extends ScheduleItemData>} employeeDayData: ScheduleItemData of employee
+     * @param {<T extends ScheduleItemData>} salonDayData: ScheduleItemData of salon
+     * @returns {<T extends ScheduleItemData>}
      */
     private updateDailyDayDataAccordingToSalon<T extends ScheduleItemData>(employeeDayData: T, salonDayData: T) {
+
+        if (employeeDayData.close < salonDayData.open) {
+            employeeDayData.status = false;
+            return employeeDayData;
+        }
+
+        if (employeeDayData.open > salonDayData.close) {
+            employeeDayData.status = false;
+            return employeeDayData;
+        }
 
         if (salonDayData.status == false) {
             employeeDayData.status = false;
@@ -94,7 +124,7 @@ export class EmployeeSchedule extends Schedule {
         }
 
         if (employeeDayData.close > salonDayData.close) {
-            employeeDayData.close = salonDayData.open;
+            employeeDayData.close = salonDayData.close;
         }
 
         return employeeDayData;
