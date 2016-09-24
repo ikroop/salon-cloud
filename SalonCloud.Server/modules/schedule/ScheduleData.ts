@@ -30,4 +30,10 @@ export interface DailyScheduleData {
     salon_id: string,
     employee_id: string,
     day: DailyDayData
+};
+
+export interface MonthlyScheduleData {
+    salon_id: string, //<salon_id>
+    employee_id: string,
+    month: [DailyDayData]
 }

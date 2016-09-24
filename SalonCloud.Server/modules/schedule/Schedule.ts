@@ -2,7 +2,7 @@
  *
  *
  */
-import { DailyScheduleData, WeeklyScheduleData, DailyDayData, WeeklyDayData } from './ScheduleData';
+import { MonthlyScheduleData, DailyScheduleData, WeeklyScheduleData, DailyDayData, WeeklyDayData } from './ScheduleData';
 import {SalonCloudResponse} from "../../core/SalonCloudResponse";
 import {ScheduleBehavior} from "./ScheduleBehavior";
 import {WeeklyScheduleModel, DailyScheduleModel} from "./ScheduleModel";
@@ -25,39 +25,14 @@ export abstract class Schedule implements ScheduleBehavior {
         this.salonId = salonId;
         this.employeeId = employeeId;
     };
-    private async getDailyScheduleProcess(date: Date) {
-        var targetSchedule:DailyDayData;
-        var dailySchedule = await this.getDailyScheduleRecord(date);
-        if (!dailySchedule.data) {
-            var weeklySchedule = await this.getWeeklyScheduleRecord();
-            
-            //get dailySchedule from weeklySchedule
-            if(weeklySchedule){
-               var indexDay = date.getDay();
-               for(var i=0; i<=6; i++){
-                  if(weeklySchedule.data[i].day_of_week == indexDay){
-                          targetSchedule.open = weeklySchedule.data[i].open;
-                          targetSchedule.close = weeklySchedule.data[i].close;
-                          targetSchedule.status = weeklySchedule.data[i].status;
-                          targetSchedule.date = date;
-                    }
-                }
-            }
-
-        }else{
-            targetSchedule = dailySchedule.data;
-        }
-        if(targetSchedule){
-            targetSchedule = await this.normalizeDailySchedule(targetSchedule);
-            return targetSchedule;
-
-        }else{
-            return undefined;
-        }
-    }
 
     /**
-	*
+	*@name: getDailySchedule(date: Date)
+    *@parameter: {date: Date}
+    *@return: a promise resolved to SalonCloudResponse<DailyScheduleData>
+    *Step 1: validation;
+    *Step 2: call this.getDailyScheduleProcess(date) to get DailyDayData
+    *Step 3: check the returned value in step 2 and return the proper reponse.
 	*/
     public async getDailySchedule(date: Date) {
         var response: SalonCloudResponse<DailyScheduleData> = {
@@ -65,11 +40,14 @@ export abstract class Schedule implements ScheduleBehavior {
             data: undefined,
             err: undefined
         };
-        //TODO: implement validation
+        //TODO: Step 1: implement validation
         var resultReturn: DailyScheduleData;
-        var targetSchedule:DailyDayData;
+        var targetSchedule:DailyDayData; 
+
+        //Step 2: call this.getDailyScheduleProcess(date) to get DailyDayData
         targetSchedule = await this.getDailyScheduleProcess(date);
 
+        //Step 3: check the returned value in step 1 and return the proper reponse.
         if (targetSchedule) {
             //parse data into resultReturn : dailyScheduleData 
             resultReturn.day = targetSchedule;
@@ -89,17 +67,26 @@ export abstract class Schedule implements ScheduleBehavior {
     }
 
     /**
-      * name
-      */
+	*@name: getWeeklySchedule()
+    *@parameter: { }
+    *@return: a promise resolved to SalonCloudResponse<WeeklyScheduleData>
+    *Step 1: call this.getWeeklyScheduleRecord(date) to get [WeeklyDayData]
+    *Step 2: check the returned value in step 1 and return the proper reponse.
+	*/    
     public async getWeeklySchedule(){
         var response: SalonCloudResponse<WeeklyScheduleData>={
             code: undefined,
             data: undefined,
             err: undefined
         };
-        //TODO: implement validation
         var resultReturn: WeeklyScheduleData;
+
+        //Step 1: call this.getWeeklyScheduleRecord(date) to get [WeeklyDayData]
+
         var weeklySchedule = await this.getWeeklyScheduleRecord();
+
+        //Step 2: check the returned value in step 1 and return the proper reponse.
+
         if (weeklySchedule.data) {
             //normalize to get the best schedule
             weeklySchedule.data = await this.normalizeWeeklySchedule(weeklySchedule.data);
@@ -120,19 +107,30 @@ export abstract class Schedule implements ScheduleBehavior {
         return response;
     }
 
-	/**
-	*
+    /**
+	*@name: getMonthlySchedule(month: number; year: number)
+    *@parameter: {month: number, year: number}
+    *@return: a promise resolved to SalonCloudResponse<MonthlyScheduleData>
+    *Step 1: validation;
+    *Step 2: loop and call this.getDailyScheduleProcess(date) for each day in month to get [DailyDayData]
+    *Step 3: parse data to response to return;
 	*/
     public async getMonthlySchedule(month: number, year: number){
-        var response: SalonCloudResponse<[DailyDayData]>= {
+        var response: SalonCloudResponse<MonthlyScheduleData>= {
             code: undefined,
             data: undefined,
             err: undefined
         };
+        //Todo: Step 1: validation;
+
+        //prepare for the loop
+        var returnValue : MonthlyScheduleData;
+        var dataReturn : [DailyDayData];
         var firstDayOfMonth =  new Date(year, month, 1, 0, 0, 0, 0);
         var lastDayOfMonth = new Date(year, month+1, 0, 0, 0, 0, 0);
         var currentDate = firstDayOfMonth;
-        var dataReturn : [DailyDayData];
+
+        //Step 2: loop and call this.getDailyScheduleProcess(date) for each day in month to get [DailyDayData]
         for(var i = 1;currentDate > lastDayOfMonth; currentDate.setDate(i)){
             console.log(i);
             var targetSchedule = await this.getDailyScheduleProcess(currentDate);
@@ -140,14 +138,27 @@ export abstract class Schedule implements ScheduleBehavior {
             dataReturn.push(targetSchedule);
         }
 
-        response.data = dataReturn;
+        //Step 3: parse data to response to return;
 
+        returnValue.salon_id = this.salonId;
+        returnValue.employee_id = this.employeeId;
+        returnValue.month = dataReturn;
+
+        response.data = returnValue;
         
-        //TODO: use getDailyScheduleRecord(date)
-
         return response;
     }
 
+    /**
+	*@name: saveDailySchedule(dailySchedule: DailyDayData)
+    *@parameter: {dailySchedule: DailyDayData}
+    *@return: a promise resolved to SalonCloudResponse<boolean>
+    *Step 1: validation;
+    *Step 2: check docs existence by calling this.checkDailySchedule(dailySchedule)
+    *Step 3: if docs exists: call this.updateDailySchedule(dailySchedule);
+             if docs does not exist: call this.addDailySchedule(dailySchedule);
+    *Step 4: check result form step 3 and return proper response;
+	*/
     public async saveDailySchedule(dailySchedule: DailyDayData){
 
         var response: SalonCloudResponse<boolean>={
@@ -157,7 +168,7 @@ export abstract class Schedule implements ScheduleBehavior {
         };
         var saveStatus;
 
-        //validation
+        //Step 1: validation;
         var errorReturn = await this.dailyScheduleValidation(dailySchedule);
         if(errorReturn){
             response.code = 400;
@@ -165,17 +176,22 @@ export abstract class Schedule implements ScheduleBehavior {
             return response;
         }
 
-        //check docs existence: yes>>>> process update, no>>>>> process add
-        var k = await this.checkDailySchedule(dailySchedule);
-        if(k.err){
+        //Step 2: check docs existence by calling this.checkDailySchedule(dailySchedule)
+        var existence = await this.checkDailySchedule(dailySchedule);
+
+        //Step 3: if docs exists: call this.updateDailySchedule(dailySchedule);
+        //        if docs does not exist: call this.addDailySchedule(dailySchedule);
+        if(existence.err){
             saveStatus = undefined;
         }else{
-            if (k.data) {
+            if (existence.data) {
                 saveStatus = await this.updateDailySchedule(dailySchedule);
           } else {
                 saveStatus = await this.addDailySchedule(dailySchedule);
             }
         }
+
+        //Step 4: check result form step 3 and return proper response;
         response.data = saveStatus.data;
 
         if (!saveStatus.err){
@@ -189,9 +205,17 @@ export abstract class Schedule implements ScheduleBehavior {
 
         return response;
     }
+
     /**
-     * name
-     */
+	*@name: saveWeeklySchedule(weeklyScheduleList: [WeeklyDayData])
+    *@parameter: {weeklyScheduleList: [WeeklyDayData]}
+    *@return: a promise resolved to SalonCloudResponse<boolean>
+    *Step 1: validation;
+    *Step 2: check docs existence by calling this.checkWeeklySchedule(weeklyScheduleList)
+    *Step 3: if docs exists: call this.updateDailySchedule(weeklyScheduleList);
+             if docs does not exist: call this.addDailySchedule(weeklyScheduleList);
+    *Step 4: check result form step 3 and return proper response;
+	*/
     public async saveWeeklySchedule(weeklyScheduleList: [WeeklyDayData]){
 
         var response: SalonCloudResponse<boolean> = {
@@ -202,7 +226,7 @@ export abstract class Schedule implements ScheduleBehavior {
 
         var saveStatus;
 
-        //validation
+        //Step 1: validation
         var errorReturn = await this.weeklyScheduleValidation(weeklyScheduleList);
         if(errorReturn){
             response.code = 400;
@@ -502,9 +526,37 @@ export abstract class Schedule implements ScheduleBehavior {
         });
         return returnResult;
     }
-    protected abstract normalizeDailySchedule(dailySchedule: DailyDayData);
-    protected abstract normalizeWeeklySchedule(weeklySchedule: [WeeklyDayData]);
 
+    private async getDailyScheduleProcess(date: Date) {
+        var targetSchedule:DailyDayData;
+        var dailySchedule = await this.getDailyScheduleRecord(date);
+        if (!dailySchedule.data) {
+            var weeklySchedule = await this.getWeeklyScheduleRecord();
+            
+            //get dailySchedule from weeklySchedule
+            if(weeklySchedule){
+               var indexDay = date.getDay();
+               for(var i=0; i<=6; i++){
+                  if(weeklySchedule.data[i].day_of_week == indexDay){
+                          targetSchedule.open = weeklySchedule.data[i].open;
+                          targetSchedule.close = weeklySchedule.data[i].close;
+                          targetSchedule.status = weeklySchedule.data[i].status;
+                          targetSchedule.date = date;
+                    }
+                }
+            }
+
+        }else{
+            targetSchedule = dailySchedule.data;
+        }
+        if(targetSchedule){
+            targetSchedule = await this.normalizeDailySchedule(targetSchedule);
+            return targetSchedule;
+
+        }else{
+            return undefined;
+        }
+    }
     /**
      * sortWeeklyDayData
      * Sort a given array of WeeklyDayDatas in order ASC or DESC
@@ -529,5 +581,7 @@ export abstract class Schedule implements ScheduleBehavior {
 
         return sortedArray;
     }
+    protected abstract normalizeDailySchedule(dailySchedule: DailyDayData);
+    protected abstract normalizeWeeklySchedule(weeklySchedule: [WeeklyDayData]);
 
 }
