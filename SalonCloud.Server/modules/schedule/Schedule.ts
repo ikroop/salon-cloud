@@ -25,7 +25,40 @@ export abstract class Schedule implements ScheduleBehavior {
         this.salonId = salonId;
         this.employeeId = employeeId;
     };
+    private async getDailyScheduleProcess(date: Date) {
+        var targetSchedule:DailyDayData;
+        var dailySchedule = await this.getDailyScheduleRecord(date);
+        if (!dailySchedule.data) {
+            var weeklySchedule = await this.getWeeklyScheduleRecord();
+            
+            //get dailySchedule from weeklySchedule
+            if(weeklySchedule){
+               var indexDay = date.getDay();
+               for(var i=0; i<=6; i++){
+                  if(weeklySchedule.data[i].day_of_week == indexDay){
+                          targetSchedule.open = weeklySchedule.data[i].open;
+                          targetSchedule.close = weeklySchedule.data[i].close;
+                          targetSchedule.status = weeklySchedule.data[i].status;
+                          targetSchedule.date = date;
+                    }
+                }
+            }
 
+        }else{
+            targetSchedule = dailySchedule.data;
+        }
+        if(targetSchedule){
+            targetSchedule = await this.normalizeDailySchedule(targetSchedule);
+            return targetSchedule;
+
+        }else{
+            return undefined;
+        }
+    }
+
+    /**
+	*
+	*/
     public async getDailySchedule(date: Date) {
         var response: SalonCloudResponse<DailyScheduleData> = {
             code: undefined,
@@ -35,30 +68,9 @@ export abstract class Schedule implements ScheduleBehavior {
         //TODO: implement validation
         var resultReturn: DailyScheduleData;
         var targetSchedule:DailyDayData;
-        var dailySchedule = await this.getDailyScheduleRecord(date);
-        if (!dailySchedule.data) {
-            var weeklySchedule = await this.getWeeklyScheduleRecord();
-            
-            //get dailySchedule from weeklySchedule
-            var indexDay = date.getDay();
-            for(var i=0; i<=6; i++){
-                if(weeklySchedule.data[i].day_of_week == indexDay){
-                        targetSchedule.open = weeklySchedule.data[i].open;
-                        targetSchedule.close = weeklySchedule.data[i].close;
-                        targetSchedule.status = weeklySchedule.data[i].status;
-                        targetSchedule.date = date;
-                }
-            }
-
-        }else{
-            targetSchedule = dailySchedule.data;
-        }
-
+        targetSchedule = await this.getDailyScheduleProcess(date);
 
         if (targetSchedule) {
-            //normalize to get the best schedule
-            targetSchedule = await this.normalizeDailySchedule(targetSchedule);
-           
             //parse data into resultReturn : dailyScheduleData 
             resultReturn.day = targetSchedule;
             resultReturn.salon_id = this.salonId;
@@ -86,7 +98,7 @@ export abstract class Schedule implements ScheduleBehavior {
             err: undefined
         };
         //TODO: implement validation
-        var resultReturn: WeeklyScheduleData
+        var resultReturn: WeeklyScheduleData;
         var weeklySchedule = await this.getWeeklyScheduleRecord();
         if (weeklySchedule.data) {
             //normalize to get the best schedule
@@ -111,8 +123,26 @@ export abstract class Schedule implements ScheduleBehavior {
 	/**
 	*
 	*/
-    public getMonthlySchedule(month: number, year: number): SalonCloudResponse<[DailyDayData]> {
-        var response: SalonCloudResponse<[DailyDayData]>;
+    public async getMonthlySchedule(month: number, year: number){
+        var response: SalonCloudResponse<[DailyDayData]>= {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
+        var firstDayOfMonth =  new Date(year, month, 1, 0, 0, 0, 0);
+        var lastDayOfMonth = new Date(year, month+1, 0, 0, 0, 0, 0);
+        var currentDate = firstDayOfMonth;
+        var dataReturn : [DailyDayData];
+        for(var i = 1;currentDate > lastDayOfMonth; currentDate.setDate(i)){
+            console.log(i);
+            var targetSchedule = await this.getDailyScheduleProcess(currentDate);
+            i++;
+            dataReturn.push(targetSchedule);
+        }
+
+        response.data = dataReturn;
+
+        
         //TODO: use getDailyScheduleRecord(date)
 
         return response;
@@ -179,19 +209,15 @@ export abstract class Schedule implements ScheduleBehavior {
             response.err = errorReturn;
             return response;
         }
-        console.log('3');
         //check docs existence: yes>>>process update, no>>>> procee add
         var k = await this.checkWeeklySchedule();
-        console.log('4', k)
         if(k.err){
             saveStatus = undefined;
         }else{
             if (k.data) {
             saveStatus = await this.updateWeeklySchedule(weeklyScheduleList);
-            console.log('5', saveStatus);
         } else {
             saveStatus = await this.addWeeklySchedule(weeklyScheduleList);
-            console.log('6', saveStatus);
         }
         }
         
