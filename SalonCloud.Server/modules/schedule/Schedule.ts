@@ -261,7 +261,12 @@ export abstract class Schedule implements ScheduleBehavior {
     }
 
     /**
-     * name
+     * @name checkWeeklySchedule()
+     * @parameter: { }
+     * @return: a promise resolved to SalonCloudResponse<boolean>
+     * Step 1: find WeeklyScheduleModel docs with salonId and employeeId
+     * Step 2: if docs exist, return data as true
+     *         if docs does not exist, return data as false
      */
     private async checkWeeklySchedule(){
         var returnResult : SalonCloudResponse<boolean> = {
@@ -282,7 +287,12 @@ export abstract class Schedule implements ScheduleBehavior {
     };
 
     /**
-     * name
+     * @name: addWeeklySchedule(weeklyScheduleList: [WeeklyDayData])
+     * @parameter: {weeklyScheduleList: [WeeklyDayData]}
+     * @return: a promise resolved to SalonCloudResponse<boolean>
+     * Step 1: create new docs of WeeklyScheduleModel with salonId, employeeId, and weeklyScheduleList
+     * Step 2: return true if success
+     *         return error if fail
      */
     private async addWeeklySchedule(weeklyScheduleList: [WeeklyDayData]){
          var returnResult: SalonCloudResponse<boolean>={
@@ -310,7 +320,14 @@ export abstract class Schedule implements ScheduleBehavior {
     };
 
     /**
-     * name
+     * @name: updateWeeklySchedule(weeklyScheduleList: [WeeklyDayData])
+     * @parameter: {weeklyScheduleList: [WeeklyDayData]}
+     * @return: a promise resolved to SalonCloudResponse<boolean>
+     * Step 1: find docs WeeklyScheduleModel with salonId, employeeId
+     * Step 2: update 'week' in docs with weeklyScheduleList
+     * Step 3: save the edited docs
+     * Step 4: return true if save success  
+     *         return error if fail
      */
     private async updateWeeklySchedule(weeklyScheduleList: [WeeklyDayData]){
         var returnResult: SalonCloudResponse<boolean> = {
@@ -337,7 +354,10 @@ export abstract class Schedule implements ScheduleBehavior {
     };
 
     /**
-     * name
+     * @name: weeklyScheduleValidation(weeklyScheduleList: [WeeklyDayData])
+     * @parameter: {weeklyScheduleList: [WeeklyDayData]}
+     * @return: error if any
+     * Use Validator in core
      */
     private async weeklyScheduleValidation(weeklyScheduleList: [WeeklyDayData]){
         var errorReturn: any = undefined;
@@ -379,9 +399,14 @@ export abstract class Schedule implements ScheduleBehavior {
     };
 
     /**
-     * name
+     * @name checkDailySchedule(dailySchedule: DailyDayData)
+     * @parameter: {dailySchedule: DailyDayData}
+     * @return: a promise resolved to SalonCloudResponse<boolean>
+     * Step 1: find DailyScheduleModel docs with salonId, employeeId and date
+     * Step 2: if docs exist, return data as true
+     *         if docs does not exist, return data as false
      */
-    private async checkDailySchedule(dailySchedule: DailyDayData){
+     private async checkDailySchedule(dailySchedule: DailyDayData){
         var returnResult: SalonCloudResponse<boolean> = {
             err: undefined,
             code: undefined,
@@ -401,9 +426,14 @@ export abstract class Schedule implements ScheduleBehavior {
     };
 
     /**
-     * name
+     * @name: addDailySchedule(dailySchedule: DailyDayData)
+     * @parameter: {dailySchedule: DailyDayData]}
+     * @return: a promise resolved to SalonCloudResponse<boolean>
+     * Step 1: create new docs of DailyScheduleModel with salonId, employeeId, and dailySchedule
+     * Step 2: return true if success
+     *         return error if fail
      */
-    private async addDailySchedule(dailySchedule: DailyDayData){
+     private async addDailySchedule(dailySchedule: DailyDayData){
         var returnResult: SalonCloudResponse<boolean>={
             code: undefined,
             err: undefined,
@@ -426,7 +456,14 @@ export abstract class Schedule implements ScheduleBehavior {
     };
 
     /**
-     * name
+     * @name: updateDailySchedule(dailySchedule: DailyDayData)
+     * @parameter: {dailySchedule: DailyDayData}
+     * @return: a promise resolved to SalonCloudResponse<boolean>
+     * Step 1: find docs dailyScheduleModel with salonId, employeeId, and date
+     * Step 2: update 'day' in docs with weeklyScheduleList
+     * Step 3: save the edited docs
+     * Step 4: return true if save success  
+     *         return error if fail
      */
     private async updateDailySchedule(dailySchedule: DailyDayData){
         var returnResult: SalonCloudResponse<boolean> = {
@@ -453,7 +490,10 @@ export abstract class Schedule implements ScheduleBehavior {
     };
 
     /**
-     * name
+     * @name: dailyScheduleValidation(dailySchedule: DailyDayData))
+     * @parameter: {dailySchedule: DailyDayData}
+     * @return: error if any
+     * Use Validator in core
      */
     private async dailyScheduleValidation(dailySchedule: DailyDayData){
         var errorReturn: any = undefined;
@@ -482,7 +522,13 @@ export abstract class Schedule implements ScheduleBehavior {
     };
 
     /**
-     * name
+     * @name: getDailyScheduleRecord(date: Date)
+     * @parameter: {date: Date}
+     * @return: a promise resolved to SalonCloudResponse<DailyDayData>
+     * Step 1: find docs of DailyScheduleModel with salonId, employeeId, and date
+     * Step 2: return err if fail
+     *         return undefined if docs not found
+     *         return docs.day date if found
      */
     protected async getDailyScheduleRecord(date: Date){
         var returnResult : SalonCloudResponse<DailyDayData> = {
@@ -505,7 +551,13 @@ export abstract class Schedule implements ScheduleBehavior {
     }
 
     /**
-     * name
+     * @name: getWeeklyScheduleRecord()
+     * @parameter: {}
+     * @return: a promise resolved to SalonCloudResponse<[WeeklyDayData]>
+     * Step 1: find docs of WeeklyScheduleModel with salonId, employeeId
+     * Step 2: return err if fail
+     *         return undefined if docs not found
+     *         return docs.day date if found
      */
     protected async getWeeklyScheduleRecord(){
         var returnResult : SalonCloudResponse<[WeeklyDayData]> = {
@@ -526,7 +578,15 @@ export abstract class Schedule implements ScheduleBehavior {
         });
         return returnResult;
     }
-
+    /**
+     * @name: getDailyScheduleRecord(date: Date)
+     * @parameter: {date: Date}
+     * @return: a promise that resolve to DailyDayData
+     * Step 1: call getDailyScheduleRecord
+     * Step 2: if dailySchedule data not found, getWeeklyScheduleRecord. get dailySchedule from weeklySchedule
+     * Step 3: normalizeDailySchedule the dailySchedule found in step 1 or step 2.
+     * Step 4: return undefinded if no dailySchedule found 
+     */
     private async getDailyScheduleProcess(date: Date) {
         var targetSchedule:DailyDayData;
         var dailySchedule = await this.getDailyScheduleRecord(date);
