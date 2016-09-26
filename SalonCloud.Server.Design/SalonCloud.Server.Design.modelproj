@@ -71,6 +71,13 @@
       <SubType>Content</SubType>
       <DependentUpon>Core.User.classdiagram</DependentUpon>
     </Content>
+    <Content Include="ServiceManagement.classdiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ServiceManagement.classdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>ServiceManagement.classdiagram</DependentUpon>
+    </Content>
     <Content Include="UserManagement.classdiagram">
       <SubType>Content</SubType>
     </Content>

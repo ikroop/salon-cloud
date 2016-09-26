@@ -7,6 +7,7 @@
     "name": "SalonHelps"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.36",
     "body-parser": "^1.15.2",
     "errorhandler": "^1.4.3",
     "express": "^4.14.0",
