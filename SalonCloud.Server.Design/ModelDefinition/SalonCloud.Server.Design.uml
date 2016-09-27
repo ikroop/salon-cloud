@@ -2338,7 +2338,7 @@ getDailyScheduleRecord(date, function(err, data){
     <packageHasNamedElement>
       <Interface
         Id="0ddbec70-7d46-442c-a4cf-2fb182eca4d6"
-        name="AuthorizationBehavior"
+        name="AuthenticationBehavior"
         isAbstract="false"
         isLeaf="false">
         <ownedOperations>
@@ -2573,7 +2573,7 @@ getDailyScheduleRecord(date, function(err, data){
     <packageHasNamedElement>
       <Interface
         Id="d47bb92a-bf44-4754-8d29-9fd59b7a7a28"
-        name="AuthorizationData"
+        name="AuthenticationData"
         isAbstract="false"
         isLeaf="false">
         <ownedAttributes>
@@ -2737,7 +2737,7 @@ getDailyScheduleRecord(date, function(err, data){
     <packageHasNamedElement>
       <class
         Id="f5d84f0b-fcc2-47b1-b696-9fe1ddd78ae8"
-        name="Authorization"
+        name="Authentication"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -2746,7 +2746,7 @@ getDailyScheduleRecord(date, function(err, data){
             Id="f1c6d745-03dd-4df4-83c5-4ee24b3d76bd">
             <interfaceMoniker
               Id="0ddbec70-7d46-442c-a4cf-2fb182eca4d6"
-              LastKnownName="AuthorizationBehavior"
+              LastKnownName="AuthenticationBehavior"
               LastKnownLocation="SalonCloud.Server.Design.uml" />
           </interfaceRealization>
         </suppliersInternal>
@@ -3088,7 +3088,7 @@ getDailyScheduleRecord(date, function(err, data){
             <type_NamedElement>
               <classMoniker
                 Id="f5d84f0b-fcc2-47b1-b696-9fe1ddd78ae8"
-                LastKnownName="Authorization"
+                LastKnownName="Authentication"
                 LastKnownLocation="SalonCloud.Server.Design.uml" />
             </type_NamedElement>
           </property>

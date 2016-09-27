@@ -3,14 +3,14 @@
   <logicalClassDesignerModelMoniker Id="de4cc442-22e5-4002-b585-a5db78f6e85e" />
   <nestedChildShapes>
     <interfaceShape Id="bc309e4c-5aa5-4176-aa2c-8e5c90eb57d3" absoluteBounds="0.5, 2.25, 6.125, 1.7031249602635703" hideQualifiedName="false" increaseHeight="0" customColor="207, 223, 191">
-      <interfaceMoniker Id="9824cdfd-f83f-4c73-b34a-d5c064413f3d" LastKnownName="AuthorizationBehavior" />
+      <interfaceMoniker Id="9824cdfd-f83f-4c73-b34a-d5c064413f3d" LastKnownName="AuthenticationBehavior" />
       <nestedChildShapes>
         <AttributeElementListCompartment Id="987dcaf3-4503-4710-8cb4-bd7db9aecf7f" absoluteBounds="0.51499999999999968, 2.64, 6.0950000000000006, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
         <OperationElementListCompartment Id="e6a4600c-8a14-4fc9-ae8d-35554c99f7d5" absoluteBounds="0.51499999999999968, 2.8511718675494193, 6.0950000000000006, 1.0019530927141507" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </interfaceShape>
     <interfaceShape Id="e60b8fc8-2773-4d87-9662-a6ac3dd48955" absoluteBounds="2.125, 0.5, 2.125, 1.7031249602635703" hideQualifiedName="false" increaseHeight="0" customColor="207, 223, 191">
-      <interfaceMoniker Id="4ee0cb05-3016-4fe3-af4e-0c18b05dc08d" LastKnownName="AuthorizationData" />
+      <interfaceMoniker Id="4ee0cb05-3016-4fe3-af4e-0c18b05dc08d" LastKnownName="AuthenticationData" />
       <nestedChildShapes>
         <AttributeElementListCompartment Id="52d228d8-f757-4fe8-8b16-bc0dc70fbb3c" absoluteBounds="2.1399999999999997, 0.89000000000000012, 2.0949999999999998, 1.0019530927141505" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
         <OperationElementListCompartment Id="49a1e091-13c5-46dd-96f8-5dd61710f687" absoluteBounds="2.1399999999999997, 1.9019530927141508, 2.0949999999999998, 0.2011718675494194" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
@@ -24,7 +24,7 @@
       </nestedChildShapes>
     </interfaceShape>
     <classShape Id="3dfc8516-5843-450f-80e3-c61b9703986b" absoluteBounds="0.5, 4.375, 6.125, 1.7031249602635707" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
-      <classMoniker Id="08d87a11-02ad-4b05-83b7-713a1d589b5e" LastKnownName="Authorization" />
+      <classMoniker Id="08d87a11-02ad-4b05-83b7-713a1d589b5e" LastKnownName="Authentication" />
       <nestedChildShapes>
         <AttributeElementListCompartment Id="897f1c9f-8e4a-4188-9c54-7c6e7a9a7efb" absoluteBounds="0.51499999999999968, 4.765, 6.0950000000000006, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
         <OperationElementListCompartment Id="c1b5fc8b-832b-4d64-abf9-7992bef7cdc7" absoluteBounds="0.51499999999999968, 4.97617186754942, 6.0950000000000006, 1.0019530927141507" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />

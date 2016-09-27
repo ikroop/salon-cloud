@@ -280,7 +280,7 @@
           <property Id="5df5f8b8-d459-4ac8-9d5c-80029910704e" name="Auth" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="68bb9659-7c72-4f59-bf9e-eae3b1ead033" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="88f66676-4097-4a81-a0a9-d16446cced20" LastKnownName="Authorization" />
+              <referencedTypeMoniker Id="88f66676-4097-4a81-a0a9-d16446cced20" LastKnownName="Authentication" />
             </type_NamedElement>
           </property>
           <property Id="e0ceb028-436a-401c-80fe-32e063cef808" name="SalonPublicDP" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -371,7 +371,7 @@
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
-      <referencedType Id="88f66676-4097-4a81-a0a9-d16446cced20" name="Authorization" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::Authorization">
+      <referencedType Id="88f66676-4097-4a81-a0a9-d16446cced20" name="Authentication" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::Authentication">
         <elementDefinition Id="f5d84f0b-fcc2-47b1-b696-9fe1ddd78ae8" />
       </referencedType>
     </packageHasNamedElement>

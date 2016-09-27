@@ -72,32 +72,6 @@
       </propertyInstances>
     </stereotypeInstance>
   </appliedStereotypesInternal>
-  <profileInstances>
-    <packageHasProfileInstances Id="645082d2-182e-4fe9-b50c-dd1bde79e19f">
-      <profileInstance Id="c4e41d69-e2b4-454d-9667-43986127a0b9" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="7494cd5b-0d8c-44a1-b592-92e7392bb224">
-      <profileInstance Id="bd2f01b7-be53-4b6c-8655-9507964792f9" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="bdb4de98-64d3-4e97-ab4e-7bd4aa587757">
-      <profileInstance Id="12f268fe-394f-42c7-950d-fb896392dedf" name="CSharpProfile">
-        <elementDefinition Id="642fa43c-7777-4048-8c3c-1cdc335cff26" />
-      </profileInstance>
-      <elementDefinition Id="911f7a69-85b8-429b-94b7-751ece6cd98a" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="80b46c59-0bc6-4c23-8d81-105327ec3953">
-      <profileInstance Id="283295f4-84fc-4c50-8812-ac6c8ed20c3b" name="TextTemplateBindings">
-        <elementDefinition Id="75454b40-952d-479a-ad39-f0b93335dc6f" />
-      </profileInstance>
-      <elementDefinition Id="6f146c50-9d98-4021-9148-1e8d0b26731f" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <packageHasNamedElement>
       <referencedType Id="2399f683-e7aa-43f3-a080-750ced96cf40" name="SalonCloudResponse&lt;AuthorizationData&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;AuthorizationData&gt;">
@@ -125,7 +99,7 @@
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="9824cdfd-f83f-4c73-b34a-d5c064413f3d" name="AuthorizationBehavior" isAbstract="false" isLeaf="false">
+      <Interface Id="9824cdfd-f83f-4c73-b34a-d5c064413f3d" name="AuthenticationBehavior" isAbstract="false" isLeaf="false">
         <elementDefinition Id="0ddbec70-7d46-442c-a4cf-2fb182eca4d6" />
         <ownedOperations>
           <operation Id="45bd1a39-b5b1-4f6c-9f83-6a7a403c5135" name="signUpWithUsernamePassword" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
@@ -260,7 +234,7 @@
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <Interface Id="4ee0cb05-3016-4fe3-af4e-0c18b05dc08d" name="AuthorizationData" isAbstract="false" isLeaf="false">
+      <Interface Id="4ee0cb05-3016-4fe3-af4e-0c18b05dc08d" name="AuthenticationData" isAbstract="false" isLeaf="false">
         <elementDefinition Id="d47bb92a-bf44-4754-8d29-9fd59b7a7a28" />
         <ownedAttributes>
           <property Id="1c7a6e06-5e10-40fb-808b-7e25e36f28d7" name="_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -322,11 +296,11 @@
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <logicalClassDesignerModelHasTypes>
-      <class Id="08d87a11-02ad-4b05-83b7-713a1d589b5e" name="Authorization" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="08d87a11-02ad-4b05-83b7-713a1d589b5e" name="Authentication" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="f5d84f0b-fcc2-47b1-b696-9fe1ddd78ae8" />
         <suppliersInternal>
           <interfaceRealization Id="a11bec7f-651e-4ef3-abae-c7a781a49571">
-            <interfaceMoniker Id="9824cdfd-f83f-4c73-b34a-d5c064413f3d" LastKnownName="AuthorizationBehavior" />
+            <interfaceMoniker Id="9824cdfd-f83f-4c73-b34a-d5c064413f3d" LastKnownName="AuthenticationBehavior" />
             <elementDefinition Id="f1c6d745-03dd-4df4-83c5-4ee24b3d76bd" />
           </interfaceRealization>
         </suppliersInternal>
@@ -485,5 +459,31 @@
   </packagedElements>
   <package Id="5f7880c9-756f-4179-bf79-f5b79a1c1f14" name="SalonCloud.Server.Design">
     <elementDefinition Id="2c899048-69c9-4895-a4a9-015718059e00" />
+    <profileInstances>
+      <packageHasProfileInstances Id="645082d2-182e-4fe9-b50c-dd1bde79e19f">
+        <profileInstance Id="c4e41d69-e2b4-454d-9667-43986127a0b9" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="7494cd5b-0d8c-44a1-b592-92e7392bb224">
+        <profileInstance Id="bd2f01b7-be53-4b6c-8655-9507964792f9" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="bdb4de98-64d3-4e97-ab4e-7bd4aa587757">
+        <profileInstance Id="12f268fe-394f-42c7-950d-fb896392dedf" name="CSharpProfile">
+          <elementDefinition Id="642fa43c-7777-4048-8c3c-1cdc335cff26" />
+        </profileInstance>
+        <elementDefinition Id="911f7a69-85b8-429b-94b7-751ece6cd98a" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="80b46c59-0bc6-4c23-8d81-105327ec3953">
+        <profileInstance Id="283295f4-84fc-4c50-8812-ac6c8ed20c3b" name="TextTemplateBindings">
+          <elementDefinition Id="75454b40-952d-479a-ad39-f0b93335dc6f" />
+        </profileInstance>
+        <elementDefinition Id="6f146c50-9d98-4021-9148-1e8d0b26731f" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </logicalClassDesignerModel>
