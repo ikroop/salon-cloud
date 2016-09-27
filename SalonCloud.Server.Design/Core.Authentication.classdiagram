@@ -74,11 +74,6 @@
   </appliedStereotypesInternal>
   <packagedElements>
     <packageHasNamedElement>
-      <referencedType Id="2399f683-e7aa-43f3-a080-750ced96cf40" name="SalonCloudResponse&lt;AuthorizationData&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;AuthorizationData&gt;">
-        <elementDefinition Id="b3d823a7-9438-4bbc-a492-82eab1ba56c2" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
       <referencedType Id="50bb2cae-c43a-4561-9ca1-9120a4b1859f" name="string" isAbstract="false" isLeaf="false" cachedFullName="string">
         <elementDefinition Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1" />
       </referencedType>
@@ -138,21 +133,21 @@
                 <parameter Id="d363b99d-c1f8-46e1-88e9-b28d6a03c966" direction="Return" isUnique="false">
                   <elementDefinition Id="84386e67-a500-4882-b526-a042ed7bc552" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="2399f683-e7aa-43f3-a080-750ced96cf40" LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;" />
+                    <referencedTypeMoniker Id="e7c4efe8-37bc-42f8-91c3-2742924cfcec" LastKnownName="SalonCloudResponse&lt;AuthenticationData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="cb41ef2d-36c7-46af-a6de-90bfd3a1d452" name="username" direction="In" isUnique="false">
-                  <elementDefinition Id="571914ee-de74-48e4-abe3-c39b1542531b" />
+                <parameter Id="bf848678-4b30-4439-b4a6-41a98213c5d9" name="username" direction="In" isUnique="false">
+                  <elementDefinition Id="317b8399-6763-4b84-b0a0-691485dafab2" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="50bb2cae-c43a-4561-9ca1-9120a4b1859f" LastKnownName="string" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="5c9401bb-6ba6-49b6-876e-9cb1bf0fa070" name="password" direction="In" isUnique="false">
-                  <elementDefinition Id="98cda044-a4d9-447a-8af5-e559239a9860" />
+                <parameter Id="4f5818a9-aa36-4ddb-be26-b2ad90d8ce9e" name="password" direction="In" isUnique="false">
+                  <elementDefinition Id="7fd250f6-d573-43b7-b5a7-c1bf96acfe72" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="50bb2cae-c43a-4561-9ca1-9120a4b1859f" LastKnownName="string" />
                   </type_NamedElement>
@@ -213,18 +208,18 @@
             <elementDefinition Id="f8cdbfce-c025-44c2-9db0-dc12c300e07d" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="43979749-3674-4c3c-9ea6-296160411084" name="token" direction="In" isUnique="false">
-                  <elementDefinition Id="8f4a8917-7182-45b8-8eaa-4fa5205061ce" />
+                <parameter Id="2d9cba39-9f50-48ad-a574-21e83e97b562" direction="Return" isUnique="false">
+                  <elementDefinition Id="5f11445a-9b2a-4fac-890b-439f8615f26a" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="84c17f42-6a68-467c-9afe-1ca1efa40741" LastKnownName="string" />
+                    <referencedTypeMoniker Id="e7c4efe8-37bc-42f8-91c3-2742924cfcec" LastKnownName="SalonCloudResponse&lt;AuthenticationData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="2d9cba39-9f50-48ad-a574-21e83e97b562" direction="Return" isUnique="false">
-                  <elementDefinition Id="5f11445a-9b2a-4fac-890b-439f8615f26a" />
+                <parameter Id="b0374318-a6f4-43da-b41c-ca46d7260759" name="token" direction="In" isUnique="false">
+                  <elementDefinition Id="7a22fe58-e6f8-4a19-ac23-9699402d03a0" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="00fd1d3e-379f-4b65-9caf-503d637e7b57" LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;" />
+                    <referencedTypeMoniker Id="84c17f42-6a68-467c-9afe-1ca1efa40741" LastKnownName="string" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -357,7 +352,7 @@
                 <parameter Id="4581fc37-a845-437e-93bf-81168773e3ab" direction="Return" isUnique="false">
                   <elementDefinition Id="7d85fc79-2c6d-4b1c-8788-34957deaa45b" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="2399f683-e7aa-43f3-a080-750ced96cf40" LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;" />
+                    <referencedTypeMoniker Id="e7c4efe8-37bc-42f8-91c3-2742924cfcec" LastKnownName="SalonCloudResponse&lt;AuthenticationData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -416,18 +411,18 @@
             <elementDefinition Id="d165e537-fd3b-4627-b31d-276ae2499eef" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="ff159873-89dc-483b-a1e1-1495dcf051ae" name="token" direction="In" isUnique="false">
-                  <elementDefinition Id="8a50eb92-d0a7-46bd-8b9e-b146c85d697f" />
+                <parameter Id="95b192a0-526e-4517-a830-cde52f503a41" direction="Return" isUnique="false">
+                  <elementDefinition Id="a12be70d-f5c8-4f52-97d3-6f67a0134266" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="50bb2cae-c43a-4561-9ca1-9120a4b1859f" LastKnownName="string" />
+                    <referencedTypeMoniker Id="e7c4efe8-37bc-42f8-91c3-2742924cfcec" LastKnownName="SalonCloudResponse&lt;AuthenticationData&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="95b192a0-526e-4517-a830-cde52f503a41" direction="Return" isUnique="false">
-                  <elementDefinition Id="a12be70d-f5c8-4f52-97d3-6f67a0134266" />
+                <parameter Id="f7d4d86c-1294-40a0-8282-e8b0099d102c" name="token" direction="In" isUnique="false">
+                  <elementDefinition Id="659224e4-5e5f-4074-8e47-654ff7e12cbc" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="2399f683-e7aa-43f3-a080-750ced96cf40" LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;" />
+                    <referencedTypeMoniker Id="50bb2cae-c43a-4561-9ca1-9120a4b1859f" LastKnownName="string" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -442,11 +437,6 @@
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="00fd1d3e-379f-4b65-9caf-503d637e7b57" name="SalonCloudResponse&lt;AuthorizationData&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;AuthorizationData&gt;">
-        <elementDefinition Id="b3d823a7-9438-4bbc-a492-82eab1ba56c2" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
       <referencedType Id="c90904c0-8710-4ec4-94d4-074d73a2f96f" name="TokenData" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::TokenData">
         <elementDefinition Id="51c3c42a-57a4-4c22-aaf6-51c009897a86" />
       </referencedType>
@@ -454,6 +444,11 @@
     <packageHasNamedElement>
       <referencedType Id="118670c7-5e5c-49d7-b094-3184c2a75175" name="boolean" isAbstract="false" isLeaf="false" cachedFullName="boolean">
         <elementDefinition Id="051e7997-f310-4d15-a48a-c3a7ec61badb" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="e7c4efe8-37bc-42f8-91c3-2742924cfcec" name="SalonCloudResponse&lt;AuthenticationData&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;AuthenticationData&gt;">
+        <elementDefinition Id="da8ab358-05fb-4c9a-8b74-4345e268b933" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>

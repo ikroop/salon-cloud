@@ -2410,15 +2410,15 @@ getDailyScheduleRecord(date, function(err, data){
                   isUnique="false">
                   <type_NamedElement>
                     <undefinedTypeMoniker
-                      Id="b3d823a7-9438-4bbc-a492-82eab1ba56c2"
-                      LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;"
+                      Id="da8ab358-05fb-4c9a-8b74-4345e268b933"
+                      LastKnownName="SalonCloudResponse&lt;AuthenticationData&gt;"
                       LastKnownLocation="SalonCloud.Server.Design.uml" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="571914ee-de74-48e4-abe3-c39b1542531b"
+                  Id="317b8399-6763-4b84-b0a0-691485dafab2"
                   name="username"
                   direction="In"
                   isUnique="false">
@@ -2432,7 +2432,7 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="98cda044-a4d9-447a-8af5-e559239a9860"
+                  Id="7fd250f6-d573-43b7-b5a7-c1bf96acfe72"
                   name="password"
                   direction="In"
                   isUnique="false">
@@ -2540,7 +2540,20 @@ getDailyScheduleRecord(date, function(err, data){
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="8f4a8917-7182-45b8-8eaa-4fa5205061ce"
+                  Id="5f11445a-9b2a-4fac-890b-439f8615f26a"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="da8ab358-05fb-4c9a-8b74-4345e268b933"
+                      LastKnownName="SalonCloudResponse&lt;AuthenticationData&gt;"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7a22fe58-e6f8-4a19-ac23-9699402d03a0"
                   name="token"
                   direction="In"
                   isUnique="false">
@@ -2548,19 +2561,6 @@ getDailyScheduleRecord(date, function(err, data){
                     <undefinedTypeMoniker
                       Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
                       LastKnownName="string"
-                      LastKnownLocation="SalonCloud.Server.Design.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="5f11445a-9b2a-4fac-890b-439f8615f26a"
-                  direction="Return"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="b3d823a7-9438-4bbc-a492-82eab1ba56c2"
-                      LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;"
                       LastKnownLocation="SalonCloud.Server.Design.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -2847,8 +2847,8 @@ getDailyScheduleRecord(date, function(err, data){
                   isUnique="false">
                   <type_NamedElement>
                     <undefinedTypeMoniker
-                      Id="b3d823a7-9438-4bbc-a492-82eab1ba56c2"
-                      LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;"
+                      Id="da8ab358-05fb-4c9a-8b74-4345e268b933"
+                      LastKnownName="SalonCloudResponse&lt;AuthenticationData&gt;"
                       LastKnownLocation="SalonCloud.Server.Design.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -2949,7 +2949,20 @@ getDailyScheduleRecord(date, function(err, data){
             <ownedParameters>
               <operationHasOwnedParameters>
                 <parameter
-                  Id="8a50eb92-d0a7-46bd-8b9e-b146c85d697f"
+                  Id="a12be70d-f5c8-4f52-97d3-6f67a0134266"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="da8ab358-05fb-4c9a-8b74-4345e268b933"
+                      LastKnownName="SalonCloudResponse&lt;AuthenticationData&gt;"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="659224e4-5e5f-4074-8e47-654ff7e12cbc"
                   name="token"
                   direction="In"
                   isUnique="false">
@@ -2957,19 +2970,6 @@ getDailyScheduleRecord(date, function(err, data){
                     <undefinedTypeMoniker
                       Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
                       LastKnownName="string"
-                      LastKnownLocation="SalonCloud.Server.Design.uml" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter
-                  Id="a12be70d-f5c8-4f52-97d3-6f67a0134266"
-                  direction="Return"
-                  isUnique="false">
-                  <type_NamedElement>
-                    <undefinedTypeMoniker
-                      Id="b3d823a7-9438-4bbc-a492-82eab1ba56c2"
-                      LastKnownName="SalonCloudResponse&lt;AuthorizationData&gt;"
                       LastKnownLocation="SalonCloud.Server.Design.uml" />
                   </type_NamedElement>
                 </parameter>
@@ -10314,6 +10314,11 @@ getDailyScheduleRecord(date, function(err, data){
       <undefinedType
         Id="5f3745f4-df9c-48e0-a2b4-d82ec905feee"
         name="Array&lt;ReceiptItemData&gt;" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <undefinedType
+        Id="da8ab358-05fb-4c9a-8b74-4345e268b933"
+        name="SalonCloudResponse&lt;AuthenticationData&gt;" />
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType
