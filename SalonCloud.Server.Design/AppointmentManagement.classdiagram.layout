@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<logicalClassDesignerDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 14.5, 9.625" name="AppointmentManagement">
+<logicalClassDesignerDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 20.125, 9.625" name="AppointmentManagement">
   <logicalClassDesignerModelMoniker Id="154dba53-06db-4f14-838a-db4cf61ee0bd" />
   <nestedChildShapes>
     <interfaceShape Id="6c6f97e4-85aa-4627-b77c-b124ca1679c4" absoluteBounds="5.875, 0.5, 5.375, 1.8632812052965164" hideQualifiedName="false" increaseHeight="0" customColor="207, 223, 191">
@@ -76,5 +76,26 @@
         <classShapeMoniker Id="5a5c895e-3968-4d91-8de2-3ad42dabd7f9" />
       </nodes>
     </generalizationConnector>
+    <interfaceShape Id="fef5e3a9-2919-464b-9018-8dbcb0d7dc11" absoluteBounds="13.5, 3.125, 2.375, 2.5039061854283009" hideQualifiedName="false" increaseHeight="0" customColor="207, 223, 191">
+      <interfaceMoniker Id="a05b8afb-8a7e-42de-8c11-4e5ff9623afd" LastKnownName="AppointmentData" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="b5607082-2ed9-409d-998f-8153ac5d3eb8" absoluteBounds="13.515, 3.5149999999999997, 2.3449999999999998, 1.8027343178788819" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="8b4e4238-e84a-4ec7-8c41-b5085a20bdd6" absoluteBounds="13.515, 5.3277343178788819, 2.3449999999999998, 0.20117186754941985" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </interfaceShape>
+    <interfaceShape Id="61b5b4fc-3a9a-4ba7-b22a-7bfca532a82b" absoluteBounds="16.625, 2.375, 3, 1.7031249602635699" hideQualifiedName="false" increaseHeight="0" customColor="207, 223, 191">
+      <interfaceMoniker Id="89a0d68c-1916-48f5-a205-a284457e4d1a" LastKnownName="ReceiptItemData" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="18632b18-e2ca-47cf-84f9-e204b016c544" absoluteBounds="16.64, 2.765, 2.9699999999999998, 1.0019530927141507" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="0eaff300-9882-4c01-83e0-e4da96408055" absoluteBounds="16.64, 3.7769530927141508, 2.9699999999999998, 0.20117186754941963" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </interfaceShape>
+    <interfaceShape Id="f9177ee0-b15d-4329-8a4c-b9dbc6db97d3" absoluteBounds="16.625, 4.375, 3.25, 1.3828124701976776" hideQualifiedName="false" increaseHeight="0" customColor="207, 223, 191">
+      <interfaceMoniker Id="f293661d-513b-4103-a0bf-3c6c86cd1b3f" LastKnownName="ReceiptData" />
+      <nestedChildShapes>
+        <AttributeElementListCompartment Id="6827eb5a-3cc4-44d8-8de8-524cc42357a3" absoluteBounds="16.64, 4.765, 3.2199999999999998, 0.68164060264825821" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="19ff9a92-8dab-4da5-a533-55dbf8c6adbf" absoluteBounds="16.64, 5.4566406026482586, 3.2199999999999998, 0.20117186754941963" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </interfaceShape>
   </nestedChildShapes>
 </logicalClassDesignerDiagram>
