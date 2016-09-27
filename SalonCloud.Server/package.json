@@ -19,7 +19,8 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.0.0",
-    "stylus": "*"
+    "stylus": "*",
+    "typescript": "^2.1.0-dev.20160927"
   },
   "devDependencies": {
     "gulp": "^3.8.11",
