@@ -44,6 +44,31 @@ getDailyScheduleRecord(date, function(err, data){
      }
 })</body>
     </comment>
+    <comment
+      Id="617d2bb9-e55d-4e59-98a1-3975888aff82">
+      <body>CheckPermission Method
+1. Check permission in database
+2. If there is not permission in database, check default permission.
+3. Return value.</body>
+      <annotatedElements>
+        <classMoniker
+          Id="07243c3b-19c2-4ca2-bbb3-2214d688dc8b"
+          LastKnownName="Authorization"
+          LastKnownLocation="SalonCloud.Server.Design.uml" />
+      </annotatedElements>
+    </comment>
+    <comment
+      Id="2d1ce34c-9bd8-4f23-95b3-0670ffbe1e99">
+      <body>Allow/ DisAllowPemission Method
+1. if (exist pemission in database) -&gt; update permission
+    else add new permission (allow / disallow)</body>
+      <annotatedElements>
+        <classMoniker
+          Id="07243c3b-19c2-4ca2-bbb3-2214d688dc8b"
+          LastKnownName="Authorization"
+          LastKnownLocation="SalonCloud.Server.Design.uml" />
+      </annotatedElements>
+    </comment>
   </ownedCommentsInternal>
   <appliedStereotypesInternal>
     <stereotypeInstance
@@ -2987,7 +3012,7 @@ getDailyScheduleRecord(date, function(err, data){
     <packageHasNamedElement>
       <Interface
         Id="e2c22e8f-96f7-4fce-98fb-33edde933ae0"
-        name="Authentication"
+        name="Authorization"
         isAbstract="false"
         isLeaf="false">
         <ownedOperations>
@@ -3013,6 +3038,131 @@ getDailyScheduleRecord(date, function(err, data){
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ab0bcc2c-4048-4db2-abc0-ebc21b719cf9"
+                  name="userId"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
+                      LastKnownName="string"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="3bae2109-68e2-40f8-bc7e-075005461bc0"
+                  name="apiUrl"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
+                      LastKnownName="string"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="2cf5e609-fc03-49ee-9cd7-bf0108f212a6"
+            name="AllowPemission"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5d99286c-569d-4990-8a2f-e47e01875b9a"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="051e7997-f310-4d15-a48a-c3a7ec61badb"
+                      LastKnownName="boolean"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6e1ce3cf-1952-4311-b7b9-5dbdbc18e541"
+                  name="apiUrl"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
+                      LastKnownName="string"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="57dbbb4b-4337-4acf-98a8-67b6eeadab21"
+                  name="userType"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="725b7863-09dc-4804-a657-1800269b1e70"
+                      LastKnownName="number"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="d123b63b-d6e5-4347-882c-7d03882db488"
+            name="DisAllowPermission"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="201889c6-f976-41a3-8356-40f1db4610f1"
+                  name="apiUrl"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
+                      LastKnownName="string"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6ec12b64-24e0-4488-9308-c335b6e95745"
+                  name="UserType"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="030bfa75-e709-49b7-99fa-523c5fdd4ce4"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="051e7997-f310-4d15-a48a-c3a7ec61badb"
+                      LastKnownName="boolean"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
         </ownedOperations>
@@ -3021,7 +3171,7 @@ getDailyScheduleRecord(date, function(err, data){
     <packageHasNamedElement>
       <class
         Id="07243c3b-19c2-4ca2-bbb3-2214d688dc8b"
-        name="Authentication"
+        name="Authorization"
         isAbstract="false"
         isLeaf="false"
         isActiveClass="false">
@@ -3030,10 +3180,30 @@ getDailyScheduleRecord(date, function(err, data){
             Id="11442bb8-dfd1-45b5-8415-738586481743">
             <interfaceMoniker
               Id="e2c22e8f-96f7-4fce-98fb-33edde933ae0"
-              LastKnownName="Authentication"
+              LastKnownName="Authorization"
               LastKnownLocation="SalonCloud.Server.Design.uml" />
           </interfaceRealization>
         </suppliersInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="46941cc9-a02e-4ad6-a6ee-3b483d2f278f"
+            name="salonId"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
+                LastKnownName="string"
+                LastKnownLocation="SalonCloud.Server.Design.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
             Id="ef7fe2ce-b434-4d12-9208-1c52940a2354"
@@ -3053,6 +3223,184 @@ getDailyScheduleRecord(date, function(err, data){
                     <undefinedTypeMoniker
                       Id="4a6479c9-bc02-4d0d-b08b-e78e471e785d"
                       LastKnownName="SalonCloudResponse&lt;boolean&gt;"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="59f6c6aa-3e59-49f0-bf8b-b6d6d35c65d4"
+                  name="userId"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
+                      LastKnownName="string"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="25b8789c-1b58-47f7-8cc0-e9e003df7663"
+                  name="apiUrl"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
+                      LastKnownName="string"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="bfdd940b-5234-4e36-aa06-7402d58ed1f9"
+            name="AllowPemission"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="95a3846d-49d7-4a71-a053-4e09be85ee8c"
+                  name="salonId"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
+                      LastKnownName="string"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="67509fbd-5805-4376-9fd8-162cdeff613f"
+                  name="apiUrl"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="725b7863-09dc-4804-a657-1800269b1e70"
+                      LastKnownName="number"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="fe2e120a-016f-4b2c-bacc-372cf69cdc54"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="051e7997-f310-4d15-a48a-c3a7ec61badb"
+                      LastKnownName="boolean"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="65094cf0-7b7f-43fe-8c81-cfca91cf6abf"
+            name="DisAllowPermission"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e614f5c3-0698-4a58-92a8-87e2558f138f"
+                  name="apiUrl"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
+                      LastKnownName="string"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d5d48d37-3759-44f9-96c8-4c6c5c17c735"
+                  name="UserType"
+                  direction="In"
+                  isUnique="false" />
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="87bc3424-ab55-4851-88dc-023179a31f4b"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="051e7997-f310-4d15-a48a-c3a7ec61badb"
+                      LastKnownName="boolean"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="4cb76e97-0a70-4d95-aeeb-6f0bded19700"
+            name="isExistPermission"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f6ac4ced-aa74-4f79-bf3e-5e8f1e1ee701"
+                  name="apiUrl"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
+                      LastKnownName="string"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="144af164-f386-4e3e-a21e-4d718491cc23"
+                  name="status"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="051e7997-f310-4d15-a48a-c3a7ec61badb"
+                      LastKnownName="boolean"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="0ca2345e-3cac-498a-963e-8be37dc3dc76"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="051e7997-f310-4d15-a48a-c3a7ec61badb"
+                      LastKnownName="boolean"
                       LastKnownLocation="SalonCloud.Server.Design.uml" />
                   </type_NamedElement>
                 </parameter>
