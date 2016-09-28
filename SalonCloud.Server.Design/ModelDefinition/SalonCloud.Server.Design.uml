@@ -6352,6 +6352,44 @@ getDailyScheduleRecord(date, function(err, data){
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation
+            Id="66c2b74f-5bbd-4c49-bd0b-b597056597f6"
+            name="getTimezoneFromAddress"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="79588d10-fff6-45c4-9071-de94764ccd32"
+                  name="address"
+                  direction="In"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
+                      LastKnownName="string"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="28bdd2c4-f4d3-497a-bb2e-360ac9c9186e"
+                  direction="Return"
+                  isUnique="false">
+                  <type_NamedElement>
+                    <undefinedTypeMoniker
+                      Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1"
+                      LastKnownName="string"
+                      LastKnownLocation="SalonCloud.Server.Design.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </packageHasNamedElement>

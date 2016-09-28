@@ -72,32 +72,6 @@
       </propertyInstances>
     </stereotypeInstance>
   </appliedStereotypesInternal>
-  <profileInstances>
-    <packageHasProfileInstances Id="6b17b371-c5d9-433c-941a-50d432d6026b">
-      <profileInstance Id="a840b9ea-f393-475a-97da-b42d30c683e2" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="4419b34b-1e1c-481b-850c-caeb82f3c0e0">
-      <profileInstance Id="f0411a6f-2ca0-4f90-92dc-0cda7dd458d3" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="4d203d3f-f79b-4714-bffc-1a5603721530">
-      <profileInstance Id="bc6e5fed-5d75-4808-887e-07e10b517479" name="CSharpProfile">
-        <elementDefinition Id="642fa43c-7777-4048-8c3c-1cdc335cff26" />
-      </profileInstance>
-      <elementDefinition Id="911f7a69-85b8-429b-94b7-751ece6cd98a" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="a50b8014-8b99-4ea8-95d8-d863e4047d8f">
-      <profileInstance Id="bfc8787d-9dd3-4714-8c74-9b97877d6d90" name="TextTemplateBindings">
-        <elementDefinition Id="75454b40-952d-479a-ad39-f0b93335dc6f" />
-      </profileInstance>
-      <elementDefinition Id="6f146c50-9d98-4021-9148-1e8d0b26731f" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <class Id="b74c73b3-b70f-4acc-b73f-f52474a4d656" name="Timezone" isAbstract="false" isLeaf="false" isActiveClass="false">
@@ -219,6 +193,27 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
+          <operation Id="32f47a90-de78-4f99-a06a-36653b7b914f" name="getTimezoneFromAddress" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="66c2b74f-5bbd-4c49-bd0b-b597056597f6" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="09d7a8b9-f218-4a20-8525-6ea60ef13755" name="address" direction="In" isUnique="false">
+                  <elementDefinition Id="79588d10-fff6-45c4-9071-de94764ccd32" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="103de8ee-f424-4df5-98f0-0a4758fcdef5" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8c5cd0a4-8961-430e-811a-73ccf6eac316" direction="Return" isUnique="false">
+                  <elementDefinition Id="28bdd2c4-f4d3-497a-bb2e-360ac9c9186e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="103de8ee-f424-4df5-98f0-0a4758fcdef5" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
         </ownedOperationsInternal>
       </class>
     </logicalClassDesignerModelHasTypes>
@@ -235,5 +230,31 @@
   </packagedElements>
   <package Id="04d0f25d-1fca-4703-89a8-7fd47575bd52" name="SalonCloud.Server.Design">
     <elementDefinition Id="2c899048-69c9-4895-a4a9-015718059e00" />
+    <profileInstances>
+      <packageHasProfileInstances Id="6b17b371-c5d9-433c-941a-50d432d6026b">
+        <profileInstance Id="a840b9ea-f393-475a-97da-b42d30c683e2" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="4419b34b-1e1c-481b-850c-caeb82f3c0e0">
+        <profileInstance Id="f0411a6f-2ca0-4f90-92dc-0cda7dd458d3" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="4d203d3f-f79b-4714-bffc-1a5603721530">
+        <profileInstance Id="bc6e5fed-5d75-4808-887e-07e10b517479" name="CSharpProfile">
+          <elementDefinition Id="642fa43c-7777-4048-8c3c-1cdc335cff26" />
+        </profileInstance>
+        <elementDefinition Id="911f7a69-85b8-429b-94b7-751ece6cd98a" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="a50b8014-8b99-4ea8-95d8-d863e4047d8f">
+        <profileInstance Id="bfc8787d-9dd3-4714-8c74-9b97877d6d90" name="TextTemplateBindings">
+          <elementDefinition Id="75454b40-952d-479a-ad39-f0b93335dc6f" />
+        </profileInstance>
+        <elementDefinition Id="6f146c50-9d98-4021-9148-1e8d0b26731f" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </logicalClassDesignerModel>
