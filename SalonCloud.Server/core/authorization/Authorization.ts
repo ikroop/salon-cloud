@@ -17,4 +17,17 @@ export class Authorization implements AuthorizationBehavior{
 
     //public addPermission(apiFunction: string, id:string, status: boolean): SalonCloudResponse<boolean>;
     //public removePermission(apiFunction: string, id:string): SalonCloudResponse<boolean>;
+
+    public AllowPemission(apiUrl : string, userType : number) : SalonCloudResponse<boolean>{
+
+    };
+
+    public DisAllowPermission(apiUrl : string, UserType) : SalonCloudResponse<boolean>{
+
+    };
+
+    private isExistPermission(apiUrl : string, status : boolean) : boolean {
+
+    };
+
 }
