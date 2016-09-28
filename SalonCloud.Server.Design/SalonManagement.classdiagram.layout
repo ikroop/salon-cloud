@@ -9,11 +9,11 @@
         <OperationElementListCompartment Id="88578d13-3f0d-49bf-aad9-d54b562e139a" absoluteBounds="0.89, 1.2261718675494193, 5.2200000000000006, 1.4824218278129895" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </interfaceShape>
-    <classShape Id="14e83934-1276-4144-8d19-6511a7955c46" absoluteBounds="0.5, 4, 6, 2.1835936953624095" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
+    <classShape Id="14e83934-1276-4144-8d19-6511a7955c46" absoluteBounds="0.5, 4, 6, 2.3437499403953552" hideQualifiedName="false" increaseHeight="0" customColor="181, 193, 223">
       <classMoniker Id="6b108648-84fa-44c2-a4c5-7075a5dbeb72" LastKnownName="SalonManagement" />
       <nestedChildShapes>
-        <AttributeElementListCompartment Id="f938ccd5-ee36-4421-ac91-d38f0de9edd6" absoluteBounds="0.515, 4.39, 5.9700000000000006, 0.2011718675494194" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
-        <OperationElementListCompartment Id="54690d79-feea-4c3d-b75c-71ad5f220d2f" absoluteBounds="0.515, 4.60117186754942, 5.9700000000000006, 1.4824218278129897" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <AttributeElementListCompartment Id="f938ccd5-ee36-4421-ac91-d38f0de9edd6" absoluteBounds="0.515, 4.39, 5.9700000000000006, 0.36132811258236563" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="54690d79-feea-4c3d-b75c-71ad5f220d2f" absoluteBounds="0.515, 4.7613281125823654, 5.9700000000000006, 1.48242182781299" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <realizationConnector edgePoints="[(3.5 : 4); (3.5 : 2.80859369536241)]" fixedFrom="NotFixed" fixedTo="NotFixed" customColor="113, 111, 110" showAsLollipop="false">
