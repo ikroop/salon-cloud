@@ -4153,6 +4153,26 @@ getDailyScheduleRecord(date, function(err, data){
               LastKnownLocation="SalonCloud.Server.Design.uml" />
           </interfaceRealization>
         </suppliersInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="da1e59ab-019f-4fc7-ae8c-702a959338cb"
+            name="authenticationDp"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <classMoniker
+                Id="f5d84f0b-fcc2-47b1-b696-9fe1ddd78ae8"
+                LastKnownName="Authentication"
+                LastKnownLocation="SalonCloud.Server.Design.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
             Id="2a379048-2a6f-49c0-bf5c-601f7bf6e0f8"

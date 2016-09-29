@@ -716,6 +716,14 @@
             <elementDefinition Id="ebcb756e-7eed-4443-9a6b-c9d4c44a9bfa" />
           </interfaceRealization>
         </suppliersInternal>
+        <ownedAttributesInternal>
+          <property Id="9f84ba8d-eced-4d26-992a-fc0160e3b593" name="authenticationDp" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="da1e59ab-019f-4fc7-ae8c-702a959338cb" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="88f66676-4097-4a81-a0a9-d16446cced20" LastKnownName="Authentication" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="9b8dd58f-00ce-4c64-b8d7-23db80862425" name="signUpWithUserAndPassword" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="2a379048-2a6f-49c0-bf5c-601f7bf6e0f8" />
