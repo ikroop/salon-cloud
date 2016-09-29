@@ -127,35 +127,6 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="8c2c2bd0-30c5-4014-abd1-6bf1479b4a44" name="addUser" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
-            <elementDefinition Id="96b9105e-090c-489a-b982-1e63b987358a" />
-            <ownedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="e02370e5-12e0-4c72-8175-25930a2b2d8c" direction="Return" isUnique="false">
-                  <elementDefinition Id="51e091f2-a859-4e8f-b243-65253334f05a" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="0e8e48d5-7983-4c2d-a76f-95611a9d4d21" LastKnownName="boolean" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="5783926c-7423-439a-86c8-5b53bd251866" name="phone" direction="In" isUnique="false">
-                  <elementDefinition Id="7e576f67-46d4-41ef-9dd3-f002a5c8a35e" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="ec5fac6e-ab7c-448c-bbd0-e7e4ea1cddfa" LastKnownName="string" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
-                <parameter Id="0148b8a1-c998-4a81-a250-31a1963387d0" name="profile" direction="In" isUnique="false">
-                  <elementDefinition Id="a1cea0dc-70ef-4e70-9824-3f5f4e4c6f66" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="fb05870c-c6b4-45c3-8842-51e6ccd5408b" LastKnownName="UserProfile" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-            </ownedParameters>
-          </operation>
           <operation Id="2ab24dd3-14d4-444e-83de-b32ba0e16221" name="updateProfile" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="11f60f0f-558d-40dc-962f-6a7137ca4d75" />
             <ownedParameters>
@@ -180,6 +151,32 @@
                   <elementDefinition Id="cbd0c704-b5cf-48a3-8812-cc17365e60a5" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="fb05870c-c6b4-45c3-8842-51e6ccd5408b" LastKnownName="UserProfile" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="43d62af4-711b-4c4e-86c0-50a5c64032e3" name="addUser" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ef3e3d8b-cabc-4bd7-ba4d-7fae86f8066e" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="57acc214-bb71-493a-a1e5-dcd95096bbe5" name="phone" direction="In" isUnique="false">
+                  <elementDefinition Id="6a9827fa-5e36-4dfa-ac89-55d8244e81f9" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="18fee93f-a833-44b8-ace4-e75553969889" name="profile" direction="In" isUnique="false">
+                  <elementDefinition Id="e7cdedde-6e3a-431f-b95c-bb83e39cbb58" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="fb05870c-c6b4-45c3-8842-51e6ccd5408b" LastKnownName="UserProfile" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="5a669f77-f0af-4186-a0ed-68ef57be2e41" direction="Return" isUnique="false">
+                  <elementDefinition Id="374cf318-d489-4c1c-9871-57555c6b8692" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0e8e48d5-7983-4c2d-a76f-95611a9d4d21" LastKnownName="boolean" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>

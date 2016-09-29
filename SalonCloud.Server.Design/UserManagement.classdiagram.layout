@@ -6,7 +6,7 @@
       <classMoniker Id="1978ef72-5b36-4ae9-943d-1f0108b4a71f" LastKnownName="UserManagement" />
       <nestedChildShapes>
         <AttributeElementListCompartment Id="29d4bb61-7511-467f-82de-df9c54141be0" absoluteBounds="5.64, 4.0150000000000006, 4.0950000000000006, 0.36132811258236563" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
-        <OperationElementListCompartment Id="7d6108d2-2fc2-41ea-8a77-bba68ee26b8c" absoluteBounds="5.64, 4.3863281125823654, 4.0950000000000006, 0.84179684768120455" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <OperationElementListCompartment Id="7d6108d2-2fc2-41ea-8a77-bba68ee26b8c" absoluteBounds="5.64, 4.3863281125823654, 4.0950000000000006, 0.84179684768120444" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <interfaceShape Id="fd374b34-07af-4c60-82f5-eb1f76c8ba08" absoluteBounds="5.625, 0.5, 2.125, 1.8632812052965169" hideQualifiedName="false" increaseHeight="0" customColor="207, 223, 191">
