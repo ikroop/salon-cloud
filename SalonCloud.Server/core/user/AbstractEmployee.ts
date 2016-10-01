@@ -3,33 +3,43 @@
 
 import {SalonUser} from './SalonUser'
 import {EmployeeBehavior} from './EmployeeBehavior'
+import {UserProfile} from './UserData'
+import {AppointmentData} from './../../modules/appointmentManagement/AppointmentData'
+import {DailyDayData, WeeklyDayData} from './../../modules/schedule/ScheduleData'
+import {EmployeeSchedule} from './../../modules/schedule/EmployeeSchedule'
+import {SalonSchedule} from './../../modules/schedule/SalonSchedule'
+import {SalonCloudResponse} from './../SalonCloudResponse'
 
 export abstract class AbstractEmployee extends SalonUser implements EmployeeBehavior  {
 
     employeeScheduleDp : EmployeeSchedule;
     salonScheduleDp : SalonSchedule;
 
-    public getAppointmentByDate(date : Date) : Array<Appointment>{
+    public getAppointmentByDate(date : Date) : Array<AppointmentData>{
 
+        return;
     };
 
-    public getAppointmentById(appointmentId : string) : Appointment{
+    public getAppointmentById(appointmentId : string) : AppointmentData{
 
+        return;
     };
 
-    public getSalonSchedule(start : Date, end : Date) : SalonCloudResopnse<Array<DailySchedule>>{
+    public getSalonSchedule(start : Date, end : Date) : SalonCloudResponse<Array<DailyDayData>>{
 
+        return;
     };
 
-    public getSchedule(start : Date, end : Date) : SalonCloudResponse<Array<DailySchedule>>{
+    public getSchedule(start : Date, end : Date) : SalonCloudResponse<Array<DailyDayData>>{
 
+        return;
     };
 
-    public updateAppointmentStatus(appointmentId : string, status : number) : SalonCloudResponse<Appointment>{
-
+    public updateAppointmentStatus(appointmentId : string, status : number) : SalonCloudResponse<AppointmentData>{
+        return;
     };
 
-    protected abstract filterAppointmentFields(appointment : Appointment) : Appointment;
+    protected abstract filterAppointmentFields(appointment : AppointmentData) : AppointmentData;
 
 
 }

@@ -1,22 +1,43 @@
 
 
 import {BookingAppointmentBehavior} from './BookingAppointmentBehavior';
+import {SalonCloudResponse} from './../SalonCloudResponse'
+import {AppointmentData} from './../../modules/appointmentManagement/AppointmentData'
+import {AppointmentManagement} from './../../modules/appointmentManagement/AppointmentManagement'
+import {ServiceManagement} from './../../modules/serviceManagement/ServiceManagement'
+import {ServiceItem} from './../../modules/serviceManagement/ServiceItem'
+
 
 export class BookingAppointment implements BookingAppointmentBehavior {
 
-    appointmentDP: AppoinmentManagement;
+    appointmentDP: AppointmentManagement;
     serviceDP: ServiceManagement;
     verificationDP: Verification;
 
-    bookAppointment(appointment : Appointment) : SalonCloudResponse<Appointment>;
+    bookAppointment(appointment : AppointmentData) : SalonCloudResponse<AppointmentData>{
+
+        return;
+    };
     
-    getAvailableTime(date : Date, services : Array<Services>) : SalonCloudResponse<BookingSchedule>;
+    getAvailableTime(date : Date, services : Array<ServiceItem>) : SalonCloudResponse<BookingSchedule>{
 
-    getServices() : SalonCloudResponse<Array<Services>>;
+        return;
+    };
 
-    sendVerifyCode(phonenumber : string) : SalonCloudResponse<boolean>;
+    getServices() : SalonCloudResponse<Array<ServiceItem>>{
 
-    verifyCode(code : string) : SalonCloudResponse<boolean>;
+        return;
+    };
+
+    sendVerifyCode(phonenumber : string) : SalonCloudResponse<boolean>{
+
+        return;
+    };
+
+    verifyCode(code : string) : SalonCloudResponse<boolean>{
+
+        return;
+    };
 
 
 }

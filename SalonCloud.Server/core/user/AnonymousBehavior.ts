@@ -1,5 +1,9 @@
 
 
+import {BookingAppointmentBehavior} from './BookingAppointmentBehavior'
+import {SalonCloudResponse} from './../SalonCloudResponse'
+import {Authorization} from './../authorization/Authorization'
+
 
 export interface AnonymousBehavior {
    
