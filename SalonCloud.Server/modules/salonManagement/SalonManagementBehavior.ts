@@ -1,5 +1,8 @@
 
 
+import {SalonData} from './SalonData'
+import {SalonCloudResponse} from './../../core/SalonCloudResponse'
+
 
 export interface SalonManagementBehavior {
 
@@ -15,7 +18,7 @@ export interface SalonManagementBehavior {
 
     getAllSalon(userId : string) : SalonCloudResponse<SalonInformation>;
 
-    updateInformation(data : SalonInformation) : SalonCloudRespoonse<boolean>;
+    updateInformation(data : SalonInformation) : SalonCloudResponse<boolean>;
 
     updateSetting(setting : SalonSetting) : SalonCloudResponse<boolean>;
 

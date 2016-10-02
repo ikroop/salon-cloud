@@ -1,4 +1,6 @@
 
+import {SalonCloudResponse} from './../SalonCloudResponse'
+import {SalonManagement} from './../../modules/salonManagement/SalonManagement'
 
 
 export interface SignedInUserBehavior {

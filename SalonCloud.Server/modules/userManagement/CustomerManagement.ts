@@ -7,11 +7,19 @@ import {CustomerManagementBehavior} from './CustomerManagementBehavior'
 
 export class CustomerManagement implements CustomerManagementBehavior{
 
-    addCustomer(phone, profile :UserProfile) : boolean{};
+    addCustomer(phone, profile :UserProfile) : boolean{
+        return;
+    };
 
-    getAllCustomers() : Array<UserData>{};
+    getAllCustomers() : Array<UserData>{
+        return;
+    };
 
-    getCustomer(customerId : string) : UserData{};
+    getCustomer(customerId : string) : UserData{
+        return;
+    };
 
-    updateCustomer(customerId : string, profile :UserProfile) : boolean{};
+    updateCustomer(customerId : string, profile :UserProfile) : boolean{
+        return;
+    };
 }

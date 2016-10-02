@@ -1,5 +1,6 @@
 
 
+import {AppointmentData} from './AppointmentData'
 
 export interface AppointmentManagementBehavior {
 

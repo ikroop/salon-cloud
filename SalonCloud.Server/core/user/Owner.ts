@@ -2,38 +2,50 @@
 
 
 import {AbstractAdministrator} from './AbstractAdministrator'
+import {SalonCloudResponse} from './../SalonCloudResponse'
+import {UserProfile} from './UserData'
+import {AppointmentData} from './../../modules/appointmentManagement/AppointmentData'
+import {DailyDayData, WeeklyDayData} from './../../modules/schedule/ScheduleData'
+
 
 export class Owner extends AbstractAdministrator {
     
-    public activateEmployee(employeeId : string) : boolean{
+    public activateEmployee(employeeId : string) : SalonCloudResponse<boolean>{
 
+        return;
     };
 
     public activateSalon(salonId : string) : boolean{
+
+        return;
 
     };
 
     public addService(){
 
+        return;
     };
 
     public deactivateEmployee(emplpoyeeId : string) : boolean{
 
+        return;
     };
 
     public deativateSalon(salonId : string) : boolean{
-
+        return; 
     };
 
     public removeService(){
 
+        return;
     };
 
     public updateEmployeeProfile(employee : UserProfile) : boolean{
 
+        return;
     };
 
-    public updateSalonDailySchedule(dailySchedule : DailySchedule){
+    public updateSalonDailySchedule(dailySchedule : DailyDayData){
 
     };
 
@@ -45,7 +57,7 @@ export class Owner extends AbstractAdministrator {
 
     };
 
-    public updateSalonWeeklySchedule(weeklySchedule : WeeklySchedule){
+    public updateSalonWeeklySchedule(weeklySchedule : WeeklyDayData){
 
     };
 
@@ -53,11 +65,13 @@ export class Owner extends AbstractAdministrator {
 
     };
 
-    public getSchedule(start : Date, end : Date) : SalonCloudResponse<Array<DailySchedule>>{
+    public getSchedule(start : Date, end : Date) : SalonCloudResponse<Array<DailyDayData>>{
 
+        return;
     };
 
     protected filterProfileData(user : UserProfile) : UserProfile {
 
+        return;
     }
 }
