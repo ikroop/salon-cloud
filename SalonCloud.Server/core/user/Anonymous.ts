@@ -5,12 +5,13 @@ import {OnlineBooking} from './OnlineBooking'
 import {BookingAppointmentBehavior} from './BookingAppointmentBehavior'
 import {SalonCloudResponse} from './../SalonCloudResponse'
 import {Authorization} from './../authorization/Authorization'
+import {SalonPublicService} from './../salonPublicService/SalonPublicService'
 
 export class Anonymous implements AnonymousBehavior, OnlineBooking {
 
     auth: Authorization;
 
-    salonPublicDP: SalonPublic;
+    salonPublicDP: SalonPublicService;
 
     bookingAppointmentDP: BookingAppointmentBehavior;
 

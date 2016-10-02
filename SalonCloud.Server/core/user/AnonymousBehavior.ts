@@ -3,13 +3,13 @@
 import {BookingAppointmentBehavior} from './BookingAppointmentBehavior'
 import {SalonCloudResponse} from './../SalonCloudResponse'
 import {Authorization} from './../authorization/Authorization'
-
+import {SalonPublicService} from './../salonPublicService/SalonPublicService'
 
 export interface AnonymousBehavior {
    
     auth: Authorization;
 
-    salonPublicDP: SalonPublic;
+    salonPublicDP: SalonPublicService;
 
     forgotPassword(username) : SalonCloudResponse<boolean>;
 

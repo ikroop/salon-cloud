@@ -4,10 +4,12 @@ import {SignedInUser} from './SignedInUser'
 import {UserProfileBehavior} from './UserProfileBehavior'
 import {SalonCloudResponse} from './../SalonCloudResponse'
 import {UserProfile} from './UserData'
+import {SalonPublicService} from './../salonPublicService/SalonPublicService'
+
 
 export class SalonUser extends SignedInUser implements UserProfileBehavior {
 
-    SalonPublicDP : SalonPublic;
+    SalonPublicDP : SalonPublicService;
 
     activate():SalonCloudResponse<boolean>{
 
