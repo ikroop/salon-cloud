@@ -3,7 +3,7 @@
 
 
 import {SalonManagementBehavior} from './SalonManagementBehavior'
-import {SalonData} from './SalonData'
+import {SalonData, SalonInformation, SalonSetting} from './SalonData'
 import {SalonCloudResponse} from './../../core/SalonCloudResponse'
 
 export class SalonManagement implements SalonManagementBehavior {

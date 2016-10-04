@@ -6,6 +6,7 @@ import {AppointmentData} from './../../modules/appointmentManagement/Appointment
 import {AppointmentManagement} from './../../modules/appointmentManagement/AppointmentManagement'
 import {ServiceManagement} from './../../modules/serviceManagement/ServiceManagement'
 import {ServiceItem} from './../../modules/serviceManagement/ServiceItem'
+import {Verification} from './../verification/Verification'
 
 
 export class BookingAppointment implements BookingAppointmentBehavior {

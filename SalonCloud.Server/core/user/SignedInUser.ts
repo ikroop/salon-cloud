@@ -3,6 +3,7 @@
 import {SignedInUserBehavior} from './SignedInUserBehavior'
 import {SalonCloudResponse} from './../SalonCloudResponse'
 import {SalonManagement} from './../../modules/salonManagement/SalonManagement'
+import {SalonInformation} from './../../modules/salonManagement/SalonData'
 
 
 export class SignedInUser implements SignedInUserBehavior{
