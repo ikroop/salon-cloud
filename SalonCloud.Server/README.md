@@ -5,7 +5,7 @@ API References
 ==============
 
 [REST API References on
-Confluence](https://smisyteam.atlassian.net/wiki/display/SC/REST+API+References)
+Wiki](https://github.com/thanhtruong0315/salon-cloud/wiki/REST-API-Preferences)
 
 Global packages
 =============
