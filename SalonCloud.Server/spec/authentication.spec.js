@@ -11,19 +11,12 @@ describe('Authentication', function () {
     var url = 'http://localhost:3000/api/v1/authentication';
     var timestamp = new Date().getTime();
     var defaultPassword = '1234@1234'
-    // within before() you can run all the operations that are needed to setup your tests. In this case
-    // I want to create a connection with the database, and when I'm done, I call done().
+
     before(function (done) {
         // In our tests we use the test db
         done();
     });
-    // use describe to give a title to your test suite, in this case the tile is "User"
-    // and then specify a function in which we are going to declare all the tests
-    // we want to run. Each test starts with the function it() and as a first argument 
-    // we have to provide a meaningful title for it, whereas as the second argument we
-    // specify a function that takes a single parameter, "done", that we will use 
-    // to specify when our test is completed, and that's what makes easy
-    // to perform async test!
+
     describe('User SignUp with Username & Password', function () {
         var apiUrl = '/signupwithusernameandpassword';
 
@@ -31,20 +24,15 @@ describe('Authentication', function () {
             var user = {
                 password: defaultPassword
             };
-            // once we have specified the info we want to send to the server via POST verb,
-            // we need to actually perform the action on the resource, in this case we want to 
-            // POST on /api/auth/register and we want to send some info
-            // We do this using the request object, requiring supertest!
+
             console.log('apiUrl:', apiUrl);
             request(url)
                 .post(apiUrl)
                 .send(user)
-                // end handles the response
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('MissingUsername');
@@ -57,19 +45,13 @@ describe('Authentication', function () {
                 username: 'salonhelpstest',
                 password: defaultPassword
             };
-            // once we have specified the info we want to send to the server via POST verb,
-            // we need to actually perform the action on the resource, in this case we want to 
-            // POST on /api/auth/register and we want to send some info
-            // We do this using the request object, requiring supertest!
             request(url)
                 .post(apiUrl)
                 .send(user)
-                // end handles the response
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('NotEmailOrPhoneNumber');
@@ -82,19 +64,13 @@ describe('Authentication', function () {
                 username: '12345678',
                 password: defaultPassword
             };
-            // once we have specified the info we want to send to the server via POST verb,
-            // we need to actually perform the action on the resource, in this case we want to 
-            // POST on /api/auth/register and we want to send some info
-            // We do this using the request object, requiring supertest!
             request(url)
                 .post(apiUrl)
                 .send(user)
-                // end handles the response
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('NotEmailOrPhoneNumber');
@@ -106,19 +82,13 @@ describe('Authentication', function () {
             var user = {
                 username: 'unittest@gmail.com'
             };
-            // once we have specified the info we want to send to the server via POST verb,
-            // we need to actually perform the action on the resource, in this case we want to 
-            // POST on /api/auth/register and we want to send some info
-            // We do this using the request object, requiring supertest!
             request(url)
                 .post(apiUrl)
                 .send(user)
-                // end handles the response
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('MissingPassword');
@@ -131,44 +101,32 @@ describe('Authentication', function () {
                 username: 'unittest@gmail.com',
                 password: '12345'
             };
-            // once we have specified the info we want to send to the server via POST verb,
-            // we need to actually perform the action on the resource, in this case we want to 
-            // POST on /api/auth/register and we want to send some info
-            // We do this using the request object, requiring supertest!
             request(url)
                 .post(apiUrl)
                 .send(user)
-                // end handles the response
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('PasswordTooShort');
                     done();
                 });
-        });       
+        });
 
         it('should return user object trying to register sucessfully', function (done) {
             var user = {
                 username: 'unittest' + timestamp + '@gmail.com',
                 password: defaultPassword
             };
-            // once we have specified the info we want to send to the server via POST verb,
-            // we need to actually perform the action on the resource, in this case we want to 
-            // POST on /api/auth/register and we want to send some info
-            // We do this using the request object, requiring supertest!
             request(url)
                 .post(apiUrl)
                 .send(user)
-                // end handles the response
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    // this is should.js syntax, very clear
                     res.status.should.be.equal(200);
                     res.body.should.have.property('user');
                     res.body.user.should.have.property('username').eql(user.username);
@@ -182,19 +140,13 @@ describe('Authentication', function () {
                 password: defaultPassword,
                 fullname: 'salonhelps'
             };
-            // once we have specified the info we want to send to the server via POST verb,
-            // we need to actually perform the action on the resource, in this case we want to 
-            // POST on /api/auth/register and we want to send some info
-            // We do this using the request object, requiring supertest!
             request(url)
                 .post(apiUrl)
                 .send(user)
-                // end handles the response
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    // this is should.js syntax, very clear
                     res.status.should.be.equal(409);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('UserExistsError');
@@ -210,19 +162,13 @@ describe('Authentication', function () {
             var user = {
                 password: defaultPassword
             };
-            // once we have specified the info we want to send to the server via POST verb,
-            // we need to actually perform the action on the resource, in this case we want to 
-            // POST on /api/auth/register and we want to send some info
-            // We do this using the request object, requiring supertest!
             request(url)
                 .post(apiUrl)
                 .send(user)
-                // end handles the response
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('MissingUsername');
@@ -234,19 +180,13 @@ describe('Authentication', function () {
             var user = {
                 username: 'test@salonhelps.com'
             };
-            // once we have specified the info we want to send to the server via POST verb,
-            // we need to actually perform the action on the resource, in this case we want to 
-            // POST on /api/auth/register and we want to send some info
-            // We do this using the request object, requiring supertest!
             request(url)
                 .post(apiUrl)
                 .send(user)
-                // end handles the response
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('MissingPassword');
@@ -259,19 +199,13 @@ describe('Authentication', function () {
                 username: 'test@salonhelps.com',
                 password: defaultPassword
             };
-            // once we have specified the info we want to send to the server via POST verb,
-            // we need to actually perform the action on the resource, in this case we want to 
-            // POST on /api/auth/register and we want to send some info
-            // We do this using the request object, requiring supertest!
             request(url)
                 .post(apiUrl)
                 .send(user)
-                // end handles the response
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('SignInFailed');
@@ -284,19 +218,13 @@ describe('Authentication', function () {
                 username: 'unittest' + timestamp + '@gmail.com',
                 password: defaultPassword
             };
-            // once we have specified the info we want to send to the server via POST verb,
-            // we need to actually perform the action on the resource, in this case we want to 
-            // POST on /api/auth/register and we want to send some info
-            // We do this using the request object, requiring supertest!
             request(url)
                 .post(apiUrl)
                 .send(user)
-                // end handles the response
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    // this is should.js syntax, very clear
                     res.status.should.be.equal(200);
                     res.body.should.have.property('user');
                     res.body.user.should.have.property('username').eql(user.username);
