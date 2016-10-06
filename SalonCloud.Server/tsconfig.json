@@ -8,7 +8,7 @@
   "files": [
     "./typings/tsd.d.ts",
     "./routes/routes.d.ts",
-    "./core/validator/Validator.ts",
+    "./core/validation/Validation.d.ts",
     "./core/user/User.d.ts",
     "./core/core.d.ts",
     "./modules/schedule/Schedule.d.ts",
