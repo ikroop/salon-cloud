@@ -47,11 +47,14 @@
     "express-serve-static-core/express-serve-static-core.d.ts": {
       "commit": "4cb9c9032e8a1cfb45b7f4684aca52c1ce0f2685"
     },
-    "jsonwebtoken/jsonwebtoken.d.ts":{
+    "jsonwebtoken/jsonwebtoken.d.ts": {
       "commit": "150227f1870c71ff602da2cf1281878ed925a44c"
     },
-    "mocha/mocha.d.ts":{
+    "mocha/mocha.d.ts": {
       "commit": "a361a8ab3c327f208d3f82ad206971d4a63d8c25"
+    },
+    "twilio/twilio.d.ts": {
+      "commit": "962044d3ceb599d00c6ec69053218439b0df87cb"
     }
   }
 }
