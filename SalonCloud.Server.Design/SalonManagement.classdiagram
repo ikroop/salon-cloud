@@ -72,32 +72,6 @@
       </propertyInstances>
     </stereotypeInstance>
   </appliedStereotypesInternal>
-  <profileInstances>
-    <packageHasProfileInstances Id="9385e3a9-6d37-43ac-928b-291e64b5fd76">
-      <profileInstance Id="4eb8d4f1-e33f-40db-9a7d-6662ce05b279" name="StandardProfileL2">
-        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
-      </profileInstance>
-      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="e707c574-a35a-444b-8866-5588157e6a05">
-      <profileInstance Id="61b76223-8448-425b-9112-d073d2f23df6" name="StandardProfileL3">
-        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
-      </profileInstance>
-      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="3e690836-04c6-4dfb-a9a8-9c3c2f52f611">
-      <profileInstance Id="bf6a81e4-2a85-43b7-88df-a596f2bf4549" name="CSharpProfile">
-        <elementDefinition Id="642fa43c-7777-4048-8c3c-1cdc335cff26" />
-      </profileInstance>
-      <elementDefinition Id="911f7a69-85b8-429b-94b7-751ece6cd98a" />
-    </packageHasProfileInstances>
-    <packageHasProfileInstances Id="cf0c8817-e044-400b-a320-cec200727fc4">
-      <profileInstance Id="2edb4f18-23f9-47d9-b767-f08e7eba907b" name="TextTemplateBindings">
-        <elementDefinition Id="75454b40-952d-479a-ad39-f0b93335dc6f" />
-      </profileInstance>
-      <elementDefinition Id="6f146c50-9d98-4021-9148-1e8d0b26731f" />
-    </packageHasProfileInstances>
-  </profileInstances>
   <packagedElements>
     <logicalClassDesignerModelHasTypes>
       <Interface Id="fc48255a-18d8-408f-b9cc-b77f7ea51ab2" name="SalonManagement" isAbstract="false" isLeaf="false">
@@ -115,8 +89,16 @@
                 </parameter>
               </operationHasOwnedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="ed1ab029-2333-47b3-90a5-c72c6bc00023" name="data" direction="In" isUnique="false">
-                  <elementDefinition Id="a6952e2c-fafa-41ef-8961-ace3d493830f" />
+                <parameter Id="11d407fc-d5ef-4c1e-85b0-9a255439e8b5" name="salonId" direction="In" isUnique="false">
+                  <elementDefinition Id="ebff5bed-4ab0-442f-b3c7-e3ed6281b771" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="90de5c62-5412-4313-9907-aea7b670b0ed" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="520d2029-a5f9-41b5-8908-47210a0ba0d1" name="data" direction="In" isUnique="false">
+                  <elementDefinition Id="5048f8ad-3b13-4e3b-8329-e169d2920b5a" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="5b7369e1-b92c-42f3-98c0-1109e2329465" LastKnownName="SalonInformation" />
                   </type_NamedElement>
@@ -124,7 +106,7 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="d335a2ff-ce74-4942-a8ec-226870a3dd17" name="active" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+          <operation Id="d335a2ff-ce74-4942-a8ec-226870a3dd17" name="activate" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="426195d9-839b-4b90-a0da-b43118448fcd" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -137,7 +119,7 @@
               </operationHasOwnedParameters>
             </ownedParameters>
           </operation>
-          <operation Id="0f8f447c-704b-47d2-947f-80a5df8e8b38" name="deactive" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+          <operation Id="0f8f447c-704b-47d2-947f-80a5df8e8b38" name="deactivate" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="4b109403-5284-49f7-84d6-c188772999f5" />
             <ownedParameters>
               <operationHasOwnedParameters>
@@ -154,18 +136,18 @@
             <elementDefinition Id="2a819e4b-d10d-4821-af31-fe2c7f092557" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="36a6569a-b7fa-40c0-994e-9dec4ee498ef" name="data" direction="In" isUnique="false">
-                  <elementDefinition Id="9d959338-ff9c-48d3-bf96-fee8bbe45bea" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="5b7369e1-b92c-42f3-98c0-1109e2329465" LastKnownName="SalonInformation" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
                 <parameter Id="4fabf4b3-bbe7-4a45-84e7-9c8e12a50ab6" direction="Return" isUnique="false">
                   <elementDefinition Id="5cda48c4-8732-42d0-aca8-6ca18f9399d8" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="6a1006d7-3233-4792-ac55-6220be4a8c32" LastKnownName="SalonCloudRespoonse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8e7e5b2c-5114-49f0-88da-1784c6138c6c" name="data" direction="In" isUnique="false">
+                  <elementDefinition Id="d66e1514-8fbb-4efd-8a23-b665f0bb135d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="5b7369e1-b92c-42f3-98c0-1109e2329465" LastKnownName="SalonInformation" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -175,18 +157,26 @@
             <elementDefinition Id="e20483c3-5870-4de4-9057-7f0d0befc022" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="91597d43-a1ba-46a7-ba32-55d2c349217b" name="setting" direction="In" isUnique="false">
-                  <elementDefinition Id="049a1cf4-baa8-43ae-92c3-dbd48bf24014" />
-                  <type_NamedElement>
-                    <referencedTypeMoniker Id="efb11988-8de0-4beb-99cc-9bf39e39b8dd" LastKnownName="SalonSetting" />
-                  </type_NamedElement>
-                </parameter>
-              </operationHasOwnedParameters>
-              <operationHasOwnedParameters>
                 <parameter Id="dc0fe0d8-76a2-4bc0-821c-2aa4f9caedd3" direction="Return" isUnique="false">
                   <elementDefinition Id="b9a631ed-ab9b-4cef-a40f-958d8ce666c4" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="43c328cd-afa9-4c60-b25d-fdd54607cca5" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1f2f0023-9532-4e35-8257-fc4d46034419" name="salonId" direction="In" isUnique="false">
+                  <elementDefinition Id="16183ce2-5e87-4859-9427-9575af11326e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="90de5c62-5412-4313-9907-aea7b670b0ed" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="c25ff4b2-6587-4148-a907-dc63ccdfe672" name="setting" direction="In" isUnique="false">
+                  <elementDefinition Id="bc373191-f972-463e-809f-1c72405cbc0a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="efb11988-8de0-4beb-99cc-9bf39e39b8dd" LastKnownName="SalonSetting" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -196,18 +186,57 @@
             <elementDefinition Id="dcc09637-1b6c-40c9-b636-860f0314bd0e" />
             <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="247a5f56-0937-4c97-be70-cf2859b81456" name="setting" direction="In" isUnique="false">
-                  <elementDefinition Id="0cdba5cb-03cc-4d5e-8e84-b1583988179d" />
+                <parameter Id="dbc3c87f-2391-4a56-b586-36bfcca71b1c" direction="Return" isUnique="false">
+                  <elementDefinition Id="ab93777f-a00d-4b0b-981f-5b3c3c0fbacf" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="43c328cd-afa9-4c60-b25d-fdd54607cca5" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d5d02d59-37c2-4072-9765-97f18fc10448" name="setting" direction="In" isUnique="false">
+                  <elementDefinition Id="71ed2cc3-2322-48fc-896e-642791d8b35b" />
                   <type_NamedElement>
                     <referencedTypeMoniker Id="efb11988-8de0-4beb-99cc-9bf39e39b8dd" LastKnownName="SalonSetting" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="1df2e8da-1784-437e-9ac4-524dfffb42cb" name="createSalon" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c4115c9f-f952-40eb-b94b-96995f87424d" />
+            <ownedParameters>
               <operationHasOwnedParameters>
-                <parameter Id="dbc3c87f-2391-4a56-b586-36bfcca71b1c" direction="Return" isUnique="false">
-                  <elementDefinition Id="ab93777f-a00d-4b0b-981f-5b3c3c0fbacf" />
+                <parameter Id="b760e4ff-8ca8-43e1-956a-ce7f2b5c5ed2" direction="Return" isUnique="false">
+                  <elementDefinition Id="b9874407-e0a9-4d1b-8bbe-ad3989bdb8a0" />
                   <type_NamedElement>
-                    <referencedTypeMoniker Id="43c328cd-afa9-4c60-b25d-fdd54607cca5" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                    <referencedTypeMoniker Id="3d41f23c-7c09-43e8-9b57-21ce08a5f2a8" LastKnownName="SalonCloudResponse&lt;string&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="5509fd34-3bbf-4707-986d-beace0e5f2b5" name="salonInformation" direction="In" isUnique="false">
+                  <elementDefinition Id="53b8d6f2-c8c0-4d72-8714-f1de4ff82e83" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="ac672fb1-e485-477b-9d53-ce634c7eff81" name="getAllSalon" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="951da606-3ac4-4f46-b782-892a5b1621fc" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="85a0ab72-1847-4ad3-a361-c40011547221" name="userId" direction="In" isUnique="false">
+                  <elementDefinition Id="e6d89547-e076-4488-84be-0d1411765acb" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="90de5c62-5412-4313-9907-aea7b670b0ed" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4224a13e-cad1-427b-a380-1960286ad68f" direction="Return" isUnique="false">
+                  <elementDefinition Id="0ce220e8-124a-4096-8d81-af84f37da351" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3e848db1-2ad8-4bff-914c-fae17298ca51" LastKnownName="SalonCloudResponse&lt;SalonInformation&gt;" />
                   </type_NamedElement>
                 </parameter>
               </operationHasOwnedParameters>
@@ -241,8 +270,230 @@
         <elementDefinition Id="6d767c44-74ee-4241-85f9-9eac324eba5f" />
       </referencedType>
     </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="6b108648-84fa-44c2-a4c5-7075a5dbeb72" name="SalonManagement" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="466ea45f-369a-443d-a9ae-cac4772baea1" />
+        <suppliersInternal>
+          <interfaceRealization Id="29896125-66bc-4d6c-80f8-abfdda00d29a">
+            <interfaceMoniker Id="fc48255a-18d8-408f-b9cc-b77f7ea51ab2" LastKnownName="SalonManagement" />
+            <elementDefinition Id="7dba2bef-1fd4-4cca-8a28-658a4144376e" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <property Id="cea28e06-c0f9-4853-9687-1e3da11d1a4d" name="salonId" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="930a28ab-7cc9-44de-9484-fd7b0964db41" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="90de5c62-5412-4313-9907-aea7b670b0ed" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="390040f5-e080-4691-9fb2-707038b25f93" name="createInformation" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="742ca60f-a9e4-4940-b9a6-fa947b2c3c2b" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="3b75e8a6-c253-4345-95ab-ff7b695f1143" name="data" direction="In" isUnique="false">
+                  <elementDefinition Id="802f0b33-83ed-4718-bbab-48d4c2cc0d58" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="90de5c62-5412-4313-9907-aea7b670b0ed" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="817cf9a3-5335-4624-8934-f59c767c0795" direction="Return" isUnique="false">
+                  <elementDefinition Id="e7916e3f-f6d3-464d-863b-53f34afc6d2e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3d41f23c-7c09-43e8-9b57-21ce08a5f2a8" LastKnownName="SalonCloudResponse&lt;string&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ca45d86c-37d4-4976-9687-14292632fbf7" name="data" direction="In" isUnique="false">
+                  <elementDefinition Id="f3d4d7dc-6a77-4c51-a17f-c94e30de1d8d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="5b7369e1-b92c-42f3-98c0-1109e2329465" LastKnownName="SalonInformation" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="65094911-d8dd-43d3-827f-98ec9319eff3" name="activate" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="9b2c11dc-1f83-4977-a4e7-27760f95dff9" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="22ad12db-6fab-481d-b577-9a856a14b704" direction="Return" isUnique="false">
+                  <elementDefinition Id="4bf13644-57fe-4aa2-ba98-59e55d80f4bf" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="43c328cd-afa9-4c60-b25d-fdd54607cca5" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="2750c521-503e-463e-9067-9e9a5397fea6" name="deactivate" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="383689fe-e48a-4181-a862-309dbbbe6905" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="2dfb243b-a1cc-4d85-bca9-fc780ae6c37b" direction="Return" isUnique="false">
+                  <elementDefinition Id="809eb5a5-7cc5-448f-8537-e03e9e49f8af" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="43c328cd-afa9-4c60-b25d-fdd54607cca5" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="07bf7985-9005-47cd-9139-a7dde460552d" name="updateInformation" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="fb77a93d-7e99-4d35-bf9a-000f4259291c" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0faa0e88-1fbe-46dd-a473-193f3e303eb1" name="data" direction="In" isUnique="false">
+                  <elementDefinition Id="f9da8f1e-9528-45a7-b54d-b39ac5ffec56" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="5b7369e1-b92c-42f3-98c0-1109e2329465" LastKnownName="SalonInformation" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="08fb5bef-99ba-4f2c-8d41-8cc98e07466c" direction="Return" isUnique="false">
+                  <elementDefinition Id="c699cd0b-85d3-4b88-8f78-dee43c00c02a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6a1006d7-3233-4792-ac55-6220be4a8c32" LastKnownName="SalonCloudRespoonse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="d075f991-b414-4db8-ba13-320b58c8255a" name="createSetting" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="0eb73bc2-b53d-4a0e-a1f2-990ed2978000" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="187010e0-646d-45b1-bd47-26cae462d47f" name="setting" direction="In" isUnique="false">
+                  <elementDefinition Id="abe48041-9213-41ad-9bcf-b86399a60942" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="90de5c62-5412-4313-9907-aea7b670b0ed" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ce68b1f4-762a-4d72-ad2f-ab35bff6f7cc" direction="Return" isUnique="false">
+                  <elementDefinition Id="0923293b-26e0-4309-ac4d-3d2fb210a51c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="43c328cd-afa9-4c60-b25d-fdd54607cca5" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="81e12f9c-765d-4861-89ec-18cbfae3d0cf" name="setting" direction="In" isUnique="false">
+                  <elementDefinition Id="88ce3b7c-c527-45af-8f16-1171141a201b" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="efb11988-8de0-4beb-99cc-9bf39e39b8dd" LastKnownName="SalonSetting" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="e1054997-24b3-40d3-b3d9-b5337ecdb6da" name="updateSetting" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="20a1eb33-aeb9-46d7-88b8-8084b5dfb9a2" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="232d4053-83a7-414c-821f-1f80bb65cea2" name="setting" direction="In" isUnique="false">
+                  <elementDefinition Id="e2cdccc5-b27e-40e8-800f-f19434218d36" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="efb11988-8de0-4beb-99cc-9bf39e39b8dd" LastKnownName="SalonSetting" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="551b1e63-01f7-4b6a-801c-e19a853c8773" direction="Return" isUnique="false">
+                  <elementDefinition Id="61e59536-a0e6-4bec-a280-db662fcc3b52" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="43c328cd-afa9-4c60-b25d-fdd54607cca5" LastKnownName="SalonCloudResponse&lt;boolean&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="dce62dab-df8d-4ee4-9e76-86e0801457f3" name="createSalon" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="197f3b99-95d3-40a8-b40d-07f2327d80a4" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="118b8706-284b-42a8-8633-af59df7ca94b" name="salonInformation" direction="In" isUnique="false">
+                  <elementDefinition Id="8cbeb22f-3209-47af-9753-2f795cb4c01f" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="a20d5464-458b-452c-8b0c-168b1a2a7a57" direction="Return" isUnique="false">
+                  <elementDefinition Id="75662cc9-e0f1-47e6-8348-48e93036189a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3d41f23c-7c09-43e8-9b57-21ce08a5f2a8" LastKnownName="SalonCloudResponse&lt;string&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="80e99b31-d796-47f6-9c44-21661213f72d" name="getAllSalon" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ddfa9d51-5329-48ce-a914-5cdf06134aef" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="de9e7920-ee3d-4858-84df-5ea78c2a4491" name="userId" direction="In" isUnique="false">
+                  <elementDefinition Id="7d2d4731-d903-4687-a1eb-17cc83134a19" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="90de5c62-5412-4313-9907-aea7b670b0ed" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="503c2e72-b05d-46f8-a3a4-ca1fd901fd71" direction="Return" isUnique="false">
+                  <elementDefinition Id="8c98f426-25bd-4a83-b631-0dac6409a754" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3e848db1-2ad8-4bff-914c-fae17298ca51" LastKnownName="SalonCloudResponse&lt;SalonInformation&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="90de5c62-5412-4313-9907-aea7b670b0ed" name="string" isAbstract="false" isLeaf="false" cachedFullName="string">
+        <elementDefinition Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="3e848db1-2ad8-4bff-914c-fae17298ca51" name="SalonCloudResponse&lt;SalonInformation&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;SalonInformation&gt;">
+        <elementDefinition Id="c68ba752-2b60-4e3f-b9e2-eec1190a486c" />
+      </referencedType>
+    </packageHasNamedElement>
   </packagedElements>
   <package Id="6a822355-c20f-437f-95e6-126c19d9785b" name="SalonCloud.Server.Design">
     <elementDefinition Id="2c899048-69c9-4895-a4a9-015718059e00" />
+    <profileInstances>
+      <packageHasProfileInstances Id="9385e3a9-6d37-43ac-928b-291e64b5fd76">
+        <profileInstance Id="4eb8d4f1-e33f-40db-9a7d-6662ce05b279" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="e707c574-a35a-444b-8866-5588157e6a05">
+        <profileInstance Id="61b76223-8448-425b-9112-d073d2f23df6" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="3e690836-04c6-4dfb-a9a8-9c3c2f52f611">
+        <profileInstance Id="bf6a81e4-2a85-43b7-88df-a596f2bf4549" name="CSharpProfile">
+          <elementDefinition Id="642fa43c-7777-4048-8c3c-1cdc335cff26" />
+        </profileInstance>
+        <elementDefinition Id="911f7a69-85b8-429b-94b7-751ece6cd98a" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="cf0c8817-e044-400b-a320-cec200727fc4">
+        <profileInstance Id="2edb4f18-23f9-47d9-b767-f08e7eba907b" name="TextTemplateBindings">
+          <elementDefinition Id="75454b40-952d-479a-ad39-f0b93335dc6f" />
+        </profileInstance>
+        <elementDefinition Id="6f146c50-9d98-4021-9148-1e8d0b26731f" />
+      </packageHasProfileInstances>
+    </profileInstances>
   </package>
 </logicalClassDesignerModel>

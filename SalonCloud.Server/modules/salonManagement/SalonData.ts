@@ -4,10 +4,9 @@
 //
 //
 //
-export interface SalonData{
-    _id?: string,
-    information:{
-        salon_name: string;
+
+export interface SalonInformation {
+            salon_name: string;
         phone:{
             number:string;
             is_verified: boolean
@@ -17,11 +16,17 @@ export interface SalonData{
             is_verified: boolean
         } 
         email?: string;
-    },
-    setting:{
+
+}
+
+export interface SalonSetting {
         appointment_reminder: boolean;
         flexible_time: number;
         technician_checkout: boolean;
-    }
+}
+export interface SalonData{
+    _id?: string,
+    information:SalonInformation,
+    setting: SalonSetting,
     
 }

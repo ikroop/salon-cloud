@@ -40,20 +40,12 @@ export class AuthorizationRouter {
     getRouter(): Router {
         var auhthorization = new Authorization();
 
-        this.router.post("/checkpermission", function (request: Request, response: Response) {
-            /*var UserId: string = request.user._id;
-            var url: string = request.url;
-            var permissionResponse: SalonCloudResponse<boolean> = auhthorization.checkPermission(UserId, url);
-            response.statusCode = permissionResponse.code;
-            if (permissionResponse.err) {
-                response.json(permissionResponse.err);
-            } else {
-                response.json(permissionResponse.data);
-                next();
-            }*/
-            console.log("request.body:", request.body);
-        });
+        this.router.post("/allowpermission", function (request: Request, response: Response) {
 
+        });
+        this.router.post("/disallowpermission", function (request: Request, response: Response) {
+
+        });
         return this.router;
     }
 }

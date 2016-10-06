@@ -15,6 +15,7 @@ export class AuthenticationRouter {
         var authorizationRouter = new AuthorizationRouter();
 
         this.router.post("/signupwithusernameandpassword", authorizationRouter.checkPermission, function (request: Request, response: Response) {
+            //TODO: have to use Anonymouse class
             authentication.signUpWithUsernameAndPassword(request.body.username, request.body.password, function (err, code, data) {
                 response.statusCode = code;
                 if (err) {
@@ -26,6 +27,7 @@ export class AuthenticationRouter {
         });
 
         this.router.post("/signinwithusernameandpassword", authorizationRouter.checkPermission, function (request: Request, response: Response) {
+            //TODO: have to use Anonymouse class
             authentication.signInWithUsernameAndPassword(request.body.username, request.body.password, function (err, code, data) {
                 response.statusCode = code;
                 if (err) {

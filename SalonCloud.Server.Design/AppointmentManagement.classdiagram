@@ -1,0 +1,811 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="154dba53-06db-4f14-838a-db4cf61ee0bd" name="AppointmentManagement" linkedPackageId="8699afe5-0862-429c-883b-47a331bfefd1" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <appliedStereotypesInternal>
+    <stereotypeInstance Id="7cbe131a-06d5-4ac1-8fe4-7a4258457f53" name="namespace" profile="CSharpProfile">
+      <elementDefinition Id="5119a86d-53ac-4402-95a7-056f66c40584" />
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="14279194-1f4e-4455-831c-0d3ad13703b2">
+          <propertyInstance Id="fe0362d9-4fde-4807-8049-35ab71ae14a8" name="BaseName">
+            <elementDefinition Id="bbe7b240-d81b-4c14-ab87-231d0b2a1933" />
+          </propertyInstance>
+          <elementDefinition Id="5ff246de-d99d-4436-aae7-961dcf31d985" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="4c804be8-d94d-4e6b-b125-6a8b7362556e">
+          <propertyInstance Id="76458767-8d23-46c6-ba60-3a6f6e6d1797" name="ClrAttributes">
+            <elementDefinition Id="7ec6a41b-b601-4e94-9777-9be4be9fc5c1" />
+          </propertyInstance>
+          <elementDefinition Id="7b15e59e-9932-4a86-a19d-974c466ce23b" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="ce01faa8-2dbb-49ca-a83e-23381b14d2b4">
+          <propertyInstance Id="49e8361f-4d71-4b8a-98a0-bcc303d36d11" name="Usings">
+            <elementDefinition Id="c778f11f-d414-4932-b26c-aa5697094ede" />
+          </propertyInstance>
+          <elementDefinition Id="d3a911a4-614e-4e12-8ef5-7063a9dfe467" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+    <stereotypeInstance Id="a111d321-9723-4e24-8cdb-34e1fe651459" name="TextTemplateBindings" profile="TextTemplateBindings">
+      <elementDefinition Id="2249fea9-500b-40f5-9ec6-91c33d9fb4ff" />
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="aced9134-5aba-4a7e-acac-3a5ac878c8d8">
+          <propertyInstance Id="b82bc507-f77c-4736-9ec3-fc767d4e47c0" name="Alias" value="ClassTemplate|EnumTemplate|InterfaceTemplate|StructTemplate">
+            <elementDefinition Id="bfdb9ea4-f4cd-4de9-8a8f-190e7a527233" />
+          </propertyInstance>
+          <elementDefinition Id="21e9d7d5-287d-4c15-8f79-0ca66eccecfc" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="201cbe7d-f647-45c4-b4da-1eae12dfbf50">
+          <propertyInstance Id="4d1871ac-603a-43b4-9ff1-484de3a9c0af" name="TemplateFilePath" value="ClassTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4|EnumTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\EnumTemplate.t4|InterfaceTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4|StructTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4">
+            <elementDefinition Id="e91ff35b-8bb9-436d-afbe-8629ea9abf65" />
+          </propertyInstance>
+          <elementDefinition Id="9d2bca0b-7b01-451d-8e9c-3ed15e369219" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="78eace9e-d444-4258-989c-f373031d5e78">
+          <propertyInstance Id="c5facd46-0f4a-4e34-a7b7-1fa5a7e1afb9" name="ProjectPath" value="ClassTemplate=..\SalonCloud.Server.DesignLib\SalonCloud.Server.DesignLib.csproj|EnumTemplate=..\SalonCloud.Server.DesignLib\SalonCloud.Server.DesignLib.csproj|InterfaceTemplate=..\SalonCloud.Server.DesignLib\SalonCloud.Server.DesignLib.csproj|StructTemplate=..\SalonCloud.Server.DesignLib\SalonCloud.Server.DesignLib.csproj">
+            <elementDefinition Id="0290a594-da74-49b2-9d2b-b9f1980506e9" />
+          </propertyInstance>
+          <elementDefinition Id="5c4e31d2-7374-4796-b9a4-a15e8ea088fb" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="c414732a-20b5-4c8c-a1a0-6b51461bf87c">
+          <propertyInstance Id="e6cfba0e-344a-4447-aae9-26e7f098a007" name="TargetDirectory" value="ClassTemplate=GeneratedCode\{PackageStructure}|EnumTemplate=GeneratedCode\{PackageStructure}|InterfaceTemplate=GeneratedCode\{PackageStructure}|StructTemplate=GeneratedCode\{PackageStructure}">
+            <elementDefinition Id="5befd87c-8563-48eb-aa5d-00a92be8cc0d" />
+          </propertyInstance>
+          <elementDefinition Id="9e20b46f-0f58-46d9-a951-3db6f954c869" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="c2d37e92-4e77-4586-b094-6eeb9c4118da">
+          <propertyInstance Id="514560b0-7c2a-4c67-a0b9-73698cb2a2ce" name="TargetName" value="ClassTemplate={Name}|EnumTemplate={Name}|InterfaceTemplate={Name}|StructTemplate={Name}">
+            <elementDefinition Id="62732227-3052-4ce9-98e7-1df466c02407" />
+          </propertyInstance>
+          <elementDefinition Id="d7094a84-c0ad-47b3-9158-014f67a56279" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="d58bcb85-5898-4d6b-8850-e1b413192a69">
+          <propertyInstance Id="362d2af7-895c-4030-8619-a55adea83f03" name="Overwrite" value="ClassTemplate=True|EnumTemplate=True|InterfaceTemplate=True|StructTemplate=True">
+            <elementDefinition Id="28614822-bd61-48cb-bbc3-bda4e700574d" />
+          </propertyInstance>
+          <elementDefinition Id="eff1e5f8-57d3-4657-8054-2dbdb9c78fc5" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances Id="414cc5ca-29db-4262-bdd9-98302c2a483e">
+          <propertyInstance Id="beb004df-db77-4e9f-85be-68e1065e0470" name="Parameters">
+            <elementDefinition Id="17e1e716-f589-4549-8a5f-a1b74f314370" />
+          </propertyInstance>
+          <elementDefinition Id="5da80d6d-7b0a-4d52-ab26-2dc3dc6f61a5" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+  </appliedStereotypesInternal>
+  <profileInstances>
+    <packageHasProfileInstances Id="5d3c0820-41c0-4cde-bd53-8a121c46d258">
+      <profileInstance Id="4e89f4c8-9bfd-444f-b65a-4cd9bb195518" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="268e8210-e931-4b22-bcad-0d8e96c64a5f">
+      <profileInstance Id="8f09bee3-eb3d-47ea-aae9-e553bb5a729b" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="2266802d-36aa-4118-bf95-50b299271537">
+      <profileInstance Id="a879e4c6-a20b-4fc4-9a65-576562968c0e" name="CSharpProfile">
+        <elementDefinition Id="642fa43c-7777-4048-8c3c-1cdc335cff26" />
+      </profileInstance>
+      <elementDefinition Id="911f7a69-85b8-429b-94b7-751ece6cd98a" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="cda5d839-ab08-4045-9291-4b8a11ad05c3">
+      <profileInstance Id="15df3a84-b634-4643-9a7e-aad4a80686f5" name="TextTemplateBindings">
+        <elementDefinition Id="75454b40-952d-479a-ad39-f0b93335dc6f" />
+      </profileInstance>
+      <elementDefinition Id="6f146c50-9d98-4021-9148-1e8d0b26731f" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="e2c1d5c7-29eb-4439-88bd-b5ef24dc0e0c" name="AppointmentBehavior" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="842f31ac-7bb6-4e60-a612-a709e9c5878b" />
+        <ownedOperations>
+          <operation Id="1b27857a-6d99-446f-836b-a090cda4c905" name="createAppointment" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="753eb70f-54c6-4cfb-a171-1ab4d3972e77" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1cb615c5-c93d-4c13-bf4a-bae2f1427df0" direction="Return" isUnique="false">
+                  <elementDefinition Id="d81aa8ce-0be4-45d9-afa5-11655a8838bc" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="c0b67f81-1734-43f8-bae2-697f890a93e9" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="7348d2e4-f8b8-4dca-96c2-11513385da9f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3b5b73ec-644c-4c61-9697-fdfbf5f3d4f9" LastKnownName="AppointmentData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="76c35148-cb89-4f46-9550-207850234d33" name="updateAppointment" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="7d824fb1-615e-4dc5-9a23-4338a59fbade" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="51e94677-ad64-41d7-9700-2ea06248185c" name="appointmentId" direction="In" isUnique="false">
+                  <elementDefinition Id="1f918da6-0a56-4238-8a8b-2f684d42975c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="66f3b14e-5ce1-4ce6-87e9-9795da46039a" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="00a7d530-b546-4d03-b036-1a445ca44f77" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3b5b73ec-644c-4c61-9697-fdfbf5f3d4f9" LastKnownName="AppointmentData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="22b9d101-ef04-4f34-99b5-ca05a6157628" direction="Return" isUnique="false">
+                  <elementDefinition Id="fb61ba7a-c48c-4175-81fd-f3cad902c8e1" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="40241ceb-3f7f-4d5b-8807-cadc27dd337a" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="17113199-edd9-491d-941a-092491f0c29a" name="getAppointment" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="578062f0-8c02-47be-89d6-af04315deb14" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="5bdb1e09-ac57-460c-a164-0402aa6b12f5" name="appointmentId" direction="In" isUnique="false">
+                  <elementDefinition Id="338f19c7-ec2d-4c4b-a019-035ae6743a3c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="26b4df00-c3f6-493a-a710-73993980197c" direction="Return" isUnique="false">
+                  <elementDefinition Id="86edd187-cafd-447d-bc37-f2bea2ce8cde" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3b5b73ec-644c-4c61-9697-fdfbf5f3d4f9" LastKnownName="AppointmentData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="f4fdf211-f5ac-4fd1-9b2d-ec113e11940c" name="getAppointmentByDate" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="4324a9dc-080f-4531-8a7c-d74efa01e1b3" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="374f50a2-0d51-40af-b46d-a58798d2a572" name="date" direction="In" isUnique="false">
+                  <elementDefinition Id="8fe1f542-9ea8-4686-aaac-10b4fadd1ad2" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="63517130-36a3-431e-8a6b-8a2c6955643b" LastKnownName="Date" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="6cc0c73c-6e45-4fb2-b74f-9e21614069e0" direction="Return" isUnique="false">
+                  <elementDefinition Id="a04d3da5-89e0-483d-a54d-00e6e18cab60" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c7230a0d-d19f-4a54-a93e-25bb5eed4d9b" LastKnownName="Array&lt;AppointmentData&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="6d7b8099-b635-4d13-b83d-e6739d06b54f" name="getAppointmentByCustomer" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="05e9ba01-9762-4d6d-a176-1573ef2c278c" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="248c39f8-54fc-4d15-935b-3dd0bb22c828" name="customerId" direction="In" isUnique="false">
+                  <elementDefinition Id="7c468ed4-2905-4e0b-9739-a97a50035fcc" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4d8f89ef-1aa8-49e9-85c7-c4d77b766e52" direction="Return" isUnique="false">
+                  <elementDefinition Id="8c567000-5768-450c-a971-e8d0c065656c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c7230a0d-d19f-4a54-a93e-25bb5eed4d9b" LastKnownName="Array&lt;AppointmentData&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="1b73db0b-5097-40f7-a9cc-e00d8716602d" name="cancelAppointment" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="7bd17e41-eefd-4ea7-a0ba-7b378039a425" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="5b0665d4-e808-4694-b37b-ce50b3f19523" name="appointmentId" direction="In" isUnique="false">
+                  <elementDefinition Id="629e6bc3-654a-4f1e-b05e-00cffbb8ffce" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="031c3679-35f9-4e55-8468-ce7ba7e4a231" direction="Return" isUnique="false">
+                  <elementDefinition Id="74081088-c099-4495-b81a-52ab38ac076d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="40241ceb-3f7f-4d5b-8807-cadc27dd337a" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" name="string" isAbstract="false" isLeaf="false" cachedFullName="string">
+        <elementDefinition Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="40241ceb-3f7f-4d5b-8807-cadc27dd337a" name="boolean" isAbstract="false" isLeaf="false" cachedFullName="boolean">
+        <elementDefinition Id="051e7997-f310-4d15-a48a-c3a7ec61badb" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="3b5b73ec-644c-4c61-9697-fdfbf5f3d4f9" name="AppointmentData" isAbstract="false" isLeaf="false" cachedFullName="AppointmentData">
+        <elementDefinition Id="5af913a2-add7-4e46-bb8a-1bea82e5242f" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="c7230a0d-d19f-4a54-a93e-25bb5eed4d9b" name="Array&lt;AppointmentData&gt;" isAbstract="false" isLeaf="false" cachedFullName="Array&lt;AppointmentData&gt;">
+        <elementDefinition Id="82fd105b-6eb5-49fc-99c2-4876e3388261" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="de98fbe8-fe17-4de3-adb6-90961ea15d47" name="AppointmentAbstract" isAbstract="true" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="767fffd1-2fc9-4f1f-b61d-55eb54a7cfd2" />
+        <ownedAttributesInternal>
+          <property Id="43ce44a1-4692-47c4-a875-e9cebf880551" name="appoinmtentManagementDp" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="93d4b417-0dee-42a1-aa2d-bc51954e60dc" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="e49a5826-4e36-43fe-b395-d4e3b52d80d3" LastKnownName="AppointmentManagement" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="eb1cae51-4923-4fc3-acd1-28f95d42e73b" name="createAppointment" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="301d7848-e4f9-4555-b2d9-6ef84d1b26bb" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ae853da0-646b-4f45-9052-0cb3d7fbe7d9" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="0cf5eede-11b3-4fb4-88b5-ac87df682bf1" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3b5b73ec-644c-4c61-9697-fdfbf5f3d4f9" LastKnownName="AppointmentData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="fab70aab-4130-48c1-b6c2-fdb5f13bd644" direction="Return" isUnique="false">
+                  <elementDefinition Id="b88a4538-f149-4281-b4b9-38156e9901ce" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="c2f6d637-77fc-4837-8404-cc604b8432ef" name="updateAppointment" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c261f21f-e321-4d99-9065-1b5f5d2bf72e" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="159fdf93-7db3-4894-9e04-eccd6d302efc" direction="Return" isUnique="false">
+                  <elementDefinition Id="a3b74eb8-c958-40e0-8411-58c3dcee4b86" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="40241ceb-3f7f-4d5b-8807-cadc27dd337a" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d7297736-340d-41f2-9906-5c537177d5d1" name="appointmentId" direction="In" isUnique="false">
+                  <elementDefinition Id="af24646a-847f-4c4e-aa62-a9a5fdf68422" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="9a764ac4-5eb5-405e-88f6-1f96c10df2d5" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="e90d5ac3-34f7-4974-bf5e-a9f30de3effb" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3b5b73ec-644c-4c61-9697-fdfbf5f3d4f9" LastKnownName="AppointmentData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="7c854014-671b-4e8d-ad31-beff860f647e" name="cancelAppointment" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a77a1df5-c8dc-49f1-8fa8-cc46df76b253" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ee55be88-acd5-47fe-affb-1e25e3396fbb" name="appointmentId" direction="In" isUnique="false">
+                  <elementDefinition Id="8e51a6a4-112e-4804-8f71-008799518754" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="454f7f93-5d31-417b-9d76-fb3f86da01da" direction="Return" isUnique="false">
+                  <elementDefinition Id="465f4879-c86d-487d-ba53-d4f1827008f4" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="40241ceb-3f7f-4d5b-8807-cadc27dd337a" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="7019a8bf-9aa8-4cb4-a573-846523e0d063" name="validation" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b7f581e3-4aed-43fd-8570-7525d0d138a4" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b19fb093-1457-4209-97be-cd9722de5255" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="594bc620-de90-4bd6-9850-e86269729c56" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3b5b73ec-644c-4c61-9697-fdfbf5f3d4f9" LastKnownName="AppointmentData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="bffc9bb6-4b22-4d75-a63f-4e69fc78262e" direction="Return" isUnique="false">
+                  <elementDefinition Id="5fff0c3f-96ec-4d31-b834-5bae75052dbc" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6063720e-4106-4677-a9bc-4a87bdf1af76" LastKnownName="SalonCloudResponse&lt;string&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="bab3de96-c87e-4889-8981-d460758bac0a" name="updateAppointmentStatus" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c3f440cd-b18d-4304-a6f4-73eecd7ffb58" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0073040b-f5ea-4e7f-8838-c8c4dc323237" name="status" direction="In" isUnique="false">
+                  <elementDefinition Id="3a197a9b-493e-4f95-8db0-d24f87751d48" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e2720721-086a-481c-a22f-9053aeb43a43" LastKnownName="number" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b07d70f6-f46a-4a53-bbce-bb99657e2298" direction="Return" isUnique="false">
+                  <elementDefinition Id="d9116767-32b9-43af-9542-451ea02a5d63" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="40241ceb-3f7f-4d5b-8807-cadc27dd337a" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="6ed5100c-b71e-418c-8fe1-2bdeb61bd459" name="AppointmentManagement" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="cad234b5-b60b-4e1d-b655-5705237323c5" />
+        <suppliersInternal>
+          <interfaceRealization Id="ec880f9c-c559-4b9a-a9fc-5354d82a20fc">
+            <interfaceMoniker Id="e2c1d5c7-29eb-4439-88bd-b5ef24dc0e0c" LastKnownName="AppointmentBehavior" />
+            <elementDefinition Id="44395157-2b00-49e4-ad54-967b44b0fa5f" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <property Id="591a2489-936f-419a-ad3f-fdd05864fa9b" name="salonId" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="a8145536-b7b2-44cb-8745-86ad0f8126f4" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="c0371b0f-9536-4fdf-9937-4ad7120c9668" name="createAppointment" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="dc96330d-d24f-4a4d-b798-11f1ec4ded2d" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="693c96df-5dfe-492c-9ba2-6cd86475b4c4" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="01f13ebf-2f17-4b45-bde5-b169d71b980b" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3b5b73ec-644c-4c61-9697-fdfbf5f3d4f9" LastKnownName="AppointmentData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="9fb5465f-f915-43cf-ac7a-9af2ccc449ce" direction="Return" isUnique="false">
+                  <elementDefinition Id="04ec424d-f888-41ea-a4ef-ea64bef1f0f4" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="e1028f2c-b53b-4ed4-99cf-b1e9c6b82b2b" name="updateAppointment" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d9fa9252-1ef8-42ec-bad1-cf4a325d3c77" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="aa785910-708a-4fae-a0c6-19305cdd6011" name="appointmentId" direction="In" isUnique="false">
+                  <elementDefinition Id="0ee8f6f4-a294-4313-aa0b-09f8b4602373" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="45809c8f-911d-4eec-8c6a-333853c79728" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="2c8105ba-101c-4c63-a17b-f91a8dc8e6dc" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3b5b73ec-644c-4c61-9697-fdfbf5f3d4f9" LastKnownName="AppointmentData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="2d10641a-b421-4655-b970-618f3e9eab35" direction="Return" isUnique="false">
+                  <elementDefinition Id="83b5eaa9-0429-4d5f-8a98-78f5984e11b6" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="40241ceb-3f7f-4d5b-8807-cadc27dd337a" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="cad53ca0-643a-4a7c-bba7-7a475e2d1b22" name="getAppointment" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="34a1de1c-6adf-4dd6-9846-11f2c407115d" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="a92ac4c6-9607-4fd9-8664-730d240ca90c" name="appointmentId" direction="In" isUnique="false">
+                  <elementDefinition Id="22d36224-575c-48ae-9c78-0c3a9c9edce9" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="9b75b7e3-1864-41a5-9073-8ec5ed2fb334" direction="Return" isUnique="false">
+                  <elementDefinition Id="932894f7-c7dc-4fc9-a94c-836a2218c219" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3b5b73ec-644c-4c61-9697-fdfbf5f3d4f9" LastKnownName="AppointmentData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="18a9e246-ea3a-431b-9d82-0bfd9bee318c" name="getAppointmentByDate" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ce10efd1-1e5d-4012-8c64-afca28eb8444" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="6eadae79-e1d7-4fbf-9557-fc4a364f6f81" name="date" direction="In" isUnique="false">
+                  <elementDefinition Id="bb7e6166-2947-449c-840e-94413ad9444e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="63517130-36a3-431e-8a6b-8a2c6955643b" LastKnownName="Date" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="f4805a61-8c57-4679-a56e-e52f29eef6e9" direction="Return" isUnique="false">
+                  <elementDefinition Id="3018290b-42a0-46a9-8e75-aafd71861a1e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c7230a0d-d19f-4a54-a93e-25bb5eed4d9b" LastKnownName="Array&lt;AppointmentData&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="a6aa6509-25ae-4a2f-b30e-1ff304d0f9f2" name="getAppointmentByCustomer" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="028acfe1-cbda-4a26-a7a0-5f43f066a28f" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="99f02e1a-e8b0-4cdb-9a80-c2b4becc3301" name="customerId" direction="In" isUnique="false">
+                  <elementDefinition Id="16ad2265-5139-4c5e-a1d5-7f63cb162c29" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="94e7dd85-6196-405a-a45a-f11a28d34f0a" direction="Return" isUnique="false">
+                  <elementDefinition Id="4900a400-3ae8-43e5-954d-d5027c170e7b" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c7230a0d-d19f-4a54-a93e-25bb5eed4d9b" LastKnownName="Array&lt;AppointmentData&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="c66bec69-dffd-40c3-9b9e-25455af68555" name="cancelAppointment" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="91a6335a-3a3f-4ac4-aa5d-10bbc7189c33" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b00f2e14-7d8b-4f2b-90aa-42461c5128e9" name="appointmentId" direction="In" isUnique="false">
+                  <elementDefinition Id="0a6c2775-0336-4245-864b-dbd2fde67381" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b01408e2-cf7e-49d6-8155-e34d54207a53" direction="Return" isUnique="false">
+                  <elementDefinition Id="4969b13f-5df3-4638-a177-7760d112d815" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="40241ceb-3f7f-4d5b-8807-cadc27dd337a" LastKnownName="boolean" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="63517130-36a3-431e-8a6b-8a2c6955643b" name="Date" isAbstract="false" isLeaf="false" cachedFullName="Date">
+        <elementDefinition Id="d5101847-a7de-43e3-8ef0-5336a70dbb80" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="e49a5826-4e36-43fe-b395-d4e3b52d80d3" name="AppointmentManagement" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::AppointmentManagement">
+        <elementDefinition Id="cad234b5-b60b-4e1d-b655-5705237323c5" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="f9e11092-d952-48c0-ae58-d86a475e5729" name="CheckinAppointment" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="01ad60fd-8321-404c-bfd7-2549fc214718" />
+        <generalsInternal>
+          <generalization Id="b23e1334-aa6a-4aab-a27a-c05402cad02f" isSubstitutable="false">
+            <classMoniker Id="de98fbe8-fe17-4de3-adb6-90961ea15d47" LastKnownName="AppointmentAbstract" />
+            <elementDefinition Id="16062a08-c55d-4d25-adb8-c58c13fdbbcf" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation Id="b5bb309b-37a2-4832-ba49-bfa49f59e9b6" name="validation" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="9283a6e1-8abe-433f-a7d8-72690844ab55" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b2af3fe8-5e1f-4cc3-b983-87e842dadb35" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="59661b98-f9c8-45bf-b034-7700ddfa8ac3" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3b5b73ec-644c-4c61-9697-fdfbf5f3d4f9" LastKnownName="AppointmentData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8aadaf28-0791-4f1c-bf12-cbf7c49b65a7" direction="Return" isUnique="false">
+                  <elementDefinition Id="b7409773-be55-47bd-9cd0-31d3f3d93f9a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6063720e-4106-4677-a9bc-4a87bdf1af76" LastKnownName="SalonCloudResponse&lt;string&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="4a1394ac-8113-43bb-927b-33648e7cf4f6" name="OnlineAppointment" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="08733c48-0c6c-4220-8e05-dc0523ba9c39" />
+        <generalsInternal>
+          <generalization Id="f0236616-74a6-4930-acfa-78b29ca7fdfa" isSubstitutable="false">
+            <classMoniker Id="de98fbe8-fe17-4de3-adb6-90961ea15d47" LastKnownName="AppointmentAbstract" />
+            <elementDefinition Id="13506c04-fa2b-4ff2-9484-a0ebc26edbd9" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation Id="4a855a23-5455-4eae-9b31-6e4a4771d39b" name="validation" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="acca6842-85e8-4645-a985-000ad355f10d" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7863e58c-d52b-4bc3-b21f-db0a3eaa25e9" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="81444a83-353a-4857-8119-b5ecb64964e9" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3b5b73ec-644c-4c61-9697-fdfbf5f3d4f9" LastKnownName="AppointmentData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="14511401-921d-4684-89de-3c699c6bc445" direction="Return" isUnique="false">
+                  <elementDefinition Id="e33bebbe-5479-426b-90ce-e82c4a2549da" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6063720e-4106-4677-a9bc-4a87bdf1af76" LastKnownName="SalonCloudResponse&lt;string&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="c0f7de25-cbc0-4233-96a1-f9d513e12919" name="PhoneCallAppointment" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="a00cedd9-a805-4a2f-972e-4c62591248eb" />
+        <generalsInternal>
+          <generalization Id="1b69518c-c02d-4931-b82a-e17b6a76dde7" isSubstitutable="false">
+            <classMoniker Id="de98fbe8-fe17-4de3-adb6-90961ea15d47" LastKnownName="AppointmentAbstract" />
+            <elementDefinition Id="3e7daddf-f71a-46a8-b956-eefcfa2953dd" />
+          </generalization>
+        </generalsInternal>
+        <ownedOperationsInternal>
+          <operation Id="7cdda2c2-0272-4cce-ba0b-58bde3cbb7a1" name="validation" visibility="Protected" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="93ba7902-4708-4fdb-a0d8-1e35972bc4ae" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0c20d158-884f-409e-8f75-a0d866296c21" name="appointment" direction="In" isUnique="false">
+                  <elementDefinition Id="bba7ed67-0776-408b-b099-1b5dc4a7875f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3b5b73ec-644c-4c61-9697-fdfbf5f3d4f9" LastKnownName="AppointmentData" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="fe5298dd-ab17-4977-aae2-e1922273321e" direction="Return" isUnique="false">
+                  <elementDefinition Id="3007c271-10de-4074-a031-58c9682f745c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6063720e-4106-4677-a9bc-4a87bdf1af76" LastKnownName="SalonCloudResponse&lt;string&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="6063720e-4106-4677-a9bc-4a87bdf1af76" name="SalonCloudResponse&lt;string&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;string&gt;">
+        <elementDefinition Id="e5853dd4-bad0-4f09-b277-778c8c856998" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="e2720721-086a-481c-a22f-9053aeb43a43" name="number" isAbstract="false" isLeaf="false" cachedFullName="number">
+        <elementDefinition Id="725b7863-09dc-4804-a657-1800269b1e70" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="a05b8afb-8a7e-42de-8c11-4e5ff9623afd" name="AppointmentData" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="864b6c0e-2f47-416b-8514-b19606d724c3" />
+        <ownedAttributes>
+          <property Id="9dcdf0d8-c144-4f5f-b262-35f833e62500" name="id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="c736caa5-2b08-43ac-bd60-0a15ce929937" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="8e00b7c3-459a-4b71-bd52-205e4eab8e31" name="customer_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="b3b35051-4231-4425-adf3-77fb043ad2ac" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="cd858504-38e6-49b9-9600-dcb256cd3c84" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="3112b4df-632c-40e0-b0ea-4e0cbc964baf" name="salon_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="1586e313-8542-4c87-bea7-c3cfc2999d74" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="652154a8-f062-4570-a86f-c4918c9fb8b3" name="note" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="9e205951-984c-4017-9119-a4cf5bf6df0b" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="fb867652-d2c8-449e-a274-104d7e3cc021" name="device" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="9279d703-dc40-495d-b632-0d70d73d5dc9" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="e2720721-086a-481c-a22f-9053aeb43a43" LastKnownName="number" />
+            </type_NamedElement>
+          </property>
+          <property Id="59a11583-7dcb-40d2-ad44-efd1413761f2" name="status" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="b635a3ef-770e-4f2d-bf7c-27fc24eec65b" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="e2720721-086a-481c-a22f-9053aeb43a43" LastKnownName="number" />
+            </type_NamedElement>
+          </property>
+          <property Id="3e0c78a6-4a07-4b00-a23a-f0a544c3ed6c" name="type" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="f248deb7-e359-43ba-87d5-4b10504d6d65" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="e2720721-086a-481c-a22f-9053aeb43a43" LastKnownName="number" />
+            </type_NamedElement>
+          </property>
+          <property Id="de34fc88-8267-4293-92ae-b3f799003dec" name="is_reminded" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="47942f49-bb00-4e70-8989-3ba41cbc77af" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="40241ceb-3f7f-4d5b-8807-cadc27dd337a" LastKnownName="boolean" />
+            </type_NamedElement>
+          </property>
+          <property Id="2c8a044a-be4c-4013-abff-f7c7bea0f7a9" name="flexible" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="af437008-b12f-4bc2-b3ea-77b7d4929727" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="40241ceb-3f7f-4d5b-8807-cadc27dd337a" LastKnownName="boolean" />
+            </type_NamedElement>
+          </property>
+          <property Id="1ecb37fc-13a4-4e50-ac1c-dbcf02e002ad" name="receipt_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="ca83faa3-d030-4b9a-b9db-d758bfbfef29" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributes>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="cd858504-38e6-49b9-9600-dcb256cd3c84" name="string" isAbstract="false" isLeaf="false" cachedFullName="string">
+        <elementDefinition Id="6cb97e2b-d8aa-405c-84c2-e9819b8eb7b1" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="89a0d68c-1916-48f5-a205-a284457e4d1a" name="ReceiptItemData" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="46c7a93b-ffa6-44ff-ab8b-9b22ab9c1524" />
+        <ownedAttributes>
+          <property Id="70cee977-cb88-4264-97ca-787034086446" name="service_group_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="a1c4671b-d00d-44ac-99d1-2c1a100f12be" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="0e119503-a383-4944-8f5e-389acf29e0e0" name="service_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="3c10a69f-2b99-46a9-bc4f-82d9b023769f" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="8e5a2900-e8db-4cff-a42b-2f29f4d41186" name="employee_id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="16455b7c-d3a2-4ae4-99bd-5cf24f062cae" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="07fe1a1d-6b43-4cb7-9176-74c1768da0c5" name="service_name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="eb2dc0aa-7021-4953-a619-8c58ce510db7" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="6c3e8f85-af01-45f9-9fa4-9050d702d5f4" name="price" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="e1492314-3e55-40d0-a807-2b42ceed386d" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="e2720721-086a-481c-a22f-9053aeb43a43" LastKnownName="number" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributes>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="f293661d-513b-4103-a0bf-3c6c86cd1b3f" name="ReceiptData" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="eadb2d6e-7c0b-4c8a-9d97-e1806dc72e91" />
+        <ownedAttributes>
+          <property Id="f3133054-a277-41ee-b0f5-d15397dd7a9f" name="id" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="4f993a0c-34d2-45f3-880e-3777970a76e2" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="6c8b8af6-4f34-4893-b759-b400a9caeddc" LastKnownName="string" />
+            </type_NamedElement>
+          </property>
+          <property Id="9c674cc1-513c-447c-9a54-749d8255f8e8" name="services" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="65f8dbcd-ca03-49fb-9b58-3510348f3dbe" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="1ab747be-e78b-4f34-a811-b2a1ded5ab16" LastKnownName="Array&lt;ReceiptItemData&gt;" />
+            </type_NamedElement>
+          </property>
+          <property Id="7b53e4c1-ebc9-4b82-959d-45713698a9a6" name="total" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="c2480a6c-9761-4253-8f8e-c93e25556ca2" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="e2720721-086a-481c-a22f-9053aeb43a43" LastKnownName="number" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributes>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="1ab747be-e78b-4f34-a811-b2a1ded5ab16" name="Array&lt;ReceiptItemData&gt;" isAbstract="false" isLeaf="false" cachedFullName="Array&lt;ReceiptItemData&gt;">
+        <elementDefinition Id="5f3745f4-df9c-48e0-a2b4-d82ec905feee" />
+      </referencedType>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="8699afe5-0862-429c-883b-47a331bfefd1" name="SalonCloud.Server.Design">
+    <elementDefinition Id="2c899048-69c9-4895-a4a9-015718059e00" />
+  </package>
+</logicalClassDesignerModel>

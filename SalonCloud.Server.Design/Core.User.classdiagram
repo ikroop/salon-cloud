@@ -258,37 +258,6 @@
         <elementDefinition Id="4a6479c9-bc02-4d0d-b08b-e78e471e785d" />
       </referencedType>
     </packageHasNamedElement>
-    <logicalClassDesignerModelHasTypes>
-      <Interface Id="dc266e12-ad38-4c5e-a7af-62e510078626" name="UserData" isAbstract="false" isLeaf="false">
-        <elementDefinition Id="878a9a92-b71c-410e-8f11-3b0bdfc183f8" />
-        <ownedAttributes>
-          <property Id="8bb38393-0668-4674-9531-84124fcb5c9d" name="username" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="145d6301-cc11-4e2c-b5ad-da1b1970cd31" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
-            </type_NamedElement>
-          </property>
-          <property Id="ab4f2d96-b8d8-465d-8257-72ab29a4b52b" name="password" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="ace3af38-9669-49ef-8115-9220e54bc041" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
-            </type_NamedElement>
-          </property>
-          <property Id="146e334b-63a8-44af-be8a-0b828e026b37" name="status" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="97c71e39-fb09-480c-9b05-41fa57db2274" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="e31998c4-4967-4126-8cf6-fb120b096fd0" LastKnownName="string" />
-            </type_NamedElement>
-          </property>
-          <property Id="17ff2ee1-0ce9-4660-bb63-f41a0840dc58" name="is_verified" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="4a0dcbfd-bd9a-4996-a3b6-5983e45b96e9" />
-            <type_NamedElement>
-              <referencedTypeMoniker Id="1061a28b-629b-402b-a7f3-8cac0d52128f" LastKnownName="boolean" />
-            </type_NamedElement>
-          </property>
-        </ownedAttributes>
-      </Interface>
-    </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
       <referencedType Id="adfcea1b-325a-452f-894b-5f8f792b7932" name="SalonCloudResponse&lt;UserPublicProfile&gt;" isAbstract="false" isLeaf="false" cachedFullName="SalonCloudResponse&lt;UserPublicProfile&gt;">
         <elementDefinition Id="fee13505-5f62-403c-9977-89b1b9cd668e" />
@@ -311,13 +280,13 @@
           <property Id="5df5f8b8-d459-4ac8-9d5c-80029910704e" name="Auth" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="68bb9659-7c72-4f59-bf9e-eae3b1ead033" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="88f66676-4097-4a81-a0a9-d16446cced20" LastKnownName="Authorization" />
+              <referencedTypeMoniker Id="88f66676-4097-4a81-a0a9-d16446cced20" LastKnownName="Authentication" />
             </type_NamedElement>
           </property>
           <property Id="e0ceb028-436a-401c-80fe-32e063cef808" name="SalonPublicDP" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="38c26eb1-d115-4fb6-94b3-d4d99336a5fd" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="14987d81-2b9a-41f4-9198-d6d04b3805ae" LastKnownName="SalonPublicDisplay" />
+              <referencedTypeMoniker Id="b99005d6-cae3-4d6a-a123-5beab05dfcdb" LastKnownName="SalonPublicService" />
             </type_NamedElement>
           </property>
         </ownedAttributes>
@@ -402,7 +371,7 @@
       </Interface>
     </logicalClassDesignerModelHasTypes>
     <packageHasNamedElement>
-      <referencedType Id="88f66676-4097-4a81-a0a9-d16446cced20" name="Authorization" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::Authorization">
+      <referencedType Id="88f66676-4097-4a81-a0a9-d16446cced20" name="Authentication" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::Authentication">
         <elementDefinition Id="f5d84f0b-fcc2-47b1-b696-9fe1ddd78ae8" />
       </referencedType>
     </packageHasNamedElement>
@@ -747,6 +716,14 @@
             <elementDefinition Id="ebcb756e-7eed-4443-9a6b-c9d4c44a9bfa" />
           </interfaceRealization>
         </suppliersInternal>
+        <ownedAttributesInternal>
+          <property Id="9f84ba8d-eced-4d26-992a-fc0160e3b593" name="authenticationDp" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="da1e59ab-019f-4fc7-ae8c-702a959338cb" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="88f66676-4097-4a81-a0a9-d16446cced20" LastKnownName="Authentication" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="9b8dd58f-00ce-4c64-b8d7-23db80862425" name="signUpWithUserAndPassword" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="2a379048-2a6f-49c0-bf5c-601f7bf6e0f8" />
@@ -1274,7 +1251,7 @@
           <property Id="1dfc0e50-3c89-4f09-9495-cfd362d30a76" name="SalonPublicDP" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="bd0b6edb-9a14-49d8-ad86-b1f486dea083" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="c8364cd8-66a0-46fc-9333-0b799e0013b5" LastKnownName="SalonPublicDisplay" />
+              <referencedTypeMoniker Id="c8364cd8-66a0-46fc-9333-0b799e0013b5" LastKnownName="SalonPublicService" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -1886,7 +1863,7 @@
       </referencedType>
     </packageHasNamedElement>
     <logicalClassDesignerModelHasTypes>
-      <class Id="f140198d-adaf-4761-8057-12a0c70923fa" name="SalonPublicDisplay" isAbstract="false" isLeaf="false" isActiveClass="false">
+      <class Id="f140198d-adaf-4761-8057-12a0c70923fa" name="SalonPublicService" isAbstract="false" isLeaf="false" isActiveClass="false">
         <elementDefinition Id="5e1c1703-a0f1-464d-92b6-08c6664a97fc" />
         <ownedAttributesInternal>
           <property Id="3ff9a326-703e-4eee-afa9-95b8405bcc8f" name="SalonManagement" visibility="Private" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -1963,12 +1940,12 @@
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="14987d81-2b9a-41f4-9198-d6d04b3805ae" name="SalonPublicDisplay" isAbstract="false" isLeaf="false" cachedFullName="SalonPublicDisplay">
-        <elementDefinition Id="10b93ff8-b70e-4550-9e88-e85de3e1e220" />
+      <referencedType Id="c8364cd8-66a0-46fc-9333-0b799e0013b5" name="SalonPublicService" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::SalonPublicService">
+        <elementDefinition Id="5e1c1703-a0f1-464d-92b6-08c6664a97fc" />
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="c8364cd8-66a0-46fc-9333-0b799e0013b5" name="SalonPublicDisplay" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::SalonPublicDisplay">
+      <referencedType Id="b99005d6-cae3-4d6a-a123-5beab05dfcdb" name="SalonPublicService" isAbstract="false" isLeaf="false" cachedFullName="SalonCloud.Server.Design::SalonPublicService">
         <elementDefinition Id="5e1c1703-a0f1-464d-92b6-08c6664a97fc" />
       </referencedType>
     </packageHasNamedElement>
