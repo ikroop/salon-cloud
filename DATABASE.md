@@ -72,6 +72,7 @@ use UTC.
   |     |             
   |----service
   |     |----id: string
+  |     |----salon_id: string
   |     |----group_name: string
   |     |----description: string
   |     |----service_list
