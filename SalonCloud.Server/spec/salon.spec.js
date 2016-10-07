@@ -19,7 +19,7 @@ describe('Salon Management', function () {
         };
         request(url)
             .post('/auth/signinwithemailandpassword')
-            .send(user)            
+            .send(user)
             .end(function (err, res) {
                 if (err) {
                     throw err;
@@ -45,12 +45,12 @@ describe('Salon Management', function () {
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
-                
+
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    
+
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('InvalidTokenError');
@@ -69,12 +69,12 @@ describe('Salon Management', function () {
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
-                
+
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    
+
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('MissingSalonName');
@@ -93,12 +93,12 @@ describe('Salon Management', function () {
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
-                
+
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    
+
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('MissingAddress');
@@ -114,12 +114,12 @@ describe('Salon Management', function () {
                 'phonenumber': '4049806189',
                 'email': 'salon@salonhelps.com'
             };
-   
+
             request(url)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set('Authorization', token)
-                
+
                 .end(function (err, res) {
                     if (err) {
                         throw err;
@@ -142,12 +142,12 @@ describe('Salon Management', function () {
                 .post(apiUrl)
                 .set({ 'Authorization': token })
                 .send(bodyRequest)
-                
+
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    
+
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('MissingPhoneNumber');
@@ -167,12 +167,12 @@ describe('Salon Management', function () {
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
-                
+
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    
+
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('WrongPhoneNumberFormat');
@@ -196,7 +196,7 @@ describe('Salon Management', function () {
                     if (err) {
                         throw err;
                     }
-                    
+
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('WrongEmailFormat');
@@ -216,14 +216,15 @@ describe('Salon Management', function () {
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
-                
+
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    
                     res.status.should.be.equal(200);
-                    res.body.should.have.property('_id');
+                    res.body.should.have.property('uid');
+                    res.body.should.have.property('salon_id');
+                    res.body.should.have.property('role').eql(1);
                     done();
                 });
         });
