@@ -55,6 +55,9 @@
     },
     "twilio/twilio.d.ts": {
       "commit": "962044d3ceb599d00c6ec69053218439b0df87cb"
+    },
+    "googlemaps/google.maps.d.ts":{
+      "commit": "18faea35154d44650005de30336c1f0203a55af6"
     }
   }
 }
