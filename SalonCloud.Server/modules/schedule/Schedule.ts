@@ -312,9 +312,7 @@ export abstract class Schedule implements ScheduleBehavior {
         },function(error){
             returnResult.err = error
             return;
-        })
-
-        
+        })       
 
         return returnResult; 
     };
@@ -380,7 +378,7 @@ export abstract class Schedule implements ScheduleBehavior {
             closeTimeValidator = new IsInRange(closeTimeValidator,ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
             var closeTimeResult = await closeTimeValidator.validate();
             if(closeTimeResult){
-                return errorReturn = openTimeResult;
+                return errorReturn = closeTimeResult;
             }
 
             var dayOfWeekValidator = new BaseValidator(weeklyScheduleList[i].day_of_week);
