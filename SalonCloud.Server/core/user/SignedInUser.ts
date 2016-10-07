@@ -11,21 +11,21 @@ import {UserManagement} from './../../modules/userManagement/UserManagement'
 import {UserProfile} from './../../modules/userManagement/UserProfile'
 
 
-export class SignedInUser implements SignedInUserBehavior{
+export class SignedInUser implements SignedInUserBehavior {
 
     salonManagementDP: SalonManagement;
     UserManagementDP: UserManagement;
     //Todo: neccesary??
     //salonScheduleDP: Schedule;
 
-    constructor(salonManagementDP: SalonManagement){
+    constructor(salonManagementDP: SalonManagement) {
         this.salonManagementDP = salonManagementDP;
 
     }
 
-    public async createSalon(salonInformation : SalonInformation) : SalonCloudResponse<SalonInformation> {
+    public async createSalon(salonInformation: SalonInformation): SalonCloudResponse<SalonInformation> {
 
-        var returnResult : SalonCloudResponse<SalonInformation> = {
+        var returnResult: SalonCloudResponse<SalonInformation> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -37,28 +37,28 @@ export class SignedInUser implements SignedInUserBehavior{
 
         //step 3: create default schedule;
         var scheduleDP = new SalonSchedule(salonData.data._id);
-        
-        var defaultSchedule =await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule); //Todo:  static method in schedule module
+
+        var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule); //Todo:  static method in schedule module
 
         //step 4: update user profile;
         var profile = this.addNewProfile(salonData.data._id); //Todo
 
         return;
-};
+    };
 
-    public getSalonList() : SalonCloudResponse<Array<SalonInformation>> {
+    public getSalonList(): SalonCloudResponse<Array<SalonInformation>> {
 
         return;
-};
+    };
 
-    public selectSalon(SalonId : string) : SalonCloudResponse<boolean> {
+    public selectSalon(SalonId: string): SalonCloudResponse<boolean> {
         return;
-};
+    };
 
-    public async addNewProfile(salonId: string):SalonCloudResponse<UserProfile>{
+    public async addNewProfile(salonId: string): SalonCloudResponse<UserProfile> {
 
         var returnResult = await this.UserManagementDP.addProfile(salonId, 1);
-        return returnResult ;
+        return returnResult;
     };
 
 
