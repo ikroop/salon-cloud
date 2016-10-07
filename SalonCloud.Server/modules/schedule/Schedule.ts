@@ -18,6 +18,8 @@ export abstract class Schedule implements ScheduleBehavior {
      */
     protected salonId: string;
     protected employeeId: string;
+
+
     
     //this constructor will only be called in subclass contructors;
     //we defer the identification of salonId and employeeId to subclass.
@@ -25,6 +27,10 @@ export abstract class Schedule implements ScheduleBehavior {
         this.salonId = salonId;
         this.employeeId = employeeId;
     };
+
+    public static addDefaultSchedule(salonId: string){
+        
+    }
 
     /**
 	*@name: getDailySchedule(date: Date)
@@ -411,7 +417,7 @@ export abstract class Schedule implements ScheduleBehavior {
             data:undefined
         }
 
-        var result = await DailyScheduleModel.findOne({salon_id: this.salonId, employee_id: this.employeeId, "day.date": dailySchedule._id}).exec( function(err, docs){
+        var result = await DailyScheduleModel.findOne({salon_id: this.salonId, employee_id: this.employeeId, "day.date": dailySchedule.date}).exec( function(err, docs){
             if(err){
                 return returnResult.err = err;
             }else if(docs){

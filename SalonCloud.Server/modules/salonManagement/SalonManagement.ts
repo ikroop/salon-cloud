@@ -5,6 +5,9 @@
 import {SalonManagementBehavior} from './SalonManagementBehavior'
 import {SalonData, SalonInformation, SalonSetting} from './SalonData'
 import {SalonCloudResponse} from './../../core/SalonCloudResponse'
+import {SalonModel, SalonProfileSchema} from './SalonModel'
+import {defaultSalonSetting} from './../../core/defaultData'
+
 
 export class SalonManagement implements SalonManagementBehavior {
 
@@ -18,8 +21,26 @@ export class SalonManagement implements SalonManagementBehavior {
         return;
     };
 
-    public createSalon(salonInformation) : SalonCloudResponse<string>{
-        return;
+    public async createSalon(salonInformation) : SalonCloudResponse<SalonData>{
+        //step 1: 
+        var returnResult : SalonCloudResponse<string> = {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
+
+        var salonData: SalonData = {
+            information: salonInformation,
+            setting: defaultSalonSetting,
+        }
+        var SalonCreation = SalonModel.create(salonData);
+        await SalonCreation.then(function(docs){
+                returnResult.data = docs;
+            }, function(err){
+                returnResult.err = err;
+            })
+
+        return returnResult;
     };
 
     public createSetting(salonId : string, setting : SalonSetting) : SalonCloudResponse<boolean>{

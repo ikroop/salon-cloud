@@ -6,7 +6,7 @@
 //
 
 export interface SalonInformation {
-            salon_name: string;
+        salon_name: string;
         phone:{
             number:string;
             is_verified: boolean
