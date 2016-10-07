@@ -1,15 +1,9 @@
 
 
-import {ServiceGroup} from './ServiceGroup'
+import {ServiceGroupData} from './ServiceData'
 
 export interface ServiceManagementBehavior {
-    addGroup(group : ServiceGroup) : string;
-
-    getServices() : Array<ServiceGroup>;
-
-    removeGroup(groupId : string) : boolean;
-
-    updateGroup(groupId : string, group :ServiceGroup) : boolean;
-
-
+    addGroup(group: ServiceGroupData);
+    getServices();
+    updateGroup(groupId: string, group: ServiceGroupData);
 }
