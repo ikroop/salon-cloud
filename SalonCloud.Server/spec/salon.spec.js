@@ -229,5 +229,29 @@ describe('Salon Management', function () {
                 });
         });
 
+        it('should return salon object with id trying to create salon information successfully without email', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'salon_name': 'SunshineNails VA',
+                'address': '2506 Bailey Dr NW, Norcross, GA 30071',
+                'phonenumber': '4049806189'
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('uid');
+                    res.body.should.have.property('salon_id');
+                    res.body.should.have.property('role').eql(1);
+                    done();
+                });
+        });
+
     });
 });
