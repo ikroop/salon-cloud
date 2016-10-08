@@ -314,6 +314,8 @@ export class IsValidSalonId extends DecoratingValidator{
 
 }
 
+//Validate if a name is valid.
+//Valid name string is a string which not only contains blank space(s).
 export class IsValidNameString extends DecoratingValidator{
     public errorType: any;
     public targetElement: any;
