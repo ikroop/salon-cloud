@@ -37,8 +37,10 @@ export class SignedInUser implements SignedInUserBehavior {
 
         //step 3: create default schedule;
         var scheduleDP = new SalonSchedule(salonData.data._id);
-        var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule); //Todo:  static method in schedule module
+        var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule); 
 
+        //step 4: create sample services;
+        
         //step 5: update user profile;
         var profile = this.addNewProfile(salonData.data._id); //Todo
 
