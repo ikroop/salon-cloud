@@ -15,13 +15,19 @@ module.exports = {
     'MissingFullName': {
         'err': {
             'name': 'MissingFullName',
-            'message': 'A required FullName is missing!'
+            'message': 'A required fullname is missing!'
         }
     },
-    'InvalidFullName': {
+    'MissingNickName': {
         'err': {
-            'name': 'InvalidFullName',
-            'message': 'Fullname should not only contain blank space(s)!'
+            'name': 'MissingNickName',
+            'message': 'A required nickname is missing!'
+        }
+    },
+    'InvalidNameString': {
+        'err': {
+            'name': 'InvalidNameString',
+            'message': 'A name should not only contain blank space(s)!'
         }
     },
     'PasswordTooShort': {
