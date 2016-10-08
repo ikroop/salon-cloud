@@ -74,7 +74,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
             code: undefined,
             data: undefined
         };
-        var dailyDocsReturn = await ServiceGroupModel.findOne({ salonId: this.salonId }).exec(function (err, docs) {
+        var dailyDocsReturn = await ServiceGroupModel.find({ salonId: this.salonId }).exec(function (err, docs) {
             if (err) {
                 returnResult.err = err;
             } else {
@@ -102,7 +102,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
             data: undefined,
             err: undefined
         };
-        var docsFound = await ServiceGroupModel.findOne({ salon_id: this.salonId, id: groupId }).exec();
+        var docsFound = await ServiceGroupModel.find({ salon_id: this.salonId, id: groupId }).exec();
 
         docsFound = group;
         var saveAction = docsFound.save();
