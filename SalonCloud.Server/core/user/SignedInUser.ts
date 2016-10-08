@@ -9,6 +9,9 @@ import {Schedule} from './../../modules/schedule/Schedule'
 import {defaultWeeklySchedule} from './../defaultData'
 import {UserManagement} from './../../modules/userManagement/UserManagement'
 import {UserProfile} from './../../modules/userManagement/UserProfile'
+import {ServiceManagement} from './../../modules/serviceManagement/ServiceManagement'
+import {ServiceGroupData} from './../../modules/serviceManagement/ServiceData'
+import {samplesService1, samplesService2} from './../defaultData'
 
 
 export class SignedInUser implements SignedInUserBehavior {
@@ -25,7 +28,7 @@ export class SignedInUser implements SignedInUserBehavior {
 
     public async createSalon(salonInformation: SalonInformation): SalonCloudResponse<SalonInformation> {
 
-        var returnResult: SalonCloudResponse<SalonInformation> = {
+        var returnResult: SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -40,11 +43,22 @@ export class SignedInUser implements SignedInUserBehavior {
         var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule); 
 
         //step 4: create sample services;
-        
+        var serviceDP = new ServiceManagement(salonData.data._id);
+
+        var sampleServices:[ServiceGroupData]= [samplesService1, samplesService2];
+
+        var addSampleServicesAction = await serviceDP.addGroupArray(sampleServices); //Todo
+
         //step 5: update user profile;
         var profile = this.addNewProfile(salonData.data._id); //Todo
-
-        return;
+         
+        returnResult.data = {
+            salon_id: salonData.data._id,
+            uid: this.UserManagementDP.user_id,
+            role: profile.data.role,
+        }
+        returnResult.err = 200;
+        return returnResult;
     };
 
     public getSalonList(): SalonCloudResponse<Array<SalonInformation>> {
