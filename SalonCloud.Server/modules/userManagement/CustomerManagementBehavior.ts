@@ -1,7 +1,6 @@
 
 
-import {UserData} from './UserData'
-import {UserProfile} from './UserProfile'
+import {UserData, UserProfile} from './UserData'
 
 export interface CustomerManagementBehavior{
     addCustomer(phone, profile :UserProfile) : boolean;

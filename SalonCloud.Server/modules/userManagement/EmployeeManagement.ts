@@ -1,6 +1,5 @@
 
-import {UserData} from './UserData'
-import {UserProfile} from './UserProfile'
+import {UserData, UserProfile} from './UserData'
 import {EmployeeManagementBehavior} from './EmployeeManagementBehavior'
 
 export class EmployeeManagement implements EmployeeManagementBehavior{

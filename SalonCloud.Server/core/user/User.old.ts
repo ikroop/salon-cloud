@@ -2,10 +2,10 @@
  * 
  */
 import { mongoose } from "../../services/database";
-import {UserData, UserProfile} from "./UserData";
+import { UserData, UserProfile } from './../../modules/userManagement/UserData'
 var ErrorMessage = require('./../../routes/ErrorMessage');
-import {Validator} from '../../core/validator/Validator';
-import {Salon} from '../../modules/salon/salon';
+import { Validator } from '../../core/validator/Validator';
+import { Salon } from '../../modules/salon/salon';
 import UserModel = require("./UserModel");
 
 export class User {

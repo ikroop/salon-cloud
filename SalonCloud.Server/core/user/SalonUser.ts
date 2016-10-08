@@ -1,37 +1,37 @@
 
 
-import {SignedInUser} from './SignedInUser'
-import {UserProfileBehavior} from './UserProfileBehavior'
-import {SalonCloudResponse} from './../SalonCloudResponse'
-import {UserProfile} from './UserData'
-import {SalonPublicService} from './../salonPublicService/SalonPublicService'
+import { SignedInUser } from './SignedInUser'
+import { UserProfileBehavior } from './UserProfileBehavior'
+import { SalonCloudResponse } from './../SalonCloudResponse'
+import { UserProfile } from './../../modules/userManagement/UserData'
+import { SalonPublicService } from './../salonPublicService/SalonPublicService'
 
 
 export class SalonUser extends SignedInUser implements UserProfileBehavior {
 
-    SalonPublicDP : SalonPublicService;
+    SalonPublicDP: SalonPublicService;
 
-    activate():SalonCloudResponse<boolean>{
-
-        return;
-    };
-
-    createProfile(Profile : UserProfile) : SalonCloudResponse<boolean>{
+    activate(): SalonCloudResponse<boolean> {
 
         return;
     };
 
-    deactivate() : SalonCloudResponse<boolean> {
+    createProfile(Profile: UserProfile): SalonCloudResponse<boolean> {
 
         return;
     };
 
-    getProfile() : SalonCloudResponse<UserProfile> {
+    deactivate(): SalonCloudResponse<boolean> {
 
         return;
     };
 
-    updateProfile(profile : UserProfile) : SalonCloudResponse<boolean> {
+    getProfile(): SalonCloudResponse<UserProfile> {
+
+        return;
+    };
+
+    updateProfile(profile: UserProfile): SalonCloudResponse<boolean> {
 
         return;
     };
