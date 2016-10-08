@@ -21,7 +21,7 @@ export class SalonManagement implements SalonManagementBehavior {
         return;
     };
 
-    public async createSalon(salonInformation) : SalonCloudResponse<SalonData>{
+    public async createSalonDocs(salonInformation) : SalonCloudResponse<SalonData>{
         //step 1: 
         var returnResult : SalonCloudResponse<string> = {
             code: undefined,

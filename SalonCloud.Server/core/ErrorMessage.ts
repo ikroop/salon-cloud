@@ -1,5 +1,5 @@
 //Error Messages Definition
-module.exports = {
+export const ErrorMessage = {
     'MissingUsername': {
         'err': {
             'name': 'MissingUsername',

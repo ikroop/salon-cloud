@@ -27,6 +27,7 @@ export const UserProfileSchema = new mongoose.Schema({
 });
 
 export const UserSchema = new Schema({
+    _id: {type: String,  required: false},
     username: { type: String, required: true },
     password: String,
     status: { type: Boolean, required: true },

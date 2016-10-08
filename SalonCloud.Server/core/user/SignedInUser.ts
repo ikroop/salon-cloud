@@ -32,15 +32,15 @@ export class SignedInUser implements SignedInUserBehavior{
         };
         //step 1: validation;
 
-        //step 2: create salon;
-        var salonData = await this.salonManagementDP.createSalon(salonInformation);
+        //step 2: create salon docs;
+        var salonData = await this.salonManagementDP.createSalonDocs(salonInformation);
 
         //step 3: create default schedule;
         var scheduleDP = new SalonSchedule(salonData.data._id);
         
-        var defaultSchedule =await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule); //Todo:  static method in schedule module
+        var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule); //Todo:  static method in schedule module
 
-        //step 4: update user profile;
+        //step 5: update user profile;
         var profile = this.addNewProfile(salonData.data._id); //Todo
 
         return;
