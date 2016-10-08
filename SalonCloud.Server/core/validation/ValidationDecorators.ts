@@ -314,7 +314,7 @@ export class IsValidSalonId extends DecoratingValidator{
 
 }
 
-export class IsValidFullname extends DecoratingValidator{
+export class IsValidNameString extends DecoratingValidator{
     public errorType: any;
     public targetElement: any;
     constructor (wrapedValidator: Validator, errorType: any){
@@ -325,8 +325,8 @@ export class IsValidFullname extends DecoratingValidator{
     };
 
     public async validatingOperation(){
-        let fullname: string = this.targetElement;
-        let strimmedString: string = fullname.replace(" ", "");
+        let name: string = this.targetElement;
+        let strimmedString: string = name.replace(" ", "");
         if(strimmedString == ""){
             return this.errorType;
         }else{
