@@ -314,5 +314,27 @@ export class IsValidSalonId extends DecoratingValidator{
 
 }
 
+export class IsValidNameString extends DecoratingValidator{
+    public errorType: any;
+    public targetElement: any;
+    constructor (wrapedValidator: Validator, errorType: any){
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+    };
+
+    public async validatingOperation(){
+        let name: string = this.targetElement;
+        let strimmedString: string = name.replace(" ", "");
+        if(strimmedString == ""){
+            return this.errorType;
+        }else{
+            return undefined;
+        }
+    }
+
+}
+
 
 

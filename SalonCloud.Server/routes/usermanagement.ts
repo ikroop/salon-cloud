@@ -18,6 +18,10 @@ export class UserManagementRouter {
         this.router.post("/API-NAME", function (request: Request, response: Response) {
 
         });
+       
+        this.router.post("/api/v1/employee/create", function (request: Request, response: Response) {
+
+        });
         return this.router;
     }
 }

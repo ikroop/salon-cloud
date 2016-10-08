@@ -15,7 +15,19 @@ export const ErrorMessage = {
     'MissingFullName': {
         'err': {
             'name': 'MissingFullName',
-            'message': 'A required FullName is missing!'
+            'message': 'A required fullname is missing!'
+        }
+    },
+    'MissingNickName': {
+        'err': {
+            'name': 'MissingNickName',
+            'message': 'A required nickname is missing!'
+        }
+    },
+    'InvalidNameString': {
+        'err': {
+            'name': 'InvalidNameString',
+            'message': 'A name should not only contain blank space(s)!'
         }
     },
     'PasswordTooShort': {

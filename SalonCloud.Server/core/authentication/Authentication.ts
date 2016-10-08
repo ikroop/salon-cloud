@@ -6,7 +6,6 @@
  */
 
 import { SalonCloudResponse } from "./../SalonCloudResponse";
-import { AuthenticationData } from "./AuthenticationData";
 import { AuthenticationBehavior } from "./AuthenticationBehavior";
 import { Validator } from "./../validator/Validator";
 var ErrorMessage = require("./../ErrorMessage");
