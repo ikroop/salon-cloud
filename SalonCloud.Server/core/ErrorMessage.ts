@@ -18,6 +18,12 @@ module.exports = {
             'message': 'A required FullName is missing!'
         }
     },
+    'InvalidFullName': {
+        'err': {
+            'name': 'InvalidFullName',
+            'message': 'Fullname should not only contain blank space(s)!'
+        }
+    },
     'PasswordTooShort': {
         'err': {
             'name': 'PasswordTooShort',
