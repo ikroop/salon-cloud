@@ -53,26 +53,30 @@ export class Authentication implements AuthenticationBehavior {
             return response;
         }
 
-        await UserModel.register(new UserModel({
-            'username': username,
-            'status': true,
-            'is_verified': false,
-            'is_temporary': false
-        }), password, function (err, account) {
-            if (err) {
-                //callback({ 'err': err }, 409, undefined);
-                response.err = err;
-                response.code = 409;
-                response.data = undefined;
-            } else {
-                response.err = undefined;
-                response.code = 200;
-                response.data = {
-                    'user': account
-                };
-            }
+        let promise = new Promise(function (resolve, reject) {
+            UserModel.register(new UserModel({
+                'username': username,
+                'status': true,
+                'is_verified': false,
+                'is_temporary': false
+            }), password, function (err, account) {
+                if (err) {
+                    //callback({ 'err': err }, 409, undefined);
+                    response.err = { 'err': err };
+                    response.code = 409;
+                    response.data = undefined;
+                } else {
+                    response.err = undefined;
+                    response.code = 200;
+                    response.data = {
+                        'user': account
+                    };
+                }
+                resolve(response);
+            });
         });
-        return response;
+        return promise;
+
     }
 
     public signInWithUsernameAndPassword(username: string, password: string, callback) {
