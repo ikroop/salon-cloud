@@ -53,20 +53,23 @@ export class UserManagement implements UserManagementBehavior {
             cash_rate: 6,
             fullname: undefined,
             nickname: undefined,
-            status: undefined,
+            status: true,
 
         };
         var userDocs = await UserModel.findOne({ '_id': this.user_id }).exec();
         var checkExistArray = userDocs.profile.filter(profile => profile.salon_id === salonId);
-        if (checkExistArray.length > 0) {
+        if (checkExistArray.length == 0) {
+            console.log('010101', userDocs);
             userDocs.profile.push(newProfile);
             var saveAction = userDocs.save();
-
+            
             await saveAction.then(function (docs) {
+                console.log('090909090',docs)
                 returnResult.data = newProfile;
                 return returnResult;
 
             }, function (err) {
+                console.log(err, '8877676');;
                 returnResult.err = err;
                 return returnResult;
             });

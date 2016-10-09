@@ -10,7 +10,7 @@ export interface SalonManagementBehavior {
 
     createInformation(salonId: string, data: SalonInformation): SalonCloudResponse<string>;
 
-    createSalon(salonInformation): SalonCloudResponse<string>;
+    createSalonDocs(salonInformation: SalonInformation);
 
     createSetting(salonId: string, setting: SalonSetting): SalonCloudResponse<boolean>;
 

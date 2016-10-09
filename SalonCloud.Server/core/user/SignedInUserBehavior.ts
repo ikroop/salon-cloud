@@ -7,7 +7,7 @@ export interface SignedInUserBehavior {
 
     salonManagementDP: SalonManagement;
 
-    createSalon(salonInformation : SalonInformation) : SalonCloudResponse<SalonInformation>;
+    createSalon(salonInformation : SalonInformation);
 
     getSalonList() : SalonCloudResponse<Array<SalonInformation>>;
 

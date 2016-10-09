@@ -26,8 +26,11 @@ export class ScheduleRouter {
            
             //Todo: call Salon (and employee if needed) static validation
             //Todo: build a factory for schedule;
+            console.log('in');
             let testObject = new SalonSchedule(request.body.salon_id);
+            console.log('mid');
             let returnResponse  = await testObject.saveDailySchedule(request.body.daily_schedule);
+            console.log('out');
             response.status(200).json(returnResponse)
         });
         this.router.post("/saveemployeeweeklyschedule", async(request: Request, response: Response) => {

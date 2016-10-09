@@ -20,7 +20,7 @@ export interface UserData{
     is_verified: string;
     password: string;
     profile: [UserProfile];
-    status: string;
+    status: boolean;
     username: string;
 
 }
