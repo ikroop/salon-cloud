@@ -13,6 +13,7 @@
     "./core/core.d.ts",
     "./modules/schedule/Schedule.d.ts",
     "./modules/serviceManagement/Service.d.ts",
+    "./modules/userManagement/UserManagement.d.ts",
     "./app.ts",
     "./core/observer/Observer.d.ts"
   ]

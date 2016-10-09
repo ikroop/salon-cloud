@@ -6,7 +6,7 @@ import * as http from "http";
 
 import { ScheduleRouter } from "./routes/schedule";
 import { AuthenticationRouter } from "./routes/authentication";
-var UserModel = require ("./core/user/UserModel");
+var UserModel = require ("./modules/userManagement/UserModel");
 
 const app: express.Application = express();
 //var authorizationRouter: AuthorizationRouter = new AuthorizationRouter();

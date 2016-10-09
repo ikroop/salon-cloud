@@ -102,7 +102,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
             code: undefined,
             data: undefined
         };
-        var dailyDocsReturn = await ServiceGroupModel.find({ salonId: this.salonId }).exec(function (err, docs) {
+        await ServiceGroupModel.find({ salonId: this.salonId }).exec(function (err, docs) {
             if (err) {
                 returnResult.err = err;
             } else {

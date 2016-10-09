@@ -37,8 +37,8 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
-                'salary_rate': 0.6,
-                'cash_rate': 0.6
+                'salary_rate': 6,
+                'cash_rate': 6
             };
             request(url)
                 .post(apiUrl)
@@ -63,8 +63,8 @@ describe('Employee Management', function () {
                 'phone': 'abd1234',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
-                'salary_rate': 0.6,
-                'cash_rate': 0.6
+                'salary_rate': 6,
+                'cash_rate': 6
             };
             request(url)
                 .post(apiUrl)
@@ -88,8 +88,8 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'phone': '4049806189',
                 'nickname': 'Lee',
-                'salary_rate': 0.6,
-                'cash_rate': 0.6
+                'salary_rate': 6,
+                'cash_rate': 6
             };
             request(url)
                 .post(apiUrl)
@@ -114,8 +114,8 @@ describe('Employee Management', function () {
                 'phone': '4049806189',
                 'fullname': '   ',
                 'nickname': 'Lee',
-                'salary_rate': 0.6,
-                'cash_rate': 0.6
+                'salary_rate': 6,
+                'cash_rate': 6
             };
             request(url)
                 .post(apiUrl)
@@ -181,6 +181,160 @@ describe('Employee Management', function () {
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql('InvalidNameString');
+                    done();
+                });
+        });
+
+        it('should return "MissingSalaryRate" error trying to create new employee without nickname', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'phone': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'cash_rate': 6
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('MissingSalaryRate');
+                    done();
+                });
+        });
+
+        it('should return "SalaryRateRangeError" error trying to create new employee with salary_rate < 0', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'phone': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': -1,
+                'cash_rate': 6
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('SalaryRateRangeError');
+                    done();
+                });
+        });
+
+        it('should return "SalaryRateRangeError" error trying to create new employee with salary_rate > 10', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'phone': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 10.5,
+                'cash_rate': 6
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('SalaryRateRangeError');
+                    done();
+                });
+        });
+
+        it('should return "MissingCashRate" error trying to create new employee without nickname', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'phone': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 6
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('MissingCashRate');
+                    done();
+                });
+        });
+
+        it('should return "CashRateRangeError" error trying to create new employee with cash_rate < 0', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'phone': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 6,
+                'cash_rate': -0.5
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('CashRateRangeError');
+                    done();
+                });
+        });
+
+        it('should return "CashRateRangeError" error trying to create new employee with cash_rate > 10', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'phone': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 6,
+                'cash_rate': 11
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('CashRateRangeError');
                     done();
                 });
         });
