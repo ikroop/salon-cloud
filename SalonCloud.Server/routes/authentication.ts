@@ -27,16 +27,15 @@ export class AuthenticationRouter {
             }
         });
 
-        this.router.post("/signinwithusernameandpassword", authorizationRouter.checkPermission, function (request: Request, response: Response) {
+        this.router.post("/signinwithusernameandpassword", authorizationRouter.checkPermission, async function (request: Request, response: Response) {
             //TODO: have to use Anonymouse class
-            authentication.signInWithUsernameAndPassword(request.body.username, request.body.password, function (err, code, data) {
-                response.statusCode = code;
-                if (err) {
-                    response.json(err);
-                } else if (data) {
-                    response.json(data);
-                }
-            });
+            let result = await authentication.signInWithUsernameAndPassword(request.body.username, request.body.password);
+            response.statusCode = result.code;
+            if(result.err){
+                response.json(result.err);
+            }else{
+                response.json(result.data);
+            }
         });
 
         return this.router;
