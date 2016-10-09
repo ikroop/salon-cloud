@@ -7,11 +7,13 @@
 
 import { SalonCloudResponse } from "./../SalonCloudResponse";
 import { AuthenticationBehavior } from "./AuthenticationBehavior";
-import { Validator } from "./../validator/Validator";
 import { ErrorMessage } from './../ErrorMessage';
-import { UserModel } from './../../modules/userManagement/UserModel';
+var UserModel = require('./../../modules/userManagement/UserModel');
 import jwt = require('jsonwebtoken');
 import fs = require('fs');
+import { BaseValidator } from "./../../core/validation/BaseValidator";
+import { MissingCheck, IsString, IsLengthGreaterThan, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidUserName }
+    from "./../../core/validation/ValidationDecorators";
 
 export class Authentication implements AuthenticationBehavior {
     changePassword(oldPasswords: string, newPassword: string, code: string, callback) {
@@ -23,59 +25,54 @@ export class Authentication implements AuthenticationBehavior {
 
         return response;
     }
-    public signUpWithUsernameAndPassword(username: string, password: string, callback) {
-        //validate username;
-        if (!username) {
-            callback(ErrorMessage.MissingUsername, 400, undefined);
-            return;
-        } else {
-            var isPhonenumber = true;
-            var isEmail = true;
-
-            //case: username is phonenumber
-            if (!Validator.IsPhoneNumber(username)) {
-                isPhonenumber = false;
-            }
-
-            //case: username is email
-            if (!Validator.IsEmail(username)) {
-                isEmail = false;
-            }
-
-            if (!(isPhonenumber || isEmail)) {
-                callback(ErrorMessage.NotEmailOrPhoneNumber, 400, undefined);
-                return;
-            }
-
-        }
-        //validate password;
-        if (!password) {
-            callback(ErrorMessage.MissingPassword, 400, undefined);
-            return;
-
-        } else {
-            //validate password length, must be > = 6;
-            if (password.length < 6) {
-                callback(ErrorMessage.PasswordTooShort, 400, undefined);
-                return;
-
-            }
+    public async signUpWithUsernameAndPassword(username: string, password: string) {
+        var response: SalonCloudResponse<any> = {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
+        // Validate Username
+        var usernameValidator = new BaseValidator(username);
+        usernameValidator = new MissingCheck(usernameValidator, ErrorMessage.MissingUsername);
+        usernameValidator = new IsValidUserName(usernameValidator, ErrorMessage.NotEmailOrPhoneNumber);
+        var usernameResult = await usernameValidator.validate();
+        if (usernameResult) {
+            response.err = usernameResult;
+            response.code = 400;
+            return response;
         }
 
-        UserModel.register(new UserModel({
+        // Validate password;
+        var passwordValidator = new BaseValidator(password);
+        passwordValidator = new MissingCheck(passwordValidator, ErrorMessage.MissingPassword);
+        passwordValidator = new IsLengthGreaterThan(passwordValidator, ErrorMessage.PasswordTooShort, 6);
+        var passwordResult = await passwordValidator.validate();
+        if (passwordResult) {
+            response.err = passwordResult;
+            response.code = 400;
+            return response;
+        }
+
+        await UserModel.register(new UserModel({
             'username': username,
             'status': true,
             'is_verified': false,
             'is_temporary': false
         }), password, function (err, account) {
             if (err) {
-                callback({ 'err': err }, 409, undefined);
-                return;
+                //callback({ 'err': err }, 409, undefined);
+                response.err = err;
+                response.code = 409;
+                response.data = undefined;
             } else {
-                callback(undefined, 200, { 'user': account });
-                return;
+                response.err = undefined;
+                response.code = 200;
+                response.data = {
+                    'user': account
+                };
             }
         });
+        return response;
     }
 
     public signInWithUsernameAndPassword(username: string, password: string, callback) {
