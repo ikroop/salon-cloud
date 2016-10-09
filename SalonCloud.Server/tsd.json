@@ -56,8 +56,14 @@
     "twilio/twilio.d.ts": {
       "commit": "962044d3ceb599d00c6ec69053218439b0df87cb"
     },
-    "googlemaps/google.maps.d.ts":{
+    "googlemaps/google.maps.d.ts": {
       "commit": "18faea35154d44650005de30336c1f0203a55af6"
+    },
+    "q/Q.d.ts": {
+      "commit": "667d77f21cf01e8037beb07d0cbbfe1a982f66db"
+    },
+    "passport-local-mongoose/passport-local-mongoose.d.ts": {
+      "commit": "73e5a5026641eda668d1c787bfa25b065645e539"
     }
   }
 }
