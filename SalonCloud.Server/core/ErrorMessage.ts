@@ -294,5 +294,17 @@ export const ErrorMessage = {
                 'name': 'DuplicateDaysOfWeek',
                 'message': 'day_of_week in schedules must be unique!'
            }
+    },
+    'MissingSalaryRate': {
+        'err': {
+            'name': 'MissingSalaryRate',
+            'message': 'A required salary rate is missing!'
+        }
+    },
+    'MissingCashRate': {
+        'err': {
+            'name': 'MissingCashRate',
+            'message': 'A required cash rate is missing!'
+        }
     }
 };

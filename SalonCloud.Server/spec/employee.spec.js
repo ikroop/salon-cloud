@@ -185,5 +185,55 @@ describe('Employee Management', function () {
                 });
         });
 
+        it('should return "MissingSalaryRate" error trying to create new employee without nickname', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'phone': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'cash_rate': 0.6
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('MissingSalaryRate');
+                    done();
+                });
+        });
+
+        it('should return "MissingCashRate" error trying to create new employee without nickname', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'phone': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 0.6
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql('MissingCashRate');
+                    done();
+                });
+        });
+
     });
 });
