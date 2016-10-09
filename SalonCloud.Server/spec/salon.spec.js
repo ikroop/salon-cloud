@@ -225,6 +225,9 @@ describe('Salon Management', function () {
                     res.body.should.have.property('uid');
                     res.body.should.have.property('salon_id');
                     res.body.should.have.property('role').eql(1);
+                    res.body.should.have.property('default_schedule');
+                    res.body.should.have.property('sample_services');
+                    res.body.should.have.property('salon_data');
                     done();
                 });
         });
@@ -249,6 +252,9 @@ describe('Salon Management', function () {
                     res.body.should.have.property('uid');
                     res.body.should.have.property('salon_id');
                     res.body.should.have.property('role').eql(1);
+                    res.body.should.have.property('default_schedule');
+                    res.body.should.have.property('sample_services');
+                    res.body.should.have.property('salon_data');
                     done();
                 });
         });
