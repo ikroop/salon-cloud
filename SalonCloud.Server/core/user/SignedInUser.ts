@@ -8,7 +8,7 @@ import {SalonSchedule} from './../../modules/schedule/SalonSchedule'
 import {Schedule} from './../../modules/schedule/Schedule'
 import {defaultWeeklySchedule} from './../defaultData'
 import {UserManagement} from './../../modules/userManagement/UserManagement'
-import {UserProfile} from './../../modules/userManagement/UserProfile'
+import {UserProfile} from './../../modules/userManagement/UserData'
 
 
 export class SignedInUser implements SignedInUserBehavior {
