@@ -210,7 +210,7 @@ describe('Employee Management', function () {
                 });
         });
 
-        it('should return "SalaryRateRangeError" error trying to create new employee with salary_rate <= 0', function (done) {
+        it('should return "SalaryRateRangeError" error trying to create new employee with salary_rate < 0', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
@@ -236,13 +236,13 @@ describe('Employee Management', function () {
                 });
         });
 
-        it('should return "SalaryRateRangeError" error trying to create new employee with salary_rate >= 10', function (done) {
+        it('should return "SalaryRateRangeError" error trying to create new employee with salary_rate > 10', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
-                'salary_rate': 10,
+                'salary_rate': 10.5,
                 'cash_rate': 6
             };
             request(url)
@@ -287,14 +287,14 @@ describe('Employee Management', function () {
                 });
         });
 
-        it('should return "CashRateRangeError" error trying to create new employee with cash_rate <= 0', function (done) {
+        it('should return "CashRateRangeError" error trying to create new employee with cash_rate < 0', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
-                'cash_rate': 0
+                'cash_rate': -0.5
             };
             request(url)
                 .post(apiUrl)
@@ -313,14 +313,14 @@ describe('Employee Management', function () {
                 });
         });
 
-        it('should return "CashRateRangeError" error trying to create new employee with cash_rate >= 10', function (done) {
+        it('should return "CashRateRangeError" error trying to create new employee with cash_rate > 10', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
-                'cash_rate': 10
+                'cash_rate': 11
             };
             request(url)
                 .post(apiUrl)

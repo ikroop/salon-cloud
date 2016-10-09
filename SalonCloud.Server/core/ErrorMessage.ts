@@ -81,13 +81,13 @@ export const ErrorMessage = {
     'SalaryRateRangeError': {
         'err': {
             'name': 'SalaryRateRangeError',
-            'message': 'Salary rate must be greater than 0 and less than 10'
+            'message': 'Salary rate must be not less than 0 nor greater than 10'
         }
     },
     'CashRateRangeError': {
         'err': {
             'name': 'CashRateRangeError',
-            'message': 'Cash rate must be greater than 0 and less than 10'
+            'message': 'Cash rate must be not less than 0 nor greater than 10'
         }
     },
     'UserNotFound': {
