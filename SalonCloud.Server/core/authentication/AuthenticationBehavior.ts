@@ -6,7 +6,6 @@
  */
 
 import { SalonCloudResponse } from "./../SalonCloudResponse";
-import { AuthenticationData } from "./AuthenticationData";
 export interface AuthenticationBehavior {
     changePassword(oldPasswords: string, newPassword: string, code: string, callback);
     sendVerifyCode(username: string, callback);
