@@ -11,6 +11,10 @@ export class UserManagement implements UserManagementBehavior{
     user_id: string;
     salon_id: string;
 
+    constructor(user_id: string){
+        this.user_id = user_id;
+    }
+
     addUser(phone, profile : UserProfile) : boolean{
         return;
     };

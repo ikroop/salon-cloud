@@ -15,7 +15,7 @@ export interface UserProfile{
 }
 
 export interface UserData{
-    _id: string;
+    _id?: string;
     is_temporary: string;
     is_verified: string;
     password: string;

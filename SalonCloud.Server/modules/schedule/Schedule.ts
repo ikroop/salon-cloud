@@ -224,7 +224,7 @@ export abstract class Schedule implements ScheduleBehavior {
 	*/
     public async saveWeeklySchedule(weeklyScheduleList: [WeeklyDayData]){
 
-        var response: SalonCloudResponse<boolean> = {
+        var response: SalonCloudResponse<WeeklyScheduleData> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -301,7 +301,7 @@ export abstract class Schedule implements ScheduleBehavior {
      *         return error if fail
      */
     private async addWeeklySchedule(weeklyScheduleList: [WeeklyDayData]){
-         var returnResult: SalonCloudResponse<boolean>={
+         var returnResult: SalonCloudResponse<WeeklyScheduleData>={
             code: undefined,
             err: undefined,
             data: undefined,
@@ -313,7 +313,7 @@ export abstract class Schedule implements ScheduleBehavior {
             week: weeklyScheduleList,
         })
         await dataCreation.then(function(docs){
-            returnResult.data = true;
+            returnResult.data = docs;
             return;
         },function(error){
             returnResult.err = error
@@ -334,7 +334,7 @@ export abstract class Schedule implements ScheduleBehavior {
      *         return error if fail
      */
     private async updateWeeklySchedule(weeklyScheduleList: [WeeklyDayData]){
-        var returnResult: SalonCloudResponse<boolean> = {
+        var returnResult: SalonCloudResponse<WeeklyScheduleData> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -347,7 +347,7 @@ export abstract class Schedule implements ScheduleBehavior {
         //saveAction is a promise returned by mongoose so we must use 'await' on its resolution.
         await saveAction.then(function(docs){
 
-            returnResult.data = true;
+            returnResult.data = docs;
 
         }, function(err){
 
