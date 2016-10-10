@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var winston = require('winston');
 
 describe('Salon Management', function () {
-    var url = 'http://localhost:3000';
+    var url = 'http://localhost:3000/api/v1';
     var validToken;
     var invalidToken;
     var defaultPassword = '1234@1234'
@@ -14,11 +14,11 @@ describe('Salon Management', function () {
 
         // Login and get token
         var user = {
-            username: 'unittest1472245629435@gmail.com',
+            username: 'unittest1473044833007@gmail.com',
             password: defaultPassword
         };
         request(url)
-            .post('/auth/signinwithemailandpassword')
+            .post('/authentication/signinwithusernameandpassword')
             .send(user)
             .end(function (err, res) {
                 if (err) {
@@ -31,7 +31,7 @@ describe('Salon Management', function () {
     });
 
     describe('Unit Test Create Salon API', function () {
-        var apiUrl = '/api/v1/salon/create';
+        var apiUrl = '/salon/create';
 
         it('should return "InvalidTokenError" error trying to create salon information with invalid token', function (done) {
             var token = invalidToken;
