@@ -138,7 +138,6 @@ export abstract class Schedule implements ScheduleBehavior {
 
         //Step 2: loop and call this.getDailyScheduleProcess(date) for each day in month to get [DailyDayData]
         for(var i = 1;currentDate > lastDayOfMonth; currentDate.setDate(i)){
-            console.log(i);
             var targetSchedule = await this.getDailyScheduleProcess(currentDate);
             i++;
             dataReturn.push(targetSchedule);
@@ -175,7 +174,6 @@ export abstract class Schedule implements ScheduleBehavior {
         var saveStatus;
 
         //Step 1: validation;
-        console.log('12')
         var errorReturn = await this.dailyScheduleValidation(dailySchedule);
         if(errorReturn){
             response.code = 400;
@@ -183,11 +181,9 @@ export abstract class Schedule implements ScheduleBehavior {
             return response;
         }
 
-        console.log('22');
         //Step 2: check docs existence by calling this.checkDailySchedule(dailySchedule)
         var existence = await this.checkDailySchedule(dailySchedule);
 
-        console.log('32');
         //Step 3: if docs exists: call this.updateDailySchedule(dailySchedule);
         //        if docs does not exist: call this.addDailySchedule(dailySchedule);
         if(existence.err){
@@ -200,7 +196,6 @@ export abstract class Schedule implements ScheduleBehavior {
             }
         }
 
-        console.log('42');
         //Step 4: check result form step 3 and return proper response;
         response.data = saveStatus.data;
 
@@ -212,7 +207,6 @@ export abstract class Schedule implements ScheduleBehavior {
             response.err = ErrorMessage.ServerError;
         }
         
-        console.log('52');
         return response;
     }
 
@@ -227,7 +221,6 @@ export abstract class Schedule implements ScheduleBehavior {
     *Step 4: check result form step 3 and return proper response;
 	*/
     public async saveWeeklySchedule(weeklyScheduleList: [WeeklyDayData]){
-        console.log('kj', weeklyScheduleList);
         var response: SalonCloudResponse<WeeklyScheduleData> = {
             code: undefined,
             data: undefined,

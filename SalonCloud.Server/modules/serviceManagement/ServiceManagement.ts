@@ -32,16 +32,21 @@ export class ServiceManagement implements ServiceManagementBehavior {
             err: undefined
         };
         var saveGroupArray : [ServiceGroupData] ;
+        console.log(groupArray);
         for(let group of groupArray){
+            console.log('OOOOOO', group);
             var addResult = await this.addGroup(group);
             if(addResult.err){
+                console.log('UUUUUU', addResult);
                 returnResult.err = addResult.err;
                 returnResult.code = 500;
             }else{
+                console.log('IIIIIII', addResult);
                 saveGroupArray.push(addResult.data);
             }
         }
         if(!returnResult.err){
+            
             returnResult.data = groupArray;
             returnResult.code = 200;
         }

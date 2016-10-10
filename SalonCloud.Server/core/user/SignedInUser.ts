@@ -35,16 +35,12 @@ export class SignedInUser implements SignedInUserBehavior {
             data: undefined,
             err: undefined
         };
-        console.log('11')
         //step 1: validation;
             //salon name validation
         var salonNameValidator = new BaseValidator(salonInformation.salon_name);
         salonNameValidator = new MissingCheck(salonNameValidator, ErrorMessage.MissingSalonName);
-        console.log('111');
         var salonNameError = await salonNameValidator.validate();
-        console.log('112');
         if(salonNameError){
-            console.log('113');
             returnResult.err = salonNameError.err;
             returnResult.code = 400;
             return  returnResult;
@@ -52,7 +48,6 @@ export class SignedInUser implements SignedInUserBehavior {
             //address validation 
         var addressValidator = new BaseValidator(salonInformation.location.address);
         addressValidator = new MissingCheck(addressValidator, ErrorMessage.MissingAddress);
-        console.log('1111');
         //Todo: validator for IsAddress
         var addressError = await addressValidator.validate();
         if(addressError){
@@ -61,7 +56,6 @@ export class SignedInUser implements SignedInUserBehavior {
             return returnResult;
         }      
             //phone number validation
-        console.log('1112')
         var phoneNumberValidator = new BaseValidator(salonInformation.phone.number);
         phoneNumberValidator = new MissingCheck(phoneNumberValidator, ErrorMessage.MissingPhoneNumber);
         phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat);
@@ -74,14 +68,11 @@ export class SignedInUser implements SignedInUserBehavior {
 
             //email validation
             //email is not required, so check if email is in the request first.
-        console.log('1113')
         if(salonInformation.email){
             var emailValidator = new BaseValidator(salonInformation.email);
             emailValidator = new IsEmail(emailValidator, ErrorMessage.WrongEmailFormat);
             var emailError = await emailValidator.validate();
-            console.log('1114');
             if(emailError){
-                console.log('1115')
                 returnResult.err = emailError.err;
                 returnResult.code = 400;
                 return returnResult;
@@ -92,35 +83,26 @@ export class SignedInUser implements SignedInUserBehavior {
 
 
 
-        console.log('21');
         //step 2: create salon docs;
         var salonData = await this.salonManagementDP.createSalonDocs(salonInformation);
 
-        console.log('31');
         //step 3: create default schedule;
-        console.log('ok', defaultWeeklySchedule);
-        console.log('okok', salonData);
         var scheduleDP = new SalonSchedule(salonData.data._id);
-        console.log(defaultWeeklySchedule);
         var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule);
 
-        console.log('41', salonData.data._id);
         //step 4: create sample services;
         var serviceDP = new ServiceManagement(salonData.data._id);
 
         //samplesService1.salon_id = salonData.data._id;
-        //samplesService2.salon_id = salonData.data._id;
-        //samplesService1.salon_id = salonData.data._id.toString();
+        samplesService2.salon_id = salonData.data._id;
+        samplesService1.salon_id = salonData.data._id.toString();
         //samplesService2.salon_id = samplesService1.salon_id.toString();
-        console.log('AAAAAAAA', samplesService1);
         var sampleServices: [ServiceGroupData] = [samplesService1, samplesService2];
 
-        var addSampleServicesAction = await serviceDP.addGroup(samplesService1);
+        var addSampleServicesAction = await serviceDP.addGroup(samplesService2);
 
-        console.log('51', addSampleServicesAction);
         //step 5: update user profile;
         var profile = await this.userManagementDP.addProfile(salonData.data._id, 1); //Todo
-        console.log('61', profile);
         returnResult.data = {
             salon_id: salonData.data._id,
             uid: this.userManagementDP.user_id,

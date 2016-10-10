@@ -18,10 +18,7 @@ export class SalonManagementRouter {
         var authorizationRouter = new AuthorizationRouter();
 
         this.router.post("/create", authorizationRouter.checkPermission, async(request: Request, response: Response) => {
-            console.log('in');
-            console.log(request.body);
             var userObject = new SignedInUser(new SalonManagement(), new UserManagement('57cce161025fbb84279aa13f'));
-            console.log('mid');
             var salonInformationInput : SalonInformation = {
                 email: request.body.email,
                 phone: {
@@ -36,10 +33,24 @@ export class SalonManagementRouter {
             }
             
             var salonCreation = await userObject.createSalon(salonInformationInput);
-            console.log('out');
-            console.log(salonCreation);
+            var dataReturn;
+            if(salonCreation.err){
+                dataReturn ={
+                    'err': salonCreation.err,
+                }
+            }else{
+            dataReturn = {
+                'err': salonCreation.err,
+                'uid': salonCreation.data.uid,
+                'salon_id': salonCreation.data.salon_id,
+                'role': salonCreation.data.role,
+                'default_schedule': salonCreation.data.default_schedule,
+                'sample_services': salonCreation.data.sample_services,
+                'salon_data': salonCreation.data.salon_data,
+            }
+            }
             response.status(salonCreation.code);
-            response.json(salonCreation);
+            response.json(dataReturn);
         });
 
         this.router.post("/getsalonlist", authorizationRouter.checkPermission, function (request: Request, response: Response) {
