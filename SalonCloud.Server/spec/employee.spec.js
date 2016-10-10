@@ -339,5 +339,32 @@ describe('Employee Management', function () {
                 });
         });
 
+        it('should return employee object with id if new employee is added successfully', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'phonenumber': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 6,
+                'cash_rate': 6
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('uid');
+                    res.body.should.have.property('phone');
+                    res.body.should.have.property('fullname');
+                    res.body.should.have.property('role').eql(2);
+                    done();
+                });
+        }); 
+
     });
 });

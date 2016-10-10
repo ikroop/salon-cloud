@@ -6,7 +6,9 @@ import * as http from "http";
 
 import { ScheduleRouter } from "./routes/schedule";
 import { AuthenticationRouter } from "./routes/authentication";
-import { SalonManagementRouter} from "./routes/salonmanagement";
+import { UserManagementRouter } from "./routes/usermanagement";
+import { SalonManagementRouter } from "./routes/salonmanagement";
+
 var UserModel = require ("./modules/userManagement/UserModel");
 
 const app: express.Application = express();
@@ -40,6 +42,7 @@ app.use((err: Error & { status: number }, request: express.Request, response: ex
 
 app.use("/api/v1/schedule", new ScheduleRouter().getRouter());
 app.use("/api/v1/authentication", new AuthenticationRouter().getRouter());
+app.use("/api/v1/employee", new UserManagementRouter().getRouter());
 app.use("/api/v1/salon", new SalonManagementRouter().getRouter());
 
 const server: http.Server = app.listen(3000, function () {
