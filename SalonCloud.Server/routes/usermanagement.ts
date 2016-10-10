@@ -7,7 +7,7 @@ import { SalonCloudResponse } from "../core/SalonCloudResponse";
 import { Authentication } from '../core/authentication/authentication';
 import { Authorization } from "../core/authorization/authorization";
 import { AuthorizationRouter } from "./authorization";
-import { EmployeeManagement } from '../modules/usermanagement/EmployeeManagement.ts';
+import { EmployeeManagement } from '../modules/usermanagement/EmployeeManagement';
 
 export class UserManagementRouter {
     private router: Router = Router();    
