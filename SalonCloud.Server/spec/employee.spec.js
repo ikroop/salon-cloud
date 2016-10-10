@@ -359,8 +359,8 @@ describe('Employee Management', function () {
                     }
                     res.status.should.be.equal(200);
                     res.body.should.have.property('uid');
-                    res.body.should.have.property('phone');
-                    res.body.should.have.property('fullname');
+                    res.body.should.have.property('phone').eql(bodyRequest.phonenumber);
+                    res.body.should.have.property('fullname').eql(bodyRequest.fullname);
                     res.body.should.have.property('role').eql(2);
                     done();
                 });
