@@ -3,7 +3,6 @@
 
 import {AppointmentManagementBehavior} from './AppointmentManagementBehavior'
 import {AppointmentData} from './AppointmentData'
-import 
 
 export class AppointmentManagement implements AppointmentManagementBehavior {
 
