@@ -115,7 +115,7 @@ export class SignedInUser implements SignedInUserBehavior {
         console.log('AAAAAAAA', samplesService1);
         var sampleServices: [ServiceGroupData] = [samplesService1, samplesService2];
 
-        var addSampleServicesAction = await serviceDP.addGroupArray(sampleServices); //Todo
+        var addSampleServicesAction = await serviceDP.addGroup(samplesService1);
 
         console.log('51', addSampleServicesAction);
         //step 5: update user profile;

@@ -73,16 +73,14 @@ export class ServiceManagement implements ServiceManagementBehavior {
 
         //Add new service group to database
 
-        var dataCreation = ServiceGroupModel.create({
-            description: group.description,
-            name: group.name,
-            service_list: group.service_list,
-        })
+        var dataCreation = ServiceGroupModel.create(group)
         await dataCreation.then(function (docs) {
             response.data = docs;
+            response.code = 200;
             return;
         }, function (error) {
             response.err = error
+            response.code = 500;
             return;
         })
         return response;
