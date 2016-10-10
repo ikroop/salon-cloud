@@ -34,9 +34,12 @@ export class SalonManagementRouter {
                 },
                 salon_name: request.body.salon_name,
             }
+            
             var salonCreation = await userObject.createSalon(salonInformationInput);
             console.log('out');
-            response.status(200).json(salonCreation.data);
+            console.log(salonCreation);
+            response.status(salonCreation.code);
+            response.json(salonCreation);
         });
 
         this.router.post("/getsalonlist", authorizationRouter.checkPermission, function (request: Request, response: Response) {

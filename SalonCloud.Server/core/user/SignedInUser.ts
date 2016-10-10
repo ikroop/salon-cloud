@@ -46,7 +46,7 @@ export class SignedInUser implements SignedInUserBehavior {
         if(salonNameError){
             console.log('113');
             returnResult.err = salonNameError.err;
-            returnResult.code = 500;
+            returnResult.code = 400;
             return  returnResult;
         }
             //address validation 
@@ -57,7 +57,7 @@ export class SignedInUser implements SignedInUserBehavior {
         var addressError = await addressValidator.validate();
         if(addressError){
             returnResult.err = addressError.err;
-            returnResult.code = 500;
+            returnResult.code = 400;
             return returnResult;
         }      
             //phone number validation
@@ -68,7 +68,7 @@ export class SignedInUser implements SignedInUserBehavior {
         var phoneNumberError = await phoneNumberValidator.validate();
         if(phoneNumberError){
             returnResult.err = phoneNumberError.err;
-            returnResult.code = 500;
+            returnResult.code = 400;
             return returnResult;
         }
 
@@ -83,7 +83,7 @@ export class SignedInUser implements SignedInUserBehavior {
             if(emailError){
                 console.log('1115')
                 returnResult.err = emailError.err;
-                returnResult.code = 500;
+                returnResult.code = 400;
                 return returnResult;
             }
 
@@ -129,7 +129,7 @@ export class SignedInUser implements SignedInUserBehavior {
             sample_services: addSampleServicesAction.data,
             salon_data: salonData.data
         }
-        returnResult.err = 200;
+        returnResult.code = 200;
         return returnResult;
     };
 
