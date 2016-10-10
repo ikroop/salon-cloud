@@ -195,7 +195,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
 
         //validate name field
         var serviceNameValidator = new BaseValidator(group.name);
-        serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingScheduleCloseTime);
+        serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingServiceName);
         var serviceNameResult = await serviceNameValidator.validate();
         if (serviceNameResult) {
             return errorReturn = serviceNameResult;
@@ -203,7 +203,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
 
         //validate salon_id field
         var salonIdValidator = new BaseValidator(group.salon_id);
-        salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingScheduleCloseTime);
+        salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId);
         var priceResult = await salonIdValidator.validate();
         if (priceResult) {
             return errorReturn = priceResult;

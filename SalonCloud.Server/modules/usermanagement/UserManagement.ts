@@ -57,10 +57,14 @@ export class UserManagement implements UserManagementBehavior {
 
         };
         var userDocs = await UserModel.findOne({ '_id': this.user_id }).exec();
+        console.log('USERDOCS',userDocs);
+        console.log('SALONID', salonId);
         var checkExistArray = userDocs.profile.filter(profile => profile.salon_id === salonId);
+        console.log('AARRRAY', checkExistArray);
         if (checkExistArray.length == 0) {
             console.log('010101', userDocs);
             userDocs.profile.push(newProfile);
+            console.log('AFTER',userDocs);
             var saveAction = userDocs.save();
             
             await saveAction.then(function (docs) {
@@ -76,6 +80,7 @@ export class UserManagement implements UserManagementBehavior {
             return returnResult;
 
         } else {
+            console.log('ERRRORRRRRR');
             returnResult.err = ErrorMessage.ProfileAlreadyExist;
             return returnResult;
         }

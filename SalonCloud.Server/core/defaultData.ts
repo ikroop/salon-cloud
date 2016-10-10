@@ -80,13 +80,13 @@ const gelServiceItem2: ServiceItemData = {
 
 export const samplesService1: ServiceGroupData = {
     name: 'Regular',
-    salon_id: undefined,
+    salon_id: 'trool',
     service_list: [regularServiceItem1, regularServiceItem2]
 }
 
 export const samplesService2: ServiceGroupData = {
     name: 'Gel',
-    salon_id: undefined,
+    salon_id: 'trool',
     service_list: [gelServiceItem1, gelServiceItem2]
 }
 

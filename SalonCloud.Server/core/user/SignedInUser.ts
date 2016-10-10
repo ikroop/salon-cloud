@@ -46,7 +46,7 @@ export class SignedInUser implements SignedInUserBehavior {
         if(salonNameError){
             console.log('113');
             returnResult.err = salonNameError.err;
-            returnResult.code = salonNameError.code;
+            returnResult.code = 500;
             return  returnResult;
         }
             //address validation 
@@ -57,7 +57,7 @@ export class SignedInUser implements SignedInUserBehavior {
         var addressError = await addressValidator.validate();
         if(addressError){
             returnResult.err = addressError.err;
-            returnResult.code = addressError.code;
+            returnResult.code = 500;
             return returnResult;
         }      
             //phone number validation
@@ -68,7 +68,7 @@ export class SignedInUser implements SignedInUserBehavior {
         var phoneNumberError = await phoneNumberValidator.validate();
         if(phoneNumberError){
             returnResult.err = phoneNumberError.err;
-            returnResult.code = returnResult.code;
+            returnResult.code = 500;
             return returnResult;
         }
 
@@ -83,7 +83,7 @@ export class SignedInUser implements SignedInUserBehavior {
             if(emailError){
                 console.log('1115')
                 returnResult.err = emailError.err;
-                returnResult.code = emailError.code;
+                returnResult.code = 500;
                 return returnResult;
             }
 
@@ -104,17 +104,22 @@ export class SignedInUser implements SignedInUserBehavior {
         console.log(defaultWeeklySchedule);
         var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule);
 
-        console.log('41');
+        console.log('41', salonData.data._id);
         //step 4: create sample services;
         var serviceDP = new ServiceManagement(salonData.data._id);
 
+        //samplesService1.salon_id = salonData.data._id;
+        //samplesService2.salon_id = salonData.data._id;
+        //samplesService1.salon_id = salonData.data._id.toString();
+        //samplesService2.salon_id = samplesService1.salon_id.toString();
+        console.log('AAAAAAAA', samplesService1);
         var sampleServices: [ServiceGroupData] = [samplesService1, samplesService2];
 
         var addSampleServicesAction = await serviceDP.addGroupArray(sampleServices); //Todo
 
         console.log('51', addSampleServicesAction);
         //step 5: update user profile;
-        var profile = await this.addNewProfile(salonData.data._id); //Todo
+        var profile = await this.userManagementDP.addProfile(salonData.data._id, 1); //Todo
         console.log('61', profile);
         returnResult.data = {
             salon_id: salonData.data._id,

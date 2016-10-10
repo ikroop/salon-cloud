@@ -306,5 +306,17 @@ export const ErrorMessage = {
             'name': 'MissingCashRate',
             'message': 'A required cash rate is missing!'
         }
+    },
+    'MissingServiceName': {
+        'err': {
+            'name': 'MissingServiceName',
+            'message': 'Service name is required!'
+        }
+    },
+    'MissingServiceId': {
+        'err': {
+            'name': 'MissingServiceId',
+            'message': 'Service id is required!'
+        }
     }
 };
