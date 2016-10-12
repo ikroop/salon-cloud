@@ -1,6 +1,9 @@
 
 import {UserData, UserProfile} from './UserData'
 import {EmployeeManagementBehavior} from './EmployeeManagementBehavior'
+var UserModel = require('./UserModel')
+import { SalonCloudResponse } from './../../core/SalonCloudResponse'
+import { ErrorMessage } from './../../core/ErrorMessage'
 
 export class EmployeeManagement implements EmployeeManagementBehavior{
 
@@ -9,7 +12,42 @@ export class EmployeeManagement implements EmployeeManagementBehavior{
     };
 
     addEmployee(phone, profile : UserProfile) : boolean{
-        return;
+
+        var returnResult: SalonCloudResponse<UserProfile> = {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
+
+
+         
+        returnResult.data = profile;
+        returnResult.err = 200;
+        return true;//returnResult;
+
+
+        /*
+        var userDocs = await UserModel.findOne({ '_id': this.user_id }).exec();
+        var checkExistArray = userDocs.profile.filter(profile => profile.salon_id === salonId);
+        if (checkExistArray.length > 0) {
+            userDocs.profile.push(newProfile);
+            var saveAction = userDocs.save();
+
+            await saveAction.then(function (docs) {
+                returnResult.data = newProfile;
+                return returnResult;
+
+            }, function (err) {
+                returnResult.err = err;
+                return returnResult;
+            });
+            return returnResult;
+
+        } else {
+            returnResult.err = ErrorMessage.ProfileAlreadyExist;
+            return returnResult;
+        }*/
+        
     };
 
     deactivateEmployee(employeeId : string) : boolean{

@@ -38,7 +38,8 @@ describe('Employee Management', function () {
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
-                'cash_rate': 6
+                'cash_rate': 6,
+                'social_security_number': '165374245'
             };
             request(url)
                 .post(apiUrl)
@@ -64,7 +65,8 @@ describe('Employee Management', function () {
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
-                'cash_rate': 6
+                'cash_rate': 6,
+                'social_security_number': '165374245'
             };
             request(url)
                 .post(apiUrl)
@@ -89,7 +91,8 @@ describe('Employee Management', function () {
                 'phone': '4049806189',
                 'nickname': 'Lee',
                 'salary_rate': 6,
-                'cash_rate': 6
+                'cash_rate': 6,
+                'social_security_number': '165374245'
             };
             request(url)
                 .post(apiUrl)
@@ -115,7 +118,8 @@ describe('Employee Management', function () {
                 'fullname': '   ',
                 'nickname': 'Lee',
                 'salary_rate': 6,
-                'cash_rate': 6
+                'cash_rate': 6,
+                'social_security_number': '165374245'
             };
             request(url)
                 .post(apiUrl)
@@ -140,7 +144,8 @@ describe('Employee Management', function () {
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'salary_rate': 0.6,
-                'cash_rate': 0.6
+                'cash_rate': 0.6,
+                'social_security_number': '165374245'
             };
             request(url)
                 .post(apiUrl)
@@ -166,7 +171,8 @@ describe('Employee Management', function () {
                 'fullname': 'Thanh Le',
                 'nickname': '   ',
                 'salary_rate': 0.6,
-                'cash_rate': 0.6
+                'cash_rate': 0.6,
+                'social_security_number': '165374245'
             };
             request(url)
                 .post(apiUrl)
@@ -191,7 +197,8 @@ describe('Employee Management', function () {
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
-                'cash_rate': 6
+                'cash_rate': 6,
+                'social_security_number': '165374245'
             };
             request(url)
                 .post(apiUrl)
@@ -217,7 +224,8 @@ describe('Employee Management', function () {
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': -1,
-                'cash_rate': 6
+                'cash_rate': 6,
+                'social_security_number': '165374245'
             };
             request(url)
                 .post(apiUrl)
@@ -243,7 +251,8 @@ describe('Employee Management', function () {
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 10.5,
-                'cash_rate': 6
+                'cash_rate': 6,
+                'social_security_number': '165374245'
             };
             request(url)
                 .post(apiUrl)
@@ -268,7 +277,8 @@ describe('Employee Management', function () {
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
-                'salary_rate': 6
+                'salary_rate': 6,
+                'social_security_number': '165374245'
             };
             request(url)
                 .post(apiUrl)
@@ -294,7 +304,8 @@ describe('Employee Management', function () {
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
-                'cash_rate': -0.5
+                'cash_rate': -0.5,
+                'social_security_number': '165374245'
             };
             request(url)
                 .post(apiUrl)
@@ -320,7 +331,8 @@ describe('Employee Management', function () {
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
-                'cash_rate': 11
+                'cash_rate': 11,
+                'social_security_number': '165374245'
             };
             request(url)
                 .post(apiUrl)
@@ -339,7 +351,7 @@ describe('Employee Management', function () {
                 });
         });
 
-        it('should return employee object with id if new employee is added successfully', function (done) {
+        it('should return employee object with id if new employee is added successfully without SSN', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phonenumber': '4049806189',
@@ -361,7 +373,35 @@ describe('Employee Management', function () {
                     res.body.should.have.property('uid');
                     res.body.should.have.property('phone').eql(bodyRequest.phonenumber);
                     res.body.should.have.property('fullname').eql(bodyRequest.fullname);
-                    res.body.should.have.property('role').eql(2);
+                    res.body.should.have.property('role').eql(3);
+                    done();
+                });
+        }); 
+
+        it('should return employee object with id if new employee is added successfully with SSN', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'phonenumber': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 6,
+                'cash_rate': 6,
+                'social_security_number': '165374245'
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('uid');
+                    res.body.should.have.property('phone').eql(bodyRequest.phonenumber);
+                    res.body.should.have.property('fullname').eql(bodyRequest.fullname);
+                    res.body.should.have.property('role').eql(3);
                     done();
                 });
         }); 
