@@ -4,14 +4,14 @@
  * 
  */
 
-import {ServiceManagementBehavior} from './ServiceManagementBehavior';
-import {ServiceGroupData, ServiceItemData} from './ServiceData'
-import {BaseValidator} from "./../../core/validation/BaseValidator";
-import {MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId}
-from "./../../core/validation/ValidationDecorators";
-import {ErrorMessage} from './../../core/ErrorMessage';
-import {SalonCloudResponse} from "../../core/SalonCloudResponse";
-import {ServiceGroupModel, ServiceItemModel} from "./ServiceModel"
+import { ServiceManagementBehavior } from './ServiceManagementBehavior';
+import { ServiceGroupData, ServiceItemData } from './ServiceData'
+import { BaseValidator } from "./../../core/validation/BaseValidator";
+import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId }
+    from "./../../core/validation/ValidationDecorators";
+import { ErrorMessage } from './../../core/ErrorMessage';
+import { SalonCloudResponse } from "../../core/SalonCloudResponse";
+import { ServiceGroupModel, ServiceItemModel } from "./ServiceModel"
 
 export class ServiceManagement implements ServiceManagementBehavior {
     private salonId: string;
@@ -25,24 +25,24 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * 
     */
 
-    public async addGroupArray(groupArray: [ServiceGroupData]){
-        var returnResult : SalonCloudResponse<[ServiceGroupData]> = {
+    public async addGroupArray(groupArray: [ServiceGroupData]) {
+        var returnResult: SalonCloudResponse<[ServiceGroupData]> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
-        var saveGroupArray : [ServiceGroupData] ;
-        for(let group of groupArray){
+        var saveGroupArray: [ServiceGroupData];
+        for (let group of groupArray) {
             var addResult = await this.addGroup(group);
-            if(addResult.err){
+            if (addResult.err) {
                 returnResult.err = addResult.err;
                 returnResult.code = 500;
-            }else{
+            } else {
                 saveGroupArray.push(addResult.data);
             }
         }
-        if(!returnResult.err){
-            
+        if (!returnResult.err) {
+
             returnResult.data = groupArray;
             returnResult.code = 200;
         }

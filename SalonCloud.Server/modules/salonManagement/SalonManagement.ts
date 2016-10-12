@@ -8,7 +8,6 @@ import {SalonCloudResponse} from './../../core/SalonCloudResponse'
 import {SalonModel, SalonProfileSchema} from './SalonModel'
 import {defaultSalonSetting} from './../../core/defaultData'
 
-
 export class SalonManagement implements SalonManagementBehavior {
 
     salonId: string;
@@ -22,7 +21,6 @@ export class SalonManagement implements SalonManagementBehavior {
     };
 
     public async createSalonDocs(salonInformation : SalonInformation){
-        //step 1: 
         var returnResult : SalonCloudResponse<SalonData> = {
             code: undefined,
             data: undefined,
@@ -32,7 +30,6 @@ export class SalonManagement implements SalonManagementBehavior {
             information: salonInformation,
             setting: defaultSalonSetting,
         }
-
         var SalonCreation = SalonModel.create(salonData);
         await SalonCreation.then(function(docs){
                 returnResult.data = docs;

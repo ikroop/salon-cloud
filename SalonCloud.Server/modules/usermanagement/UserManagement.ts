@@ -36,6 +36,13 @@ export class UserManagement implements UserManagementBehavior {
         return;
     };
 
+    /**
+	* @name: addProfile
+    * @parameter: salonId: string, role: number
+    * @return: 
+    *  - User profile if succeed
+    *  - Error if existing or internal error
+	*/
     public async addProfile(salonId: string, role: number) {
 
         var returnResult: SalonCloudResponse<UserProfile> = {
