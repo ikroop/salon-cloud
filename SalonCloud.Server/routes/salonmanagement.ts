@@ -18,7 +18,7 @@ export class SalonManagementRouter {
         var authorizationRouter = new AuthorizationRouter();
 
         this.router.post("/create", authorizationRouter.checkPermission, async(request: Request, response: Response) => {
-            var userObject = new SignedInUser(new SalonManagement(), new UserManagement('57cce161025fbb84279aa13f'));
+            var userObject = new SignedInUser(new SalonManagement(), new UserManagement(request.user._id));
             var salonInformationInput : SalonInformation = {
                 email: request.body.email,
                 phone: {

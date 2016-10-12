@@ -35,11 +35,10 @@ export class AuthorizationRouter {
                 }
             }
         });*/
-        authentication.verifyToken(token, function (err, code, data){
-            console.log('3434');
-            request.body.user = data;
+        authentication.verifyToken(token, function (err, code, data) {
+            request.user = data;
+            next();
         });
-        next();
     }
 
     getRouter(): Router {
