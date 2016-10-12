@@ -32,7 +32,34 @@ describe('Employee Management', function () {
     describe('Unit Test Add New Employee', function () {
         var apiUrl = '/api/v1/employee/create';
 
-        it('should return "MissingPhoneNumber" error trying to create new employee without phone number', function (done) {
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
+            var token = invalidToken;
+            var bodyRequest = {
+                'phonenumber': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 6,
+                'cash_rate': 6,
+                'social_security_number': '165374245'
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to create new employee without phone number', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'fullname': 'Thanh Le',
@@ -53,12 +80,12 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingPhoneNumber');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingPhoneNumber.err.name);
                     done();
                 });
         });
 
-        it('should return "WrongPhoneNumberFormat" error trying to create new employee with wrong phone format', function (done) {
+        it('should return ' + ErrorMessage.WrongPhoneNumberFormat.err.name + ' error trying to create new employee with wrong phone format', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': 'abd1234',
@@ -80,12 +107,12 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('WrongPhoneNumberFormat');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongPhoneNumberFormat.err.name);
                     done();
                 });
         });
 
-        it('should return "MissingFullName" error trying to create new employee without fullname', function (done) {
+        it('should return ' + ErrorMessage.MissingFullName.err.name + ' error trying to create new employee without fullname', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
@@ -106,12 +133,12 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingFullName');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingFullName.err.name);
                     done();
                 });
         });
 
-        it('should return "InvalidNameString" error trying to create new employee with fullname contains only blank space(s)', function (done) {
+        it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create new employee with fullname contains only blank space(s)', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
@@ -133,12 +160,12 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('InvalidNameString');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
                     done();
                 });
         });
 
-        it('should return "MissingNickName" error trying to create new employee without nickname', function (done) {
+        it('should return ' + ErrorMessage.MissingNickName.err.name + ' error trying to create new employee without nickname', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
@@ -159,12 +186,12 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingNickName');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingNickName.err.name);
                     done();
                 });
         });
 
-        it('should return "InvalidNameString" error trying to create new employee with nickname contains only blank space(s)', function (done) {
+        it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create new employee with nickname contains only blank space(s)', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
@@ -186,12 +213,12 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('InvalidNameString');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
                     done();
                 });
         });
 
-        it('should return "MissingSalaryRate" error trying to create new employee without nickname', function (done) {
+        it('should return ' + ErrorMessage.MissingSalaryRate.err.name + ' error trying to create new employee without nickname', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
@@ -212,12 +239,12 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingSalaryRate');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalaryRate.err.name);
                     done();
                 });
         });
 
-        it('should return "SalaryRateRangeError" error trying to create new employee with salary_rate < 0', function (done) {
+        it('should return ' + ErrorMessage.SalaryRateRangeError.err.name + ' error trying to create new employee with salary_rate < 0', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
@@ -239,12 +266,12 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('SalaryRateRangeError');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.SalaryRateRangeError.err.name);
                     done();
                 });
         });
 
-        it('should return "SalaryRateRangeError" error trying to create new employee with salary_rate > 10', function (done) {
+        it('should return ' + ErrorMessage.SalaryRateRangeError.err.name + ' error trying to create new employee with salary_rate > 10', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
@@ -266,12 +293,12 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('SalaryRateRangeError');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.SalaryRateRangeError.err.name);
                     done();
                 });
         });
 
-        it('should return "MissingCashRate" error trying to create new employee without nickname', function (done) {
+        it('should return ' + ErrorMessage.MissingCashRate.err.name + ' error trying to create new employee without nickname', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
@@ -292,12 +319,12 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingCashRate');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingCashRate.err.name);
                     done();
                 });
         });
 
-        it('should return "CashRateRangeError" error trying to create new employee with cash_rate < 0', function (done) {
+        it('should return ' + ErrorMessage.CashRateRangeError.err.name + ' error trying to create new employee with cash_rate < 0', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
@@ -319,12 +346,12 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('CashRateRangeError');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.CashRateRangeError.err.name);
                     done();
                 });
         });
 
-        it('should return "CashRateRangeError" error trying to create new employee with cash_rate > 10', function (done) {
+        it('should return ' + ErrorMessage.CashRateRangeError.err.name + ' error trying to create new employee with cash_rate > 10', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phone': '4049806189',
@@ -346,12 +373,12 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('CashRateRangeError');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.CashRateRangeError.err.name);
                     done();
                 });
         });
 
-        it('should return "WrongSSNFormat" error trying to create new employee with wrong-format SSN', function (done) {
+        it('should return ' + ErrorMessage.WrongSSNFormat.err.name + ' error trying to create new employee with wrong-format SSN', function (done) {
             var token = validToken;
             var bodyRequest = {
                 'phonenumber': '4049806189',
@@ -373,7 +400,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('WrongSSNFormat');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongSSNFormat.err.name);
                     done();
                 });
         }); 
