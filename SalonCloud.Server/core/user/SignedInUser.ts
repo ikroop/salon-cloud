@@ -15,7 +15,7 @@ import { samplesService1, samplesService2 } from './../defaultData'
 import { BaseValidator } from './../validation/BaseValidator'
 import { MissingCheck, IsPhoneNumber, IsEmail, IsString } from './../validation/ValidationDecorators'
 import { ErrorMessage } from './../ErrorMessage'
-
+import { GoogleMap } from './../googlemap/GoogleMap';
 export class SignedInUser implements SignedInUserBehavior {
 
     salonManagementDP: SalonManagement;
@@ -89,8 +89,9 @@ export class SignedInUser implements SignedInUserBehavior {
         }
         // get Timezone from address and puts that into salon information constructor
         // TODO:
-
-
+        var Timezone = await GoogleMap.getTimeZone(salonInformation.location.address);
+        salonInformation.location.timezone_id = Timezone.timeZoneId;
+        
         // Create Salon Document
         var salonData = await this.salonManagementDP.createSalonDocs(salonInformation);
 
