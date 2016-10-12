@@ -4,14 +4,15 @@ import {EmployeeManagementBehavior} from './EmployeeManagementBehavior'
 var UserModel = require('./UserModel')
 import { SalonCloudResponse } from './../../core/SalonCloudResponse'
 import { ErrorMessage } from './../../core/ErrorMessage'
+import { UserManagement} from './UserManagement';
 
-export class EmployeeManagement implements EmployeeManagementBehavior{
+export class EmployeeManagement extends UserManagement implements EmployeeManagementBehavior{
 
     activateEmployee(employeeId : string) : boolean{
         return;
     };
-
-    addEmployee(phone, profile : UserProfile) : boolean{
+    // can phai bo di;
+    addEmployeeProfile(employeeId: string , profile : UserProfile) : boolean{
 
         var returnResult: SalonCloudResponse<UserProfile> = {
             code: undefined,

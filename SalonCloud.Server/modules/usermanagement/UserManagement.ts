@@ -13,11 +13,9 @@ import { ErrorMessage } from './../../core/ErrorMessage'
 
 export class UserManagement implements UserManagementBehavior {
 
-    user_id: string;
     salon_id: string;
 
-    constructor(user_id: string) {
-        this.user_id = user_id;
+    constructor() {
     }
 
     addUser(phone, profile: UserProfile): boolean {
@@ -36,34 +34,22 @@ export class UserManagement implements UserManagementBehavior {
         return;
     };
 
-    public async addProfile(salonId: string, role: number) {
+    public async addProfile(userId: string, userProfile: UserProfile) {
 
         var returnResult: SalonCloudResponse<UserProfile> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
-        var newProfile: UserProfile = {
-            role: role,
-            salon_id: salonId,
-            address: undefined,
-            birthday: undefined,
-            salary_rate: 6,
-            social_security_number: undefined,
-            cash_rate: 6,
-            fullname: undefined,
-            nickname: undefined,
-            status: true,
-
-        };
-        var userDocs = await UserModel.findOne({ '_id': this.user_id }).exec();
-        var checkExistArray = userDocs.profile.filter(profile => profile.salon_id === salonId);
+        
+        var userDocs = await UserModel.findOne({ '_id': userId }).exec();
+        var checkExistArray = userDocs.profile.filter(profile => profile.salon_id === userProfile.salon_id);
         if (checkExistArray.length == 0) {
-            userDocs.profile.push(newProfile);
+            userDocs.profile.push(userProfile);
             var saveAction = userDocs.save();
             
             await saveAction.then(function (docs) {
-                returnResult.data = newProfile;
+                returnResult.data = userProfile;
                 return returnResult;
 
             }, function (err) {
