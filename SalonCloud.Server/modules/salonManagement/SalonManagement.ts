@@ -1,7 +1,8 @@
-
-
-
-
+/**
+ * 
+ * 
+ * 
+ */
 import {SalonManagementBehavior} from './SalonManagementBehavior'
 import {SalonData, SalonInformation, SalonSetting} from './SalonData'
 import {SalonCloudResponse} from './../../core/SalonCloudResponse'
@@ -20,7 +21,23 @@ export class SalonManagement implements SalonManagementBehavior {
         return;
     };
 
+    /**
+	*@name: createSalonDocs
+    *@parameter: SalonInformation
+    *@return: Mongoose result
+    * - Connect database and create salon record
+	*/
     public async createSalonDocs(salonInformation : SalonInformation){
+
+        googleMapsClient.geocode({
+            address: salonInformation.location.address
+        }, function (err, response) {
+            if (!err) {
+                console.log(response);
+            }else{
+                console.log("err:", err);
+            }
+        });
         var returnResult : SalonCloudResponse<SalonData> = {
             code: undefined,
             data: undefined,
@@ -30,6 +47,7 @@ export class SalonManagement implements SalonManagementBehavior {
             information: salonInformation,
             setting: defaultSalonSetting,
         }
+        // create Salon record
         var SalonCreation = SalonModel.create(salonData);
         await SalonCreation.then(function(docs){
                 returnResult.data = docs;
