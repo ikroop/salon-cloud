@@ -397,7 +397,10 @@ describe('Employee Management', function () {
                         throw err;
                     }
                     res.status.should.be.equal(200);
+
                     res.body.should.have.property('uid');
+                    // TODO: check uid format: Id must be a single String of 12 bytes or a string of 24 hex characters
+
                     res.body.should.have.property('phone').eql(bodyRequest.phonenumber);
                     res.body.should.have.property('fullname').eql(bodyRequest.fullname);
                     res.body.should.have.property('role').eql(3);
@@ -425,7 +428,15 @@ describe('Employee Management', function () {
                         throw err;
                     }
                     res.status.should.be.equal(200);
+
                     res.body.should.have.property('uid');
+                    // TODO: check uid format: Id must be a single String of 12 bytes or a string of 24 hex characters
+                    // let uid = res.body.property('uid');
+                    // uid.should.be.
+                    // let isHex: Boolean = res.body.property(uid).matches("[0-9A-F]+");//http://stackoverflow.com/questions/5317320/regex-to-check-string-contains-only-hex-characters
+                    // let twelveBytes: Boolean = Buffer.byteLength(str, 'utf8');//http://stackoverflow.com/questions/9864662/how-to-get-the-string-length-in-bytes-in-nodejs
+
+
                     res.body.should.have.property('phone').eql(bodyRequest.phonenumber);
                     res.body.should.have.property('fullname').eql(bodyRequest.fullname);
                     res.body.should.have.property('role').eql(3);
