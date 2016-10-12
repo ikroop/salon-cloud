@@ -102,7 +102,10 @@ export class SignedInUser implements SignedInUserBehavior {
         var addSampleServicesAction = await serviceDP.addGroup(samplesService2);
 
         //step 5: update user profile;
-        var profile = await this.userManagementDP.addProfile(salonData.data._id, 1); //Todo
+        var newProfile : UserProfile = {
+            
+        }
+        var profile = await this.addNewProfile(salonData.data._id); //Todo
         returnResult.data = {
             salon_id: salonData.data._id,
             uid: this.userManagementDP.user_id,
@@ -124,12 +127,16 @@ export class SignedInUser implements SignedInUserBehavior {
         return;
     };
 
-    public async addNewProfile(salonId: string) {
+    public async addNewProfile(newProfile: UserProfile) {
         var returnResult: SalonCloudResponse<UserProfile> = {
             code: undefined,
             err: undefined,
             data: undefined
         };
+
+        var newProfile : UserProfile = {
+            address: 
+        }
         var returnResult = await this.userManagementDP.addProfile(salonId, 1);
         return returnResult;
     };
