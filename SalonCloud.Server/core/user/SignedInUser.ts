@@ -15,19 +15,27 @@ import { samplesService1, samplesService2 } from './../defaultData'
 import { BaseValidator } from './../validation/BaseValidator'
 import { MissingCheck, IsPhoneNumber, IsEmail, IsString } from './../validation/ValidationDecorators'
 import { ErrorMessage } from './../ErrorMessage'
-
+import { GoogleMap } from './../googlemap/GoogleMap';
 export class SignedInUser implements SignedInUserBehavior {
 
     salonManagementDP: SalonManagement;
     userManagementDP: UserManagement;
-    //Todo: neccesary??
-    //salonScheduleDP: Schedule;
 
     constructor(salonManagementDP: SalonManagement, userManagementDP: UserManagement) {
         this.salonManagementDP = salonManagementDP;
         this.userManagementDP = userManagementDP;
     }
 
+    /**
+	*@name: createSalon
+    *@parameter: SalonInformation
+    *@return: a promise resolved to SalonCloudResponse<data>
+    * - validation
+    * - Get Timezone from address
+    * - create default weekly schedule
+    * - Create sample Services
+    * - Update User Profile
+	*/
     public async createSalon(salonInformation: SalonInformation) {
 
         var returnResult: SalonCloudResponse<any> = {
@@ -35,8 +43,8 @@ export class SignedInUser implements SignedInUserBehavior {
             data: undefined,
             err: undefined
         };
-        //step 1: validation;
-        //salon name validation
+        // Validation
+        // salon name validation
         var salonNameValidator = new BaseValidator(salonInformation.salon_name);
         salonNameValidator = new MissingCheck(salonNameValidator, ErrorMessage.MissingSalonName);
         var salonNameError = await salonNameValidator.validate();
@@ -45,17 +53,17 @@ export class SignedInUser implements SignedInUserBehavior {
             returnResult.code = 400;
             return returnResult;
         }
-        //address validation 
+        // address validation 
         var addressValidator = new BaseValidator(salonInformation.location.address);
         addressValidator = new MissingCheck(addressValidator, ErrorMessage.MissingAddress);
-        //Todo: validator for IsAddress
+        // TODO: validator for IsAddress
         var addressError = await addressValidator.validate();
         if (addressError) {
             returnResult.err = addressError.err;
             returnResult.code = 400;
             return returnResult;
         }
-        //phone number validation
+        // phone number validation
         var phoneNumberValidator = new BaseValidator(salonInformation.phone.number);
         phoneNumberValidator = new MissingCheck(phoneNumberValidator, ErrorMessage.MissingPhoneNumber);
         phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat);
@@ -66,8 +74,8 @@ export class SignedInUser implements SignedInUserBehavior {
             return returnResult;
         }
 
-        //email validation
-        //email is not required, so check if email is in the request first.
+        // email validation
+        // email is not required, so check if email is in the request first.
         if (salonInformation.email) {
             var emailValidator = new BaseValidator(salonInformation.email);
             emailValidator = new IsEmail(emailValidator, ErrorMessage.WrongEmailFormat);
@@ -79,30 +87,27 @@ export class SignedInUser implements SignedInUserBehavior {
             }
 
         }
-        //get Timezone from address and puts that into salon information constructor
+        // get Timezone from address and puts that into salon information constructor
         // TODO:
-
-
-        //step 2: create salon docs;
+        var Timezone = await GoogleMap.getTimeZone(salonInformation.location.address);
+        salonInformation.location.timezone_id = Timezone.timeZoneId;
+        
+        // Create Salon Document
         var salonData = await this.salonManagementDP.createSalonDocs(salonInformation);
 
-        //step 3: create default schedule;
+        // Create default Schedule
         var scheduleDP = new SalonSchedule(salonData.data._id);
         var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule);
 
-        //step 4: create sample services;
+        // Create Sample Services
         var serviceDP = new ServiceManagement(salonData.data._id);
-
-        //samplesService1.salon_id = salonData.data._id;
-        samplesService2.salon_id = salonData.data._id;
+        samplesService2.salon_id = salonData.data._id.toString();
         samplesService1.salon_id = salonData.data._id.toString();
-        //samplesService2.salon_id = samplesService1.salon_id.toString();
-        var sampleServices: [ServiceGroupData] = [samplesService1, samplesService2];
+        var addSample1Result = await serviceDP.addGroup(samplesService1);
+        var addSample2Result = await serviceDP.addGroup(samplesService2);
 
-        var addSampleServicesAction = await serviceDP.addGroup(samplesService2);
-
-        //step 5: update user profile;
-        var newProfile : UserProfile = {
+        // Update User Profile
+         var newProfile : UserProfile = {
             
         }
         var profile = await this.addNewProfile(salonData.data._id); //Todo
@@ -111,7 +116,7 @@ export class SignedInUser implements SignedInUserBehavior {
             uid: this.userManagementDP.user_id,
             role: profile.data.role,
             default_schedule: defaultSchedule.data,
-            sample_services: addSampleServicesAction.data,
+            sample_services: [addSample1Result.data, addSample2Result.data],
             salon_data: salonData.data
         }
         returnResult.code = 200;

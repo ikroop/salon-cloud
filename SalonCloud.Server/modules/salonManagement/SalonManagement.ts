@@ -1,29 +1,35 @@
-
-
-
-
-import {SalonManagementBehavior} from './SalonManagementBehavior'
-import {SalonData, SalonInformation, SalonSetting} from './SalonData'
-import {SalonCloudResponse} from './../../core/SalonCloudResponse'
-import {SalonModel, SalonProfileSchema} from './SalonModel'
-import {defaultSalonSetting} from './../../core/defaultData'
-
+/**
+ * 
+ * 
+ * 
+ */
+import { SalonManagementBehavior } from './SalonManagementBehavior'
+import { SalonData, SalonInformation, SalonSetting } from './SalonData'
+import { SalonCloudResponse } from './../../core/SalonCloudResponse'
+import { SalonModel, SalonProfileSchema } from './SalonModel'
+import { defaultSalonSetting } from './../../core/defaultData'
 
 export class SalonManagement implements SalonManagementBehavior {
 
     salonId: string;
 
-    public activate() : SalonCloudResponse<boolean>{
+    public activate(): SalonCloudResponse<boolean> {
         return;
     };
 
-    public createInformation(salonId : string, data : SalonInformation) : SalonCloudResponse<string>{
+    public createInformation(salonId: string, data: SalonInformation): SalonCloudResponse<string> {
         return;
     };
 
-    public async createSalonDocs(salonInformation : SalonInformation){
-        //step 1: 
-        var returnResult : SalonCloudResponse<SalonData> = {
+    /**
+	*@name: createSalonDocs
+    *@parameter: SalonInformation
+    *@return: Mongoose result
+    * - Connect database and create salon record
+	*/
+    public async createSalonDocs(salonInformation: SalonInformation) {
+        
+        var returnResult: SalonCloudResponse<SalonData> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -32,36 +38,36 @@ export class SalonManagement implements SalonManagementBehavior {
             information: salonInformation,
             setting: defaultSalonSetting,
         }
-
+        // create Salon record
         var SalonCreation = SalonModel.create(salonData);
-        await SalonCreation.then(function(docs){
-                returnResult.data = docs;
-            }, function(err){
-                returnResult.err = err;
-            })
+        await SalonCreation.then(function (docs) {
+            returnResult.data = docs;
+        }, function (err) {
+            returnResult.err = err;
+        })
 
         return returnResult;
     };
 
-    public createSetting(salonId : string, setting : SalonSetting) : SalonCloudResponse<boolean>{
+    public createSetting(salonId: string, setting: SalonSetting): SalonCloudResponse<boolean> {
         return;
     };
 
-    public deactivate() : SalonCloudResponse<boolean>{
+    public deactivate(): SalonCloudResponse<boolean> {
         return;
     };
 
-    public getAllSalon(userId : string) : SalonCloudResponse<SalonInformation>{
+    public getAllSalon(userId: string): SalonCloudResponse<SalonInformation> {
         return;
     };
 
-    public updateInformation(data : SalonInformation) : SalonCloudResponse<boolean>{
+    public updateInformation(data: SalonInformation): SalonCloudResponse<boolean> {
         return;
     };
 
-    public updateSetting(setting : SalonSetting) : SalonCloudResponse<boolean>{
+    public updateSetting(setting: SalonSetting): SalonCloudResponse<boolean> {
         return;
     };
 
-    
+
 }

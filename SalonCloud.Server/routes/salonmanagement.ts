@@ -27,7 +27,8 @@ export class SalonManagementRouter {
                 },
                 location: {
                     address: request.body.address,
-                    is_verified: false
+                    is_verified: false,
+                    timezone_id: undefined
                 },
                 salon_name: request.body.salon_name,
             }

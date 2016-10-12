@@ -1,7 +1,6 @@
 
 import {UserData, UserProfile} from './UserData'
 import {EmployeeManagementBehavior} from './EmployeeManagementBehavior'
-var UserModel = require('./UserModel')
 import { SalonCloudResponse } from './../../core/SalonCloudResponse'
 import { ErrorMessage } from './../../core/ErrorMessage'
 import { UserManagement} from './UserManagement';
@@ -14,7 +13,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
     // can phai bo di;
     addEmployeeProfile(employeeId: string , profile : UserProfile) : boolean{
 
-        var returnResult: SalonCloudResponse<UserProfile> = {
+        /*var returnResult: SalonCloudResponse<UserProfile> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -23,8 +22,8 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
 
          
         returnResult.data = profile;
-        returnResult.err = 200;
-        return true;//returnResult;
+        returnResult.err = 200;*/
+        return true;
 
 
         /*

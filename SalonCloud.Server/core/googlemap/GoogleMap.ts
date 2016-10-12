@@ -4,28 +4,36 @@
  * 
  * 
  */
-var googleMapsClient = require('@google/maps').createClient();
-
+var googleMapsClient = require('@google/maps').createClient({
+    key: 'AIzaSyCptaA0X0FDTsjVgotaKtGgbPYjXBszGgk'
+});
 export class GoogleMap {
     static async getTimeZone(address: string) {
         var geocode: any = undefined;
         var timezone: any = undefined;
-        await googleMapsClient.geocode({
-            address: address
-        }, function (err, response) {
-            if (!err) {
-                console.log(response.json.results);
-            }
+
+        let promise = new Promise(function(resolve, reject) {
+            googleMapsClient.geocode({
+                address: address
+            }, function(err, response) {
+                if (!err) {
+                    geocode = response.json.results[0].geometry.location;
+                    timezone = googleMapsClient.timezone({
+                        location: [geocode.lat, geocode.lng]
+                    }, function(err, response) {
+                        if (!err) {
+                            timezone = response.json;
+                            resolve(timezone);
+                        } else {
+                            resolve(err);
+                        }
+                    });
+                } else {
+                    resolve(err);
+                }
+            })
         });
 
-        await googleMapsClient.timezone({
-            location: [geocode.lat, geocode.long],
-            timestamp: 1331766000,
-            language: 'en'
-        }, function (err, response) {
-            timezone = response.json;
-        });
-
-        return timezone;
+        return promise;
     }
 }

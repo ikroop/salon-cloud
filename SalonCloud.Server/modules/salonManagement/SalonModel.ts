@@ -19,7 +19,8 @@ export const SalonProfileSchema = new mongoose.Schema({
         },
         location: {
             address: { type: String, required: true },
-            is_verified: { type: Boolean, required: true }
+            is_verified: { type: Boolean, required: true },
+            timezone_id: String
         },
         email: String
     }
