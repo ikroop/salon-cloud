@@ -24,8 +24,6 @@ describe('Authentication', function () {
             var user = {
                 password: defaultPassword
             };
-
-            console.log('apiUrl:', apiUrl);
             request(url)
                 .post(apiUrl)
                 .send(user)

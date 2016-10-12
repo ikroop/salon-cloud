@@ -11,7 +11,6 @@ export class AuthorizationRouter {
     private router: Router = Router();
 
     public checkPermission(request: Request, response: Response, next) {
-        console.log('3');
         var token = request.headers.authorization;
         var authentication = new Authentication();
         var authorization = new Authorization();

@@ -23,13 +23,11 @@ export class SalonManagement implements SalonManagementBehavior {
 
     public async createSalonDocs(salonInformation : SalonInformation){
         //step 1: 
-        console.log('a1');
         var returnResult : SalonCloudResponse<SalonData> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
-        console.log('a2');
         var salonData: SalonData = {
             information: salonInformation,
             setting: defaultSalonSetting,
@@ -37,7 +35,6 @@ export class SalonManagement implements SalonManagementBehavior {
 
         var SalonCreation = SalonModel.create(salonData);
         await SalonCreation.then(function(docs){
-                console.log('a3');
                 returnResult.data = docs;
             }, function(err){
                 returnResult.err = err;
