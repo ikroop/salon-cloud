@@ -28,7 +28,7 @@ export class SignedInUser implements SignedInUserBehavior {
         this.userManagementDP = userManagementDP;
     }
 
-    public async createSalon(salonInformation: SalonInformation){
+    public async createSalon(salonInformation: SalonInformation) {
 
         var returnResult: SalonCloudResponse<any> = {
             code: undefined,
@@ -36,51 +36,51 @@ export class SignedInUser implements SignedInUserBehavior {
             err: undefined
         };
         //step 1: validation;
-            //salon name validation
+        //salon name validation
         var salonNameValidator = new BaseValidator(salonInformation.salon_name);
         salonNameValidator = new MissingCheck(salonNameValidator, ErrorMessage.MissingSalonName);
         var salonNameError = await salonNameValidator.validate();
-        if(salonNameError){
+        if (salonNameError) {
             returnResult.err = salonNameError.err;
             returnResult.code = 400;
-            return  returnResult;
+            return returnResult;
         }
-            //address validation 
+        //address validation 
         var addressValidator = new BaseValidator(salonInformation.location.address);
         addressValidator = new MissingCheck(addressValidator, ErrorMessage.MissingAddress);
         //Todo: validator for IsAddress
         var addressError = await addressValidator.validate();
-        if(addressError){
+        if (addressError) {
             returnResult.err = addressError.err;
             returnResult.code = 400;
             return returnResult;
-        }      
-            //phone number validation
+        }
+        //phone number validation
         var phoneNumberValidator = new BaseValidator(salonInformation.phone.number);
         phoneNumberValidator = new MissingCheck(phoneNumberValidator, ErrorMessage.MissingPhoneNumber);
         phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat);
         var phoneNumberError = await phoneNumberValidator.validate();
-        if(phoneNumberError){
+        if (phoneNumberError) {
             returnResult.err = phoneNumberError.err;
             returnResult.code = 400;
             return returnResult;
         }
 
-            //email validation
-            //email is not required, so check if email is in the request first.
-        if(salonInformation.email){
+        //email validation
+        //email is not required, so check if email is in the request first.
+        if (salonInformation.email) {
             var emailValidator = new BaseValidator(salonInformation.email);
             emailValidator = new IsEmail(emailValidator, ErrorMessage.WrongEmailFormat);
             var emailError = await emailValidator.validate();
-            if(emailError){
+            if (emailError) {
                 returnResult.err = emailError.err;
                 returnResult.code = 400;
                 return returnResult;
             }
 
         }
-        
-
+        //get Timezone from address and puts that into salon information constructor
+        // TODO:
 
 
         //step 2: create salon docs;
@@ -124,8 +124,8 @@ export class SignedInUser implements SignedInUserBehavior {
         return;
     };
 
-    public async addNewProfile(salonId: string){
-        var returnResult : SalonCloudResponse<UserProfile> ={
+    public async addNewProfile(salonId: string) {
+        var returnResult: SalonCloudResponse<UserProfile> = {
             code: undefined,
             err: undefined,
             data: undefined
