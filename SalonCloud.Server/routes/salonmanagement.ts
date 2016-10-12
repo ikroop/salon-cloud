@@ -18,7 +18,7 @@ export class SalonManagementRouter {
         var authorizationRouter = new AuthorizationRouter();
 
         this.router.post("/create", authorizationRouter.checkPermission, async (request: Request, response: Response) => {
-            var userObject = new SignedInUser(new SalonManagement(), new UserManagement(request.user._id));
+            var signedUser = new SignedInUser(new SalonManagement(), new UserManagement(request.user._id));
             var salonInformationInput: SalonInformation = {
                 email: request.body.email,
                 phone: {
@@ -32,7 +32,7 @@ export class SalonManagementRouter {
                 salon_name: request.body.salon_name,
             }
 
-            var salonCreation = await userObject.createSalon(salonInformationInput);
+            var salonCreation = await signedUser.createSalon(salonInformationInput);
             var dataReturn;
             if (salonCreation.err) {
                 dataReturn = {
