@@ -7,6 +7,8 @@ describe('Employee Management', function () {
     var url = 'http://localhost:3000';
     var validToken;
     var invalidToken;
+    var validSalonId;
+    var invalidSalonId;
     var defaultPassword = '1234@1234'
 
     before(function (done) {
@@ -23,8 +25,12 @@ describe('Employee Management', function () {
                 if (err) {
                     throw err;
                 }
+
                 validToken = res.body.auth.token;
                 invalidToken = 'eyJhbGciOiJSUz';
+
+                validSalonId = res.body.user._id;//alon_id
+                invalidSalonId = '00';
                 done();
             });
     });
@@ -34,7 +40,9 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
             var token = invalidToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phonenumber': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -59,9 +67,67 @@ describe('Employee Management', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to create new employee without phone number', function (done) {
+        it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to create new employee without salon id', function (done) {
             var token = validToken;
             var bodyRequest = {
+                'phone': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 6,
+                'cash_rate': 6,
+                'social_security_number': '165374245'
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.WrongIdFormat.err.name + ' error trying to create new employee wrong-format salon id', function (done) {
+            var token = validToken;
+            var salonId =invalidSalonId,
+            var bodyRequest = {
+                'salon_id': salonId,
+                'phone': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 6,
+                'cash_rate': 6,
+                'social_security_number': '165374245'
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongIdFormat.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to create new employee without phone number', function (done) {
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -87,7 +153,9 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.WrongPhoneNumberFormat.err.name + ' error trying to create new employee with wrong phone format', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phone': 'abd1234',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -114,7 +182,9 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.MissingFullName.err.name + ' error trying to create new employee without fullname', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phone': '4049806189',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -140,7 +210,9 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create new employee with fullname contains only blank space(s)', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phone': '4049806189',
                 'fullname': '   ',
                 'nickname': 'Lee',
@@ -167,7 +239,9 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.MissingNickName.err.name + ' error trying to create new employee without nickname', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'salary_rate': 0.6,
@@ -193,7 +267,9 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create new employee with nickname contains only blank space(s)', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': '   ',
@@ -220,7 +296,9 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.MissingSalaryRate.err.name + ' error trying to create new employee without nickname', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -246,7 +324,9 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.SalaryRateRangeError.err.name + ' error trying to create new employee with salary_rate < 0', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -273,7 +353,9 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.SalaryRateRangeError.err.name + ' error trying to create new employee with salary_rate > 10', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -300,7 +382,9 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.MissingCashRate.err.name + ' error trying to create new employee without nickname', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -326,7 +410,9 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.CashRateRangeError.err.name + ' error trying to create new employee with cash_rate < 0', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -353,7 +439,9 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.CashRateRangeError.err.name + ' error trying to create new employee with cash_rate > 10', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -380,7 +468,9 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.WrongSSNFormat.err.name + ' error trying to create new employee with wrong-format SSN', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phonenumber': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -407,7 +497,9 @@ describe('Employee Management', function () {
 
         it('should return employee object with id if new employee is added successfully without SSN', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phonenumber': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -437,7 +529,9 @@ describe('Employee Management', function () {
 
         it('should return employee object with id if new employee is added successfully with SSN', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
+                'salon_id': salonId,
                 'phonenumber': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
