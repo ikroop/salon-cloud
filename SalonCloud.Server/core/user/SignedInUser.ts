@@ -16,14 +16,17 @@ import { BaseValidator } from './../validation/BaseValidator'
 import { MissingCheck, IsPhoneNumber, IsEmail, IsString } from './../validation/ValidationDecorators'
 import { ErrorMessage } from './../ErrorMessage'
 import { GoogleMap } from './../googlemap/GoogleMap';
+import {OwnerManagement} from './../../modules/usermanagement/OwnerManagement'
+
 export class SignedInUser implements SignedInUserBehavior {
 
     salonManagementDP: SalonManagement;
     userManagementDP: UserManagement;
+    userId: string;
 
-    constructor(salonManagementDP: SalonManagement, userManagementDP: UserManagement) {
+    constructor(userId: string, salonManagementDP: SalonManagement) {
         this.salonManagementDP = salonManagementDP;
-        this.userManagementDP = userManagementDP;
+        this.userId = userId;
     }
 
     /**
@@ -107,13 +110,12 @@ export class SignedInUser implements SignedInUserBehavior {
         var addSample2Result = await serviceDP.addGroup(samplesService2);
 
         // Update User Profile
-         var newProfile : UserProfile = {
-            
-        }
-        var profile = await this.addNewProfile(salonData.data._id); //Todo
+        var ownerManagementDP = new OwnerManagement(salonData.data._id);
+        var profile = await ownerManagementDP.addOwnerProfile(this.userId); //Todo
+
         returnResult.data = {
             salon_id: salonData.data._id,
-            uid: this.userManagementDP.user_id,
+            uid: this.userId,
             role: profile.data.role,
             default_schedule: defaultSchedule.data,
             sample_services: [addSample1Result.data, addSample2Result.data],
@@ -132,19 +134,6 @@ export class SignedInUser implements SignedInUserBehavior {
         return;
     };
 
-    public async addNewProfile(newProfile: UserProfile) {
-        var returnResult: SalonCloudResponse<UserProfile> = {
-            code: undefined,
-            err: undefined,
-            data: undefined
-        };
-
-        var newProfile : UserProfile = {
-            address: 
-        }
-        var returnResult = await this.userManagementDP.addProfile(salonId, 1);
-        return returnResult;
-    };
-
+   
 
 }

@@ -13,9 +13,10 @@ import { ErrorMessage } from './../../core/ErrorMessage'
 
 export class UserManagement implements UserManagementBehavior {
 
-    salon_id: string;
+    salonId: string;
 
-    constructor() {
+    constructor(salonId: string) {
+        this.salonId = salonId;
     }
 
     addUser(phone, profile: UserProfile): boolean {

@@ -13,6 +13,10 @@ export class SalonManagement implements SalonManagementBehavior {
 
     salonId: string;
 
+    constructor(salonId: string){
+        this.salonId = salonId;
+    }
+
     public activate(): SalonCloudResponse<boolean> {
         return;
     };

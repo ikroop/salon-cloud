@@ -6,4 +6,5 @@
 /// <reference path="EmployeeManagement.ts" />
 /// <reference path="CustomerManagement.ts" />
 /// <reference path="CustomerManagementBehavior.ts" />
+/// <reference path="OwnerManagement.ts" />
 
