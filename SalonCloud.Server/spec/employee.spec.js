@@ -9,6 +9,7 @@ describe('Employee Management', function () {
     var invalidToken;
     var validSalonId;
     var invalidSalonId;
+    var notFoundSalonId;
     var defaultPassword = '1234@1234'
 
     before(function (done) {
@@ -29,8 +30,9 @@ describe('Employee Management', function () {
                 validToken = res.body.auth.token;
                 invalidToken = 'eyJhbGciOiJSUz';
 
-                validSalonId = res.body.user._id;//alon_id
+                validSalonId = res.body.user._id;//salon_id
                 invalidSalonId = '00';
+                notFoundSalonId = '97ba6280f531d1b53d54a6e5';
                 done();
             });
     });
@@ -119,6 +121,35 @@ describe('Employee Management', function () {
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.WrongIdFormat.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to create new employee wrong salon id', function (done) {
+            var token = validToken;
+            var salonId =notFoundSalonId,
+            var bodyRequest = {
+                'salon_id': salonId,
+                'phone': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 6,
+                'cash_rate': 6,
+                'social_security_number': '165374245'
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
                     done();
                 });
         });
