@@ -1,17 +1,17 @@
 
-import {UserData, UserProfile} from './UserData'
-import {EmployeeManagementBehavior} from './EmployeeManagementBehavior'
+import { UserData, UserProfile } from './UserData'
+import { EmployeeManagementBehavior } from './EmployeeManagementBehavior'
 import { SalonCloudResponse } from './../../core/SalonCloudResponse'
 import { ErrorMessage } from './../../core/ErrorMessage'
-import { UserManagement} from './UserManagement';
+import { UserManagement } from './UserManagement';
 
-export class EmployeeManagement extends UserManagement implements EmployeeManagementBehavior{
+export class EmployeeManagement extends UserManagement implements EmployeeManagementBehavior {
 
-    activateEmployee(employeeId : string) : boolean{
+    activateEmployee(employeeId: string): boolean {
         return;
     };
     // can phai bo di;
-    addEmployeeProfile(employeeId: string , profile : UserProfile) : boolean{
+    addEmployeeProfile(employeeId: string, profile: UserProfile): boolean {
 
         /*var returnResult: SalonCloudResponse<UserProfile> = {
             code: undefined,
@@ -47,22 +47,22 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
             returnResult.err = ErrorMessage.ProfileAlreadyExist;
             return returnResult;
         }*/
-        
+
     };
 
-    deactivateEmployee(employeeId : string) : boolean{
+    deactivateEmployee(employeeId: string): boolean {
         return;
     };
 
-    getAllEmployee() : Array<UserData>{
+    getAllEmployee(): Array<UserData> {
         return;
     };
 
-    getEmployee(employeeId : string) :UserData{
+    getEmployee(employeeId: string): UserData {
         return;
     };
 
-    updateEmployee(employeeId : string, profile : UserProfile) : boolean{
+    updateEmployee(employeeId: string, profile: UserProfile): boolean {
         return;
     };
 
