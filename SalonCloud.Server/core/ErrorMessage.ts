@@ -72,12 +72,6 @@ export const ErrorMessage = {
             'message': 'A address is wrong format!'
         }
     },
-    'WrongSocialSecurityNumberFormat': {
-        'err': {
-            'name': 'WrongSocialSecurityNumberFormat',
-            'message': 'Social Security Number is wrong format!'
-        }
-    },
     'SalaryRateRangeError': {
         'err': {
             'name': 'SalaryRateRangeError',
@@ -288,18 +282,18 @@ export const ErrorMessage = {
             'message': 'Social Security Number is wrong format.'
         }
     },
-    'WrongNumberOfDaysOfWeek':{
+    'WrongNumberOfDaysOfWeek': {
         'err': {
-                'name': 'WrongNumberOfDaysOfWeek',
-                'message': 'A weekly schedule must have 7 days!'
-           }
+            'name': 'WrongNumberOfDaysOfWeek',
+            'message': 'A weekly schedule must have 7 days!'
+        }
 
     },
     'DuplicateDaysOfWeek': {
         'err': {
-                'name': 'DuplicateDaysOfWeek',
-                'message': 'day_of_week in schedules must be unique!'
-           }
+            'name': 'DuplicateDaysOfWeek',
+            'message': 'day_of_week in schedules must be unique!'
+        }
     },
     'MissingSalaryRate': {
         'err': {
