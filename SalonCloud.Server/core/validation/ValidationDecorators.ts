@@ -330,8 +330,8 @@ export class IsValidNameString extends DecoratingValidator {
 
     public async validatingOperation() {
         let name: string = this.targetElement;
-        let strimmedString: string = name.replace(" ", "");
-        if (strimmedString == "") {
+        let strimmedString: string = name.trim();
+        if (strimmedString.length == 0) {
             return this.errorType;
         } else {
             return undefined;
