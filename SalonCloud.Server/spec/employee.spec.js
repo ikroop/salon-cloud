@@ -187,6 +187,66 @@ describe('Employee Management', function () {
                 });
         }); 
 
+        it('should return ' + ErrorMessage.RoleRangeError.err.name + ' error trying to create new employee with role <= 0', function (done) {
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'role': 0,
+                'phonenumber': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 6,
+                'cash_rate': 6,
+                'social_security_number': '165374245'
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.RoleRangeError.err.name);
+                    done();
+                });
+        }); 
+
+        it('should return ' + ErrorMessage.RoleRangeError.err.name + ' error trying to create new employee with role >= 5', function (done) {
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'role': 5,
+                'phonenumber': '4049806189',
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 6,
+                'cash_rate': 6,
+                'social_security_number': '165374245'
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.RoleRangeError.err.name);
+                    done();
+                });
+        }); 
+
         it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to create new employee without phone number', function (done) {
             var token = validToken;
             var salonId = validSalonId;
