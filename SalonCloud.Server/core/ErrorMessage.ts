@@ -324,5 +324,11 @@ export const ErrorMessage = {
             'name': 'MissingServiceId',
             'message': 'Service id is required!'
         }
+    },
+    'MissingGroupName': {
+        'err': {
+            'name': 'MissingGroupName',
+            'message': 'Group name is required!'
+        }
     }
 };
