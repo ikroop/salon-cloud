@@ -2,6 +2,7 @@ var should = require('should');
 var assert = require('assert');
 var request = require('supertest');
 var winston = require('winston');
+var ErrorMessage = require('./../core/ErrorMessage');
 
 describe('Employee Management', function () {
     var url = 'http://localhost:3000';
@@ -16,7 +17,7 @@ describe('Employee Management', function () {
 
         // Login and get token
         var user = {
-            username: 'unittest1472245629435@gmail.com',
+            username: 'unittest1473044833007@gmail.com',
             password: defaultPassword
         };
         request(url)
@@ -100,7 +101,7 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.WrongIdFormat.err.name + ' error trying to create new employee wrong-format salon id', function (done) {
             var token = validToken;
-            var salonId =invalidSalonId,
+            var salonId = invalidSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
@@ -130,7 +131,7 @@ describe('Employee Management', function () {
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to create new employee wrong salon id', function (done) {
             var token = validToken;
-            var salonId =notFoundSalonId,
+            var salonId = notFoundSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
@@ -185,7 +186,7 @@ describe('Employee Management', function () {
                     res.body.err.should.have.property('name').eql(ErrorMessage.MissingRole.err.name);
                     done();
                 });
-        }); 
+        });
 
         it('should return ' + ErrorMessage.RoleRangeError.err.name + ' error trying to create new employee with role <= 0', function (done) {
             var token = validToken;
@@ -215,7 +216,7 @@ describe('Employee Management', function () {
                     res.body.err.should.have.property('name').eql(ErrorMessage.RoleRangeError.err.name);
                     done();
                 });
-        }); 
+        });
 
         it('should return ' + ErrorMessage.RoleRangeError.err.name + ' error trying to create new employee with role >= 5', function (done) {
             var token = validToken;
@@ -245,7 +246,7 @@ describe('Employee Management', function () {
                     res.body.err.should.have.property('name').eql(ErrorMessage.RoleRangeError.err.name);
                     done();
                 });
-        }); 
+        });
 
         it('should return ' + ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name + ' error trying to create new employee with role = 1', function (done) {
             var token = validToken;
@@ -275,7 +276,7 @@ describe('Employee Management', function () {
                     res.body.err.should.have.property('name').eql(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
                     done();
                 });
-        }); 
+        });
 
         it('should return ' + ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name + ' error trying to create new employee with role = 4', function (done) {
             var token = validToken;
@@ -305,7 +306,7 @@ describe('Employee Management', function () {
                     res.body.err.should.have.property('name').eql(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
                     done();
                 });
-        }); 
+        });
 
         it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to create new employee without phone number', function (done) {
             var token = validToken;
@@ -690,7 +691,7 @@ describe('Employee Management', function () {
                     res.body.err.should.have.property('name').eql(ErrorMessage.WrongSSNFormat.err.name);
                     done();
                 });
-        }); 
+        });
 
         it('should return employee object with id if new employee is added successfully without SSN', function (done) {
             var token = validToken;
@@ -724,7 +725,7 @@ describe('Employee Management', function () {
                     res.body.should.have.property('role').eql(bodyRequest.role);
                     done();
                 });
-        }); 
+        });
 
         it('should return employee object with id if new employee is added successfully with SSN', function (done) {
             var token = validToken;
@@ -764,7 +765,7 @@ describe('Employee Management', function () {
                     res.body.should.have.property('role').eql(bodyRequest.role);
                     done();
                 });
-        }); 
+        });
 
     });
 });
