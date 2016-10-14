@@ -76,7 +76,7 @@ export class IsNumber extends DecoratingValidator {
 }
 
 //Validate if target element has type of string.
-//To pass the test: Target Element has to be string type.
+//To pass the test: Target Element has to be smaller than floor and bigger than ceiling.
 export class IsInRange extends DecoratingValidator {
 
     public errorType: any;

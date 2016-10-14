@@ -12,7 +12,7 @@ describe('Employee Management', function () {
     var invalidSalonId;
     var notFoundSalonId;
     var defaultPassword = '1234@1234';
-    var phone = (new Date()).getTime().toString();
+    var phone = ((new Date()).getTime()%10000000000).toString();
 
     before(function (done) {
 
@@ -48,7 +48,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -76,7 +76,7 @@ describe('Employee Management', function () {
             var token = validToken;
             var bodyRequest = {
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -106,7 +106,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -136,7 +136,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -165,7 +165,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -195,7 +195,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 0,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -225,7 +225,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 5,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -255,7 +255,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 1,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -285,7 +285,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 4,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -374,7 +374,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
@@ -403,7 +403,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': '   ',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -433,7 +433,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'salary_rate': 0.6,
                 'cash_rate': 0.6,
@@ -462,7 +462,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': '   ',
                 'salary_rate': 0.6,
@@ -492,7 +492,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'cash_rate': 6,
@@ -521,7 +521,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': -1,
@@ -551,7 +551,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 10.5,
@@ -581,7 +581,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -610,7 +610,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -640,7 +640,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -670,7 +670,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': (new Date()).getTime().toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -700,7 +700,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': Math.floor((new Date()).getTime()/1000).toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -734,7 +734,7 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': Math.floor((new Date()).getTime()/1000).toString(),
+                'phone': ((new Date()).getTime()%10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,

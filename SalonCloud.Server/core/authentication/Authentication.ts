@@ -206,7 +206,7 @@ export class Authentication implements AuthenticationBehavior {
             err: undefined,
             data: undefined
         }
-        var randomPassword = Math.floor(Math.random() * 1000000);
+        var randomPassword = 100000 + Math.floor(Math.random() * 900000);
         var randomPasswordString = randomPassword.toString();
         var registerProcess = await this.signUpWithUsernameAndPassword(username, randomPasswordString);
         if (registerProcess.err) {
