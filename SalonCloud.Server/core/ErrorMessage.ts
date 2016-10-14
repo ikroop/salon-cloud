@@ -270,6 +270,12 @@ export const ErrorMessage = {
             'message': 'Role must be greater than 0 and less than 5.'
         }
     },
+    'UnacceptedRoleForAddedEmployeeError': {
+        'err': {
+            'name': 'UnacceptedRoleForAddedEmployeeError',
+            'message': 'Can only add employee with role = Manager(2) or Technician(3).'
+        }
+    },
     'WrongSSNFormat': {
         'err': {
             'name': 'WrongSSNFormat',
