@@ -600,7 +600,7 @@ describe('Employee Management', function () {
 
                     res.body.should.have.property('phone').eql(bodyRequest.phonenumber);
                     res.body.should.have.property('fullname').eql(bodyRequest.fullname);
-                    res.body.should.have.property('role').eql(3);
+                    res.body.should.have.property('role').eql(bodyRequest.role);
                     done();
                 });
         }); 
@@ -639,7 +639,7 @@ describe('Employee Management', function () {
 
                     res.body.should.have.property('phone').eql(bodyRequest.phonenumber);
                     res.body.should.have.property('fullname').eql(bodyRequest.fullname);
-                    res.body.should.have.property('role').eql(3);
+                    res.body.should.have.property('role').eql(bodyRequest.role);
                     done();
                 });
         }); 
