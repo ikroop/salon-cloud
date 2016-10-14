@@ -10,10 +10,11 @@ import { SalonInformation, SalonSetting } from './../../modules/salonManagement/
 import { Verification } from './../verification/Verification'
 import { Authentication } from './../authentication/Authentication'
 import { EmployeeManagement } from './../../modules/userManagement/EmployeeManagement'
-import {ErrorMessage} from './../ErrorMessage'
-import {BaseValidator} from './../validation/BaseValidator'
-import {IsInArray, IsNumber, IsPhoneNumber, IsString, IsSSN, MissingCheck, IsValidNameString, IsInRange, IsValidSalonId
-    } from './../validation/ValidationDecorators'
+import { ErrorMessage } from './../ErrorMessage'
+import { BaseValidator } from './../validation/BaseValidator'
+import {
+    IsInArray, IsNumber, IsPhoneNumber, IsString, IsSSN, MissingCheck, IsValidNameString, IsInRange, IsValidSalonId
+} from './../validation/ValidationDecorators'
 
 
 export class Owner extends AbstractAdministrator {
@@ -37,27 +38,27 @@ export class Owner extends AbstractAdministrator {
      * -- return 
      * 
      */
-    public async addEmployee(username: string, employeeProfile: any, verificationObj: Verification) : Promise<SalonCloudResponse<any>>{
-        var response : SalonCloudResponse<any> =  {
+    public async addEmployee(username: string, employeeProfile: any, verificationObj: Verification): Promise<SalonCloudResponse<any>> {
+        var response: SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
             err: undefined
         }
-        
+
         // validation:
         // 'role' validation:
         var roleValidation = new BaseValidator(employeeProfile.role);
         roleValidation = new MissingCheck(roleValidation, ErrorMessage.MissingRole);
         roleValidation = new IsInRange(roleValidation, ErrorMessage.RoleRangeError, 1, 4);
-        roleValidation = new IsInArray(roleValidation, ErrorMessage.UnacceptedRoleForAddedEmployeeError, [2,3]);
+        roleValidation = new IsInArray(roleValidation, ErrorMessage.UnacceptedRoleForAddedEmployeeError, [2, 3]);
         var roleError = await roleValidation.validate();
-        if(roleError){
+        if (roleError) {
             response.err = roleError.err;
             response.code = 400;
             return response;
         }
-        console.log('KKK');
-        var salonIdValidation = new BaseValidator(employeeProfile.salon_id);
+
+        /*var salonIdValidation = new BaseValidator(employeeProfile.salon_id);
         salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
         salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
         var salonIdError = await salonIdValidation.validate();
@@ -65,23 +66,82 @@ export class Owner extends AbstractAdministrator {
             response.err = salonIdError.err;
             response.code = 400;
             return response;
+        }*/
+
+        console.log('phoneNumber:', employeeProfile.phone);
+
+        var phoneNumberValidation = new BaseValidator(employeeProfile.phone);
+        phoneNumberValidation = new MissingCheck(phoneNumberValidation, ErrorMessage.MissingPhoneNumber);
+        phoneNumberValidation = new IsPhoneNumber(phoneNumberValidation, ErrorMessage.WrongPhoneNumberFormat);
+        var phoneNumberError = await phoneNumberValidation.validate();
+        if (phoneNumberError) {
+            response.err = phoneNumberError.err;
+            response.code = 400;
+            return response;
         }
 
-        console.log('Nononon');
+        var fullnameValidation = new BaseValidator(employeeProfile.fullname);
+        fullnameValidation = new MissingCheck(fullnameValidation, ErrorMessage.MissingFullName);
+        fullnameValidation = new IsValidNameString(fullnameValidation, ErrorMessage.InvalidNameString);
+        var fullnameError = await fullnameValidation.validate();
+        if (fullnameError) {
+            response.err = fullnameError.err;
+            response.code = 400;
+            return response;
+        }
 
+        var nicknameValidation = new BaseValidator(employeeProfile.nickname);
+        nicknameValidation = new MissingCheck(nicknameValidation, ErrorMessage.MissingNickName);
+        nicknameValidation = new IsValidNameString(nicknameValidation, ErrorMessage.InvalidNameString);
+        var nicknameError = await nicknameValidation.validate();
+        if (nicknameError) {
+            response.err = nicknameError.err;
+            response.code = 400;
+            return response;
+        }
 
+        var salaryRateValidation = new BaseValidator(employeeProfile.salary_rate);
+        salaryRateValidation = new MissingCheck(salaryRateValidation, ErrorMessage.MissingSalaryRate);
+        salaryRateValidation = new IsInRange(salaryRateValidation, ErrorMessage.SalaryRateRangeError, 0, 10);
+        var salaryRateError = await salaryRateValidation.validate();
+        if (salaryRateError) {
+            response.err = salaryRateError.err;
+            response.code = 400;
+            return response;
+        }
+
+        var cashRateValidation = new BaseValidator(employeeProfile.cash_rate);
+        cashRateValidation = new MissingCheck(cashRateValidation, ErrorMessage.MissingCashRate);
+        cashRateValidation = new IsInRange(cashRateValidation, ErrorMessage.CashRateRangeError, 0, 10);
+        var cashRateError = await cashRateValidation.validate();
+        if (cashRateError) {
+            response.err = cashRateError.err;
+            response.code = 400;
+            return response;
+        }
+
+        if (employeeProfile.social_security_number) {
+            var ssnValidation = new BaseValidator(employeeProfile.social_security_number);
+            ssnValidation = new IsSSN(ssnValidation, ErrorMessage.WrongSSNFormat);
+            var ssnError = await ssnValidation.validate();
+            if (ssnError) {
+                response.err = ssnError.err;
+                response.code = 400;
+                return response;
+            }
+        }
 
         // create employee account with username;
         var authObject = new Authentication();
         var accountCreation = await authObject.signUpWithAutoGeneratedPassword(username);
         console.log('INNN');
         // send verification if successfully create account
-        if(accountCreation.err){
+        if (accountCreation.err) {
             response.err = accountCreation.err;
             response.code = accountCreation.code;
             return response;
-        }else{
-            let content = "Your account with Salonhelp has been successfully created! Username: "+username+", Password: "+accountCreation.data.password;
+        } else {
+            let content = "Your account with Salonhelp has been successfully created! Username: " + username + ", Password: " + accountCreation.data.password;
             verificationObj.sendContent(username, content);
         }
         console.log('INNNNN');
@@ -101,7 +161,7 @@ export class Owner extends AbstractAdministrator {
 
         return response;
 
-        
+
     }
 
     public activateEmployee(employeeId: string): SalonCloudResponse<boolean> {
