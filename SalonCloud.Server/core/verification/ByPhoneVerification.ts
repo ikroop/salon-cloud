@@ -11,7 +11,7 @@ export class ByPhoneVerification extends Verification {
             err: undefined,
             data: undefined
         }
-        var response = await Twilio.sendSMS(username, content);
+        var response.err = await Twilio.sendSMS(username, content);
         return response;
     }
 }

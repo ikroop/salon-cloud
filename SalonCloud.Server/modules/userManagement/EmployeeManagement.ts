@@ -10,20 +10,35 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
     activateEmployee(employeeId: string): boolean {
         return;
     };
-    // can phai bo di;
-    addEmployeeProfile(employeeId: string, profile: UserProfile): boolean {
+    public async addEmployeeProfile(employeeId: string, profile: any) : Promise<SalonCloudResponse<UserProfile>> {
 
-        /*var returnResult: SalonCloudResponse<UserProfile> = {
+        var returnResult: SalonCloudResponse<UserProfile> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
+        var newProfile : UserProfile = {
+            role : profile.role,
+            fullname: profile.fullname,
+            salon_id: this.salonId,
+            status: true,
+            nickname: profile.nickname,
+            salary_rate: profile.salary_rate,
+            cash_rate: profile.cash_rate,
+            social_security_number: profile.social_serurity_number,
 
-
+        }
+        let addProfileAction = await this.addProfile(employeeId, newProfile);
+        if(addProfileAction.err){
+            returnResult.err = addProfileAction.err;
+            returnResult.code = addProfileAction.code;
+            return returnResult;
+        }else{
+            returnResult.code = addProfileAction.code;
+            returnResult.data = addProfileAction.data;
+            return returnResult;
+        }
          
-        returnResult.data = profile;
-        returnResult.err = 200;*/
-        return true;
 
 
         /*

@@ -8,20 +8,22 @@ import { Authentication } from '../core/authentication/authentication';
 import { Authorization } from "../core/authorization/authorization";
 import { AuthorizationRouter } from "./authorization";
 import { EmployeeManagement } from '../modules/usermanagement/EmployeeManagement';
+import { SalonManagement } from './../modules/salonManagement/SalonManagement'
+import { Owner } from './../core/user/Owner'
+import {ByPhoneVerification} from './../core/verification/ByPhoneVerification'
 
 export class UserManagementRouter {
-    private router: Router = Router();    
+    private router: Router = Router();
 
     getRouter(): Router {
         var authentication = new Authentication();
         var authorizationRouter = new AuthorizationRouter();
-        var employeeManagement = new EmployeeManagement();
-       
+
         this.router.post("/API-NAME", function (request: Request, response: Response) {
 
         });
-       
-        this.router.post("/create", function (request: Request, response: Response) {
+
+        this.router.post("/create", authorizationRouter.checkPermission , async (request: Request, response: Response) => {
 
 
             var result: SalonCloudResponse<any> = {
@@ -29,15 +31,30 @@ export class UserManagementRouter {
                 data: undefined,
                 err: undefined
             };
-
-            employeeManagement.addEmployee(request.body.phone, request.body);
-
-            response.statusCode = result.code;
-            if(result.err){
-                response.json(result.err);
-            }else{
-                response.json(result.data);
+            console.log('IN: ', request.body.phone);
+            var userObject = new Owner(request.user._id, new SalonManagement(request.body.salon_id));
+            
+            console.log('IN2');
+            result = await userObject.addEmployee(request.body.salon_id, request.body.phone, request.body, new ByPhoneVerification());
+            console.log('IN3: ', result);
+            let dataReturn;
+            if (result.err) {
+                dataReturn = {
+                    'err': result.err,
+                };
+            } else {
+                dataReturn = {
+                    'salon_id': result.data.salon_id,
+                    'uid': result.data.uid,
+                    'phone': result.data.phone,
+                    'fullname': result.data.fullname,
+                    'role': result.data.role
+                }
             }
+            response.json(dataReturn);
+            response.status(result.code);
+
+            console.log('IN4');
         });
         return this.router;
     }

@@ -10,11 +10,13 @@ import { SalonInformation, SalonSetting } from './../../modules/salonManagement/
 import { Verification } from './../verification/Verification'
 import { Authentication } from './../authentication/Authentication'
 import { EmployeeManagement } from './../../modules/userManagement/EmployeeManagement'
+import {ErrorMessage} from './../ErrorMessage'
+import {BaseValidator} from './../validation/BaseValidator'
+import {IsInArray, IsNumber, IsPhoneNumber, IsString, IsSSN, MissingCheck, IsValidNameString} from './../validation/ValidationDecorators'
 
 
 export class Owner extends AbstractAdministrator {
 
-    employeeManagementDP: EmployeeManagement;
 
     /**
      * @name: addEmployee
@@ -34,7 +36,7 @@ export class Owner extends AbstractAdministrator {
      * -- return 
      * 
      */
-    public async addEmployee(salonId : string, username: string, employeeProfile: UserProfile, verificationObj: Verification) : Promise<SalonCloudResponse<any>>{
+    public async addEmployee(salonId : string, username: string, employeeProfile: any, verificationObj: Verification) : Promise<SalonCloudResponse<any>>{
         var response : SalonCloudResponse<any> =  {
             code: undefined,
             data: undefined,
@@ -42,6 +44,20 @@ export class Owner extends AbstractAdministrator {
         }
         
         // validation:
+        // 'role' validation:
+        var roleValidation = new BaseValidator(employeeProfile.role);
+        roleValidation = new MissingCheck(roleValidation, ErrorMessage.MissingRole);
+        roleValidation = new IsInArray(roleValidation, ErrorMessage.RoleRangeError, [1,2]);
+        var roleError = await roleValidation.validate();
+        if(roleError){
+            response.err = roleError.err;
+            response.code = 400;
+            return response;
+        }
+
+        
+
+
 
         // create employee account with username;
         var authObject = new Authentication();
@@ -58,12 +74,14 @@ export class Owner extends AbstractAdministrator {
         }
 
         // add new profile to the account
-        let addProfileAction = await this.employeeManagementDP.addProfile(accountCreation.data.user._id, employeeProfile);
+        let employeeManagementDP = new EmployeeManagement(salonId);
+        let addProfileAction = await employeeManagementDP.addProfile(accountCreation.data.user._id, employeeProfile);
 
         response.data = {
             uid: accountCreation.data.user._id,
             salon_id: salonId,
             username: username,
+            phone: employeeProfile.phone,
             fullname: employeeProfile.fullname,
             role: employeeProfile.role,
         }

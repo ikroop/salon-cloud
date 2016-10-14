@@ -6,7 +6,7 @@ export interface EmployeeManagementBehavior{
 
     activateEmployee(employeeId : string) : boolean;
 
-    addEmployeeProfile(employeeId: string, profile : UserProfile) : boolean;
+    addEmployeeProfile(employeeId: string, profile : any);
 
     deactivateEmployee(employeeId : string) : boolean;
 
