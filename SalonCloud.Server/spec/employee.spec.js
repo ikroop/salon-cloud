@@ -598,6 +598,7 @@ describe('Employee Management', function () {
                     res.body.should.have.property('uid');
                     // TODO: check uid format: Id must be a single String of 12 bytes or a string of 24 hex characters
 
+                    res.body.should.have.property('salon_id').eql(bodyRequest.salon_id);
                     res.body.should.have.property('phone').eql(bodyRequest.phonenumber);
                     res.body.should.have.property('fullname').eql(bodyRequest.fullname);
                     res.body.should.have.property('role').eql(bodyRequest.role);
@@ -637,6 +638,7 @@ describe('Employee Management', function () {
                     // let twelveBytes: Boolean = Buffer.byteLength(str, 'utf8');//http://stackoverflow.com/questions/9864662/how-to-get-the-string-length-in-bytes-in-nodejs
 
 
+                    res.body.should.have.property('salon_id').eql(bodyRequest.salon_id);
                     res.body.should.have.property('phone').eql(bodyRequest.phonenumber);
                     res.body.should.have.property('fullname').eql(bodyRequest.fullname);
                     res.body.should.have.property('role').eql(bodyRequest.role);
