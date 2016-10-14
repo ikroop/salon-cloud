@@ -2,10 +2,10 @@ var should = require('should');
 var assert = require('assert');
 var request = require('supertest');
 var winston = require('winston');
-var ErrorMessage = require('./../core/ErrorMessage');
+var ErrorMessage = require('./../core/ErrorMessage').ErrorMessage;
 
 describe('Employee Management', function () {
-    var url = 'http://localhost:3000';
+    var url = 'http://localhost:3000/api/v1';
     var validToken;
     var invalidToken;
     var validSalonId;
@@ -21,7 +21,7 @@ describe('Employee Management', function () {
             password: defaultPassword
         };
         request(url)
-            .post('/auth/signinwithemailandpassword')
+            .post('/authentication/signinwithusernameandpassword')
             .send(user)
             .end(function (err, res) {
                 if (err) {
@@ -39,7 +39,7 @@ describe('Employee Management', function () {
     });
 
     describe('Unit Test Add New Employee', function () {
-        var apiUrl = '/api/v1/employee/create';
+        var apiUrl = '/employee/create';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
             var token = invalidToken;
