@@ -330,5 +330,17 @@ export const ErrorMessage = {
             'name': 'MissingGroupName',
             'message': 'Group name is required!'
         }
+    },
+    'MissingDescription': {
+        'err': {
+            'name': 'MissingDescription',
+            'message': 'Description is required!'
+        }
+    },
+    'InvalidDescriptionString': {
+        'err': {
+            'name': 'InvalidDescriptionString',
+            'message': 'A Description should not only contain blank space(s)!'
+        }
     }
 };

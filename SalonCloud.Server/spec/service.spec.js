@@ -131,5 +131,64 @@ describe('Service Management', function () {
                 });
         });
 
+        it('should return ' + ErrorMessage.MissingDescription.err.name + ' error trying to create new service(s) without group-description', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'group_name': 'Traditional Pedicure',
+                'salon_id': salonId,
+                'service_list': [
+                     {
+                        'name': 'Traditional Pedicure 0',
+                        'price': 5,
+                        'time': 5
+                     }]
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingDescription.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidDescriptionString.err.name + ' error trying to add new service(s) to group with invalid description', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'group_name': 'Traditional Pedicure',
+                'description': '     ',
+                'salon_id': salonId,
+                'service_list': [
+                     {
+                        'name': 'Traditional Pedicure 0',
+                        'price': 5,
+                        'time': 5
+                     }]
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidDescriptionString.err.name);
+                    done();
+                });
+        });
+
     });
 });
