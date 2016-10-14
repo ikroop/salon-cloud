@@ -45,6 +45,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phonenumber': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -72,6 +73,7 @@ describe('Employee Management', function () {
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to create new employee without salon id', function (done) {
             var token = validToken;
             var bodyRequest = {
+                'role': 2,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -101,6 +103,7 @@ describe('Employee Management', function () {
             var salonId =invalidSalonId,
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -130,6 +133,7 @@ describe('Employee Management', function () {
             var salonId =notFoundSalonId,
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -159,6 +163,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -187,6 +192,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phone': 'abd1234',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -216,6 +222,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phone': '4049806189',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -244,6 +251,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phone': '4049806189',
                 'fullname': '   ',
                 'nickname': 'Lee',
@@ -273,6 +281,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'salary_rate': 0.6,
@@ -301,6 +310,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': '   ',
@@ -330,6 +340,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -358,6 +369,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -387,6 +399,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -416,6 +429,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -444,6 +458,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -473,6 +488,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phone': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -502,6 +518,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phonenumber': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -531,6 +548,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phonenumber': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
@@ -563,6 +581,7 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
+                'role': 2,
                 'phonenumber': '4049806189',
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
