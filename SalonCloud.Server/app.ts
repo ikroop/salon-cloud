@@ -9,7 +9,7 @@ import { AuthenticationRouter } from "./routes/authentication";
 import { UserManagementRouter } from "./routes/usermanagement";
 import { SalonManagementRouter } from "./routes/salonmanagement";
 
-var UserModel = require ("./modules/userManagement/UserModel");
+import { UserModel } from "./modules/userManagement/UserModel";
 
 const app: express.Application = express();
 //var authorizationRouter: AuthorizationRouter = new AuthorizationRouter();

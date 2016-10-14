@@ -8,7 +8,8 @@
 import { SalonCloudResponse } from "./../SalonCloudResponse";
 import { AuthenticationBehavior } from "./AuthenticationBehavior";
 import { ErrorMessage } from './../ErrorMessage';
-var UserModel = require('./../../modules/userManagement/UserModel');
+import { UserModel } from "./../../modules/userManagement/UserModel";
+
 import jwt = require('jsonwebtoken');
 import fs = require('fs');
 import { BaseValidator } from "./../../core/validation/BaseValidator";
