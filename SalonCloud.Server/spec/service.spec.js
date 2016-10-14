@@ -190,5 +190,96 @@ describe('Service Management', function () {
                 });
         });
 
+        it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to add new service(s) without salon id', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+                'group_name': 'Traditional Pedicure',
+                'description': 'Traditional Pedicure is a normal Pedicure.',
+                'service_list': [
+                     {
+                        'name': 'Traditional Pedicure 0',
+                        'price': 5,
+                        'time': 5
+                     }]
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.WrongIdFormat.err.name + ' error trying to add new service(s) with wrong-format salon id', function (done) {
+            var token = validToken;
+            var salonId = invalidSalonId;
+            var bodyRequest = {
+                'group_name': 'Traditional Pedicure',
+                'description': 'Traditional Pedicure is a normal Pedicure.',
+                'salon_id': salonId,
+                'service_list': [
+                     {
+                        'name': 'Traditional Pedicure 0',
+                        'price': 5,
+                        'time': 5
+                     }]
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongIdFormat.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to add new service(s) with wrong salon id', function (done) {
+            var token = validToken;
+            var salonId = notFoundSalonId;
+            var bodyRequest = {
+                'group_name': 'Traditional Pedicure',
+                'description': 'Traditional Pedicure is a normal Pedicure.',
+                'salon_id': salonId,
+                'service_list': [
+                     {
+                        'name': 'Traditional Pedicure 0',
+                        'price': 5,
+                        'time': 5
+                     }]
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
+
     });
 });
