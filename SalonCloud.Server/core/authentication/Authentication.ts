@@ -175,8 +175,6 @@ export class Authentication implements AuthenticationBehavior {
                             token: token
                         }
                     };
-                    console.log('UserToken:', UserToken);
-                    console.log('token:', token);
                 }
                 resolve(response);
 
