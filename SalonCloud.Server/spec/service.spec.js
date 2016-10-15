@@ -317,7 +317,7 @@ describe('Service Management', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingPrice.err.name + ' error trying to add new service(s) without service_price', function (done) {
+        it('should return ' + ErrorMessage.MissingServicePrice.err.name + ' error trying to add new service(s) without service_price', function (done) {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
@@ -347,7 +347,43 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingPrice.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingServicePrice.err.name);
+                    
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingServiceTime.err.name + ' error trying to add new service(s) without service_time', function (done) {
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'group_name': 'Traditional Pedicure',
+                'description': 'Traditional Pedicure is a normal Pedicure.',
+                'salon_id': salonId,
+                'service_list': [
+                     {
+                        'name': 'Traditional Pedicure 0',
+                        'price': 5
+                     },
+                     {
+                        'name': 'Traditional Pedicure 1',
+                        'price': 6,
+                        'time': 5
+                     }]
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingServiceTime.err.name);
                     
                     done();
                 });

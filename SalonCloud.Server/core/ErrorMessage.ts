@@ -336,11 +336,17 @@ export const ErrorMessage = {
             'name': 'InvalidDescriptionString',
             'message': 'A Description should not only contain blank space(s)!'
         }
-    }
-    'MissingPrice': {
+    },
+    'MissingServicePrice': {
         'err': {
-            'name': 'MissingPrice',
-            'message': 'Price is required!'
+            'name': 'MissingServicePrice',
+            'message': 'Service\'s price is required!'
+        }
+    },
+    'MissingServiceTime': {
+        'err': {
+            'name': 'MissingServiceTime',
+            'message': 'Service\'s time is required!'
         }
     }
 };
