@@ -73,7 +73,7 @@ export class Owner extends AbstractAdministrator {
 
         let employeeManagementDP = new EmployeeManagement(employeeProfile.salon_id);
         response = await employeeManagementDP.validation(employeeProfile);
-        if (response.err){
+        if (response.err) {
             return response;
         }
 
@@ -161,11 +161,8 @@ export class Owner extends AbstractAdministrator {
             err: undefined,
             data: undefined
         };
-        // validation
-
+        let serviceManagementDP = new ServiceManagement(serviceGroup.salon_id);
         // init and declare;
-        console.log('Before: ');
-        var serviceManagementDP = new ServiceManagement(serviceGroup.salon_id);
         var newServiceGroup: ServiceGroupData = {
             salon_id: serviceGroup.salon_id,
             description: serviceGroup.description,
@@ -173,12 +170,16 @@ export class Owner extends AbstractAdministrator {
             service_list: serviceGroup.service_list,
 
         }
-        console.log('After: ', newServiceGroup);
+
+        // validation
+        response = await serviceManagementDP.validateServiceGroup(newServiceGroup);
+        if (response.err) {
+            return response;
+        }
+
 
         // adding service group
         var addingAction = await serviceManagementDP.addGroup(newServiceGroup);
-
-        console.log('After2: ', addingAction);
         // return
         if (addingAction.err) {
             response.err = addingAction.err;
@@ -189,8 +190,6 @@ export class Owner extends AbstractAdministrator {
             response.code = addingAction.code;
             return response;
         }
-
-
     };
 
     public deactivateEmployee(emplpoyeeId: string): boolean {

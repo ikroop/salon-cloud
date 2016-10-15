@@ -63,13 +63,6 @@ export class ServiceManagement implements ServiceManagementBehavior {
             err: undefined
         };
         var saveStatus;
-        //Validate parameter
-        var errorReturn = await this.validateServiceGroup(group);
-        if (errorReturn) {
-            response.code = 400;
-            response.err = errorReturn;
-            return response;
-        }
         //Add new service group to database
 
         var dataCreation = ServiceGroupModel.create(group)
@@ -149,15 +142,20 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * Validate Service Item.
      */
     private async validateServiceItem(item: ServiceItemData) {
-        var errorReturn: any = undefined;
-
+        var returnResult: SalonCloudResponse<any> = {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
         //validate name field
         var serviceNameValidator = new BaseValidator(item.name);
         serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingServiceName);
         serviceNameValidator = new IsValidNameString(serviceNameValidator, ErrorMessage.InvalidNameString);
         var serviceNameResult = await serviceNameValidator.validate();
         if (serviceNameResult) {
-            return errorReturn = serviceNameResult.err;
+            returnResult.err = serviceNameResult.err;
+            returnResult.code = 400;
+            return returnResult;
         }
 
         //validate price field
@@ -167,7 +165,9 @@ export class ServiceManagement implements ServiceManagementBehavior {
         priceValidator = new IsInRange(priceValidator, ErrorMessage.ServicePriceRangeError, 0, 500);
         var priceResult = await priceValidator.validate();
         if (priceResult) {
-            return errorReturn = priceResult.err;
+            returnResult.err = priceResult.err;
+            returnResult.code = 400;
+            return returnResult;
         }
 
         //validate time field
@@ -177,9 +177,11 @@ export class ServiceManagement implements ServiceManagementBehavior {
         timeValidator = new IsInRange(timeValidator, ErrorMessage.InvalidServiceTime, 300, 3600 * 3);
         var timeResult = await timeValidator.validate();
         if (timeResult) {
-            return errorReturn = timeResult.err;
+            returnResult.err = timeResult.err;
+            returnResult.code = 400;
+            return returnResult;
         }
-        return errorReturn;
+        return returnResult;
     }
 
     /**
@@ -189,16 +191,21 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * @return: error message.
      * Validate Service Group.
      */
-    private async validateServiceGroup(group: ServiceGroupData) {
-        var errorReturn: any = undefined;
-
+    public async validateServiceGroup(group: ServiceGroupData) {
+        var returnResult: SalonCloudResponse<any> = {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
         // validate salon_id field
         var salonIdValidator = new BaseValidator(group.salon_id);
         salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId);
         salonIdValidator = new IsValidSalonId(salonIdValidator, ErrorMessage.SalonNotFound);
         var priceResult = await salonIdValidator.validate();
         if (priceResult) {
-            return errorReturn = priceResult.err;
+            returnResult.err = priceResult.err;
+            returnResult.code = 400;
+            return returnResult;
         }
 
         // validate name field
@@ -208,7 +215,9 @@ export class ServiceManagement implements ServiceManagementBehavior {
         serviceNameValidator = new IsServiceGroupNameExisted(serviceNameValidator, ErrorMessage.InvalidDescriptionString, group.salon_id);
         var serviceNameResult = await serviceNameValidator.validate();
         if (serviceNameResult) {
-            return errorReturn = serviceNameResult.err;
+            returnResult.err = serviceNameResult.err;
+            returnResult.code = 400;
+            return returnResult;
         }
 
         // validate description field 
@@ -216,23 +225,22 @@ export class ServiceManagement implements ServiceManagementBehavior {
         descriptionValidator = new MissingCheck(descriptionValidator, ErrorMessage.MissingDescription);
         descriptionValidator = new IsValidNameString(descriptionValidator, ErrorMessage.InvalidDescriptionString);
         var descriptionError = await descriptionValidator.validate();
-        if(descriptionError){
-            return errorReturn = descriptionError.err;
+        if (descriptionError) {
+            returnResult.err = descriptionError.err;
+            returnResult.code = 400;
+            return returnResult;
         }
 
         // validate service item
-        console.log('INSIDE: ', group);
-        if (group.service_list){
+        if (group.service_list) {
             for (let item of group.service_list) {
-                console.log('COUNTER');
-                errorReturn = await this.validateServiceItem(item)
-                if (errorReturn) {
-                    return errorReturn;
+                returnResult = await this.validateServiceItem(item)
+                if (returnResult.err) {
+                    return returnResult;
                 }
             }
         }
-        console.log('AfterINSIDE: ', errorReturn);
-        return errorReturn;
+        return returnResult;
     }
 
 }
