@@ -348,5 +348,11 @@ export const ErrorMessage = {
             'name': 'MissingServiceTime',
             'message': 'Service\'s time is required!'
         }
+    },
+    'ServicePriceRangeError': {
+        'err': {
+            'name': 'ServicePriceRangeError',
+            'message': 'Service price must be greater than 0!'
+        }
     }
 };
