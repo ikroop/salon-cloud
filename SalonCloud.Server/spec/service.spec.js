@@ -317,6 +317,43 @@ describe('Service Management', function () {
                 });
         });
 
+        it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to add new service(s) with invalid service_name', function (done) {
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'group_name': 'Traditional Pedicure',
+                'description': 'Traditional Pedicure is a normal Pedicure.',
+                'salon_id': salonId,
+                'service_list': [
+                     {
+                        'name': '   ',
+                        'price': 5,
+                        'time': 5
+                     },
+                     {
+                        'name': 'Traditional Pedicure 0',
+                        'price': 5,
+                        'time': 5
+                     }]
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
+                    
+                    done();
+                });
+        });
+
         it('should return ' + ErrorMessage.MissingServicePrice.err.name + ' error trying to add new service(s) without service_price', function (done) {
             var token = validToken;
             var salonId = validSalonId;
@@ -424,9 +461,14 @@ describe('Service Management', function () {
                 'salon_id': salonId,
                 'service_list': [
                      {
-                        'name': 'Traditional Pedicure 0',
-                        'price': 5,
-                        'time': 5
+                        'name': 'Traditional Pedicure 3',
+                        'price': 9,
+                        'time': 30
+                     },
+                     {
+                        'name': 'Traditional Pedicure 4',
+                        'price': 15,
+                        'time': 45
                      }]
             };
             request(url)
