@@ -15,6 +15,8 @@ import { BaseValidator } from './../validation/BaseValidator'
 import {
     IsInArray, IsNumber, IsPhoneNumber, IsString, IsSSN, MissingCheck, IsValidNameString, IsInRange, IsValidSalonId
 } from './../validation/ValidationDecorators'
+import { ServiceGroupData, ServiceItemData } from './../../modules/serviceManagement/ServiceData'
+import {ServiceManagement} from './../../modules/serviceManagement/ServiceManagement'
 
 
 export class Owner extends AbstractAdministrator {
@@ -61,8 +63,7 @@ export class Owner extends AbstractAdministrator {
             response.code = 400;
             return response;
         }
-
-        // SalonId validation
+        // 'salonId' validation
         var salonIdValidation = new BaseValidator(employeeProfile.salon_id);
         salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
         salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
@@ -73,7 +74,7 @@ export class Owner extends AbstractAdministrator {
             return response;
         }
 
-        // Phone Number validation
+        // 'phone' validation
         var phoneNumberValidation = new BaseValidator(employeeProfile.phone);
         phoneNumberValidation = new MissingCheck(phoneNumberValidation, ErrorMessage.MissingPhoneNumber);
         phoneNumberValidation = new IsPhoneNumber(phoneNumberValidation, ErrorMessage.WrongPhoneNumberFormat);
@@ -84,7 +85,7 @@ export class Owner extends AbstractAdministrator {
             return response;
         }
 
-        // Fullname validation
+        // 'fullname' validation
         var fullnameValidation = new BaseValidator(employeeProfile.fullname);
         fullnameValidation = new MissingCheck(fullnameValidation, ErrorMessage.MissingFullName);
         fullnameValidation = new IsValidNameString(fullnameValidation, ErrorMessage.InvalidNameString);
@@ -95,7 +96,7 @@ export class Owner extends AbstractAdministrator {
             return response;
         }
 
-        // Nickname validation
+        // 'nickname' validation
         var nicknameValidation = new BaseValidator(employeeProfile.nickname);
         nicknameValidation = new MissingCheck(nicknameValidation, ErrorMessage.MissingNickName);
         nicknameValidation = new IsValidNameString(nicknameValidation, ErrorMessage.InvalidNameString);
@@ -106,7 +107,7 @@ export class Owner extends AbstractAdministrator {
             return response;
         }
 
-        // Salary Rate validation
+        // 'salaryRate' validation
         var salaryRateValidation = new BaseValidator(employeeProfile.salary_rate);
         salaryRateValidation = new MissingCheck(salaryRateValidation, ErrorMessage.MissingSalaryRate);
         salaryRateValidation = new IsInRange(salaryRateValidation, ErrorMessage.SalaryRateRangeError, 0, 10);
@@ -117,7 +118,7 @@ export class Owner extends AbstractAdministrator {
             return response;
         }
 
-        // Cash Rate Validation
+        // 'cashRate' validation
         var cashRateValidation = new BaseValidator(employeeProfile.cash_rate);
         cashRateValidation = new MissingCheck(cashRateValidation, ErrorMessage.MissingCashRate);
         cashRateValidation = new IsInRange(cashRateValidation, ErrorMessage.CashRateRangeError, 0, 10);
@@ -181,10 +182,80 @@ export class Owner extends AbstractAdministrator {
         return;
 
     };
+    /**
+     * @name: addService
+     * @param: {serviceGroup: any}
+     * @paramDataStructures:
+     *  serviceGroup : {
+     *          group_name: require
+                description: require
+                salon_id: require
+                service_list: optional [
+            {
+                    name: require
+                    price: number, require
+                    time: number, require
+            }
+        ]
+     * }
+     * 
+     * @return: Promise<SalonCloudResponse<ServiceGroupData>>
+     * @returnDataStructure: 
+     * {
+     *          group_name: require
+                description: require
+                salon_id: require
+                service_list: optional [
+            {
+                    name: require
+                    price: number, require
+                    time: number, require
+            }
+        ]
+     * }
+     * 
+     * -- validation
+     * -- init serviceManagementDP and declare newServiceGroup
+     * -- addService via serviceManagementDP.addGroup() method
+     * -- return
+     * 
+     */
+    public async addService(serviceGroup: any) : Promise<SalonCloudResponse<ServiceGroupData>>{
+        var response : SalonCloudResponse<ServiceGroupData> = {
+            code: undefined,
+            err: undefined,
+            data: undefined
+        };
+        // validation
 
-    public addService() {
+        // init and declare;
+        console.log('Before: ');
+        var serviceManagementDP = new ServiceManagement(serviceGroup.salon_id);
+        var newServiceGroup : ServiceGroupData = {
+            salon_id: serviceGroup.salon_id,
+            description: serviceGroup.description,
+            name: serviceGroup.group_name,
+            service_list: serviceGroup.service_list,
 
-        return;
+        }
+        console.log('After: ', newServiceGroup);
+
+        // adding service group
+        var addingAction = await serviceManagementDP.addGroup(newServiceGroup);
+
+        console.log('After2: ', addingAction);
+        // return
+        if(addingAction.err){
+            response.err = addingAction.err;
+            response.code = addingAction.code;
+            return response;
+        }else{
+            response.data = addingAction.data;
+            response.code = addingAction.code;
+            return response;
+        }
+
+
     };
 
     public deactivateEmployee(emplpoyeeId: string): boolean {
