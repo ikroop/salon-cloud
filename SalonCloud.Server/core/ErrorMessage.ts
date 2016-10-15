@@ -337,4 +337,10 @@ export const ErrorMessage = {
             'message': 'A Description should not only contain blank space(s)!'
         }
     }
+    'MissingPrice': {
+        'err': {
+            'name': 'MissingPrice',
+            'message': 'Price is required!'
+        }
+    }
 };
