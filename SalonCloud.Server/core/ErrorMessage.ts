@@ -354,5 +354,11 @@ export const ErrorMessage = {
             'name': 'ServicePriceRangeError',
             'message': 'Service price must be greater than 0!'
         }
+    },
+    'InvalidServiceTime': {
+        'err': {
+            'name': 'InvalidServiceTime',
+            'message': 'Time for service must be greater than 1 minute and less than 5 hours!'
+        }
     }
 };
