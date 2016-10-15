@@ -12,11 +12,9 @@ import { Authentication } from './../authentication/Authentication'
 import { EmployeeManagement } from './../../modules/userManagement/EmployeeManagement'
 import { ErrorMessage } from './../ErrorMessage'
 import { BaseValidator } from './../validation/BaseValidator'
-import {
-    IsInArray, IsNumber, IsPhoneNumber, IsString, IsSSN, MissingCheck, IsValidNameString, IsInRange, IsValidSalonId
-} from './../validation/ValidationDecorators'
+import { IsPhoneNumber, IsValidSalonId, MissingCheck } from './../validation/ValidationDecorators'
 import { ServiceGroupData, ServiceItemData } from './../../modules/serviceManagement/ServiceData'
-import {ServiceManagement} from './../../modules/serviceManagement/ServiceManagement'
+import { ServiceManagement } from './../../modules/serviceManagement/ServiceManagement'
 
 
 export class Owner extends AbstractAdministrator {
@@ -51,18 +49,6 @@ export class Owner extends AbstractAdministrator {
             err: undefined
         }
 
-        // validation:
-        // 'role' validation:
-        var roleValidation = new BaseValidator(employeeProfile.role);
-        roleValidation = new MissingCheck(roleValidation, ErrorMessage.MissingRole);
-        roleValidation = new IsInRange(roleValidation, ErrorMessage.RoleRangeError, 1, 4);
-        roleValidation = new IsInArray(roleValidation, ErrorMessage.UnacceptedRoleForAddedEmployeeError, [2, 3]);
-        var roleError = await roleValidation.validate();
-        if (roleError) {
-            response.err = roleError.err;
-            response.code = 400;
-            return response;
-        }
         // 'salonId' validation
         var salonIdValidation = new BaseValidator(employeeProfile.salon_id);
         salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
@@ -85,60 +71,10 @@ export class Owner extends AbstractAdministrator {
             return response;
         }
 
-        // 'fullname' validation
-        var fullnameValidation = new BaseValidator(employeeProfile.fullname);
-        fullnameValidation = new MissingCheck(fullnameValidation, ErrorMessage.MissingFullName);
-        fullnameValidation = new IsValidNameString(fullnameValidation, ErrorMessage.InvalidNameString);
-        var fullnameError = await fullnameValidation.validate();
-        if (fullnameError) {
-            response.err = fullnameError.err;
-            response.code = 400;
+        let employeeManagementDP = new EmployeeManagement(employeeProfile.salon_id);
+        response = await employeeManagementDP.validation(employeeProfile);
+        if (response.err){
             return response;
-        }
-
-        // 'nickname' validation
-        var nicknameValidation = new BaseValidator(employeeProfile.nickname);
-        nicknameValidation = new MissingCheck(nicknameValidation, ErrorMessage.MissingNickName);
-        nicknameValidation = new IsValidNameString(nicknameValidation, ErrorMessage.InvalidNameString);
-        var nicknameError = await nicknameValidation.validate();
-        if (nicknameError) {
-            response.err = nicknameError.err;
-            response.code = 400;
-            return response;
-        }
-
-        // 'salaryRate' validation
-        var salaryRateValidation = new BaseValidator(employeeProfile.salary_rate);
-        salaryRateValidation = new MissingCheck(salaryRateValidation, ErrorMessage.MissingSalaryRate);
-        salaryRateValidation = new IsInRange(salaryRateValidation, ErrorMessage.SalaryRateRangeError, 0, 10);
-        var salaryRateError = await salaryRateValidation.validate();
-        if (salaryRateError) {
-            response.err = salaryRateError.err;
-            response.code = 400;
-            return response;
-        }
-
-        // 'cashRate' validation
-        var cashRateValidation = new BaseValidator(employeeProfile.cash_rate);
-        cashRateValidation = new MissingCheck(cashRateValidation, ErrorMessage.MissingCashRate);
-        cashRateValidation = new IsInRange(cashRateValidation, ErrorMessage.CashRateRangeError, 0, 10);
-        var cashRateError = await cashRateValidation.validate();
-        if (cashRateError) {
-            response.err = cashRateError.err;
-            response.code = 400;
-            return response;
-        }
-
-        // Social Security Number
-        if (employeeProfile.social_security_number) {
-            var ssnValidation = new BaseValidator(employeeProfile.social_security_number);
-            ssnValidation = new IsSSN(ssnValidation, ErrorMessage.WrongSSNFormat);
-            var ssnError = await ssnValidation.validate();
-            if (ssnError) {
-                response.err = ssnError.err;
-                response.code = 400;
-                return response;
-            }
         }
 
         // create employee account with username;
@@ -155,7 +91,6 @@ export class Owner extends AbstractAdministrator {
         }
 
         // add new profile to the account
-        let employeeManagementDP = new EmployeeManagement(employeeProfile.salon_id);
         let addProfileAction = await employeeManagementDP.addProfile(accountCreation.data.user._id, employeeProfile);
         response.data = {
             uid: accountCreation.data.user._id,
@@ -220,8 +155,8 @@ export class Owner extends AbstractAdministrator {
      * -- return
      * 
      */
-    public async addService(serviceGroup: any) : Promise<SalonCloudResponse<ServiceGroupData>>{
-        var response : SalonCloudResponse<ServiceGroupData> = {
+    public async addService(serviceGroup: any): Promise<SalonCloudResponse<ServiceGroupData>> {
+        var response: SalonCloudResponse<ServiceGroupData> = {
             code: undefined,
             err: undefined,
             data: undefined
@@ -231,7 +166,7 @@ export class Owner extends AbstractAdministrator {
         // init and declare;
         console.log('Before: ');
         var serviceManagementDP = new ServiceManagement(serviceGroup.salon_id);
-        var newServiceGroup : ServiceGroupData = {
+        var newServiceGroup: ServiceGroupData = {
             salon_id: serviceGroup.salon_id,
             description: serviceGroup.description,
             name: serviceGroup.group_name,
@@ -245,11 +180,11 @@ export class Owner extends AbstractAdministrator {
 
         console.log('After2: ', addingAction);
         // return
-        if(addingAction.err){
+        if (addingAction.err) {
             response.err = addingAction.err;
             response.code = addingAction.code;
             return response;
-        }else{
+        } else {
             response.data = addingAction.data;
             response.code = addingAction.code;
             return response;
