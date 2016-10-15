@@ -58,6 +58,7 @@ export class Owner extends AbstractAdministrator {
             return response;
         }
 
+        // SalonId validation
         var salonIdValidation = new BaseValidator(employeeProfile.salon_id);
         salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
         salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
@@ -68,6 +69,7 @@ export class Owner extends AbstractAdministrator {
             return response;
         }
 
+        // Phone Number validation
         var phoneNumberValidation = new BaseValidator(employeeProfile.phone);
         phoneNumberValidation = new MissingCheck(phoneNumberValidation, ErrorMessage.MissingPhoneNumber);
         phoneNumberValidation = new IsPhoneNumber(phoneNumberValidation, ErrorMessage.WrongPhoneNumberFormat);
@@ -78,6 +80,7 @@ export class Owner extends AbstractAdministrator {
             return response;
         }
 
+        // Fullname validation
         var fullnameValidation = new BaseValidator(employeeProfile.fullname);
         fullnameValidation = new MissingCheck(fullnameValidation, ErrorMessage.MissingFullName);
         fullnameValidation = new IsValidNameString(fullnameValidation, ErrorMessage.InvalidNameString);
@@ -88,6 +91,7 @@ export class Owner extends AbstractAdministrator {
             return response;
         }
 
+        // Nickname validation
         var nicknameValidation = new BaseValidator(employeeProfile.nickname);
         nicknameValidation = new MissingCheck(nicknameValidation, ErrorMessage.MissingNickName);
         nicknameValidation = new IsValidNameString(nicknameValidation, ErrorMessage.InvalidNameString);
@@ -98,6 +102,7 @@ export class Owner extends AbstractAdministrator {
             return response;
         }
 
+        // Salary Rate validation
         var salaryRateValidation = new BaseValidator(employeeProfile.salary_rate);
         salaryRateValidation = new MissingCheck(salaryRateValidation, ErrorMessage.MissingSalaryRate);
         salaryRateValidation = new IsInRange(salaryRateValidation, ErrorMessage.SalaryRateRangeError, 0, 10);
@@ -108,6 +113,7 @@ export class Owner extends AbstractAdministrator {
             return response;
         }
 
+        // Cash Rate Validation
         var cashRateValidation = new BaseValidator(employeeProfile.cash_rate);
         cashRateValidation = new MissingCheck(cashRateValidation, ErrorMessage.MissingCashRate);
         cashRateValidation = new IsInRange(cashRateValidation, ErrorMessage.CashRateRangeError, 0, 10);
@@ -118,6 +124,7 @@ export class Owner extends AbstractAdministrator {
             return response;
         }
 
+        // Social Security Number
         if (employeeProfile.social_security_number) {
             var ssnValidation = new BaseValidator(employeeProfile.social_security_number);
             ssnValidation = new IsSSN(ssnValidation, ErrorMessage.WrongSSNFormat);
@@ -141,6 +148,7 @@ export class Owner extends AbstractAdministrator {
             let content = "Your account with Salonhelp has been successfully created! Username: " + username + ", Password: " + accountCreation.data.password;
             verificationObj.sendContent(username, content);
         }
+        
         // add new profile to the account
         let employeeManagementDP = new EmployeeManagement(employeeProfile.salon_id);
         let addProfileAction = await employeeManagementDP.addProfile(accountCreation.data.user._id, employeeProfile);
