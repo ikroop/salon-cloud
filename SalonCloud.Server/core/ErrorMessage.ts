@@ -343,22 +343,22 @@ export const ErrorMessage = {
             'message': 'Service\'s price is required!'
         }
     },
+    'ServicePriceRangeError': {
+        'err': {
+            'name': 'ServicePriceRangeError',
+            'message': 'Service price\'s range = [0,500](dollars).'
+        }
+    },
     'MissingServiceTime': {
         'err': {
             'name': 'MissingServiceTime',
             'message': 'Service\'s time is required!'
         }
     },
-    'ServicePriceRangeError': {
-        'err': {
-            'name': 'ServicePriceRangeError',
-            'message': 'Service price must be greater than 0!'
-        }
-    },
     'InvalidServiceTime': {
         'err': {
             'name': 'InvalidServiceTime',
-            'message': 'Time for service must be greater than 1 minute and less than 5 hours!'
+            'message': 'Service time\'s range = [300, 10800](seconds).'
         }
     }
 };
