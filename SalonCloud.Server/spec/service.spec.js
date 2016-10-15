@@ -281,5 +281,30 @@ describe('Service Management', function () {
                 });
         });
 
+        it('should return  id if request proceeds successfully without service_list', function (done) {
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'group_name': 'Traditional Pedicure',
+                'description': 'Traditional Pedicure is a normal Pedicure.',
+                'salon_id': salonId
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(200);
+
+                    res.body.should.have.property('id');
+                    // TODO: check uid format: Id must be a single String of 12 bytes or a string of 24 hex characters
+
+                    done();
+                });
+        });
     });
 });
