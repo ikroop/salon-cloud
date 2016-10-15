@@ -222,7 +222,7 @@ describe('Service Management', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.WrongIdFormat.err.name + ' error trying to add new service(s) with wrong-format salon id', function (done) {
+        /*it('should return ' + ErrorMessage.WrongIdFormat.err.name + ' error trying to add new service(s) with wrong-format salon id', function (done) {
             var token = validToken;
             var salonId = invalidSalonId;
             var bodyRequest = {
@@ -251,7 +251,7 @@ describe('Service Management', function () {
                     res.body.err.should.have.property('name').eql(ErrorMessage.WrongIdFormat.err.name);
                     done();
                 });
-        });
+        });*/
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to add new service(s) with wrong salon id', function (done) {
             var token = validToken;
