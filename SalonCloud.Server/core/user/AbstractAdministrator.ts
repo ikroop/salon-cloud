@@ -4,8 +4,10 @@ import { AbstractEmployee } from './AbstractEmployee'
 import { UserProfile } from './../../modules/userManagement/UserData'
 import { AppointmentData } from './../../modules/appointmentManagement/AppointmentData'
 import { DailyDayData, WeeklyDayData } from './../../modules/schedule/ScheduleData'
+import { AdministatorBehavior } from './AdministatorBehavior'
+import { PhoneCallAppointment } from './../../modules/appointmentManagement/PhoneCallAppointment';
 
-export abstract class AbstractAdministrator extends AbstractEmployee {
+export abstract class AbstractAdministrator extends AbstractEmployee implements AdministatorBehavior{
 
     public cancelAppointment(appointmentId: string) {
 
@@ -29,6 +31,32 @@ export abstract class AbstractAdministrator extends AbstractEmployee {
     };
 
     public saveAppointment(appointment: AppointmentData) {
+        var appointmentByPhone: PhoneCallAppointment;
+        
+        // Check booking available time
+
+        var bookingTimeList = appointmentByPhone.checkBookingAvailableTimes(appointment);
+
+        if (!bookingTimeList){
+            return;
+        }
+
+        // Salon has available time for appointment
+
+        // Create customer with phone number if necessary
+        // OR find customer by phone
+        // get customer id
+        
+        // create receipt 
+        // TODO:
+
+        // create appointment
+        var result = appointmentByPhone.createAppointment(appointment);
+
+        // Normalization return data
+        // TODO:
+
+        return;
 
     };
 
