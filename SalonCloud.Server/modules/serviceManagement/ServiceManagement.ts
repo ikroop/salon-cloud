@@ -7,7 +7,7 @@
 import { ServiceManagementBehavior } from './ServiceManagementBehavior';
 import { ServiceGroupData, ServiceItemData } from './ServiceData'
 import { BaseValidator } from "./../../core/validation/BaseValidator";
-import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId }
+import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidNameString }
     from "./../../core/validation/ValidationDecorators";
 import { ErrorMessage } from './../../core/ErrorMessage';
 import { SalonCloudResponse } from "../../core/SalonCloudResponse";
@@ -63,27 +63,31 @@ export class ServiceManagement implements ServiceManagementBehavior {
             err: undefined
         };
         var saveStatus;
-
+        console.log('checkA: ', group);
         //Validate parameter
         var errorReturn = await this.validateServiceGroup(group);
+        console.log('CheckB: ', errorReturn);
         if (errorReturn) {
             response.code = 400;
             response.err = errorReturn;
             return response;
         }
-
+        console.log('Check: ', group);
         //Add new service group to database
 
         var dataCreation = ServiceGroupModel.create(group)
         await dataCreation.then(function (docs) {
+            console.log('Docs: ', docs);
             response.data = docs;
             response.code = 200;
             return;
         }, function (error) {
+            console.log('Error: ', error);
             response.err = error
             response.code = 500;
             return;
         })
+
         return response;
 
     };
@@ -154,30 +158,31 @@ export class ServiceManagement implements ServiceManagementBehavior {
 
         //validate name field
         var serviceNameValidator = new BaseValidator(item.name);
-        serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingScheduleCloseTime);
+        serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingServiceName);
+        serviceNameValidator = new IsValidNameString(serviceNameValidator, ErrorMessage.InvalidNameString);
         var serviceNameResult = await serviceNameValidator.validate();
         if (serviceNameResult) {
-            return errorReturn = serviceNameResult;
+            return errorReturn = serviceNameResult.err;
         }
 
         //validate price field
         var priceValidator = new BaseValidator(item.price);
-        priceValidator = new MissingCheck(priceValidator, ErrorMessage.MissingScheduleCloseTime);
-        priceValidator = new IsNumber(priceValidator, ErrorMessage.InvalidScheduleCloseTime);
-        priceValidator = new IsInRange(priceValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 1000);
+        priceValidator = new MissingCheck(priceValidator, ErrorMessage.MissingServicePrice);
+        priceValidator = new IsNumber(priceValidator, ErrorMessage.ServicePriceRangeError);
+        priceValidator = new IsInRange(priceValidator, ErrorMessage.ServicePriceRangeError, 0, 500);
         var priceResult = await priceValidator.validate();
         if (priceResult) {
-            return errorReturn = priceResult;
+            return errorReturn = priceResult.err;
         }
 
         //validate time field
         var timeValidator = new BaseValidator(item.time);
-        timeValidator = new MissingCheck(timeValidator, ErrorMessage.MissingScheduleCloseTime);
-        timeValidator = new IsNumber(timeValidator, ErrorMessage.InvalidScheduleCloseTime);
-        timeValidator = new IsInRange(timeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 3600 * 5);
+        timeValidator = new MissingCheck(timeValidator, ErrorMessage.MissingServiceTime);
+        timeValidator = new IsNumber(timeValidator, ErrorMessage.InvalidServiceTime);
+        timeValidator = new IsInRange(timeValidator, ErrorMessage.InvalidServiceTime, 300, 3600 * 3);
         var timeResult = await timeValidator.validate();
         if (timeResult) {
-            return errorReturn = timeResult;
+            return errorReturn = timeResult.err;
         }
         return errorReturn;
     }
@@ -192,29 +197,45 @@ export class ServiceManagement implements ServiceManagementBehavior {
     private async validateServiceGroup(group: ServiceGroupData) {
         var errorReturn: any = undefined;
 
-        //validate name field
+        // validate name field
         var serviceNameValidator = new BaseValidator(group.name);
-        serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingServiceName);
+        serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingGroupName);
+        serviceNameValidator = new IsValidNameString(serviceNameValidator, ErrorMessage.InvalidNameString);
         var serviceNameResult = await serviceNameValidator.validate();
         if (serviceNameResult) {
-            return errorReturn = serviceNameResult;
+            return errorReturn = serviceNameResult.err;
         }
 
-        //validate salon_id field
+        // validate salon_id field
         var salonIdValidator = new BaseValidator(group.salon_id);
         salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId);
+        salonIdValidator = new IsValidSalonId(salonIdValidator, ErrorMessage.SalonNotFound);
         var priceResult = await salonIdValidator.validate();
         if (priceResult) {
-            return errorReturn = priceResult;
+            return errorReturn = priceResult.err;
         }
 
-        //validate service item
-        for (let item of group.service_list) {
-            errorReturn = this.validateServiceItem(item)
-            if (errorReturn) {
-                return errorReturn;
+        // validate description field 
+        var descriptionValidator = new BaseValidator(group.description);
+        descriptionValidator = new MissingCheck(descriptionValidator, ErrorMessage.MissingDescription);
+        descriptionValidator = new IsValidNameString(descriptionValidator, ErrorMessage.InvalidDescriptionString);
+        var descriptionError = await descriptionValidator.validate();
+        if(descriptionError){
+            return errorReturn = descriptionError.err;
+        }
+
+        // validate service item
+        console.log('INSIDE: ', group);
+        if (group.service_list){
+            for (let item of group.service_list) {
+                console.log('COUNTER');
+                errorReturn = await this.validateServiceItem(item)
+                if (errorReturn) {
+                    return errorReturn;
+                }
             }
         }
+        console.log('AfterINSIDE: ', errorReturn);
         return errorReturn;
     }
 
