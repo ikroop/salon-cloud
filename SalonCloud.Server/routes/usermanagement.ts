@@ -31,12 +31,9 @@ export class UserManagementRouter {
                 data: undefined,
                 err: undefined
             };
-            console.log('IN: ', request.body.phone);
             var userObject = new Owner(request.user._id, new SalonManagement(request.body.salon_id));
             
-            console.log('IN2');
             result = await userObject.addEmployee(request.body.phone, request.body, new ByPhoneVerification());
-            console.log('IN3: ', result);
             let dataReturn;
             if (result.err) {
                 dataReturn = {
@@ -54,8 +51,6 @@ export class UserManagementRouter {
             response.status(result.code);
 
             response.json(dataReturn);
-
-            console.log('IN4: ', response.statusCode, result.code);
         });
         return this.router;
     }
