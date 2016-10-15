@@ -41,7 +41,6 @@ export class SalonManagementRouter {
                 }
             } else {
                 dataReturn = {
-                    'err': salonCreation.err,
                     'uid': salonCreation.data.uid,
                     'salon_id': salonCreation.data.salon_id,
                     'role': salonCreation.data.role,
