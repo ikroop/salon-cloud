@@ -31,7 +31,7 @@ describe('Service Management', function () {
                 validToken = res.body.auth.token;
                 invalidToken = 'eyJhbGciOiJSUz';
 
-                validSalonId = res.body.user._id;//salon_id
+                validSalonId = '57c0afac9265a426237f6f5f';//salon_id
                 invalidSalonId = '00';
                 notFoundSalonId = '97ba6280f531d1b53d54a6e5';
                 done();
@@ -74,6 +74,7 @@ describe('Service Management', function () {
 
         it('should return ' + ErrorMessage.MissingGroupName.err.name + ' error trying to create new service(s) without specifying its group', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
@@ -103,6 +104,7 @@ describe('Service Management', function () {
 
         it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to add new service(s) to group with invalid name', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
                 'group_name': '   ',
                 'description': 'Traditional Pedicure is a normal Pedicure.',
@@ -133,6 +135,7 @@ describe('Service Management', function () {
 
         it('should return ' + ErrorMessage.MissingDescription.err.name + ' error trying to create new service(s) without group-description', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
                 'group_name': 'Traditional Pedicure',
                 'salon_id': salonId,
@@ -162,6 +165,7 @@ describe('Service Management', function () {
 
         it('should return ' + ErrorMessage.InvalidDescriptionString.err.name + ' error trying to add new service(s) to group with invalid description', function (done) {
             var token = validToken;
+            var salonId = validSalonId;
             var bodyRequest = {
                 'group_name': 'Traditional Pedicure',
                 'description': '     ',
@@ -211,7 +215,6 @@ describe('Service Management', function () {
                     if (err) {
                         throw err;
                     }
-
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
@@ -365,11 +368,11 @@ describe('Service Management', function () {
                      {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
-                        'time': 5
+                        'time': 3600
                      },
                      {
                         'name': 'Traditional Pedicure 1',
-                        'time': 5
+                        'time': 3600
                      }]
             };
             request(url)
@@ -401,12 +404,12 @@ describe('Service Management', function () {
                      {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
-                        'time': 5
+                        'time': 3600
                      },
                      {
                         'name': 'Traditional Pedicure 1',
                         'price': -5,
-                        'time': 5
+                        'time': 3600
                      }]
             };
             request(url)
@@ -438,12 +441,12 @@ describe('Service Management', function () {
                      {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
-                        'time': 5
+                        'time': 3600
                      },
                      {
                         'name': 'Traditional Pedicure 1',
                         'price': 501,
-                        'time': 5
+                        'time': 3600
                      }]
             };
             request(url)
@@ -611,12 +614,12 @@ describe('Service Management', function () {
                      {
                         'name': 'Traditional Pedicure 3',
                         'price': 9,
-                        'time': 30
+                        'time': 3600
                      },
                      {
                         'name': 'Traditional Pedicure 4',
                         'price': 15,
-                        'time': 45
+                        'time': 3600
                      }]
             };
             request(url)
@@ -630,7 +633,7 @@ describe('Service Management', function () {
                     }
                     res.status.should.be.equal(200);
 
-                    res.body.should.have.property('uid');
+                    res.body.should.have.property('id');
                     // TODO: check uid format: Id must be a single String of 12 bytes or a string of 24 hex characters
                     // let uid = res.body.property('uid');
                     // uid.should.be.
