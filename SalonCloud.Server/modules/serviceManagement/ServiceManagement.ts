@@ -63,26 +63,21 @@ export class ServiceManagement implements ServiceManagementBehavior {
             err: undefined
         };
         var saveStatus;
-        console.log('checkA: ', group);
         //Validate parameter
         var errorReturn = await this.validateServiceGroup(group);
-        console.log('CheckB: ', errorReturn);
         if (errorReturn) {
             response.code = 400;
             response.err = errorReturn;
             return response;
         }
-        console.log('Check: ', group);
         //Add new service group to database
 
         var dataCreation = ServiceGroupModel.create(group)
         await dataCreation.then(function (docs) {
-            console.log('Docs: ', docs);
             response.data = docs;
             response.code = 200;
             return;
         }, function (error) {
-            console.log('Error: ', error);
             response.err = error
             response.code = 500;
             return;

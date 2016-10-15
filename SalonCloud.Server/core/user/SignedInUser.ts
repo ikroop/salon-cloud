@@ -12,9 +12,6 @@ import { UserProfile } from './../../modules/userManagement/UserData'
 import { ServiceManagement } from './../../modules/serviceManagement/ServiceManagement'
 import { ServiceGroupData } from './../../modules/serviceManagement/ServiceData'
 import { samplesService1, samplesService2 } from './../defaultData'
-import { BaseValidator } from './../validation/BaseValidator'
-import { MissingCheck, IsPhoneNumber, IsEmail, IsString } from './../validation/ValidationDecorators'
-import { ErrorMessage } from './../ErrorMessage'
 import { GoogleMap } from './../googlemap/GoogleMap';
 import {OwnerManagement} from './../../modules/usermanagement/OwnerManagement'
 
@@ -46,49 +43,11 @@ export class SignedInUser implements SignedInUserBehavior {
             data: undefined,
             err: undefined
         };
-        // Validation
-        // salon name validation
-        var salonNameValidator = new BaseValidator(salonInformation.salon_name);
-        salonNameValidator = new MissingCheck(salonNameValidator, ErrorMessage.MissingSalonName);
-        var salonNameError = await salonNameValidator.validate();
-        if (salonNameError) {
-            returnResult.err = salonNameError.err;
-            returnResult.code = 400;
-            return returnResult;
-        }
-        // address validation 
-        var addressValidator = new BaseValidator(salonInformation.location.address);
-        addressValidator = new MissingCheck(addressValidator, ErrorMessage.MissingAddress);
-        // TODO: validator for IsAddress
-        var addressError = await addressValidator.validate();
-        if (addressError) {
-            returnResult.err = addressError.err;
-            returnResult.code = 400;
-            return returnResult;
-        }
-        // phone number validation
-        var phoneNumberValidator = new BaseValidator(salonInformation.phone.number);
-        phoneNumberValidator = new MissingCheck(phoneNumberValidator, ErrorMessage.MissingPhoneNumber);
-        phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat);
-        var phoneNumberError = await phoneNumberValidator.validate();
-        if (phoneNumberError) {
-            returnResult.err = phoneNumberError.err;
-            returnResult.code = 400;
-            return returnResult;
-        }
 
-        // email validation
-        // email is not required, so check if email is in the request first.
-        if (salonInformation.email) {
-            var emailValidator = new BaseValidator(salonInformation.email);
-            emailValidator = new IsEmail(emailValidator, ErrorMessage.WrongEmailFormat);
-            var emailError = await emailValidator.validate();
-            if (emailError) {
-                returnResult.err = emailError.err;
-                returnResult.code = 400;
-                return returnResult;
-            }
-
+        // validation
+        returnResult = await this.salonManagementDP.validation(salonInformation);
+        if (returnResult.err){
+            return returnResult;
         }
         // get Timezone from address and puts that into salon information constructor
         // TODO:
