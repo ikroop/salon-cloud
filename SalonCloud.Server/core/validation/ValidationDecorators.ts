@@ -2,8 +2,8 @@
 
 
 */
-import {Validator, DecoratingValidator, BaseValidator} from "./BaseValidator";
-import SalonModel = require("./../../modules/salonManagement/SalonModel");
+import { Validator, DecoratingValidator, BaseValidator } from "./BaseValidator";
+import { SalonModel } from "./../../modules/salonManagement/SalonModel";
 import { ErrorMessage } from './../ErrorMessage';
 
 //Validate if target element is missing.
@@ -306,12 +306,27 @@ export class IsValidSalonId extends DecoratingValidator {
     };
 
     public async validatingOperation() {
-        var k = SalonModel.findOne({ '_id': this.targetElement }).exec();
-        await k.then(function (docs) {
-            return undefined;
-        }, function (err) {
-            return this.errorType;
+        var salonId = this.targetElement;
+        var response = await this.checkSalonId(salonId, this.errorType);
+        return response;
+
+    }
+
+    private async checkSalonId(salonId: string, errorType: any):any {
+        let promise = new Promise<any>(function(resolve, reject) {
+            var response = undefined;
+            SalonModel.findOne({ "_id": salonId }, function(err, docs) {
+                if (err) {
+                    response = errorType;
+                } else if (!docs) {
+                    response = errorType;
+                } else {
+                    response = undefined;
+                }
+                resolve(response);
+            });
         });
+        return promise;
     }
 
 }
@@ -378,7 +393,7 @@ export class IsLengthGreaterThan extends DecoratingValidator {
     public errorType: any;
     public targetElement: any;
     private minimumLength: number;
-    constructor(wrapedValidator: Validator, errorType: any, minimumLength:number) {
+    constructor(wrapedValidator: Validator, errorType: any, minimumLength: number) {
         super();
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
