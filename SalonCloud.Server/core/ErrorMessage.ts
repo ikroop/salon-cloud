@@ -360,5 +360,11 @@ export const ErrorMessage = {
             'name': 'InvalidServiceTime',
             'message': 'Service time\'s range = [300, 10800](seconds).'
         }
+    },
+    'ServiceGroupNameExisted': {
+        'err': {
+            'name': 'ServiceGroupNameExisted',
+            'message': 'This service group name is already existed!'
+        }
     }
 };

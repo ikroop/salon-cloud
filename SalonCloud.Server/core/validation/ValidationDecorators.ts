@@ -4,6 +4,7 @@
 */
 import { Validator, DecoratingValidator, BaseValidator } from "./BaseValidator";
 import { SalonModel } from "./../../modules/salonManagement/SalonModel";
+import { ServiceGroupModel} from './../../modules/serviceManagement/ServiceModel';
 import { ErrorMessage } from './../ErrorMessage';
 
 //Validate if target element is missing.
@@ -411,5 +412,48 @@ export class IsLengthGreaterThan extends DecoratingValidator {
     }
 
 }
+
+// validate if service group name of a salon already existed;
+// to pass test: service group name  does not exist on that salon's db;
+// Note: ALWAYS RUN SALONID VALIDATION BEFORE THIS VALIDATION.
+
+export class IsServiceGroupNameExisted extends DecoratingValidator {
+    public errorType: any;
+    public targetElement: any;
+    public salonId: string
+    constructor(wrapedValidator: Validator, errorType: any, salonId: string) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+    };
+
+    public async validatingOperation() {
+        var groupName = this.targetElement;
+        var salonId = this.salonId;
+        var response = await this.checkExistence(groupName, salonId, this.errorType);
+        return response;
+
+    }
+
+    private async checkExistence(groupName: string, salonId: string, errorType: any):any {
+        let promise = new Promise<any>(function(resolve, reject) {
+            var response = undefined;
+            ServiceGroupModel.findOne({ "name": groupName, "salon_id": salonId }, function(err, docs) {
+                if (err) {
+                    response = errorType;
+                } else if (!docs) {
+                    response = undefined;
+                } else {
+                    response = errorType;
+                }
+                resolve(response);
+            });
+        });
+        return promise;
+    }
+
+}
+
 
 

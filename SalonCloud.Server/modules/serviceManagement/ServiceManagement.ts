@@ -7,7 +7,7 @@
 import { ServiceManagementBehavior } from './ServiceManagementBehavior';
 import { ServiceGroupData, ServiceItemData } from './ServiceData'
 import { BaseValidator } from "./../../core/validation/BaseValidator";
-import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidNameString }
+import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidNameString, IsServiceGroupNameExisted }
     from "./../../core/validation/ValidationDecorators";
 import { ErrorMessage } from './../../core/ErrorMessage';
 import { SalonCloudResponse } from "../../core/SalonCloudResponse";
@@ -197,15 +197,6 @@ export class ServiceManagement implements ServiceManagementBehavior {
     private async validateServiceGroup(group: ServiceGroupData) {
         var errorReturn: any = undefined;
 
-        // validate name field
-        var serviceNameValidator = new BaseValidator(group.name);
-        serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingGroupName);
-        serviceNameValidator = new IsValidNameString(serviceNameValidator, ErrorMessage.InvalidNameString);
-        var serviceNameResult = await serviceNameValidator.validate();
-        if (serviceNameResult) {
-            return errorReturn = serviceNameResult.err;
-        }
-
         // validate salon_id field
         var salonIdValidator = new BaseValidator(group.salon_id);
         salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId);
@@ -213,6 +204,16 @@ export class ServiceManagement implements ServiceManagementBehavior {
         var priceResult = await salonIdValidator.validate();
         if (priceResult) {
             return errorReturn = priceResult.err;
+        }
+
+        // validate name field
+        var serviceNameValidator = new BaseValidator(group.name);
+        serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingGroupName);
+        serviceNameValidator = new IsValidNameString(serviceNameValidator, ErrorMessage.InvalidNameString);
+        serviceNameValidator = new IsServiceGroupNameExisted(serviceNameValidator, ErrorMessage.InvalidDescriptionString, group.salon_id);
+        var serviceNameResult = await serviceNameValidator.validate();
+        if (serviceNameResult) {
+            return errorReturn = serviceNameResult.err;
         }
 
         // validate description field 
