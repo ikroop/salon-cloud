@@ -275,5 +275,68 @@ describe('Appointment Management', function () {
                 });
         });
 
+        it('should return ' + ErrorMessage.MissingServiceId.err.name + ' error trying to create appointment which has service with no serviceId', function (done) {
+            var bodyRequest = { 
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services":[{
+                            service_id: existedServiceId,
+                            employee_id: existedEmployeeId
+                            }, {
+                            employee_id: existedEmployeeId
+                            }],
+                "booking_time": ""
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingServiceId.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.ServiceNotFound.err.name + ' error trying to create appointment which has not-found service', function (done) {
+            var bodyRequest = { 
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services":[{
+                            service_id: existedServiceId,
+                            employee_id: existedEmployeeId
+                            }, {
+                            service_id: notFoundServiceId,
+                            employee_id: existedEmployeeId
+                            }],
+                "booking_time": ""
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.ServiceNotFound.err.name);
+                    done();
+                });
+        });
+
     });
 });

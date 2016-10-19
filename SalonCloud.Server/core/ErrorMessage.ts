@@ -319,6 +319,12 @@ export const ErrorMessage = {
             'message': 'Service id is required!'
         }
     },
+    'ServiceNotFound': {
+        'err': {
+            'name': 'ServiceNotFound',
+            'message': 'Service is not found!'
+        }
+    },
     'MissingGroupName': {
         'err': {
             'name': 'MissingGroupName',
