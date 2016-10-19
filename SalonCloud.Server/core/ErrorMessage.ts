@@ -372,5 +372,11 @@ export const ErrorMessage = {
             'name': 'MissingCustomerName',
             'message': 'Customer\'s name is required!'
         }
+    },
+    'MissingBookedServiceList': {
+        'err': {
+            'name': 'MissingBookedServiceList',
+            'message': 'Booked service list is required!'
+        }
     }
 };
