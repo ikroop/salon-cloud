@@ -156,6 +156,12 @@ export const ErrorMessage = {
             'message': 'end-date is earlier than start-date!'
         }
     },
+    'MissingEmployeeId': {
+        'err': {
+            'name': 'MissingEmployeeId',
+            'message': 'EmployeeId is required!'
+        }
+    },
     'EmployeeNotFound': {
         'err': {
             'name': 'EmployeeNotFound',
