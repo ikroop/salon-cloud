@@ -12,10 +12,11 @@ describe('Appointment Management', function () {
     var invalidSalonId;
     var notFoundSalonId;
     let defaultPassword = '1234@1234';
-    let wrongFormattedPhoneNumber = '9384484728';
-    let rightFormattedPhoneNumber = 'abd1234';
-    let wrongFormattedName = 'Tom Hanks';
-    let rightFormattedName = '   ';
+    let rightFormattedPhoneNumber = '9384484728';
+    let wrongFormattedPhoneNumber = 'abd1234';
+    let rightFormattedName = 'Tom Hanks';
+    let emptyName = '   ';
+    let tooLongName = 'Alibaba Nam Tren Ghe Sopha Mo Ve Noi Xa Xong Pha Tran Mac Cuop Duoc Dola Thiet Thiet La Nhieu Dola Xay Nha Cho Mafia'
     let existedServiceId = '';
     let notFoundServiceId = '';
     let invalidServiceId = '0000';
@@ -164,10 +165,39 @@ describe('Appointment Management', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create appointment with wrong-formatted customer\'s name', function (done) {
+        it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create appointment with customer\'s name = empty string', function (done) {
             var bodyRequest = { 
                 "customer_phone": rightFormattedPhoneNumber,
-                "customer_name": wrongFormattedName,
+                "customer_name": emptyName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services":[{
+                            service_id: existedServiceId,
+                            employee_id: existedEmployeeId
+                            }],
+                "booking_time": ""
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create appointment with too long customer\'s name', function (done) {
+            var bodyRequest = { 
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": tooLongName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
                 "services":[{
