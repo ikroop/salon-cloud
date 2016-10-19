@@ -27,7 +27,7 @@ export const ErrorMessage = {
     'InvalidNameString': {
         'err': {
             'name': 'InvalidNameString',
-            'message': 'A name should not only contain blank space(s)!'
+            'message': 'A name should not only contain blank space(s) and is not longer than 30 characters!'
         }
     },
     'PasswordTooShort': {
