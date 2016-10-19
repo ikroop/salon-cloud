@@ -11,6 +11,7 @@ describe('Service Management', function () {
     var validSalonId;
     var invalidSalonId;
     var notFoundSalonId;
+    var premadeGroupName;
     var defaultPassword = '1234@1234'
 
     before(function (done) {
@@ -34,6 +35,7 @@ describe('Service Management', function () {
                 validSalonId = '57c0afac9265a426237f6f5f';//salon_id
                 invalidSalonId = '00';
                 notFoundSalonId = '97ba6280f531d1b53d54a6e5';
+                premadeGroupName = 'Successful Name' + (new Date().getTime().toString());
                 done();
             });
     });
@@ -45,7 +47,7 @@ describe('Service Management', function () {
             var token = invalidToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
@@ -137,7 +139,7 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'salon_id': salonId,
                 'service_list': [
                      {
@@ -167,7 +169,7 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'description': '     ',
                 'salon_id': salonId,
                 'service_list': [
@@ -197,7 +199,7 @@ describe('Service Management', function () {
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to add new service(s) without salon id', function (done) {
             var token = validToken;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'service_list': [
                      {
@@ -257,7 +259,7 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = notFoundSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
@@ -288,7 +290,7 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
@@ -324,7 +326,7 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
@@ -361,7 +363,7 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
@@ -397,7 +399,7 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
@@ -434,7 +436,7 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
@@ -471,7 +473,7 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
@@ -507,7 +509,7 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
@@ -544,7 +546,7 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
@@ -581,7 +583,7 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId
             };
@@ -606,8 +608,9 @@ describe('Service Management', function () {
         it('should return id if request proceeds successfully with valid service_list', function (done) {
             var token = validToken;
             var salonId = validSalonId;
+            var groupName = premadeGroupName;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure',
+                'group_name': groupName,
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
@@ -643,5 +646,39 @@ describe('Service Management', function () {
                     done();
                 });
         });
+        it('should return ' + ErrorMessage.ServiceGroupNameExisted.err.name + ' error trying to add new service(s) to group with existed name', function (done) {
+            var token = validToken;
+            var salonId = validSalonId;
+            var groupName = premadeGroupName;
+            var bodyRequest = {
+                'group_name': groupName,
+                'description': 'Traditional Pedicure is a normal Pedicure.',
+                'salon_id': salonId,
+                'service_list': [
+                     {
+                        'name': 'Traditional Pedicure 0',
+                        'price': 5,
+                        'time': 5
+                     }]
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.ServiceGroupNameExisted.err.name);
+                    done();
+                });
+        });
+
+
+
     });
 });

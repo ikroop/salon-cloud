@@ -212,7 +212,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
         var serviceNameValidator = new BaseValidator(group.name);
         serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingGroupName);
         serviceNameValidator = new IsValidNameString(serviceNameValidator, ErrorMessage.InvalidNameString);
-        serviceNameValidator = new IsServiceGroupNameExisted(serviceNameValidator, ErrorMessage.InvalidDescriptionString, group.salon_id);
+        serviceNameValidator = new IsServiceGroupNameExisted(serviceNameValidator, ErrorMessage.ServiceGroupNameExisted, group.salon_id);
         var serviceNameResult = await serviceNameValidator.validate();
         if (serviceNameResult) {
             returnResult.err = serviceNameResult.err;
