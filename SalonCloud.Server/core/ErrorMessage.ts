@@ -366,5 +366,11 @@ export const ErrorMessage = {
             'name': 'ServiceGroupNameExisted',
             'message': 'This service group name is already existed!'
         }
+    },
+    'MissingCustomerName': {
+        'err': {
+            'name': 'MissingCustomerName',
+            'message': 'Customer\'s name is required!'
+        }
     }
 };

@@ -136,5 +136,62 @@ describe('Appointment Management', function () {
                 });
         });
 
+        it('should return ' + ErrorMessage.MissingCustomerName.err.name + ' error trying to create new employee without customer\'s name', function (done) {
+            var bodyRequest = { 
+                "customer_phone": rightFormattedPhoneNumber,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services":[{
+                            service_id: existedServiceId,
+                            employee_id: existedEmployeeId
+                            }],
+                "booking_time": ""
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingCustomerName.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create new employee with wrong-formatted customer\'s name', function (done) {
+            var bodyRequest = { 
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": wrongFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services":[{
+                            service_id: existedServiceId,
+                            employee_id: existedEmployeeId
+                            }],
+                "booking_time": ""
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
+                    done();
+                });
+        });
+
     });
 });
