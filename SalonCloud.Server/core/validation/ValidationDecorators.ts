@@ -4,8 +4,9 @@
 */
 import { Validator, DecoratingValidator, BaseValidator } from "./BaseValidator";
 import { SalonModel } from "./../../modules/salonManagement/SalonModel";
-import { ServiceGroupModel} from './../../modules/serviceManagement/ServiceModel';
+import { ServiceGroupModel } from './../../modules/serviceManagement/ServiceModel';
 import { ErrorMessage } from './../ErrorMessage';
+import { UserModel } from './../../modules/usermanagement/UserModel'
 
 //Validate if target element is missing.
 //To pass the test: Target Element must not be undefined.
@@ -313,10 +314,10 @@ export class IsValidSalonId extends DecoratingValidator {
 
     }
 
-    private async checkSalonId(salonId: string, errorType: any):any {
-        let promise = new Promise<any>(function(resolve, reject) {
+    private async checkSalonId(salonId: string, errorType: any): any {
+        let promise = new Promise<any>(function (resolve, reject) {
             var response = undefined;
-            SalonModel.findOne({ "_id": salonId }, function(err, docs) {
+            SalonModel.findOne({ "_id": salonId }, function (err, docs) {
                 if (err) {
                     response = errorType;
                 } else if (!docs) {
@@ -436,10 +437,10 @@ export class IsServiceGroupNameExisted extends DecoratingValidator {
 
     }
 
-    private async checkExistence(groupName: string, salonId: string, errorType: any):any {
-        let promise = new Promise<any>(function(resolve, reject) {
+    private async checkExistence(groupName: string, salonId: string, errorType: any): any {
+        let promise = new Promise<any>(function (resolve, reject) {
             var response = undefined;
-            ServiceGroupModel.findOne({ "name": groupName, "salon_id": salonId }, function(err, docs) {
+            ServiceGroupModel.findOne({ "name": groupName, "salon_id": salonId }, function (err, docs) {
                 if (err) {
                     response = errorType;
                 } else if (!docs) {
@@ -455,5 +456,98 @@ export class IsServiceGroupNameExisted extends DecoratingValidator {
 
 }
 
+//validate if a service Id is valid
+//to pass test:  service Id of the specific salon and service group can be found;
+//Note: make sure salonId is valid also.
+export class IsValidServiceId extends DecoratingValidator {
+    public errorType: any;
+    public targetElement: any;
+    public salonId: string
+    public groupName: string;
+    constructor(wrapedValidator: Validator, errorType: any, groupName: string, salonId: string) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+    };
+
+    public async validatingOperation() {
+        var serviceId = this.targetElement;
+        var groupName = this.groupName;
+        var salonId = this.salonId;
+        var response = await this.checkExistence(serviceId, groupName, salonId, this.errorType);
+        return response;
+
+    }
+
+    private async checkExistence(serviceId: string, groupName: string, salonId: string, errorType: any): any {
+        let promise = new Promise<any>(function (resolve, reject) {
+            var response = undefined;
+            ServiceGroupModel.findOne({ "name": groupName, "salon_id": salonId }, function (err, docs) {
+                if (err) {
+                    response = errorType;
+                } else if (!docs) {
+                    response = errorType;
+                } else {
+                    if (docs.service_list.id(serviceId)) {
+                        response = undefined;
+                    } else {
+                        response = errorType;
+                    }
+                }
+                resolve(response);
+            });
+        });
+        return promise;
+    }
+
+}
+
+//validate if an employeeId is valid
+//to pass test: employee docs can be found and one of the profile of the employee is of the mentioned salon.
+export class IsValidEmployeeId extends DecoratingValidator {
+    public errorType: any;
+    public targetElement: any;
+    public salonId: string
+    constructor(wrapedValidator: Validator, errorType: any, salonId: string) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+    };
+
+    public async validatingOperation() {
+        var employeeId = this.targetElement;
+        var salonId = this.salonId;
+        var response = await this.checkExistence(employeeId, salonId, this.errorType);
+        return response;
+
+    }
+
+    private async checkExistence(employeeId: string, salonId: string, errorType: any): any {
+        let promise = new Promise<any>(function (resolve, reject) {
+            var response = undefined;
+            UserModel.findOne({ "_id": employeeId }, function (err, docs) {
+                if (err) {
+                    response = errorType;
+                } else if (!docs) {
+                    response = errorType;
+                } else {
+                   for(let each of docs.profile){
+                       if(each.salon_id == salonId){
+                           response = undefined;
+                           resolve(response)
+                           return;
+                       }
+                   }
+                   response = errorType;
+                }
+                resolve(response);
+            });
+        });
+        return promise;
+    }
+
+}
 
 
