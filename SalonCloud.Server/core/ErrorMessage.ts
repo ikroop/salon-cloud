@@ -390,5 +390,11 @@ export const ErrorMessage = {
             'name': 'MissingBookedServiceList',
             'message': 'Booked service list is required!'
         }
+    },
+    'MissingAppointmentTime': {
+        'err': {
+            'name': 'MissingAppointmentTime',
+            'message': 'Time of appointment is required!'
+        }
     }
 };
