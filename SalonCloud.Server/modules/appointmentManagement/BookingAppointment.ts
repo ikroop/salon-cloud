@@ -10,7 +10,7 @@ import {SalonCloudResponse} from './../../core/SalonCloudResponse'
 
 export class BookingAppointment extends AppointmentAbstract {
 
-    protected validation(appointment : AppointmentData) : SalonCloudResponse<string>{
+    public validation(appointment : AppointmentData) : SalonCloudResponse<string>{
 
         return;
     }

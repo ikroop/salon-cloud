@@ -17,7 +17,7 @@ export class AppointmentManagementRouter {
         var authentication = new Authentication();
         var authorizationRouter = new AuthorizationRouter();
        
-        this.router.post("/createbyphone", function (request: Request, response: Response) {
+        this.router.post("/bookbyphone", function (request: Request, response: Response) {
             var admin:AdministratorBehavior;
 
             // User Factory get Owner or Manager by Id
