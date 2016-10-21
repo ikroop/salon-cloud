@@ -39,7 +39,7 @@ export class CustomerManagement extends UserManagement implements CustomerManage
         }    
     };
 
-    public async createCustomer(salonId: string, customerData: any): Promise<SalonCloudResponse<UserData>> {
+    public async createCustomer(customerData: any): Promise<SalonCloudResponse<UserData>> {
         var response : SalonCloudResponse<UserData> = {
             code: undefined,
             data: undefined,

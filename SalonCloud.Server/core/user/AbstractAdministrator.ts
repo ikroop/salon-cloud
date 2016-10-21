@@ -106,7 +106,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             
             } else {
                 // customer account not existed, create account with salon profile for the user
-                var customerCreation = await customerManagementDP.createCustomer(salonId, inputData);
+                var customerCreation = await customerManagementDP.createCustomer(inputData);
                 response.data = customerCreation.data._id;
                 response.code = 200;
                 return response;
