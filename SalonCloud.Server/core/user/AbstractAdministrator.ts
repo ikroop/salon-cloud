@@ -4,13 +4,13 @@ import { AbstractEmployee } from './AbstractEmployee'
 import { UserProfile, UserData } from './../../modules/userManagement/UserData'
 import { UserModel } from './../../modules/usermanagement/UserModel'
 import { AppointmentData } from './../../modules/appointmentManagement/AppointmentData'
-import { DailyDayData, WeeklyDayData } from './../../modules/schedule/ScheduleData'
 import { AdministratorBehavior } from './AdministratorBehavior'
 import { BookingAppointment } from './../../modules/appointmentManagement/BookingAppointment';
 import { SalonCloudResponse } from './../SalonCloudResponse'
 import { ErrorMessage } from './../ErrorMessage'
 import { CustomerManagement } from './../../modules/usermanagement/CustomerManagement'
 import {Authentication} from './../authentication/Authentication'
+import { DailyScheduleData, WeeklyScheduleData } from './../../modules/schedule/ScheduleData';
 
 export abstract class AbstractAdministrator extends AbstractEmployee implements AdministratorBehavior {
 
@@ -156,11 +156,10 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
     };
 
-    public updateDailySchedule(employeeId: string, dailySchedule: DailyDayData) {
-
+    public updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData){
     };
 
-    public updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyDayData) {
+    public updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData) {
 
     };
 
