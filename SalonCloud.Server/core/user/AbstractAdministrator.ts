@@ -35,18 +35,19 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         return;
     };
 
-    public async saveAppointment(appointment: any): Promise<SalonCloudResponse<AppointmentData>> {
+    public async saveAppointment(inputData: any): Promise<SalonCloudResponse<AppointmentData>> {
         var response: SalonCloudResponse<AppointmentData> = {
             data: undefined,
             code: undefined,
             err: undefined
         }
-
+        var salonId = inputData.salon_id;
         var appointmentByPhone: BookingAppointment;
+        //Todo:  validation
 
         // Check booking available time
 
-        var bookingTimeList = appointmentByPhone.checkBookingAvailableTimes(appointment);
+        var bookingTimeList = appointmentByPhone.checkBookingAvailableTimes(inputData);
 
         if (!bookingTimeList) {
             return;
@@ -54,33 +55,19 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         // Salon has available time for appointment
 
-        // find customer by phone
-        var customerId: string;
-        var findCustomer = await this.findCustomerByPhone(appointment.phone);
-
-        if (findCustomer.err) {
-            response.err = findCustomer.err;
-            response.code = findCustomer.code;
+        // Get customer Id
+        var getCustomerId = await this.getCustomerID(salonId, inputData);
+        if(getCustomerId.err){
+            response.err = getCustomerId.err;
+            response.code = getCustomerId.code;
             return response;
-        } else if (findCustomer.data == false) {
-            //  Create customer account with phone number (no customer account found)
-            var customerCreation = await this.createCustomerAccount(appointment, this.salonManagementDP.salonId);
-            // get customer id
-            customerId = customerCreation.data._id
-        } else {
-            // get customer id
-            customerId = findCustomer.data._id;
         }
-
-
-
-        // Todo: Create salonProfile if necessary
 
         // create receipt 
         // TODO:
 
         // create appointment
-        var result = appointmentByPhone.createAppointment(appointment);
+        var result = appointmentByPhone.createAppointment(inputData);
 
         // Normalization return data
         // TODO:
@@ -88,25 +75,42 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         return;
 
     };
-    // This method find if a customer already exists in the system
-    // DataReturn is 'false' if no exists
-    // DataReturn is a 'UserData' if exists
-    private async findCustomerByPhone(phone: string): Promise<SalonCloudResponse<UserData>> {
 
 
-        var response: SalonCloudResponse<boolean> = {
+    private async getCustomerID(salonId: string, inputData: any) : Promise<SalonCloudResponse<string>>{
+        var response : SalonCloudResponse<string> = {
             data: undefined,
             code: undefined,
             err: undefined
         };
-        var userFinding = UserModel.findOne({ "username": phone }).exec();
-        await userFinding.then(function (docs) {
+        var customerManagementDP = new CustomerManagement(salonId);
+        var userFinding = UserModel.findOne({ "username": inputData.customer_phone }).exec();
+        await userFinding.then(async function (docs){
+            // customer account existed, get Id and check if needed to create profile for salon;
             if (docs) {
-                response.data = docs;
+                response.data = docs._id;
+                response.code = 200;
+                var flag = false;
+                // check if salon profile existed for the customer and create one if needed;
+                for(let each of docs.profile){
+                    if(salonId === each.salon_id){
+                        flag =true;
+                        break;
+                    }
+                }
+                if(flag ===false){
+                    var customerProfileCreation = await customerManagementDP.addCustomerProfile(docs._id, inputData)
+                }
+                return response;
+
+            
             } else {
-                response.data = false;
+                // customer account not existed, create account with salon profile for the user
+                var customerCreation = await customerManagementDP.createCustomer(salonId, inputData);
+                response.data = customerCreation.data._id;
+                response.code = 200;
+                return response;
             }
-            response.code = 200
         }, function (err) {
             response.err = err;
             response.code = 500;
@@ -114,42 +118,12 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         return response;
 
-
-
-
     }
 
-    private async createCustomerAccount(customerData: any, salonId: string): Promise<SalonCloudResponse<UserData>> {
-        var response : SalonCloudResponse<UserData> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
-        }
-        var customerManagementDP = new CustomerManagement(salonId);
-        var authDP = new Authentication();
 
-        // create customer account with phone
-        var customerAccountCreation = await  authDP.signUpWithAutoGeneratedPassword(customerData.customer_phone);
-        if(customerAccountCreation.err){
-            response.err = customerAccountCreation.err;
-            response.code = customerAccountCreation.code;
-            return response;
-        }
+    
 
-        // add salon profile to customer account
-        var profileCreation = await customerManagementDP.addCustomerProfile(customerAccountCreation.data._id ,customerData);
-        if(profileCreation.err){
-            response.err = profileCreation.err;
-            response.code = profileCreation.code;
-            return response;
-        }
-
-        response.data = customerAccountCreation.data;
-        response.code = 200;
-        return response;
-
-
-    }
+    
 
 
     public updateAppointment(appointment: AppointmentData) {
