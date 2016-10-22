@@ -25,7 +25,7 @@ use UTC.
   |     |----id: string
   |     |----salon_id: string
   |     |----comment: string
-  |     |----device: number
+  |     |----device: number, 1: phone, 2: web, 3: app
   |     |----employee
   |     |     |----<id>
   |     |     |----employee_id(uid): string
@@ -35,14 +35,13 @@ use UTC.
   |     |     |----realized_time: number
   |     |     |----realized_price: number
   |     |----end: timestamp
-  |     |----flexible
-  |     |----status: boolean
+  |     |----flexible: boolean
   |     |----appointment_id: string
   |     |----customer_id(uid): string
   |     |----no: number
   |     |----start: timestamp
-  |     |----status: number
-  |     |----type: number
+  |     |----status: number, 1: booked, 2: checked in, 3: in-process, 4: done, 5: paid
+  |     |----type: number, 1: booking, 2: check-in
   |     |----is_reminded: boolean
   |----customer
   |     |----uid: string
