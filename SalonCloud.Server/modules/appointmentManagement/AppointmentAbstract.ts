@@ -17,15 +17,29 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         return;
     };
 
-    public createAppointment(appointment: AppointmentData) {
+    public async createAppointment(appointment: AppointmentData) : Promise<SalonCloudResponse<AppointmentData>> {
+        var response : SalonCloudResponse<AppointmentData> = {
+            data: undefined,
+            code: undefined,
+            err: undefined
+        }
+        
         var validationResult = this.validation(appointment);
 
         //Normalization Data
-        appointment = this.normalizationData(appointment);
+        var newAppointment = this.normalizationData(appointment);
 
         // Create appointment document
-        var result = this.createAppointmentDoc(appointment);
-        return result;
+        //var result = this.createAppointmentDoc(appointment);
+
+        var result = await this.appointmentManagementDP.createAppointment(newAppointment);
+        if(result.err){
+            response.err = result.err;
+            response.code = result.code;
+            return response;
+        }
+
+        return response;
     };
 
     public updateAppointment(appointmentId: string, appointment: AppointmentData) {
