@@ -7,7 +7,9 @@
  */
 
 import { ReceiptManagementBehavior } from './ReceiptManagementBehavior';
-import { ReceiptData } from './ReceiptData';
+import { ReceiptData, ReceiptItemData } from './ReceiptData';
+import { ReceiptModel } from './ReceiptModel';
+import {SalonCloudResponse} from './../../core/SalonCloudResponse';
 
 export class ReceiptManagement implements ReceiptManagementBehavior {
     private salonId: string;
@@ -17,8 +19,27 @@ export class ReceiptManagement implements ReceiptManagementBehavior {
     }
 
     
-    public add(receipt: ReceiptData) {
+    public async add(receipt: ReceiptData) : Promise<SalonCloudResponse<ReceiptData>> {
+        var response : SalonCloudResponse<ReceiptData> = {
+            data: undefined,
+            code: undefined,
+            err: undefined
+        }
+        var newReceipt : ReceiptData = {
+            total: receipt.total,
+            services: receipt.services,
+            payment_id: receipt.payment_id
+        }
 
+        var receiptCreation = ReceiptModel.create(newReceipt);
+        await receiptCreation.then(function(docs){
+            response.data = docs;
+            response.code = 200;
+        }, function(err){
+            response.err = err;
+            response.code = 500;
+        });
+        return response;
     }
     public remove(receiptId: string) {
 

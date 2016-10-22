@@ -9,8 +9,9 @@ import { BookingAppointment } from './../../modules/appointmentManagement/Bookin
 import { SalonCloudResponse } from './../SalonCloudResponse'
 import { ErrorMessage } from './../ErrorMessage'
 import { CustomerManagement } from './../../modules/usermanagement/CustomerManagement'
-import {Authentication} from './../authentication/Authentication'
+import { Authentication } from './../authentication/Authentication'
 import { DailyScheduleData, WeeklyScheduleData } from './../../modules/schedule/ScheduleData';
+import { ReceiptManagement } from './../../modules/receipt/ReceiptManagement'
 
 export abstract class AbstractAdministrator extends AbstractEmployee implements AdministratorBehavior {
 
@@ -41,9 +42,12 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             code: undefined,
             err: undefined
         }
+        //Todo:  validation
+
+
         var salonId = inputData.salon_id;
         var appointmentByPhone: BookingAppointment;
-        //Todo:  validation
+        var receiptManagementDP = new ReceiptManagement(salonId);
 
         // Check booking available time
 
@@ -57,14 +61,19 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         // Get customer Id
         var getCustomerId = await this.getCustomerID(salonId, inputData);
-        if(getCustomerId.err){
+        if (getCustomerId.err) {
             response.err = getCustomerId.err;
             response.code = getCustomerId.code;
             return response;
         }
 
         // create receipt 
-        // TODO:
+        var receiptCreation = await receiptManagementDP.add(inputData);
+        if(receiptCreation.err) {
+            response.err = receiptCreation.err;
+            response.code = receiptCreation.code;
+            return response;
+        }
 
         // create appointment
         var result = appointmentByPhone.createAppointment(inputData);
@@ -77,33 +86,33 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
     };
 
 
-    private async getCustomerID(salonId: string, inputData: any) : Promise<SalonCloudResponse<string>>{
-        var response : SalonCloudResponse<string> = {
+    private async getCustomerID(salonId: string, inputData: any): Promise<SalonCloudResponse<string>> {
+        var response: SalonCloudResponse<string> = {
             data: undefined,
             code: undefined,
             err: undefined
         };
         var customerManagementDP = new CustomerManagement(salonId);
         var userFinding = UserModel.findOne({ "username": inputData.customer_phone }).exec();
-        await userFinding.then(async function (docs){
+        await userFinding.then(async function (docs) {
             // customer account existed, get Id and check if needed to create profile for salon;
             if (docs) {
                 response.data = docs._id;
                 response.code = 200;
                 var flag = false;
                 // check if salon profile existed for the customer and create one if needed;
-                for(let each of docs.profile){
-                    if(salonId === each.salon_id){
-                        flag =true;
+                for (let each of docs.profile) {
+                    if (salonId === each.salon_id) {
+                        flag = true;
                         break;
                     }
                 }
-                if(flag ===false){
+                if (flag === false) {
                     var customerProfileCreation = await customerManagementDP.addCustomerProfile(docs._id, inputData)
                 }
                 return response;
 
-            
+
             } else {
                 // customer account not existed, create account with salon profile for the user
                 var customerCreation = await customerManagementDP.createCustomer(inputData);
@@ -121,16 +130,16 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
     }
 
 
-    
 
-    
+
+
 
 
     public updateAppointment(appointment: AppointmentData) {
 
     };
 
-    public updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData){
+    public updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData) {
     };
 
     public updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData) {

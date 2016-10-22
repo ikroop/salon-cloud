@@ -11,7 +11,7 @@ export interface ReceiptItemData{
 }
 
 export interface ReceiptData{
-    id: string,
+    id?: string,
     services: [ReceiptItemData],
     total: number,
     payment_id: string

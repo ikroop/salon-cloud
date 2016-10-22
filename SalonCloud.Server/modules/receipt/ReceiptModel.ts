@@ -16,7 +16,9 @@ export const ReceiptItemSchema = new mongoose.Schema({
 });
 
 export const ReceiptSchema = new mongoose.Schema({
-    id: {type: String, require: true},
-    
+    services: [ReceiptItemSchema],
+    payment_id: String,
+    total: Number,
 });
 
+export const ReceiptModel = mongoose.model<ReceiptData>('Receipt', ReceiptSchema);
