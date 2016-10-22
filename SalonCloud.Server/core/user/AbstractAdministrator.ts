@@ -36,8 +36,8 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         return;
     };
 
-    public async saveAppointment(inputData: any): Promise<SalonCloudResponse<AppointmentData>> {
-        var response: SalonCloudResponse<AppointmentData> = {
+    public async saveAppointment(inputData: any): Promise<SalonCloudResponse<string>> {
+        var response: SalonCloudResponse<string> = {
             data: undefined,
             code: undefined,
             err: undefined
@@ -76,12 +76,19 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         }
 
         // create appointment
-        var result = appointmentByPhone.createAppointment(inputData);
+        var result = await appointmentByPhone.createAppointment(inputData);
+        if(result.err) {
+            response.err = result.err;
+            response.code = result.code;
+            return response;
+        }
 
         // Normalization return data
+        response.data = result.data._id;
+        response.code = 200;
         // TODO:
 
-        return;
+        return response;
 
     };
 
