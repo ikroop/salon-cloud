@@ -732,5 +732,72 @@ describe('Appointment Management', function () {
                 });
         });
 
+        it('should return appointment_id if request proceeds successfully with note', function (done) {
+            var bodyRequest = { 
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Any appointment note, even blank one, is acceptable",
+                "services":[{
+                            service_id: existedServiceId,
+                            employee_id: existedEmployeeId
+                            }],
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2017,
+                            hour: 10,
+                            min: 45
+                        }
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('appointment_id');
+                    done();
+                });
+        });
+
+        it('should return appointment_id if request proceeds successfully without note', function (done) {
+            var bodyRequest = { 
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "services":[{
+                            service_id: existedServiceId,
+                            employee_id: existedEmployeeId
+                            }],
+                "booking_time": {
+                            day: 27,
+                            month: 2,
+                            year: 2017,
+                            hour: 10,
+                            min: 45
+                        }
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('appointment_id');
+                    done();
+                });
+        });
+
     });
 });
