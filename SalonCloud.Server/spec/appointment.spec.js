@@ -61,7 +61,13 @@ describe('Appointment Management', function () {
                             service_id: existedServiceId,
                             employee_id: existedEmployeeId
                             }],
-                "booking_time": ""
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
             };
             request(url)
                 .post(apiUrl)
@@ -89,7 +95,13 @@ describe('Appointment Management', function () {
                             service_id: existedServiceId,
                             employee_id: existedEmployeeId
                             }],
-                "booking_time": ""
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
             };
             request(url)
                 .post(apiUrl)
@@ -118,7 +130,13 @@ describe('Appointment Management', function () {
                             service_id: existedServiceId,
                             employee_id: existedEmployeeId
                             }],
-                "booking_time": ""
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
             };
             request(url)
                 .post(apiUrl)
@@ -146,7 +164,13 @@ describe('Appointment Management', function () {
                             service_id: existedServiceId,
                             employee_id: existedEmployeeId
                             }],
-                "booking_time": ""
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
             };
             request(url)
                 .post(apiUrl)
@@ -175,7 +199,13 @@ describe('Appointment Management', function () {
                             service_id: existedServiceId,
                             employee_id: existedEmployeeId
                             }],
-                "booking_time": ""
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
             };
             request(url)
                 .post(apiUrl)
@@ -204,7 +234,13 @@ describe('Appointment Management', function () {
                             service_id: existedServiceId,
                             employee_id: existedEmployeeId
                             }],
-                "booking_time": ""
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
             };
             request(url)
                 .post(apiUrl)
@@ -232,7 +268,13 @@ describe('Appointment Management', function () {
                             service_id: existedServiceId,
                             employee_id: existedEmployeeId
                             }],
-                "booking_time": ""
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
             };
             request(url)
                 .post(apiUrl)
@@ -261,7 +303,13 @@ describe('Appointment Management', function () {
                             service_id: existedServiceId,
                             employee_id: existedEmployeeId
                             }],
-                "booking_time": ""
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
             };
             request(url)
                 .post(apiUrl)
@@ -286,7 +334,13 @@ describe('Appointment Management', function () {
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "booking_time": ""
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
             };
             request(url)
                 .post(apiUrl)
@@ -317,7 +371,13 @@ describe('Appointment Management', function () {
                             }, {
                             employee_id: existedEmployeeId
                             }],
-                "booking_time": ""
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
             };
             request(url)
                 .post(apiUrl)
@@ -349,7 +409,13 @@ describe('Appointment Management', function () {
                             service_id: notFoundServiceId,
                             employee_id: existedEmployeeId
                             }],
-                "booking_time": ""
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
             };
             request(url)
                 .post(apiUrl)
@@ -380,7 +446,13 @@ describe('Appointment Management', function () {
                             service_id: existedServiceId,
                             employee_id: existedEmployeeId
                             }],
-                "booking_time": ""
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
             };
             request(url)
                 .post(apiUrl)
@@ -412,7 +484,13 @@ describe('Appointment Management', function () {
                             service_id: existedServiceId,
                             employee_id: existedEmployeeId
                             }],
-                "booking_time": ""
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
             };
             request(url)
                 .post(apiUrl)
