@@ -396,5 +396,35 @@ export const ErrorMessage = {
             'name': 'MissingAppointmentTime',
             'message': 'Time of appointment is required!'
         }
+    },
+    'MissingBookingTimeDay': {
+        'err': {
+            'name': 'MissingBookingTimeDay',
+            'message': 'Day of appointment time is required!'
+        }
+    },
+    'MissingBookingTimeMonth': {
+        'err': {
+            'name': 'MissingBookingTimeMonth',
+            'message': 'Month of appointment time is required!'
+        }
+    },
+    'MissingBookingTimeYear': {
+        'err': {
+            'name': 'MissingBookingTimeYear',
+            'message': 'Year of appointment time is required!'
+        }
+    },
+    'MissingBookingTimeHour': {
+        'err': {
+            'name': 'MissingBookingTimeHour',
+            'message': 'Hour of appointment time is required!'
+        }
+    },
+    'MissingBookingTimeMinute': {
+        'err': {
+            'name': 'MissingBookingTimeMinute',
+            'message': 'Minute of appointment time is required!'
+        }
     }
 };

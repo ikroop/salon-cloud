@@ -17,12 +17,12 @@ describe('Appointment Management', function () {
     let rightFormattedName = 'Tom Hanks';
     let emptyName = '   ';
     let tooLongName = 'Alibaba Nam Tren Ghe Sopha Mo Ve Noi Xa Xong Pha Tran Mac Cuop Duoc Dola Thiet Thiet La Nhieu Dola Xay Nha Cho Mafia'
-    let existedServiceId = '';
-    let notFoundServiceId = '';
-    let invalidServiceId = '0000';
-    let existedEmployeeId = '';
-    let notFoundEmployeeId = '';
-    let invalidEmployeeId = '1111';
+    var existedServiceId = '';
+    var notFoundServiceId = '';
+    var invalidServiceId = '0000';
+    var existedEmployeeId = '';
+    var notFoundEmployeeId = '';
+    var invalidEmployeeId = '1111';
 
     before(function (done) {
 
@@ -44,6 +44,15 @@ describe('Appointment Management', function () {
                 validSalonId = "57faa2692579df79216a153c";
                 invalidSalonId = "00";
                 notFoundSalonId = '97ba653d54a6e5';
+
+                existedServiceId = '57fe92633674bf315450686d';
+                notFoundServiceId = '00fe92633674bf315450686d';
+                invalidServiceId = '000';
+
+                existedEmployeeId = '';
+                notFoundEmployeeId = '';
+                invalidEmployeeId = '';
+
                 done();
             });
     });
@@ -533,6 +542,192 @@ describe('Appointment Management', function () {
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.MissingAppointmentTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingBookingTimeDay.err.name + ' error trying to create appointment which has no-day booking_time', function (done) {
+            var bodyRequest = { 
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services":[{
+                            service_id: existedServiceId,
+                            employee_id: notFoundEmployeeId
+                            }, {
+                            service_id: existedServiceId,
+                            employee_id: existedEmployeeId
+                            }],
+                "booking_time": {
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingBookingTimeDay.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingBookingTimeMonth.err.name + ' error trying to create appointment which has no-month booking_time', function (done) {
+            var bodyRequest = { 
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services":[{
+                            service_id: existedServiceId,
+                            employee_id: notFoundEmployeeId
+                            }, {
+                            service_id: existedServiceId,
+                            employee_id: existedEmployeeId
+                            }],
+                "booking_time": {
+                            day: 28,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingBookingTimeMonth.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingBookingTimeYear.err.name + ' error trying to create appointment which has no-year booking_time', function (done) {
+            var bodyRequest = { 
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services":[{
+                            service_id: existedServiceId,
+                            employee_id: notFoundEmployeeId
+                            }, {
+                            service_id: existedServiceId,
+                            employee_id: existedEmployeeId
+                            }],
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            hour: 10,
+                            min: 45
+                        }
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingBookingTimeYear.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingBookingTimeHour.err.name + ' error trying to create appointment which has no-hour booking_time', function (done) {
+            var bodyRequest = { 
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services":[{
+                            service_id: existedServiceId,
+                            employee_id: notFoundEmployeeId
+                            }, {
+                            service_id: existedServiceId,
+                            employee_id: existedEmployeeId
+                            }],
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            min: 45
+                        }
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingBookingTimeHour.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingBookingTimeMinute.err.name + ' error trying to create appointment which has no-minute booking_time', function (done) {
+            var bodyRequest = { 
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services":[{
+                            service_id: existedServiceId,
+                            employee_id: notFoundEmployeeId
+                            }, {
+                            service_id: existedServiceId,
+                            employee_id: existedEmployeeId
+                            }],
+                "booking_time": {
+                            day: 28,
+                            month: 2,
+                            year: 2016,
+                            hour: 10,
+                            min: 45
+                        }
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingBookingTimeMinute.err.name);
                     done();
                 });
         });
