@@ -29,7 +29,7 @@ use UTC.
   |     |----receipt_id: string
   |     |----flexible: boolean
   |     |----customer_id(uid): string
-  |     |----start: SalonTime
+  |     |----end: SalonTime
   |     |----status: number, 1: booked, 2: checked in, 3: in-process, 4: done, 5: paid
   |     |----type: number, 1: booking, 2: check-in
   |     |----is_reminded: boolean
