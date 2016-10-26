@@ -27,7 +27,7 @@ export const ErrorMessage = {
     'InvalidNameString': {
         'err': {
             'name': 'InvalidNameString',
-            'message': 'A name should not only contain blank space(s)!'
+            'message': 'A name should not only contain blank space(s) and is not longer than 30 characters!'
         }
     },
     'PasswordTooShort': {
@@ -154,6 +154,12 @@ export const ErrorMessage = {
         'err': {
             'name': 'InvalidEndDateForStartDate',
             'message': 'end-date is earlier than start-date!'
+        }
+    },
+    'MissingEmployeeId': {
+        'err': {
+            'name': 'MissingEmployeeId',
+            'message': 'EmployeeId is required!'
         }
     },
     'EmployeeNotFound': {
@@ -319,6 +325,12 @@ export const ErrorMessage = {
             'message': 'Service id is required!'
         }
     },
+    'ServiceNotFound': {
+        'err': {
+            'name': 'ServiceNotFound',
+            'message': 'Service is not found!'
+        }
+    },
     'MissingGroupName': {
         'err': {
             'name': 'MissingGroupName',
@@ -365,6 +377,54 @@ export const ErrorMessage = {
         'err': {
             'name': 'ServiceGroupNameExisted',
             'message': 'This service group name is already existed!'
+        }
+    },
+    'MissingCustomerName': {
+        'err': {
+            'name': 'MissingCustomerName',
+            'message': 'Customer\'s name is required!'
+        }
+    },
+    'MissingBookedServiceList': {
+        'err': {
+            'name': 'MissingBookedServiceList',
+            'message': 'Booked service list is required!'
+        }
+    },
+    'MissingAppointmentTime': {
+        'err': {
+            'name': 'MissingAppointmentTime',
+            'message': 'Time of appointment is required!'
+        }
+    },
+    'MissingBookingTimeDay': {
+        'err': {
+            'name': 'MissingBookingTimeDay',
+            'message': 'Day of appointment time is required!'
+        }
+    },
+    'MissingBookingTimeMonth': {
+        'err': {
+            'name': 'MissingBookingTimeMonth',
+            'message': 'Month of appointment time is required!'
+        }
+    },
+    'MissingBookingTimeYear': {
+        'err': {
+            'name': 'MissingBookingTimeYear',
+            'message': 'Year of appointment time is required!'
+        }
+    },
+    'MissingBookingTimeHour': {
+        'err': {
+            'name': 'MissingBookingTimeHour',
+            'message': 'Hour of appointment time is required!'
+        }
+    },
+    'MissingBookingTimeMinute': {
+        'err': {
+            'name': 'MissingBookingTimeMinute',
+            'message': 'Minute of appointment time is required!'
         }
     }
 };
