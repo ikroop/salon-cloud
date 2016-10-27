@@ -64,6 +64,9 @@
     },
     "passport-local-mongoose/passport-local-mongoose.d.ts": {
       "commit": "73e5a5026641eda668d1c787bfa25b065645e539"
+    },
+    "moment/moment.d.ts": {
+      "commit": "637e7d6df755e785387d5269cb9287cdc51b8cb7"
     }
   }
 }

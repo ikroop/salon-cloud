@@ -14,3 +14,4 @@
 /// <reference path="SignedInUser.ts" />
 /// <reference path="SignedInUserBehavior.ts" />
 /// <reference path="Technician.ts" />
+/// <reference path="UserFactory.ts" />
