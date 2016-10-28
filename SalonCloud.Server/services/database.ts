@@ -2,7 +2,7 @@
  * 
  * 
  */
-import * as mongoose from "mongoose";
+import mongoose = require("mongoose");
 
 mongoose.Promise = global.Promise;
 
