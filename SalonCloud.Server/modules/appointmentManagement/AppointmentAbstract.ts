@@ -17,8 +17,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior{
         return;
     };
 
-    public createAppointment(appointment : AppointmentData){
-        var validationResult = this.validation(appointment);
+    public createAppointment(appointment : AppointmentData) : any{
+        var validationResult:any = this.validation(appointment);
         
         // validation
         if (validationResult){
@@ -29,7 +29,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior{
         appointment = this.normalizationData(appointment);
 
         // Create appointment document
-        var result = this.createAppointmentDoc(appointment);
+        var result:any = this.createAppointmentDoc(appointment);
         return result;
     };
 
