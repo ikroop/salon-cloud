@@ -3,11 +3,11 @@
 import { AbstractEmployee } from './AbstractEmployee'
 import { UserProfile } from './../../modules/userManagement/UserData'
 import { AppointmentData } from './../../modules/appointmentManagement/AppointmentData'
-import { DailyDayData, WeeklyDayData } from './../../modules/schedule/ScheduleData'
-import { AdministatorBehavior } from './AdministatorBehavior'
+import { DailyScheduleData, WeeklyScheduleData } from './../../modules/schedule/ScheduleData'
+import { AdministratorBehavior } from './AdministratorBehavior'
 import { PhoneCallAppointment } from './../../modules/appointmentManagement/PhoneCallAppointment';
 
-export abstract class AbstractAdministrator extends AbstractEmployee implements AdministatorBehavior{
+export abstract class AbstractAdministrator extends AbstractEmployee implements AdministratorBehavior{
 
     public cancelAppointment(appointmentId: string) {
 
@@ -64,11 +64,11 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
     };
 
-    public updateDailySchedule(employeeId: string, dailySchedule: DailyDayData) {
+    public updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData) {
 
     };
 
-    public updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyDayData) {
+    public updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData) {
 
     };
 
