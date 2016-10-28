@@ -21,7 +21,7 @@ export class ServiceManagementRouter {
             
 
             var ownerObject = new Owner(request.user._id, new SalonManagement(request.body.salon_id));
-            var creatingServiceAction = await ownerObject.addService(request.body);
+            var creatingServiceAction:any = await ownerObject.addService(request.body);
             var returnData;
             if(creatingServiceAction.err){
                 returnData = {
