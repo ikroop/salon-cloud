@@ -16,5 +16,8 @@
     "./modules/userManagement/UserManagement.d.ts",
     "./app.ts",
     "./core/observer/Observer.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
