@@ -76,7 +76,7 @@ export class SalonManagement implements SalonManagementBehavior {
         return;
     };
 
-    public async validation(salonInformation: SalonInformation): any {
+    public async validation(salonInformation: SalonInformation) {
         var returnResult: SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
