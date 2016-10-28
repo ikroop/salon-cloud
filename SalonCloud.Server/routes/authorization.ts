@@ -4,9 +4,9 @@
 
 
 import { Router, Request, Response } from "express";
-import { SalonCloudResponse } from "../core/SalonCloudResponse";
-import { Authentication } from '../core/authentication/authentication';
-import { Authorization } from "../core/authorization/authorization";
+import { SalonCloudResponse } from "./../core/SalonCloudResponse";
+import { Authentication } from './../core/authentication/authentication';
+import { Authorization } from "./../core/authorization/authorization";
 export class AuthorizationRouter {
     private router: Router = Router();
 

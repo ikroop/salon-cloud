@@ -2,17 +2,17 @@
  * 
  * 
  */
-import { mongoose } from "../../services/database";
+import { mongoose } from "./../../services/database";
 import { Schedule } from "./Schedule";
 import { ScheduleItemData, IDailyScheduleData, IWeeklyScheduleData, DailyDayData, WeeklyDayData } from "./ScheduleData";
 import WeeklyScheduleModel = require("./WeeklyScheduleModel");
 import DailyScheduleModel = require("./DailyScheduleModel");
-import {SalonCloudResponse} from "../../core/SalonCloudResponse";
+import {SalonCloudResponse} from "./../../core/SalonCloudResponse";
 import {BaseValidator} from "./../../core/validation/BaseValidator";
 import {MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId}
     from "./../../core/validation/ValidationDecorators";
 import {SalonSchedule} from "./SalonSchedule"
-var ErrorMessage = require  ("../../core/ErrorMessage");
+var ErrorMessage = require  ("./../../core/ErrorMessage");
 export class EmployeeSchedule extends Schedule {
 
     constructor (salonId: string, employeeId: string){

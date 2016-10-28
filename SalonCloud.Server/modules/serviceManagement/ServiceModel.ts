@@ -1,5 +1,5 @@
 
-import { mongoose } from "../../services/database";
+import { mongoose } from "./../../services/database";
 import { IServiceGroupData} from './ServiceData'
 
 const ServiceItemSchema = new mongoose.Schema(

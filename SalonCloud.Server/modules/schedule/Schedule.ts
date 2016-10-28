@@ -3,7 +3,7 @@
  *
  */
 import { MonthlyScheduleData, IDailyScheduleData, IWeeklyScheduleData, DailyDayData, WeeklyDayData } from './ScheduleData';
-import { SalonCloudResponse } from "../../core/SalonCloudResponse";
+import { SalonCloudResponse } from "./../../core/SalonCloudResponse";
 import { ScheduleBehavior } from "./ScheduleBehavior";
 import WeeklyScheduleModel = require("./WeeklyScheduleModel");
 import DailyScheduleModel = require("./DailyScheduleModel");

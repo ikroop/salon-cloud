@@ -2,7 +2,7 @@
  * 
  * 
  */
-import { mongoose } from "../../services/database";
+import { mongoose } from "./../../services/database";
 import { ISalonModel } from './SalonData';
 
 const SalonProfileSchema = new mongoose.Schema({

@@ -3,7 +3,7 @@
  * 
  * 
  */
-import { mongoose } from "../../services/database";
+import { mongoose } from "./../../services/database";
 
 export interface ServiceItemData {
     id?: string;

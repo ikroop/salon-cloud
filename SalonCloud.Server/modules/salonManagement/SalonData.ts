@@ -4,7 +4,7 @@
 //
 //
 //
-import { mongoose } from "../../services/database";
+import { mongoose } from "./../../services/database";
 
 export interface SalonInformation {
     salon_name: string;

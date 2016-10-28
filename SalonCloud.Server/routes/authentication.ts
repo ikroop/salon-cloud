@@ -6,7 +6,7 @@
 import jwt = require('jsonwebtoken');
 import { Router, Request, Response } from "express";
 import { AuthorizationRouter } from "./authorization";
-import { Authentication } from '../core/authentication/authentication';
+import { Authentication } from './../core/authentication/authentication';
 import { SalonCloudResponse } from "./../core/SalonCloudResponse";
 
 export class AuthenticationRouter {

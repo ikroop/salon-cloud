@@ -5,7 +5,7 @@
  * 
  */
 
-import { mongoose } from "../../services/database";
+import { mongoose } from "./../../services/database";
 import { ReceiptData, ReceiptItemData } from './ReceiptData';
 
 export const ReceiptItemSchema = new mongoose.Schema({

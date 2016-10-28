@@ -6,7 +6,7 @@
  */
 
 import { IUserData } from "./UserData";
-import { mongoose } from "../../services/database";
+import { mongoose } from "./../../services/database";
 
 import passportLocalMongoose = require('passport-local-mongoose');
 import Schema = mongoose.Schema;

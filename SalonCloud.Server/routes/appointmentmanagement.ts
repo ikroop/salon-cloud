@@ -3,9 +3,9 @@
  */
 
 import { Router, Request, Response } from "express";
-import { SalonCloudResponse } from "../core/SalonCloudResponse";
+import { SalonCloudResponse } from "./../core/SalonCloudResponse";
 import { Authentication } from '../core/authentication/authentication';
-import { Authorization } from "../core/authorization/authorization";
+import { Authorization } from "./../core/authorization/authorization";
 import { AuthorizationRouter } from "./authorization";
 import { AdministratorBehavior } from "./../core/user/AdministratorBehavior";
 import { AppointmentData } from "./../modules/appointmentManagement/AppointmentData";

@@ -10,7 +10,7 @@ import { BaseValidator } from "./../../core/validation/BaseValidator";
 import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidNameString, IsServiceGroupNameExisted }
     from "./../../core/validation/ValidationDecorators";
 import { ErrorMessage } from './../../core/ErrorMessage';
-import { SalonCloudResponse } from "../../core/SalonCloudResponse";
+import { SalonCloudResponse } from "./../../core/SalonCloudResponse";
 import ServiceGroupModel = require("./ServiceModel");
 
 export class ServiceManagement implements ServiceManagementBehavior {
