@@ -3,6 +3,7 @@
  * 
  * 
  */
+import { mongoose } from "../../services/database";
 
 export interface ServiceItemData {
     id?: string;
@@ -18,3 +19,5 @@ export interface ServiceGroupData {
     salon_id: string;
     service_list?: [ServiceItemData];
 }
+
+export interface IServiceGroupData extends ServiceGroupData, mongoose.Document { }

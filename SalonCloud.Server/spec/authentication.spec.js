@@ -126,8 +126,6 @@ describe('Authentication', function () {
                         throw err;
                     }
                     res.status.should.be.equal(200);
-                    res.body.should.have.property('user');
-                    res.body.user.should.have.property('username').eql(user.username);
                     done();
                 });
         });

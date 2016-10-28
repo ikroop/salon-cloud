@@ -8,8 +8,8 @@
 import { SalonCloudResponse } from "./../SalonCloudResponse";
 import { AuthenticationBehavior } from "./AuthenticationBehavior";
 import { ErrorMessage } from './../ErrorMessage';
-import { UserModel } from "./../../modules/userManagement/UserModel";
-
+import UserModel = require("./../../modules/userManagement/UserModel");
+import { IUserData, UserData, UserProfile } from "./../../modules/userManagement/UserData"
 import jwt = require('jsonwebtoken');
 import fs = require('fs');
 import { BaseValidator } from "./../../core/validation/BaseValidator";
@@ -70,14 +70,15 @@ export class Authentication implements AuthenticationBehavior {
             return response;
         }
 
+        var user: UserData = {
+            username: username,
+            status: true,
+            is_verified: false,
+            is_temporary: false
+        };
         // Kill callback function
         let promise = new Promise<SalonCloudResponse<any>>(function (resolve, reject) {
-            UserModel.register(new UserModel({
-                'username': username,
-                'status': true,
-                'is_verified': false,
-                'is_temporary': false,
-            }), password, function (err, account) {
+            UserModel.register(new UserModel(user), password, function (err) {
                 if (err) {
                     response.err = { 'err': err };
                     response.code = 409;
@@ -85,13 +86,6 @@ export class Authentication implements AuthenticationBehavior {
                 } else {
                     response.err = undefined;
                     response.code = 200;
-                    response.data = {
-                        'user': {
-                            'username': account.username,
-                            'status': account.status,
-                            '_id': account._id
-                        }
-                    };
                 }
                 resolve(response);
             });
@@ -146,13 +140,13 @@ export class Authentication implements AuthenticationBehavior {
             return response;
         }
         let promise = new Promise(function (resolve, reject) {
-            UserModel.authenticate('local', { session: false })(username, password, function (err, user, options) {
+            UserModel.authenticate()(username, password, function (err: any, user: IUserData, error: any) {
                 if (err) {
                     response.err = { 'err': err };
                     response.code = 409;
                     response.data = undefined;
                 }
-                if (user === false) {
+                if (!user) {
                     response.err = ErrorMessage.SignInFailed;
                     response.code = 403;
                     response.data = undefined;
@@ -206,17 +200,20 @@ export class Authentication implements AuthenticationBehavior {
         }
         var randomPassword = 100000 + Math.floor(Math.random() * 900000);
         var randomPasswordString = randomPassword.toString();
+
         var registerProcess = await this.signUpWithUsernameAndPassword(username, randomPasswordString);
+
         if (registerProcess.err) {
             response.err = registerProcess.err;
             response.code = 409;
-            return response;
         } else {
-            response.data = registerProcess.data;
+            let signinData:any = await this.signInWithUsernameAndPassword(username, randomPasswordString);
+            response.data = signinData.data;
             response.data.password = randomPasswordString;
             response.code = 200;
-            return response;
         }
+        return response;
+
     }
 
     /**

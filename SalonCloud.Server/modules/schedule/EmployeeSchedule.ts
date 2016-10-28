@@ -4,8 +4,9 @@
  */
 import { mongoose } from "../../services/database";
 import { Schedule } from "./Schedule";
-import { ScheduleItemData, DailyScheduleData, WeeklyScheduleData, DailyDayData, WeeklyDayData } from "./ScheduleData";
-import { WeeklyScheduleModel, DailyScheduleModel } from "./ScheduleModel";
+import { ScheduleItemData, IDailyScheduleData, IWeeklyScheduleData, DailyDayData, WeeklyDayData } from "./ScheduleData";
+import WeeklyScheduleModel = require("./WeeklyScheduleModel");
+import DailyScheduleModel = require("./DailyScheduleModel");
 import {SalonCloudResponse} from "../../core/SalonCloudResponse";
 import {BaseValidator} from "./../../core/validation/BaseValidator";
 import {MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId}

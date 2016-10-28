@@ -3,7 +3,7 @@
 import { AbstractEmployee } from './AbstractEmployee'
 import { UserProfile } from './../../modules/userManagement/UserData'
 import { AppointmentData } from './../../modules/appointmentManagement/AppointmentData'
-import { DailyScheduleData, WeeklyScheduleData } from './../../modules/schedule/ScheduleData'
+import { IDailyScheduleData, IWeeklyScheduleData } from './../../modules/schedule/ScheduleData'
 import { AdministratorBehavior } from './AdministratorBehavior'
 import { PhoneCallAppointment } from './../../modules/appointmentManagement/PhoneCallAppointment';
 
@@ -64,11 +64,11 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
     };
 
-    public updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData) {
+    public updateDailySchedule(employeeId: string, dailySchedule: IDailyScheduleData) {
 
     };
 
-    public updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData) {
+    public updateWeeklySchedule(employeeId: string, weeklySchedule: IWeeklyScheduleData) {
 
     };
 

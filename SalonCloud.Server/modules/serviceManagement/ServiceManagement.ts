@@ -11,7 +11,7 @@ import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan,
     from "./../../core/validation/ValidationDecorators";
 import { ErrorMessage } from './../../core/ErrorMessage';
 import { SalonCloudResponse } from "../../core/SalonCloudResponse";
-import { ServiceGroupModel, ServiceItemModel } from "./ServiceModel"
+import ServiceGroupModel = require("./ServiceModel");
 
 export class ServiceManagement implements ServiceManagementBehavior {
     private salonId: string;

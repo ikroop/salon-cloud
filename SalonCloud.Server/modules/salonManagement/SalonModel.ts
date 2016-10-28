@@ -3,9 +3,9 @@
  * 
  */
 import { mongoose } from "../../services/database";
-import { SalonData } from './SalonData';
+import { ISalonModel } from './SalonData';
 
-export const SalonProfileSchema = new mongoose.Schema({
+const SalonProfileSchema = new mongoose.Schema({
     setting: {
         appointment_reminder: { type: Boolean, required: true },
         flexible_time: { type: Number, required: true },
@@ -26,4 +26,5 @@ export const SalonProfileSchema = new mongoose.Schema({
     }
 });
 
-export const SalonModel = mongoose.model<SalonData>('salon', SalonProfileSchema);
+var SalonModel = mongoose.model<ISalonModel>("Salon", SalonProfileSchema);
+export = SalonModel;

@@ -3,8 +3,8 @@
 
 */
 import { Validator, DecoratingValidator, BaseValidator } from "./BaseValidator";
-import { SalonModel } from "./../../modules/salonManagement/SalonModel";
-import { ServiceGroupModel } from './../../modules/serviceManagement/ServiceModel';
+import SalonModel = require("./../../modules/salonManagement/SalonModel");
+import ServiceGroupModel = require('./../../modules/serviceManagement/ServiceModel');
 import { ErrorMessage } from './../ErrorMessage';
 
 //Validate if target element is missing.

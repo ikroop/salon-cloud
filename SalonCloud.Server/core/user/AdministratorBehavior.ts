@@ -8,7 +8,7 @@
 
 import { UserProfile } from './../../modules/userManagement/UserData'
 import { AppointmentData } from './../../modules/appointmentManagement/AppointmentData'
-import { DailyScheduleData, WeeklyScheduleData } from './../../modules/schedule/ScheduleData';
+import { IDailyScheduleData, IWeeklyScheduleData } from './../../modules/schedule/ScheduleData';
 
 export interface AdministratorBehavior {
     cancelAppointment(appointmentId: string);
@@ -18,6 +18,6 @@ export interface AdministratorBehavior {
     getEmployeeProfile(employeeId: string): UserProfile;
     saveAppointment(appointment: AppointmentData);
     updateAppointment(appointment: AppointmentData);
-    updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData);
-    updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData);
+    updateDailySchedule(employeeId: string, dailySchedule: IDailyScheduleData);
+    updateWeeklySchedule(employeeId: string, weeklySchedule: IWeeklyScheduleData);
 }

@@ -10,7 +10,7 @@ import { UserManagementRouter } from "./routes/usermanagement";
 import { SalonManagementRouter } from "./routes/salonmanagement";
 import { ServiceManagementRouter } from "./routes/servicemanagement";
 
-import { UserModel } from "./modules/userManagement/UserModel";
+import UserModel = require("./modules/userManagement/UserModel");
 
 const app: express.Application = express();
 //var authorizationRouter: AuthorizationRouter = new AuthorizationRouter();
