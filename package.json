@@ -67,7 +67,7 @@
     }
   },
   "scripts": {
-    "test": "CODECOV_TOKEN='edd2feb9-70ff-42cf-9a56-65a49fe4f727' istanbul cover node_modules/mocha/bin/_mocha spec && codecov",
+    "test": "export CODECOV_TOKEN='edd2feb9-70ff-42cf-9a56-65a49fe4f727' && istanbul cover mocha spec --report lcovonly -- -R spec && codecov",
     "start": "cd dist && node App.js"
   }
 }
