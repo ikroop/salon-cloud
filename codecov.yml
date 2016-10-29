@@ -27,9 +27,9 @@ coverage:
 
     gitter:
       default:
-        url: null
+        url: https://gitter.im/salon-cloud/Lobby
         threshold: null
-        branches: null
+        branches: master
         message: null
 
     webhook:
@@ -67,5 +67,5 @@ coverage:
 
 comment:
   layout: "header, diff, changes, sunburst, uncovered, tree"
-  branches: null
+  branches: master
   behavior: default
