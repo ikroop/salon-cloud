@@ -6,12 +6,12 @@ dependencies:
     - npm install -g typescript   
     - npm install -g mocha
     - npm install -g nodemon
+    - npm install forever -g
     - cd SalonCloud.Server && npm install
     - cd SalonCloud.Server && tsc
 test:
   post:
-    - nodemon App.js:
-          background: true
+    - forever start App.js
     - cd SalonCloud.Server && mocha Spec/Authentication.spec.js
 
 
