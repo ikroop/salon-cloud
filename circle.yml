@@ -6,12 +6,13 @@ dependencies:
     - npm install -g typescript   
     - npm install -g mocha
     - npm install -g nodemon
-    - npm install forever -g
-    - cd SalonCloud.Server && npm install
-    - cd SalonCloud.Server && tsc
+    - npm install -g forever
+    - npm install -g gulp
+    - npm install
+    - gulp
 test:
   post:
-    - cd SalonCloud.Server && forever start App.js
-    - cd SalonCloud.Server && mocha $(find Spec -name '*.js')
+    - cd dist && forever start App.js
+    - mocha $(find spec -name '*.js')
 
 

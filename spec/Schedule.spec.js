@@ -4,7 +4,7 @@ var request = require('supertest');
 var mongoose = require('mongoose');
 var winston = require('winston');
 var configDB = require('./../Services/Database.js');
-var ErrorMessage = require('./../Core/ErrorMessage');
+var ErrorMessage = require('./../dist/Core/ErrorMessage');
 
 describe('Schedule', function () {
     var url = 'http://localhost:3000';

@@ -62,5 +62,9 @@
         "Spec"
       ]
     }
+  },
+  "scripts": {
+    "test": "mocha $(find spec -name '*.js')",
+    "start": "cd dist && node App.js"
   }
 }

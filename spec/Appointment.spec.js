@@ -2,7 +2,7 @@
 var assert = require('assert');
 var request = require('supertest');
 var winston = require('winston');
-var ErrorMessage = require('./../Core/ErrorMessage').ErrorMessage;
+var ErrorMessage = require('./../dist/Core/ErrorMessage').ErrorMessage;
 
 describe('Appointment Management', function () {
     var url = 'http://localhost:3000/api/v1';

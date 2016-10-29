@@ -8,24 +8,22 @@ var tsProject = ts.createProject('tsconfig.json',
     { typescript: require('typescript') });
 
 //build typescript
-gulp.task('default', function () {
+gulp.task('scripts', function () {
     var tsResult = gulp.src('src/**/*.ts')
         .pipe(ts(tsProject));
     return tsResult.pipe(gulp.dest('dist'));
 });
 
-// Copy bower & node_modules
-/*gulp.task('config', function() {
-    gulp.src('Config')
-        .pipe(gulp.dest('dist'));
-});*/
+// Copy Config folder
+gulp.task('config', function () {
+    gulp.src('src/Config/**/*')
+        .pipe(gulp.dest('dist/Config'));
+});
 
 // Clean
-/*gulp.task('clean', function(cb) {
-    del(['dist/'], cb);
-});*/
+gulp.task('clean', function (cb) {
+    del.sync(['dist/'], cb);
+});
 
 // Build task
-/*gulp.task('default', ['scripts', 'config'], function() {
-
-});*/
+gulp.task('default', ['clean','config', 'scripts']);
