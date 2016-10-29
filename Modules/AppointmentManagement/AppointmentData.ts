@@ -11,7 +11,7 @@ export interface AppointmentData {
     device: number;
     overlapped: {
         status: boolean;
-        overlappedAppointmentId?: string;
+        overlapped_appointment_id?: string;
     };
     id?: string;
     is_reminded: boolean;

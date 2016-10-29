@@ -25,7 +25,10 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
             customer_id: appointment.customer_id,
             device: appointment.device,
             salon_id: appointment.salon_id,
-            flexible: appointment.flexible,
+            overlapped: {
+                status: appointment.overlapped.status,
+                overlapped_appointment_id: appointment.overlapped.overlapped_appointment_id
+            },
             is_reminded: appointment.is_reminded,
             receipt_id: appointment.receipt_id,
             note: appointment.note,

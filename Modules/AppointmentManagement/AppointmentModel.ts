@@ -9,7 +9,7 @@ const AppointmentSchema = new mongoose.Schema({
     device: { type: Number, require: true },
     overlapped: { 
         status: {type: Boolean, require: true},
-        overlappedAppointmentId: String
+        overlapped_appointment_id: String
     },
     is_reminded: { type: Boolean, require: true },
     note: String,

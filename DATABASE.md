@@ -29,7 +29,7 @@ use UTC.
   |     |----receipt_id: string
   |     |----overlapped:
   |     |         |----status: boolean
-  |     |         |----overlappedAppointmentId: string (optional)
+  |     |         |----overlapped_appointment_id: string (optional)
   |     |----customer_id(uid): string
   |     |----end: SalonTime
   |     |----status: number, 1: booked, 2: checked in, 3: in-process, 4: done, 5: paid
