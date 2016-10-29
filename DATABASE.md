@@ -27,7 +27,9 @@ use UTC.
   |     |----comment: string
   |     |----device: number, 1: phone, 2: web, 3: app
   |     |----receipt_id: string
-  |     |----flexible: boolean
+  |     |----overlapped:
+  |     |         |----status: boolean
+  |     |         |----overlappedAppointmentId: string (optional)
   |     |----customer_id(uid): string
   |     |----end: SalonTime
   |     |----status: number, 1: booked, 2: checked in, 3: in-process, 4: done, 5: paid
