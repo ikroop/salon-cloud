@@ -12,9 +12,9 @@ dependencies:
     - npm install -g codecov
     - npm install -g nyc
     - gulp
+    - cd dist && forever start App.js
 test:
   post:
-    - cd dist && forever start App.js
     - npm test
 
 
