@@ -20,13 +20,13 @@ export interface DailyDayData extends ScheduleItemData {
     date: Date
 };
 
-interface WeeklyScheduleData {
+export interface WeeklyScheduleData {
     salon_id: string, //<salon_id>
     employee_id: string,
     week: [WeeklyDayData]
 };
 
-interface DailyScheduleData {
+export interface DailyScheduleData {
     salon_id: string,
     employee_id: string,
     day: DailyDayData
