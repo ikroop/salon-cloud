@@ -9,7 +9,10 @@ export interface AppointmentData {
 
     customer_id: string;
     device: number;
-    flexible: boolean;
+    overlapped: {
+        status: boolean;
+        overlappedAppointmentId?: string;
+    };
     id?: string;
     is_reminded: boolean;
     note: string;
