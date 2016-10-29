@@ -10,6 +10,6 @@ dependencies:
     - tsc
 test:
   post:
-    - mocha spec/authentication.spec.js
+    - mocha spec/Authentication.spec.js
 
 

@@ -30,13 +30,13 @@ $ tsc
 Run web server
 =============
 Required: 
-- List all .ts files that need to be compile into a "d.ts" file, e.g: "Salon.d.ts" (in SalonCloud.Server/modules/salon)
+- List all .ts files that need to be compile into a "d.ts" file, e.g: "Salon.d.ts" (in SalonCloud.Server/Modules/salon)
 ```
 /// <reference path="Salon.ts" />
 ```
 - Add file that "d.ts" file (e.g: "Salon.d.ts") into "files" node of "tsconfig.json" file (in SalonCloud.Server)
 ```
-"./modules/salon/Salon.d.ts"
+"./Modules/salon/Salon.d.ts"
 ```
 
 Windows
@@ -53,7 +53,7 @@ Run Unit Test
 =============
 ```
 # Test only one file in spec folder
-$ mocha ./spec/authentication.spec.js
+$ mocha ./spec/Authentication.spec.js
 # Test all files in spec folder
 $ mocha ./spec
 ```
@@ -67,16 +67,16 @@ $ openssl rsa -in private_key_filename -pubout -outform PEM -out public_key_outp
 Development
 ============
 ## How to add new REST API ##
-Create file in routes folder. Example [routes/salon.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/routes/salon.ts):
+Create file in routes folder. Example [routes/salon.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/Routes/salon.ts):
 ```
 import express = require('express');
 import passport = require('passport');
 import jwt = require('jsonwebtoken');
-import {Validator} from '../core/validator/Validator';
-import {Salon} from '../modules/salon/Salon';
-import {ISalon} from '../modules/salon/ISalon';
+import {Validator} from '../Core/validator/Validator';
+import {Salon} from '../Modules/salon/Salon';
+import {ISalon} from '../Modules/salon/ISalon';
 var ErrorMessage = require('./ErrorMessage');
-var Authentication = require('../modules/salon/Salon');
+var Authentication = require('../Modules/salon/Salon');
 module route {
     export class SalonRoute {
         public static CreateInformation(req: express.Request, res: express.Response) {
@@ -109,7 +109,7 @@ module route {
 }
 export = route.SalonRoute;
 ```
-Add config to [routes.d.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/routes/routes.d.ts)
+Add config to [routes.d.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/Routes/Routes.d.ts)
 ```
 /// <reference path="salon.ts" />
 ```
@@ -119,7 +119,7 @@ Add function REST API to [app.ts](https://github.com/thanhtruong0315/salon-cloud
 
 Add define
 ```
-var SalonRoute = require("./routes/salon");
+var SalonRoute = require("./Routes/salon");
 ```
 then
 ```
@@ -146,8 +146,8 @@ Use Postman to get access token
 ## How to use mongoose ##
 
  1. Read [Getting Started](http://mongoosejs.com/docs/index.html)
- 2. Read data structure file: [modules/salon/ISalon.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/modules/salon/ISalon.ts)
- 3. Read Logic Class: [modules/salon/Salon.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/modules/salon/Salon.ts)
+ 2. Read data structure file: [modules/salon/ISalon.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/Modules/salon/ISalon.ts)
+ 3. Read Logic Class: [modules/salon/Salon.ts](https://github.com/thanhtruong0315/salon-cloud/blob/master/SalonCloud.Server/Modules/salon/Salon.ts)
  4. Expert: [How to add Sub Docs](http://mongoosejs.com/docs/subdocs.html)
 
 ## How to async/await instead of callback function ##
