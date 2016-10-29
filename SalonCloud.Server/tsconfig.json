@@ -14,7 +14,7 @@
     "./Modules/ServiceManagement/Service.d.ts",
     "./Modules/UserManagement/UserManagement.d.ts",
     "./App.ts",
-    "./Core/observer/Observer.d.ts"
+    "./Core/Observer/Observer.d.ts"
   ],
   "exclude": [
     "node_modules"
