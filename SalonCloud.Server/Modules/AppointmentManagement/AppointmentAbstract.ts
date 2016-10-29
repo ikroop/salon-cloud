@@ -34,7 +34,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         // Create appointment document
         //var result = this.createAppointmentDoc(appointment);
 
-        var result:any = await this.appointmentManagementDP.createAppointment(newAppointment);
+        var result: any = await this.appointmentManagementDP.createAppointment(newAppointment);
         if (result.err) {
             response.err = result.err;
             response.code = result.code;
@@ -111,114 +111,109 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         }
 
         // mark unavailable time point on the timeArray
-        /**
-         * PROCESS EXPLANATION: 
-         * Let's consider each tick is equivalent to 15 minutes, we have the example timeline with 15 ticks.
-         * timeArray :  0   1   2   3   4   5   6   7   8   9   10  11  12  13  14   
-         *              |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-         * 
-         * Example 1: Time needed is 45 minutes (timeNeededNumberOfTicks = 3 ticks).
-         *            The appointment time is 4-11. 
-         *             and the appointment is already touched by another appointment (flexible flag == true).
-         *   Then:
-         * leftPoleIndex = startTime - neededTime = 4 - 3 = 1
-         * rightPoleIndex = endTime =  11
-         * 
-         * updated timeArray :   0   1   2   3   4   5   6   7   8   9   10  11  12  13  14   
-         *                       |---xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx---|---|---|---|
-         * 
-         * Notice: 11 is still available.
-         * 
-         * 
-         * Example 2: Time needed is 45 minutes (timeNeededNumberOfTicks = 3 ticks).
-         *            The appointmentand time is 4-11, 
-         *            and the appointment is not touched by any other appointment (flexible flag == false).
-         *            and flexibleTime is 30 ( ==2 ticks).
-         *   Then: 
-         * leftPoleIndex = startTime + flexibleTimeTicks - neededTime =  4 + 2 - 3 = 6
-         * rightPoleIndex = endTime - flexibleTimeTicks = 11 - 2 = 9
-         * 
-         * updated timeArray : 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14   
-         *                     |---|---|---|---|---|---xxxxxxxxx---|---|---|---|---|---|
-         * 
-         * Notice: 9 is still available.
-         * 
-         * 
-         * Example 3: Time needed is 45 minutes (timeNeededNumberOfTicks = 3 ticks).
-         *            The appointmentand time is 4-7, 
-         *            and the appointment is not touched by any other appointment (flexible flag == false).
-         *            and flexibleTime is 30 ( ==2 ticks).
-         *   Then: 
-         * leftPoleIndex = startTime + flexibleTimeTicks - neededTime =  4 + 2 - 3 = 6
-         * rightPoleIndex = endTime - flexibleTimeTicks = 7 - 2 = 5
-         * (leftPoleIndex > rightPoleIndex)>>> no action needed on timeArray except for update flexible fields.
-         * 
-         * updated timeArray : 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14   
-         *                     |---|---|---|---|---|---|---|---|---|---|---|---|---|---|         
-         * 
-         * */
         if (appointmentArray) {
             // loop appointmentArray to work with each busy appointed time period
-            // each appointment run 1 time the explained process.
-
-            //TODO: split into 2 case: touched and not touched
             for (let eachAppointment of appointmentArray) {
 
-                // init leftPoleIndex
-                eachAppointment.startPoint = eachAppointment.start.min + eachAppointment.start.hour * 60;
-                let leftPoleIndex = (eachAppointment.startPoint - openTimePoint) / 15;
-
-                // init rightPoleIndex
-                eachAppointment.endPoint = eachAppointment.end.min + eachAppointment.end.hour * 60;
-                let rightPoleIndex = (eachAppointment.endPoint - openTimePoint) / 15;
-
-
-                // check if the current appointment touched by another appointment and adjust the 'POLEs';
-                if (eachAppointment.flexible) {
-                    // adjust the poles;
-                    leftPoleIndex -= timeNeededNumberOfTicks;
-                } else {
-                    // adjust the poles;
-                    leftPoleIndex = leftPoleIndex - timeNeededNumberOfTicks + flexibleTime / 15;
-                    rightPoleIndex = rightPoleIndex - flexibleTime / 15;
-                }
-
-
-                // if leftPoleInded > rightPoleIndex, dont update timeArray;
-                // if leftPoleInded<= rightPoleIndex, update timeArray with loop;
-                if (leftPoleIndex <= rightPoleIndex) {
-                    for (let i = rightPoleIndex - 1; (i >= leftPoleIndex) && (i >= 0); i--) {
-                        timeArray[i].status = false;
-                    }
-                }
-
-
-                //update flexible field for element in timeArray
-                if (eachAppointment.flexible) {
-                    for (let i = 1; i <= flexibleTime / 15; i++) {
-                        timeArray[i + rightPoleIndex - 1].flexible = true;
-                        timeArray[leftPoleIndex - i].flexible = true;
-                    }
-                }
-
-                //check if lastAvailPeriod should be mark unavailable too or not.
-                let lastAvailPeriodTicks = closeTimePoint / 15 - rightPoleIndex;
-                if (lastAvailPeriodTicks < timeNeededNumberOfTicks - flexibleTime / 15) {
-                    for (let i = rightPoleIndex; i <= closeTimePoint / 15; i++) {
-                        timeArray[i].status = false;
-                    }
-                }
-
+                this.filterTimeArray(eachAppointment, timeArray, openTimePoint, closeTimePoint, timeNeededNumberOfTicks, flexibleTime);
 
             }
         }
-
-
-
-
-
     }
 
+
+    /**
+     * PROCESS EXPLANATION: 
+     * Let's consider each tick is equivalent to 15 minutes, we have the example timeline with 15 ticks.
+     * timeArray :  0   1   2   3   4   5   6   7   8   9   10  11  12  13  14   
+     *              |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+     * 
+     * Example 1: Time needed is 45 minutes (timeNeededNumberOfTicks = 3 ticks).
+     *            The appointment time is 4-11. 
+     *             and the appointment is already touched by another appointment (flexible flag == true).
+     *   Then:
+     * leftPoleIndex = startTime - neededTime = 4 - 3 = 1
+     * rightPoleIndex = endTime =  11
+     * 
+     * updated timeArray :   0   1   2   3   4   5   6   7   8   9   10  11  12  13  14   
+     *                       |---xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx---|---|---|---|
+     * 
+     * Notice: 11 is still available.
+     * 
+     * 
+     * Example 2: Time needed is 45 minutes (timeNeededNumberOfTicks = 3 ticks).
+     *            The appointmentand time is 4-11, 
+     *            and the appointment is not touched by any other appointment (flexible flag == false).
+     *            and flexibleTime is 30 ( ==2 ticks).
+     *   Then: 
+     * leftPoleIndex = startTime + flexibleTimeTicks - neededTime =  4 + 2 - 3 = 6
+     * rightPoleIndex = endTime - flexibleTimeTicks = 11 - 2 = 9
+     * 
+     * updated timeArray : 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14   
+     *                     |---|---|---|---|---|---xxxxxxxxx---|---|---|---|---|---|
+     * 
+     * Notice: 9 is still available.
+     * 
+     * 
+     * Example 3: Time needed is 45 minutes (timeNeededNumberOfTicks = 3 ticks).
+     *            The appointmentand time is 4-7, 
+     *            and the appointment is not touched by any other appointment (flexible flag == false).
+     *            and flexibleTime is 30 ( ==2 ticks).
+     *   Then: 
+     * leftPoleIndex = startTime + flexibleTimeTicks - neededTime =  4 + 2 - 3 = 6
+     * rightPoleIndex = endTime - flexibleTimeTicks = 7 - 2 = 5
+     * (leftPoleIndex > rightPoleIndex)>>> no action needed on timeArray except for update flexible fields.
+     * 
+     * updated timeArray : 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14   
+     *                     |---|---|---|---|---|---|---|---|---|---|---|---|---|---|         
+     * 
+     * */
+    private filterTimeArray(appointment: any, timeArray: any, openTimePoint: number, closeTimePoint: number, timeNeededNumberOfTicks: number, flexibleTime: number) {
+
+        // init leftPoleIndex
+        let startPointOfAppointment = appointment.start.min + appointment.start.hour * 60;
+        let leftPoleIndex = (startPointOfAppointment - openTimePoint) / 15;
+
+        // init rightPoleIndex
+        let endPointOfAppointment = appointment.end.min + appointment.end.hour * 60;
+        let rightPoleIndex = (endPointOfAppointment - openTimePoint) / 15;
+
+
+        if (appointment.overlapped) {
+            // adjust the poles with touched appointment;
+            leftPoleIndex -= timeNeededNumberOfTicks;
+        } else {
+            // adjust the poles with UNTOUCHED APPOINTMENT;
+            leftPoleIndex = leftPoleIndex - timeNeededNumberOfTicks + flexibleTime / 15;
+            rightPoleIndex = rightPoleIndex - flexibleTime / 15;
+        }
+
+
+        // if leftPoleInded > rightPoleIndex, don't update timeArray;
+        // if leftPoleInded<= rightPoleIndex, update timeArray with loop;
+        if (leftPoleIndex <= rightPoleIndex) {
+            for (let i = rightPoleIndex - 1; (i >= leftPoleIndex) && (i >= 0); i--) {
+                timeArray[i].status = false;
+            }
+        }
+
+        //update flexible field for element in timeArray due to UNTOUCHED APPOINTMENT 
+        if (appointment.overlapped) {
+            for (let i = 1; i <= flexibleTime / 15; i++) {
+                timeArray[i + rightPoleIndex - 1].flexible = true;
+                timeArray[leftPoleIndex - i].flexible = true;
+            }
+        }
+
+        //check if lastAvailPeriod should be mark unavailable.
+        let lastAvailPeriodTicks = closeTimePoint / 15 - rightPoleIndex;
+        if (lastAvailPeriodTicks < timeNeededNumberOfTicks - flexibleTime / 15) {
+            for (let i = rightPoleIndex; i <= closeTimePoint / 15; i++) {
+                timeArray[i].status = false;
+            }
+        }
+
+    }
     protected abstract validation(appointment: AppointmentData): SalonCloudResponse<string>;
     protected abstract normalizationData(appointment: AppointmentData): AppointmentData;
 

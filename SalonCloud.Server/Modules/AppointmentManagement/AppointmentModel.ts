@@ -7,7 +7,10 @@ import { mongoose } from '../../Services/Database';
 const AppointmentSchema = new mongoose.Schema({
     customer_id: { type: String, require: true },
     device: { type: Number, require: true },
-    flexible: { type: Boolean, require: true },
+    overlapped: { 
+        status: {type: Boolean, require: true},
+        overlappedAppointmentId: String
+    },
     is_reminded: { type: Boolean, require: true },
     note: String,
     receipt_id: { type: String, require: true },
