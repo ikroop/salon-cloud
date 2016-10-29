@@ -41,7 +41,7 @@ describe('Employee Management', function () {
     describe('Unit Test Add New Employee', function () {
         var apiUrl = '/employee/create';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
+        /*it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
             var token = invalidToken;
             var salonId = validSalonId;
             var bodyRequest = {
@@ -69,7 +69,7 @@ describe('Employee Management', function () {
                     res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
                     done();
                 });
-        });
+        });*/
 
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to create new employee without salon id', function (done) {
             var token = validToken;

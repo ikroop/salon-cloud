@@ -33,7 +33,7 @@ describe('Salon Management', function () {
     describe('Unit Test Create Salon API', function () {
         var apiUrl = '/salon/create';
 
-        it('should return "InvalidTokenError" error trying to create salon information with invalid token', function (done) {
+        /*it('should return "InvalidTokenError" error trying to create salon information with invalid token', function (done) {
             var token = invalidToken;
             var bodyRequest = {
                 'salon_name': 'SunshineNails VA',
@@ -56,7 +56,7 @@ describe('Salon Management', function () {
                     res.body.err.should.have.property('name').eql('InvalidTokenError');
                     done();
                 });
-        });
+        });*/
 
         it('should return "MissingSalonName" error trying to create salon information without salon name', function (done) {
             var token = validToken;

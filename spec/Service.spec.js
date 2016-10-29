@@ -43,7 +43,7 @@ describe('Service Management', function () {
     describe('Unit Test Add Service', function () {
         var apiUrl = '/service/create';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
+        /*it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
             var token = invalidToken;
             var salonId = validSalonId;
             var bodyRequest = {
@@ -72,7 +72,7 @@ describe('Service Management', function () {
                     res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
                     done();
                 });
-        });
+        });*/
 
         it('should return ' + ErrorMessage.MissingGroupName.err.name + ' error trying to create new service(s) without specifying its group', function (done) {
             var token = validToken;
