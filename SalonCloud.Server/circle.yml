@@ -1,0 +1,15 @@
+machine:
+  node:
+    version: 5.5.0
+dependencies:
+  override:
+    - cd SalonCloud.Server
+    - npm install -g typescript   
+    - npm install -g mocha
+    - npm install
+    - tsc
+test:
+  post:
+    - mocha spec/Authentication.spec.js
+
+

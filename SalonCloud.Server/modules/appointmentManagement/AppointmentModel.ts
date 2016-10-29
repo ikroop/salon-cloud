@@ -1,7 +1,7 @@
 
 
 import { IAppointmentData } from './AppointmentData';
-import { mongoose } from '../../services/database';
+import { mongoose } from '../../Services/Database';
 
 
 const AppointmentSchema = new mongoose.Schema({

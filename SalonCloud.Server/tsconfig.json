@@ -6,15 +6,15 @@
     "target": "es6"
   },
   "files": [
-    "./routes/routes.d.ts",
-    "./core/validation/Validation.d.ts",
-    "./core/user/User.d.ts",
-    "./core/core.d.ts",
-    "./modules/schedule/Schedule.d.ts",
-    "./modules/serviceManagement/Service.d.ts",
-    "./modules/userManagement/UserManagement.d.ts",
-    "./app.ts",
-    "./core/observer/Observer.d.ts"
+    "./Routes/Routes.d.ts",
+    "./Core/Validation/Validation.d.ts",
+    "./Core/User/User.d.ts",
+    "./Core/Core.d.ts",
+    "./Modules/Schedule/Schedule.d.ts",
+    "./Modules/ServiceManagement/Service.d.ts",
+    "./Modules/UserManagement/UserManagement.d.ts",
+    "./App.ts",
+    "./Core/observer/Observer.d.ts"
   ],
   "exclude": [
     "node_modules"
