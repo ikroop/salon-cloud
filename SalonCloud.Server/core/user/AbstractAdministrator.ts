@@ -2,7 +2,7 @@
 
 import { AbstractEmployee } from './AbstractEmployee'
 import { UserProfile, UserData } from './../../modules/userManagement/UserData'
-import { UserModel } from './../../modules/usermanagement/UserModel'
+import UserModel = require('./../../modules/usermanagement/UserModel');
 import { AppointmentData } from './../../modules/appointmentManagement/AppointmentData'
 import { AdministratorBehavior } from './AdministratorBehavior'
 import { BookingAppointment } from './../../modules/appointmentManagement/BookingAppointment';
@@ -10,7 +10,7 @@ import { SalonCloudResponse } from './../SalonCloudResponse'
 import { ErrorMessage } from './../ErrorMessage'
 import { CustomerManagement } from './../../modules/usermanagement/CustomerManagement'
 import { Authentication } from './../authentication/Authentication'
-import { DailyScheduleData, WeeklyScheduleData } from './../../modules/schedule/ScheduleData';
+import { IDailyScheduleData, IWeeklyScheduleData } from './../../modules/schedule/ScheduleData'
 import { ReceiptManagement } from './../../modules/receipt/ReceiptManagement'
 
 export abstract class AbstractAdministrator extends AbstractEmployee implements AdministratorBehavior {
@@ -69,15 +69,15 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         // create receipt 
         var receiptCreation = await receiptManagementDP.add(inputData);
-        if(receiptCreation.err) {
+        if (receiptCreation.err) {
             response.err = receiptCreation.err;
             response.code = receiptCreation.code;
             return response;
         }
 
         // create appointment
-        var result = await appointmentByPhone.createAppointment(inputData);
-        if(result.err) {
+        var result: any = await appointmentByPhone.createAppointment(inputData);
+        if (result.err) {
             response.err = result.err;
             response.code = result.code;
             return response;
@@ -122,7 +122,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
             } else {
                 // customer account not existed, create account with salon profile for the user
-                var customerCreation = await customerManagementDP.createCustomer(inputData);
+                var customerCreation: any = await customerManagementDP.createCustomer(inputData);
                 response.data = customerCreation.data._id;
                 response.code = 200;
                 return response;
@@ -136,20 +136,14 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
     }
 
-
-
-
-
-
-
     public updateAppointment(appointment: AppointmentData) {
 
     };
+    public updateDailySchedule(employeeId: string, dailySchedule: IDailyScheduleData) {
 
-    public updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData) {
     };
 
-    public updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData) {
+    public updateWeeklySchedule(employeeId: string, weeklySchedule: IWeeklyScheduleData) {
 
     };
 

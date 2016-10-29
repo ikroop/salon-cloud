@@ -4,6 +4,7 @@
 //
 //
 //
+import { mongoose } from "./../../services/database";
 
 export interface SalonInformation {
     salon_name: string;
@@ -25,9 +26,10 @@ export interface SalonSetting {
     flexible_time: number;
     technician_checkout: boolean;
 }
-export interface SalonData {
-    _id?: string,
-    information: SalonInformation,
-    setting: SalonSetting,
 
+export interface SalonData {
+    information: SalonInformation,
+    setting: SalonSetting
 }
+
+export interface ISalonModel extends SalonData, mongoose.Document{}

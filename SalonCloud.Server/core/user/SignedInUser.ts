@@ -51,8 +51,8 @@ export class SignedInUser implements SignedInUserBehavior {
         }
         // get Timezone from address and puts that into salon information constructor
         // TODO:
-        var Timezone = await GoogleMap.getTimeZone(salonInformation.location.address);
-        salonInformation.location.timezone_id = Timezone.timeZoneId;
+        var Timezone:any = await GoogleMap.getTimeZone(salonInformation.location.address);
+        salonInformation.location.timezone_id = Timezone["timeZoneId"];
         
         // Create Salon Document
         var salonData = await this.salonManagementDP.createSalonDocs(salonInformation);

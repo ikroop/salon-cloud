@@ -20,7 +20,7 @@ export class BookingAppointment implements BookingAppointmentBehavior {
         return;
     };
     
-    getAvailableTime(date : Date, services : Array<ServiceItemData>) : SalonCloudResponse<BookingSchedule>{
+    getAvailableTime(date : Date, services : Array<ServiceItemData>) : SalonCloudResponse<any>{
 
         return;
     };

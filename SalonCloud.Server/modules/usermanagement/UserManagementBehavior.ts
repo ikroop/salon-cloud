@@ -1,5 +1,5 @@
 
-import {UserData, UserProfile} from './UserData'
+import {UserData, UserProfile} from './UserData';
 
 
 export interface UserManagementBehavior{

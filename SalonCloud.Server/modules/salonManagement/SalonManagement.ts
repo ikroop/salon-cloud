@@ -4,9 +4,9 @@
  * 
  */
 import { SalonManagementBehavior } from './SalonManagementBehavior'
-import { SalonData, SalonInformation, SalonSetting } from './SalonData'
+import { ISalonModel, SalonData, SalonInformation, SalonSetting } from './SalonData'
 import { SalonCloudResponse } from './../../core/SalonCloudResponse'
-import { SalonModel, SalonProfileSchema } from './SalonModel'
+import SalonModel = require('./SalonModel');
 import { defaultSalonSetting } from './../../core/defaultData'
 import { BaseValidator } from './../../core/validation/BaseValidator'
 import { MissingCheck, IsPhoneNumber, IsEmail, IsString } from './../../core/validation/ValidationDecorators'
@@ -36,7 +36,7 @@ export class SalonManagement implements SalonManagementBehavior {
 	*/
     public async createSalonDocs(salonInformation: SalonInformation) {
 
-        var returnResult: SalonCloudResponse<SalonData> = {
+        var returnResult: SalonCloudResponse<ISalonModel> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -46,7 +46,8 @@ export class SalonManagement implements SalonManagementBehavior {
             setting: defaultSalonSetting,
         }
         // create Salon record
-        var SalonCreation = SalonModel.create(salonData);
+        var salon = new SalonModel(salonData);
+        var SalonCreation = salon.save();
         await SalonCreation.then(function (docs) {
             returnResult.data = docs;
         }, function (err) {
@@ -76,7 +77,7 @@ export class SalonManagement implements SalonManagementBehavior {
         return;
     };
 
-    public async validation(salonInformation: SalonInformation): any {
+    public async validation(salonInformation: SalonInformation) {
         var returnResult: SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,

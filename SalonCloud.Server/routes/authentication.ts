@@ -6,7 +6,7 @@
 import jwt = require('jsonwebtoken');
 import { Router, Request, Response } from "express";
 import { AuthorizationRouter } from "./authorization";
-import { Authentication } from '../core/authentication/authentication';
+import { Authentication } from './../core/authentication/authentication';
 import { SalonCloudResponse } from "./../core/SalonCloudResponse";
 
 export class AuthenticationRouter {
@@ -29,7 +29,7 @@ export class AuthenticationRouter {
 
         this.router.post("/signinwithusernameandpassword", authorizationRouter.checkPermission, async function (request: Request, response: Response) {
             //TODO: have to use Anonymouse class
-            let result = await authentication.signInWithUsernameAndPassword(request.body.username, request.body.password);
+            let result:any = await authentication.signInWithUsernameAndPassword(request.body.username, request.body.password);
             response.statusCode = result.code;
             if(result.err){
                 response.json(result.err);

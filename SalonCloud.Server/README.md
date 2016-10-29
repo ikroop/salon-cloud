@@ -1,6 +1,6 @@
 SalonCloud.Server
 =================
-
+[ ![Codeship Status for thanhtruong0315/salon-cloud](https://codeship.com/projects/c2934100-7e12-0134-56d1-42c59cf9d92c/status?branch=master)](https://codeship.com/projects/181578)
 API References
 ==============
 

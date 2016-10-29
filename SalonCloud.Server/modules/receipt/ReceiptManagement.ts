@@ -8,7 +8,7 @@
 
 import { ReceiptManagementBehavior } from './ReceiptManagementBehavior';
 import { ReceiptData, ReceiptItemData } from './ReceiptData';
-import { ReceiptModel } from './ReceiptModel';
+import ReceiptModel = require ('./ReceiptModel');
 import {SalonCloudResponse} from './../../core/SalonCloudResponse';
 
 export class ReceiptManagement implements ReceiptManagementBehavior {

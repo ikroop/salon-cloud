@@ -3,10 +3,12 @@
 
 */
 import { Validator, DecoratingValidator, BaseValidator } from "./BaseValidator";
-import { SalonModel } from "./../../modules/salonManagement/SalonModel";
-import { ServiceGroupModel } from './../../modules/serviceManagement/ServiceModel';
+
+import SalonModel = require("./../../modules/salonManagement/SalonModel");
+import ServiceGroupModel = require('./../../modules/serviceManagement/ServiceModel');
+import { IServiceGroupData } from './../../modules/serviceManagement/ServiceData';
 import { ErrorMessage } from './../ErrorMessage';
-import { UserModel } from './../../modules/usermanagement/UserModel'
+import UserModel = require('./../../modules/usermanagement/UserModel');
 
 //Validate if target element is missing.
 //To pass the test: Target Element must not be undefined.
@@ -314,7 +316,8 @@ export class IsValidSalonId extends DecoratingValidator {
 
     }
 
-    private async checkSalonId(salonId: string, errorType: any): any {
+
+    private async checkSalonId(salonId: string, errorType: any): Promise<any> {
         let promise = new Promise<any>(function (resolve, reject) {
             var response = undefined;
             SalonModel.findOne({ "_id": salonId }, function (err, docs) {
@@ -438,7 +441,8 @@ export class IsServiceGroupNameExisted extends DecoratingValidator {
 
     }
 
-    private async checkExistence(groupName: string, salonId: string, errorType: any): any {
+
+    private async checkExistence(groupName: string, salonId: string, errorType: any): Promise<any> {
         let promise = new Promise<any>(function (resolve, reject) {
             var response = undefined;
             ServiceGroupModel.findOne({ "name": groupName, "salon_id": salonId }, function (err, docs) {
@@ -481,10 +485,10 @@ export class IsValidServiceId extends DecoratingValidator {
 
     }
 
-    private async checkExistence(serviceId: string, groupName: string, salonId: string, errorType: any): any {
+    private async checkExistence(serviceId: string, groupName: string, salonId: string, errorType: any): Promise<any> {
         let promise = new Promise<any>(function (resolve, reject) {
             var response = undefined;
-            ServiceGroupModel.findOne({ "name": groupName, "salon_id": salonId }, function (err, docs) {
+            ServiceGroupModel.findOne({ "name": groupName, "salon_id": salonId }, function (err, docs:any) {
                 if (err) {
                     response = errorType;
                 } else if (!docs) {
@@ -525,7 +529,7 @@ export class IsValidEmployeeId extends DecoratingValidator {
 
     }
 
-    private async checkExistence(employeeId: string, salonId: string, errorType: any): any {
+    private async checkExistence(employeeId: string, salonId: string, errorType: any): Promise<any> {
         let promise = new Promise<any>(function (resolve, reject) {
             var response = undefined;
             UserModel.findOne({ "_id": employeeId }, function (err, docs) {

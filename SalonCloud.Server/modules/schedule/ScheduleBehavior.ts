@@ -4,8 +4,8 @@
 //
 //
 //
-import { DailyScheduleData, WeeklyScheduleData, DailyDayData, WeeklyDayData } from './ScheduleData';
-import {SalonCloudResponse} from "../../core/SalonCloudResponse";
+import { IDailyScheduleData, IWeeklyScheduleData, DailyDayData, WeeklyDayData } from './ScheduleData';
+import {SalonCloudResponse} from "./../../core/SalonCloudResponse";
 
 export interface ScheduleBehavior{
     /**

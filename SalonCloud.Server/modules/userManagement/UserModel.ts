@@ -5,40 +5,44 @@
  * 
  */
 
-import {UserData} from "./UserData";
-import { mongoose } from "../../services/database";
+import { IUserData } from "./UserData";
+import { mongoose } from "./../../services/database";
 
 import passportLocalMongoose = require('passport-local-mongoose');
 import Schema = mongoose.Schema;
 
-export const UserProfileSchema = new mongoose.Schema({
-    salon_id: { type: String, required: true },
-    status: { type: Boolean, required: true },
-    role: { type: Number, required: true },
-    fullname: {type: String, require: true},
-    nickname: {type: String, require: true},
-    social_security_number: String,
-    salary_rate: Number,
-    cash_rate: Number,
-    birthday: String,
-    address: String,
-    email: String
+const UserProfileSchema = new mongoose.Schema({
+  salon_id: { type: String, required: true },
+  status: { type: Boolean, required: true },
+  role: { type: Number, required: true },
+  fullname: { type: String, require: true },
+  nickname: { type: String, require: true },
+  social_security_number: String,
+  salary_rate: Number,
+  cash_rate: Number,
+  birthday: String,
+  address: String,
+  email: String
 
 });
 
-export const UserSchema = new Schema({
-    username: { type: String, required: true },
-    password: String,
-    status: { type: Boolean, required: true },
-    is_verified: { type: Boolean, required: true },
-    is_temporary: { type: Boolean, required: true },
-    profile: [UserProfileSchema]
+const UserSchema = new Schema({
+  username: { type: String, required: true },
+  password: String,
+  status: { type: Boolean, required: true },
+  is_verified: { type: Boolean, required: true },
+  is_temporary: { type: Boolean, required: true },
+  profile: [UserProfileSchema]
 });
 
 UserSchema.plugin(passportLocalMongoose);
 
-if (mongoose.models.User) {
-  export const UserModel = mongoose.model('User')
-} else {
-  export const UserModel = mongoose.model<UserData>('User', UserSchema);
+var UserModel;
+try {
+  // Throws an error if "Name" hasn't been registered
+  UserModel = mongoose.model("User")
+} catch (e) {
+  UserModel = mongoose.model<IUserData>('User', UserSchema);
 }
+
+export = UserModel;

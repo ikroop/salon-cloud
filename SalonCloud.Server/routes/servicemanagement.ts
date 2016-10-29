@@ -3,12 +3,12 @@
  */
 
 import { Router, Request, Response } from "express";
-import { SalonCloudResponse } from "../core/SalonCloudResponse";
-import { Authentication } from '../core/authentication/authentication';
-import { Authorization } from "../core/authorization/authorization";
+import { SalonCloudResponse } from "./../core/SalonCloudResponse";
+import { Authentication } from './../core/authentication/authentication';
+import { Authorization } from "./../core/authorization/authorization";
 import { AuthorizationRouter } from "./authorization";
-import { Owner } from "../core/user/Owner"
-import {SalonManagement} from "../modules/salonManagement/SalonManagement"
+import { Owner } from "./../core/user/Owner"
+import {SalonManagement} from "./../modules/salonManagement/SalonManagement"
 
 export class ServiceManagementRouter {
     private router: Router = Router();    
@@ -21,7 +21,7 @@ export class ServiceManagementRouter {
             
 
             var ownerObject = new Owner(request.user._id, new SalonManagement(request.body.salon_id));
-            var creatingServiceAction = await ownerObject.addService(request.body);
+            var creatingServiceAction:any = await ownerObject.addService(request.body);
             var returnData;
             if(creatingServiceAction.err){
                 returnData = {

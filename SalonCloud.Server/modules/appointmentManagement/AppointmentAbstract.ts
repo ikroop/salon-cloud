@@ -34,7 +34,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         // Create appointment document
         //var result = this.createAppointmentDoc(appointment);
 
-        var result = await this.appointmentManagementDP.createAppointment(newAppointment);
+        var result:any = await this.appointmentManagementDP.createAppointment(newAppointment);
         if (result.err) {
             response.err = result.err;
             response.code = result.code;

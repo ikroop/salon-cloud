@@ -4,11 +4,11 @@
 
 import { Router, Request, Response } from "express";
 import { AuthorizationRouter } from "./authorization";
-import { Authentication } from '../core/authentication/authentication';
-import { SignedInUser } from '../core/user/SignedInUser';
-import { SalonManagement } from '../modules/salonManagement/SalonManagement';
-import { UserManagement } from '../modules/userManagement/UserManagement';
-import { SalonInformation } from '../modules/salonManagement/SalonData'
+import { Authentication } from './../core/authentication/authentication';
+import { SignedInUser } from './../core/user/SignedInUser';
+import { SalonManagement } from './../modules/salonManagement/SalonManagement';
+import { UserManagement } from './../modules/userManagement/UserManagement';
+import { SalonInformation } from './../modules/salonManagement/SalonData'
 
 export class SalonManagementRouter {
     private router: Router = Router();

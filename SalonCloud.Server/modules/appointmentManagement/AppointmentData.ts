@@ -1,4 +1,9 @@
-
+/**
+ * 
+ * 
+ * 
+ */
+import { mongoose } from '../../services/database';
 
 export interface AppointmentData {
 
@@ -13,3 +18,5 @@ export interface AppointmentData {
     status: number;
     type: number;
 }
+
+export interface IAppointmentData extends AppointmentData, mongoose.Document { };

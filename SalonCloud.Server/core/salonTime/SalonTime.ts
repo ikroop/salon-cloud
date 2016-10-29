@@ -9,7 +9,7 @@
 import * as moment from 'moment';
 import { SalonTimeData } from './SalonTimeData';
 export class SalonTime {
-    private momentObject: moment;
+    private momentObject: moment.Moment;
     constructor(salonTime: SalonTimeData) {
         var timeString: string = salonTime.year + '-' + salonTime.month + '-' + 
                                  salonTime.day + ' ' + salonTime.hour + ':' + salonTime.min;
@@ -39,7 +39,7 @@ export class SalonTime {
     }
 
     public setMinute(minute: number) {
-        this.momentObject.minunte(minute);
+        this.momentObject.minute(minute);
     }
 
     public setHour(hour: number) {

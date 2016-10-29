@@ -1,8 +1,8 @@
 
-import { mongoose } from "../../services/database";
-import {ServiceItemData, ServiceGroupData} from './ServiceData'
+import { mongoose } from "./../../services/database";
+import { IServiceGroupData} from './ServiceData'
 
-export const ServiceItemSchema = new mongoose.Schema(
+const ServiceItemSchema = new mongoose.Schema(
     {
         id: { type: String, required: false },
         price: { type: Number, required: true },
@@ -14,7 +14,7 @@ export const ServiceItemSchema = new mongoose.Schema(
     }
 );
 
-export const ServiceGroupSchema = new mongoose.Schema(
+const ServiceGroupSchema = new mongoose.Schema(
     {
         id: { type: String, required: false },
         salon_id: { type: String, required: true },
@@ -27,5 +27,5 @@ export const ServiceGroupSchema = new mongoose.Schema(
     }
 );
 
-export const ServiceItemModel = mongoose.model<ServiceItemData>('ServiceItem', ServiceItemSchema);
-export const ServiceGroupModel = mongoose.model<ServiceGroupData>('ServiceGroup', ServiceGroupSchema);
+var ServiceGroupModel = mongoose.model<IServiceGroupData>('ServiceGroup', ServiceGroupSchema);
+export = ServiceGroupModel;

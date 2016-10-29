@@ -1,10 +1,10 @@
 
 
-import { AppointmentData } from './AppointmentData';
+import { IAppointmentData } from './AppointmentData';
 import { mongoose } from '../../services/database';
 
 
-export const AppointmentSchema = new mongoose.Schema({
+const AppointmentSchema = new mongoose.Schema({
     customer_id: { type: String, require: true },
     device: { type: Number, require: true },
     flexible: { type: Boolean, require: true },
@@ -16,4 +16,5 @@ export const AppointmentSchema = new mongoose.Schema({
     type: { type: Number, require: true }
 });
 
-export const AppointmentModel = mongoose.model<AppointmentData>('Appointment', AppointmentSchema);
+var AppointmentModel = mongoose.model<IAppointmentData>('Appointment', AppointmentSchema);
+export = AppointmentModel;

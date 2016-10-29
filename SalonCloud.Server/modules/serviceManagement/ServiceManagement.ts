@@ -10,8 +10,8 @@ import { BaseValidator } from "./../../core/validation/BaseValidator";
 import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidNameString, IsServiceGroupNameExisted }
     from "./../../core/validation/ValidationDecorators";
 import { ErrorMessage } from './../../core/ErrorMessage';
-import { SalonCloudResponse } from "../../core/SalonCloudResponse";
-import { ServiceGroupModel, ServiceItemModel } from "./ServiceModel"
+import { SalonCloudResponse } from "./../../core/SalonCloudResponse";
+import ServiceGroupModel = require("./ServiceModel");
 
 export class ServiceManagement implements ServiceManagementBehavior {
     private salonId: string;
@@ -88,7 +88,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * Get all service groups and services.
      */
     public async getServices() {
-        var returnResult: SalonCloudResponse<[ServiceGroupData]> = {
+        /*var returnResult: SalonCloudResponse<[ServiceGroupData]> = {
             err: undefined,
             code: undefined,
             data: undefined
@@ -104,7 +104,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
                 }
             }
         });
-        return returnResult;
+        return returnResult;*/
     };
 
     /**
@@ -116,7 +116,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * Update all data in service group by new service group data.
      */
     public async updateGroup(groupId: string, group: ServiceGroupData) {
-        var returnResult: SalonCloudResponse<boolean> = {
+        /*var returnResult: SalonCloudResponse<boolean> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -131,7 +131,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
         }, function (err) {
             returnResult.err = err;
         })
-        return returnResult;
+        return returnResult;*/
     };
 
     /**
