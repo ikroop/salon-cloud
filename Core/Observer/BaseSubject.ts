@@ -1,5 +1,5 @@
-import { Subject } from "./Subject";
-import { Observer } from "./Observer";
+import { Subject } from './Subject';
+import { Observer } from './Observer';
 
 export class BaseSubject implements Subject {
     private observers: Observer[] = [];

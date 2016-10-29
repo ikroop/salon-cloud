@@ -8,7 +8,7 @@
 import { UserManagementBehavior } from './UserManagementBehavior'
 import { UserData, UserProfile } from './UserData'
 // FIX ME: the path have to contain modules/UserManagement
-import UserModel = require ("./../../Modules/UserManagement/UserModel");
+import UserModel = require ('./../../Modules/UserManagement/UserModel');
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 

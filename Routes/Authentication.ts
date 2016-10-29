@@ -4,10 +4,10 @@
 
 
 import jwt = require('jsonwebtoken');
-import { Router, Request, Response } from "express";
-import { AuthorizationRouter } from "./Authorization";
+import { Router, Request, Response } from 'express';
+import { AuthorizationRouter } from './Authorization';
 import { Authentication } from './../Core/Authentication/Authentication';
-import { SalonCloudResponse } from "./../Core/SalonCloudResponse";
+import { SalonCloudResponse } from './../Core/SalonCloudResponse';
 
 export class AuthenticationRouter {
     private router: Router = Router();
@@ -16,7 +16,7 @@ export class AuthenticationRouter {
         var authentication = new Authentication();
         var authorizationRouter = new AuthorizationRouter();
 
-        this.router.post("/signupwithusernameandpassword", authorizationRouter.checkPermission, async(request: Request, response: Response) => {    
+        this.router.post('/signupwithusernameandpassword', authorizationRouter.checkPermission, async(request: Request, response: Response) => {    
             //TODO: have to use Anonymouse class
             let result = await authentication.signUpWithUsernameAndPassword(request.body.username, request.body.password);
             response.statusCode = result.code;
@@ -27,7 +27,7 @@ export class AuthenticationRouter {
             }
         });
 
-        this.router.post("/signinwithusernameandpassword", authorizationRouter.checkPermission, async function (request: Request, response: Response) {
+        this.router.post('/signinwithusernameandpassword', authorizationRouter.checkPermission, async function (request: Request, response: Response) {
             //TODO: have to use Anonymouse class
             let result:any = await authentication.signInWithUsernameAndPassword(request.body.username, request.body.password);
             response.statusCode = result.code;

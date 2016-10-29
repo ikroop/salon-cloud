@@ -1,2 +1,2 @@
-/// <reference path="BaseValidator.ts" />
-/// <reference path="ValidationDecorators.ts" />
+/// <reference path='BaseValidator.ts' />
+/// <reference path='ValidationDecorators.ts' />

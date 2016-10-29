@@ -5,7 +5,7 @@
  * 
  * 
  */
-import { AppointmentData } from "./AppointmentData";
+import { AppointmentData } from './AppointmentData';
 
 export interface AppointmentBehavior {
     cancelAppointment(appointmentId : string);

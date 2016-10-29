@@ -1,5 +1,5 @@
 
-import { Twilio } from "./../Sms/TwilioSMS"
+import { Twilio } from './../Sms/TwilioSMS'
 import { Verification } from './Verification'
 import { SalonCloudResponse } from './../SalonCloudResponse'
 

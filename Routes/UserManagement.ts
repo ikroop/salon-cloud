@@ -2,11 +2,11 @@
  * GET users listing.
  */
 
-import { Router, Request, Response } from "express";
-import { SalonCloudResponse } from "./../Core/SalonCloudResponse";
+import { Router, Request, Response } from 'express';
+import { SalonCloudResponse } from './../Core/SalonCloudResponse';
 import { Authentication } from './../Core/Authentication/Authentication';
-import { Authorization } from "./../Core/Authorization/Authorization";
-import { AuthorizationRouter } from "./Authorization";
+import { Authorization } from './../Core/Authorization/Authorization';
+import { AuthorizationRouter } from './Authorization';
 import { EmployeeManagement } from './../Modules/UserManagement/EmployeeManagement';
 import { SalonManagement } from './../Modules/SalonManagement/SalonManagement'
 import { Owner } from './../Core/User/Owner'
@@ -19,11 +19,11 @@ export class UserManagementRouter {
         var authentication = new Authentication();
         var authorizationRouter = new AuthorizationRouter();
 
-        this.router.post("/API-NAME", function (request: Request, response: Response) {
+        this.router.post('/API-NAME', function (request: Request, response: Response) {
 
         });
 
-        this.router.post("/create", authorizationRouter.checkPermission , async (request: Request, response: Response) => {
+        this.router.post('/create', authorizationRouter.checkPermission , async (request: Request, response: Response) => {
 
 
             var result: SalonCloudResponse<any> = {

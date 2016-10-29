@@ -100,7 +100,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             err: undefined
         };
         var customerManagementDP = new CustomerManagement(salonId);
-        var userFinding = UserModel.findOne({ "username": inputData.customer_phone }).exec();
+        var userFinding = UserModel.findOne({ 'username': inputData.customer_phone }).exec();
         await userFinding.then(async function (docs) {
             // customer account existed, get Id and check if needed to create profile for salon;
             if (docs) {

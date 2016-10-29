@@ -5,8 +5,8 @@
  * 
  */
 
-import { IUserData } from "./UserData";
-import { mongoose } from "./../../Services/Database";
+import { IUserData } from './UserData';
+import { mongoose } from './../../Services/Database';
 
 import passportLocalMongoose = require('passport-local-mongoose');
 import Schema = mongoose.Schema;
@@ -39,8 +39,8 @@ UserSchema.plugin(passportLocalMongoose);
 
 var UserModel;
 try {
-  // Throws an error if "Name" hasn't been registered
-  UserModel = mongoose.model("User")
+  // Throws an error if 'Name' hasn't been registered
+  UserModel = mongoose.model('User')
 } catch (e) {
   UserModel = mongoose.model<IUserData>('User', UserSchema);
 }

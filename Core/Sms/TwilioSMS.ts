@@ -4,8 +4,8 @@
  * 
  * 
  */
-var TwilioSecret = require("./Secret");
-var TwilioClient = require("twilio")(TwilioSecret.sid, TwilioSecret.token);
+var TwilioSecret = require('./Secret');
+var TwilioClient = require('twilio')(TwilioSecret.sid, TwilioSecret.token);
 
 export class Twilio {
     static async sendSMS(phonenumber: string, content: string) {

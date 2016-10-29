@@ -2,17 +2,17 @@
  * 
  * 
  */
-import { mongoose } from "./../../Services/Database";
-import { Schedule } from "./Schedule";
-import { ScheduleItemData, IDailyScheduleData, IWeeklyScheduleData, DailyDayData, WeeklyDayData } from "./ScheduleData";
-import WeeklyScheduleModel = require("./WeeklyScheduleModel");
-import DailyScheduleModel = require("./DailyScheduleModel");
-import {SalonCloudResponse} from "./../../Core/SalonCloudResponse";
-import {BaseValidator} from "./../../Core/Validation/BaseValidator";
+import { mongoose } from './../../Services/Database';
+import { Schedule } from './Schedule';
+import { ScheduleItemData, IDailyScheduleData, IWeeklyScheduleData, DailyDayData, WeeklyDayData } from './ScheduleData';
+import WeeklyScheduleModel = require('./WeeklyScheduleModel');
+import DailyScheduleModel = require('./DailyScheduleModel');
+import {SalonCloudResponse} from './../../Core/SalonCloudResponse';
+import {BaseValidator} from './../../Core/Validation/BaseValidator';
 import {MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId}
-    from "./../../Core/Validation/ValidationDecorators";
-import {SalonSchedule} from "./SalonSchedule"
-var ErrorMessage = require  ("./../../Core/ErrorMessage");
+    from './../../Core/Validation/ValidationDecorators';
+import {SalonSchedule} from './SalonSchedule'
+var ErrorMessage = require  ('./../../Core/ErrorMessage');
 export class EmployeeSchedule extends Schedule {
 
     constructor (salonId: string, employeeId: string){

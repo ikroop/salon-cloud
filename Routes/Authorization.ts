@@ -3,15 +3,15 @@
  */
 
 
-import { Router, Request, Response } from "express";
-import { SalonCloudResponse } from "./../Core/SalonCloudResponse";
+import { Router, Request, Response } from 'express';
+import { SalonCloudResponse } from './../Core/SalonCloudResponse';
 import { Authentication } from './../Core/Authentication/Authentication';
-import { Authorization } from "./../Core/Authorization/Authorization";
+import { Authorization } from './../Core/Authorization/Authorization';
 export class AuthorizationRouter {
     private router: Router = Router();
 
     public checkPermission(request: Request, response: Response, next) {
-        var token = request.headers["authorization"];
+        var token = request.headers['authorization'];
         var authentication = new Authentication();
         var authorization = new Authorization();
         /*authentication.verifyToken(token, function (err, code, data) {
@@ -43,10 +43,10 @@ export class AuthorizationRouter {
     getRouter(): Router {
         var auhthorization = new Authorization();
 
-        this.router.post("/allowpermission", function (request: Request, response: Response) {
+        this.router.post('/allowpermission', function (request: Request, response: Response) {
 
         });
-        this.router.post("/disallowpermission", function (request: Request, response: Response) {
+        this.router.post('/disallowpermission', function (request: Request, response: Response) {
 
         });
         return this.router;

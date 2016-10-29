@@ -2,8 +2,8 @@
  * Salon REST API
  */
 
-import { Router, Request, Response } from "express";
-import { AuthorizationRouter } from "./Authorization";
+import { Router, Request, Response } from 'express';
+import { AuthorizationRouter } from './Authorization';
 import { Authentication } from './../Core/Authentication/Authentication';
 import { SignedInUser } from './../Core/User/SignedInUser';
 import { SalonManagement } from './../Modules/SalonManagement/SalonManagement';
@@ -17,7 +17,7 @@ export class SalonManagementRouter {
         var authentication = new Authentication();
         var authorizationRouter = new AuthorizationRouter();
 
-        this.router.post("/create", authorizationRouter.checkPermission, async (request: Request, response: Response) => {
+        this.router.post('/create', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
             var signedUser = new SignedInUser(request.user._id, new SalonManagement(null));//Todo
             var salonInformationInput: SalonInformation = {
                 email: request.body.email,
@@ -53,15 +53,15 @@ export class SalonManagementRouter {
             response.json(dataReturn);
         });
 
-        this.router.post("/getsalonlist", authorizationRouter.checkPermission, function (request: Request, response: Response) {
+        this.router.post('/getsalonlist', authorizationRouter.checkPermission, function (request: Request, response: Response) {
 
         });
 
-        this.router.post("/updatesettings", authorizationRouter.checkPermission, function (request: Request, response: Response) {
+        this.router.post('/updatesettings', authorizationRouter.checkPermission, function (request: Request, response: Response) {
 
         });
 
-        this.router.post("/updateinformation", authorizationRouter.checkPermission, function (request: Request, response: Response) {
+        this.router.post('/updateinformation', authorizationRouter.checkPermission, function (request: Request, response: Response) {
 
         });
 

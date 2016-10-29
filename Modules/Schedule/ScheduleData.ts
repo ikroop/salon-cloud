@@ -3,8 +3,8 @@
 *
 *
 */
-import { mongoose } from "./../../Services/Database";
-import { Document } from "mongoose";
+import { mongoose } from './../../Services/Database';
+import { Document } from 'mongoose';
 
 export interface ScheduleItemData {
     close: number,

@@ -4,8 +4,8 @@
  * 
  * 
  */
-import { AuthorizationBehavior } from "./AuthorizationBehavior";
-import { SalonCloudResponse } from "./../SalonCloudResponse";
+import { AuthorizationBehavior } from './AuthorizationBehavior';
+import { SalonCloudResponse } from './../SalonCloudResponse';
 export class Authorization implements AuthorizationBehavior{
     public checkPermission(userId: string, functionName: string): SalonCloudResponse<boolean> {
         var response: SalonCloudResponse<boolean>;

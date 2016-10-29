@@ -1,5 +1,5 @@
 
-import { mongoose } from "./../../Services/Database";
+import { mongoose } from './../../Services/Database';
 import { IDailyScheduleData } from './ScheduleData'
 
 

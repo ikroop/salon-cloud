@@ -1,5 +1,5 @@
 
-import { mongoose } from "./../../Services/Database";
+import { mongoose } from './../../Services/Database';
 import { IWeeklyScheduleData } from './ScheduleData'
 
 const WeeklyDaySchema = new mongoose.Schema({

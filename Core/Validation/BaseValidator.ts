@@ -3,7 +3,7 @@
  * 
  */
 
-var errorMessage = require("./../ErrorMessage");
+var errorMessage = require('./../ErrorMessage');
 //Parent Validator;
 export abstract class Validator {
     public targetElement: any;

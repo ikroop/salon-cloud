@@ -5,16 +5,16 @@
  * 
  */
 
-import { SalonCloudResponse } from "./../SalonCloudResponse";
-import { AuthenticationBehavior } from "./AuthenticationBehavior";
+import { SalonCloudResponse } from './../SalonCloudResponse';
+import { AuthenticationBehavior } from './AuthenticationBehavior';
 import { ErrorMessage } from './../ErrorMessage';
-import UserModel = require("./../../Modules/UserManagement/UserModel");
-import { IUserData, UserData, UserProfile } from "./../../Modules/UserManagement/UserData"
+import UserModel = require('./../../Modules/UserManagement/UserModel');
+import { IUserData, UserData, UserProfile } from './../../Modules/UserManagement/UserData'
 import jwt = require('jsonwebtoken');
 import fs = require('fs');
-import { BaseValidator } from "./../../Core/Validation/BaseValidator";
+import { BaseValidator } from './../../Core/Validation/BaseValidator';
 import { MissingCheck, IsString, IsLengthGreaterThan, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidUserName }
-    from "./../../Core/Validation/ValidationDecorators";
+    from './../../Core/Validation/ValidationDecorators';
 
 export class Authentication implements AuthenticationBehavior {
     changePassword(oldPasswords: string, newPassword: string, code: string, callback) {

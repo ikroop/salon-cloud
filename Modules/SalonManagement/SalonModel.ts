@@ -2,7 +2,7 @@
  * 
  * 
  */
-import { mongoose } from "./../../Services/Database";
+import { mongoose } from './../../Services/Database';
 import { ISalonModel } from './SalonData';
 
 const SalonProfileSchema = new mongoose.Schema({
@@ -28,10 +28,10 @@ const SalonProfileSchema = new mongoose.Schema({
 
 let SalonModel; 
 try {
-  // Throws an error if "Name" hasn't been registered
-  SalonModel = mongoose.model("Salon")
+  // Throws an error if 'Name' hasn't been registered
+  SalonModel = mongoose.model('Salon')
 } catch (e) {
-  SalonModel = mongoose.model<ISalonModel>("Salon", SalonProfileSchema);
+  SalonModel = mongoose.model<ISalonModel>('Salon', SalonProfileSchema);
 }
 
 export = SalonModel;

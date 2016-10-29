@@ -86,7 +86,7 @@ export class Owner extends AbstractAdministrator {
             response.code = accountCreation.code;
             return response;
         } else {
-            let content = "Your account with Salonhelp has been successfully created! Username: " + username + ", Password: " + accountCreation.data.password;
+            let content = 'Your account with Salonhelp has been successfully created! Username: ' + username + ', Password: ' + accountCreation.data.password;
             verificationObj.sendContent(username, content);
         }
 

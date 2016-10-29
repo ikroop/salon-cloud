@@ -2,14 +2,14 @@
  * GET users listing.
  */
 
-import { Router, Request, Response } from "express";
-import { SalonCloudResponse } from "./../Core/SalonCloudResponse";
+import { Router, Request, Response } from 'express';
+import { SalonCloudResponse } from './../Core/SalonCloudResponse';
 import { Authentication } from '../Core/Authentication/Authentication';
-import { Authorization } from "./../Core/Authorization/Authorization";
-import { AuthorizationRouter } from "./Authorization";
-import { AdministratorBehavior } from "./../Core/User/AdministratorBehavior";
+import { Authorization } from './../Core/Authorization/Authorization';
+import { AuthorizationRouter } from './Authorization';
+import { AdministratorBehavior } from './../Core/User/AdministratorBehavior';
 import {AbstractAdministrator} from './../Core/User/AbstractAdministrator'
-import { AppointmentData } from "./../Modules/AppointmentManagement/AppointmentData";
+import { AppointmentData } from './../Modules/AppointmentManagement/AppointmentData';
 import { UserFactory } from './../Core/User/UserFactory';
 
 export class AppointmentManagementRouter {
@@ -19,7 +19,7 @@ export class AppointmentManagementRouter {
         var authentication = new Authentication();
         var authorizationRouter = new AuthorizationRouter();
        
-        this.router.post("/bookbyphone", function (request: Request, response: Response) {
+        this.router.post('/bookbyphone', function (request: Request, response: Response) {
             var admin: AdministratorBehavior;
 
             // User Factory get Owner or Manager by Id

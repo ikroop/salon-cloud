@@ -6,12 +6,12 @@
 
 import { ServiceManagementBehavior } from './ServiceManagementBehavior';
 import { ServiceGroupData, ServiceItemData } from './ServiceData'
-import { BaseValidator } from "./../../Core/Validation/BaseValidator";
+import { BaseValidator } from './../../Core/Validation/BaseValidator';
 import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidNameString, IsServiceGroupNameExisted }
-    from "./../../Core/Validation/ValidationDecorators";
+    from './../../Core/Validation/ValidationDecorators';
 import { ErrorMessage } from './../../Core/ErrorMessage';
-import { SalonCloudResponse } from "./../../Core/SalonCloudResponse";
-import ServiceGroupModel = require("./ServiceModel");
+import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
+import ServiceGroupModel = require('./ServiceModel');
 
 export class ServiceManagement implements ServiceManagementBehavior {
     private salonId: string;

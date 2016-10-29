@@ -2,13 +2,13 @@
  * GET users listing.
  */
 
-import { Router, Request, Response } from "express";
-import { SalonCloudResponse } from "./../Core/SalonCloudResponse";
+import { Router, Request, Response } from 'express';
+import { SalonCloudResponse } from './../Core/SalonCloudResponse';
 import { Authentication } from './../Core/Authentication/Authentication';
-import { Authorization } from "./../Core/Authorization/Authorization";
-import { AuthorizationRouter } from "./Authorization";
-import { Owner } from "./../Core/User/Owner"
-import {SalonManagement} from "./../Modules/SalonManagement/SalonManagement"
+import { Authorization } from './../Core/Authorization/Authorization';
+import { AuthorizationRouter } from './Authorization';
+import { Owner } from './../Core/User/Owner'
+import {SalonManagement} from './../Modules/SalonManagement/SalonManagement'
 
 export class ServiceManagementRouter {
     private router: Router = Router();    
@@ -17,7 +17,7 @@ export class ServiceManagementRouter {
         var authentication = new Authentication();
         var authorizationRouter = new AuthorizationRouter();
        
-        this.router.post("/create", authorizationRouter.checkPermission ,async function (request: Request, response: Response) {
+        this.router.post('/create', authorizationRouter.checkPermission ,async function (request: Request, response: Response) {
             
 
             var ownerObject = new Owner(request.user._id, new SalonManagement(request.body.salon_id));

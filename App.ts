@@ -1,17 +1,17 @@
-﻿import * as express from "express";
-import * as bodyParser from "body-parser";
-import * as passport from "passport";
-import * as passportLocal from "passport-local";
-import * as http from "http";
+﻿import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as passport from 'passport';
+import * as passportLocal from 'passport-local';
+import * as http from 'http';
 
-import { ScheduleRouter } from "./Routes/Schedule";
-import { AuthenticationRouter } from "./Routes/Authentication";
-import { UserManagementRouter } from "./Routes/UserManagement";
-import { SalonManagementRouter } from "./Routes/SalonManagement";
-import { ServiceManagementRouter } from "./Routes/ServiceManagement";
+import { ScheduleRouter } from './Routes/Schedule';
+import { AuthenticationRouter } from './Routes/Authentication';
+import { UserManagementRouter } from './Routes/UserManagement';
+import { SalonManagementRouter } from './Routes/SalonManagement';
+import { ServiceManagementRouter } from './Routes/ServiceManagement';
 import { AppointmentManagementRouter } from './Routes/AppointmentManagement';
 
-import UserModel = require("./Modules/UserManagement/UserModel");
+import UserModel = require('./Modules/UserManagement/UserModel');
 
 const app: express.Application = express();
 //var authorizationRouter: AuthorizationRouter = new AuthorizationRouter();
@@ -31,26 +31,26 @@ passport.serializeUser(UserModel.serializeUser());
 passport.deserializeUser(UserModel.deserializeUser());
 
 app.get('/', (req, res) => {
-    res.json({ "name": "SalonCloud Server" });
+    res.json({ 'name': 'SalonCloud Server' });
 });
 
 app.use((err: Error & { status: number }, request: express.Request, response: express.Response, next: express.NextFunction): void => {
 
     response.status(err.status || 500);
     response.json({
-        error: "Server error"
+        error: 'Server error'
     })
 });
 
-app.use("/api/v1/schedule", new ScheduleRouter().getRouter());
-app.use("/api/v1/authentication", new AuthenticationRouter().getRouter());
-app.use("/api/v1/employee", new UserManagementRouter().getRouter());
-app.use("/api/v1/salon", new SalonManagementRouter().getRouter());
-app.use("/api/v1/service", new ServiceManagementRouter().getRouter());
-app.use("/api/v1/appointment", new AppointmentManagementRouter().getRouter());
+app.use('/api/v1/schedule', new ScheduleRouter().getRouter());
+app.use('/api/v1/authentication', new AuthenticationRouter().getRouter());
+app.use('/api/v1/employee', new UserManagementRouter().getRouter());
+app.use('/api/v1/salon', new SalonManagementRouter().getRouter());
+app.use('/api/v1/service', new ServiceManagementRouter().getRouter());
+app.use('/api/v1/appointment', new AppointmentManagementRouter().getRouter());
 
 const server: http.Server = app.listen(3000, function () {
-    console.log("OMG!!! NO BUGS! SalonCloud server listening on port %d in %s mode", 3000, app.settings.env);
+    console.log('OMG!!! NO BUGS! SalonCloud server listening on port %d in %s mode', 3000, app.settings.env);
 });
 
 export { server };

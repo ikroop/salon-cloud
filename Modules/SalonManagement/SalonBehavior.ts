@@ -5,7 +5,7 @@
  * 
  */
 
-import {SalonData} from "./SalonData";
+import {SalonData} from './SalonData';
 export interface SalonBehavior{
     createSalonInformation(SalonProfileData: SalonData, callback);
     getId();

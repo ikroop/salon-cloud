@@ -3,15 +3,15 @@
  *
  */
 import { MonthlyScheduleData, IDailyScheduleData, IWeeklyScheduleData, DailyDayData, WeeklyDayData } from './ScheduleData';
-import { SalonCloudResponse } from "./../../Core/SalonCloudResponse";
-import { ScheduleBehavior } from "./ScheduleBehavior";
-import WeeklyScheduleModel = require("./WeeklyScheduleModel");
-import DailyScheduleModel = require("./DailyScheduleModel");
+import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
+import { ScheduleBehavior } from './ScheduleBehavior';
+import WeeklyScheduleModel = require('./WeeklyScheduleModel');
+import DailyScheduleModel = require('./DailyScheduleModel');
 
 var ErrorMessage = require('./../../Core/ErrorMessage');
-import { BaseValidator } from "./../../Core/Validation/BaseValidator";
+import { BaseValidator } from './../../Core/Validation/BaseValidator';
 import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId }
-    from "./../../Core/Validation/ValidationDecorators";
+    from './../../Core/Validation/ValidationDecorators';
 
 export abstract class Schedule implements ScheduleBehavior {
 	/**
@@ -416,7 +416,7 @@ export abstract class Schedule implements ScheduleBehavior {
             data: undefined
         }
 
-        var result = await DailyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId, "day.date": dailySchedule.date }).exec(function (err, docs) {
+        var result = await DailyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId, 'day.date': dailySchedule.date }).exec(function (err, docs) {
             if (err) {
                 return returnResult.err = err;
             } else if (docs) {

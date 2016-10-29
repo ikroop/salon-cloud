@@ -2,9 +2,9 @@
 
 
 */
-import { Validator, DecoratingValidator, BaseValidator } from "./BaseValidator";
+import { Validator, DecoratingValidator, BaseValidator } from './BaseValidator';
 
-import SalonModel = require("./../../Modules/SalonManagement/SalonModel");
+import SalonModel = require('./../../Modules/SalonManagement/SalonModel');
 import ServiceGroupModel = require('./../../Modules/ServiceManagement/ServiceModel');
 import { IServiceGroupData } from './../../Modules/ServiceManagement/ServiceData';
 import { ErrorMessage } from './../ErrorMessage';
@@ -48,7 +48,7 @@ export class IsString extends DecoratingValidator {
     }
 
     public validatingOperation() {
-        if (typeof this.targetElement !== "string") {
+        if (typeof this.targetElement !== 'string') {
             return this.errorType;
         } else {
             return undefined;
@@ -71,7 +71,7 @@ export class IsNumber extends DecoratingValidator {
     }
 
     public validatingOperation() {
-        if (typeof this.targetElement !== "number") {
+        if (typeof this.targetElement !== 'number') {
             return this.errorType;
         } else {
             return undefined;
@@ -171,7 +171,7 @@ export class IsEmail extends DecoratingValidator {
     }
 
     public validatingOperation() {
-        var emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var emailReg = /^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!this.targetElement.match(emailReg)) {
             return this.errorType;
         } else {
@@ -320,7 +320,7 @@ export class IsValidSalonId extends DecoratingValidator {
     private async checkSalonId(salonId: string, errorType: any): Promise<any> {
         let promise = new Promise<any>(function (resolve, reject) {
             var response = undefined;
-            SalonModel.findOne({ "_id": salonId }, function (err, docs) {
+            SalonModel.findOne({ '_id': salonId }, function (err, docs) {
                 if (err) {
                     response = errorType;
                 } else if (!docs) {
@@ -445,7 +445,7 @@ export class IsServiceGroupNameExisted extends DecoratingValidator {
     private async checkExistence(groupName: string, salonId: string, errorType: any): Promise<any> {
         let promise = new Promise<any>(function (resolve, reject) {
             var response = undefined;
-            ServiceGroupModel.findOne({ "name": groupName, "salon_id": salonId }, function (err, docs) {
+            ServiceGroupModel.findOne({ 'name': groupName, 'salon_id': salonId }, function (err, docs) {
                 if (err) {
                     response = errorType;
                 } else if (!docs) {
@@ -488,7 +488,7 @@ export class IsValidServiceId extends DecoratingValidator {
     private async checkExistence(serviceId: string, groupName: string, salonId: string, errorType: any): Promise<any> {
         let promise = new Promise<any>(function (resolve, reject) {
             var response = undefined;
-            ServiceGroupModel.findOne({ "name": groupName, "salon_id": salonId }, function (err, docs:any) {
+            ServiceGroupModel.findOne({ 'name': groupName, 'salon_id': salonId }, function (err, docs:any) {
                 if (err) {
                     response = errorType;
                 } else if (!docs) {
@@ -532,7 +532,7 @@ export class IsValidEmployeeId extends DecoratingValidator {
     private async checkExistence(employeeId: string, salonId: string, errorType: any): Promise<any> {
         let promise = new Promise<any>(function (resolve, reject) {
             var response = undefined;
-            UserModel.findOne({ "_id": employeeId }, function (err, docs) {
+            UserModel.findOne({ '_id': employeeId }, function (err, docs) {
                 if (err) {
                     response = errorType;
                 } else if (!docs) {

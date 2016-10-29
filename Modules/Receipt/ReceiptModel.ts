@@ -5,7 +5,7 @@
  * 
  */
 
-import { mongoose } from "./../../Services/Database";
+import { mongoose } from './../../Services/Database';
 import { IReceiptData } from './ReceiptData';
 
 
