@@ -249,3 +249,5 @@ typings/
 
 #Javascript file
 dist/
+coverage/
+.nyc_output/

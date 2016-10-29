@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "blanket": "^1.2.3",
+    "codecov": "^1.0.1",
     "coveralls": "^2.11.14",
     "gulp": "^3.9.1",
     "gulp-debug": "^2.0.1",
@@ -46,8 +47,10 @@
     "gulp-sourcemaps": "^1.5.1",
     "gulp-tslint": "^1.4.4",
     "gulp-typescript": "^2.5.0",
+    "istanbul": "^0.4.5",
     "mocha-lcov-reporter": "^1.2.0",
     "mockgoose": "^6.0.6",
+    "nyc": "^8.3.2",
     "should": "^11.0.0",
     "supertest": "^2.0.0",
     "winston": "^2.2.0"
@@ -64,7 +67,7 @@
     }
   },
   "scripts": {
-    "test": "mocha $(find spec -name '*.js')",
+    "test": "CODECOV_TOKEN='edd2feb9-70ff-42cf-9a56-65a49fe4f727' istanbul cover node_modules/mocha/bin/_mocha spec && codecov",
     "start": "cd dist && node App.js"
   }
 }

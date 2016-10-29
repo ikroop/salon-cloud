@@ -8,11 +8,13 @@ dependencies:
     - npm install -g nodemon
     - npm install -g forever
     - npm install -g gulp
-    - npm install
+    - npm install -g istanbul
+    - npm install -g codecov
+    - npm install -g nyc
     - gulp
 test:
   post:
     - cd dist && forever start App.js
-    - mocha $(find spec -name '*.js')
+    - npm test
 
 
