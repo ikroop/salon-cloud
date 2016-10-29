@@ -1,7 +1,7 @@
 codecov:
   branch: master
   bot: null
-
+  token: edd2feb9-70ff-42cf-9a56-65a49fe4f727
 coverage:
   precision: 2
   round: down
