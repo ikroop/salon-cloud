@@ -250,4 +250,5 @@ typings/
 #Javascript file
 *.js
 *.js.map
-!SalonCloud.Server/spec/*.spec.js
+!Spec/*.js
+dist/

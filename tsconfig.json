@@ -2,8 +2,10 @@
   "compileOnSave": true,
   "compilerOptions": {
     "module": "commonjs",
-    "sourceMap": true,
-    "target": "es6"
+    "target": "es6",
+    "rootDir": ".",
+    "outDir": "./dist",
+    "declaration": true
   },
   "files": [
     "./Routes/Routes.d.ts",
