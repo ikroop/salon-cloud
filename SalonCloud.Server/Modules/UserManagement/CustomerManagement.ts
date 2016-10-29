@@ -3,8 +3,8 @@
 import { UserData, UserProfile } from './UserData'
 import { CustomerManagementBehavior } from './CustomerManagementBehavior'
 import { UserManagement } from './UserManagement'
-import { SalonCloudResponse } from './../../core/SalonCloudResponse'
-import { Authentication } from './../../core/authentication/Authentication'
+import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
+import { Authentication } from './../../Core/Authentication/Authentication'
 
 
 export class CustomerManagement extends UserManagement implements CustomerManagementBehavior {

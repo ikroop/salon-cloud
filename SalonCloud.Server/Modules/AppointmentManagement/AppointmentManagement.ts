@@ -4,7 +4,7 @@
 import { AppointmentManagementBehavior } from './AppointmentManagementBehavior'
 import { AppointmentData } from './AppointmentData'
 import AppointmentModel = require('./AppointmentModel');
-import { SalonCloudResponse } from './../../core/SalonCloudResponse'
+import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 
 export class AppointmentManagement implements AppointmentManagementBehavior {
 

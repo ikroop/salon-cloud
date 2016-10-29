@@ -1,7 +1,7 @@
 
 
 import { AppointmentData } from './AppointmentData'
-import { SalonCloudResponse } from './../../core/SalonCloudResponse'
+import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 
 export interface AppointmentManagementBehavior {
 

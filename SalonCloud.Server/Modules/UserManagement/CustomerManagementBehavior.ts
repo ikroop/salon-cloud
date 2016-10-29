@@ -1,7 +1,7 @@
 
 
 import { UserData, UserProfile } from './UserData'
-import { SalonCloudResponse } from './../../core/SalonCloudResponse'
+import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 
 export interface CustomerManagementBehavior {
     addCustomerProfile(customerId: string, profile: any): Promise<SalonCloudResponse<UserProfile>>;

@@ -9,7 +9,7 @@ import { Owner } from './Owner'
 import { Manager } from './Manager'
 import { Technician } from './Technician'
 import { Customer } from './Customer'
-import { SalonManagement } from './../../modules/salonManagement/SalonManagement'
+import { SalonManagement } from './../../Modules/SalonManagement/SalonManagement'
 import {AdministratorBehavior} from './AdministratorBehavior'
 
 export class UserFactory {

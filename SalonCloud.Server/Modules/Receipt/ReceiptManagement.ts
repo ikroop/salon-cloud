@@ -9,7 +9,7 @@
 import { ReceiptManagementBehavior } from './ReceiptManagementBehavior';
 import { ReceiptData, ReceiptItemData } from './ReceiptData';
 import ReceiptModel = require ('./ReceiptModel');
-import {SalonCloudResponse} from './../../core/SalonCloudResponse';
+import {SalonCloudResponse} from './../../Core/SalonCloudResponse';
 
 export class ReceiptManagement implements ReceiptManagementBehavior {
     private salonId: string;
