@@ -12,6 +12,6 @@ dependencies:
 test:
   post:
     - cd SalonCloud.Server && forever start App.js
-    - cd SalonCloud.Server && mocha Spec/Authentication.spec.js
+    - cd SalonCloud.Server && mocha $(find Spec -name '*.js')
 
 
