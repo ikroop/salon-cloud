@@ -5,10 +5,13 @@ dependencies:
   override:
     - npm install -g typescript   
     - npm install -g mocha
+    - npm install -g nodemon
     - cd SalonCloud.Server && npm install
     - cd SalonCloud.Server && tsc
 test:
   post:
+    - nodemon App.js:
+          background: true
     - cd SalonCloud.Server && mocha Spec/Authentication.spec.js
 
 
