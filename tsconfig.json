@@ -3,20 +3,19 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es6",
-    "rootDir": ".",
-    "outDir": "./dist",
-    "declaration": true
+    "rootDir": "src/**/*.ts",
+    "outDir": "dist"
   },
   "files": [
-    "./Routes/Routes.d.ts",
-    "./Core/Validation/Validation.d.ts",
-    "./Core/User/User.d.ts",
-    "./Core/Core.d.ts",
-    "./Modules/Schedule/Schedule.d.ts",
-    "./Modules/ServiceManagement/Service.d.ts",
-    "./Modules/UserManagement/UserManagement.d.ts",
-    "./App.ts",
-    "./Core/Observer/Observer.d.ts"
+    "./src/Routes/Routes.d.ts",
+    "./src/Core/Validation/Validation.d.ts",
+    "./src/Core/User/User.d.ts",
+    "./src/Core/Core.d.ts",
+    "./src/Modules/Schedule/Schedule.d.ts",
+    "./src/Modules/ServiceManagement/Service.d.ts",
+    "./src/Modules/UserManagement/UserManagement.d.ts",
+    "./src/App.ts",
+    "./src/Core/Observer/Observer.d.ts"
   ],
   "exclude": [
     "node_modules"

@@ -248,7 +248,4 @@ ModelManifest.xml
 typings/
 
 #Javascript file
-*.js
-*.js.map
-!Spec/*.js
 dist/
