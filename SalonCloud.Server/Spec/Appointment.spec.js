@@ -5,18 +5,18 @@ var winston = require('winston');
 var ErrorMessage = require('./../Core/ErrorMessage').ErrorMessage;
 
 describe('Appointment Management', function () {
-    let url = 'http://localhost:3000/api/v1';
+    var url = 'http://localhost:3000/api/v1';
     var validToken;
     var invalidToken;
     var validSalonId;
     var invalidSalonId;
     var notFoundSalonId;
-    let defaultPassword = '1234@1234';
-    let rightFormattedPhoneNumber = '9384484728';
-    let wrongFormattedPhoneNumber = 'abd1234';
-    let rightFormattedName = 'Tom Hanks';
-    let emptyName = '   ';
-    let tooLongName = 'Alibaba Nam Tren Ghe Sopha Mo Ve Noi Xa Xong Pha Tran Mac Cuop Duoc Dola Thiet Thiet La Nhieu Dola Xay Nha Cho Mafia'
+    var defaultPassword = '1234@1234';
+    var rightFormattedPhoneNumber = '9384484728';
+    var wrongFormattedPhoneNumber = 'abd1234';
+    var rightFormattedName = 'Tom Hanks';
+    var emptyName = '   ';
+    var tooLongName = 'Alibaba Nam Tren Ghe Sopha Mo Ve Noi Xa Xong Pha Tran Mac Cuop Duoc Dola Thiet Thiet La Nhieu Dola Xay Nha Cho Mafia'
     var existedServiceId = '';
     var notFoundServiceId = '';
     var invalidServiceId = '0000';
@@ -61,22 +61,22 @@ describe('Appointment Management', function () {
         var apiUrl = '/appointment/createbyphone';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to create appointment with invalid token', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -96,21 +96,21 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to create appointment without customer\'s phone', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -130,22 +130,22 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.WrongPhoneNumberFormat.err.name + ' error trying to create appointment with wrong-formatted phone number', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": wrongFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -165,21 +165,21 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingCustomerName.err.name + ' error trying to create appointment without customer\'s name', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -199,22 +199,22 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create appointment with customer\'s name = empty string', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": emptyName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -234,22 +234,22 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create appointment with too long customer\'s name', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": tooLongName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -269,21 +269,21 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to create appointment without salonId', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -303,22 +303,22 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to create appointment with wrong salonId', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": notFoundSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -338,18 +338,18 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingBookedServiceList.err.name + ' error trying to create appointment without service(s)', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -369,24 +369,24 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingServiceId.err.name + ' error trying to create appointment which has service with no serviceId', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }, {
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }, {
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -406,25 +406,25 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.ServiceNotFound.err.name + ' error trying to create appointment which has not-found service', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }, {
-                            service_id: notFoundServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }, {
+                    service_id: notFoundServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -444,24 +444,24 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingEmployeeId.err.name + ' error trying to create appointment which has service with no employeeId', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId
-                            }, {
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId
+                }, {
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -481,25 +481,25 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.EmployeeNotFound.err.name + ' error trying to create appointment which has not-found employee', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: notFoundEmployeeId
-                            }, {
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: notFoundEmployeeId
+                }, {
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -519,15 +519,15 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingAppointmentTime.err.name + ' error trying to create appointment without booking_time', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
             };
             request(url)
                 .post(apiUrl)
@@ -547,24 +547,24 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingBookingTimeDay.err.name + ' error trying to create appointment which has no-day booking_time', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: notFoundEmployeeId
-                            }, {
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: notFoundEmployeeId
+                }, {
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -584,24 +584,24 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingBookingTimeMonth.err.name + ' error trying to create appointment which has no-month booking_time', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: notFoundEmployeeId
-                            }, {
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: notFoundEmployeeId
+                }, {
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -621,24 +621,24 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingBookingTimeYear.err.name + ' error trying to create appointment which has no-year booking_time', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: notFoundEmployeeId
-                            }, {
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: notFoundEmployeeId
+                }, {
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -658,24 +658,24 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingBookingTimeHour.err.name + ' error trying to create appointment which has no-hour booking_time', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: notFoundEmployeeId
-                            }, {
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: notFoundEmployeeId
+                }, {
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -695,25 +695,25 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingBookingTimeMinute.err.name + ' error trying to create appointment which has no-minute booking_time', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: notFoundEmployeeId
-                            }, {
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: notFoundEmployeeId
+                }, {
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2016,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -733,22 +733,22 @@ describe('Appointment Management', function () {
         });
 
         it('should return appointment_id if request proceeds successfully with note', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Any appointment note, even blank one, is acceptable",
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 28,
-                            month: 2,
-                            year: 2017,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 28,
+                    month: 2,
+                    year: 2017,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
@@ -767,21 +767,21 @@ describe('Appointment Management', function () {
         });
 
         it('should return appointment_id if request proceeds successfully without note', function (done) {
-            var bodyRequest = { 
+            var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
-                "services":[{
-                            service_id: existedServiceId,
-                            employee_id: existedEmployeeId
-                            }],
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
                 "booking_time": {
-                            day: 27,
-                            month: 2,
-                            year: 2017,
-                            hour: 10,
-                            min: 45
-                        }
+                    day: 27,
+                    month: 2,
+                    year: 2017,
+                    hour: 10,
+                    min: 45
+                }
             };
             request(url)
                 .post(apiUrl)
