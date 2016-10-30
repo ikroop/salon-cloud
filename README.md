@@ -2,7 +2,7 @@
 SalonCloud – a software will change all your definition about managing a salon to a high new level.
 
 [![Join the chat at https://gitter.im/salon-cloud/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/salon-cloud/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
-[![CircleCI](https://circleci.com/gh/thanhtruong0315/salon-cloud/tree/master.svg?style=svg&circle-token=581ea042d188894d25e63c087a11b4ec8ed3851a)](https://circleci.com/gh/thanhtruong0315/salon-cloud/tree/master)
+[![CircleCI](https://circleci.com/gh/thanhtruong0315/salon-cloud/tree/master.svg?style=shield&circle-token=581ea042d188894d25e63c087a11b4ec8ed3851a)](https://circleci.com/gh/thanhtruong0315/salon-cloud/tree/master)
 [![codecov](https://codecov.io/gh/thanhtruong0315/salon-cloud/branch/master/graph/badge.svg?token=pf4UaCBhUy)](https://codecov.io/gh/thanhtruong0315/salon-cloud)
 
 # Database Structure
