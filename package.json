@@ -68,7 +68,7 @@
   },
   "scripts": {
     "pretest": "gulp",
-    "test": "istanbul cover mocha spec --report lcovonly -- -R spec",
+    "test": "istanbul cover mocha spec",
     "posttest": "export CODECOV_TOKEN='edd2feb9-70ff-42cf-9a56-65a49fe4f727' && codecov",
     "start": "cd dist && node App.js"
   }
