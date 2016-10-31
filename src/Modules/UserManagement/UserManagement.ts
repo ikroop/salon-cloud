@@ -58,6 +58,7 @@ export class UserManagement implements UserManagementBehavior {
             var saveAction = userDocs.save();
             
             await saveAction.then(function (docs) {
+                console.log('docs', docs);
                 returnResult.data = userProfile;
                 return returnResult;
 
