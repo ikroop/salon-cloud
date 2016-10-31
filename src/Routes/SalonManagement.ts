@@ -9,6 +9,7 @@ import { SignedInUser } from './../Core/User/SignedInUser';
 import { SalonManagement } from './../Modules/SalonManagement/SalonManagement';
 import { UserManagement } from './../Modules/UserManagement/UserManagement';
 import { SalonInformation } from './../Modules/SalonManagement/SalonData'
+import {EmployeeManagement} from './../Modules/UserManagement/EmployeeManagement';
 
 export class SalonManagementRouter {
     private router: Router = Router();
@@ -16,7 +17,11 @@ export class SalonManagementRouter {
     getRouter(): Router {
         var authentication = new Authentication();
         var authorizationRouter = new AuthorizationRouter();
+        this.router.post('/test', async(request: Request, response: Response)=>{
 
+            var testObj = new EmployeeManagement('57faa2692579df79216a153c');
+            testObj.getAllEmployee();
+        })
         this.router.post('/create', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
             var signedUser = new SignedInUser(request.user._id, new SalonManagement(null));//Todo
             var salonInformationInput: SalonInformation = {
