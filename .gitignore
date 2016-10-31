@@ -251,3 +251,5 @@ typings/
 dist/
 coverage/
 .nyc_output/
+src/**/*.js
+src/**/*.js.map

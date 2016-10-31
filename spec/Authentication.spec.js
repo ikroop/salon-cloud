@@ -6,25 +6,30 @@
 var should = require('should');
 var assert = require('assert');
 var request = require('supertest');
+//require = require('really-need');
 
 describe('Authentication', function () {
-    var url = 'http://localhost:3000/api/v1/Authentication';
     var timestamp = new Date().getTime();
     var defaultPassword = '1234@1234'
+    var server;
 
-    before(function (done) {
-        // In our tests we use the test db
+    beforeEach(function (done) {
+        delete require.cache[require.resolve('./../dist/App')];
+        server = require('./../dist/App');
         done();
+    });
+    afterEach(function () {
+        server.close();
     });
 
     describe('User SignUp with Username & Password', function () {
-        var apiUrl = '/signupwithusernameandpassword';
+        var apiUrl = '/api/v1/Authentication/signupwithusernameandpassword';
 
         it('should return "MissingUsername" error trying to register without username', function (done) {
             var user = {
                 password: defaultPassword
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -43,7 +48,7 @@ describe('Authentication', function () {
                 username: 'salonhelpstest',
                 password: defaultPassword
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -62,7 +67,7 @@ describe('Authentication', function () {
                 username: '12345678',
                 password: defaultPassword
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -80,7 +85,7 @@ describe('Authentication', function () {
             var user = {
                 username: 'unittest@gmail.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -99,7 +104,7 @@ describe('Authentication', function () {
                 username: 'unittest@gmail.com',
                 password: '12345'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -118,7 +123,7 @@ describe('Authentication', function () {
                 username: 'unittest' + timestamp + '@gmail.com',
                 password: defaultPassword
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -136,7 +141,7 @@ describe('Authentication', function () {
                 password: defaultPassword,
                 fullname: 'salonhelps'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -152,13 +157,13 @@ describe('Authentication', function () {
     });
 
     describe('User Signin with Username & Password', function () {
-        var apiUrl = '/signinwithusernameandpassword';
+        var apiUrl = '/api/v1/Authentication/signinwithusernameandpassword';
 
         it('should return "MissingUsername" error trying to Signin without username', function (done) {
             var user = {
                 password: defaultPassword
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -176,7 +181,7 @@ describe('Authentication', function () {
             var user = {
                 username: 'test@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -195,7 +200,7 @@ describe('Authentication', function () {
                 username: 'test@salonhelps.com',
                 password: defaultPassword
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -214,7 +219,7 @@ describe('Authentication', function () {
                 username: 'unittest' + timestamp + '@gmail.com',
                 password: defaultPassword
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -241,7 +246,7 @@ describe('Authentication', function () {
             // we need to actually perform the action on the resource, in this case we want to 
             // POST on /api/auth/register and we want to send some info
             // We do this using the request object, requiring supertest!
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -262,7 +267,7 @@ describe('Authentication', function () {
                 username: 'unittest'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -283,7 +288,7 @@ describe('Authentication', function () {
                 username: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -304,7 +309,7 @@ describe('Authentication', function () {
                 username: 'unittest@gmail.com'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -325,7 +330,7 @@ describe('Authentication', function () {
                 username: '0000000000'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -346,7 +351,7 @@ describe('Authentication', function () {
                 username: 'samthui7@gmail.com'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -367,7 +372,7 @@ describe('Authentication', function () {
                 username: '1111111111'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -388,7 +393,7 @@ describe('Authentication', function () {
                 username: 'siamtian2015@gmail.com'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -408,7 +413,7 @@ describe('Authentication', function () {
                 username: '4049806189'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -434,7 +439,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -457,7 +462,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -480,7 +485,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -503,7 +508,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -526,7 +531,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -549,7 +554,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -575,7 +580,7 @@ describe('Authentication', function () {
             // we need to actually perform the action on the resource, in this case we want to 
             // POST on /api/auth/register and we want to send some info
             // We do this using the request object, requiring supertest!
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -598,7 +603,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -621,7 +626,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(username)
                 // end handles the response
@@ -644,7 +649,7 @@ describe('Authentication', function () {
                 verify_code: ''
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -667,7 +672,7 @@ describe('Authentication', function () {
                 verify_code: '000'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -690,7 +695,7 @@ describe('Authentication', function () {
                 verify_code: '308372'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -712,7 +717,7 @@ describe('Authentication', function () {
                 verify_code: '308372'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response

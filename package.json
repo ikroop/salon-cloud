@@ -67,7 +67,9 @@
     }
   },
   "scripts": {
-    "test": "export CODECOV_TOKEN='edd2feb9-70ff-42cf-9a56-65a49fe4f727' && istanbul cover mocha spec --report lcovonly -- -R spec && codecov",
+    "pretest": "gulp",
+    "test": "export CODECOV_TOKEN='edd2feb9-70ff-42cf-9a56-65a49fe4f727' && istanbul cover mocha spec --report lcovonly -- -R spec",
+    "posttest": "codecov",
     "start": "cd dist && node App.js"
   }
 }

@@ -5,24 +5,26 @@ var winston = require('winston');
 var ErrorMessage = require('./../dist/Core/ErrorMessage').ErrorMessage;
 
 describe('Employee Management', function () {
-    var url = 'http://localhost:3000/api/v1';
     var validToken;
     var invalidToken;
     var validSalonId;
     var invalidSalonId;
     var notFoundSalonId;
     var defaultPassword = '1234@1234';
-    var phone = ((new Date()).getTime()%10000000000).toString();
+    var phone = ((new Date()).getTime() % 10000000000).toString();
+    var server;
 
-    before(function (done) {
+    beforeEach(function (done) {
+        delete require.cache[require.resolve('./../dist/App')];
 
+        server = require('./../dist/App');
         // Login and get token
         var user = {
             username: 'unittest1473044833007@gmail.com',
             password: defaultPassword
         };
-        request(url)
-            .post('/authentication/signinwithusernameandpassword')
+        request(server)
+            .post('/api/v1/authentication/signinwithusernameandpassword')
             .send(user)
             .end(function (err, res) {
                 if (err) {
@@ -37,9 +39,12 @@ describe('Employee Management', function () {
                 done();
             });
     });
+    afterEach(function () {
+        server.close();
+    });
 
     describe('Unit Test Add New Employee', function () {
-        var apiUrl = '/employee/create';
+        var apiUrl = '/api/v1/employee/create';
 
         /*it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
             var token = invalidToken;
@@ -54,7 +59,7 @@ describe('Employee Management', function () {
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -75,14 +80,14 @@ describe('Employee Management', function () {
             var token = validToken;
             var bodyRequest = {
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -112,7 +117,7 @@ describe('Employee Management', function () {
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -135,14 +140,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -164,14 +169,14 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -194,14 +199,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 0,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -224,14 +229,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 5,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -254,14 +259,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 1,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -284,14 +289,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 4,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -320,7 +325,7 @@ describe('Employee Management', function () {
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -350,7 +355,7 @@ describe('Employee Management', function () {
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -373,13 +378,13 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -402,14 +407,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': '   ',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -432,13 +437,13 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'salary_rate': 0.6,
                 'cash_rate': 0.6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -461,14 +466,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': '   ',
                 'salary_rate': 0.6,
                 'cash_rate': 0.6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -491,13 +496,13 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -520,14 +525,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': -1,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -550,14 +555,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 10.5,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -580,13 +585,13 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -609,14 +614,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': -0.5,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -639,14 +644,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 11,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -669,14 +674,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '1653245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -699,13 +704,13 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -733,14 +738,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })

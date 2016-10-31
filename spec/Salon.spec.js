@@ -5,20 +5,22 @@ var mongoose = require('mongoose');
 var winston = require('winston');
 
 describe('Salon Management', function () {
-    var url = 'http://localhost:3000/api/v1';
     var validToken;
     var invalidToken;
     var defaultPassword = '1234@1234'
+    var server;
 
-    before(function (done) {
+    beforeEach(function (done) {
+        delete require.cache[require.resolve('./../dist/App')];
 
+        server = require('./../dist/App');
         // Login and get token
         var user = {
             username: 'unittest1473044833007@gmail.com',
             password: defaultPassword
         };
-        request(url)
-            .post('/authentication/signinwithusernameandpassword')
+        request(server)
+            .post('/api/v1/authentication/signinwithusernameandpassword')
             .send(user)
             .end(function (err, res) {
                 if (err) {
@@ -30,8 +32,12 @@ describe('Salon Management', function () {
             });
     });
 
+    afterEach(function () {
+        server.close();
+    });
+
     describe('Unit Test Create Salon API', function () {
-        var apiUrl = '/salon/create';
+        var apiUrl = '/api/v1/salon/create';
 
         /*it('should return "InvalidTokenError" error trying to create salon information with invalid token', function (done) {
             var token = invalidToken;
@@ -41,7 +47,7 @@ describe('Salon Management', function () {
                 'phonenumber': '4049806189',
                 'email': 'salon@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -65,7 +71,7 @@ describe('Salon Management', function () {
                 'phonenumber': '4049806189',
                 'email': 'salon@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -89,7 +95,7 @@ describe('Salon Management', function () {
                 'phonenumber': '4049806189',
                 'email': 'salon@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -115,7 +121,7 @@ describe('Salon Management', function () {
                 'email': 'salon@salonhelps.com'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set('Authorization', token)
@@ -138,7 +144,7 @@ describe('Salon Management', function () {
                 'address': '2506 Bailey Dr NW, Norcross, GA 30071',
                 'email': 'salon@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .set({ 'Authorization': token })
                 .send(bodyRequest)
@@ -163,7 +169,7 @@ describe('Salon Management', function () {
                 'phonenumber': '1234',
                 'email': 'salon@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -188,7 +194,7 @@ describe('Salon Management', function () {
                 'phonenumber': '4049806189',
                 'email': 'salon@salonhe'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -212,7 +218,7 @@ describe('Salon Management', function () {
                 'phonenumber': '4049806189',
                 'email': 'salon@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -239,7 +245,7 @@ describe('Salon Management', function () {
                 'address': '2506 Bailey Dr NW, Norcross, GA 30071',
                 'phonenumber': '4049806189'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
