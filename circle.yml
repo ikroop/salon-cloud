@@ -5,14 +5,11 @@ dependencies:
   override:
     - npm install -g typescript   
     - npm install -g mocha
-    - npm install -g nodemon
     - npm install -g forever
     - npm install -g gulp
     - npm install -g istanbul
     - npm install -g codecov
     - npm install -g nyc
-    - gulp
-    - cd dist && forever start App.js
 test:
   post:
     - npm test
