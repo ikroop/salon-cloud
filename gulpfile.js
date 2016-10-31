@@ -16,7 +16,7 @@ gulp.task('scripts', function () {
 
 // Copy Config folder
 gulp.task('config', function () {
-    gulp.src('src/Config/**/*')
+    gulp.src('Config/**/*')
         .pipe(gulp.dest('dist/Config'));
 });
 
