@@ -41,6 +41,7 @@
     "codecov": "^1.0.1",
     "coveralls": "^2.11.14",
     "gulp": "^3.9.1",
+    "gulp-codecov": "^2.0.2",
     "gulp-debug": "^2.0.1",
     "gulp-inject": "^1.2.0",
     "gulp-istanbul": "^1.1.1",
