@@ -21,21 +21,28 @@ use UTC.
   |           |----cash_rate: double (optional)
   |           |----birthday: string (optional)
   |           |----address: string (optional)
-  |----appointment
+  |----receipt
   |     |----id: string
   |     |----salon_id: string
   |     |----comment: string
   |     |----device: number, 1: phone, 2: web, 3: app
-  |     |----receipt_id: string
-  |     |----overlapped:
-  |     |         |----status: boolean
-  |     |         |----overlapped_appointment_id: string (optional)
+  |     |----appointment:Array
+  |     |     |----id: string
+  |     |     |----employee_id: string
+  |     |     |----services: Array
+  |     |     |     |----service_id: string
+  |     |     |     |----service_name: string
+  |     |     |     |----time: number
+  |     |     |     |----price: number
+  |     |     |----start: SalonTime
+  |     |     |----end: SalonTime
+  |     |     |----overlapped:
+  |     |           |----status: boolean
+  |     |           |----appointment_id: string (optional)
   |     |----customer_id(uid): string
-  |     |----end: SalonTime
   |     |----status: number, 1: booked, 2: checked in, 3: in-process, 4: done, 5: paid
   |     |----type: number, 1: booking, 2: check-in
   |     |----is_reminded: boolean
-  |     |----start: SalonTime
   |----customer
   |     |----uid: string
   |     |----last_appointment: timestamp
