@@ -14,7 +14,7 @@ describe('Employee Management', function () {
     var phone = ((new Date()).getTime() % 10000000000).toString();
     var server;
 
-    beforeEach(function (done) {
+    before(function (done) {
         delete require.cache[require.resolve('./../dist/App')];
 
         server = require('./../dist/App');
@@ -39,7 +39,7 @@ describe('Employee Management', function () {
                 done();
             });
     });
-    afterEach(function () {
+    after(function () {
         server.close();
     });
 

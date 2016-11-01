@@ -10,7 +10,7 @@ describe('Salon Management', function () {
     var defaultPassword = '1234@1234'
     var server;
 
-    beforeEach(function (done) {
+    before(function (done) {
         delete require.cache[require.resolve('./../dist/App')];
 
         server = require('./../dist/App');
@@ -32,7 +32,7 @@ describe('Salon Management', function () {
             });
     });
 
-    afterEach(function () {
+    after(function () {
         server.close();
     });
 

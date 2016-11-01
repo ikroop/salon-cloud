@@ -7,18 +7,19 @@ var should = require('should');
 var assert = require('assert');
 var request = require('supertest');
 //require = require('really-need');
+var server = require('./../dist/App');
 
 describe('Authentication', function () {
     var timestamp = new Date().getTime();
     var defaultPassword = '1234@1234'
     var server;
 
-    beforeEach(function (done) {
-        delete require.cache[require.resolve('./../dist/App')];
+    before(function (done) {
+        //delete require.cache[require.resolve('./../dist/App')];
         server = require('./../dist/App');
         done();
     });
-    afterEach(function () {
+    after(function () {
         server.close();
     });
 

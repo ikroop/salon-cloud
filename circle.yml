@@ -12,6 +12,6 @@ dependencies:
     - npm install -g nyc
 test:
   post:
-    - npm test
+    - bash <(curl -s https://codecov.io/bash)
 
 

@@ -13,7 +13,7 @@ describe('Service Management', function () {
     var premadeGroupName = 'Successful Name' + (new Date().getTime().toString());
     var defaultPassword = '1234@1234'
     var server;
-    beforeEach(function (done) {
+    before(function (done) {
         delete require.cache[require.resolve('./../dist/App')];
 
         server = require('./../dist/App');
@@ -40,7 +40,7 @@ describe('Service Management', function () {
             });
     });
 
-    afterEach(function () {
+    after(function () {
         server.close();
     });
 
