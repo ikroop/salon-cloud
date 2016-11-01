@@ -72,7 +72,7 @@
   },
   "scripts": {
     "postinstall": "gulp",
-    "test": "export CODECOV_TOKEN='edd2feb9-70ff-42cf-9a56-65a49fe4f727' && gulp codecov",
+    "test": "export CODECOV_TOKEN='edd2feb9-70ff-42cf-9a56-65a49fe4f727' && gulp test",
     "start": "cd dist && node App.js"
   }
 }
