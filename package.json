@@ -48,6 +48,7 @@
     "gulp-mocha": "^3.0.1",
     "gulp-rimraf": "^0.1.1",
     "gulp-sourcemaps": "^1.5.1",
+    "gulp-spawn-mocha": "^3.1.0",
     "gulp-tslint": "^1.4.4",
     "gulp-typescript": "^2.5.0",
     "istanbul": "^0.4.5",
@@ -70,7 +71,8 @@
     }
   },
   "scripts": {
-    "test": "export CODECOV_TOKEN='edd2feb9-70ff-42cf-9a56-65a49fe4f727' && gulp test",
+    "postinstall": "gulp",
+    "test": "export CODECOV_TOKEN='edd2feb9-70ff-42cf-9a56-65a49fe4f727' && gulp codecov",
     "start": "cd dist && node App.js"
   }
 }

@@ -10,7 +10,6 @@ dependencies:
     - npm install -g istanbul
     - npm install -g codecov
     - npm install
-    - gulp
 test:
   post:
     - bash <(curl -s https://codecov.io/bash)

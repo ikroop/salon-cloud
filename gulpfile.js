@@ -6,6 +6,7 @@ var del = require('del');
 
 var istanbul = require('gulp-istanbul');
 var mocha = require('gulp-mocha');
+var codecov = require('gulp-codecov');
 
 var tsProject = ts.createProject('tsconfig.json',
     { typescript: require('typescript') });
@@ -29,21 +30,36 @@ gulp.task('clean', function (cb) {
 });
 
 gulp.task('pre-test', function () {
-  return gulp.src(['dist/**/*.js'])
-    // Covering files
-    .pipe(istanbul())
-    // Force `require` to return covered files
-    .pipe(istanbul.hookRequire());
+    return gulp.src(['dist/**/*.js'])
+        // Covering files
+        .pipe(istanbul())
+        // Force `require` to return covered files
+        .pipe(istanbul.hookRequire());
 });
 
 gulp.task('test', ['pre-test'], function () {
-  return gulp.src(['spec/*.js'])
-    .pipe(mocha())
-    // Creating the reports after tests ran
-    .pipe(istanbul.writeReports())
-    // Enforce a coverage of at least 90%
-    .pipe(istanbul.enforceThresholds({ thresholds: { global: 10 } }));
+    return gulp.src(['spec/*.js'])
+        .pipe(mocha({
+            reporter: 'spec',
+            globals: {
+                should: require('should')
+            }
+        }))
+        // Creating the reports after tests ran
+        .pipe(istanbul.writeReports())
+        // Enforce a coverage of at least 90%
+        .pipe(istanbul.enforceThresholds({ thresholds: { global: 5 } }))
+        .once('error', () => {
+            process.exit(1);
+        })
+        .once('end', () => {
+            process.exit();
+        });
+});
+gulp.task('codecov', ['test'], function () {
+    gulp.src('./coverage/lcov.info')
+        .pipe(codecov());
 });
 
 // Build task
-gulp.task('default', ['clean','config', 'scripts']);
+gulp.task('default', ['clean', 'config', 'scripts']);
