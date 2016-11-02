@@ -73,7 +73,6 @@
   "scripts": {
     "postinstall": "gulp",
     "start": "cd dist && node App.js",
-    "test": "standard && istanbul cover ./node_modules/mocha/bin/_mocha spec --report lcov -- -R spec",
-    "codecov": "istanbul cover ./node_modules/mocha/bin/_mocha spec --report lcovonly -- -R spec && gulp codecov && rm -rf ./coverage"
+    "test": "standard && istanbul cover ./node_modules/mocha/bin/_mocha spec --report lcovonly -- -R spec && gulp codecov && rm -rf ./coverage"
   }
 }
