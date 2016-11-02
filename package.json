@@ -72,7 +72,8 @@
   },
   "scripts": {
     "postinstall": "gulp",
-    "test": "export CODECOV_TOKEN='edd2feb9-70ff-42cf-9a56-65a49fe4f727' && gulp codecov",
-    "start": "cd dist && node App.js"
+    "start": "cd dist && node App.js",
+    "test": "standard && istanbul cover ./node_modules/mocha/bin/_mocha spec --report lcov -- -R spec",
+    "codecov": "istanbul cover ./node_modules/mocha/bin/_mocha spec --report lcovonly -- -R spec && gulp codecov && rm -rf ./coverage"
   }
 }
