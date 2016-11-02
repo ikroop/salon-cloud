@@ -62,7 +62,7 @@ gulp.task('test', ['pre-test'], function () {
             process.exit();
         });
 });
-gulp.task('codecov', ['test'], function () {
+gulp.task('codecov', function () {
     gulp.src('./spec/coverage/lcov.info')
         .pipe(codecov());
 });
