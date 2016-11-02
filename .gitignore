@@ -249,7 +249,7 @@ typings/
 
 #Javascript file
 dist/
-coverage/
+spec/coverage/
 .nyc_output/
 src/**/*.js
 src/**/*.js.map

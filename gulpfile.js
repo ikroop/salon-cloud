@@ -46,7 +46,13 @@ gulp.task('test', ['pre-test'], function () {
             }
         }))
         // Creating the reports after tests ran
-        .pipe(istanbul.writeReports())
+        .pipe(istanbul.writeReports({
+            dir: './spec/coverage',
+            reportOpts: {
+                dir: './spec/coverage'
+            },
+            reporters: ['lcov'],
+        }))
         // Enforce a coverage of at least 90%
         .pipe(istanbul.enforceThresholds({ thresholds: { global: 5 } }))
         .once('error', () => {
@@ -57,7 +63,7 @@ gulp.task('test', ['pre-test'], function () {
         });
 });
 gulp.task('codecov', ['test'], function () {
-    gulp.src('./coverage/lcov.info')
+    gulp.src('./spec/coverage/lcov.info')
         .pipe(codecov());
 });
 
