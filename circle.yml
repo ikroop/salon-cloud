@@ -3,12 +3,7 @@ machine:
     version: 5.5.0
 dependencies:
   override:
-    - npm install -g typescript   
-    - npm install -g mocha
-    - npm install -g gulp
-    - npm install -g istanbul
-    - npm install -g codecov
-    - npm install standard
+    - npm install -g typescript mocha gulp istanbul codecov standard
     - npm install
 test:
   post:
