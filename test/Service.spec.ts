@@ -1,19 +1,18 @@
-var should = require('should');
-var assert = require('assert');
-var request = require('supertest');
-var winston = require('winston');
-var ErrorMessage = require('./../dist/Core/ErrorMessage').ErrorMessage;
+import * as server from '../src/App';
+import * as request from 'supertest';
+import * as chai from 'chai';
+var expect = chai.expect;
+var should = chai.should();
+import { ErrorMessage } from './../src/Core/ErrorMessage';
 
 describe('Service Management', function () {
-    var url = 'http://localhost:3000/api/v1';
     var validToken;
     var invalidToken;
     var validSalonId;
     var invalidSalonId;
     var notFoundSalonId;
-    var premadeGroupName;
+    var premadeGroupName = 'Successful Name' + (new Date().getTime().toString());
     var defaultPassword = '1234@1234'
-
     before(function (done) {
 
         // Login and get token
@@ -21,8 +20,8 @@ describe('Service Management', function () {
             username: 'unittest1473044833007@gmail.com',
             password: defaultPassword
         };
-        request(url)
-            .post('/authentication/signinwithusernameandpassword')
+        request(server)
+            .post('/api/v1/authentication/signinwithusernameandpassword')
             .send(user)
             .end(function (err, res) {
                 if (err) {
@@ -35,13 +34,15 @@ describe('Service Management', function () {
                 validSalonId = '57c0afac9265a426237f6f5f';//salon_id
                 invalidSalonId = '00';
                 notFoundSalonId = '97ba6280f531d1b53d54a6e5';
-                premadeGroupName = 'Successful Name' + (new Date().getTime().toString());
                 done();
             });
     });
 
+    after(function () {
+    });
+
     describe('Unit Test Add Service', function () {
-        var apiUrl = '/service/create';
+        var apiUrl = '/api/v1/service/create';
 
         /*it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
             var token = invalidToken;
@@ -57,7 +58,7 @@ describe('Service Management', function () {
                         'time': 5
                      }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -69,7 +70,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
                     done();
                 });
         });*/
@@ -81,13 +82,13 @@ describe('Service Management', function () {
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 5
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -99,7 +100,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingGroupName.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingGroupName.err.name);
                     done();
                 });
         });
@@ -112,13 +113,13 @@ describe('Service Management', function () {
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 5
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -130,7 +131,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidNameString.err.name);
                     done();
                 });
         });
@@ -139,16 +140,16 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
+                'group_name': 'Traditional Pedicure' + (new Date().getTime().toString()),
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 5
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -160,7 +161,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingDescription.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingDescription.err.name);
                     done();
                 });
         });
@@ -169,17 +170,17 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
+                'group_name': 'Traditional Pedicure' + (new Date().getTime().toString()),
                 'description': '     ',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 5
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -191,7 +192,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidDescriptionString.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidDescriptionString.err.name);
                     done();
                 });
         });
@@ -199,16 +200,16 @@ describe('Service Management', function () {
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to add new service(s) without salon id', function (done) {
             var token = validToken;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
+                'group_name': 'Traditional Pedicure' + (new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 5
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -219,7 +220,7 @@ describe('Service Management', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
                     done();
                 });
         });
@@ -238,7 +239,7 @@ describe('Service Management', function () {
                         'time': 5
                      }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -250,7 +251,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongIdFormat.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.WrongIdFormat.err.name);
                     done();
                 });
         });*/
@@ -259,17 +260,17 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = notFoundSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
+                'group_name': 'Traditional Pedicure' + (new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 5
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -281,7 +282,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
                     done();
                 });
         });
@@ -290,21 +291,21 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
+                'group_name': 'Traditional Pedicure' + (new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'price': 5,
                         'time': 5
-                     },
-                     {
+                    },
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 5
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -316,8 +317,8 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingServiceName.err.name);
-                    
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingServiceName.err.name);
+
                     done();
                 });
         });
@@ -326,22 +327,22 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
+                'group_name': 'Traditional Pedicure' + (new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': '   ',
                         'price': 5,
                         'time': 5
-                     },
-                     {
+                    },
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 5
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -353,8 +354,8 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
-                    
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidNameString.err.name);
+
                     done();
                 });
         });
@@ -363,21 +364,21 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
+                'group_name': 'Traditional Pedicure' + (new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 3600
-                     },
-                     {
+                    },
+                    {
                         'name': 'Traditional Pedicure 1',
                         'time': 3600
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -389,8 +390,8 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingServicePrice.err.name);
-                    
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingServicePrice.err.name);
+
                     done();
                 });
         });
@@ -399,22 +400,22 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
+                'group_name': 'Traditional Pedicure' + (new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 3600
-                     },
-                     {
+                    },
+                    {
                         'name': 'Traditional Pedicure 1',
                         'price': -5,
                         'time': 3600
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -426,8 +427,8 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.ServicePriceRangeError.err.name);
-                    
+                    res.body.err.name.should.be.equal(ErrorMessage.ServicePriceRangeError.err.name);
+
                     done();
                 });
         });
@@ -436,22 +437,22 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
+                'group_name': 'Traditional Pedicure' + (new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 3600
-                     },
-                     {
+                    },
+                    {
                         'name': 'Traditional Pedicure 1',
                         'price': 501,
                         'time': 3600
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -463,8 +464,8 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.ServicePriceRangeError.err.name);
-                    
+                    res.body.err.name.should.be.equal(ErrorMessage.ServicePriceRangeError.err.name);
+
                     done();
                 });
         });
@@ -473,21 +474,21 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
+                'group_name': 'Traditional Pedicure' + (new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5
-                     },
-                     {
+                    },
+                    {
                         'name': 'Traditional Pedicure 1',
                         'price': 6,
                         'time': 5
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -499,8 +500,8 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingServiceTime.err.name);
-                    
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingServiceTime.err.name);
+
                     done();
                 });
         });
@@ -509,22 +510,22 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
+                'group_name': 'Traditional Pedicure' + (new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 180
-                     },
-                     {
+                    },
+                    {
                         'name': 'Traditional Pedicure 1',
                         'price': 6,
                         'time': 300
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -536,8 +537,8 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidServiceTime.err.name);
-                    
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidServiceTime.err.name);
+
                     done();
                 });
         });
@@ -546,22 +547,22 @@ describe('Service Management', function () {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
-                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
+                'group_name': 'Traditional Pedicure' + (new Date().getTime().toString()),
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 10801
-                     },
-                     {
+                    },
+                    {
                         'name': 'Traditional Pedicure 1',
                         'price': 6,
                         'time': 3600
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -573,8 +574,8 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidServiceTime.err.name);
-                    
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidServiceTime.err.name);
+
                     done();
                 });
         });
@@ -587,7 +588,7 @@ describe('Service Management', function () {
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -614,18 +615,18 @@ describe('Service Management', function () {
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 3',
                         'price': 9,
                         'time': 3600
-                     },
-                     {
+                    },
+                    {
                         'name': 'Traditional Pedicure 4',
                         'price': 15,
                         'time': 3600
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -655,13 +656,13 @@ describe('Service Management', function () {
                 'description': 'Traditional Pedicure is a normal Pedicure.',
                 'salon_id': salonId,
                 'service_list': [
-                     {
+                    {
                         'name': 'Traditional Pedicure 0',
                         'price': 5,
                         'time': 5
-                     }]
+                    }]
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -673,7 +674,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.ServiceGroupNameExisted.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.ServiceGroupNameExisted.err.name);
                     done();
                 });
         });

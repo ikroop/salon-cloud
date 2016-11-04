@@ -3,29 +3,38 @@
  * 
  * 
  */
-var should = require('should');
-var assert = require('assert');
-var request = require('supertest');
+import * as server from '../src/App';
+import * as request from 'supertest';
+import * as chai from 'chai';
+var expect = chai.expect;
+var should = chai.should();
 
 describe('Authentication', function () {
-    var url = 'http://localhost:3000/api/v1/Authentication';
     var timestamp = new Date().getTime();
     var defaultPassword = '1234@1234'
-
-    before(function (done) {
-        // In our tests we use the test db
+    /*before(function (done) {
+        delete require.cache[require.resolve('./../src/App')];
+        server = require('./../src/App');
         done();
+    });
+    after(function () {
+        server.close();
+    });*/
+
+    beforeEach(function () {
+    });
+    afterEach(function () {
     });
 
     describe('User SignUp with Username & Password', function () {
-        var apiUrl = '/signupwithusernameandpassword';
+        var apiUrl = '/api/v1/authentication/signupwithusernameandpassword';
 
         it('should return "MissingUsername" error trying to register without username', function (done) {
             var user = {
                 password: defaultPassword
             };
-            request(url)
-                .post(apiUrl)
+            request(server)
+                .post('/api/v1/authentication/signupwithusernameandpassword')
                 .send(user)
                 .end(function (err, res) {
                     if (err) {
@@ -33,7 +42,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingUsername');
+                    res.body.err.name.should.be.equal('MissingUsername');
                     done();
                 });
         });
@@ -43,7 +52,7 @@ describe('Authentication', function () {
                 username: 'salonhelpstest',
                 password: defaultPassword
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -52,7 +61,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('NotEmailOrPhoneNumber');
+                    res.body.err.name.should.be.equal('NotEmailOrPhoneNumber');
                     done();
                 });
         });
@@ -62,7 +71,7 @@ describe('Authentication', function () {
                 username: '12345678',
                 password: defaultPassword
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -71,7 +80,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('NotEmailOrPhoneNumber');
+                    res.body.err.name.should.be.equal('NotEmailOrPhoneNumber');
                     done();
                 });
         });
@@ -80,7 +89,7 @@ describe('Authentication', function () {
             var user = {
                 username: 'unittest@gmail.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -89,7 +98,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingPassword');
+                    res.body.err.name.should.be.equal('MissingPassword');
                     done();
                 });
         });
@@ -99,7 +108,7 @@ describe('Authentication', function () {
                 username: 'unittest@gmail.com',
                 password: '12345'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -108,7 +117,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('PasswordTooShort');
+                    res.body.err.name.should.be.equal('PasswordTooShort');
                     done();
                 });
         });
@@ -118,7 +127,7 @@ describe('Authentication', function () {
                 username: 'unittest' + timestamp + '@gmail.com',
                 password: defaultPassword
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -136,7 +145,7 @@ describe('Authentication', function () {
                 password: defaultPassword,
                 fullname: 'salonhelps'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -145,20 +154,20 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(409);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserExistsError');
+                    res.body.err.name.should.be.equal('UserExistsError');
                     done();
                 });
         });
     });
 
     describe('User Signin with Username & Password', function () {
-        var apiUrl = '/signinwithusernameandpassword';
+        var apiUrl = '/api/v1/Authentication/signinwithusernameandpassword';
 
         it('should return "MissingUsername" error trying to Signin without username', function (done) {
             var user = {
                 password: defaultPassword
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -167,7 +176,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingUsername');
+                    res.body.err.name.should.be.equal('MissingUsername');
                     done();
                 });
         });
@@ -176,7 +185,7 @@ describe('Authentication', function () {
             var user = {
                 username: 'test@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -185,7 +194,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingPassword');
+                    res.body.err.name.should.be.equal('MissingPassword');
                     done();
                 });
         });
@@ -195,7 +204,7 @@ describe('Authentication', function () {
                 username: 'test@salonhelps.com',
                 password: defaultPassword
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -204,7 +213,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('SignInFailed');
+                    res.body.err.name.should.be.equal('SignInFailed');
                     done();
                 });
         });
@@ -214,7 +223,7 @@ describe('Authentication', function () {
                 username: 'unittest' + timestamp + '@gmail.com',
                 password: defaultPassword
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 .end(function (err, res) {
@@ -223,7 +232,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(200);
                     res.body.should.have.property('user');
-                    res.body.user.should.have.property('username').eql(user.username);
+                    res.body.user.username.should.be.equal(user.username);
                     res.body.should.have.property('auth');
                     res.body.auth.should.have.property('token');
                     done();
@@ -241,7 +250,7 @@ describe('Authentication', function () {
             // we need to actually perform the action on the resource, in this case we want to 
             // POST on /api/auth/register and we want to send some info
             // We do this using the request object, requiring supertest!
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -252,7 +261,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingUsername');
+                    res.body.err.name.should.be.equal('MissingUsername');
                     done();
                 });
         });
@@ -262,7 +271,7 @@ describe('Authentication', function () {
                 username: 'unittest'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -273,7 +282,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -283,7 +292,7 @@ describe('Authentication', function () {
                 username: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -294,7 +303,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -304,7 +313,7 @@ describe('Authentication', function () {
                 username: 'unittest@gmail.com'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -315,7 +324,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -325,7 +334,7 @@ describe('Authentication', function () {
                 username: '0000000000'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -336,7 +345,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -346,7 +355,7 @@ describe('Authentication', function () {
                 username: 'samthui7@gmail.com'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -357,7 +366,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserIsBlocked');
+                    res.body.err.name.should.be.equal('UserIsBlocked');
                     done();
                 });
         });
@@ -367,7 +376,7 @@ describe('Authentication', function () {
                 username: '1111111111'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -378,7 +387,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserIsBlocked');
+                    res.body.err.name.should.be.equal('UserIsBlocked');
                     done();
                 });
         });
@@ -388,7 +397,7 @@ describe('Authentication', function () {
                 username: 'siamtian2015@gmail.com'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -408,7 +417,7 @@ describe('Authentication', function () {
                 username: '4049806189'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -434,7 +443,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -445,7 +454,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -457,7 +466,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -468,7 +477,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -480,7 +489,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -491,7 +500,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -503,7 +512,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -514,7 +523,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -526,7 +535,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -537,7 +546,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserIsBlocked');
+                    res.body.err.name.should.be.equal('UserIsBlocked');
                     done();
                 });
         });
@@ -549,7 +558,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -560,7 +569,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserIsBlocked');
+                    res.body.err.name.should.be.equal('UserIsBlocked');
                     done();
                 });
         });
@@ -575,7 +584,7 @@ describe('Authentication', function () {
             // we need to actually perform the action on the resource, in this case we want to 
             // POST on /api/auth/register and we want to send some info
             // We do this using the request object, requiring supertest!
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -586,7 +595,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingUsername');
+                    res.body.err.name.should.be.equal('MissingUsername');
                     done();
                 });
         });
@@ -598,7 +607,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -609,7 +618,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingPassword');
+                    res.body.err.name.should.be.equal('MissingPassword');
                     done();
                 });
         });
@@ -621,7 +630,7 @@ describe('Authentication', function () {
                 verify_code: '123'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(username)
                 // end handles the response
@@ -632,7 +641,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(404);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('PasswordTooShort');
+                    res.body.err.name.should.be.equal('PasswordTooShort');
                     done();
                 });
         });
@@ -644,7 +653,7 @@ describe('Authentication', function () {
                 verify_code: ''
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -655,7 +664,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingVerifyCode');
+                    res.body.err.name.should.be.equal('MissingVerifyCode');
                     done();
                 });
         });
@@ -667,7 +676,7 @@ describe('Authentication', function () {
                 verify_code: '000'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -678,7 +687,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('WrongVerifyCode');
+                    res.body.err.name.should.be.equal('WrongVerifyCode');
                     done();
                 });
         });
@@ -690,7 +699,7 @@ describe('Authentication', function () {
                 verify_code: '308372'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response
@@ -712,7 +721,7 @@ describe('Authentication', function () {
                 verify_code: '308372'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(user)
                 // end handles the response

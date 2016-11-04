@@ -53,4 +53,4 @@ const server: http.Server = app.listen(3000, function () {
     console.log('OMG!!! NO BUGS! SalonCloud server listening on port %d in %s mode', 3000, app.settings.env);
 });
 
-export { server };
+module.exports = server;

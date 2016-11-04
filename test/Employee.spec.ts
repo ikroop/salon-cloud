@@ -1,18 +1,23 @@
-var should = require('should');
-var assert = require('assert');
-var request = require('supertest');
-var winston = require('winston');
-var ErrorMessage = require('./../dist/Core/ErrorMessage').ErrorMessage;
+/**
+ * 
+ * 
+ * 
+ */
+import * as server from '../src/App';
+import * as request from 'supertest';
+import * as chai from 'chai';
+var expect = chai.expect;
+var should = chai.should();
+import { ErrorMessage } from './../src/Core/ErrorMessage';
 
 describe('Employee Management', function () {
-    var url = 'http://localhost:3000/api/v1';
     var validToken;
     var invalidToken;
     var validSalonId;
     var invalidSalonId;
     var notFoundSalonId;
     var defaultPassword = '1234@1234';
-    var phone = ((new Date()).getTime()%10000000000).toString();
+    var phone = ((new Date()).getTime() % 10000000000).toString();
 
     before(function (done) {
 
@@ -21,8 +26,8 @@ describe('Employee Management', function () {
             username: 'unittest1473044833007@gmail.com',
             password: defaultPassword
         };
-        request(url)
-            .post('/authentication/signinwithusernameandpassword')
+        request(server)
+            .post('/api/v1/authentication/signinwithusernameandpassword')
             .send(user)
             .end(function (err, res) {
                 if (err) {
@@ -37,9 +42,11 @@ describe('Employee Management', function () {
                 done();
             });
     });
+    after(function () {
+    });
 
     describe('Unit Test Add New Employee', function () {
-        var apiUrl = '/employee/create';
+        var apiUrl = '/api/v1/employee/create';
 
         /*it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
             var token = invalidToken;
@@ -54,7 +61,7 @@ describe('Employee Management', function () {
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -66,7 +73,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
                     done();
                 });
         });*/
@@ -75,14 +82,14 @@ describe('Employee Management', function () {
             var token = validToken;
             var bodyRequest = {
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -94,7 +101,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
                     done();
                 });
         });
@@ -112,7 +119,7 @@ describe('Employee Management', function () {
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -124,7 +131,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongIdFormat.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.WrongIdFormat.err.name);
                     done();
                 });
         });*/
@@ -135,14 +142,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -154,7 +161,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
                     done();
                 });
         });
@@ -164,14 +171,14 @@ describe('Employee Management', function () {
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -183,7 +190,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingRole.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingRole.err.name);
                     done();
                 });
         });
@@ -194,14 +201,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 0,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -213,7 +220,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.RoleRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.RoleRangeError.err.name);
                     done();
                 });
         });
@@ -224,14 +231,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 5,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -243,7 +250,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.RoleRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.RoleRangeError.err.name);
                     done();
                 });
         });
@@ -254,14 +261,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 1,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -273,7 +280,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
                     done();
                 });
         });
@@ -284,14 +291,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 4,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -303,7 +310,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
                     done();
                 });
         });
@@ -320,7 +327,7 @@ describe('Employee Management', function () {
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -332,7 +339,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingPhoneNumber.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingPhoneNumber.err.name);
                     done();
                 });
         });
@@ -350,7 +357,7 @@ describe('Employee Management', function () {
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -362,7 +369,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongPhoneNumberFormat.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.WrongPhoneNumberFormat.err.name);
                     done();
                 });
         });
@@ -373,13 +380,13 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -391,7 +398,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingFullName.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingFullName.err.name);
                     done();
                 });
         });
@@ -402,14 +409,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': '   ',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -421,7 +428,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidNameString.err.name);
                     done();
                 });
         });
@@ -432,13 +439,13 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'salary_rate': 0.6,
                 'cash_rate': 0.6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -450,7 +457,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingNickName.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingNickName.err.name);
                     done();
                 });
         });
@@ -461,14 +468,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': '   ',
                 'salary_rate': 0.6,
                 'cash_rate': 0.6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -480,7 +487,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidNameString.err.name);
                     done();
                 });
         });
@@ -491,13 +498,13 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -509,7 +516,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalaryRate.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalaryRate.err.name);
                     done();
                 });
         });
@@ -520,14 +527,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': -1,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -539,7 +546,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalaryRateRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.SalaryRateRangeError.err.name);
                     done();
                 });
         });
@@ -550,14 +557,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 10.5,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -569,7 +576,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalaryRateRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.SalaryRateRangeError.err.name);
                     done();
                 });
         });
@@ -580,13 +587,13 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -598,7 +605,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingCashRate.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingCashRate.err.name);
                     done();
                 });
         });
@@ -609,14 +616,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': -0.5,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -628,7 +635,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.CashRateRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.CashRateRangeError.err.name);
                     done();
                 });
         });
@@ -639,14 +646,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 11,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -658,7 +665,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.CashRateRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.CashRateRangeError.err.name);
                     done();
                 });
         });
@@ -669,14 +676,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '1653245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -688,7 +695,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongSSNFormat.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.WrongSSNFormat.err.name);
                     done();
                 });
         });
@@ -699,13 +706,13 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -718,11 +725,10 @@ describe('Employee Management', function () {
 
                     res.body.should.have.property('uid');
                     // TODO: check uid format: Id must be a single String of 12 bytes or a string of 24 hex characters
-
-                    res.body.should.have.property('salon_id').eql(bodyRequest.salon_id);
-                    res.body.should.have.property('phone').eql(bodyRequest.phone);
-                    res.body.should.have.property('fullname').eql(bodyRequest.fullname);
-                    res.body.should.have.property('role').eql(bodyRequest.role);
+                    res.body.salon_id.should.be.equal(bodyRequest.salon_id);
+                    res.body.phone.should.be.equal(bodyRequest.phone);
+                    res.body.fullname.should.be.equal(bodyRequest.fullname);
+                    res.body.role.should.be.equal(bodyRequest.role);
                     done();
                 });
         });
@@ -733,14 +739,14 @@ describe('Employee Management', function () {
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
                 'cash_rate': 6,
                 'social_security_number': '165374245'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -759,10 +765,10 @@ describe('Employee Management', function () {
                     // let twelveBytes: Boolean = Buffer.byteLength(str, 'utf8');//http://stackoverflow.com/questions/9864662/how-to-get-the-string-length-in-bytes-in-nodejs
 
 
-                    res.body.should.have.property('salon_id').eql(bodyRequest.salon_id);
-                    res.body.should.have.property('phone').eql(bodyRequest.phone);
-                    res.body.should.have.property('fullname').eql(bodyRequest.fullname);
-                    res.body.should.have.property('role').eql(bodyRequest.role);
+                    res.body.salon_id.should.be.equal(bodyRequest.salon_id);
+                    res.body.phone.should.be.equal(bodyRequest.phone);
+                    res.body.fullname.should.be.equal(bodyRequest.fullname);
+                    res.body.role.should.be.equal(bodyRequest.role);
                     done();
                 });
         });

@@ -1,11 +1,11 @@
-var should = require('should');
-var assert = require('assert');
-var request = require('supertest');
-var mongoose = require('mongoose');
-var winston = require('winston');
+import * as server from '../src/App';
+import * as request from 'supertest';
+import * as chai from 'chai';
+var expect = chai.expect;
+var should = chai.should();
+import { ErrorMessage } from './../src/Core/ErrorMessage';
 
 describe('Salon Management', function () {
-    var url = 'http://localhost:3000/api/v1';
     var validToken;
     var invalidToken;
     var defaultPassword = '1234@1234'
@@ -17,8 +17,8 @@ describe('Salon Management', function () {
             username: 'unittest1473044833007@gmail.com',
             password: defaultPassword
         };
-        request(url)
-            .post('/authentication/signinwithusernameandpassword')
+        request(server)
+            .post('/api/v1/authentication/signinwithusernameandpassword')
             .send(user)
             .end(function (err, res) {
                 if (err) {
@@ -30,8 +30,11 @@ describe('Salon Management', function () {
             });
     });
 
+    after(function () {
+    });
+
     describe('Unit Test Create Salon API', function () {
-        var apiUrl = '/salon/create';
+        var apiUrl = '/api/v1/salon/create';
 
         /*it('should return "InvalidTokenError" error trying to create salon information with invalid token', function (done) {
             var token = invalidToken;
@@ -41,7 +44,7 @@ describe('Salon Management', function () {
                 'phonenumber': '4049806189',
                 'email': 'salon@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -53,7 +56,7 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('InvalidTokenError');
+                    res.body.err.name.should.be.equal('InvalidTokenError');
                     done();
                 });
         });*/
@@ -65,7 +68,7 @@ describe('Salon Management', function () {
                 'phonenumber': '4049806189',
                 'email': 'salon@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -77,7 +80,7 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingSalonName');
+                    res.body.err.name.should.be.equal('MissingSalonName');
                     done();
                 });
         });
@@ -89,7 +92,7 @@ describe('Salon Management', function () {
                 'phonenumber': '4049806189',
                 'email': 'salon@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -101,7 +104,7 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingAddress');
+                    res.body.err.name.should.be.equal('MissingAddress');
                     done();
                 });
         });
@@ -115,7 +118,7 @@ describe('Salon Management', function () {
                 'email': 'salon@salonhelps.com'
             };
 
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set('Authorization', token)
@@ -126,7 +129,7 @@ describe('Salon Management', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('WrongAddressFormat');
+                    res.body.err.name.should.be.equal('WrongAddressFormat');
                     done();
                 });
         });*/
@@ -138,7 +141,7 @@ describe('Salon Management', function () {
                 'address': '2506 Bailey Dr NW, Norcross, GA 30071',
                 'email': 'salon@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .set({ 'Authorization': token })
                 .send(bodyRequest)
@@ -150,7 +153,7 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingPhoneNumber');
+                    res.body.err.name.should.be.equal('MissingPhoneNumber');
                     done();
                 });
         });
@@ -163,7 +166,7 @@ describe('Salon Management', function () {
                 'phonenumber': '1234',
                 'email': 'salon@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -175,7 +178,7 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('WrongPhoneNumberFormat');
+                    res.body.err.name.should.be.equal('WrongPhoneNumberFormat');
                     done();
                 });
         });
@@ -188,7 +191,7 @@ describe('Salon Management', function () {
                 'phonenumber': '4049806189',
                 'email': 'salon@salonhe'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -199,7 +202,7 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('WrongEmailFormat');
+                    res.body.err.name.should.be.equal('WrongEmailFormat');
                     done();
                 });
         });
@@ -212,7 +215,7 @@ describe('Salon Management', function () {
                 'phonenumber': '4049806189',
                 'email': 'salon@salonhelps.com'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
@@ -239,7 +242,7 @@ describe('Salon Management', function () {
                 'address': '2506 Bailey Dr NW, Norcross, GA 30071',
                 'phonenumber': '4049806189'
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': token })
