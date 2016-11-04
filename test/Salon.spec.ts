@@ -1,19 +1,17 @@
-var should = require('should');
-var assert = require('assert');
-var request = require('supertest');
-var mongoose = require('mongoose');
-var winston = require('winston');
+import * as server from '../src/App';
+import * as request from 'supertest';
+import * as chai from 'chai';
+var expect = chai.expect;
+var should = chai.should();
+import { ErrorMessage } from './../src/Core/ErrorMessage';
 
 describe('Salon Management', function () {
     var validToken;
     var invalidToken;
     var defaultPassword = '1234@1234'
-    var server;
 
     before(function (done) {
-        delete require.cache[require.resolve('./../dist/App')];
 
-        server = require('./../dist/App');
         // Login and get token
         var user = {
             username: 'unittest1473044833007@gmail.com',
@@ -33,7 +31,6 @@ describe('Salon Management', function () {
     });
 
     after(function () {
-        server.close();
     });
 
     describe('Unit Test Create Salon API', function () {
@@ -59,7 +56,7 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('InvalidTokenError');
+                    res.body.err.name.should.be.equal('InvalidTokenError');
                     done();
                 });
         });*/
@@ -83,7 +80,7 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingSalonName');
+                    res.body.err.name.should.be.equal('MissingSalonName');
                     done();
                 });
         });
@@ -107,7 +104,7 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingAddress');
+                    res.body.err.name.should.be.equal('MissingAddress');
                     done();
                 });
         });
@@ -132,7 +129,7 @@ describe('Salon Management', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('WrongAddressFormat');
+                    res.body.err.name.should.be.equal('WrongAddressFormat');
                     done();
                 });
         });*/
@@ -156,7 +153,7 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingPhoneNumber');
+                    res.body.err.name.should.be.equal('MissingPhoneNumber');
                     done();
                 });
         });
@@ -181,7 +178,7 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('WrongPhoneNumberFormat');
+                    res.body.err.name.should.be.equal('WrongPhoneNumberFormat');
                     done();
                 });
         });
@@ -205,7 +202,7 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('WrongEmailFormat');
+                    res.body.err.name.should.be.equal('WrongEmailFormat');
                     done();
                 });
         });

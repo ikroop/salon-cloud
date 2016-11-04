@@ -1,8 +1,14 @@
-var should = require('should');
-var assert = require('assert');
-var request = require('supertest');
-var winston = require('winston');
-var ErrorMessage = require('./../dist/Core/ErrorMessage').ErrorMessage;
+/**
+ * 
+ * 
+ * 
+ */
+import * as server from '../src/App';
+import * as request from 'supertest';
+import * as chai from 'chai';
+var expect = chai.expect;
+var should = chai.should();
+import { ErrorMessage } from './../src/Core/ErrorMessage';
 
 describe('Employee Management', function () {
     var validToken;
@@ -12,12 +18,9 @@ describe('Employee Management', function () {
     var notFoundSalonId;
     var defaultPassword = '1234@1234';
     var phone = ((new Date()).getTime() % 10000000000).toString();
-    var server;
 
     before(function (done) {
-        delete require.cache[require.resolve('./../dist/App')];
 
-        server = require('./../dist/App');
         // Login and get token
         var user = {
             username: 'unittest1473044833007@gmail.com',
@@ -40,7 +43,6 @@ describe('Employee Management', function () {
             });
     });
     after(function () {
-        server.close();
     });
 
     describe('Unit Test Add New Employee', function () {
@@ -71,7 +73,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
                     done();
                 });
         });*/
@@ -99,7 +101,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
                     done();
                 });
         });
@@ -129,7 +131,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongIdFormat.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.WrongIdFormat.err.name);
                     done();
                 });
         });*/
@@ -159,7 +161,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
                     done();
                 });
         });
@@ -188,7 +190,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingRole.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingRole.err.name);
                     done();
                 });
         });
@@ -218,7 +220,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.RoleRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.RoleRangeError.err.name);
                     done();
                 });
         });
@@ -248,7 +250,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.RoleRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.RoleRangeError.err.name);
                     done();
                 });
         });
@@ -278,7 +280,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
                     done();
                 });
         });
@@ -308,7 +310,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
                     done();
                 });
         });
@@ -337,7 +339,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingPhoneNumber.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingPhoneNumber.err.name);
                     done();
                 });
         });
@@ -367,7 +369,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongPhoneNumberFormat.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.WrongPhoneNumberFormat.err.name);
                     done();
                 });
         });
@@ -396,7 +398,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingFullName.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingFullName.err.name);
                     done();
                 });
         });
@@ -426,7 +428,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidNameString.err.name);
                     done();
                 });
         });
@@ -455,7 +457,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingNickName.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingNickName.err.name);
                     done();
                 });
         });
@@ -485,7 +487,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidNameString.err.name);
                     done();
                 });
         });
@@ -514,7 +516,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalaryRate.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalaryRate.err.name);
                     done();
                 });
         });
@@ -544,7 +546,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalaryRateRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.SalaryRateRangeError.err.name);
                     done();
                 });
         });
@@ -574,7 +576,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalaryRateRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.SalaryRateRangeError.err.name);
                     done();
                 });
         });
@@ -603,7 +605,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingCashRate.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingCashRate.err.name);
                     done();
                 });
         });
@@ -633,7 +635,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.CashRateRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.CashRateRangeError.err.name);
                     done();
                 });
         });
@@ -663,7 +665,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.CashRateRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.CashRateRangeError.err.name);
                     done();
                 });
         });
@@ -693,7 +695,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongSSNFormat.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.WrongSSNFormat.err.name);
                     done();
                 });
         });
@@ -723,11 +725,10 @@ describe('Employee Management', function () {
 
                     res.body.should.have.property('uid');
                     // TODO: check uid format: Id must be a single String of 12 bytes or a string of 24 hex characters
-
-                    res.body.should.have.property('salon_id').eql(bodyRequest.salon_id);
-                    res.body.should.have.property('phone').eql(bodyRequest.phone);
-                    res.body.should.have.property('fullname').eql(bodyRequest.fullname);
-                    res.body.should.have.property('role').eql(bodyRequest.role);
+                    res.body.salon_id.should.be.equal(bodyRequest.salon_id);
+                    res.body.phone.should.be.equal(bodyRequest.phone);
+                    res.body.fullname.should.be.equal(bodyRequest.fullname);
+                    res.body.role.should.be.equal(bodyRequest.role);
                     done();
                 });
         });
@@ -764,10 +765,10 @@ describe('Employee Management', function () {
                     // let twelveBytes: Boolean = Buffer.byteLength(str, 'utf8');//http://stackoverflow.com/questions/9864662/how-to-get-the-string-length-in-bytes-in-nodejs
 
 
-                    res.body.should.have.property('salon_id').eql(bodyRequest.salon_id);
-                    res.body.should.have.property('phone').eql(bodyRequest.phone);
-                    res.body.should.have.property('fullname').eql(bodyRequest.fullname);
-                    res.body.should.have.property('role').eql(bodyRequest.role);
+                    res.body.salon_id.should.be.equal(bodyRequest.salon_id);
+                    res.body.phone.should.be.equal(bodyRequest.phone);
+                    res.body.fullname.should.be.equal(bodyRequest.fullname);
+                    res.body.role.should.be.equal(bodyRequest.role);
                     done();
                 });
         });

@@ -1,8 +1,9 @@
-var should = require('should');
-var assert = require('assert');
-var request = require('supertest');
-var winston = require('winston');
-var ErrorMessage = require('./../dist/Core/ErrorMessage').ErrorMessage;
+import * as server from '../src/App';
+import * as request from 'supertest';
+import * as chai from 'chai';
+var expect = chai.expect;
+var should = chai.should();
+import { ErrorMessage } from './../src/Core/ErrorMessage';
 
 describe('Service Management', function () {
     var validToken;
@@ -12,11 +13,8 @@ describe('Service Management', function () {
     var notFoundSalonId;
     var premadeGroupName = 'Successful Name' + (new Date().getTime().toString());
     var defaultPassword = '1234@1234'
-    var server;
     before(function (done) {
-        delete require.cache[require.resolve('./../dist/App')];
 
-        server = require('./../dist/App');
         // Login and get token
         var user = {
             username: 'unittest1473044833007@gmail.com',
@@ -41,7 +39,6 @@ describe('Service Management', function () {
     });
 
     after(function () {
-        server.close();
     });
 
     describe('Unit Test Add Service', function () {
@@ -73,7 +70,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
                     done();
                 });
         });*/
@@ -103,7 +100,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingGroupName.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingGroupName.err.name);
                     done();
                 });
         });
@@ -134,7 +131,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidNameString.err.name);
                     done();
                 });
         });
@@ -164,7 +161,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingDescription.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingDescription.err.name);
                     done();
                 });
         });
@@ -195,7 +192,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidDescriptionString.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidDescriptionString.err.name);
                     done();
                 });
         });
@@ -223,7 +220,7 @@ describe('Service Management', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
                     done();
                 });
         });
@@ -254,7 +251,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongIdFormat.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.WrongIdFormat.err.name);
                     done();
                 });
         });*/
@@ -285,7 +282,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
                     done();
                 });
         });
@@ -320,7 +317,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingServiceName.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingServiceName.err.name);
 
                     done();
                 });
@@ -357,7 +354,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidNameString.err.name);
 
                     done();
                 });
@@ -393,7 +390,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingServicePrice.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingServicePrice.err.name);
 
                     done();
                 });
@@ -430,7 +427,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.ServicePriceRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.ServicePriceRangeError.err.name);
 
                     done();
                 });
@@ -467,7 +464,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.ServicePriceRangeError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.ServicePriceRangeError.err.name);
 
                     done();
                 });
@@ -503,7 +500,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingServiceTime.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingServiceTime.err.name);
 
                     done();
                 });
@@ -540,7 +537,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidServiceTime.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidServiceTime.err.name);
 
                     done();
                 });
@@ -577,7 +574,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidServiceTime.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidServiceTime.err.name);
 
                     done();
                 });
@@ -677,7 +674,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.ServiceGroupNameExisted.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.ServiceGroupNameExisted.err.name);
                     done();
                 });
         });

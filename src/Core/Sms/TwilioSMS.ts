@@ -4,7 +4,7 @@
  * 
  * 
  */
-var TwilioSecret = require('./Secret');
+import TwilioSecret from './TwilioSecret';
 var TwilioClient = require('twilio')(TwilioSecret.sid, TwilioSecret.token);
 
 export class Twilio {

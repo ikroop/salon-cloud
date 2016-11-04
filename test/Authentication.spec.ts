@@ -3,35 +3,38 @@
  * 
  * 
  */
-var should = require('should');
-var assert = require('assert');
-var request = require('supertest');
-//require = require('really-need');
-var server = require('./../dist/App');
+import * as server from '../src/App';
+import * as request from 'supertest';
+import * as chai from 'chai';
+var expect = chai.expect;
+var should = chai.should();
 
 describe('Authentication', function () {
     var timestamp = new Date().getTime();
     var defaultPassword = '1234@1234'
-    var server;
-
-    before(function (done) {
-        //delete require.cache[require.resolve('./../dist/App')];
-        server = require('./../dist/App');
+    /*before(function (done) {
+        delete require.cache[require.resolve('./../src/App')];
+        server = require('./../src/App');
         done();
     });
     after(function () {
         server.close();
+    });*/
+
+    beforeEach(function () {
+    });
+    afterEach(function () {
     });
 
     describe('User SignUp with Username & Password', function () {
-        var apiUrl = '/api/v1/Authentication/signupwithusernameandpassword';
+        var apiUrl = '/api/v1/authentication/signupwithusernameandpassword';
 
         it('should return "MissingUsername" error trying to register without username', function (done) {
             var user = {
                 password: defaultPassword
             };
             request(server)
-                .post(apiUrl)
+                .post('/api/v1/authentication/signupwithusernameandpassword')
                 .send(user)
                 .end(function (err, res) {
                     if (err) {
@@ -39,7 +42,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingUsername');
+                    res.body.err.name.should.be.equal('MissingUsername');
                     done();
                 });
         });
@@ -58,7 +61,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('NotEmailOrPhoneNumber');
+                    res.body.err.name.should.be.equal('NotEmailOrPhoneNumber');
                     done();
                 });
         });
@@ -77,7 +80,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('NotEmailOrPhoneNumber');
+                    res.body.err.name.should.be.equal('NotEmailOrPhoneNumber');
                     done();
                 });
         });
@@ -95,7 +98,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingPassword');
+                    res.body.err.name.should.be.equal('MissingPassword');
                     done();
                 });
         });
@@ -114,7 +117,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('PasswordTooShort');
+                    res.body.err.name.should.be.equal('PasswordTooShort');
                     done();
                 });
         });
@@ -151,7 +154,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(409);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserExistsError');
+                    res.body.err.name.should.be.equal('UserExistsError');
                     done();
                 });
         });
@@ -173,7 +176,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingUsername');
+                    res.body.err.name.should.be.equal('MissingUsername');
                     done();
                 });
         });
@@ -191,7 +194,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingPassword');
+                    res.body.err.name.should.be.equal('MissingPassword');
                     done();
                 });
         });
@@ -210,7 +213,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('SignInFailed');
+                    res.body.err.name.should.be.equal('SignInFailed');
                     done();
                 });
         });
@@ -229,7 +232,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(200);
                     res.body.should.have.property('user');
-                    res.body.user.should.have.property('username').eql(user.username);
+                    res.body.user.username.should.be.equal(user.username);
                     res.body.should.have.property('auth');
                     res.body.auth.should.have.property('token');
                     done();
@@ -258,7 +261,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingUsername');
+                    res.body.err.name.should.be.equal('MissingUsername');
                     done();
                 });
         });
@@ -279,7 +282,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -300,7 +303,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -321,7 +324,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -342,7 +345,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -363,7 +366,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserIsBlocked');
+                    res.body.err.name.should.be.equal('UserIsBlocked');
                     done();
                 });
         });
@@ -384,7 +387,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserIsBlocked');
+                    res.body.err.name.should.be.equal('UserIsBlocked');
                     done();
                 });
         });
@@ -451,7 +454,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -474,7 +477,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -497,7 +500,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -520,7 +523,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserNotFound');
+                    res.body.err.name.should.be.equal('UserNotFound');
                     done();
                 });
         });
@@ -543,7 +546,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserIsBlocked');
+                    res.body.err.name.should.be.equal('UserIsBlocked');
                     done();
                 });
         });
@@ -566,7 +569,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('UserIsBlocked');
+                    res.body.err.name.should.be.equal('UserIsBlocked');
                     done();
                 });
         });
@@ -592,7 +595,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingUsername');
+                    res.body.err.name.should.be.equal('MissingUsername');
                     done();
                 });
         });
@@ -615,7 +618,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingPassword');
+                    res.body.err.name.should.be.equal('MissingPassword');
                     done();
                 });
         });
@@ -638,7 +641,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(404);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('PasswordTooShort');
+                    res.body.err.name.should.be.equal('PasswordTooShort');
                     done();
                 });
         });
@@ -661,7 +664,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('MissingVerifyCode');
+                    res.body.err.name.should.be.equal('MissingVerifyCode');
                     done();
                 });
         });
@@ -684,7 +687,7 @@ describe('Authentication', function () {
                     // this is should.js syntax, very clear
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql('WrongVerifyCode');
+                    res.body.err.name.should.be.equal('WrongVerifyCode');
                     done();
                 });
         });
