@@ -1,9 +1,0 @@
-machine:
-  node:
-    version: 5.5.0
-dependencies:
-  override:
-    - npm install -g typescript mocha gulp istanbul codecov standard
-    - npm install
-test:
-  post:
