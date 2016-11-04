@@ -19,9 +19,9 @@ Global packages
 ```
 Install NodeJS v4.5 (LTS - Recommended For Most Users): https://nodejs.org/en/download/
 # WINDOWS
-$ npm install -g tsd typescript nodemon mocha nyc codecov
+$ npm install -g typescript nodemon mocha nyc codecov
 # MAC OS
-$ sudo npm install -g tsd typescript nodemon mocha nyc codecov
+$ sudo npm install -g typescript nodemon mocha nyc codecov
 ```
 
 Install dependencies
