@@ -77,6 +77,24 @@ export class SalonManagement implements SalonManagementBehavior {
         return;
     };
 
+    public getFlexibleTime(): Promise<number> {
+        let salonId = this.salonId;
+        let promise = new Promise<any>(function (resolve, reject) {
+            var flexibleTime = 0;
+            SalonModel.findOne({ '_id': salonId }, function (err, docs: ISalonModel) {
+                if (err) {
+                    flexibleTime = 0;
+                } else if (!docs) {
+                    flexibleTime = 0;
+                } else {
+                    flexibleTime = docs.setting.flexible_time;
+                }
+                resolve(flexibleTime);
+            });
+        });
+        return promise;
+    }
+
     public async validation(salonInformation: SalonInformation) {
         var returnResult: SalonCloudResponse<any> = {
             code: undefined,
