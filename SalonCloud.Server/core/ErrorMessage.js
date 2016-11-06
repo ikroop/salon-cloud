@@ -438,6 +438,12 @@ exports.ErrorMessage = {
             'name': 'LaterAppointmentTimeThanSalonTimeOnCertainDate',
             'message': 'Appointment\'s start time is later than salon\'s close time on appointment date!'
         }
+    },
+    'AppointmentCanNotBeDoneWithinSalonWorkingTime': {
+        'err': {
+            'name': 'AppointmentCanNotBeDoneWithinSalonWorkingTime',
+            'message': 'Appointment cannot be done within salon\'s working time!'
+        }
     }
 };
 //# sourceMappingURL=ErrorMessage.js.map
