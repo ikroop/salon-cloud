@@ -4,6 +4,7 @@
  * 
  */
 import { mongoose } from '../../Services/Database';
+import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
 
 export interface BookedServiceData {
     service_id: string,
@@ -13,8 +14,8 @@ export interface BookedServiceData {
 }
 export interface AppointmentItemData {
     employee_id: string,
-    start: number,
-    end: number,
+    start: SalonTimeData,
+    end: SalonTimeData,
     services: BookedServiceData,
     overlapped: {
         status: boolean;
@@ -23,7 +24,7 @@ export interface AppointmentItemData {
     id?: string;
 }
 
-export interface AppointmentData{
+export interface AppointmentData {
     id?: string,
     appointment_items: [AppointmentItemData],
     total: number,
@@ -34,7 +35,7 @@ export interface AppointmentData{
     status: number,
     type: number,
     customer_id: string,
-    comment: string,
+    note: string,
 }
 
 export interface IAppointmentData extends AppointmentData, mongoose.Document { };

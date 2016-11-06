@@ -29,7 +29,7 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
             salon_id: appointment.salon_id,
             appointment_items: appointment.appointment_items,
             is_reminded: appointment.is_reminded,
-            comment: appointment.comment,
+            note: appointment.note,
             status: appointment.status,
             type: appointment.type,
             total: appointment.total,

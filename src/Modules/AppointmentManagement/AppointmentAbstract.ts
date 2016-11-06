@@ -73,7 +73,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
      *    2. get timeNeeded
      *    3. employee schedule
      *    4. call getEmployeeAvailableTime, get data from the result
-     *    5. return err if time is not available
+     *    5. return err if err
+     *       return null if time is not available
      *       return AppointmentItemData if time is available
      * 
      * @SalonCloudResponse.data: AppointmentItemData
@@ -90,31 +91,68 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         // get service data
         var serviceManagementDP = new ServiceManagement(this.salonId);
         var serviceItem = await serviceManagementDP.getServiceItemById(serviceId);
-        if(serviceItem.err){
+        if (serviceItem.err) {
             response.err = serviceItem.err;
             response.code = serviceItem.code;
             return response;
         }
-        // get Time needed
+        // get Time needed and end time
         var timeNeeded = serviceItem.data.time;
+        var endTime = new SalonTime(start);
+        endTime.addMinute(timeNeeded);
+        var end = endTime.toSalonTime();
 
         // get emloyee schedule
         var scheduleManagementDP = new EmployeeSchedule(this.salonId, employeeId)
-        var employeeDaySchedule = scheduleManagementDP.getDailySchedule(start);
+        var dayInput = new Date(start.year, start.month, start.day, start.hour, start.min, 0, 0);
+        var employeeDaySchedule = await scheduleManagementDP.getDailySchedule(dayInput);
         var employee = {
             employee_id: employeeId,
-            close: employeeDaySchedule.data.close,
-            status: employeeDaySchedule.data.status,
-            open: employeeDaySchedule.data.open
+            close: employeeDaySchedule.data.day.close,
+            status: employeeDaySchedule.data.day.status,
+            open: employeeDaySchedule.data.day.open
 
         }
 
         // call getEmployeeAvailableTime, get data from the result
-        this.getEmployeeAvailableTime(timeNeeded,start,employee);
-        
+        var getTimeArray = await this.getEmployeeAvailableTime(timeNeeded, start, employee);
+        if (getTimeArray.err) {
+            response.err = getTimeArray.err;
+            response.code = getTimeArray.code;
+        } else {
+            if (!getTimeArray.data) {
+                response.data = null;
+                response.code = 200;
+            } else {
+                for (var eachPoint of getTimeArray.data.time_array) {
+                    if (eachPoint.time == start) {
+                        if (eachPoint.available == false) {
+                            response.data = null;
+                            response.code = 200;
+                        } else {
+                            let appointmentItem : AppointmentItemData = {
+                                employee_id: employeeId,
+                                start: start,
+                                end: end,
+                                services: {
+                                    service_id: serviceItem.data.id,
+                                    time: serviceItem.data.time,
+                                    price: serviceItem.data.price,
+                                    service_name: serviceItem.data.name
+                                },
+                                overlapped: eachPoint.overlapped
+                            }
+                            response.data = appointmentItem;
+                            response.code = 200;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
 
         // return
-        return;
+        return response;
     }
 
     private createAppointmentDoc(appointment: AppointmentData) {
@@ -160,8 +198,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         var resultArray: Array<any>;
 
         // run loop method getEmployeeAvailableTime for each employee, push result to result array;
-        for (var each of employeeList) {
-            var process = this.getEmployeeAvailableTime(timeNeeded, date, each);
+        for (var each of employeeList.data) {
+            var process = await this.getEmployeeAvailableTime(timeNeeded, date, each);
             if (process.err) {
 
             } else {
@@ -179,7 +217,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     /**
     * @name: getEmployeeAvailableTime
-    * @param:  timeNeeded: number, date: SalonTimeData, employee: any // expecting 'employee': {status: boolean, close: number, open: number, employeeId: string}  
+    * @param:  timeNeeded: number, date: SalonTimeData, employee: any // expecting 'employee': {status: boolean, close: number, open: number, employee_id: string}  
     * @note: This function will get all available time-points for a service  of 1 employee.
     *        The timeNeeded param is the amount of time that the service requires.
     * @steps: Todo
@@ -198,7 +236,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
     *          }
     * 
     */
-    public async getEmployeeAvailableTime(timeNeeded: number, date: SalonTimeData, employee: any) : Promise<SalonCloudResponse<any>> {
+    public async getEmployeeAvailableTime(timeNeeded: number, date: SalonTimeData, employee: any): Promise<SalonCloudResponse<any>> {
         var response: SalonCloudResponse<any> = {
             data: undefined,
             code: undefined,
@@ -235,11 +273,11 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
         // get all employee's appointments in the day;
         var appointmentSearch = await this.appointmentManagementDP.getEmployeeAppointmentByDate(employee.employee_id, date);
-        if(appointmentSearch.err){
+        if (appointmentSearch.err) {
             response.err = appointmentSearch.err;
             response.code = appointmentSearch.code;
             return response;
-        }else{
+        } else {
             var appointmentArray = appointmentSearch.data;
         }
 
@@ -247,7 +285,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         var timeArray: Array<any>;
         for (let i = 0; i < timeArrayLenght; i++) {
             let obj = {
-                status: true,
+                available: true,
                 overlapped: {
                     status: false,
                     appointment_id: null,
@@ -350,7 +388,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         // if leftPoleInded<= rightPoleIndex, update timeArray with loop;
         if (leftPoleIndex <= rightPoleIndex) {
             for (let i = rightPoleIndex - 1; (i >= leftPoleIndex) && (i >= 0); i--) {
-                timeArray[i].status = false;
+                timeArray[i].available = false;
             }
         }
 
@@ -374,7 +412,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         let lastAvailPeriodTicks = closeTimePoint / SmallestTimeTick - rightPoleIndex;
         if (lastAvailPeriodTicks < timeNeededNumberOfTicks - flexibleTime / SmallestTimeTick) {
             for (let i = rightPoleIndex; i <= closeTimePoint / SmallestTimeTick; i++) {
-                timeArray[i].status = false;
+                timeArray[i].available = false;
             }
         }
 

@@ -11,7 +11,6 @@ import { ErrorMessage } from './../ErrorMessage'
 import { CustomerManagement } from './../../Modules/UserManagement/CustomerManagement'
 import { Authentication } from './../Authentication/Authentication'
 import { IDailyScheduleData, IWeeklyScheduleData } from './../../Modules/Schedule/ScheduleData'
-import { ReceiptManagement } from './../../Modules/Receipt/ReceiptManagement'
 
 export abstract class AbstractAdministrator extends AbstractEmployee implements AdministratorBehavior {
 
@@ -57,27 +56,43 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         }
 
         // get available time
-        var appointmentItemsArray : [AppointmentItemData];
+        var appointmentItemsArray: [AppointmentItemData];
         // create Service
-        for(let each of inputData.services){
-            var timeAvalibility = appointmentByPhone.checkBookingAvailableTimes(each.employee_id, each.service_id, each.start);
-            if(timeAvalibility.err = false){
-                response.err = ErrorMessage.EmployeeNotFound; //Todo
-                response.code = 400
+        for (let each of inputData.services) {
+            var timeAvalibility = await appointmentByPhone.checkBookingAvailableTimes(each.employee_id, each.service_id, each.start);
+            if (timeAvalibility.err) {
+                response.err = timeAvalibility.err;
+                response.code = timeAvalibility.code
                 return response;
-            }else{
+            } else {
+                if (!timeAvalibility.data) {
+                    response.err = ErrorMessage.AppointmentTimeNotAvailable; //TODO
+                    response.code = 500;
+                    return response;
+                }
                 appointmentItemsArray.push(timeAvalibility.data);
             }
         }
 
 
 
-        // Salon has available time for appointment
+        // Salon has available time for appointment, process to save appointment
+        var newAppointment : AppointmentData = {
+            customer_id: inputData.customer_id,
+            device: inputData.device,
+            appointment_items: appointmentItemsArray,
+            payment_id: undefined,
+            total: undefined,
+            salon_id: salonId,
+            status: undefined, //TODO: add default data
+            is_reminded: false,
+            note: inputData.note,
+            type: 1
+        }
 
 
-        
         // create appointment
-        var result: any = await appointmentByPhone.createAppointment(inputData);
+        var result: any = await appointmentByPhone.createAppointment(newAppointment);
         if (result.err) {
             response.err = result.err;
             response.code = result.code;

@@ -426,5 +426,18 @@ export const ErrorMessage = {
             'name': 'MissingBookingTimeMinute',
             'message': 'Minute of appointment time is required!'
         }
+    },
+    'AppointmentTimeNotAvailable': {
+        'err': {
+            'name': 'AppointmentTimeNotAvailable',
+            'message': 'The time of the appointment is not available to be booked!'
+        }
+    },
+    'EarlierAppointmentTimeThanSalonTimeOnCertainDate': {
+        'err': {
+            'name': 'EarlierAppointmentTimeThanSalonTimeOnCertainDate',
+            'message': 'Early Appointment' //TOdo
+        }
     }
+
 };

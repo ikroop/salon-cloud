@@ -17,7 +17,6 @@ export class BookingAppointment extends AppointmentAbstract {
 
     protected normalizationData(appointment: AppointmentData): AppointmentData{
         appointment.is_reminded = false;
-        appointment.overlapped.status = false;
         appointment.status = 1;
         appointment.type = 1;
         appointment.device = 1;
