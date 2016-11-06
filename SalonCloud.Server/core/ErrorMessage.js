@@ -444,6 +444,12 @@ exports.ErrorMessage = {
             'name': 'AppointmentCanNotBeDoneWithinSalonWorkingTime',
             'message': 'Appointment cannot be done within salon\'s working time!'
         }
+    },
+    'OverlappedAppointment': {
+        'err': {
+            'name': 'OverlappedAppointment',
+            'message': 'There is an un-finished appointment at appointment\'s start time!'
+        }
     }
 };
 //# sourceMappingURL=ErrorMessage.js.map
