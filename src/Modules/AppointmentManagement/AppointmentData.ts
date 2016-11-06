@@ -15,7 +15,7 @@ export interface AppointmentItemData {
     employee_id: string,
     start: number,
     end: number,
-    services: [BookedServiceData],
+    services: BookedServiceData,
     overlapped: {
         status: boolean;
         overlapped_appointment_id?: string;
@@ -25,9 +25,9 @@ export interface AppointmentItemData {
 
 export interface AppointmentData{
     id?: string,
-    appointment: [AppointmentItemData],
+    appointment_items: [AppointmentItemData],
     total: number,
-    payment_id: string,
+    payment_id?: string,
     device: number,
     is_reminded: boolean,
     salon_id: string,

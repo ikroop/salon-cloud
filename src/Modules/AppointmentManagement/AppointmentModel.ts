@@ -15,7 +15,7 @@ const AppointmentItemSchema = new mongoose.Schema({
     start: { type: SalonTimeSchema, require: true},
     end: { type: SalonTimeSchema, require: true},
     employee_id: { type: String, require: true},
-    servies: [BookedServiceSchema],
+    servies: BookedServiceSchema,
     overlapped: { 
         status: {type: Boolean, require: true},
         overlapped_appointment_id: String
