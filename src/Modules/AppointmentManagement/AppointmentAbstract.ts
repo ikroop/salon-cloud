@@ -86,7 +86,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
         // get service data
         var serviceManagementDP = new ServiceManagement(this.salonId);
-        serviceManagementDP.getServices()
+        var serviceItem = serviceManagementDP.getServiceItemById(service_id);
 
         // calculate end time
 

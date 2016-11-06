@@ -243,4 +243,41 @@ export class ServiceManagement implements ServiceManagementBehavior {
         return returnResult;
     }
 
+
+    /**
+     * @name: getServiceItemById 
+     * @parameter: {serviceId: string}
+     * 
+     * @note: 
+     * @steps: 
+     * 
+     * @SalonCloudResponse.data: ServiceItemData
+     * 
+     * 
+     *  */ 
+    public async getServiceItemById(serviceId: string): Promise<SalonCloudResponse<ServiceItemData>>{
+        var response : SalonCloudResponse<ServiceItemData> = {
+            data: undefined,
+            code: undefined,
+            err: undefined
+        }
+
+        var serviceSearch = ServiceGroupModel.findOne({'service_list.$.id' : serviceId }).exec();
+        await serviceSearch.then(function(docs){
+            if(docs){
+                response.data = docs.service_list[0];
+                response.code = 200;
+            }else {
+                response.err = ErrorMessage.ServiceNotFound;
+                response.code = 400;
+            }
+        }, function(err){
+            response.err = err;
+            response.code = 500;
+        })
+
+        return response;
+
+    }
+
 }
