@@ -2,6 +2,7 @@
 
 import { AppointmentData } from './AppointmentData'
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
+import {SalonTimeData} from './../../Core/SalonTime/SalonTimeData'
 
 export interface AppointmentManagementBehavior {
 
@@ -13,7 +14,7 @@ export interface AppointmentManagementBehavior {
 
     getAppointmentByCustomer(customerId: string): Array<AppointmentData>;
 
-    getAppointmentByDate(date: Date): Array<AppointmentData>;
+    getAppointmentByDate(date: SalonTimeData): Array<AppointmentData>;
 
     updateAppointment(appointmentId: string, appointment: AppointmentData): boolean;
 

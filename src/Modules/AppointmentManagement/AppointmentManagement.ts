@@ -5,6 +5,8 @@ import { AppointmentManagementBehavior } from './AppointmentManagementBehavior'
 import { AppointmentData } from './AppointmentData'
 import AppointmentModel = require('./AppointmentModel');
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
+import { SalonTime } from './../../Core/SalonTime/SalonTime'
+import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
 
 export class AppointmentManagement implements AppointmentManagementBehavior {
 
@@ -25,15 +27,12 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
             customer_id: appointment.customer_id,
             device: appointment.device,
             salon_id: appointment.salon_id,
-            overlapped: {
-                status: appointment.overlapped.status,
-                overlapped_appointment_id: appointment.overlapped.overlapped_appointment_id
-            },
+            appointment_items: appointment.appointment_items,
             is_reminded: appointment.is_reminded,
-            receipt_id: appointment.receipt_id,
-            note: appointment.note,
+            comment: appointment.comment,
             status: appointment.status,
-            type: appointment.type
+            type: appointment.type,
+            total: appointment.total,
         }
         var appointmentCreation = AppointmentModel.create(newAppointment);
         await appointmentCreation.then(function (docs) {
@@ -55,7 +54,15 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
         return;
     };
 
-    public getAppointmentByDate(date: Date): Array<AppointmentData> {
+    public getAppointmentByDate(date: SalonTimeData): Array<AppointmentData> {
+        var response : SalonCloudResponse<Array<AppointmentData>> = {
+            data: undefined,
+            code: undefined,
+            err: undefined
+        }
+
+        AppointmentModel.find({}).exec();
+        
         return;
     };
 

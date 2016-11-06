@@ -3,7 +3,7 @@
 import { AbstractEmployee } from './AbstractEmployee'
 import { UserProfile, UserData } from './../../Modules/UserManagement/UserData'
 import UserModel = require('./../../Modules/UserManagement/UserModel');
-import { AppointmentData } from './../../Modules/AppointmentManagement/AppointmentData'
+import { AppointmentItemData, AppointmentData } from './../../Modules/AppointmentManagement/AppointmentData'
 import { AdministratorBehavior } from './AdministratorBehavior'
 import { BookingAppointment } from './../../Modules/AppointmentManagement/BookingAppointment';
 import { SalonCloudResponse } from './../SalonCloudResponse'
@@ -47,17 +47,6 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         var salonId = inputData.salon_id;
         var appointmentByPhone: BookingAppointment;
-        var receiptManagementDP = new ReceiptManagement(salonId);
-
-        // Check booking available time
-
-        var bookingTimeList = appointmentByPhone.checkBookingAvailableTimes(inputData);
-
-        if (!bookingTimeList) {
-            return;
-        }
-
-        // Salon has available time for appointment
 
         // Get customer Id
         var getCustomerId = await this.getCustomerID(salonId, inputData);
@@ -67,14 +56,26 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             return response;
         }
 
-        // create receipt 
-        var receiptCreation = await receiptManagementDP.add(inputData);
-        if (receiptCreation.err) {
-            response.err = receiptCreation.err;
-            response.code = receiptCreation.code;
-            return response;
+        // get available time
+        var appointmentItemsArray : [AppointmentItemData];
+        // create Service
+        for(let each of inputData.services){
+            var timeAvalibility = appointmentByPhone.checkBookingAvailableTimes(each.employee_id, each.service_id, each.start);
+            if(timeAvalibility.err = false){
+                response.err = ErrorMessage.EmployeeNotFound; //Todo
+                response.code = 400
+                return response;
+            }else{
+                appointmentItemsArray.push(timeAvalibility.data);
+            }
         }
 
+
+
+        // Salon has available time for appointment
+
+
+        
         // create appointment
         var result: any = await appointmentByPhone.createAppointment(inputData);
         if (result.err) {

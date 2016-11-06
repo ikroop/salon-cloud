@@ -133,11 +133,24 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         return;
     };
 
-    getAllEmployee(): Array<UserData> {
-        UserModel.find({'profile.salon_id': this.salonId, 'profile.status': true, 'profile.role': {$in: [2,3]}}, function (err, docs) {
-            console.log(err, docs);
+    public async getAllEmployee(): Promise<SalonCloudResponse<Array<UserData>>> {
+        var response: SalonCloudResponse<Array<UserData>> = {
+            data: undefined,
+            code: undefined,
+            err: undefined
+        }
+        var userSearch = UserModel.find({ 'profile.salon_id': this.salonId, 'profile.status': true, 'profile.role': { $in: [2, 3] } }).exec();
+        await userSearch.then(function (docs) {
+            console.log('docs', docs);
+            response.data = docs;
+            response.code = 200;
+
+
+        }, function (err) {
+            response.err = err;
+            response.code = 500;
         });
-        return;
+        return response;
     };
 
     getEmployee(employeeId: string): UserData {
