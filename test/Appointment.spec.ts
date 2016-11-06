@@ -935,7 +935,7 @@ describe('Appointment Management', function () {
                     - name: 'OverlapAnotherAppointmentEndTime' 
                     - message: 'There is an un-finished appointment at appointment's start time!'
         */
-        it('should return ' + ErrorMessage.OverlapAnotherAppointmentEndTime.err.name + ' error trying to create appointment which has start time overlaps another appointment\'s end time", function (done) {
+        it('should return ' + ErrorMessage.OverlapAnotherAppointmentEndTime.err.name + ' error trying to create appointment which has start time overlaps another appointment\'s end time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -978,7 +978,7 @@ describe('Appointment Management', function () {
                     - name: 'OverlapAnotherAppointmentStartTime' 
                     - message: 'There's an appointment that starts before this appointment ends!'
         */
-        it('should return ' + ErrorMessage.OverlappeOverlapAnotherAppointmentStartTimedAppointment.err.name + ' error trying to create appointment which has end time overlaps another appointment\'s start time", function (done) {
+        it('should return ' + ErrorMessage.OverlappeOverlapAnotherAppointmentStartTimedAppointment.err.name + ' error trying to create appointment which has end time overlaps another appointment\'s start time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -1012,6 +1012,49 @@ describe('Appointment Management', function () {
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.OverlapAnotherAppointmentStartTime.err.name);
+                    done();
+                });
+        });
+
+        /* 20	currentAppointment.Start < (anotherAppointment.End + delay) 	400	
+                error : 
+                    - name: 'OverlapDelayedAppointmentEndTime' 
+                    - message: 'Appointment's start time may not be available since previous appointment may be delayed!'
+        */
+        it('should return ' + ErrorMessage.OverlapDelayedAppointmentEndTime.err.name + ' error trying to create appointment which has start time may not be available since previous appointment may be delayed', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: notFoundEmployeeId
+                }, {
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
+                "booking_time": {
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 20,
+                    min: 55
+                }
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.OverlapDelayedAppointmentEndTime.err.name);
                     done();
                 });
         });
