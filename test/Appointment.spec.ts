@@ -1,4 +1,4 @@
-/*var should = require('should');
+var should = require('should');
 var assert = require('assert');
 var request = require('supertest');
 var winston = require('winston');
@@ -60,6 +60,11 @@ describe('Appointment Management', function () {
     describe('Unit Test Create Appointment By Phone', function () {
         var apiUrl = '/appointment/createbyphone';
 
+        /* 1	Invalid token	403	
+                error : 
+                    - name: 'InvalidTokenError' 
+                    - message: 'Token is invalid'
+        */
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to create appointment with invalid token', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -95,6 +100,11 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 2	Missing Phone Number	400	
+                error : 
+                    - name: 'MissingPhoneNumber' 
+                    - message: 'Missing Phone Number'
+        */
         it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to create appointment without customer\'s phone', function (done) {
             var bodyRequest = {
                 "customer_name": rightFormattedName,
@@ -129,6 +139,11 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 3	Wrong Phone Number Format	400	
+                error : 
+                    - name: 'WrongPhoneNumberFormat' 
+                    - message: 'Wrong Phone Number Format'
+        */
         it('should return ' + ErrorMessage.WrongPhoneNumberFormat.err.name + ' error trying to create appointment with wrong-formatted phone number', function (done) {
             var bodyRequest = {
                 "customer_phone": wrongFormattedPhoneNumber,
@@ -164,6 +179,11 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 4	Missing Customer Name	400	
+                error : 
+                    - name: 'MissingCustomerName' 
+                    - message: 'Missing Customer Name' 
+        */
         it('should return ' + ErrorMessage.MissingCustomerName.err.name + ' error trying to create appointment without customer\'s name', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -198,6 +218,11 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 5	Invalid Name String (name is empty)	400	
+                error : 
+                    - name: 'InvalidNameString' 
+                    - message: 'Invalid Name String (Name is empty)'
+        */
         it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create appointment with customer\'s name = empty string', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -233,6 +258,11 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 6	Invalid Name String (name is too long)	400	
+                error : 
+                    - name: 'InvalidNameString' 
+                    - message: 'Invalid Name String (Name is too long)'
+        */
         it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create appointment with too long customer\'s name', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -268,6 +298,11 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 7	Missing SalonID	400	
+                error : 
+                    - name: 'MissingSalonID' 
+                    - message: 'Missing SalonID'
+        */
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to create appointment without salonId', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -302,6 +337,11 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 8	Salon Not Found	400
+                error : 
+                    - name: 'SalonNotFound' 
+                    - message: 'Salon Not Found'
+        */
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to create appointment with wrong salonId', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -337,6 +377,11 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 9	Missing Booked Service List	400	
+                error : 
+                    - name: 'MissingBookedServiceList' 
+                    - message: 'Missing Booked Service List'
+        */
         it('should return ' + ErrorMessage.MissingBookedServiceList.err.name + ' error trying to create appointment without service(s)', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -368,6 +413,11 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 10	Missing Service Id	400	
+                error : 
+                    - name: 'MissingServiceId' 
+                    - message: 'Missing Service Id'
+        */
         it('should return ' + ErrorMessage.MissingServiceId.err.name + ' error trying to create appointment which has service with no serviceId', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -405,6 +455,11 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 11	Service Not Found	400	
+                error : 
+                    - name: 'ServiceNotFound' 
+                    - message: 'Service Not Found'
+        */
         it('should return ' + ErrorMessage.ServiceNotFound.err.name + ' error trying to create appointment which has not-found service', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -443,6 +498,11 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 12	Missing Employee Id	400	
+                error : 
+                    - name: 'MissingEmployeeId' 
+                    - message: 'Missing Employee Id'
+        */
         it('should return ' + ErrorMessage.MissingEmployeeId.err.name + ' error trying to create appointment which has service with no employeeId', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -480,6 +540,11 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 13	Employee Not Found	400	
+                error : 
+                    - name: 'EmployeeNotFound' 
+                    - message: 'Employee Not Found'
+        */
         it('should return ' + ErrorMessage.EmployeeNotFound.err.name + ' error trying to create appointment which has not-found employee', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -518,6 +583,11 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 14	Missing Appointment Time	400	
+                error : 
+                    - name: 'MissingAppointmentTime' 
+                    - message: 'Missing Appointment Time'
+        */
         it('should return ' + ErrorMessage.MissingAppointmentTime.err.name + ' error trying to create appointment without booking_time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -545,7 +615,6 @@ describe('Appointment Management', function () {
                     done();
                 });
         });
-
         it('should return ' + ErrorMessage.MissingBookingTimeDay.err.name + ' error trying to create appointment which has no-day booking_time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -732,6 +801,49 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 15	AppointmentTime.Start < SalonDailySchedule.Open	400	
+                error : 
+                    - name: 'AppointmentTimeIsEarlierThanSalonTimeOnCertainDate' 
+                    - message: 'Appointment's start time is earlier than salon's open time on appointment date on that date'
+        */
+        it('should return ' + ErrorMessage.AppointmentTimeIsEarlierThanSalonTimeOnCertainDate.err.name + ' error trying to create appointment which has no-minute booking_time', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: notFoundEmployeeId
+                }, {
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
+                "booking_time": {
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 5,
+                    min: 15
+                }
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.AppointmentTimeIsEarlierThanSalonTimeOnCertainDate.err.name);
+                    done();
+                });
+        });
+
         it('should return appointment_id if request proceeds successfully with note', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -800,4 +912,4 @@ describe('Appointment Management', function () {
         });
 
     });
-});*/
+});
