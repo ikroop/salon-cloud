@@ -973,12 +973,12 @@ describe('Appointment Management', function () {
                 });
         });
 
-        /* 19	currentAppointment.End > anotherAppointment.Start	400	
+        /* 19	currentAppointment.End > (anotherAppointment.Start + delay)	400	
                 error : 
                     - name: 'OverlapAnotherAppointmentStartTime' 
                     - message: 'There's an appointment that starts before this appointment ends!'
         */
-        it('should return ' + ErrorMessage.OverlappeOverlapAnotherAppointmentStartTimedAppointment.err.name + ' error trying to create appointment which has end time overlaps another appointment\'s start time', function (done) {
+        it('should return ' + ErrorMessage.OverlapAnotherAppointmentStartTime.err.name + ' error trying to create appointment which has end time overlaps another appointment\'s start time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -1055,6 +1055,49 @@ describe('Appointment Management', function () {
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.OverlapDelayedAppointmentEndTime.err.name);
+                    done();
+                });
+        });
+
+        /* 21	currentAppointment.End > fix anotherAppointment.Start	400	
+                error : 
+                    - name: 'OverlapAnotherAppointmentStartTimeFixed' 
+                    - message: 'Appointment's end time is not available since next appointment cannot be more delayed!'
+        */
+        it('should return ' + ErrorMessage.OverlapAnotherAppointmentStartTimeFixed.err.name + ' error trying to create appointment which has end time may not available since next appointment cannot be more delayed', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: notFoundEmployeeId
+                }, {
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
+                "booking_time": {
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 20,
+                    min: 55
+                }
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.OverlapAnotherAppointmentStartTimeFixed.err.name);
                     done();
                 });
         });

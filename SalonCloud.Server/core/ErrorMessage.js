@@ -462,6 +462,12 @@ exports.ErrorMessage = {
             'name': 'OverlapDelayedAppointmentEndTime',
             'message': 'Appointment\'s start time may not be available since previous appointment may be delayed!'
         }
+    },
+    'OverlapAnotherAppointmentStartTimeFixed': {
+        'err': {
+            'name': 'OverlapAnotherAppointmentStartTimeFixed',
+            'message': 'Appointment\'s end time is not available since next appointment cannot be more delayed!'
+        }
     }
 };
 //# sourceMappingURL=ErrorMessage.js.map
