@@ -474,6 +474,12 @@ exports.ErrorMessage = {
             'name': 'AppointmentTimeNotAvailable',
             'message': 'Appointment time is not available!'
         }
+    },
+    'CompletelyOverlapAnotherAppointment': {
+        'err': {
+            'name': 'CompletelyOverlapAnotherAppointment',
+            'message': 'Another appointment has already been at that time!'
+        }
     }
 };
 //# sourceMappingURL=ErrorMessage.js.map
