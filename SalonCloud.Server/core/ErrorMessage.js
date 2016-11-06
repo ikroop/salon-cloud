@@ -427,10 +427,16 @@ exports.ErrorMessage = {
             'message': 'Minute of appointment time is required!'
         }
     },
-    'AppointmentTimeIsEarlierThanSalonTimeOnCertainDate': {
+    'EarlierAppointmentTimeThanSalonTimeOnCertainDate': {
         'err': {
-            'name': 'AppointmentTimeIsEarlierThanSalonTimeOnCertainDate',
+            'name': 'EarlierAppointmentTimeThanSalonTimeOnCertainDate',
             'message': 'Appointment\'s start time is earlier than salon\'s open time on appointment date!'
+        }
+    },
+    'LaterAppointmentTimeThanSalonTimeOnCertainDate': {
+        'err': {
+            'name': 'LaterAppointmentTimeThanSalonTimeOnCertainDate',
+            'message': 'Appointment\'s start time is later than salon\'s close time on appointment date!'
         }
     }
 };

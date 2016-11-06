@@ -803,10 +803,10 @@ describe('Appointment Management', function () {
 
         /* 15	AppointmentTime.Start < SalonDailySchedule.Open	400	
                 error : 
-                    - name: 'AppointmentTimeIsEarlierThanSalonTimeOnCertainDate' 
+                    - name: 'EarlierAppointmentTimeThanSalonTimeOnCertainDate' 
                     - message: 'Appointment's start time is earlier than salon's open time on appointment date on that date'
         */
-        it('should return ' + ErrorMessage.AppointmentTimeIsEarlierThanSalonTimeOnCertainDate.err.name + ' error trying to create appointment which has no-minute booking_time', function (done) {
+        it('should return ' + ErrorMessage.EarlierAppointmentTimeThanSalonTimeOnCertainDate.err.name + ' error trying to create appointment which has early booking_time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -839,7 +839,50 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.AppointmentTimeIsEarlierThanSalonTimeOnCertainDate.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.EarlierAppointmentTimeThanSalonTimeOnCertainDate.err.name);
+                    done();
+                });
+        });
+
+        /* 16	AppointmentTime.Start > SalonDailySchedule.Close	400	
+                error : 
+                    - name: 'LaterAppointmentTimeThanSalonTimeOnCertainDate' 
+                    - message: 'Appointment's start time is later than salon's open time on appointment date on that date'
+        */
+        it('should return ' + ErrorMessage.LaterAppointmentTimeThanSalonTimeOnCertainDate.err.name + ' error trying to create appointment which has late booking_time', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: notFoundEmployeeId
+                }, {
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
+                "booking_time": {
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 23,
+                    min: 15
+                }
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.LaterAppointmentTimeThanSalonTimeOnCertainDate.err.name);
                     done();
                 });
         });
