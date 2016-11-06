@@ -90,3 +90,4 @@ export let samplesService2: ServiceGroupData = {
     service_list: [gelServiceItem1, gelServiceItem2]
 }
 
+export const SmallestTimeTick : number = 15;
