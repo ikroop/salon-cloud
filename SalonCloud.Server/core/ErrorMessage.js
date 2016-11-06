@@ -445,10 +445,16 @@ exports.ErrorMessage = {
             'message': 'Appointment cannot be done within salon\'s working time!'
         }
     },
-    'OverlappedAppointment': {
+    'OverlapAnotherAppointmentEndTime': {
         'err': {
-            'name': 'OverlappedAppointment',
+            'name': 'OverlapAnotherAppointmentEndTime',
             'message': 'There is an un-finished appointment at appointment\'s start time!'
+        }
+    },
+    'OverlapAnotherAppointmentStartTime': {
+        'err': {
+            'name': 'OverlapAnotherAppointmentStartTime',
+            'message': 'There\'s an appointment that starts before this appointment ends!'
         }
     }
 };
