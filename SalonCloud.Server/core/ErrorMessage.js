@@ -486,6 +486,12 @@ exports.ErrorMessage = {
             'name': 'NotEnoughTimeForAppointment',
             'message': 'This appointment may not have enough time because of its previous & next appointments!'
         }
+    },
+    'InvalidAppointmentStartTime': {
+        'err': {
+            'name': 'InvalidAppointmentStartTime',
+            'message': 'This appointment has start time which is in the past!'
+        }
     }
 };
 //# sourceMappingURL=ErrorMessage.js.map
