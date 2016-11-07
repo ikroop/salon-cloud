@@ -1190,6 +1190,50 @@ describe('Appointment Management', function () {
                 });
         });
 
+        /* 24	NotEnoughTimeForAppointment	
+                400	
+                error : 
+                    - name: 'NotEnoughTimeForAppointment' 
+                    - message: 'This appointment may not have enough time because of its previous & next appointments!'
+        */
+        it('should return ' + ErrorMessage.NotEnoughTimeForAppointment.err.name + ' error trying to create appointment which may have not enough time', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: notFoundEmployeeId
+                }, {
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
+                "booking_time": {
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 20,
+                    min: 55
+                }
+            };
+            request(url)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.NotEnoughTimeForAppointment.err.name);
+                    done();
+                });
+        });
+
         it('should return appointment_id if request proceeds successfully with note', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,

@@ -480,6 +480,12 @@ exports.ErrorMessage = {
             'name': 'CompletelyOverlapAnotherAppointment',
             'message': 'Another appointment has already been at that time!'
         }
+    },
+    'NotEnoughTimeForAppointment': {
+        'err': {
+            'name': 'NotEnoughTimeForAppointment',
+            'message': 'This appointment may not have enough time because of its previous & next appointments!'
+        }
     }
 };
 //# sourceMappingURL=ErrorMessage.js.map
