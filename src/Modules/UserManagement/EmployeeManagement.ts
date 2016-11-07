@@ -33,15 +33,12 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
             social_security_number: profile.social_serurity_number,
 
         }
-        console.log('AAAAAAA', newProfile);
         let addProfileAction = await this.addProfile(employeeId, newProfile);
         if (addProfileAction.err) {
-            console.log('err', addProfileAction.err);
             returnResult.err = addProfileAction.err;
             returnResult.code = addProfileAction.code;
             return returnResult;
         } else {
-            console.log(addProfileAction.data);
             returnResult.code = addProfileAction.code;
             returnResult.data = addProfileAction.data;
             return returnResult;
@@ -141,7 +138,6 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         }
         var userSearch = UserModel.find({ 'profile.salon_id': this.salonId, 'profile.status': true, 'profile.role': { $in: [2, 3] } }).exec();
         await userSearch.then(function (docs) {
-            console.log('docs', docs);
             response.data = docs;
             response.code = 200;
 

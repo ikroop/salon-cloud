@@ -92,7 +92,6 @@ export class Owner extends AbstractAdministrator {
 
         // add new profile to the account
         let addProfileAction = await employeeManagementDP.addEmployeeProfile(accountCreation.data.user._id, employeeProfile);
-        console.log(addProfileAction);
         response.data = {
             uid: accountCreation.data.user._id,
             salon_id: employeeProfile.salon_id,

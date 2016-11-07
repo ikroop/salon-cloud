@@ -206,7 +206,6 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 resultArray.push(process.data);
             }
         }
-        console.log(employeeList);
         response.data = resultArray;
         response.code = 200;
         // return
