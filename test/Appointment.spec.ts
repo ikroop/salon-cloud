@@ -1,11 +1,11 @@
-var should = require('should');
-var assert = require('assert');
-var request = require('supertest');
-var winston = require('winston');
-var ErrorMessage = require('./../dist/Core/ErrorMessage').ErrorMessage;
+import * as server from '../src/App';
+import * as request from 'supertest';
+import * as chai from 'chai';
+var expect = chai.expect;
+var should = chai.should();
+import { ErrorMessage } from './../src/Core/ErrorMessage';
 
 describe('Appointment Management', function () {
-    var url = 'http://localhost:3000/api/v1';
     var validToken;
     var invalidToken;
     var validSalonId;
@@ -31,8 +31,8 @@ describe('Appointment Management', function () {
             username: 'unittest1473044833007@gmail.com',
             password: defaultPassword
         };
-        request(url)
-            .post('/authentication/signinwithusernameandpassword')
+        request(server)
+            .post('/api/v1/authentication/signinwithusernameandpassword')
             .send(user)
             .end(function (err, res) {
                 if (err) {
@@ -83,7 +83,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': invalidToken })
@@ -122,7 +122,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -162,7 +162,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -201,7 +201,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -241,7 +241,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -281,7 +281,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -320,7 +320,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -360,7 +360,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -396,7 +396,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -438,7 +438,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -481,7 +481,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -523,7 +523,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -566,7 +566,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -599,7 +599,7 @@ describe('Appointment Management', function () {
                     employee_id: existedEmployeeId
                 }],
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -635,7 +635,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -672,7 +672,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -709,7 +709,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -746,7 +746,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -784,7 +784,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -827,7 +827,7 @@ describe('Appointment Management', function () {
                     min: 15
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -870,7 +870,7 @@ describe('Appointment Management', function () {
                     min: 15
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -913,7 +913,7 @@ describe('Appointment Management', function () {
                     min: 55
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -956,7 +956,7 @@ describe('Appointment Management', function () {
                     min: 55
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -999,7 +999,7 @@ describe('Appointment Management', function () {
                     min: 55
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -1042,7 +1042,7 @@ describe('Appointment Management', function () {
                     min: 55
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -1085,7 +1085,7 @@ describe('Appointment Management', function () {
                     min: 55
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -1129,7 +1129,7 @@ describe('Appointment Management', function () {
                     min: 55
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -1173,7 +1173,7 @@ describe('Appointment Management', function () {
                     min: 55
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -1296,7 +1296,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -1329,7 +1329,7 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })

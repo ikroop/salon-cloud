@@ -436,7 +436,49 @@ export const ErrorMessage = {
     'EarlierAppointmentTimeThanSalonTimeOnCertainDate': {
         'err': {
             'name': 'EarlierAppointmentTimeThanSalonTimeOnCertainDate',
-            'message': 'Early Appointment' //TOdo
+            'message': 'Appointment\'s start time is earlier than salon\'s open time on appointment date on that date'
+        }
+    },
+    'LaterAppointmentTimeThanSalonTimeOnCertainDate': {
+        'err': {
+            'name': 'LaterAppointmentTimeThanSalonTimeOnCertainDate',
+            'message': 'Appointment\'s start time is later than salon\'s open time on appointment date on that date'
+        }
+    },
+    'AppointmentCanNotBeDoneWithinSalonWorkingTime': {
+        'err': {
+            'name': 'AppointmentCanNotBeDoneWithinSalonWorkingTime',
+            'message': 'Appointment cannot be done within salon\'s working time'
+        }
+    },
+    'OverlapAnotherAppointmentEndTime': {
+        'err': {
+            'name': 'OverlapAnotherAppointmentEndTime',
+            'message': 'There is an un-finished appointment at appointment\'s start time!'
+        }
+    },
+    'OverlapAnotherAppointmentStartTime': {
+        'err': {
+            'name': 'OverlapAnotherAppointmentStartTime',
+            'message': 'There\'s an appointment that starts before this appointment ends!'
+        }
+    },
+    'OverlapDelayedAppointmentEndTime': {
+        'err': {
+            'name': 'OverlapDelayedAppointmentEndTime',
+            'message': 'Appointment\'s start time may not be available since previous appointment may be delayed!'
+        }
+    },
+    'OverlapAnotherAppointmentStartTimeFixed': {
+        'err': {
+            'name': 'OverlapAnotherAppointmentStartTimeFixed',
+            'message': 'Appointment\'s end time is not available since next appointment cannot be more delayed!'
+        }
+    },
+    'CompletelyOverlapAnotherAppointment': {
+        'err': {
+            'name': 'CompletelyOverlapAnotherAppointment',
+            'message': 'Another appointment has already been at that time!'
         }
     }
 
