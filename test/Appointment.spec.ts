@@ -58,7 +58,7 @@ describe('Appointment Management', function () {
     });
 
     describe('Unit Test Create Appointment By Phone', function () {
-        var apiUrl = '/appointment/createbyphone';
+        var apiUrl = '/api/v1/appointment/createbyphone';
 
         /* 1	Invalid token	403	
                 error : 
@@ -1217,7 +1217,7 @@ describe('Appointment Management', function () {
                     min: 55
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
@@ -1261,7 +1261,7 @@ describe('Appointment Management', function () {
                     min: 55
                 }
             };
-            request(url)
+            request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': validToken })
