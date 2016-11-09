@@ -27,14 +27,14 @@ $ sudo npm install -g typescript nodemon mocha nyc codecov
 Install dependencies
 =============
 ```
-$ cd <project_path> (ex: workspace/salon-cloud/SalonCloud.Server)
+$ cd <project_path> (ex: workspace/salon-cloud)
 $ npm install
 ```
 
 Testing
 =============
 ```
-$ cd <project_path> (ex: workspace/salon-cloud/SalonCloud.Server)
+$ cd <project_path> (ex: workspace/salon-cloud)
 $ npm test
 ```
 
