@@ -436,13 +436,13 @@ export const ErrorMessage = {
     'EarlierAppointmentTimeThanSalonTimeOnCertainDate': {
         'err': {
             'name': 'EarlierAppointmentTimeThanSalonTimeOnCertainDate',
-            'message': 'Appointment\'s start time is earlier than salon\'s open time on appointment date on that date'
+            'message': 'Appointment\'s start time is earlier than salon\'s open time on appointment date'
         }
     },
     'LaterAppointmentTimeThanSalonTimeOnCertainDate': {
         'err': {
             'name': 'LaterAppointmentTimeThanSalonTimeOnCertainDate',
-            'message': 'Appointment\'s start time is later than salon\'s open time on appointment date on that date'
+            'message': 'Appointment\'s start time is later than salon\'s close time on appointment date'
         }
     },
     'AppointmentCanNotBeDoneWithinSalonWorkingTime': {
