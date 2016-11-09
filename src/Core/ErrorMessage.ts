@@ -492,6 +492,17 @@ export const ErrorMessage = {
             'name': 'InvalidAppointmentStartTime',
             'message': 'This appointment has start time which is in the past!'
         }
+    },
+    'InvalidDataTypeService': {
+        'err': {
+            'name': 'InvalidDataTypeService',
+            'message': 'The data type of services must be an array!'
+        }
+    },
+    'InvalidDataTypeBookingTime': {
+        'err': {
+            'name': 'InvalidDataTypeBookingTime',
+            'message': 'Invalid data type of booking time!'
+        }
     }
-
 };
