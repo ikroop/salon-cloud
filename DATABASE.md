@@ -29,7 +29,7 @@ use UTC.
   |     |----appointment_items:Array
   |     |     |----id: string
   |     |     |----employee_id: string
-  |     |     |----services: Array
+  |     |     |----service
   |     |     |     |----service_id: string
   |     |     |     |----service_name: string
   |     |     |     |----time: number
