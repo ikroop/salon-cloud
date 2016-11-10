@@ -35,7 +35,6 @@ use UTC.
   |     |     |     |----time: number
   |     |     |     |----price: number
   |     |     |----start: SalonTime
-  |     |     |----end: SalonTime
   |     |     |----overlapped:
   |     |           |----status: boolean
   |     |           |----appointment_id: string (optional)
