@@ -67,7 +67,7 @@
   },
   "scripts": {
     "pretest": "tsc test/*.ts --module commonjs --sourcemap --target es6",
-    "test": "NODE_ENV=development nyc mocha test/appointment.spec.js -t 20000 ",
+    "test": "NODE_ENV=development nyc mocha -t 5000",
     "posttest": "export CODECOV_TOKEN='22ee92e1-4cdd-4db2-ba21-95a1459f2e37' && nyc report --reporter=json && codecov -f coverage/*.json"
   }
 }
