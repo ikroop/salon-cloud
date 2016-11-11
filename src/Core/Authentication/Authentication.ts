@@ -94,19 +94,23 @@ export class Authentication implements AuthenticationBehavior {
      * signInWithUsernameAndPassword
      * Sign In with username & password
      * @param : 
-     *     Error: Validation Error
-     *     Successful: 
+     *      username: string (email or phone number)
+     *      password: string 
+     * @return
+     *      Error:  - Validation Error, code: 400
+     *              - Username or Password is wrong, code: 403
+     *              - Another: code 409
+     *      Successful: 
      *             {
      *                  user:{
      *                     username: string
      *                     status: boolean
-     *                     id: string
+     *                     _id: string
      *                  },
      *                  auth:{
      *                     token: string
      *                  }
      *             }
-     * @returns {DailyDayData}
      */
     public async signInWithUsernameAndPassword(username: string, password: string) {
 
@@ -203,7 +207,7 @@ export class Authentication implements AuthenticationBehavior {
             response.err = registerProcess.err;
             response.code = 409;
         } else {
-            let signinData:any = await this.signInWithUsernameAndPassword(username, randomPasswordString);
+            let signinData: any = await this.signInWithUsernameAndPassword(username, randomPasswordString);
             response.data = signinData.data;
             response.data.password = randomPasswordString;
             response.code = 200;
