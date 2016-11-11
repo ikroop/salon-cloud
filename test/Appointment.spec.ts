@@ -4,6 +4,12 @@ import * as chai from 'chai';
 var expect = chai.expect;
 var should = chai.should();
 import { ErrorMessage } from './../src/Core/ErrorMessage';
+import { ServiceManagement } from './../src/Modules/ServiceManagement/ServiceManagement';
+import { EmployeeSchedule } from './../src/Modules/Schedule/EmployeeSchedule';
+import { Authentication } from './../src/Core/Authentication/Authentication';
+import { SignedInUser } from './../src/Core/User/SignedInUser';
+import { Owner } from './../src/Core/User/Owner';
+import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
 
 describe('Appointment Management', function () {
     var validToken;
@@ -41,17 +47,52 @@ describe('Appointment Management', function () {
 
                 validToken = res.body.auth.token;
                 invalidToken = 'eyJhbGciOiJSUz';
-                validSalonId = "57faa2692579df79216a153c";
-                invalidSalonId = "00";
-                notFoundSalonId = '97ba653d54a6e5';
+                var userId = res.body.user._id;
 
-                existedServiceId = '57fe92633674bf315450686d';
-                notFoundServiceId = '00fe92633674bf315450686d';
-                invalidServiceId = '000';
+                //TODO: Create new salon
+                var user = new SignedInUser(userId, new SalonManagement(undefined));
+                var salonInformationInput = {
+                    email: 'salon@salon.com',
+                    phone: {
+                        number: '7703456789',
+                        is_verified: false
+                    },
+                    location: {
+                        address: '2506 Bailey Dr NW, Norcross, GA 30071',
+                        is_verified: false,
+                        timezone_id: undefined
+                    },
+                    salon_name: 'Salon Appointment Test'
+                }
 
-                existedEmployeeId = '';
-                notFoundEmployeeId = '';
-                invalidEmployeeId = '';
+                var salon: any = user.createSalon(salonInformationInput);
+
+                //TODO: Add new employee
+
+                /*{
+                    salon_id: string, require,
+                    role: number, require, accepted values: 2 or 3
+                    phone: string, require,
+                    fullname: string, require
+                    nickname: string, require,
+                    salary_rate: number, require,
+                    cash_rate: number, require,
+                    social_security_number: optional, string, format ssn
+                }*/
+                var owner = new Owner(userId, salon.data.salon_id);
+
+                //var employee = owner.addEmployee
+
+                //TODO: get services 
+                var serviceManagement = new ServiceManagement(validSalonId);
+                var service: any = serviceManagement.getServices();
+
+                //TODO: get Daily Schedule
+                var employeeSchedule = new EmployeeSchedule(salon.data.salon_id, employee.uid);
+
+                var dailySchedule = employeeSchedule.getDailySchedule(date);
+                
+                //finally, We have service list, employee Id, employee daily Schedule
 
                 done();
             });
