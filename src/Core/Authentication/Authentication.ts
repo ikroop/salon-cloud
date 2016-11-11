@@ -1,8 +1,7 @@
 /**
- * 
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
 
 import { SalonCloudResponse } from './../SalonCloudResponse';
@@ -31,16 +30,13 @@ export class Authentication implements AuthenticationBehavior {
      * signUpWithUsernameAndPassword
      * create new user with username (phone or email) & password
      * @param : 
-     *     Error: validation Error
-     *     Successful: 
-     *             {
-     *                  user:{
-     *                     username: string
-     *                     status: boolean
-     *                     id: string
-     *                  }
-     *             }
-     * @returns {DailyDayData}
+     *      username: string (email or phone number)
+     *      password: string 
+     * @return     
+     *      Error:  - validation Error, code: 400
+     *              - username is existing already, code: 409                    
+     *      Successful: 
+     *              - code: 200
      */
     public async signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<any>> {
         var response: SalonCloudResponse<any> = {
