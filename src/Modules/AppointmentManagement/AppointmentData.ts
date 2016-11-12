@@ -16,7 +16,7 @@ export interface AppointmentItemData {
     employee_id: string,
     start: SalonTimeData,
     end: SalonTimeData,
-    services: BookedServiceData,
+    service: BookedServiceData,
     overlapped: {
         status: boolean;
         overlapped_appointment_id?: string;
