@@ -7,10 +7,20 @@ import { Router, Request, Response } from 'express';
 import { SalonCloudResponse } from './../Core/SalonCloudResponse';
 import { Authentication } from './../Core/Authentication/Authentication';
 import { Authorization } from './../Core/Authorization/Authorization';
+
 export class AuthorizationRouter {
     private router: Router = Router();
 
-    public checkPermission(request: Request, response: Response, next) {
+    /**
+     * checkPermission
+     * 
+     * @param {Request} request
+     * @param {Response} response
+     * @param {any} next
+     * 
+     * @memberOf AuthorizationRouter
+     */
+    public async checkPermission(request: Request, response: Response, next) {
         var token = request.headers['authorization'];
         var authentication = new Authentication();
         var authorization = new Authorization();
@@ -34,10 +44,21 @@ export class AuthorizationRouter {
                 }
             }
         });*/
-        authentication.verifyToken(token, function (err, code, data) {
-            request.user = data;
+        var tokenStatus: any = await authentication.verifyToken(token);
+        if (tokenStatus) {
+            if (tokenStatus.code = 200) {
+                // FIX ME: call check Permission in Authorization class
+                request.user = tokenStatus.data;
+
+                next();
+            } else {
+                response.statusCode = tokenStatus.code;
+                response.json(tokenStatus.err);
+            }
+        } else {
+            // FIX ME: call check Permission in Authorization class
             next();
-        });
+        }
     }
 
     getRouter(): Router {
