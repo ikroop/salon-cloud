@@ -4,6 +4,7 @@ import { AbstractEmployee } from './AbstractEmployee'
 import { UserProfile, UserData } from './../../Modules/UserManagement/UserData'
 import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { AppointmentItemData, AppointmentData } from './../../Modules/AppointmentManagement/AppointmentData'
+import { AppointmentManagement } from './../../Modules/AppointmentManagement/AppointmentManagement'
 import { AdministratorBehavior } from './AdministratorBehavior'
 import { BookingAppointment } from './../../Modules/AppointmentManagement/BookingAppointment';
 import { SalonCloudResponse } from './../SalonCloudResponse'
@@ -45,7 +46,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
 
         var salonId = inputData.salon_id;
-        var appointmentByPhone: BookingAppointment;
+        var appointmentByPhone: BookingAppointment = new BookingAppointment(salonId, new AppointmentManagement(salonId));
         console.log('1')
         // Get customer Id
         var getCustomerId = await this.getCustomerID(salonId, inputData);
@@ -58,9 +59,10 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         // get available time
         var appointmentItemsArray: [AppointmentItemData];
         // create Service
-        console.log('2')
+        console.log('2', appointmentByPhone);
         console.log('inputData.services:', inputData.services);
         var timeAvalibilityCheck = await appointmentByPhone.checkBookingAvailableTime(inputData.services);
+
         if (timeAvalibilityCheck.err) {
             response.err = timeAvalibilityCheck.err;
             response.data = timeAvalibilityCheck.data;
@@ -109,11 +111,13 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             code: undefined,
             err: undefined
         };
+        console.log('innn', salonId);
         var customerManagementDP = new CustomerManagement(salonId);
         var userFinding = UserModel.findOne({ 'username': inputData.customer_phone }).exec();
         await userFinding.then(async function (docs) {
             // customer account existed, get Id and check if needed to create profile for salon;
             if (docs) {
+                console.log('innnHave:', docs);
                 response.data = docs._id;
                 response.code = 200;
                 var flag = false;
@@ -132,10 +136,19 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
             } else {
                 // customer account not existed, create account with salon profile for the user
+                console.log('innDontHave:', inputData);
                 var customerCreation: any = await customerManagementDP.createCustomer(inputData);
-                response.data = customerCreation.data._id;
-                response.code = 200;
-                return response;
+                if (customerCreation.err) {
+                    console.log('inininErr:', customerCreation.err);
+                    response.err = customerCreation.err;
+                    response.code = customerCreation.code;
+                    return response;
+                } else {
+                    console.log('inininData:', customerCreation.data);
+                    response.data = customerCreation.data._id;
+                    response.code = 200;
+                    return response;
+                }
             }
         }, function (err) {
             response.err = err;

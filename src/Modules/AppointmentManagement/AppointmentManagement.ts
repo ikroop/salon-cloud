@@ -12,6 +12,10 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
 
     public salonId: string;
 
+    constructor(salonId: string){
+        this.salonId = salonId;
+    }
+
     public cancelAppointment(appointmentId: string): boolean {
         return;
     };
