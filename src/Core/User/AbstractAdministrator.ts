@@ -36,7 +36,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
     };
 
     public async saveAppointment(inputData: any): Promise<SalonCloudResponse<string>> {
-        var response: SalonCloudResponse<string> = {
+        var response: SalonCloudResponse<any> = {
             data: undefined,
             code: undefined,
             err: undefined
@@ -46,7 +46,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         var salonId = inputData.salon_id;
         var appointmentByPhone: BookingAppointment;
-
+        console.log('1')
         // Get customer Id
         var getCustomerId = await this.getCustomerID(salonId, inputData);
         if (getCustomerId.err) {
@@ -58,26 +58,20 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         // get available time
         var appointmentItemsArray: [AppointmentItemData];
         // create Service
-        for (let each of inputData.services) {
-            var timeAvalibility = await appointmentByPhone.checkBookingAvailableTimes(each.employee_id, each.service_id, each.start);
-            if (timeAvalibility.err) {
-                response.err = timeAvalibility.err;
-                response.code = timeAvalibility.code
-                return response;
-            } else {
-                if (!timeAvalibility.data) {
-                    response.err = ErrorMessage.AppointmentTimeNotAvailable; //TODO
-                    response.code = 500;
-                    return response;
-                }
-                appointmentItemsArray.push(timeAvalibility.data);
-            }
+        console.log('2')
+        console.log('inputData.services:', inputData.services);
+        var timeAvalibilityCheck = await appointmentByPhone.checkBookingAvailableTime(inputData.services);
+        if (timeAvalibilityCheck.err) {
+            response.err = timeAvalibilityCheck.err;
+            response.data = timeAvalibilityCheck.data;
+            response.code = timeAvalibilityCheck.code;
+            return response;
+        } else {
+            appointmentItemsArray = response.data;
         }
-
-
-
+        console.log('3');
         // Salon has available time for appointment, process to save appointment
-        var newAppointment : AppointmentData = {
+        var newAppointment: AppointmentData = {
             customer_id: inputData.customer_id,
             device: inputData.device,
             appointment_items: appointmentItemsArray,
@@ -98,7 +92,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             response.code = result.code;
             return response;
         }
-
+        console.log('4')
         // Normalization return data
         response.data = result.data._id;
         response.code = 200;
