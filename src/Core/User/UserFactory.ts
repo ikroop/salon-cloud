@@ -14,6 +14,7 @@ import {AdministratorBehavior} from './AdministratorBehavior'
 
 export class UserFactory {
     public static createAdminUserObject(userId: string, salonId: string, role: number) : AdministratorBehavior {
+        console.log('role:', role);
         if(role==1){
             return new Owner(userId, new SalonManagement(salonId));
         }else if(role==2){

@@ -21,18 +21,18 @@ export class AppointmentManagementRouter {
        
         this.router.post('/createbyphone', authorizationRouter.checkPermission, async function (request: Request, response: Response) {
             var admin: AdministratorBehavior;
-
+            console.log(request.user);
             // User Factory get Owner or Manager by Id
             // TODO
-            admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
-
+            admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, 1);
 
             // Get data for request.body
             var appointment = request.body;
+            console.log('out', admin);
 
-
+            
             // call create appointment function
-            var result = admin.saveAppointment(appointment);
+            var result = await admin.saveAppointment(appointment);
 
             //return data
             var responseData;
@@ -41,7 +41,6 @@ export class AppointmentManagementRouter {
             }else{
                 responseData = result.data;
             }
-
             response.status(result.code).json(responseData);
 
         });
