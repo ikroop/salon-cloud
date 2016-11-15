@@ -105,7 +105,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 status: true,
                 flexible: false,
                 time: openTimePoint + 15 * i,
-                touchAppointmentId: null,
+                touchAppointmentId: undefined,
             }
             timeArray.push(obj);
         }

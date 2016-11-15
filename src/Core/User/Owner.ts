@@ -15,7 +15,9 @@ import { BaseValidator } from './../Validation/BaseValidator'
 import { IsPhoneNumber, IsValidSalonId, MissingCheck } from './../Validation/ValidationDecorators'
 import { ServiceGroupData, ServiceItemData } from './../../Modules/ServiceManagement/ServiceData'
 import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceManagement'
-
+import { Schedule } from './../../Modules/Schedule/Schedule'
+import { defaultWeeklySchedule } from './../DefaultData'
+import { EmployeeSchedule } from './../../Modules/Schedule/EmployeeSchedule'
 
 export class Owner extends AbstractAdministrator {
 
@@ -100,6 +102,12 @@ export class Owner extends AbstractAdministrator {
             fullname: employeeProfile.fullname,
             role: employeeProfile.role,
         }
+
+        // add default weeklySchedule Schedule
+        // Create default Schedule
+        var scheduleDP = new EmployeeSchedule(employeeProfile.salon_id, accountCreation.data.user._id);
+        var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule);
+        
         response.code = 200;
 
         return response;
