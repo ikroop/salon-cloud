@@ -1,8 +1,7 @@
 /**
- * 
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
 
 import { SalonCloudResponse } from './../SalonCloudResponse';
