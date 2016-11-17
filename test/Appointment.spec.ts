@@ -39,7 +39,7 @@ describe('Appointment Management', function () {
             username: 'unittest1473044833007@gmail.com',
             password: defaultPassword
         };
-        
+
         request(server)
             .post('/api/v1/authentication/signinwithusernameandpassword')
             .send(user)
