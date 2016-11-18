@@ -1,6 +1,7 @@
-/**
- * 
- * 
+ /**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
 
 var errorMessage = require('./../ErrorMessage');

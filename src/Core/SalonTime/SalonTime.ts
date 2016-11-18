@@ -1,11 +1,9 @@
 /**
- * 
- * 
- * 
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
+
 import * as moment from 'moment';
 import { SalonTimeData } from './SalonTimeData';
 export class SalonTime {

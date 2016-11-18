@@ -1,5 +1,8 @@
-
-
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import { AbstractAdministrator } from './AbstractAdministrator'
 import { SalonCloudResponse } from './../SalonCloudResponse'

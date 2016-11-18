@@ -1,5 +1,8 @@
-
-
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import { SalonUser } from './SalonUser'
 import { EmployeeBehavior } from './EmployeeBehavior'

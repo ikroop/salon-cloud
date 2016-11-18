@@ -1,4 +1,8 @@
-
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import {AnonymousBehavior} from './AnonymousBehavior';
 import {OnlineBooking} from './OnlineBooking'

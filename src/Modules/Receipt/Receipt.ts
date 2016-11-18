@@ -1,10 +1,7 @@
 /**
- * 
- * 
- * 
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
 
 import { ReceiptItemData, ReceiptData } from './ReceiptData';

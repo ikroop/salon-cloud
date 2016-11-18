@@ -1,9 +1,7 @@
 /**
- * 
- * 
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
 
 import { UserProfile } from './../../Modules/UserManagement/UserData'

@@ -1,4 +1,8 @@
-
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import { SignedInUserBehavior } from './SignedInUserBehavior'
 import { SalonCloudResponse } from './../SalonCloudResponse'

@@ -1,5 +1,8 @@
-
-
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import { AbstractAdministrator } from './AbstractAdministrator'
 import { UserProfile } from './../../Modules/UserManagement/UserData'

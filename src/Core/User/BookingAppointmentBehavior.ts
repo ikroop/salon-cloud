@@ -1,3 +1,8 @@
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import { SalonCloudResponse } from './../SalonCloudResponse'
 import { AppointmentData } from './../../Modules/AppointmentManagement/AppointmentData'

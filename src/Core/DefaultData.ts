@@ -1,3 +1,8 @@
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import { SalonSetting } from './../Modules/SalonManagement/SalonData'
 import { WeeklyDayData } from './../Modules/Schedule/ScheduleData'

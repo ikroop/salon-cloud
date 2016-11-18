@@ -1,9 +1,9 @@
 /**
- * 
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
+
 import { AuthorizationBehavior } from './AuthorizationBehavior';
 import { SalonCloudResponse } from './../SalonCloudResponse';
 export class Authorization implements AuthorizationBehavior{
