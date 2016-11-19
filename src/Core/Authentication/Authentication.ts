@@ -141,12 +141,14 @@ export class Authentication implements AuthenticationBehavior {
             return response;
         }
         let promise = new Promise(function (resolve, reject) {
+
             UserModel.authenticate()(username, password, function (err: any, user: IUserData, error: any) {
                 if (err) {
                     response.err = { 'err': err };
                     response.code = 409;
                     response.data = undefined;
                 }
+                console.log('SignIn:', user);
                 if (!user) {
                     response.err = ErrorMessage.SignInFailed;
                     response.code = 403;

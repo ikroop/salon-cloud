@@ -44,20 +44,40 @@ export class AuthorizationRouter {
                 }
             }
         });*/
+        console.log('CHECK PERMSSION');
         var tokenStatus: any = await authentication.verifyToken(token);
+        console.log('tokenStatus:', tokenStatus);
+
         if (tokenStatus) {
             if (tokenStatus.code = 200) {
                 // FIX ME: call check Permission in Authorization class
-                request.user = tokenStatus.data;
+                var role = await authorization.checkPermission(tokenStatus.data._id, request.body.salon_id, request.url)
+                if (role.data) {
+                    request.user = tokenStatus.data;
+                    request.user.role = role.data;
+                    next();
+                } else {
+                    response.statusCode = 401;
+                    response.json();
+                }
 
-                next();
             } else {
                 response.statusCode = tokenStatus.code;
                 response.json(tokenStatus.err);
             }
         } else {
             // FIX ME: call check Permission in Authorization class
-            next();
+            var role = await authorization.checkPermission(undefined, request.body.salon_id, request.originalUrl);
+            console.log('Route role:', role);
+            if (role.data) {
+                console.log('body:', request.body);
+                next();
+            } else {
+                                console.log('body:', request.body);
+
+                response.statusCode = 403;
+                response.json();
+            }
         }
     }
 

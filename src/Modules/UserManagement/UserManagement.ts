@@ -8,7 +8,7 @@
 import { UserManagementBehavior } from './UserManagementBehavior'
 import { UserData, UserProfile } from './UserData'
 // FIX ME: the path have to contain modules/UserManagement
-import UserModel = require ('./../../Modules/UserManagement/UserModel');
+import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 
@@ -50,13 +50,13 @@ export class UserManagement implements UserManagementBehavior {
             data: undefined,
             err: undefined
         };
-        
+
         var userDocs = await UserModel.findOne({ '_id': userId }).exec();
         var checkExistArray = userDocs.profile.filter(profile => profile.salon_id === userProfile.salon_id);
         if (checkExistArray.length == 0) {
             userDocs.profile.push(userProfile);
             var saveAction = userDocs.save();
-            
+
             await saveAction.then(function (docs) {
                 returnResult.data = userProfile;
                 return returnResult;
@@ -72,6 +72,42 @@ export class UserManagement implements UserManagementBehavior {
             return returnResult;
         }
 
+    }
+
+    public async getRole(userId: string) {
+        var role: number = undefined;
+        console.log('UserId:', userId);
+        if (userId) {
+            await UserModel.find({ 'id': userId }).exec(function (err, docs) {
+                //console.log('getRole:', docs);
+                role = docs.profile[0].role;
+            });
+            return this.roleToString(role);
+
+        } else {
+            return 'Anonymouse';
+        }
+
+    }
+
+    private roleToString(role: number): string {
+        var roleString: string = undefined;
+        switch (role) {
+            case 0:
+                roleString = 'SignedUser';
+            case 1:
+                roleString = 'Owner';
+            case 2:
+                roleString = 'Manager';
+            case 3:
+                roleString = 'Technician';
+            case 4:
+                roleString = 'Customer';
+            default:
+                roleString = undefined;
+        }
+
+        return roleString;
     }
 
 }
