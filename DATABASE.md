@@ -13,7 +13,7 @@ use UTC.
   |     |----profile: Array
   |           |----salon_id: string
   |           |----status: boolean
-  |           |----role: number
+  |           |----role: number, 1: Owner, 2: Manager, 3: Employee, 4: Customer
   |           |----fullname: string
   |           |----nickname: string
   |           |----social_security_number: string (optional)
