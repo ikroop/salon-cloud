@@ -148,7 +148,6 @@ export class Authentication implements AuthenticationBehavior {
                     response.code = 409;
                     response.data = undefined;
                 }
-                console.log('SignIn:', user);
                 if (!user) {
                     response.err = ErrorMessage.SignInFailed;
                     response.code = 403;
