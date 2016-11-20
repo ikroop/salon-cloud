@@ -12,8 +12,8 @@ export class AuthorizationRouter {
     private router: Router = Router();
 
     /**
-     * checkPermission
-     * 
+     * @method checkPermission
+     * @description check User Permission
      * @param {Request} request
      * @param {Response} response
      * @param {any} next
