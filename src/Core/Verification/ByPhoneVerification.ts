@@ -1,3 +1,8 @@
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import { Twilio } from './../Sms/TwilioSMS'
 import { Verification } from './Verification'

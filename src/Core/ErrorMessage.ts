@@ -1,4 +1,9 @@
-//Error Messages Definition
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
+
 export const ErrorMessage = {
     'MissingUsername': {
         'err': {

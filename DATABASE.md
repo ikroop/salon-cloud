@@ -21,21 +21,20 @@ use UTC.
   |           |----cash_rate: double (optional)
   |           |----birthday: string (optional)
   |           |----address: string (optional)
-  |----receipt
+  |----appointment
   |     |----id: string
   |     |----salon_id: string
   |     |----comment: string
   |     |----device: number, 1: phone, 2: web, 3: app
-  |     |----appointment:Array
+  |     |----appointment_items:Array
   |     |     |----id: string
   |     |     |----employee_id: string
-  |     |     |----services: Array
+  |     |     |----service
   |     |     |     |----service_id: string
   |     |     |     |----service_name: string
   |     |     |     |----time: number
   |     |     |     |----price: number
   |     |     |----start: SalonTime
-  |     |     |----end: SalonTime
   |     |     |----overlapped:
   |     |           |----status: boolean
   |     |           |----appointment_id: string (optional)

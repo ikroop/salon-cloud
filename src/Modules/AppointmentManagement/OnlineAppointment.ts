@@ -1,4 +1,8 @@
-
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import {AppointmentAbstract} from './AppointmentAbstract'
 import {AppointmentData} from './AppointmentData'

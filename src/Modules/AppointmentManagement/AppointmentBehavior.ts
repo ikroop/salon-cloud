@@ -1,10 +1,9 @@
 /**
- * 
- * 
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
+
 import { AppointmentData } from './AppointmentData';
 
 export interface AppointmentBehavior {

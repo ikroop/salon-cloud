@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
+
 import { Subject } from './Subject';
 import { Observer } from './Observer';
 

@@ -1,9 +1,9 @@
 /**
- * 
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
+
 import TwilioSecret from './TwilioSecret';
 var TwilioClient = require('twilio')(TwilioSecret.sid, TwilioSecret.token);
 

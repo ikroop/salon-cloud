@@ -1,5 +1,8 @@
-
-
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import { AppointmentManagementBehavior } from './AppointmentManagementBehavior'
 import { AppointmentData, AppointmentItemData } from './AppointmentData'

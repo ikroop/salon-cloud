@@ -15,7 +15,7 @@ var ErrorMessage = require('./../../Core/ErrorMessage');
 export class SalonSchedule extends Schedule {
 
     constructor(salonId: string) {
-        super(salonId, null);
+        super(salonId, undefined);
     }
 
     protected normalizeDailySchedule(dailySchedule: DailyDayData) {
