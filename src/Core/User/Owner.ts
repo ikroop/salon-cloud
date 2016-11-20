@@ -52,18 +52,7 @@ export class Owner extends AbstractAdministrator {
             code: undefined,
             data: undefined,
             err: undefined
-        }
-
-        // 'salonId' validation
-        var salonIdValidation = new BaseValidator(employeeProfile.salon_id);
-        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
-        salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
-        var salonIdError = await salonIdValidation.validate();
-        if (salonIdError) {
-            response.err = salonIdError.err;
-            response.code = 400;
-            return response;
-        }
+        }        
 
         // 'phone' validation
         var phoneNumberValidation = new BaseValidator(employeeProfile.phone);
