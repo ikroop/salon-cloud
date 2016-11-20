@@ -36,7 +36,7 @@ describe('Employee Management', function () {
 
                 validToken = res.body.auth.token;
                 invalidToken = 'eyJhbGciOiJSUz';
-                validSalonId = "57faa2692579df79216a153c";
+                validSalonId = "5816b9ddca5a6c2aa9bfd8c9";
                 invalidSalonId = "00";
                 notFoundSalonId = '97ba653d54a6e5';
                 done();

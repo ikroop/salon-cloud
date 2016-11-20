@@ -8,7 +8,7 @@
 import { UserManagementBehavior } from './UserManagementBehavior'
 import { UserData, UserProfile } from './UserData'
 // FIX ME: the path have to contain modules/UserManagement
-import UserModel = require ('./../../Modules/UserManagement/UserModel');
+import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 
@@ -50,13 +50,13 @@ export class UserManagement implements UserManagementBehavior {
             data: undefined,
             err: undefined
         };
-        
+
         var userDocs = await UserModel.findOne({ '_id': userId }).exec();
         var checkExistArray = userDocs.profile.filter(profile => profile.salon_id === userProfile.salon_id);
         if (checkExistArray.length == 0) {
             userDocs.profile.push(userProfile);
             var saveAction = userDocs.save();
-            
+
             await saveAction.then(function (docs) {
                 returnResult.data = userProfile;
                 return returnResult;
@@ -72,6 +72,69 @@ export class UserManagement implements UserManagementBehavior {
             return returnResult;
         }
 
+    }
+
+    /**
+     * @method getRole
+     * @description Get user role in salon.
+     * @param {string} userId
+     * @returns {string} role
+     * 
+     * @memberOf UserManagement
+     */
+    public async getRole(userId: string) {
+        var role: number = undefined;
+
+
+        if (userId) {
+            if (this.salonId) {
+                await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs) {
+                    role = docs.profile[0].role;
+                });
+                return this.roleToString(role);
+            }
+            else {
+                return 'SignedUser';
+            }
+        } else {
+            return 'Anonymouse';
+        }
+
+    }
+
+    /**
+     * @method roleToString
+     * @description convert role (number) to string
+     * @private
+     * @param {number} role
+     * @returns {string} role in string
+     * 
+     * @memberOf UserManagement
+     */
+    private roleToString(role: number): string {
+        var roleString: string = undefined;
+        switch (role) {
+            case 0:
+                roleString = 'SignedUser';
+                break;
+            case 1:
+                roleString = 'Owner';
+                break;
+            case 2:
+                roleString = 'Manager';
+                break;
+            case 3:
+                roleString = 'Technician';
+                break;
+            case 4:
+                roleString = 'Customer';
+                break;
+            default:
+                roleString = undefined;
+                break;
+        }
+
+        return roleString;
     }
 
 }
