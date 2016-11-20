@@ -76,14 +76,18 @@ export class UserManagement implements UserManagementBehavior {
 
     public async getRole(userId: string) {
         var role: number = undefined;
-        console.log('UserId:', userId);
-        if (userId) {
-            await UserModel.find({ 'id': userId }).exec(function (err, docs) {
-                //console.log('getRole:', docs);
-                role = docs.profile[0].role;
-            });
-            return this.roleToString(role);
 
+
+        if (userId) {
+            if (this.salonId) {
+                await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs) {
+                    role = docs.profile[0].role;
+                });
+                return this.roleToString(role);
+            }
+            else {
+                return 'SignedUser';
+            }
         } else {
             return 'Anonymouse';
         }
@@ -95,16 +99,22 @@ export class UserManagement implements UserManagementBehavior {
         switch (role) {
             case 0:
                 roleString = 'SignedUser';
+                break;
             case 1:
                 roleString = 'Owner';
+                break;
             case 2:
                 roleString = 'Manager';
+                break;
             case 3:
                 roleString = 'Technician';
+                break;
             case 4:
                 roleString = 'Customer';
+                break;
             default:
                 roleString = undefined;
+                break;
         }
 
         return roleString;
