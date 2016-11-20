@@ -74,6 +74,14 @@ export class UserManagement implements UserManagementBehavior {
 
     }
 
+    /**
+     * @method getRole
+     * @description Get user role in salon.
+     * @param {string} userId
+     * @returns {string} role
+     * 
+     * @memberOf UserManagement
+     */
     public async getRole(userId: string) {
         var role: number = undefined;
 
@@ -94,6 +102,15 @@ export class UserManagement implements UserManagementBehavior {
 
     }
 
+    /**
+     * @method roleToString
+     * @description convert role (number) to string
+     * @private
+     * @param {number} role
+     * @returns {string} role in string
+     * 
+     * @memberOf UserManagement
+     */
     private roleToString(role: number): string {
         var roleString: string = undefined;
         switch (role) {
