@@ -24,57 +24,28 @@ export class AuthorizationRouter {
         var token = request.headers['authorization'];
         var authentication = new Authentication();
         var authorization = new Authorization();
-        /*authentication.verifyToken(token, function (err, code, data) {
-            if (err) {
-                response.statusCode = code;
-                return response.json(err);
-            } else {
-                var UserId: string = request.user._id;
-                var url: string = request.url;
-                var permissionResponse: SalonCloudResponse<boolean> = authorization.checkPermission(UserId, url);
-                response.statusCode = permissionResponse.code;
-                if (permissionResponse.err) {
-                    response.statusCode = permissionResponse.code;
-                    response.json(permissionResponse.err);
-                } else if (permissionResponse.data){
-                    next();
-                } else {
-                    response.statusCode = permissionResponse.code;
-                    response.json(permissionResponse.data);
-                }
-            }
-        });*/
-        console.log('CHECK PERMSSION');
         var tokenStatus: any = await authentication.verifyToken(token);
-        console.log('tokenStatus:', tokenStatus);
-
-        if (tokenStatus) {
+        if (tokenStatus) { // authenticate successfully
             if (tokenStatus.code = 200) {
-                // FIX ME: call check Permission in Authorization class
-                var role = await authorization.checkPermission(tokenStatus.data._id, request.body.salon_id, request.url)
-                if (role.data) {
+                var role = await authorization.checkPermission(tokenStatus.data._id, request.body.salon_id, request.originalUrl)
+                if (role.code === 200) {
                     request.user = tokenStatus.data;
                     request.user.role = role.data;
                     next();
                 } else {
-                    response.statusCode = 401;
-                    response.json();
+                    response.statusCode = role.code;
+                    response.json({ 'err': role.err });
                 }
 
             } else {
                 response.statusCode = tokenStatus.code;
                 response.json(tokenStatus.err);
             }
-        } else {
-            // FIX ME: call check Permission in Authorization class
+        } else { // anonymous
             var role = await authorization.checkPermission(undefined, request.body.salon_id, request.originalUrl);
-            console.log('Route role:', role);
             if (role.data) {
-                console.log('body:', request.body);
                 next();
             } else {
-                                console.log('body:', request.body);
-
                 response.statusCode = 403;
                 response.json();
             }

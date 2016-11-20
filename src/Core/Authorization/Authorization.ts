@@ -8,6 +8,10 @@ import { AuthorizationBehavior } from './AuthorizationBehavior';
 import { SalonCloudResponse } from './../SalonCloudResponse';
 import { RoleConfig } from './RoleConfig';
 import { UserManagement } from './../../Modules/UserManagement/UserManagement';
+import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidNameString, IsServiceGroupNameExisted }
+    from './../../Core/Validation/ValidationDecorators';
+import { ErrorMessage } from './../../Core/ErrorMessage';
+import { BaseValidator } from './../../Core/Validation/BaseValidator';
 
 export class Authorization {
     public async checkPermission(userId: string, salonId: string, apiName: string): Promise<SalonCloudResponse<string>> {
@@ -16,23 +20,49 @@ export class Authorization {
             err: undefined,
             data: undefined
         };
-        // Get User Role
-        var user = new UserManagement(salonId);
-        var role = await user.getRole(userId);
-        console.log('role:', role);
-        console.log('api:', apiName.toLowerCase());
 
         var roleAPI = RoleConfig.filter(item => item.api.toLowerCase() == apiName.toLowerCase())[0];
-        console.log('roleAPI:', roleAPI);
-        //console.log('roleAPI.role.indexOf(role):', roleAPI.role.indexOf(role));
-        if (roleAPI && roleAPI.role.indexOf(role) > -1) {
-            response.data = role;
+        //check userid
+        if (!userId) {
+            if (roleAPI.role.indexOf('Anonymouse') > -1) {
+                response.code = 200;
+
+                response.data = 'Anonymouse';
+            } else {
+                response.code = 401;
+
+                response.data = undefined;
+            }
         } else {
-            response.data = undefined;
+            if (roleAPI.role.indexOf('SignedUser') > -1) {
+                response.code = 200;
+                response.data = 'SignedUser';
+            } else {
+                // Validate salon
+                // 'salonId' validation
+                var salonIdValidation = new BaseValidator(salonId);
+                salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
+                salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
+                var salonIdError = await salonIdValidation.validate();
+                if (salonIdError) {
+                    response.err = salonIdError.err;
+                    response.code = 400;
+                    return response;
+                }
+
+                // Get User Role
+                var user = new UserManagement(salonId);
+                var role = await user.getRole(userId);
+                if (roleAPI && roleAPI.role.indexOf(role) > -1) {
+                    response.data = role;
+                    response.code = 200;
+
+                } else {
+                    response.code = 403;
+                    response.data = undefined;
+                }
+            }
         }
-        response.code = 200;
-        response.err = undefined;
-        console.log('END checkPermission');
         return response;
     }
 
