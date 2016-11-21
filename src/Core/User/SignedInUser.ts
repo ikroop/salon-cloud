@@ -40,6 +40,20 @@ export class SignedInUser implements SignedInUserBehavior {
     * - Create sample Services
     * - Update User Profile
 	*/
+
+    /**
+     * @method: createSalon
+     * @description create salon with sample data
+     *              - validation
+     *              - Get Timezone from address
+     *              - create default weekly schedule
+     *              - Create sample Services
+     *              - Update User Profile 
+     * @param {SalonInformation} salonInformation
+     * @returns 
+     * 
+     * @memberOf SignedInUser
+     */
     public async createSalon(salonInformation: SalonInformation) {
 
         var returnResult: SalonCloudResponse<any> = {
