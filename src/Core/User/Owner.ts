@@ -21,6 +21,7 @@ import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceMana
 import { Schedule } from './../../Modules/Schedule/Schedule'
 import { defaultWeeklySchedule } from './../DefaultData'
 import { EmployeeSchedule } from './../../Modules/Schedule/EmployeeSchedule'
+import { EmployeeInput, EmployeeReturn } from './../../Modules/UserManagement/EmployeeData';
 
 export class Owner extends AbstractAdministrator {
 
@@ -47,7 +48,7 @@ export class Owner extends AbstractAdministrator {
      *     - fullname: employeeProfile.fullname,
      *     - role: employeeProfile.role
      */
-    public async addEmployee(username: string, employeeProfile: any, verificationObj: Verification): Promise<SalonCloudResponse<any>> {
+    public async addEmployee(username: string, employeeProfile: EmployeeInput, verificationObj: Verification): Promise<SalonCloudResponse<EmployeeReturn>> {
         var response: SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
