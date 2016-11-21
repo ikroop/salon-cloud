@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
+
 import * as server from '../src/App';
 import * as request from 'supertest';
 import * as chai from 'chai';
@@ -11,6 +17,8 @@ import { SignedInUser } from './../src/Core/User/SignedInUser';
 import { Owner } from './../src/Core/User/Owner';
 import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
 import { ByPhoneVerification } from './../src/Core/Verification/ByPhoneVerification';
+import { EmployeeInput } from './../src/Modules/UserManagement/EmployeeData';
+
 describe('Schedule Management', function () {
     var validToken;
     var invalidToken = 'eyJhbGciOiJSUz';
@@ -58,7 +66,7 @@ describe('Schedule Management', function () {
         // 4. Add new employee
         const owner = new Owner(loginData.data.user._id, salon.data.salon_id);
         // Add new employee
-        const employeeInput = {
+        const employeeInput: EmployeeInput = {
             salon_id: validSalonId,
             role: 2,
             phone: "7703456789",
