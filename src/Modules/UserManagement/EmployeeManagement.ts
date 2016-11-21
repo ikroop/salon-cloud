@@ -9,6 +9,7 @@ import { BaseValidator } from './../../Core/Validation/BaseValidator'
 import {
     IsInArray, IsNumber, IsPhoneNumber, IsString, IsSSN, MissingCheck, IsValidNameString, IsInRange, IsValidSalonId
 } from './../../Core/Validation/ValidationDecorators'
+import { EmployeeInput } from './../../Modules/UserManagement/EmployeeData';
 
 export class EmployeeManagement extends UserManagement implements EmployeeManagementBehavior {
 
@@ -45,8 +46,10 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         }
 
     };
-
-    public async validation(employeeProfile: UserProfile) {
+    /**
+     * @param  {EmployeeInput} employeeProfile
+     */
+    public async validation(employeeProfile: EmployeeInput) {
 
         var response: SalonCloudResponse<UserProfile> = {
             code: undefined,
