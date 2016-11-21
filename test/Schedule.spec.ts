@@ -11,7 +11,7 @@ import { SignedInUser } from './../src/Core/User/SignedInUser';
 import { Owner } from './../src/Core/User/Owner';
 import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
 import { ByPhoneVerification } from './../src/Core/Verification/ByPhoneVerification';
-describe('Appointment Management', function () {
+describe('Schedule Management', function () {
     var validToken;
     var invalidToken = 'eyJhbGciOiJSUz';
     var validSalonId;
@@ -21,7 +21,7 @@ describe('Appointment Management', function () {
     var employeeId;
     const date = new Date(2018, 3, 13);
 
-    before(async function (done) {
+    before(async function () {
 
         // Login and get token
         var user = {
@@ -33,12 +33,12 @@ describe('Appointment Management', function () {
         var authentication = new Authentication();
         const email = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
 
-        await authentication.signInWithUsernameAndPassword(email, defaultPassword);
+        await authentication.signUpWithUsernameAndPassword(email, defaultPassword);
         // 2. login to get access token
         var loginData: any = await authentication.signInWithUsernameAndPassword(email, defaultPassword);
-        validToken = loginData.auth.token;
+        validToken = loginData.data.auth.token;
         // 3. Create salon
-        var signedInUser = new SignedInUser(loginData.user._id, new SalonManagement(undefined));
+        var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(undefined));
         var salonInformationInput = {
             email: 'salon@salon.com',
             phone: {
@@ -53,10 +53,10 @@ describe('Appointment Management', function () {
             salon_name: 'Salon Appointment Test'
         }
         var salon: any = await signedInUser.createSalon(salonInformationInput);
-        validSalonId = salon.salon_id;
 
+        validSalonId = salon.data.salon_id;
         // 4. Add new employee
-        const owner = new Owner(loginData.user._id, salon.data.salon_id);
+        const owner = new Owner(loginData.data.user._id, salon.data.salon_id);
         // Add new employee
         const employeeInput = {
             salon_id: validSalonId,
@@ -69,23 +69,23 @@ describe('Appointment Management', function () {
         };
         const employeeEmail = `${Math.random().toString(36).substring(7)}@gmail.com`;
         const employee: any = await owner.addEmployee(employeeEmail, employeeInput, new ByPhoneVerification());
-        employeeId = employee.uid;
-
-        done();
+        employeeId = employee.data.uid;
     });
 
     describe('Unit Test Create Appointment By Phone', function () {
-        var apiUrl = '/api/v1/schedule/savesalonweekly';
+        var apiUrl = '/api/v1/schedule/getsalondailyschedules';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to create appointment with invalid token', function (done) {
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get salon daily schedule with invalidToken', function (done) {
             var bodyRequest = {
                
             };
+            var salonId = validSalonId;
+            var startDate = '2016-12-15';
+            var endDate = '2016-12-27';
+            var parameterUrl = apiUrl + '?salon_id='+salonId+'&start_date='+startDate+'&end_date=' + endDate;
             request(server)
-                .post(apiUrl)
-                .send(bodyRequest)
+                .get(apiUrl)
                 .set({ 'Authorization': invalidToken })
-
                 .end(function (err, res) {
                     if (err) {
                         throw err;
