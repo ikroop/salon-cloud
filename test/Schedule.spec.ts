@@ -42,15 +42,17 @@ describe('Schedule Management', function () {
 
         // 1. Create Owner 
         var authentication = new Authentication();
-        const email = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        const ownerEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        await authentication.signUpWithUsernameAndPassword(ownerEmail, defaultPassword);
 
-        await authentication.signUpWithUsernameAndPassword(email, defaultPassword);
+        const AnotherWwnerEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        await authentication.signUpWithUsernameAndPassword(AnotherWwnerEmail, defaultPassword);
         // 2. login to get access token
-        var loginData:SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(email, defaultPassword);
+        var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
         validToken = loginData.data.auth.token;
         // 3. Create salon
         var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(undefined));
-        var salonInformationInput:SalonInformation = {
+        var salonInformationInput: SalonInformation = {
             email: 'salon@salon.com',
             phone: {
                 number: '7703456789',
@@ -87,13 +89,10 @@ describe('Schedule Management', function () {
         var apiUrl = '/api/v1/schedule/getsalondailyschedules';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get salon daily schedule with invalidToken', function (done) {
-            var bodyRequest = {
-               
-            };
             var salonId = validSalonId;
             var startDate = '2016-12-15';
             var endDate = '2016-12-27';
-            var parameterUrl = apiUrl + '?salon_id='+salonId+'&start_date='+startDate+'&end_date=' + endDate;
+            var parameterUrl = apiUrl + '?salon_id=' + salonId + '&start_date=' + startDate + '&end_date=' + endDate;
             request(server)
                 .get(apiUrl)
                 .set({ 'Authorization': invalidToken })
@@ -101,12 +100,51 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
                     done();
                 });
         });
+
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to get salon daily schedule without salonId', function (done) {
+            var salonId = undefined;
+            var startDate = '2016-12-15';
+            var endDate = '2016-12-27';
+            var parameterUrl = apiUrl + '?salon_id=' + salonId + '&start_date=' + startDate + '&end_date=' + endDate;
+            request(server)
+                .get(apiUrl)
+                .set({ 'Authorization': invalidToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to get salon daily schedule with invalidSalonId', function (done) {
+            var salonId = '32daed334dsfe';
+            var startDate = '2016-12-15';
+            var endDate = '2016-12-27';
+            var parameterUrl = apiUrl + '?salon_id=' + salonId + '&start_date=' + startDate + '&end_date=' + endDate;
+            request(server)
+                .get(apiUrl)
+                .set({ 'Authorization': invalidToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
+
+
     });
 });
