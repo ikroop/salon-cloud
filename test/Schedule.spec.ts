@@ -18,6 +18,7 @@ import { Owner } from './../src/Core/User/Owner';
 import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
 import { ByPhoneVerification } from './../src/Core/Verification/ByPhoneVerification';
 import { EmployeeInput } from './../src/Modules/UserManagement/EmployeeData';
+import { UserToken } from './../src/Core/Authentication/AuthenticationData';
 
 describe('Schedule Management', function () {
     var validToken;
@@ -43,7 +44,7 @@ describe('Schedule Management', function () {
 
         await authentication.signUpWithUsernameAndPassword(email, defaultPassword);
         // 2. login to get access token
-        var loginData: any = await authentication.signInWithUsernameAndPassword(email, defaultPassword);
+        var loginData = await authentication.signInWithUsernameAndPassword(email, defaultPassword);
         validToken = loginData.data.auth.token;
         // 3. Create salon
         var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(undefined));
