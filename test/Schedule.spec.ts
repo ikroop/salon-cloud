@@ -17,7 +17,7 @@ import { SignedInUser } from './../src/Core/User/SignedInUser';
 import { Owner } from './../src/Core/User/Owner';
 import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
 import { ByPhoneVerification } from './../src/Core/Verification/ByPhoneVerification';
-import { EmployeeInput } from './../src/Modules/UserManagement/EmployeeData';
+import { EmployeeInput, EmployeeReturn } from './../src/Modules/UserManagement/EmployeeData';
 import { UserToken } from './../src/Core/Authentication/AuthenticationData';
 import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
 import { SalonInformation } from './../src/Modules/SalonManagement/SalonData'
@@ -79,7 +79,7 @@ describe('Schedule Management', function () {
             cash_rate: 0.6
         };
         const employeeEmail = `${Math.random().toString(36).substring(7)}@gmail.com`;
-        const employee: any = await owner.addEmployee(employeeEmail, employeeInput, new ByPhoneVerification());
+        const employee: SalonCloudResponse<EmployeeReturn> = await owner.addEmployee(employeeEmail, employeeInput, new ByPhoneVerification());
         employeeId = employee.data.uid;
     });
 
