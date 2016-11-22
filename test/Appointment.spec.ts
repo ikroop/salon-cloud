@@ -39,7 +39,7 @@ describe('Appointment Management', function () {
             username: 'unittest1473044833007@gmail.com',
             password: defaultPassword
         };
-        
+
         request(server)
             .post('/api/v1/authentication/signinwithusernameandpassword')
             .send(user)
@@ -96,7 +96,7 @@ describe('Appointment Management', function () {
                 existedEmployeeId = employee.data.uid;
 
                 // Insert services
-                const groupServiceInput = { 
+                const groupServiceInput = {
                     "group_name": "sample group name",
                     "description": "description of group",
                     "salon_id": validSalonId,
@@ -123,7 +123,7 @@ describe('Appointment Management', function () {
 
                 const dailySchedule = employeeSchedule.getDailySchedule(date);
                 //console.log("employeeSchedule: %j", employeeSchedule);
-                
+
                 done();
             });
     });
@@ -185,13 +185,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -225,13 +219,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -264,13 +252,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -304,13 +286,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -344,13 +320,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -383,13 +353,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -423,13 +387,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -459,13 +417,7 @@ describe('Appointment Management', function () {
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
                 "note": "Appointment note",
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -501,13 +453,7 @@ describe('Appointment Management', function () {
                 }, {
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -544,13 +490,7 @@ describe('Appointment Management', function () {
                     service_id: notFoundServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -586,13 +526,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -629,13 +563,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -686,7 +614,7 @@ describe('Appointment Management', function () {
                     done();
                 });
         });
-        it('should return ' + ErrorMessage.MissingBookingTimeDay.err.name + ' error trying to create appointment which has no-day booking_time', function (done) {
+        it('should return ' + ErrorMessage.WrongBookingTimeFormat.err.name + ' error trying to create appointment which has no-day booking_time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -699,12 +627,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -718,12 +641,12 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingBookingTimeDay.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongBookingTimeFormat.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingBookingTimeMonth.err.name + ' error trying to create appointment which has no-month booking_time', function (done) {
+        it('should return ' + ErrorMessage.WrongBookingTimeFormat.err.name + ' error trying to create appointment which has no-month booking_time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -736,12 +659,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -755,12 +673,12 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingBookingTimeMonth.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongBookingTimeFormat.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingBookingTimeYear.err.name + ' error trying to create appointment which has no-year booking_time', function (done) {
+        it('should return ' + ErrorMessage.WrongBookingTimeFormat.err.name + ' error trying to create appointment which has no-year booking_time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -773,12 +691,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -792,12 +705,12 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingBookingTimeYear.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongBookingTimeFormat.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingBookingTimeHour.err.name + ' error trying to create appointment which has no-hour booking_time', function (done) {
+        it('should return ' + ErrorMessage.WrongBookingTimeFormat.err.name + ' error trying to create appointment which has no-hour booking_time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -810,12 +723,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -829,12 +737,12 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingBookingTimeHour.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongBookingTimeFormat.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingBookingTimeMinute.err.name + ' error trying to create appointment which has no-minute booking_time', function (done) {
+        it('should return ' + ErrorMessage.WrongPhoneNumberFormat.err.name + ' error trying to create appointment which has no-minute booking_time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -847,13 +755,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2016-02-28 10:00"
             };
             request(server)
                 .post(apiUrl)
@@ -867,7 +769,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingBookingTimeMinute.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongBookingTimeFormat.err.name);
                     done();
                 });
         });
@@ -877,7 +779,7 @@ describe('Appointment Management', function () {
                     - name: 'EarlierAppointmentTimeThanSalonTimeOnCertainDate' 
                     - message: 'Appointment's start time is earlier than salon's open time on appointment date on that date'
         */
-        it('should return ' + ErrorMessage.EarlierAppointmentTimeThanSalonTimeOnCertainDate.err.name + ' error trying to create appointment which has early booking_time', function (done) {
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has early booking_time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -890,13 +792,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 5,
-                    min: 15
-                }
+                "booking_time": "2016-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -910,7 +806,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.EarlierAppointmentTimeThanSalonTimeOnCertainDate.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
                     done();
                 });
         });
@@ -920,7 +816,7 @@ describe('Appointment Management', function () {
                     - name: 'LaterAppointmentTimeThanSalonTimeOnCertainDate' 
                     - message: 'Appointment's start time is later than salon's open time on appointment date on that date'
         */
-        it('should return ' + ErrorMessage.LaterAppointmentTimeThanSalonTimeOnCertainDate.err.name + ' error trying to create appointment which has late booking_time', function (done) {
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has late booking_time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -933,13 +829,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 23,
-                    min: 15
-                }
+                "booking_time": "2016-02-28 23:15:00"
             };
             request(server)
                 .post(apiUrl)
@@ -953,7 +843,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.LaterAppointmentTimeThanSalonTimeOnCertainDate.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
                     done();
                 });
         });
@@ -963,7 +853,7 @@ describe('Appointment Management', function () {
                     - name: 'AppointmentCanNotBeDoneWithinSalonWorkingTime' 
                     - message: 'Appointment cannot be done within salon's working time'
         */
-        it('should return ' + ErrorMessage.AppointmentCanNotBeDoneWithinSalonWorkingTime.err.name + ' error trying to create appointment which cannot be done within salon\'s working time', function (done) {
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which cannot be done within salon\'s working time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -976,13 +866,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 20,
-                    min: 55
-                }
+                "booking_time": "2016-02-28 20:55:00"
             };
             request(server)
                 .post(apiUrl)
@@ -996,7 +880,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.AppointmentCanNotBeDoneWithinSalonWorkingTime.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
                     done();
                 });
         });
@@ -1006,7 +890,7 @@ describe('Appointment Management', function () {
                     - name: 'OverlapAnotherAppointmentEndTime' 
                     - message: 'There is an un-finished appointment at appointment's start time!'
         */
-        it('should return ' + ErrorMessage.OverlapAnotherAppointmentEndTime.err.name + ' error trying to create appointment which has start time overlaps another appointment\'s end time', function (done) {
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has start time overlaps another appointment\'s end time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -1019,13 +903,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 20,
-                    min: 55
-                }
+                "booking_time": "2016-02-28 20:55:00"
             };
             request(server)
                 .post(apiUrl)
@@ -1039,7 +917,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.OverlapAnotherAppointmentEndTime.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
                     done();
                 });
         });
@@ -1049,7 +927,7 @@ describe('Appointment Management', function () {
                     - name: 'OverlapAnotherAppointmentStartTime' 
                     - message: 'There's an appointment that starts before this appointment ends!'
         */
-        it('should return ' + ErrorMessage.OverlapAnotherAppointmentStartTime.err.name + ' error trying to create appointment which has end time overlaps another appointment\'s start time', function (done) {
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has end time overlaps another appointment\'s start time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -1062,13 +940,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 20,
-                    min: 55
-                }
+                "booking_time": "2016-02-28 20:55:00"
             };
             request(server)
                 .post(apiUrl)
@@ -1082,7 +954,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.OverlapAnotherAppointmentStartTime.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
                     done();
                 });
         });
@@ -1092,7 +964,7 @@ describe('Appointment Management', function () {
                     - name: 'OverlapDelayedAppointmentEndTime' 
                     - message: 'Appointment's start time may not be available since previous appointment may be delayed!'
         */
-        it('should return ' + ErrorMessage.OverlapDelayedAppointmentEndTime.err.name + ' error trying to create appointment which has start time may not be available since previous appointment may be delayed', function (done) {
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has start time may not be available since previous appointment may be delayed', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -1105,13 +977,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 20,
-                    min: 55
-                }
+                "booking_time": "2016-02-28 20:55:00"
             };
             request(server)
                 .post(apiUrl)
@@ -1125,7 +991,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.OverlapDelayedAppointmentEndTime.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
                     done();
                 });
         });
@@ -1135,7 +1001,7 @@ describe('Appointment Management', function () {
                     - name: 'OverlapAnotherAppointmentStartTimeFixed' 
                     - message: 'Appointment's end time is not available since next appointment cannot be more delayed!'
         */
-        it('should return ' + ErrorMessage.OverlapAnotherAppointmentStartTimeFixed.err.name + ' error trying to create appointment which has end time may not available since next appointment cannot be more delayed', function (done) {
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has end time may not available since next appointment cannot be more delayed', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -1148,13 +1014,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 20,
-                    min: 55
-                }
+                "booking_time": "2016-02-28 20:55:00"
             };
             request(server)
                 .post(apiUrl)
@@ -1168,7 +1028,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.OverlapAnotherAppointmentStartTimeFixed.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
                     done();
                 });
         });
@@ -1192,13 +1052,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 20,
-                    min: 55
-                }
+                "booking_time": "2016-02-28 20:55:00"
             };
             request(server)
                 .post(apiUrl)
@@ -1223,7 +1077,7 @@ describe('Appointment Management', function () {
                     - name: 'CompletelyOverlapAnotherAppointment' 
                     - message: 'Another appointment has already been at that time!'
         */
-        it('should return ' + ErrorMessage.CompletelyOverlapAnotherAppointment.err.name + ' error trying to create appointment which completely overlaps another appointment', function (done) {
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which completely overlaps another appointment', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -1236,13 +1090,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 20,
-                    min: 55
-                }
+                "booking_time": "2016-02-28 20:55:00"
             };
             request(server)
                 .post(apiUrl)
@@ -1256,7 +1104,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.CompletelyOverlapAnotherAppointment.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
                     done();
                 });
         });
@@ -1267,7 +1115,7 @@ describe('Appointment Management', function () {
                     - name: 'NotEnoughTimeForAppointment' 
                     - message: 'This appointment may not have enough time because of its previous & next appointments!'
         */
-        it('should return ' + ErrorMessage.NotEnoughTimeForAppointment.err.name + ' error trying to create appointment which may have not enough time', function (done) {
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which may have not enough time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -1280,13 +1128,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 20,
-                    min: 55
-                }
+                "booking_time": "2016-02-28 20:55:00"
             };
             request(server)
                 .post(apiUrl)
@@ -1300,7 +1142,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.NotEnoughTimeForAppointment.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
                     done();
                 });
         });
@@ -1324,13 +1166,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 20,
-                    min: 55
-                }
+                "booking_time": "2016-02-28 20:55:00"
             };
             request(server)
                 .post(apiUrl)
@@ -1362,13 +1198,7 @@ describe('Appointment Management', function () {
                 "salon_id": validSalonId,
                 "note": "Appointment note",
                 "services": 33,
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 20,
-                    min: 55
-                }
+                "booking_time": "2016-02-28 20:55:00"
             };
             request(server)
                 .post(apiUrl)
@@ -1403,9 +1233,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    notIncludedKey: 33
-                }
+                "booking_time": "2016-02-28 20:55:00"
             };
             request(server)
                 .post(apiUrl)
@@ -1434,13 +1262,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2017,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2017-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
@@ -1467,13 +1289,7 @@ describe('Appointment Management', function () {
                     service_id: existedServiceId,
                     employee_id: existedEmployeeId
                 }],
-                "booking_time": {
-                    day: 27,
-                    month: 2,
-                    year: 2017,
-                    hour: 10,
-                    min: 45
-                }
+                "booking_time": "2017-02-27 10:45:00"
             };
             request(server)
                 .post(apiUrl)
