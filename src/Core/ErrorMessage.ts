@@ -437,5 +437,17 @@ export const ErrorMessage = {
             'name': 'InvalidDataTypeBookingTime',
             'message': 'Invalid data type of booking time!'
         }
+    },
+    'MissingDate': {
+        'err': {
+            'name': 'MissingDate',
+            'message': 'Missing Date Field'
+        }
+    },
+    'InvalidDate': {
+        'err': {
+            'name': 'InvalidDate',
+            'message': 'Invalid Date Field'
+        }
     }
 };
