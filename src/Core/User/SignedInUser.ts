@@ -17,7 +17,7 @@ import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceMana
 import { ServiceGroupData } from './../../Modules/ServiceManagement/ServiceData'
 import { samplesService1, samplesService2 } from './../DefaultData'
 import { GoogleMap } from './../GoogleMap/GoogleMap';
-import {OwnerManagement} from './../../Modules/UserManagement/OwnerManagement'
+import { OwnerManagement } from './../../Modules/UserManagement/OwnerManagement'
 
 export class SignedInUser implements SignedInUserBehavior {
 
@@ -64,14 +64,14 @@ export class SignedInUser implements SignedInUserBehavior {
 
         // validation
         returnResult = await this.salonManagementDP.validation(salonInformation);
-        if (returnResult.err){
+        if (returnResult.err) {
             return returnResult;
         }
         // get Timezone from address and puts that into salon information constructor
         // TODO:
-        var Timezone:any = await GoogleMap.getTimeZone(salonInformation.location.address);
+        var Timezone: any = await GoogleMap.getTimeZone(salonInformation.location.address);
         salonInformation.location.timezone_id = Timezone['timeZoneId'];
-        
+
         // Create Salon Document
         var salonData = await this.salonManagementDP.createSalonDocs(salonInformation);
 
@@ -111,6 +111,6 @@ export class SignedInUser implements SignedInUserBehavior {
         return;
     };
 
-   
+
 
 }
