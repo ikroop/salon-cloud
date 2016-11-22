@@ -89,7 +89,7 @@ describe('Schedule Management', function () {
         employeeId = employee.data.uid;
     });
 
-    describe('Unit Test Create Appointment By Phone', function () {
+    describe('Get Salon Daily Schedule', function () {
         var apiUrl = '/api/v1/schedule/getsalondailyschedules';
 
         it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to get salon daily schedule with invalidToken', async function (done) {
@@ -270,7 +270,7 @@ describe('Schedule Management', function () {
                     done();
                 });
         });
-        
+
         it('should return daily Schedule data trying to get salon daily schedule successfully', function (done) {
             var salonId = validSalonId;
             var startDate = startDateMoment.format('YYYY-MM-DD');
