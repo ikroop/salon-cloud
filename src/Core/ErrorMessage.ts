@@ -402,34 +402,10 @@ export const ErrorMessage = {
             'message': 'Time of appointment is required!'
         }
     },
-    'MissingBookingTimeDay': {
+    'WrongBookingTimeFormat': {
         'err': {
-            'name': 'MissingBookingTimeDay',
-            'message': 'Day of appointment time is required!'
-        }
-    },
-    'MissingBookingTimeMonth': {
-        'err': {
-            'name': 'MissingBookingTimeMonth',
-            'message': 'Month of appointment time is required!'
-        }
-    },
-    'MissingBookingTimeYear': {
-        'err': {
-            'name': 'MissingBookingTimeYear',
-            'message': 'Year of appointment time is required!'
-        }
-    },
-    'MissingBookingTimeHour': {
-        'err': {
-            'name': 'MissingBookingTimeHour',
-            'message': 'Hour of appointment time is required!'
-        }
-    },
-    'MissingBookingTimeMinute': {
-        'err': {
-            'name': 'MissingBookingTimeMinute',
-            'message': 'Minute of appointment time is required!'
+            'name': 'WrongBookingTimeFormat',
+            'message': 'SalonTime format: yyyy-MM-dd HH:mm:ss'
         }
     },
     'AppointmentTimeNotAvailable': {
@@ -438,58 +414,10 @@ export const ErrorMessage = {
             'message': 'The time of the appointment is not available to be booked!'
         }
     },
-    'EarlierAppointmentTimeThanSalonTimeOnCertainDate': {
+    'BookingTimeNotAvailable': {
         'err': {
             'name': 'EarlierAppointmentTimeThanSalonTimeOnCertainDate',
-            'message': 'Appointment\'s start time is earlier than salon\'s open time on appointment date'
-        }
-    },
-    'LaterAppointmentTimeThanSalonTimeOnCertainDate': {
-        'err': {
-            'name': 'LaterAppointmentTimeThanSalonTimeOnCertainDate',
-            'message': 'Appointment\'s start time is later than salon\'s close time on appointment date'
-        }
-    },
-    'AppointmentCanNotBeDoneWithinSalonWorkingTime': {
-        'err': {
-            'name': 'AppointmentCanNotBeDoneWithinSalonWorkingTime',
-            'message': 'Appointment cannot be done within salon\'s working time'
-        }
-    },
-    'OverlapAnotherAppointmentEndTime': {
-        'err': {
-            'name': 'OverlapAnotherAppointmentEndTime',
-            'message': 'There is an un-finished appointment at appointment\'s start time!'
-        }
-    },
-    'OverlapAnotherAppointmentStartTime': {
-        'err': {
-            'name': 'OverlapAnotherAppointmentStartTime',
-            'message': 'There\'s an appointment that starts before this appointment ends!'
-        }
-    },
-    'OverlapDelayedAppointmentEndTime': {
-        'err': {
-            'name': 'OverlapDelayedAppointmentEndTime',
-            'message': 'Appointment\'s start time may not be available since previous appointment may be delayed!'
-        }
-    },
-    'OverlapAnotherAppointmentStartTimeFixed': {
-        'err': {
-            'name': 'OverlapAnotherAppointmentStartTimeFixed',
-            'message': 'Appointment\'s end time is not available since next appointment cannot be more delayed!'
-        }
-    },
-    'CompletelyOverlapAnotherAppointment': {
-        'err': {
-            'name': 'CompletelyOverlapAnotherAppointment',
-            'message': 'Another appointment has already been at that time!'
-        }
-    },
-    'NotEnoughTimeForAppointment': {
-        'err': {
-            'name': 'NotEnoughTimeForAppointment',
-            'message': 'This appointment may not have enough time because of its previous & next appointments!'
+            'message': 'Booking Time is not available'
         }
     },
     'InvalidAppointmentStartTime': {
