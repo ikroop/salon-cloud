@@ -21,6 +21,7 @@ import { EmployeeInput, EmployeeReturn } from './../src/Modules/UserManagement/E
 import { UserToken } from './../src/Core/Authentication/AuthenticationData';
 import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
 import { SalonInformation } from './../src/Modules/SalonManagement/SalonData'
+import * as moment from 'moment';
 
 describe('Schedule Management', function () {
     var validToken;
@@ -30,7 +31,10 @@ describe('Schedule Management', function () {
     var notFoundSalonId = "5825e03651934227174513d8";
     var defaultPassword = '1234@1234';
     var employeeId;
-    const date = new Date(2018, 3, 13);
+    const today: moment.Moment = moment();
+    var startDateMoment = today.add(1, 'months');
+    var endDateMoment = startDateMoment.add(1, 'month');
+    var totalDays = endDateMoment.diff(startDateMoment, 'days');
 
     before(async function () {
 
@@ -88,7 +92,34 @@ describe('Schedule Management', function () {
     describe('Unit Test Create Appointment By Phone', function () {
         var apiUrl = '/api/v1/schedule/getsalondailyschedules';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get salon daily schedule with invalidToken', function (done) {
+        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to get salon daily schedule with invalidToken', async function (done) {
+            // Create new user
+            var authentication = new Authentication();
+            const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+            await authentication.signUpWithUsernameAndPassword(anotherEmail, defaultPassword);
+            // Get Token
+            var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
+            var token = loginData.data.auth.token;
+
+            var salonId = validSalonId;
+            var startDate = '2016-12-15';
+            var endDate = '2016-12-27';
+            var parameterUrl = apiUrl + '?salon_id=' + salonId + '&start_date=' + startDate + '&end_date=' + endDate;
+            request(server)
+                .get(apiUrl)
+                .set({ 'Authorization': token })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get salon daily schedule with Token no permission', function (done) {
             var salonId = validSalonId;
             var startDate = '2016-12-15';
             var endDate = '2016-12-27';
@@ -114,12 +145,12 @@ describe('Schedule Management', function () {
             var parameterUrl = apiUrl + '?salon_id=' + salonId + '&start_date=' + startDate + '&end_date=' + endDate;
             request(server)
                 .get(apiUrl)
-                .set({ 'Authorization': invalidToken })
+                .set({ 'Authorization': validToken })
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
                     done();
@@ -133,18 +164,131 @@ describe('Schedule Management', function () {
             var parameterUrl = apiUrl + '?salon_id=' + salonId + '&start_date=' + startDate + '&end_date=' + endDate;
             request(server)
                 .get(apiUrl)
-                .set({ 'Authorization': invalidToken })
+                .set({ 'Authorization': validToken })
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
                     done();
                 });
         });
 
+        it('should return ' + ErrorMessage.MissingStartDate.err.name + ' error trying to get salon daily schedule without start_date', function (done) {
+            var salonId = validSalonId;
+            var startDate = '2016-12-15';
+            var endDate = '2016-12-27';
+            var parameterUrl = apiUrl + '?salon_id=' + salonId + '&end_date=' + endDate;
+            request(server)
+                .get(apiUrl)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingStartDate.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingEndDate.err.name + ' error trying to get salon daily schedule without end_date', function (done) {
+            var salonId = validSalonId;
+            var startDate = '2016-12-15';
+            var endDate = '2016-12-27';
+            var parameterUrl = apiUrl + '?salon_id=' + salonId + '&start_date=' + startDate;
+            request(server)
+                .get(apiUrl)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingEndDate.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidStartDate.err.name + ' error trying to get salon daily schedule with invalid start_date', function (done) {
+            var salonId = validSalonId;
+            var startDate = '2016-15';
+            var endDate = '2016-12-27';
+            var parameterUrl = apiUrl + '?salon_id=' + salonId + '&start_date=' + startDate + '&end_date=' + endDate;
+            request(server)
+                .get(apiUrl)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidEndDate.err.name + ' error trying to get salon daily schedule with invalid end_date', function (done) {
+            var salonId = validSalonId;
+            var startDate = '2016-12-15';
+            var endDate = '2016-27';
+            var parameterUrl = apiUrl + '?salon_id=' + salonId + '&start_date=' + startDate + '&end_date=' + endDate;
+            request(server)
+                .get(apiUrl)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidEndDate.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.EndDateLessThanStartDate.err.name + ' error trying to get salon daily schedule with invalid End Date', function (done) {
+            var salonId = validSalonId;
+            var startDate = '2016-12-15';
+            var endDate = '2016-11-27';
+            var parameterUrl = apiUrl + '?salon_id=' + salonId + '&start_date=' + startDate + '&end_date=' + endDate;
+            request(server)
+                .get(apiUrl)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.EndDateLessThanStartDate.err.name);
+                    done();
+                });
+        });
+        
+        it('should return daily Schedule data trying to get salon daily schedule successfully', function (done) {
+            var salonId = validSalonId;
+            var startDate = startDateMoment.format('YYYY-MM-DD');
+            var endDate = endDateMoment.format('YYYY-MM-DD');
+            var parameterUrl = apiUrl + '?salon_id=' + salonId + '&start_date=' + startDate + '&end_date=' + endDate;
+            request(server)
+                .get(apiUrl)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('daily_schedules');
+                    res.body.daily_schedules.length.shoule.be.equal(totalDays);
+                    done();
+                });
+        });
 
     });
 });

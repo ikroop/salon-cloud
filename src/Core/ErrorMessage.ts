@@ -155,10 +155,10 @@ export const ErrorMessage = {
             'message': 'end-date param is an invalid date!'
         }
     },
-    'InvalidEndDateForStartDate': {
+    'EndDateLessThanStartDate': {
         'err': {
-            'name': 'InvalidEndDateForStartDate',
-            'message': 'end-date is earlier than start-date!'
+            'name': 'EndDateLessThanStartDate',
+            'message': 'End Date Less Than Start Date'
         }
     },
     'MissingEmployeeId': {
