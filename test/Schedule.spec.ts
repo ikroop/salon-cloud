@@ -383,7 +383,7 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(200);
                     res.body.should.have.property('weekly_schedules');
-                    res.body.daily_schedules.length.shoule.be.equal(7);
+                    res.body.weekly_schedules.length.shoule.be.equal(7);
                     done();
                 });
         });
@@ -400,6 +400,7 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "open_time": openTime,
                 "close_time": closeTime,
@@ -436,6 +437,7 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "open_time": openTime,
                 "close_time": closeTime,
@@ -464,6 +466,7 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "open_time": openTime,
                 "close_time": closeTime,
@@ -492,6 +495,7 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "open_time": openTime,
                 "close_time": closeTime,
@@ -520,6 +524,7 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "open_time": openTime,
                 "close_time": closeTime
@@ -546,6 +551,7 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "open_time": openTime,
                 "close_time": closeTime,
@@ -573,6 +579,7 @@ describe('Schedule Management', function () {
             var openTime = undefined;
             var closeTime = 7200;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "close_time": closeTime,
                 "date": date
@@ -599,6 +606,7 @@ describe('Schedule Management', function () {
             var openTime = -1;
             var closeTime = 7200;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "open_time": openTime,
                 "close_time": closeTime,
@@ -626,6 +634,7 @@ describe('Schedule Management', function () {
             var openTime = 24 * 3600;
             var closeTime = 7200;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "open_time": openTime,
                 "close_time": closeTime,
@@ -652,6 +661,7 @@ describe('Schedule Management', function () {
             var status = true;
             var openTime = 36000;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "open_time": openTime,
                 "date": date
@@ -678,6 +688,7 @@ describe('Schedule Management', function () {
             var openTime = 36000;
             var closeTime = -1;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "open_time": openTime,
                 "close_time": closeTime,
@@ -705,6 +716,7 @@ describe('Schedule Management', function () {
             var openTime = 36000;
             var closeTime = 24 * 3600;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "open_time": openTime,
                 "close_time": closeTime,
@@ -732,6 +744,7 @@ describe('Schedule Management', function () {
             var openTime = 72000;
             var closeTime = 36000;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "open_time": openTime,
                 "close_time": closeTime,
@@ -759,6 +772,7 @@ describe('Schedule Management', function () {
             var openTime = 36000;
             var closeTime = 72000;
             var bodyRequest = {
+                "salon_id": salonId,
                 "status": status,
                 "open_time": openTime,
                 "close_time": closeTime,
@@ -2324,7 +2338,542 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(200);
                     res.body.should.have.property('weekly_schedules');
-                    res.body.daily_schedules.length.shoule.be.equal(7);
+                    res.body.weekly_schedules.length.shoule.be.equal(7);
+                    done();
+                });
+        });
+
+    });
+
+    describe('Save Employee Daily Schedule', function () {
+        var apiUrl = '/api/v1/schedule/savesalondailyschedules';
+
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save Employee Daily schedule with invalidToken', function (done) {
+            var salonId = validSalonId;
+            var employeeId = validEmployeeId;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': invalidToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to save Employee Daily schedule with Token no permission', async function (done) {
+            // Create new user
+            var authentication = new Authentication();
+            const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+            await authentication.signUpWithUsernameAndPassword(anotherEmail, defaultPassword);
+            // Get Token
+            var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
+            var token = loginData.data.auth.token;
+
+            var salonId = validSalonId;
+            var employeeId = validEmployeeId;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to save Employee Daily schedule without salonId', function (done) {
+            var salonId = undefined;
+            var employeeId = validEmployeeId;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to save Employee Daily schedule with invalidSalonId', function (done) {
+            var salonId = '32daed334dsfe';
+            var employeeId = validEmployeeId;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingEmployeeId.err.name + ' error trying to save Employee Daily schedule without employee id', function (done) {
+            var salonId = validSalonId;
+
+            var employeeId = undefined;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingEmployeeId.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.EmployeeNotFound.err.name + ' error trying to Get Employee Daily schedule with invalid employee id', function (done) {
+            var salonId = validSalonId;
+            var employeeId = '22cde4344fbc';
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.EmployeeNotFound.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.EmployeeNotFound.err.name + ' error trying to Get Employee Daily schedule with invalid employee id', async function (done) {
+            // Create new user
+            var authentication = new Authentication();
+            const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+            await authentication.signUpWithUsernameAndPassword(anotherEmail, defaultPassword);
+            // Get Token
+            var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
+            var userId = loginData.data.user._id;
+
+            var salonId = validSalonId;
+
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": userId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.EmployeeNotFound.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingDate.err.name + ' error trying to save Employee Daily schedule without date', function (done) {
+            var salonId = validSalonId;
+            var employeeId = validEmployeeId;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingDate.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidDate.err.name + ' error trying to save Employee Daily schedule with invalid date', function (done) {
+            var salonId = validSalonId;
+            var employeeId = validEmployeeId;
+            var date = '2016-27';
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidDate.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleOpenTime.err.name + ' error trying to save Employee Daily schedule without open_time', function (done) {
+            var salonId = validSalonId;
+            var employeeId = validEmployeeId;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = undefined;
+            var closeTime = 7200;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "close_time": closeTime,
+                "date": date
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleOpenTime.err.name + ' error trying to save Employee Daily schedule with invalid open_time', function (done) {
+            var salonId = validSalonId;
+            var employeeId = validEmployeeId;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = -1;
+            var closeTime = 7200;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleOpenTime.err.name + ' error trying to save Employee Daily schedule with invalid open_time', function (done) {
+            var salonId = validSalonId;
+            var employeeId = validEmployeeId;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 24 * 3600;
+            var closeTime = 7200;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleCloseTime.err.name + ' error trying to save Employee Daily schedule without close_time', function (done) {
+            var salonId = validSalonId;
+            var employeeId = validEmployeeId;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 36000;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "date": date
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleCloseTime.err.name + ' error trying to save Employee Daily schedule with invalid close_time', function (done) {
+            var salonId = validSalonId;
+            var employeeId = validEmployeeId;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 36000;
+            var closeTime = -1;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleCloseTime.err.name + ' error trying to save Employee Daily schedule with invalid close_time', function (done) {
+            var salonId = validSalonId;
+            var employeeId = validEmployeeId;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 36000;
+            var closeTime = 24 * 3600;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.OpenTimeGreaterThanCloseTime.err.name + ' error trying to save Employee Daily schedule with open_time is greater than close_time', function (done) {
+            var salonId = validSalonId;
+            var employeeId = validEmployeeId;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 72000;
+            var closeTime = 36000;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.OpenTimeGreaterThanCloseTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return schedule data trying to save Employee Daily schedule successfully', function (done) {
+            var salonId = validSalonId;
+            var employeeId = validEmployeeId;
+            var date = '2016-12-27';
+            var status = true;
+            var openTime = 36000;
+            var closeTime = 72000;
+            var bodyRequest = {
+                "salon_id": salonId,
+                "employee_id": employeeId,
+                "status": status,
+                "open_time": openTime,
+                "close_time": closeTime,
+                "date": date
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('_id');
                     done();
                 });
         });
