@@ -21,12 +21,11 @@ export interface AppointmentItemData {
         status: boolean;
         overlapped_appointment_id?: string;
     };
-    id?: string;
 }
 
 export interface AppointmentData {
     id?: string,
-    appointment_items: [AppointmentItemData],
+    appointment_items: AppointmentItemData[],
     total: number,
     payment_id?: string,
     device: number,
