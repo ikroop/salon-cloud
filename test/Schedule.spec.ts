@@ -805,6 +805,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -882,6 +883,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -951,6 +953,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -1020,6 +1023,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -1089,6 +1093,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -1157,6 +1162,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -1226,6 +1232,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -1294,6 +1301,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -1362,6 +1370,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -1429,6 +1438,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -1496,6 +1506,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -1563,6 +1574,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -1629,6 +1641,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -1696,6 +1709,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -1763,6 +1777,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -1830,6 +1845,7 @@ describe('Schedule Management', function() {
             var closeTime = 72000;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "weekly_schedules":
                     [
                         {
@@ -2891,6 +2907,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -2971,6 +2988,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3043,6 +3061,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3115,6 +3134,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3187,6 +3207,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3259,6 +3280,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3337,6 +3359,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3409,6 +3432,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3480,6 +3504,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3552,6 +3577,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3623,6 +3649,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3694,6 +3721,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3764,6 +3792,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3834,6 +3863,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3904,6 +3934,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -3973,6 +4004,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -4043,6 +4075,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -4113,6 +4146,7 @@ describe('Schedule Management', function() {
             var closeTime = 7200;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
@@ -4183,6 +4217,7 @@ describe('Schedule Management', function() {
             var closeTime = 72000;
             var bodyRequest =
                 {
+                    "salon_id": salonId,
                     "employee_id": employeeId,
                     "weekly_schedules":
                     [
