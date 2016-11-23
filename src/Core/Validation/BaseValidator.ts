@@ -37,7 +37,7 @@ export abstract class DecoratingValidator extends Validator {
         if(error!==undefined){
             return error;
         }else{
-            error = this.validatingOperation();
+            error = await this.validatingOperation();
             return error;
         }
         
