@@ -119,4 +119,67 @@ export class UserManagement implements UserManagementBehavior {
 
     }
 
+    /**
+     * @method getRole
+     * @description Get user role in salon.
+     * @param {string} userId
+     * @returns {string} role
+     * 
+     * @memberOf UserManagement
+     */
+    public async getRole(userId: string) {
+        var role: number = undefined;
+
+
+        if (userId) {
+            if (this.salonId) {
+                await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs) {
+                    role = docs.profile[0].role;
+                });
+                return this.roleToString(role);
+            }
+            else {
+                return 'SignedUser';
+            }
+        } else {
+            return 'Anonymouse';
+        }
+
+    }
+
+    /**
+     * @method roleToString
+     * @description convert role (number) to string
+     * @private
+     * @param {number} role
+     * @returns {string} role in string
+     * 
+     * @memberOf UserManagement
+     */
+    private roleToString(role: number): string {
+        var roleString: string = undefined;
+        switch (role) {
+            case 0:
+                roleString = 'SignedUser';
+                break;
+            case 1:
+                roleString = 'Owner';
+                break;
+            case 2:
+                roleString = 'Manager';
+                break;
+            case 3:
+                roleString = 'Technician';
+                break;
+            case 4:
+                roleString = 'Customer';
+                break;
+            default:
+                roleString = undefined;
+                break;
+        }
+
+        return roleString;
+    }
+
 }
