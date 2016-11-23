@@ -80,7 +80,7 @@ export abstract class Schedule implements ScheduleBehavior {
 	*@name: getWeeklySchedule()
     *@parameter: { }
     *@return: a promise resolved to SalonCloudResponse<WeeklyScheduleData>
-    *Step 1: call this.getWeeklyScheduleRecord(date) to get [WeeklyDayData]
+    *Step 1: call this.getWeeklyScheduleRecord(date) to get WeeklyDayData[]
     *Step 2: check the returned value in step 1 and return the proper reponse.
 	*/
     public async getWeeklySchedule() {
@@ -91,7 +91,7 @@ export abstract class Schedule implements ScheduleBehavior {
         };
         var resultReturn: IWeeklyScheduleData;
 
-        //Step 1: call this.getWeeklyScheduleRecord(date) to get [WeeklyDayData]
+        //Step 1: call this.getWeeklyScheduleRecord(date) to get WeeklyDayData[]
 
         var weeklySchedule = await this.getWeeklyScheduleRecord();
 
@@ -215,8 +215,8 @@ export abstract class Schedule implements ScheduleBehavior {
     }
 
     /**
-	*@name: saveWeeklySchedule(weeklyScheduleList: [WeeklyDayData])
-    *@parameter: {weeklyScheduleList: [WeeklyDayData]}
+	*@name: saveWeeklySchedule(weeklyScheduleList: WeeklyDayData[])
+    *@parameter: {weeklyScheduleList: WeeklyDayData[]}
     *@return: a promise resolved to SalonCloudResponse<boolean>
     *Step 1: validation;
     *Step 2: check docs existence by calling this.checkWeeklySchedule(weeklyScheduleList)
@@ -224,7 +224,7 @@ export abstract class Schedule implements ScheduleBehavior {
              if docs does not exist: call this.addDailySchedule(weeklyScheduleList);
     *Step 4: check result form step 3 and return proper response;
 	*/
-    public async saveWeeklySchedule(weeklyScheduleList: [WeeklyDayData]) {
+    public async saveWeeklySchedule(weeklyScheduleList: WeeklyDayData[]) {
         var response: SalonCloudResponse<IWeeklyScheduleData> = {
             code: undefined,
             data: undefined,
@@ -294,14 +294,14 @@ export abstract class Schedule implements ScheduleBehavior {
     };
 
     /**
-     * @name: addWeeklySchedule(weeklyScheduleList: [WeeklyDayData])
-     * @parameter: {weeklyScheduleList: [WeeklyDayData]}
+     * @name: addWeeklySchedule(weeklyScheduleList: WeeklyDayData[])
+     * @parameter: {weeklyScheduleList: WeeklyDayData[]}
      * @return: a promise resolved to SalonCloudResponse<boolean>
      * Step 1: create new docs of WeeklyScheduleModel with salonId, employeeId, and weeklyScheduleList
      * Step 2: return true if success
      *         return error if fail
      */
-    private async addWeeklySchedule(weeklyScheduleList: [WeeklyDayData]) {
+    private async addWeeklySchedule(weeklyScheduleList: WeeklyDayData[]) {
         var returnResult: SalonCloudResponse<IWeeklyScheduleData> = {
             code: undefined,
             err: undefined,
@@ -325,8 +325,8 @@ export abstract class Schedule implements ScheduleBehavior {
     };
 
     /**
-     * @name: updateWeeklySchedule(weeklyScheduleList: [WeeklyDayData])
-     * @parameter: {weeklyScheduleList: [WeeklyDayData]}
+     * @name: updateWeeklySchedule(weeklyScheduleList: WeeklyDayData[])
+     * @parameter: {weeklyScheduleList: WeeklyDayData[]}
      * @return: a promise resolved to SalonCloudResponse<boolean>
      * Step 1: find docs WeeklyScheduleModel with salonId, employeeId
      * Step 2: update 'week' in docs with weeklyScheduleList
@@ -334,7 +334,7 @@ export abstract class Schedule implements ScheduleBehavior {
      * Step 4: return true if save success  
      *         return error if fail
      */
-    private async updateWeeklySchedule(weeklyScheduleList: [WeeklyDayData]) {
+    private async updateWeeklySchedule(weeklyScheduleList: WeeklyDayData[]) {
         var returnResult: SalonCloudResponse<IWeeklyScheduleData> = {
             code: undefined,
             data: undefined,
@@ -359,12 +359,12 @@ export abstract class Schedule implements ScheduleBehavior {
     };
 
     /**
-     * @name: weeklyScheduleValidation(weeklyScheduleList: [WeeklyDayData])
-     * @parameter: {weeklyScheduleList: [WeeklyDayData]}
+     * @name: weeklyScheduleValidation(weeklyScheduleList: WeeklyDayData[])
+     * @parameter: {weeklyScheduleList: WeeklyDayData[]}
      * @return: error if any
      * Use Validator in core
      */
-    private async weeklyScheduleValidation(weeklyScheduleList: [WeeklyDayData]) {
+    private async weeklyScheduleValidation(weeklyScheduleList: WeeklyDayData[]) {
         var errorReturn: any = undefined;
 
         var tempArray: [any] = <any>[];
@@ -558,14 +558,14 @@ export abstract class Schedule implements ScheduleBehavior {
     /**
      * @name: getWeeklyScheduleRecord()
      * @parameter: {}
-     * @return: a promise resolved to SalonCloudResponse<[WeeklyDayData]>
+     * @return: a promise resolved to SalonCloudResponse<WeeklyDayData[]>
      * Step 1: find docs of WeeklyScheduleModel with salonId, employeeId
      * Step 2: return err if fail
      *         return undefined if docs not found
      *         return docs.day date if found
      */
     protected async getWeeklyScheduleRecord() {
-        var returnResult: SalonCloudResponse<[WeeklyDayData]> = {
+        var returnResult: SalonCloudResponse<WeeklyDayData[]> = {
             err: undefined,
             code: undefined,
             data: undefined
@@ -631,11 +631,11 @@ export abstract class Schedule implements ScheduleBehavior {
     /**
      * sortWeeklyDayData
      * Sort a given array of WeeklyDayDatas in order ASC or DESC
-     * @param {[WeeklyDayData]} weeklyDayDataArray
+     * @param {WeeklyDayData[]} weeklyDayDataArray
      * @param {boolean} ascending: true -> sort in ASC order, false -> sort in DESC order
-     * @returns {[WeeklyDayData]} sorted array of WeeklyDayDatas
+     * @returns {WeeklyDayData[]} sorted array of WeeklyDayDatas
      */
-    protected sortWeeklyDayDataArray(weeklyDayDataArray: [WeeklyDayData], ascending: boolean) {
+    protected sortWeeklyDayDataArray(weeklyDayDataArray: WeeklyDayData[], ascending: boolean) {
         let asc = (ascending) ? 1 : -1;
 
         var sortedArray = weeklyDayDataArray.sort((n1, n2) => {
@@ -653,6 +653,6 @@ export abstract class Schedule implements ScheduleBehavior {
         return sortedArray;
     }
     protected abstract normalizeDailySchedule(dailySchedule: DailyDayData);
-    protected abstract normalizeWeeklySchedule(weeklySchedule: [WeeklyDayData]);
+    protected abstract normalizeWeeklySchedule(weeklySchedule: WeeklyDayData[]);
 
 }

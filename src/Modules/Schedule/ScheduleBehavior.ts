@@ -28,7 +28,7 @@ export interface ScheduleBehavior{
     /**
      * name
      */
-    saveWeeklySchedule(weeklyScheduleList: [WeeklyDayData]);
+    saveWeeklySchedule(weeklyScheduleList: WeeklyDayData[]);
 
     /**
      * name

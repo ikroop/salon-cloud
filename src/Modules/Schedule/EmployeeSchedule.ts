@@ -57,12 +57,12 @@ export class EmployeeSchedule extends Schedule {
      * If Salon OFF --> Employee OFF
      * Employee.DailySchedule(date).open >= Salon.DailySchedule(date).open
      * Employee.DailySchedule(date).close <= Salon.DailySchedule(date).close
-     * @param {[WeeklyDayData]} WeeklySchedule: array of WeeklyDayDatas of employee
-     * @returns {[WeeklyDayData]}
+     * @param {WeeklyDayData[]} WeeklySchedule: array of WeeklyDayDatas of employee
+     * @returns {WeeklyDayData[]}
      */
-    protected async normalizeWeeklySchedule(WeeklySchedule: [WeeklyDayData]){
+    protected async normalizeWeeklySchedule(WeeklySchedule: WeeklyDayData[]){
 
-        //Step 1: get salon's [WeeklyDayData];
+        //Step 1: get salon's WeeklyDayData[];
         let salonSchedule = new SalonSchedule(this.salonId);
         let promiseSalonWeeklyScheduleData = await salonSchedule.getWeeklySchedule();
         console.log('Norm: ', promiseSalonWeeklyScheduleData);
@@ -82,7 +82,7 @@ export class EmployeeSchedule extends Schedule {
                 employeeWeeklyDayData = this.updateDailyDayDataAccordingToSalon(employeeWeeklyDayData, salonWeeklyDayData);
             }
             console.log('empWW:', employeeWeeklyDayDataArray);
-            //Step 3: case 1: return updated [WeeklyDayData]
+            //Step 3: case 1: return updated WeeklyDayData[]
             return employeeWeeklyDayDataArray;
         } else {
             //Step 3: case 2: return undefined if salon has no weeklySchedule
