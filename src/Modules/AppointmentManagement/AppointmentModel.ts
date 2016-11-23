@@ -33,7 +33,10 @@ const AppointmentSchema = new mongoose.Schema({
     is_reminded: { type: Boolean, require: true },
     note: String,
     type: { type: Number, require: true }
-});
+},
+    {
+        timestamps: { createdAt: 'created_at', modifiedAt: 'modified_at' }
+    });
 
 var AppointmentModel = mongoose.model<IAppointmentData>('Appointment', AppointmentSchema);
 export = AppointmentModel;
