@@ -16,6 +16,9 @@ import { ErrorMessage } from './../ErrorMessage'
 import { CustomerManagement } from './../../Modules/UserManagement/CustomerManagement'
 import { Authentication } from './../Authentication/Authentication'
 import { DailyScheduleData, WeeklyScheduleData } from './../../Modules/Schedule/ScheduleData'
+import { ScheduleBehavior } from './../../Modules/Schedule/ScheduleBehavior'
+import { EmployeeSchedule } from './../../Modules/Schedule/EmployeeSchedule'
+import { SalonSchedule } from './../../Modules/Schedule/SalonSchedule'
 
 export abstract class AbstractAdministrator extends AbstractEmployee implements AdministratorBehavior {
 
@@ -65,13 +68,13 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         var appointmentByPhone: BookingAppointment = new BookingAppointment(salonId, new AppointmentManagement(salonId));
         var validation = await appointmentByPhone.validation(newAppointment);
-        if(validation.err){
+        if (validation.err) {
             response.err = validation.err;
             response.code = validation.code;
             return response;
         }
         appointmentByPhone.normalizationData(newAppointment);
-        
+
         // Get customer Id
         var getCustomerId = await this.getCustomerID(salonId, inputData);
         if (getCustomerId.err) {
@@ -165,7 +168,36 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
     public updateAppointment(appointment: AppointmentData) {
 
     };
-    public updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData) {
+    public async updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData) {
+        var response : SalonCloudResponse<any> = {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        }
+
+        //validation;
+
+        //create schedule object;
+        var scheduleObject: ScheduleBehavior;
+        if(employeeId) {
+            scheduleObject = new EmployeeSchedule(employeeId, dailySchedule.salon_id);
+        }else{
+            scheduleObject = new SalonSchedule(dailySchedule.salon_id);
+        }
+
+        //call saveDailySchedule method;
+        var result = await scheduleObject.saveDailySchedule(dailySchedule.day);
+
+        //get result;
+        //TODO: review requirement for information returned;
+        if(result.err){
+            response.err = result.err;
+            response.code = result.code;
+        }else{
+            response.code = result.code;
+            response.data = result.data;
+        }
+        return response;
 
     };
 
