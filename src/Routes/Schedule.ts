@@ -7,7 +7,13 @@ import fs = require('fs');
 import { Router, Request, Response } from 'express';
 import {Schedule} from './../Modules/Schedule/Schedule';
 import {SalonSchedule} from './../Modules/Schedule/SalonSchedule';
-import {EmployeeSchedule} from './../Modules/Schedule/EmployeeSchedule'
+import {EmployeeSchedule} from './../Modules/Schedule/EmployeeSchedule';
+import { AdministratorBehavior } from './../Core/User/AdministratorBehavior';
+import {AbstractAdministrator} from './../Core/User/AbstractAdministrator'
+import { AppointmentData } from './../Modules/AppointmentManagement/AppointmentData';
+import { UserFactory } from './../Core/User/UserFactory';
+import {WeeklyScheduleData, DailyScheduleData, IWeeklyScheduleData} from './../Modules/Schedule/ScheduleData'
+
 
 export class ScheduleRouter {
     private router: Router = Router();
@@ -18,9 +24,30 @@ export class ScheduleRouter {
            
             //Todo: call Salon (and employee if needed) static validation
             //Todo: build a factory for schedule;
-            let testObject = new SalonSchedule(request.body.salon_id);
+            var admin: AdministratorBehavior;
+            console.log(request.user);
+            // User Factory get Owner or Manager by Id
+            // TODO
+            admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
+            var weeklySchedule : WeeklyScheduleData = {
+                salon_id: request.body.salon_id,
+                employee_id: undefined,
+                week: request.body.weekly_schedules
+            };
+            let result = await admin.updateWeeklySchedule(undefined, weeklySchedule);
+
+            var responseData;
+            if(result.err){
+                responseData = result.err;
+            }else{
+                responseData = result.data;
+            }
+            response.status(result.code).json(responseData);
+
+            /*let testObject = new SalonSchedule(request.body.salon_id);
             let test  = await testObject.saveWeeklySchedule(request.body.weekly_schedules);
             response.status(200).json(test)
+            */
         });
         this.router.post('/savesalondailyschedule', async(request: Request, response: Response) => {
            
