@@ -201,7 +201,36 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
     };
 
-    public updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData) {
+    public async updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData) {
+        var response : SalonCloudResponse<any> = {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        }
+
+        //validation;
+
+        //create schedule object;
+        var scheduleObject: ScheduleBehavior;
+        if(employeeId) {
+            scheduleObject = new EmployeeSchedule(employeeId, weeklySchedule.salon_id);
+        }else{
+            scheduleObject = new SalonSchedule(weeklySchedule.salon_id);
+        }
+
+        //call saveDailySchedule method;
+        var result = await scheduleObject.saveWeeklySchedule(weeklySchedule.week);
+
+        //get result;
+        //TODO: review requirement for information returned;
+        if(result.err){
+            response.err = result.err;
+            response.code = result.code;
+        }else{
+            response.code = result.code;
+            response.data = result.data;
+        }
+        return response;
 
     };
 
