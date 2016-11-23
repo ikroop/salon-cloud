@@ -790,50 +790,53 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 1
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 1
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
 
             request(server)
                 .post(apiUrl)
@@ -864,50 +867,53 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 1
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 1
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
 
             request(server)
                 .post(apiUrl)
@@ -930,50 +936,53 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 1
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 1
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
 
             request(server)
                 .post(apiUrl)
@@ -996,50 +1005,53 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 1
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 1
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
 
             request(server)
                 .post(apiUrl)
@@ -1062,49 +1074,52 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
             request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
@@ -1127,50 +1142,53 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 1
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 8
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 1
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 8
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
             request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
@@ -1193,50 +1211,53 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 1
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": -1
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 1
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": -1
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
             request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
@@ -1258,50 +1279,53 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 1
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 1
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 1
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 1
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
             request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
@@ -1323,49 +1347,52 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "close_time": closeTime,
-                        "day_of_week": 1
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "close_time": closeTime,
+                            "day_of_week": 1
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
             request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
@@ -1387,49 +1414,52 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": 24 * 3600,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": 24 * 3600,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
             request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
@@ -1451,49 +1481,52 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": -1,
-                        "close_time": closeTime,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": -1,
+                            "close_time": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
             request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
@@ -1515,48 +1548,51 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
             request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
@@ -1578,49 +1614,52 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": 24 * 3600,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": 24 * 3600,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
             request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
@@ -1642,49 +1681,52 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": -1,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": -1,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
             request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
@@ -1706,49 +1748,52 @@ describe('Schedule Management', function () {
             var openTime = 3600;
             var closeTime = 7200;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": 72000,
-                        "close_time": 36000,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": 72000,
+                            "close_time": 36000,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
             request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
@@ -1770,49 +1815,52 @@ describe('Schedule Management', function () {
             var openTime = 36000;
             var closeTime = 72000;
             var bodyRequest =
-                [
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 0
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 2
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 3
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 4
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 5
-                    },
-                    {
-                        "status": status,
-                        "open_time": openTime,
-                        "close_time": closeTime,
-                        "day_of_week": 6
-                    }
-                ];
+                {
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open_time": openTime,
+                            "close_time": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
             request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
