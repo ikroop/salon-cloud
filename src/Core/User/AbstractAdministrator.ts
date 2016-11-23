@@ -44,10 +44,30 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         }
         //Todo:  validation
 
-
         var salonId = inputData.salon_id;
+        var newAppointment: AppointmentData = {
+            customer_id: inputData.customer_id,
+            device: undefined,
+            appointment_items: undefined,
+            payment_id: undefined,
+            total: undefined,
+            salon_id: salonId,
+            status: undefined, //TODO: add default data
+            is_reminded: undefined,
+            note: inputData.note,
+            type: undefined
+        };
+
+
         var appointmentByPhone: BookingAppointment = new BookingAppointment(salonId, new AppointmentManagement(salonId));
-        console.log('1')
+        var validation = await appointmentByPhone.validation(newAppointment);
+        if(validation.err){
+            response.err = validation.err;
+            response.code = validation.code;
+            return response;
+        }
+        appointmentByPhone.normalizationData(newAppointment);
+        
         // Get customer Id
         var getCustomerId = await this.getCustomerID(salonId, inputData);
         if (getCustomerId.err) {
@@ -57,10 +77,8 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         }
 
         // get available time
-        var appointmentItemsArray: [AppointmentItemData];
+        var appointmentItemsArray: Array<AppointmentItemData>;
         // create Service
-        console.log('2', appointmentByPhone);
-        console.log('inputData.services:', inputData.services);
         var timeAvalibilityCheck = await appointmentByPhone.checkBookingAvailableTime(inputData.services);
 
         if (timeAvalibilityCheck.err) {
@@ -69,23 +87,10 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             response.code = timeAvalibilityCheck.code;
             return response;
         } else {
-            appointmentItemsArray = response.data;
+            appointmentItemsArray = timeAvalibilityCheck.data;
         }
-        console.log('3');
         // Salon has available time for appointment, process to save appointment
-        var newAppointment: AppointmentData = {
-            customer_id: inputData.customer_id,
-            device: inputData.device,
-            appointment_items: appointmentItemsArray,
-            payment_id: undefined,
-            total: undefined,
-            salon_id: salonId,
-            status: undefined, //TODO: add default data
-            is_reminded: false,
-            note: inputData.note,
-            type: 1
-        }
-
+        newAppointment.appointment_items = appointmentItemsArray;
 
         // create appointment
         var result: any = await appointmentByPhone.createAppointment(newAppointment);
@@ -94,7 +99,6 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             response.code = result.code;
             return response;
         }
-        console.log('4')
         // Normalization return data
         response.data = result.data._id;
         response.code = 200;
@@ -111,13 +115,11 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             code: undefined,
             err: undefined
         };
-        console.log('innn', salonId);
         var customerManagementDP = new CustomerManagement(salonId);
         var userFinding = UserModel.findOne({ 'username': inputData.customer_phone }).exec();
         await userFinding.then(async function (docs) {
             // customer account existed, get Id and check if needed to create profile for salon;
             if (docs) {
-                console.log('innnHave:', docs);
                 response.data = docs._id;
                 response.code = 200;
                 var flag = false;
@@ -136,15 +138,12 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
             } else {
                 // customer account not existed, create account with salon profile for the user
-                console.log('innDontHave:', inputData);
                 var customerCreation: any = await customerManagementDP.createCustomer(inputData);
                 if (customerCreation.err) {
-                    console.log('inininErr:', customerCreation.err);
                     response.err = customerCreation.err;
                     response.code = customerCreation.code;
                     return response;
                 } else {
-                    console.log('inininData:', customerCreation.data);
                     response.data = customerCreation.data._id;
                     response.code = 200;
                     return response;

@@ -66,19 +66,21 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
         }
 
         var appointmentSearch = AppointmentModel.find({
-            'appointment_items.employeeId': employeeId,
+            'appointment_items.employee_id': employeeId,
             'appointment_items.start.year': date.year,
             'appointment_items.start.month': date.month,
             'appointment_items.start.day': date.day
         }).exec();
 
         await appointmentSearch.then(function (docs) {
+            console.log('Docs: ', docs);
             if (!docs) {
-                response.data = null;
+                response.data = [];
                 response.code = 200;
             } else {
-                var appointmentArray: Array<AppointmentItemData>;
+                var appointmentArray: Array<AppointmentItemData> =[];
                 for (let eachAppointment of docs) {
+                    console.log('AAA: ', eachAppointment.appointment_items);
                     for (let eachItem of eachAppointment.appointment_items) {
                         if (eachItem.employee_id == employeeId) {
                             appointmentArray.push(eachItem);
@@ -87,14 +89,13 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
                 }
 
                 response.data = appointmentArray;
+                console.log('AppointmentArray: ',appointmentArray);
                 response.code = 200;
             }
         }, function (err) {
             response.err = err;
             response.code = 500;
         })
-
-
         return response;
     };
 
