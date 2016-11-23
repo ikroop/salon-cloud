@@ -15,7 +15,7 @@ import { SalonCloudResponse } from './../SalonCloudResponse'
 import { ErrorMessage } from './../ErrorMessage'
 import { CustomerManagement } from './../../Modules/UserManagement/CustomerManagement'
 import { Authentication } from './../Authentication/Authentication'
-import { IDailyScheduleData, IWeeklyScheduleData } from './../../Modules/Schedule/ScheduleData'
+import { DailyScheduleData, WeeklyScheduleData } from './../../Modules/Schedule/ScheduleData'
 
 export abstract class AbstractAdministrator extends AbstractEmployee implements AdministratorBehavior {
 
@@ -165,11 +165,11 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
     public updateAppointment(appointment: AppointmentData) {
 
     };
-    public updateDailySchedule(employeeId: string, dailySchedule: IDailyScheduleData) {
+    public updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData) {
 
     };
 
-    public updateWeeklySchedule(employeeId: string, weeklySchedule: IWeeklyScheduleData) {
+    public updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData) {
 
     };
 

@@ -6,7 +6,7 @@
 
 import { UserProfile } from './../../Modules/UserManagement/UserData'
 import { AppointmentData } from './../../Modules/AppointmentManagement/AppointmentData'
-import { IDailyScheduleData, IWeeklyScheduleData } from './../../Modules/Schedule/ScheduleData';
+import { IDailyScheduleData, IWeeklyScheduleData, WeeklyScheduleData, DailyScheduleData } from './../../Modules/Schedule/ScheduleData';
 
 export interface AdministratorBehavior {
     cancelAppointment(appointmentId: string);
@@ -16,6 +16,6 @@ export interface AdministratorBehavior {
     getEmployeeProfile(employeeId: string): UserProfile;
     saveAppointment(appointment: AppointmentData);
     updateAppointment(appointment: AppointmentData);
-    updateDailySchedule(employeeId: string, dailySchedule: IDailyScheduleData);
-    updateWeeklySchedule(employeeId: string, weeklySchedule: IWeeklyScheduleData);
+    updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData);
+    updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData);
 }
