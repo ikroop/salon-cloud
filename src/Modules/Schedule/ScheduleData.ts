@@ -23,7 +23,7 @@ export interface DailyDayData extends ScheduleItemData {
 export interface WeeklyScheduleData {
     salon_id: string, //<salon_id>
     employee_id: string,
-    week: [WeeklyDayData]
+    week: WeeklyDayData[]
 };
 
 export interface DailyScheduleData {
@@ -35,7 +35,7 @@ export interface DailyScheduleData {
 export interface MonthlyScheduleData {
     salon_id: string, //<salon_id>
     employee_id: string,
-    month: [DailyDayData]
+    month: DailyDayData[]
 }
 
 export interface IWeeklyScheduleData extends WeeklyScheduleData, mongoose.Document { }
