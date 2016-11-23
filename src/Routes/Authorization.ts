@@ -7,37 +7,49 @@ import { Router, Request, Response } from 'express';
 import { SalonCloudResponse } from './../Core/SalonCloudResponse';
 import { Authentication } from './../Core/Authentication/Authentication';
 import { Authorization } from './../Core/Authorization/Authorization';
+
 export class AuthorizationRouter {
     private router: Router = Router();
 
-    public checkPermission(request: Request, response: Response, next) {
+    /**
+     * @method checkPermission
+     * @description check User Permission
+     * @param {Request} request
+     * @param {Response} response
+     * @param {any} next
+     * 
+     * @memberOf AuthorizationRouter
+     */
+    public async checkPermission(request: Request, response: Response, next) {
         var token = request.headers['authorization'];
         var authentication = new Authentication();
         var authorization = new Authorization();
-        /*authentication.verifyToken(token, function (err, code, data) {
-            if (err) {
-                response.statusCode = code;
-                return response.json(err);
-            } else {
-                var UserId: string = request.user._id;
-                var url: string = request.url;
-                var permissionResponse: SalonCloudResponse<boolean> = authorization.checkPermission(UserId, url);
-                response.statusCode = permissionResponse.code;
-                if (permissionResponse.err) {
-                    response.statusCode = permissionResponse.code;
-                    response.json(permissionResponse.err);
-                } else if (permissionResponse.data){
+        var tokenStatus: any = await authentication.verifyToken(token);
+        if (tokenStatus) { // authenticate successfully
+            if (tokenStatus.code = 200) {
+                var role = await authorization.checkPermission(tokenStatus.data._id, request.body.salon_id, request.originalUrl)
+                if (role.code === 200) {
+                    request.user = tokenStatus.data;
+                    request.user.role = role.data;
                     next();
                 } else {
-                    response.statusCode = permissionResponse.code;
-                    response.json(permissionResponse.data);
+                    response.statusCode = role.code;
+                    response.json({ 'err': role.err });
                 }
+
+            } else {
+                response.statusCode = tokenStatus.code;
+                response.json(tokenStatus.err);
             }
-        });*/
-        authentication.verifyToken(token, function (err, code, data) {
-            request.user = data;
-            next();
-        });
+        } else { // anonymous
+            var role = await authorization.checkPermission(undefined, request.body.salon_id, request.originalUrl);
+            if (role.data) {
+                next();
+            } else {
+                response.statusCode = 403;
+                response.json();
+            }
+        }
     }
 
     getRouter(): Router {

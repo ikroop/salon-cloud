@@ -31,7 +31,7 @@ describe('Service Management', function () {
                 validToken = res.body.auth.token;
                 invalidToken = 'eyJhbGciOiJSUz';
 
-                validSalonId = '57c0afac9265a426237f6f5f';//salon_id
+                validSalonId = '5816b9ddca5a6c2aa9bfd8c9';//salon_id
                 invalidSalonId = '00';
                 notFoundSalonId = '97ba6280f531d1b53d54a6e5';
                 done();

@@ -1,9 +1,9 @@
 /**
- * 
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
+
 var googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyCptaA0X0FDTsjVgotaKtGgbPYjXBszGgk'
 });

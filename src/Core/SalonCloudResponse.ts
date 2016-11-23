@@ -1,8 +1,7 @@
 /**
- * 
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
 
 export interface SalonCloudResponse<T>{

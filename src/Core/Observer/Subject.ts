@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
+
 import { Observer } from './Observer';
 
 export interface Subject {

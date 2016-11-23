@@ -1,4 +1,8 @@
-
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import { IAppointmentData } from './AppointmentData';
 import { mongoose } from '../../Services/Database';

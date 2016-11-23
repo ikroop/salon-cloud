@@ -1,8 +1,9 @@
 /**
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
+
 import { SalonCloudResponse } from './../SalonCloudResponse';
 export interface AuthorizationBehavior {
     checkPermission(userId: string, functionName: string): SalonCloudResponse<boolean>;

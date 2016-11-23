@@ -1,7 +1,9 @@
-/*
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
-
-*/
 import { Validator, DecoratingValidator, BaseValidator } from './BaseValidator';
 
 import SalonModel = require('./../../Modules/SalonManagement/SalonModel');

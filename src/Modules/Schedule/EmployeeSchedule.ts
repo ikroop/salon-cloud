@@ -44,8 +44,8 @@ export class EmployeeSchedule extends Schedule {
             //Step 3: case 1: return updated DailyDayData;
             return employeeDailyDayData;
         } else {
-            //Step 3: case 2: return null if salon has no schedule on that date
-            return null;
+            //Step 3: case 2: return undefined if salon has no schedule on that date
+            return undefined;
         }
 
     }
@@ -85,8 +85,8 @@ export class EmployeeSchedule extends Schedule {
             //Step 3: case 1: return updated [WeeklyDayData]
             return employeeWeeklyDayDataArray;
         } else {
-            //Step 3: case 2: return null if salon has no weeklySchedule
-            return null;
+            //Step 3: case 2: return undefined if salon has no weeklySchedule
+            return undefined;
         }
 
     };

@@ -1,5 +1,8 @@
-
-
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import { AbstractAdministrator } from './AbstractAdministrator'
 import { SalonCloudResponse } from './../SalonCloudResponse'
@@ -15,7 +18,10 @@ import { BaseValidator } from './../Validation/BaseValidator'
 import { IsPhoneNumber, IsValidSalonId, MissingCheck } from './../Validation/ValidationDecorators'
 import { ServiceGroupData, ServiceItemData } from './../../Modules/ServiceManagement/ServiceData'
 import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceManagement'
-
+import { Schedule } from './../../Modules/Schedule/Schedule'
+import { defaultWeeklySchedule } from './../DefaultData'
+import { EmployeeSchedule } from './../../Modules/Schedule/EmployeeSchedule'
+import { EmployeeInput, EmployeeReturn } from './../../Modules/UserManagement/EmployeeData';
 
 export class Owner extends AbstractAdministrator {
 
@@ -42,23 +48,12 @@ export class Owner extends AbstractAdministrator {
      *     - fullname: employeeProfile.fullname,
      *     - role: employeeProfile.role
      */
-    public async addEmployee(username: string, employeeProfile: any, verificationObj: Verification): Promise<SalonCloudResponse<any>> {
+    public async addEmployee(username: string, employeeProfile: EmployeeInput, verificationObj: Verification): Promise<SalonCloudResponse<EmployeeReturn>> {
         var response: SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
             err: undefined
-        }
-
-        // 'salonId' validation
-        var salonIdValidation = new BaseValidator(employeeProfile.salon_id);
-        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
-        salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
-        var salonIdError = await salonIdValidation.validate();
-        if (salonIdError) {
-            response.err = salonIdError.err;
-            response.code = 400;
-            return response;
-        }
+        }        
 
         // 'phone' validation
         var phoneNumberValidation = new BaseValidator(employeeProfile.phone);
@@ -100,6 +95,12 @@ export class Owner extends AbstractAdministrator {
             fullname: employeeProfile.fullname,
             role: employeeProfile.role,
         }
+
+        // add default weeklySchedule Schedule
+        // Create default Schedule
+        var scheduleDP = new EmployeeSchedule(employeeProfile.salon_id, accountCreation.data.user._id);
+        var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule);
+        
         response.code = 200;
 
         return response;

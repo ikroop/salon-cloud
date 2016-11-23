@@ -1,4 +1,8 @@
-
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import {BookingAppointmentBehavior} from './BookingAppointmentBehavior';
 import {SalonCloudResponse} from './../SalonCloudResponse'
