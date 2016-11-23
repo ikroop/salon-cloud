@@ -11,9 +11,10 @@ import { SalonTimeData } from './SalonTimeData';
 export class SalonTime {
     private momentObject: moment.Moment;
     constructor(salonTime: SalonTimeData) {
-        var timeString: string = salonTime.year + '-' + salonTime.month + '-' + 
-                                 salonTime.day + ' ' + salonTime.hour + ':' + salonTime.min;
-        this.momentObject = moment(timeString, 'YYYY-MM-DD HH:MM');
+        var timeString: string = salonTime.year + '-' + (salonTime.month+1) + '-' + 
+                                 salonTime.day + ' ' + (salonTime.hour) + ':' + salonTime.min;
+        this.momentObject = moment(timeString);
+        var test = moment(timeString,'YYYY-MM-DD HH:MM');
     }
     
     
@@ -62,7 +63,7 @@ export class SalonTime {
         var returnData: SalonTimeData = {
             min: this.momentObject.minute(),
             hour: this.momentObject.hour(),
-            day: this.momentObject.day(),
+            day: this.momentObject.date(),
             month: this.momentObject.month(),
             year: this.momentObject.year()
         }
