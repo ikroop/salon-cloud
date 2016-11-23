@@ -46,14 +46,35 @@ export class ScheduleRouter {
             response.status(200).json(test)
             */
         });
+
         this.router.post('/savesalondailyschedule', async(request: Request, response: Response) => {
            
-            //Todo: call Salon (and employee if needed) static validation
-            //Todo: build a factory for schedule;
-            let testObject = new SalonSchedule(request.body.salon_id);
+            var admin: AdministratorBehavior;
+
+            //create appropriate user object using UserFactory;
+            admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
+            var dailySchedule : DailyScheduleData = {
+                salon_id: request.body.salon_id,
+                employee_id: undefined,
+                day: request.body.daily_schedule
+            };
+            let result = await admin.updateDailySchedule(undefined, dailySchedule);
+
+            var responseData;
+            if(result.err){
+                responseData = result.err;
+            }else{
+                responseData = result.data;
+            }
+            response.status(result.code).json(responseData);
+
+
+            /*let testObject = new SalonSchedule(request.body.salon_id);
             let returnResponse  = await testObject.saveDailySchedule(request.body.daily_schedule);
             response.status(200).json(returnResponse)
+            */
         });
+
         this.router.post('/saveemployeeweeklyschedule', async(request: Request, response: Response) => {
            
             var admin: AdministratorBehavior;
@@ -84,11 +105,29 @@ export class ScheduleRouter {
         });
         this.router.post('/saveemployeedailyschedule', async(request: Request, response: Response) => {
            
-            //Todo: call Salon (and employee if needed) static validation
-            //Todo: build a factory for schedule;
-            let scheduleObject = new EmployeeSchedule(request.body.salon_id, request.body.employee_id);
+            var admin: AdministratorBehavior;
+
+            //create appropriate user object using UserFactory;
+            admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
+            var dailySchedule : DailyScheduleData = {
+                salon_id: request.body.salon_id,
+                employee_id: request.body.employee_id,
+                day: request.body.daily_schedule
+            };
+            let result = await admin.updateDailySchedule(request.body.employee_id, dailySchedule);
+
+            var responseData;
+            if(result.err){
+                responseData = result.err;
+            }else{
+                responseData = result.data;
+            }
+            response.status(result.code).json(responseData);
+
+            /*let scheduleObject = new EmployeeSchedule(request.body.salon_id, request.body.employee_id);
             let returnResponse  = await scheduleObject.saveDailySchedule(request.body.daily_schedule);
             response.status(200).json(returnResponse)
+            */
         });
         this.router.post('/testpost', async(request: Request, response: Response) => {
             response.status(200).json({'testpost':'OK'});
