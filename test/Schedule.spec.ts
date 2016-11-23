@@ -90,7 +90,7 @@ describe('Schedule Management', function() {
     });
 
     describe('Get Salon Daily Schedule', function() {
-        var apiUrl = '/api/v1/schedule/getsalondailyschedules';
+        var apiUrl = '/api/v1/schedule/getsalondailyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get salon daily schedule with invalidToken', function(done) {
             var salonId = validSalonId;
@@ -293,7 +293,7 @@ describe('Schedule Management', function() {
     });
 
     describe('Get Salon Weekly Schedule', function() {
-        var apiUrl = '/api/v1/schedule/getsalonweeklyschedules';
+        var apiUrl = '/api/v1/schedule/getsalonweeklyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get Salon Weekly schedule with invalidToken', function(done) {
 
@@ -391,7 +391,7 @@ describe('Schedule Management', function() {
     });
 
     describe('Save Salon Daily Schedule', function() {
-        var apiUrl = '/api/v1/schedule/savesalondailyschedules';
+        var apiUrl = '/api/v1/schedule/savesalondailyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save salon daily schedule with invalidToken', function(done) {
             var salonId = validSalonId;
@@ -796,7 +796,7 @@ describe('Schedule Management', function() {
     });
 
     describe('Save Salon Weekly Schedule', function() {
-        var apiUrl = '/api/v1/schedule/savesalondailyschedules';
+        var apiUrl = '/api/v1/schedule/savesalondailyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save salon weekly schedule with invalidToken', function(done) {
             var salonId = validSalonId;
@@ -1909,7 +1909,7 @@ describe('Schedule Management', function() {
     });
 
     describe('Get Employee Daily Schedule', function() {
-        var apiUrl = '/api/v1/schedule/getsalondailyschedules';
+        var apiUrl = '/api/v1/schedule/getsalondailyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to Get Employee Daily schedule with invalidToken', function(done) {
             var salonId = validSalonId;
@@ -2065,7 +2065,6 @@ describe('Schedule Management', function() {
                 });
         });
 
-
         it('should return ' + ErrorMessage.MissingStartDate.err.name + ' error trying to Get Employee Daily schedule without start_date', function(done) {
             var salonId = validSalonId;
             var startDate = '2016-12-15';
@@ -2191,7 +2190,7 @@ describe('Schedule Management', function() {
     });
 
     describe('Get Employee Weekly Schedule', function() {
-        var apiUrl = '/api/v1/schedule/getemployeeweeklyschedules';
+        var apiUrl = '/api/v1/schedule/getemployeeweeklyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get Employee Weekly schedule with invalidToken', function(done) {
 
@@ -2362,7 +2361,7 @@ describe('Schedule Management', function() {
     });
 
     describe('Save Employee Daily Schedule', function() {
-        var apiUrl = '/api/v1/schedule/savesalondailyschedules';
+        var apiUrl = '/api/v1/schedule/savesalondailyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save Employee Daily schedule with invalidToken', function(done) {
             var salonId = validSalonId;
@@ -2897,7 +2896,7 @@ describe('Schedule Management', function() {
     });
 
     describe('Save Employee Weekly Schedule', function() {
-        var apiUrl = '/api/v1/schedule/savesalondailyschedules';
+        var apiUrl = '/api/v1/schedule/savesalondailyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save Employee Weekly schedule with invalidToken', function(done) {
             var salonId = validSalonId;
