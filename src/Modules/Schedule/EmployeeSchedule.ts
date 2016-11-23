@@ -29,7 +29,7 @@ export class EmployeeSchedule extends Schedule {
      * @param {DailyDayData} dailySchedule: DailyDayData of employee
      * @returns {DailyDayData}
      */
-    protected async normalizeDailySchedule(dailySchedule: DailyDayData){
+    public async normalizeDailySchedule(dailySchedule: DailyDayData){
         
         //Step 1: get salon's [DailyDayData] for same date;
         let salonSchedule = new SalonSchedule(this.salonId);
@@ -65,6 +65,7 @@ export class EmployeeSchedule extends Schedule {
         //Step 1: get salon's [WeeklyDayData];
         let salonSchedule = new SalonSchedule(this.salonId);
         let promiseSalonWeeklyScheduleData = await salonSchedule.getWeeklySchedule();
+        console.log('Norm: ', promiseSalonWeeklyScheduleData);
         let salonWeeklyScheduleData = promiseSalonWeeklyScheduleData.data;
 
         if (salonWeeklyScheduleData) {
@@ -80,7 +81,7 @@ export class EmployeeSchedule extends Schedule {
 
                 employeeWeeklyDayData = this.updateDailyDayDataAccordingToSalon(employeeWeeklyDayData, salonWeeklyDayData);
             }
-
+            console.log('empWW:', employeeWeeklyDayDataArray);
             //Step 3: case 1: return updated [WeeklyDayData]
             return employeeWeeklyDayDataArray;
         } else {
