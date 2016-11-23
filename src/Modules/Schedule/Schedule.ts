@@ -2,7 +2,7 @@
  *
  *
  */
-import { MonthlyScheduleData, IDailyScheduleData, IWeeklyScheduleData, DailyDayData, WeeklyDayData } from './ScheduleData';
+import { MonthlyScheduleData, IDailyScheduleData, IWeeklyScheduleData, DailyDayData, WeeklyDayData, DailyScheduleData } from './ScheduleData';
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
 import { ScheduleBehavior } from './ScheduleBehavior';
 import WeeklyScheduleModel = require('./WeeklyScheduleModel');
@@ -43,18 +43,21 @@ export abstract class Schedule implements ScheduleBehavior {
     *Step 3: check the returned value in step 2 and return the proper reponse.
 	*/
     public async getDailySchedule(date: Date) {
-        var response: SalonCloudResponse<IDailyScheduleData> = {
+        var response: SalonCloudResponse<DailyScheduleData> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
         //TODO: Step 1: implement validation
-        var resultReturn: IDailyScheduleData;
+        var resultReturn: DailyScheduleData={
+            day: undefined,
+            salon_id: undefined,
+            employee_id: undefined
+        };
         var targetSchedule: DailyDayData;
 
         //Step 2: call this.getDailyScheduleProcess(date) to get DailyDayData
         targetSchedule = await this.getDailyScheduleProcess(date);
-
         //Step 3: check the returned value in step 1 and return the proper reponse.
         if (targetSchedule) {
             //parse data into resultReturn : dailyScheduleData 
@@ -70,7 +73,6 @@ export abstract class Schedule implements ScheduleBehavior {
             response.data = undefined;
             response.code = 500;
         }
-
         return response;
     }
 
@@ -568,7 +570,7 @@ export abstract class Schedule implements ScheduleBehavior {
             code: undefined,
             data: undefined
         };
-        var weeklyDocsReturn = await WeeklyScheduleModel.findOne({ salonId: this.salonId, employeeId: this.employeeId }).exec(function (err, docs) {
+        var weeklyDocsReturn = await WeeklyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId }).exec(function (err, docs) {
             if (err) {
                 returnResult.err = err;
             } else {
@@ -591,7 +593,12 @@ export abstract class Schedule implements ScheduleBehavior {
      * Step 4: return undefinded if no dailySchedule found 
      */
     private async getDailyScheduleProcess(date: Date) {
-        var targetSchedule: DailyDayData;
+        var targetSchedule: DailyDayData = {
+            open: undefined,
+            close: undefined,
+            status: undefined,
+            date: undefined
+        };
         var dailySchedule = await this.getDailyScheduleRecord(date);
         if (!dailySchedule.data) {
             var weeklySchedule = await this.getWeeklyScheduleRecord();
@@ -599,6 +606,7 @@ export abstract class Schedule implements ScheduleBehavior {
             //get dailySchedule from weeklySchedule
             if (weeklySchedule) {
                 var indexDay = date.getDay();
+
                 for (var i = 0; i <= 6; i++) {
                     if (weeklySchedule.data[i].day_of_week == indexDay) {
                         targetSchedule.open = weeklySchedule.data[i].open;
