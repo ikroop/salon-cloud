@@ -774,11 +774,1059 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(200);
                     res.body.should.have.property('data');
-                    res.body.data.should.have.property('id');
+                    res.body.data.should.have.property('_id');
                     done();
                 });
         });
 
     });
 
+    describe('Save Salon Weekly Schedule', function () {
+        var apiUrl = '/api/v1/schedule/savesalondailyschedules';
+
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get salon daily schedule with invalidToken', function (done) {
+            var salonId = validSalonId;
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 1
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': invalidToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to get salon daily schedule with Token no permission', async function (done) {
+            // Create new user
+            var authentication = new Authentication();
+            const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+            await authentication.signUpWithUsernameAndPassword(anotherEmail, defaultPassword);
+            // Get Token
+            var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
+            var token = loginData.data.auth.token;
+
+            var salonId = validSalonId;
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 1
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to get salon daily schedule without salonId', function (done) {
+            var salonId = undefined;
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 1
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to get salon daily schedule with invalidSalonId', function (done) {
+            var salonId = '32daed334dsfe';
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 1
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingDayOfWeek.err.name + ' error trying to get salon daily schedule without day_of_week', function (done) {
+            var salonId = validSalonId;
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingDayOfWeek.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidDayOfWeek.err.name + ' error trying to get salon daily schedule with invalid day_of_week', function (done) {
+            var salonId = validSalonId;
+            var date = '2016-27';
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 1
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 8
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidDayOfWeek.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidDayOfWeek.err.name + ' error trying to get salon daily schedule with invalid day_of_week', function (done) {
+            var salonId = validSalonId;
+            var date = '2016-27';
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 1
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": -1
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidDayOfWeek.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.DuplicateDaysOfWeek.err.name + ' error trying to get salon daily schedule with duplicate day_of_week', function (done) {
+            var salonId = validSalonId;
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 1
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 1
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.DuplicateDaysOfWeek.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleOpenTime.err.name + ' error trying to get salon daily schedule without open_time', function (done) {
+            var salonId = validSalonId;
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "close_time": closeTime,
+                        "day_of_week": 1
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleOpenTime.err.name + ' error trying to get salon daily schedule with invalid open_time', function (done) {
+            var salonId = validSalonId;
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": 24 * 3600,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleOpenTime.err.name + ' error trying to get salon daily schedule with invalid open_time', function (done) {
+            var salonId = validSalonId;
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": -1,
+                        "close_time": closeTime,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleCloseTime.err.name + ' error trying to get salon daily schedule without close_time', function (done) {
+            var salonId = validSalonId;
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleCloseTime.err.name + ' error trying to get salon daily schedule with invalid close_time', function (done) {
+            var salonId = validSalonId;
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": 24 * 3600,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleCloseTime.err.name + ' error trying to get salon daily schedule with invalid close_time', function (done) {
+            var salonId = validSalonId;
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": -1,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.OpenTimeGreaterThanCloseTime.err.name + ' error trying to get salon daily schedule with open_time is greater than close_time', function (done) {
+            var salonId = validSalonId;
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": 72000,
+                        "close_time": 36000,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.OpenTimeGreaterThanCloseTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return schedule data trying to get salon daily schedule successfully', function (done) {
+            var salonId = validSalonId;
+            var status = true;
+            var openTime = 36000;
+            var closeTime = 72000;
+            var bodyRequest =
+                [
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 0
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 2
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 3
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 4
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 5
+                    },
+                    {
+                        "status": status,
+                        "open_time": openTime,
+                        "close_time": closeTime,
+                        "day_of_week": 6
+                    }
+                ];
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('_id');
+                    done();
+                });
+        });
+
+    });
 });

@@ -449,5 +449,17 @@ export const ErrorMessage = {
             'name': 'InvalidDate',
             'message': 'Invalid Date Field'
         }
+    },
+    'MissingDayOfWeek': {
+        'err': {
+            'name': 'MissingDayOfWeek',
+            'message': 'Missing Day Of Week'
+        }
+    },
+    'InvalidDayOfWeek': {
+        'err': {
+            'name': 'InvalidDayOfWeek',
+            'message': 'Invalid Day Of Week'
+        }
     }
 };
