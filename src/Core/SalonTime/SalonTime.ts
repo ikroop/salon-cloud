@@ -13,9 +13,29 @@ export class SalonTime {
                                  salonTime.day + ' ' + (salonTime.hour) + ':' + salonTime.min;
         this.momentObject = moment(timeString);
         var test = moment(timeString,'YYYY-MM-DD HH:MM');
+
+        console.log('TEST 1: ', this.momentObject);
+        console.log('TEST 2: ', test);
     }
     
-    
+    static stringToSalonTimeData(dateString: string){
+        var year = +dateString.substring(0,3);
+        var month = +dateString.substring(5,6);
+        var day = +dateString.substring(8,9);
+        var hour = +dateString.substring(11,12);
+        var minute = +dateString.substring(14,15);
+
+        var salonTime: SalonTimeData = {
+            year: year,
+            month: month,
+            day: day,
+            hour: hour,
+            min: minute
+        }
+        return salonTime;
+
+    }
+
     public addMinute(minute: number) {
         this.momentObject.add(minute, 'minutes');
 
