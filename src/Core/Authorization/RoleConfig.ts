@@ -35,6 +35,12 @@ export const RoleConfig =
             'role': [
                 'Owner'
             ]
+        },
+        {
+            'api': '/api/v1/appointment/createbyphone',
+            'role': [
+                'Owner', 'Manager'
+            ]
         }
     ]
     ;
