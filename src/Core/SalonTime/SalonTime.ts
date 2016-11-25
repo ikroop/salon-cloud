@@ -19,6 +19,10 @@ export class SalonTime {
     }
     
     static stringToSalonTimeData(dateString: string){
+
+        //validation;
+
+
         var year = +dateString.substring(0,3);
         var month = +dateString.substring(5,6);
         var day = +dateString.substring(8,9);
@@ -34,6 +38,16 @@ export class SalonTime {
         }
         return salonTime;
 
+    }
+
+    static dateToSalonTimeData(date: Date){
+        var salonTime: SalonTimeData = {
+            year: date.getFullYear(),
+            month: date.getMonth(),
+            day: date.getDate(),
+            hour: date.getHours(),
+            min: date.getMinutes(),
+        }
     }
 
     public addMinute(minute: number) {
@@ -74,7 +88,27 @@ export class SalonTime {
     }
 
     public setYear(year: number) {
-        this.momentObject.year(year);
+        this.momentObject.year();
+    }
+
+    public getMinute(minute: number) {
+        this.momentObject.minute();
+    }
+
+    public getHour(hour: number) {
+        this.momentObject.hour();
+    }
+
+    public getDay(day: number) {
+        this.momentObject.day();
+    }
+
+    public getMonth(month: number) {
+        this.momentObject.month();
+    }
+
+    public getYear(year: number) {
+        this.momentObject.year();
     }
 
     public toSalonTime():SalonTimeData{
