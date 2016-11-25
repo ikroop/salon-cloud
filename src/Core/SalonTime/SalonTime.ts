@@ -88,27 +88,27 @@ export class SalonTime {
     }
 
     public setYear(year: number) {
-        this.momentObject.year();
+        return this.momentObject.year();
     }
 
-    public getMinute(minute: number) {
-        this.momentObject.minute();
+    public getMinute() {
+        return this.momentObject.minute();
     }
 
-    public getHour(hour: number) {
-        this.momentObject.hour();
+    public getHour() {
+        return this.momentObject.hour();
     }
 
-    public getDay(day: number) {
-        this.momentObject.day();
+    public getDay() {
+        return this.momentObject.day();
     }
 
-    public getMonth(month: number) {
-        this.momentObject.month();
+    public getMonth() {
+        return this.momentObject.month();
     }
 
-    public getYear(year: number) {
-        this.momentObject.year();
+    public getYear() {
+        return this.momentObject.year();
     }
 
     public toSalonTime():SalonTimeData{
