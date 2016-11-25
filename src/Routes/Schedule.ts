@@ -21,6 +21,13 @@ export class ScheduleRouter {
 
     getRouter(): Router {
 
+        this.router.get('/getsalonweeklyschedule', async (request: Request, response: Response) => {
+
+            var salonId = request.query.salon_id;
+            console.log('Request.param.salon_id:', salonId);
+            response.status(200).json(request.query);
+        });
+
         this.router.post('/savesalonweeklyschedule', async (request: Request, response: Response) => {
 
             var admin: AdministratorBehavior;
@@ -52,7 +59,8 @@ export class ScheduleRouter {
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
             
             //convert date string to salonTimeData;
-            request.body.daily_schedule.date = SalonTime.stringToSalonTimeData(request.body.daily_schedule.date);
+            var salonTime = new SalonTime();
+            request.body.daily_schedule.date = salonTime.SetString(request.body.daily_schedule.date);
 
             var dailySchedule: DailyScheduleData = {
                 salon_id: request.body.salon_id,
