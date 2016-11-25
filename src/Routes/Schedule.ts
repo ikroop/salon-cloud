@@ -13,6 +13,7 @@ import { AbstractAdministrator } from './../Core/User/AbstractAdministrator'
 import { AppointmentData } from './../Modules/AppointmentManagement/AppointmentData';
 import { UserFactory } from './../Core/User/UserFactory';
 import { WeeklyScheduleData, DailyScheduleData, IWeeklyScheduleData } from './../Modules/Schedule/ScheduleData'
+import { SalonTime } from './../Core/SalonTime/SalonTime'
 
 
 export class ScheduleRouter {
@@ -49,11 +50,18 @@ export class ScheduleRouter {
 
             //create appropriate user object using UserFactory;
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
+            
+            //convert date string to salonTimeData;
+            request.body.daily_schedule.date = SalonTime.stringToSalonTimeData(request.body.daily_schedule.date);
+
             var dailySchedule: DailyScheduleData = {
                 salon_id: request.body.salon_id,
                 employee_id: undefined,
                 day: request.body.daily_schedule
             };
+
+
+            //updateDailySchedule
             let result = await admin.updateDailySchedule(undefined, dailySchedule);
 
             var responseData;
