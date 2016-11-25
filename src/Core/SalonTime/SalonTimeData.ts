@@ -3,6 +3,8 @@
  * Copyright SalonHelps. All Rights Reserved.
  *
  */
+import { mongoose } from './../../Services/Database';
+import { Document } from 'mongoose';
 
 export interface SalonTimeData {
     min: number;
@@ -11,3 +13,4 @@ export interface SalonTimeData {
     month: number;
     year: number;
 }
+export interface ISalonTimeData extends SalonTimeData, mongoose.Document { }
