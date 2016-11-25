@@ -5,6 +5,7 @@
 */
 import { mongoose } from './../../Services/Database';
 import { Document } from 'mongoose';
+import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
 
 export interface ScheduleItemData {
     close: number,
@@ -17,7 +18,7 @@ export interface WeeklyDayData extends ScheduleItemData {
 };
 
 export interface DailyDayData extends ScheduleItemData {
-    date: Date
+    date: SalonTimeData
 };
 
 export interface WeeklyScheduleData {
