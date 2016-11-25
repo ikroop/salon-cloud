@@ -7,6 +7,8 @@ import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
 import { ScheduleBehavior } from './ScheduleBehavior';
 import WeeklyScheduleModel = require('./WeeklyScheduleModel');
 import DailyScheduleModel = require('./DailyScheduleModel');
+import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
+import { SalonTime } from './../../Core/SalonTime/SalonTime'
 
 var ErrorMessage = require('./../../Core/ErrorMessage');
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
@@ -42,14 +44,14 @@ export abstract class Schedule implements ScheduleBehavior {
     *Step 2: call this.getDailyScheduleProcess(date) to get DailyDayData
     *Step 3: check the returned value in step 2 and return the proper reponse.
 	*/
-    public async getDailySchedule(date: Date) {
+    public async getDailySchedule(date: SalonTimeData) {
         var response: SalonCloudResponse<DailyScheduleData> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
         //TODO: Step 1: implement validation
-        var resultReturn: DailyScheduleData={
+        var resultReturn: DailyScheduleData = {
             day: undefined,
             salon_id: undefined,
             employee_id: undefined
@@ -136,14 +138,23 @@ export abstract class Schedule implements ScheduleBehavior {
         //prepare for the loop
         var returnValue: MonthlyScheduleData;
         var dataReturn: [DailyDayData];
-        var firstDayOfMonth = new Date(year, month, 1, 0, 0, 0, 0);
-        var lastDayOfMonth = new Date(year, month + 1, 0, 0, 0, 0, 0);
+        var firstDayOfMonthSalonTimeData: SalonTimeData = {
+            year: year,
+            month: month,
+            day: 1,
+            hour: 0,
+            min: 0
+        }
+        var lastDayOfMonthDate = new Date(year, month + 1, 0, 0, 0, 0, 0);
+        var lastDate = lastDayOfMonthDate.getDate();
+
+        var firstDayOfMonth = new SalonTime(firstDayOfMonthSalonTimeData);
         var currentDate = firstDayOfMonth;
 
         //Step 2: loop and call this.getDailyScheduleProcess(date) for each day in month to get [DailyDayData]
-        for (var i = 1; currentDate > lastDayOfMonth; currentDate.setDate(i)) {
-            var targetSchedule = await this.getDailyScheduleProcess(currentDate);
-            i++;
+        for (var i = 1; i <= lastDate; i++) {
+            currentDate.setDay(i);
+            var targetSchedule = await this.getDailyScheduleProcess(currentDate.toSalonTime());
             dataReturn.push(targetSchedule);
         }
 
@@ -418,7 +429,7 @@ export abstract class Schedule implements ScheduleBehavior {
             data: undefined
         }
 
-        var result = await DailyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId, 'day.date': dailySchedule.date }).exec(function (err, docs) {
+        var result = await DailyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId, 'day.date.year': dailySchedule.date.year, 'day.date.month': dailySchedule.date.month, 'day.date.day': dailySchedule.date.day }).exec(function (err, docs) {
             if (err) {
                 return returnResult.err = err;
             } else if (docs) {
@@ -535,13 +546,13 @@ export abstract class Schedule implements ScheduleBehavior {
      *         return undefined if docs not found
      *         return docs.day date if found
      */
-    protected async getDailyScheduleRecord(date: Date) {
+    protected async getDailyScheduleRecord(date: SalonTimeData) {
         var returnResult: SalonCloudResponse<DailyDayData> = {
             err: undefined,
             code: undefined,
             data: undefined
         };
-        var dailyDocsReturn = await DailyScheduleModel.findOne({ salonId: this.salonId, employeeId: this.employeeId, 'day.date': date }).exec(function (err, docs) {
+        var dailyDocsReturn = await DailyScheduleModel.findOne({ salonId: this.salonId, employeeId: this.employeeId, 'day.date.year': date.year, 'day.date.month': date.month, 'day.date.day': date.day }).exec(function (err, docs) {
             if (err) {
                 returnResult.err = err;
             } else {
@@ -592,7 +603,7 @@ export abstract class Schedule implements ScheduleBehavior {
      * Step 3: normalizeDailySchedule the dailySchedule found in step 1 or step 2.
      * Step 4: return undefinded if no dailySchedule found 
      */
-    private async getDailyScheduleProcess(date: Date) {
+    private async getDailyScheduleProcess(date: SalonTimeData) {
         var targetSchedule: DailyDayData = {
             open: undefined,
             close: undefined,
@@ -605,7 +616,7 @@ export abstract class Schedule implements ScheduleBehavior {
 
             //get dailySchedule from weeklySchedule
             if (weeklySchedule) {
-                var indexDay = date.getDay();
+                var indexDay = date.day;
 
                 for (var i = 0; i <= 6; i++) {
                     if (weeklySchedule.data[i].day_of_week == indexDay) {
