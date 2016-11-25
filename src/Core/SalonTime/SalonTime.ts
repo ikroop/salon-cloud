@@ -6,112 +6,209 @@
 
 import * as moment from 'moment';
 import { SalonTimeData } from './SalonTimeData';
+
+/**
+ * System is built on multiple timezone for salon & customers.
+ * 
+ * @export
+ * @class SalonTime
+ */
 export class SalonTime {
     private momentObject: moment.Moment;
-    constructor(salonTime: SalonTimeData) {
-        var timeString: string = salonTime.year + '-' + (salonTime.month+1) + '-' + 
-                                 salonTime.day + ' ' + (salonTime.hour) + ':' + salonTime.min;
-        this.momentObject = moment(timeString);
-        var test = moment(timeString,'YYYY-MM-DD HH:MM');
-
-        console.log('TEST 1: ', this.momentObject);
-        console.log('TEST 2: ', test);
-    }
-    
-    static stringToSalonTimeData(dateString: string){
-
-        //validation;
-
-
-        var year = +dateString.substring(0,3);
-        var month = +dateString.substring(5,6);
-        var day = +dateString.substring(8,9);
-        var hour = +dateString.substring(11,12);
-        var minute = +dateString.substring(14,15);
-
-        var salonTime: SalonTimeData = {
-            year: year,
-            month: month,
-            day: day,
-            hour: hour,
-            min: minute
-        }
-        return salonTime;
-
+    /**
+     * Creates an instance of SalonTime.
+     * 
+     * @param {string} dateString
+     * @constructor
+     * @memberOf SalonTime
+     */
+    constructor(dateString: string) {
+        var momentObject = moment(dateString, 'YYYY-MM-DD HH:mm:ss');
     }
 
-    static dateToSalonTimeData(date: Date){
-        var salonTime: SalonTimeData = {
-            year: date.getFullYear(),
-            month: date.getMonth(),
-            day: date.getDate(),
-            hour: date.getHours(),
-            min: date.getMinutes(),
-        }
+    /**
+     * @description convert Date to SalonTime
+     * @param {Date} date
+     * 
+     * @memberOf SalonTime
+     */
+    public SetDate(date: Date) {
+        var momentObject = moment(date);
     }
 
+    /**
+     * @description add minute to object.
+     * 
+     * @param {number} minute
+     * 
+     * @memberOf SalonTime
+     */
     public addMinute(minute: number) {
         this.momentObject.add(minute, 'minutes');
-
     }
 
+    /**
+     * @description add hour to object.
+     * 
+     * @param {number} hour
+     * 
+     * @memberOf SalonTime
+     */
     public addHour(hour: number) {
         this.momentObject.add(hour, 'hours');
     }
 
-    public addDay(day: number){
+    /**
+     * @description add day to object.
+     * 
+     * @param {number} day
+     * 
+     * @memberOf SalonTime
+     */
+    public addDay(day: number) {
         this.momentObject.add(day, 'days');
     }
 
-    public addMonth(month: number){
+    /**
+     * @description add month to object.
+     * 
+     * @param {number} month
+     * 
+     * @memberOf SalonTime
+     */
+    public addMonth(month: number) {
         this.momentObject.add(month, 'months');
     }
 
-    public addYear(year: number){
+    /**
+     * @description add year to object.
+     * 
+     * @param {number} year
+     * 
+     * @memberOf SalonTime
+     */
+    public addYear(year: number) {
         this.momentObject.add(year, 'years');
     }
 
+    /**
+     * @description set minute to object.
+     * 
+     * @param {number} minute
+     * 
+     * @memberOf SalonTime
+     */
     public setMinute(minute: number) {
         this.momentObject.minute(minute);
     }
 
+    /**
+     * @description set hour to object.
+     * 
+     * @param {number} hour
+     * 
+     * @memberOf SalonTime
+     */
     public setHour(hour: number) {
         this.momentObject.hour(hour);
     }
 
+    /**
+     * @description set day to object.
+     * 
+     * @param {number} day
+     * 
+     * @memberOf SalonTime
+     */
     public setDay(day: number) {
         this.momentObject.day(day);
     }
 
+    /**
+     * @description set month to object.
+     * 
+     * @param {number} month
+     * 
+     * @memberOf SalonTime
+     */
     public setMonth(month: number) {
         this.momentObject.month(month);
     }
 
+    /**
+     * @description set year to object.
+     * 
+     * @param {number} year
+     * 
+     * @memberOf SalonTime
+     */
     public setYear(year: number) {
-        return this.momentObject.year();
+        this.momentObject.month(year);
     }
 
-    public getMinute() {
+    /**
+     * get minute
+     * 
+     * @returns {number}
+     * 
+     * @memberOf SalonTime
+     */
+    public getMinute(): number {
         return this.momentObject.minute();
     }
 
-    public getHour() {
+    /**
+     * get hour
+     * 
+     * @returns {number}
+     * 
+     * @memberOf SalonTime
+     */
+    public getHour(): number {
         return this.momentObject.hour();
     }
 
-    public getDay() {
+    /**
+     * get day
+     * 
+     * @returns {number}
+     * 
+     * @memberOf SalonTime
+     */
+    public getDay(): number {
         return this.momentObject.day();
     }
 
-    public getMonth() {
+    /**
+     * get month
+     * 
+     * @returns {number}
+     * 
+     * @memberOf SalonTime
+     */
+    public getMonth(): number {
         return this.momentObject.month();
     }
 
-    public getYear() {
+    /**
+     * get year
+     * 
+     * @returns {number}
+     * 
+     * @memberOf SalonTime
+     */
+    public getYear(): number {
         return this.momentObject.year();
     }
 
-    public toSalonTime():SalonTimeData{
+    /**
+     * @description export SalonTimeData structure.
+     * 
+     * @returns {SalonTimeData}
+     * 
+     * @memberOf SalonTime
+     */
+    public toSalonTime(): SalonTimeData {
         var returnData: SalonTimeData = {
             min: this.momentObject.minute(),
             hour: this.momentObject.hour(),
@@ -119,7 +216,6 @@ export class SalonTime {
             month: this.momentObject.month(),
             year: this.momentObject.year()
         }
-        
         return returnData;
     }
 }
