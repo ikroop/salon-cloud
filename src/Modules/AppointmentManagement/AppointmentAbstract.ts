@@ -110,7 +110,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
         // get emloyee schedule
         var scheduleManagementDP = new EmployeeSchedule(this.salonId, employeeId)
-        var dayInput = new Date(start.year, start.month, start.day, start.hour, start.min, 0, 0);
+        var dayInput = new SalonTime(start);
         var employeeDaySchedule = await scheduleManagementDP.getDailySchedule(dayInput);
         var employee = {
             employee_id: employeeId,
@@ -196,7 +196,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 employeeAppointmentArray = employeeAppointmentArrayList[employeeIndex];
             } else {
                 var scheduleManagementDP = new EmployeeSchedule(this.salonId, eachService.employee_id)
-                var dayInput = new Date(eachService.start.year, eachService.start.month, eachService.start.day, eachService.start.hour, eachService.start.min, 0, 0);
+                var dayInput = new SalonTime(eachService.start);
                 var employeeDaySchedule = await scheduleManagementDP.getDailySchedule(dayInput);
                 employeeSchedule = {
                     employee_id: eachService.employee_id,

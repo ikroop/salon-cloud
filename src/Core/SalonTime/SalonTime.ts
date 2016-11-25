@@ -13,8 +13,13 @@ import { SalonTimeData } from './SalonTimeData';
  * @export
  * @class SalonTime
  */
-export class SalonTime {
+export class SalonTime implements SalonTimeData {
     private momentObject: moment.Moment;
+    public year: number;
+    public month: number;
+    public day: number;
+    public hour: number;
+    public min: number;
     /**
      * Creates an instance of SalonTime.
      * 
@@ -22,10 +27,23 @@ export class SalonTime {
      * @constructor
      * @memberOf SalonTime
      */
-    constructor(dateString: string) {
-        var momentObject = moment(dateString, 'YYYY-MM-DD HH:mm:ss');
+    constructor(salonTime: SalonTimeData = undefined) {
+        this.momentObject = moment();
+
+        if (salonTime) {
+            this.momentObject.set('year', salonTime.year);
+            this.momentObject.set('month', salonTime.month);
+            this.momentObject.set('day', salonTime.day);
+            this.momentObject.set('hour', salonTime.hour);
+            this.momentObject.set('minute', salonTime.min);
+            this.momentObject.set('second', 0);
+        }
     }
 
+    public SetString(dateString: string) {
+        this.momentObject = moment(dateString, 'YYYY-MM-DD HH:mm:ss');
+
+    }
     /**
      * @description convert Date to SalonTime
      * @param {Date} date
@@ -33,7 +51,7 @@ export class SalonTime {
      * @memberOf SalonTime
      */
     public SetDate(date: Date) {
-        var momentObject = moment(date);
+        this.momentObject = moment(date);
     }
 
     /**

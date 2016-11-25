@@ -9,19 +9,19 @@ import { mongoose } from '../../Services/Database';
 import { SalonTimeSchema } from '../../Core/SalonTime/SalonTimeSchema'
 
 const BookedServiceSchema = new mongoose.Schema({
-    service_id: {type: String, require: true},
-    service_name: {type: String, require: true},
-    price: {type: Number, require: true},
-    time: { type: Number, require: true}
+    service_id: { type: String, require: true },
+    service_name: { type: String, require: true },
+    price: { type: Number, require: true },
+    time: { type: Number, require: true }
 })
 
 const AppointmentItemSchema = new mongoose.Schema({
-    start: { type: SalonTimeSchema, require: true},
-    end: { type: SalonTimeSchema, require: true},
-    employee_id: { type: String, require: true},
+    start: { type: SalonTimeSchema, require: true },
+    end: { type: SalonTimeSchema, require: true },
+    employee_id: { type: String, require: true },
     servie: BookedServiceSchema,
-    overlapped: { 
-        status: {type: Boolean, require: true},
+    overlapped: {
+        status: { type: Boolean, require: true },
         overlapped_appointment_id: String
     },
 })

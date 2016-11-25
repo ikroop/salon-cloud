@@ -11,6 +11,7 @@ import { SignedInUser } from './../src/Core/User/SignedInUser';
 import { Owner } from './../src/Core/User/Owner';
 import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
 import { ByPhoneVerification } from './../src/Core/Verification/ByPhoneVerification';
+import { SalonTime } from './../src/Core/SalonTime/SalonTime';
 
 describe('Appointment Management', function () {
     var validToken;
@@ -121,7 +122,11 @@ describe('Appointment Management', function () {
                 const employeeSchedule = new EmployeeSchedule(validSalonId, existedEmployeeId);
                 //console.log("employeeSchedule: %j", employeeSchedule);
 
-                const dailySchedule = employeeSchedule.getDailySchedule(date);
+                var salonTime = new SalonTime();
+                // set date to SalonTime Object
+                salonTime.SetDate(date);
+
+                const dailySchedule = employeeSchedule.getDailySchedule(salonTime);
                 //console.log("employeeSchedule: %j", employeeSchedule);
 
                 done();
