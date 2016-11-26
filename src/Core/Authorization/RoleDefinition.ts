@@ -7,19 +7,19 @@
 export const RoleDefinition =
     [
         {
-            'value': '1',
+            'value': 1,
             'name': 'Owner'
         },
         {
-            'value': '2',
+            'value': 2,
             'name': 'Manager'
         },
         {
-            'value': '3',
+            'value': 3,
             'name': 'Technician'
         },
         {
-            'value': '4',
+            'value': 4,
             'name': 'Customer'
         }
     ]
