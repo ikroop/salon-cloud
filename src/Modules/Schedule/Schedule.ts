@@ -2,7 +2,7 @@
  *
  *
  */
-import { MonthlyScheduleData, IDailyScheduleData, IWeeklyScheduleData, DailyDayData, WeeklyDayData, DailyScheduleData } from './ScheduleData';
+import { MonthlyScheduleData, IDailyScheduleData, IWeeklyScheduleData, WeeklyScheduleData, DailyDayData, WeeklyDayData, DailyScheduleData } from './ScheduleData';
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
 import { ScheduleBehavior } from './ScheduleBehavior';
 import WeeklyScheduleModel = require('./WeeklyScheduleModel');
@@ -86,12 +86,16 @@ export abstract class Schedule implements ScheduleBehavior {
     *Step 2: check the returned value in step 1 and return the proper reponse.
 	*/
     public async getWeeklySchedule() {
-        var response: SalonCloudResponse<IWeeklyScheduleData> = {
+        var response: SalonCloudResponse<WeeklyScheduleData> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
-        var resultReturn: IWeeklyScheduleData;
+        var resultReturn: WeeklyScheduleData = {
+            salon_id: undefined,
+            employee_id: undefined,
+            week: undefined
+        };
 
         //Step 1: call this.getWeeklyScheduleRecord(date) to get WeeklyDayData[]
 
