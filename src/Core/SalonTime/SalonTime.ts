@@ -266,6 +266,7 @@ export class SalonTime implements SalonTimeData {
         this.day = this.momentObject.date();
         this.month = this.momentObject.month();
         this.year = this.momentObject.year();
-        this.date = new Date(this.momentObject.year(), this.momentObject.month(), this.momentObject.day(), this.momentObject.hour(), this.momentObject.minute());
+        this.date = new Date(Date.UTC(this.year, this.month, this.day, this.hour, this.min, 0));
+        console.log('OOOOOOO: ',this.date.getUTCHours());
     }
 }
