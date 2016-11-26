@@ -50,7 +50,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    public SetString(dateString: string): SalonTime {
+    public setString(dateString: string): SalonTime {
         this.momentObject = moment(dateString, 'YYYY-MM-DD HH:mm:ss');
         this.nomalize();
         return this;
@@ -62,7 +62,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    public SetDate(date: Date): SalonTime {
+    public setDate(date: Date): SalonTime {
         this.momentObject = moment(date);
         this.nomalize();
         return this;
