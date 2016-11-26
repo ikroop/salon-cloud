@@ -41,6 +41,21 @@ export const RoleConfig =
             'role': [
                 'Owner', 'Manager'
             ]
+        },{
+            'api': '/api/v1/schedule/saveemployeeweeklyschedule',
+            'role': [
+                'Owner', 'Manager'
+            ]
+        },{
+            'api': '/api/v1/schedule/savesalonweeklyschedule',
+            'role': [
+                'Owner'
+            ]
+        },{
+            'api': '/api/v1/schedule/savesalondailyschedule',
+            'role': [
+                'Owner'
+            ]
         }
     ]
     ;
