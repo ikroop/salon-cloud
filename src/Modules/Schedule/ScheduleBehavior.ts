@@ -13,17 +13,13 @@ export interface ScheduleBehavior {
      * getDailySchedule
 	 *
      */
-    getDailySchedule(date: SalonTimeData);
+    getDailySchedule(start: SalonTimeData, end: SalonTimeData);
 
     /**
      * name
      */
     getWeeklySchedule();
 
-	/**
-	*
-	*/
-    getMonthlySchedule(month: number, year: number);
 
 
     /**
