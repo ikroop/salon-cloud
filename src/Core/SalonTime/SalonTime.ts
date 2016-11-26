@@ -20,6 +20,8 @@ export class SalonTime implements SalonTimeData {
     public day: number;
     public hour: number;
     public min: number;
+    public date: Date;
+
     /**
      * Creates an instance of SalonTime.
      * 
@@ -38,20 +40,32 @@ export class SalonTime implements SalonTimeData {
             this.momentObject.set('minute', salonTime.min);
             this.momentObject.set('second', 0);
         }
+        this.nomalize();
     }
 
-    public SetString(dateString: string) {
+    /**
+     * 
+     * 
+     * @param {string} dateString
+     * 
+     * @memberOf SalonTime
+     */
+    public SetString(dateString: string): SalonTime {
         this.momentObject = moment(dateString, 'YYYY-MM-DD HH:mm:ss');
-
+        this.nomalize();
+        return this;
     }
+
     /**
      * @description convert Date to SalonTime
      * @param {Date} date
      * 
      * @memberOf SalonTime
      */
-    public SetDate(date: Date) {
+    public SetDate(date: Date): SalonTime {
         this.momentObject = moment(date);
+        this.nomalize();
+        return this;
     }
 
     /**
@@ -63,6 +77,8 @@ export class SalonTime implements SalonTimeData {
      */
     public addMinute(minute: number) {
         this.momentObject.add(minute, 'minutes');
+        this.nomalize();
+        return this;
     }
 
     /**
@@ -74,6 +90,8 @@ export class SalonTime implements SalonTimeData {
      */
     public addHour(hour: number) {
         this.momentObject.add(hour, 'hours');
+        this.nomalize();
+        return this;
     }
 
     /**
@@ -85,6 +103,8 @@ export class SalonTime implements SalonTimeData {
      */
     public addDay(day: number) {
         this.momentObject.add(day, 'days');
+        this.nomalize();
+        return this;
     }
 
     /**
@@ -96,6 +116,8 @@ export class SalonTime implements SalonTimeData {
      */
     public addMonth(month: number) {
         this.momentObject.add(month, 'months');
+        this.nomalize();
+        return this;
     }
 
     /**
@@ -107,6 +129,8 @@ export class SalonTime implements SalonTimeData {
      */
     public addYear(year: number) {
         this.momentObject.add(year, 'years');
+        this.nomalize();
+        return this;
     }
 
     /**
@@ -118,6 +142,8 @@ export class SalonTime implements SalonTimeData {
      */
     public setMinute(minute: number) {
         this.momentObject.minute(minute);
+        this.nomalize();
+        return this;
     }
 
     /**
@@ -129,6 +155,8 @@ export class SalonTime implements SalonTimeData {
      */
     public setHour(hour: number) {
         this.momentObject.hour(hour);
+        this.nomalize();
+        return this;
     }
 
     /**
@@ -140,6 +168,8 @@ export class SalonTime implements SalonTimeData {
      */
     public setDay(day: number) {
         this.momentObject.day(day);
+        this.nomalize();
+        return this;
     }
 
     /**
@@ -151,6 +181,8 @@ export class SalonTime implements SalonTimeData {
      */
     public setMonth(month: number) {
         this.momentObject.month(month);
+        this.nomalize();
+        return this;
     }
 
     /**
@@ -162,6 +194,8 @@ export class SalonTime implements SalonTimeData {
      */
     public setYear(year: number) {
         this.momentObject.month(year);
+        this.nomalize();
+        return this;
     }
 
     /**
@@ -172,7 +206,7 @@ export class SalonTime implements SalonTimeData {
      * @memberOf SalonTime
      */
     public getMinute(): number {
-        return this.momentObject.minute();
+        return this.min;
     }
 
     /**
@@ -183,7 +217,7 @@ export class SalonTime implements SalonTimeData {
      * @memberOf SalonTime
      */
     public getHour(): number {
-        return this.momentObject.hour();
+        return this.hour;
     }
 
     /**
@@ -194,7 +228,7 @@ export class SalonTime implements SalonTimeData {
      * @memberOf SalonTime
      */
     public getDay(): number {
-        return this.momentObject.day();
+        return this.day;
     }
 
     /**
@@ -205,7 +239,7 @@ export class SalonTime implements SalonTimeData {
      * @memberOf SalonTime
      */
     public getMonth(): number {
-        return this.momentObject.month();
+        return this.month;
     }
 
     /**
@@ -216,24 +250,22 @@ export class SalonTime implements SalonTimeData {
      * @memberOf SalonTime
      */
     public getYear(): number {
-        return this.momentObject.year();
+        return this.year;
     }
 
     /**
-     * @description export SalonTimeData structure.
      * 
-     * @returns {SalonTimeData}
+     * 
+     * @private
      * 
      * @memberOf SalonTime
      */
-    public toSalonTime(): SalonTimeData {
-        var returnData: SalonTimeData = {
-            min: this.momentObject.minute(),
-            hour: this.momentObject.hour(),
-            day: this.momentObject.date(),
-            month: this.momentObject.month(),
-            year: this.momentObject.year()
-        }
-        return returnData;
+    private nomalize() {
+        this.min = this.momentObject.minute();
+        this.hour = this.momentObject.hour();
+        this.day = this.momentObject.date();
+        this.month = this.momentObject.month();
+        this.year = this.momentObject.year();
+        this.date = new Date(this.momentObject.year(), this.momentObject.month(), this.momentObject.day(), this.momentObject.hour(), this.momentObject.minute());
     }
 }

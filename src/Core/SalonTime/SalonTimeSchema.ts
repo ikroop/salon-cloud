@@ -10,5 +10,6 @@ import {ISalonTimeData} from './SalonTimeData'
     hour: {type: Number, require: true},
     day: {type: Number, require: true},
     month: {type: Number, require: true},
-    year: {type: Number, require: true}
+    year: {type: Number, require: true},
+    date: {type: Date, require: true},
 })

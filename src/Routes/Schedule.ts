@@ -32,6 +32,21 @@ export class ScheduleRouter {
             }
         });
 
+        this.router.get('/getsalondailyschedule', async (request: Request, response: Response) => {
+
+            /*let salonId = request.query.salon_id;
+            let startDate = new SalonTime().SetString(request.query.start_date);
+            let endDate = new SalonTime().SetString(request.query.end_date);
+            let salonSchedule = new SalonSchedule(salonId);
+             
+            let salonWeeklySchedules = await salonSchedule.getDailySchedule()
+            if (salonWeeklySchedules.code === 200) {
+                response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.data);
+            } else {
+                response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.err);
+            }*/
+        });
+
         this.router.post('/savesalonweeklyschedule', async (request: Request, response: Response) => {
 
             var admin: AdministratorBehavior;

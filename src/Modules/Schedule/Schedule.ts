@@ -158,7 +158,7 @@ export abstract class Schedule implements ScheduleBehavior {
         //Step 2: loop and call this.getDailyScheduleProcess(date) for each day in month to get [DailyDayData]
         for (var i = 1; i <= lastDate; i++) {
             currentDate.setDay(i);
-            var targetSchedule = await this.getDailyScheduleProcess(currentDate.toSalonTime());
+            var targetSchedule = await this.getDailyScheduleProcess(currentDate);
             dataReturn.push(targetSchedule);
         }
 
