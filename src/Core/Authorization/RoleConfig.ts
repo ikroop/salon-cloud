@@ -56,6 +56,11 @@ export const RoleConfig =
             'role': [
                 'Owner'
             ]
+        },{
+            'api': '/api/v1/schedule/saveemployeedailyschedule',
+            'role': [
+                'Owner'
+            ]
         }
     ]
     ;
