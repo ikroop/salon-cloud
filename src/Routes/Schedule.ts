@@ -14,11 +14,17 @@ import { AppointmentData } from './../Modules/AppointmentManagement/AppointmentD
 import { UserFactory } from './../Core/User/UserFactory';
 import { WeeklyScheduleData, DailyScheduleData, IWeeklyScheduleData } from './../Modules/Schedule/ScheduleData'
 import { SalonTime } from './../Core/SalonTime/SalonTime'
+import { Authentication } from '../Core/Authentication/Authentication';
+import { Authorization } from './../Core/Authorization/Authorization';
+import { AuthorizationRouter } from './Authorization';
 
 export class ScheduleRouter {
     private router: Router = Router();
 
+
     getRouter(): Router {
+        var authentication = new Authentication();
+        var authorizationRouter = new AuthorizationRouter();
 
         this.router.get('/getsalonweeklyschedule', async (request: Request, response: Response) => {
 
@@ -32,10 +38,11 @@ export class ScheduleRouter {
             }
         });
 
-        this.router.post('/savesalonweeklyschedule', async (request: Request, response: Response) => {
+        this.router.post('/savesalonweeklyschedule', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
             var admin: AdministratorBehavior;
 
+            console.log('Body', request.body);
             //create appropriate user object using UserFactory;
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
             var weeklySchedule: WeeklyScheduleData = {
@@ -43,6 +50,8 @@ export class ScheduleRouter {
                 employee_id: undefined,
                 week: request.body.weekly_schedules
             };
+
+            console.log('Admin', admin);
             let result = await admin.updateWeeklySchedule(undefined, weeklySchedule);
 
             var responseData;
@@ -55,16 +64,20 @@ export class ScheduleRouter {
 
         });
 
-        this.router.post('/savesalondailyschedule', async (request: Request, response: Response) => {
+        this.router.post('/savesalondailyschedule', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
             var admin: AdministratorBehavior;
+            console.log('Body', request.body);
 
             //create appropriate user object using UserFactory;
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
 
+            console.log('Admin', admin);
+
             //convert date string to salonTimeData;
             var salonTime = new SalonTime();
-            request.body.daily_schedule.date = salonTime.SetString(request.body.daily_schedule.date);
+            request.body.daily_schedule.date =await salonTime.SetString(request.body.daily_schedule.date);
+            console.log('date: ', request.body.daily_schedule.date);
 
             var dailySchedule: DailyScheduleData = {
                 salon_id: request.body.salon_id,
@@ -87,9 +100,12 @@ export class ScheduleRouter {
 
         });
 
-        this.router.post('/saveemployeeweeklyschedule', async (request: Request, response: Response) => {
+        this.router.post('/saveemployeeweeklyschedule', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
             var admin: AdministratorBehavior;
+
+            console.log('Admin', admin);
+
 
             //create appropriate user object using UserFactory;
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
@@ -98,6 +114,8 @@ export class ScheduleRouter {
                 employee_id: request.body.employee_id,
                 week: request.body.weekly_schedules
             };
+
+            console.log('Admin', admin);
             let result = await admin.updateWeeklySchedule(request.body.employee_id, weeklySchedule);
 
             var responseData;
