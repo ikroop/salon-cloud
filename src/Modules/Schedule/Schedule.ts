@@ -427,7 +427,7 @@ export abstract class Schedule implements ScheduleBehavior {
             day: dailySchedule,
         })
         await dataCreation.then(function (docs) {
-            returnResult.data = true;
+            returnResult.data = docs._id;
             return;
         }, function (error) {
             returnResult.err = error
@@ -459,8 +459,7 @@ export abstract class Schedule implements ScheduleBehavior {
         var saveAction = docsFound.save();
         //saveAction is a promise returned by mongoose so we must use 'await' on its resolution.
         await saveAction.then(function (docs) {
-
-            returnResult.data = true;
+            returnResult.data = docs._id;
 
         }, function (err) {
 
