@@ -33,6 +33,10 @@ export class Authorization {
         };
 
         var roleAPI = RoleConfig.filter(item => item.api.toLowerCase() == apiName.toLowerCase())[0];
+
+        if(!roleAPI){
+            console.log('Please Add API to file RoleConfig');
+        }
         // Check userId
         if (!userId) {
             // User is Anonymouse
