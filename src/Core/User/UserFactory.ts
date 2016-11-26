@@ -12,11 +12,11 @@ import { SalonManagement } from './../../Modules/SalonManagement/SalonManagement
 import {AdministratorBehavior} from './AdministratorBehavior'
 
 export class UserFactory {
-    public static createAdminUserObject(userId: string, salonId: string, role: number) : AdministratorBehavior {
+    public static createAdminUserObject(userId: string, salonId: string, role: string) : AdministratorBehavior {
         console.log('role:', role);
-        if(role==1){
+        if(role==='Owner'){
             return new Owner(userId, new SalonManagement(salonId));
-        }else if(role==2){
+        }else if(role=='Manager'){
             return new Manager(userId, new SalonManagement(salonId));
         }
     }
