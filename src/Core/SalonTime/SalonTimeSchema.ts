@@ -1,7 +1,9 @@
-
 /**
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
+
 import { mongoose } from '../../Services/Database';
 
  export const SalonTimeSchema = new mongoose.Schema({
