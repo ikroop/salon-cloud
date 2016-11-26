@@ -12,5 +12,6 @@ export interface SalonTimeData {
     day: number;
     month: number;
     year: number;
+    date?: Date;
 }
 export interface ISalonTimeData extends SalonTimeData, mongoose.Document { }

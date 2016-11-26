@@ -106,7 +106,6 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         var timeNeeded = serviceItem.data.time;
         var endTime = new SalonTime(start);
         endTime.addMinute(timeNeeded);
-        var end = endTime.toSalonTime();
 
         // get emloyee schedule
         var scheduleManagementDP = new EmployeeSchedule(this.salonId, employeeId)
@@ -139,7 +138,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                             let appointmentItem: AppointmentItemData = {
                                 employee_id: employeeId,
                                 start: start,
-                                end: end,
+                                end: endTime,
                                 service: {
                                     service_id: serviceItem.data.id,
                                     time: serviceItem.data.time,
@@ -184,7 +183,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             var endTime = new SalonTime(eachService.start);
 
             endTime.addMinute(timeNeeded / 60);
-            eachService.end = endTime.toSalonTime();
+            eachService.end = endTime;
 
             // get emloyee schedule
             var employeeSchedule;
@@ -387,7 +386,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         openTime.setHour(employee.day.open / 3600);
         openTime.setMinute(employee.day.open % 3600 / 60);
 
-        var openTimeData = openTime.toSalonTime();
+        var openTimeData = openTime;
         var openTimePoint = openTimeData.min + openTimeData.hour * 60;
 
         var closeTime = new SalonTime(date);
@@ -395,7 +394,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         closeTime.setHour(employee.day.close / 3600);
         closeTime.setMinute(employee.day.close % 3600 / 60);
 
-        var closeTimeData = closeTime.toSalonTime();
+        var closeTimeData = closeTime;
         var closeTimePoint = closeTimeData.min + closeTimeData.hour * 60;
         var appointmentArray;
         if (appointmentList) {
