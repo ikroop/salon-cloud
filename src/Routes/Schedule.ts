@@ -14,9 +14,11 @@ import { AppointmentData } from './../Modules/AppointmentManagement/AppointmentD
 import { UserFactory } from './../Core/User/UserFactory';
 import { WeeklyScheduleData, DailyScheduleData, IWeeklyScheduleData } from './../Modules/Schedule/ScheduleData'
 import { SalonTime } from './../Core/SalonTime/SalonTime'
+import { SalonTimeData } from './../Core/SalonTime/SalonTimeData'
 import { Authentication } from '../Core/Authentication/Authentication';
 import { Authorization } from './../Core/Authorization/Authorization';
 import { AuthorizationRouter } from './Authorization';
+import { DailyDayData } from './../Modules/Schedule/ScheduleData'
 
 export class ScheduleRouter {
     private router: Router = Router();
@@ -91,7 +93,8 @@ export class ScheduleRouter {
 
             //convert date string to salonTimeData;
             var salonTime = new SalonTime();
-            request.body.daily_schedule.date =await salonTime.SetString(request.body.daily_schedule.date);
+            request.body.daily_schedule.date = salonTime.SetString(request.body.daily_schedule.date);
+            
             console.log('date: ', request.body.daily_schedule.date);
 
             var dailySchedule: DailyScheduleData = {
@@ -103,6 +106,7 @@ export class ScheduleRouter {
 
             //updateDailySchedule
             let result = await admin.updateDailySchedule(undefined, dailySchedule);
+            console.log('RESULT: ', result);
 
             var responseData;
             if (result.err) {
@@ -110,6 +114,8 @@ export class ScheduleRouter {
             } else {
                 responseData = result.data;
             }
+
+            console.log('Response: ', responseData);
             response.status(result.code).json(responseData);
 
 
