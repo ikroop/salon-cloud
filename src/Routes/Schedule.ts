@@ -94,7 +94,7 @@ export class ScheduleRouter {
             //convert date string to salonTimeData;
             var salonTime = new SalonTime();
             request.body.daily_schedule.date = salonTime.SetString(request.body.daily_schedule.date);
-            
+
             console.log('date: ', request.body.daily_schedule.date);
 
             var dailySchedule: DailyScheduleData = {
@@ -149,12 +149,17 @@ export class ScheduleRouter {
 
 
         });
-        this.router.post('/saveemployeedailyschedule', async (request: Request, response: Response) => {
+        this.router.post('/saveemployeedailyschedule', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
             var admin: AdministratorBehavior;
 
             //create appropriate user object using UserFactory;
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
+
+            //convert date string to salonTimeData;
+            var salonTime = new SalonTime();
+            request.body.daily_schedule.date = salonTime.SetString(request.body.daily_schedule.date);
+            console.log('Date: ', request.body.daily_schedule.date);
             var dailySchedule: DailyScheduleData = {
                 salon_id: request.body.salon_id,
                 employee_id: request.body.employee_id,
