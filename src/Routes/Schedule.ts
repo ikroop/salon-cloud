@@ -15,7 +15,6 @@ import { UserFactory } from './../Core/User/UserFactory';
 import { WeeklyScheduleData, DailyScheduleData, IWeeklyScheduleData } from './../Modules/Schedule/ScheduleData'
 import { SalonTime } from './../Core/SalonTime/SalonTime'
 
-
 export class ScheduleRouter {
     private router: Router = Router();
 
@@ -23,9 +22,14 @@ export class ScheduleRouter {
 
         this.router.get('/getsalonweeklyschedule', async (request: Request, response: Response) => {
 
-            var salonId = request.query.salon_id;
-            console.log('Request.param.salon_id:', salonId);
-            response.status(200).json(request.query);
+            let salonId = request.query.salon_id;
+            let salonSchedule = new SalonSchedule(salonId);
+            let salonWeeklySchedules = await salonSchedule.getWeeklySchedule();
+            if (salonWeeklySchedules.code === 200) {
+                response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.data);
+            } else {
+                response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.err);
+            }
         });
 
         this.router.post('/savesalonweeklyschedule', async (request: Request, response: Response) => {
@@ -57,7 +61,7 @@ export class ScheduleRouter {
 
             //create appropriate user object using UserFactory;
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
-            
+
             //convert date string to salonTimeData;
             var salonTime = new SalonTime();
             request.body.daily_schedule.date = salonTime.SetString(request.body.daily_schedule.date);
