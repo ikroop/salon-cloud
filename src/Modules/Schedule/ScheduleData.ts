@@ -1,8 +1,9 @@
 /**
-*
-*
-*
-*/
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
+
 import { mongoose } from './../../Services/Database';
 import { Document } from 'mongoose';
 import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
@@ -33,10 +34,10 @@ export interface DailyScheduleData {
     day: DailyDayData
 };
 
-export interface MonthlyScheduleData {
+export interface DailyScheduleArrayData {
     salon_id: string, //<salon_id>
     employee_id: string,
-    month: DailyDayData[]
+    days: DailyDayData[]
 }
 
 export interface IWeeklyScheduleData extends WeeklyScheduleData, mongoose.Document { }
