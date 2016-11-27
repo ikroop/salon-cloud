@@ -18,7 +18,7 @@ export class SalonSchedule extends Schedule {
         super(salonId, undefined);
     }
 
-    protected normalizeDailySchedule(dailySchedule: DailyDayData) {
+    protected normalizeDailySchedule(dailySchedule: DailyDayData[]) {
         //do nothing, dummy method
         return dailySchedule;
     }

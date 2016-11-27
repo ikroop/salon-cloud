@@ -17,7 +17,7 @@ import { EmployeeSchedule } from './../Schedule/EmployeeSchedule'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { BaseValidator } from './../../Core/Validation/BaseValidator'
 import { MissingCheck, IsValidEmployeeId } from './../../Core/Validation/ValidationDecorators'
-import { DailyScheduleData } from './../Schedule/ScheduleData'
+import { DailyScheduleData, DailyScheduleArrayData } from './../Schedule/ScheduleData'
 
 export abstract class AppointmentAbstract implements AppointmentBehavior {
     private appointmentManagementDP: AppointmentManagement;
@@ -110,12 +110,12 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         // get emloyee schedule
         var scheduleManagementDP = new EmployeeSchedule(this.salonId, employeeId)
         var dayInput = new SalonTime(start);
-        var employeeDaySchedule = await scheduleManagementDP.getDailySchedule(dayInput);
+        var employeeDaySchedule = await scheduleManagementDP.getDailySchedule(dayInput, dayInput);
         var employee = {
             employee_id: employeeId,
-            close: employeeDaySchedule.data.day.close,
-            status: employeeDaySchedule.data.day.status,
-            open: employeeDaySchedule.data.day.open
+            close: employeeDaySchedule.data.days[0].close,
+            status: employeeDaySchedule.data.days[0].status,
+            open: employeeDaySchedule.data.days[0].open
 
         }
 
@@ -196,12 +196,12 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             } else {
                 var scheduleManagementDP = new EmployeeSchedule(this.salonId, eachService.employee_id)
                 var dayInput = new SalonTime(eachService.start);
-                var employeeDaySchedule = await scheduleManagementDP.getDailySchedule(dayInput);
+                var employeeDaySchedule = await scheduleManagementDP.getDailySchedule(dayInput, dayInput);
                 employeeSchedule = {
                     employee_id: eachService.employee_id,
-                    close: employeeDaySchedule.data.day.close,
-                    status: employeeDaySchedule.data.day.status,
-                    open: employeeDaySchedule.data.day.open
+                    close: employeeDaySchedule.data.days[0].close,
+                    status: employeeDaySchedule.data.days[0].status,
+                    open: employeeDaySchedule.data.days[0].open
 
                 }
 
@@ -360,14 +360,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
     *          }
     * 
     */
-    public async getEmployeeAvailableTime(timeNeeded: number, date: SalonTimeData, employee: DailyScheduleData, appointmentList: Array<AppointmentItemData>): Promise<SalonCloudResponse<any>> {
+    public async getEmployeeAvailableTime(timeNeeded: number, date: SalonTimeData, employee: DailyScheduleArrayData, appointmentList: Array<AppointmentItemData>): Promise<SalonCloudResponse<any>> {
         var response: SalonCloudResponse<any> = {
             data: undefined,
             code: undefined,
             err: undefined
         }
-        var operatingTime = (employee.day.close - employee.day.open)/60;
-        if (operatingTime <= 0 || employee.day.status == false) {
+        var operatingTime = (employee.days[0].close - employee.days[0].open)/60;
+        if (operatingTime <= 0 || employee.days[0].status == false) {
             response.data = undefined;
             response.code = 200;
             return response;
@@ -383,16 +383,16 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
         var openTime = new SalonTime(date);
         console.log('openTime: ',openTime);
-        openTime.setHour(employee.day.open / 3600);
-        openTime.setMinute(employee.day.open % 3600 / 60);
+        openTime.setHour(employee.days[0].open / 3600);
+        openTime.setMinute(employee.days[0].open % 3600 / 60);
 
         var openTimeData = openTime;
         var openTimePoint = openTimeData.min + openTimeData.hour * 60;
 
         var closeTime = new SalonTime(date);
         console.log('closeTime: ', closeTime);
-        closeTime.setHour(employee.day.close / 3600);
-        closeTime.setMinute(employee.day.close % 3600 / 60);
+        closeTime.setHour(employee.days[0].close / 3600);
+        closeTime.setMinute(employee.days[0].close % 3600 / 60);
 
         var closeTimeData = closeTime;
         var closeTimePoint = closeTimeData.min + closeTimeData.hour * 60;

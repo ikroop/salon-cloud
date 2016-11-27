@@ -124,9 +124,9 @@ describe('Appointment Management', function () {
 
                 var salonTime = new SalonTime();
                 // set date to SalonTime Object
-                salonTime.SetDate(date);
+                salonTime.setDate(date);
 
-                const dailySchedule = employeeSchedule.getDailySchedule(salonTime);
+                const dailySchedule = employeeSchedule.getDailySchedule(salonTime, salonTime);
                 //console.log("employeeSchedule: %j", employeeSchedule);
 
                 done();
