@@ -59,10 +59,10 @@ export abstract class Schedule implements ScheduleBehavior {
             employee_id: undefined
         };
         var targetSchedule: DailyDayData[];
-
+        console.log('INNNN');
         //Step 2: call this.getDailyScheduleProcess(date) to get DailyDayData
        var scheduleSearch = await this.getDailyScheduleProcess(start, end);
-
+       console.log('scheduleSearch: ', scheduleSearch);
        if(scheduleSearch.err){
            response.err = scheduleSearch.err;
            response.code = scheduleSearch.code;
@@ -516,25 +516,30 @@ export abstract class Schedule implements ScheduleBehavior {
             code: undefined,
             data: undefined
         };
-        var dailyDocsReturn = await DailyScheduleModel.findOne({
-            salonId: this.salonId, employeeId: this.employeeId, day: {
-                date: {
-                    date: {
+        console.log('IIIIINNNN: ', startDate.date, endDate.date);
+        var dailyDocsReturn = await DailyScheduleModel.find({
+            salon_id: this.salonId, employee_id: this.employeeId, 'day.date.date': {
+           
                         $gte: startDate.date, $lte: endDate.date
-                    }
-                }
+                    
+                
             }
-        }).sort({ day: { date: { date: 'asc' } } }).exec(function (err, docs: IDailyScheduleData[]) {
+        }).sort({'day.date.date': 'asc'}).exec(function (err, docs: IDailyScheduleData[]) {
             if (err) {
+                console.log('err: ', err);
                 returnResult.err = err;
             } else {
+                console.log('IIIIIIIIIIIII');
                 if (!docs) {
+                    
                     returnResult.data = undefined;
                 } else {
+                    console.log('Docs: ', docs);
                     returnResult.data = docs;
                 }
             }
         });
+        console.log('Result: ',returnResult);
         return returnResult;
     }
 
@@ -583,7 +588,10 @@ export abstract class Schedule implements ScheduleBehavior {
         }
         var targetSchedule: DailyDayData[] = [];
          var weeklySchedule = await this.getWeeklyScheduleRecord();
+         console.log('WeeklySchedule: ', weeklySchedule);
         var dailyScheduleArray: SalonCloudResponse<IDailyScheduleData[]> = await this.getDailyScheduleRecord(startDate, endDate);
+
+        console.log('dailyScheduleArray: ', dailyScheduleArray);
         if(dailyScheduleArray.err){
             response.err= dailyScheduleArray.err;
             response.code = dailyScheduleArray.code;
@@ -626,6 +634,7 @@ export abstract class Schedule implements ScheduleBehavior {
 
         if (targetSchedule) {
             var normalization = await this.normalizeDailySchedule(targetSchedule);
+            console.log('Normalization: ', normalization);
             if (normalization.err) {
                 response.err = normalization.err;
                 response.code = normalization.code;

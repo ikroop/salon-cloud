@@ -41,18 +41,22 @@ export class ScheduleRouter {
         });
 
         this.router.get('/getsalondailyschedule', async (request: Request, response: Response) => {
+            console.log('QUery: ', request.query);
+            let salonId = request.query.salon_id;
+            let startDate = new SalonTime().setString(request.query.start_date);
+            let endDate = new SalonTime().setString(request.query.end_date);
 
-            /*let salonId = request.query.salon_id;
-            let startDate = new SalonTime().SetString(request.query.start_date);
-            let endDate = new SalonTime().SetString(request.query.end_date);
+            console.log('Start: ', startDate);
+            console.log('end: ', endDate);
             let salonSchedule = new SalonSchedule(salonId);
+            console.log('Salon: ', salonSchedule);
              
-            let salonWeeklySchedules = await salonSchedule.getDailySchedule()
+            let salonWeeklySchedules = await salonSchedule.getDailySchedule(startDate, endDate);
             if (salonWeeklySchedules.code === 200) {
                 response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.data);
             } else {
                 response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.err);
-            }*/
+            }
         });
 
         this.router.post('/savesalonweeklyschedule', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
@@ -93,7 +97,7 @@ export class ScheduleRouter {
 
             //convert date string to salonTimeData;
             var salonTime = new SalonTime();
-            request.body.daily_schedule.date = salonTime.SetString(request.body.daily_schedule.date);
+            request.body.daily_schedule.date = salonTime.setString(request.body.daily_schedule.date);
 
             console.log('date: ', request.body.daily_schedule.date);
 
@@ -158,7 +162,7 @@ export class ScheduleRouter {
 
             //convert date string to salonTimeData;
             var salonTime = new SalonTime();
-            request.body.daily_schedule.date = salonTime.SetString(request.body.daily_schedule.date);
+            request.body.daily_schedule.date = salonTime.setString(request.body.daily_schedule.date);
             console.log('Date: ', request.body.daily_schedule.date);
             var dailySchedule: DailyScheduleData = {
                 salon_id: request.body.salon_id,
