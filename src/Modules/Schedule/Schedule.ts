@@ -591,7 +591,7 @@ export abstract class Schedule implements ScheduleBehavior {
         console.log('WeeklySchedule: ', weeklySchedule);
         var dailyScheduleArray: SalonCloudResponse<IDailyScheduleData[]> = await this.getDailyScheduleRecord(startDate, endDate);
 
-        console.log('dailyScheduleArray: ', dailyScheduleArray);
+        console.log('dailyScheduleArray: %j', dailyScheduleArray);
         if (dailyScheduleArray.err) {
             response.err = dailyScheduleArray.err;
             response.code = dailyScheduleArray.code;
@@ -600,13 +600,23 @@ export abstract class Schedule implements ScheduleBehavior {
 
         var dailyScheduleArrayCount: number = 0;
         for (var date = startDate.date, count = 0; date <= endDate.date; date.setDate(date.getDate() + 1), count++) {
+            console.log('dailyScheduleArrayCount:', dailyScheduleArrayCount);
+
             //can chu thich
             var dailySchedule = dailyScheduleArray.data[dailyScheduleArrayCount];
+            console.log('dailySchedule: %j', dailySchedule);
             date.setHours(0, 0, 0, 0);
             dailySchedule.day.date.date.setHours(0, 0, 0, 0);
+            console.log('date:', date);
+            console.log('dailySchedule.day.date.date:', dailySchedule.day.date.date);
 
-
-            if (date != dailyScheduleArray.data[dailyScheduleArrayCount].day.date.date) {
+            targetSchedule[count] = {
+                open: undefined,
+                close: undefined,
+                status: undefined,
+                date: undefined
+            };
+            if (date.getTime() != dailySchedule.day.date.date.getTime()) {
 
 
                 //get dailySchedule from weeklySchedule
@@ -632,6 +642,7 @@ export abstract class Schedule implements ScheduleBehavior {
             }
         }
 
+        console.log('targetSchedule: %j', targetSchedule);
         if (targetSchedule) {
             var normalization = await this.normalizeDailySchedule(targetSchedule);
             console.log('Normalization: ', normalization);
