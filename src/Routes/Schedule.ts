@@ -19,6 +19,9 @@ import { Authentication } from '../Core/Authentication/Authentication';
 import { Authorization } from './../Core/Authorization/Authorization';
 import { AuthorizationRouter } from './Authorization';
 import { DailyDayData } from './../Modules/Schedule/ScheduleData'
+import { ErrorMessage } from './../Core/ErrorMessage'
+import { BaseValidator } from './../Core/Validation/BaseValidator'
+import { IsDateString, MissingCheck } from './../Core/Validation/ValidationDecorators'
 
 export class ScheduleRouter {
     private router: Router = Router();
@@ -42,6 +45,30 @@ export class ScheduleRouter {
 
         this.router.get('/getsalondailyschedule', async (request: Request, response: Response) => {
             let salonId = request.query.salon_id;
+            console.log('request.query.start_date:', request.query.start_date);
+            console.log('request.query.endDate:', request.query.end_date);
+
+            var startDateValidation = new BaseValidator(request.query.start_date);
+            startDateValidation = new MissingCheck(startDateValidation, ErrorMessage.MissingStartDate);
+            startDateValidation = new IsDateString(startDateValidation, ErrorMessage.InvalidStartDate);
+            var startDateError = await startDateValidation.validate();
+            console.log('startDateError:', startDateError);
+            if (startDateError) {
+                response.status(400).json({ 'err': startDateError.err });
+                return;
+            }
+
+            var endDateValidation = new BaseValidator(request.query.end_date);
+            endDateValidation = new MissingCheck(endDateValidation, ErrorMessage.MissingEndDate);
+            endDateValidation = new IsDateString(endDateValidation, ErrorMessage.InvalidEndDate);
+            var endDateError = await endDateValidation.validate();
+
+            if (endDateError) {
+                response.status(400).json({ 'err': endDateError.err });
+                return;
+            }
+
+
             let startDate = new SalonTime().setString(request.query.start_date);
             let endDate = new SalonTime().setString(request.query.end_date);
 
