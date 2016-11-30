@@ -11,6 +11,7 @@ import ServiceGroupModel = require('./../../Modules/ServiceManagement/ServiceMod
 import { IServiceGroupData } from './../../Modules/ServiceManagement/ServiceData';
 import { ErrorMessage } from './../ErrorMessage';
 import UserModel = require('./../../Modules/UserManagement/UserModel');
+import * as moment from 'moment';
 
 //Validate if target element is missing.
 //To pass the test: Target Element must not be undefined.
@@ -490,7 +491,7 @@ export class IsValidServiceId extends DecoratingValidator {
     private async checkExistence(serviceId: string, groupName: string, salonId: string, errorType: any): Promise<any> {
         let promise = new Promise<any>(function (resolve, reject) {
             var response = undefined;
-            ServiceGroupModel.findOne({ 'name': groupName, 'salon_id': salonId }, function (err, docs:any) {
+            ServiceGroupModel.findOne({ 'name': groupName, 'salon_id': salonId }, function (err, docs: any) {
                 if (err) {
                     response = errorType;
                 } else if (!docs) {
@@ -540,14 +541,14 @@ export class IsValidEmployeeId extends DecoratingValidator {
                 } else if (!docs) {
                     response = errorType;
                 } else {
-                   for(let each of docs.profile){
-                       if(each.salon_id == salonId){
-                           response = undefined;
-                           resolve(response)
-                           return;
-                       }
-                   }
-                   response = errorType;
+                    for (let each of docs.profile) {
+                        if (each.salon_id == salonId) {
+                            response = undefined;
+                            resolve(response)
+                            return;
+                        }
+                    }
+                    response = errorType;
                 }
                 resolve(response);
             });
@@ -557,4 +558,24 @@ export class IsValidEmployeeId extends DecoratingValidator {
 
 }
 
+//Validate if a name is valid.
+//Valid name string is a string which not only contains blank space(s).
+export class IsDateString extends DecoratingValidator {
+    public errorType: any;
+    public targetElement: any;
+    constructor(wrapedValidator: Validator, errorType: any) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+    };
 
+    public async validatingOperation() {
+        if (moment(this.targetElement, ["'YYYY-MM-DD HH:mm:ss'", "YYYY-MM-DD", 'YYYY-MM-DD HH:mm']).isValid()) {
+            return undefined;
+        } else {
+            return this.errorType;
+        }
+    }
+
+}
