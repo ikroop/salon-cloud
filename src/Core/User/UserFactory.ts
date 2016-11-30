@@ -13,7 +13,6 @@ import {AdministratorBehavior} from './AdministratorBehavior'
 
 export class UserFactory {
     public static createAdminUserObject(userId: string, salonId: string, role: string) : AdministratorBehavior {
-        console.log('role:', role);
         if(role==='Owner'){
             return new Owner(userId, new SalonManagement(salonId));
         }else if(role=='Manager'){

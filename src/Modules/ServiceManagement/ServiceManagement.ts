@@ -261,10 +261,8 @@ export class ServiceManagement implements ServiceManagementBehavior {
             code: undefined,
             err: undefined
         }
-        console.log('ServiceID: ', serviceId);
         var serviceSearch = ServiceGroupModel.findOne({'service_list' : {'$elemMatch': {'_id':serviceId }}}).exec();
         await serviceSearch.then(function(docs){
-            console.log(docs);
             if(docs){
                 response.data = docs.service_list[0];
                 response.code = 200;
