@@ -524,7 +524,7 @@ export abstract class Schedule implements ScheduleBehavior {
      *         return undefined if docs not found
      *         return docs.day date if found
      */
-    protected async getWeeklyScheduleRecord() : Promise<WeeklyDayData[]> {
+    protected async getWeeklyScheduleRecord(): Promise<WeeklyDayData[]> {
         var returnResult: WeeklyDayData[] = undefined;
         var weeklyDocsReturn = await WeeklyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId }).exec(function (err, docs: IWeeklyScheduleData) {
             if (err) {
@@ -554,7 +554,6 @@ export abstract class Schedule implements ScheduleBehavior {
         var targetSchedule: DailyDayData[] = [];
         var weeklyScheduleArray: WeeklyDayData[] = await this.getWeeklyScheduleRecord();
         var dailyScheduleArray: IDailyScheduleData[] = await this.getDailyScheduleRecord(startDate, endDate);
-
 
         var dailyScheduleArrayCount: number = 0;
         for (var date = startDate.date, count = 0; date <= endDate.date; date.setUTCDate(date.getUTCDate() + 1), count++) {

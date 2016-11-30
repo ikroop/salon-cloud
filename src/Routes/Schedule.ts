@@ -46,7 +46,7 @@ export class ScheduleRouter {
             let endDate = new SalonTime().setString(request.query.end_date);
 
             let salonSchedule = new SalonSchedule(salonId);
-             
+
             let salonWeeklySchedules = await salonSchedule.getDailySchedule(startDate, endDate);
             if (salonWeeklySchedules.code === 200) {
                 response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.data);
@@ -59,7 +59,6 @@ export class ScheduleRouter {
 
             let salonId = request.query.salon_id;
             let employeeId = request.query.employee_id;
-            console.log('employeeId:', employeeId);
             let employeeSchedule = new EmployeeSchedule(salonId, employeeId);
             let employeeWeeklySchedules = await employeeSchedule.getWeeklySchedule();
             if (employeeWeeklySchedules.code === 200) {
@@ -68,13 +67,27 @@ export class ScheduleRouter {
                 response.status(employeeWeeklySchedules.code).json(employeeWeeklySchedules.err);
             }
         });
-        
+
+        this.router.get('/getemployeedailyschedule', async (request: Request, response: Response) => {
+
+            let salonId = request.query.salon_id;
+            let employeeId = request.query.employee_id;
+            let startDate = new SalonTime().setString(request.query.start_date);
+            let endDate = new SalonTime().setString(request.query.end_date);
+
+            let employeeSchedule = new EmployeeSchedule(salonId, employeeId);
+            let employeeDailySchedules = await employeeSchedule.getDailySchedule(startDate, endDate);
+            if (employeeDailySchedules.code === 200) {
+                response.status(employeeDailySchedules.code).json(employeeDailySchedules.data);
+            } else {
+                response.status(employeeDailySchedules.code).json(employeeDailySchedules.err);
+            }
+        });
 
         this.router.post('/savesalonweeklyschedule', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
             var admin: AdministratorBehavior;
 
-            console.log('Body', request.body);
             //create appropriate user object using UserFactory;
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
             var weeklySchedule: WeeklyScheduleData = {
@@ -83,7 +96,6 @@ export class ScheduleRouter {
                 week: request.body.weekly_schedules
             };
 
-            console.log('Admin', admin);
             let result = await admin.updateWeeklySchedule(undefined, weeklySchedule);
 
             var responseData;
@@ -99,18 +111,13 @@ export class ScheduleRouter {
         this.router.post('/savesalondailyschedule', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
             var admin: AdministratorBehavior;
-            console.log('Body', request.body);
 
             //create appropriate user object using UserFactory;
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
 
-            console.log('Admin', admin);
-
             //convert date string to salonTimeData;
             var salonTime = new SalonTime();
             request.body.daily_schedule.date = salonTime.setString(request.body.daily_schedule.date);
-
-            console.log('date: ', request.body.daily_schedule.date);
 
             var dailySchedule: DailyScheduleData = {
                 salon_id: request.body.salon_id,
@@ -121,7 +128,6 @@ export class ScheduleRouter {
 
             //updateDailySchedule
             let result = await admin.updateDailySchedule(undefined, dailySchedule);
-            console.log('RESULT: ', result);
 
             var responseData;
             if (result.err) {
@@ -130,7 +136,6 @@ export class ScheduleRouter {
                 responseData = result.data;
             }
 
-            console.log('Response: ', responseData);
             response.status(result.code).json(responseData);
 
 
@@ -140,9 +145,6 @@ export class ScheduleRouter {
 
             var admin: AdministratorBehavior;
 
-            console.log('Admin', admin);
-
-
             //create appropriate user object using UserFactory;
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
             var weeklySchedule: WeeklyScheduleData = {
@@ -151,7 +153,6 @@ export class ScheduleRouter {
                 week: request.body.weekly_schedules
             };
 
-            console.log('Admin', admin);
             let result = await admin.updateWeeklySchedule(request.body.employee_id, weeklySchedule);
 
             var responseData;
@@ -174,7 +175,6 @@ export class ScheduleRouter {
             //convert date string to salonTimeData;
             var salonTime = new SalonTime();
             request.body.daily_schedule.date = salonTime.setString(request.body.daily_schedule.date);
-            console.log('Date: ', request.body.daily_schedule.date);
             var dailySchedule: DailyScheduleData = {
                 salon_id: request.body.salon_id,
                 employee_id: request.body.employee_id,
