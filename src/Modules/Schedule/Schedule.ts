@@ -94,16 +94,16 @@ export abstract class Schedule implements ScheduleBehavior {
 
         //Step 1: call this.getWeeklyScheduleRecord(date) to get WeeklyDayData[]
 
-        var weeklySchedule = await this.getWeeklyScheduleRecord();
+        var weeklyScheduleArray: WeeklyDayData[] = await this.getWeeklyScheduleRecord();
 
         //Step 2: check the returned value in step 1 and return the proper reponse.
 
-        if (weeklySchedule.data) {
+        if (weeklyScheduleArray) {
             //normalize to get the best schedule
-            weeklySchedule.data = await this.normalizeWeeklySchedule(weeklySchedule.data);
+            weeklyScheduleArray = await this.normalizeWeeklySchedule(weeklyScheduleArray);
 
             //parse data into resultReturn : weeklyScheduleData 
-            resultReturn.week = weeklySchedule.data;
+            resultReturn.week = weeklyScheduleArray;
             resultReturn.salon_id = this.salonId;
             resultReturn.employee_id = this.employeeId;
 
@@ -524,20 +524,17 @@ export abstract class Schedule implements ScheduleBehavior {
      *         return undefined if docs not found
      *         return docs.day date if found
      */
-    protected async getWeeklyScheduleRecord() {
-        var returnResult: SalonCloudResponse<WeeklyDayData[]> = {
-            err: undefined,
-            code: undefined,
-            data: undefined
-        };
-        var weeklyDocsReturn = await WeeklyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId }).exec(function (err, docs) {
+    protected async getWeeklyScheduleRecord() : Promise<WeeklyDayData[]> {
+        var returnResult: WeeklyDayData[] = undefined;
+        var weeklyDocsReturn = await WeeklyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId }).exec(function (err, docs: IWeeklyScheduleData) {
             if (err) {
-                returnResult.err = err;
+                returnResult = undefined;
+                console.log(err)
             } else {
                 if (!docs) {
-                    returnResult.data = undefined;
+                    returnResult = undefined;
                 } else {
-                    returnResult.data = docs.week;
+                    returnResult = docs.week;
                 }
             }
         });
@@ -555,7 +552,7 @@ export abstract class Schedule implements ScheduleBehavior {
     private async getDailyScheduleProcess(startDate: SalonTimeData, endDate: SalonTimeData): Promise<DailyDayData[]> {
 
         var targetSchedule: DailyDayData[] = [];
-        var weeklySchedule = await this.getWeeklyScheduleRecord();
+        var weeklyScheduleArray: WeeklyDayData[] = await this.getWeeklyScheduleRecord();
         var dailyScheduleArray: IDailyScheduleData[] = await this.getDailyScheduleRecord(startDate, endDate);
 
 
@@ -578,13 +575,13 @@ export abstract class Schedule implements ScheduleBehavior {
             if (!dailySchedule || date.getTime() != dailySchedule.day.date.date.getTime()) {
 
                 //get dailySchedule from weeklySchedule
-                if (weeklySchedule) {
+                if (weeklyScheduleArray) {
                     var indexDay = date.getUTCDay();
                     for (var i = 0; i <= 6; i++) {
-                        if (weeklySchedule.data[i].day_of_week == indexDay) {
-                            targetSchedule[count].open = weeklySchedule.data[i].open;
-                            targetSchedule[count].close = weeklySchedule.data[i].close;
-                            targetSchedule[count].status = weeklySchedule.data[i].status;
+                        if (weeklyScheduleArray[i].day_of_week == indexDay) {
+                            targetSchedule[count].open = weeklyScheduleArray[i].open;
+                            targetSchedule[count].close = weeklyScheduleArray[i].close;
+                            targetSchedule[count].status = weeklyScheduleArray[i].status;
                             targetSchedule[count].date = (new SalonTime()).setDate(date);
                         }
                     }

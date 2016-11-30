@@ -41,15 +41,11 @@ export class ScheduleRouter {
         });
 
         this.router.get('/getsalondailyschedule', async (request: Request, response: Response) => {
-            console.log('QUery: ', request.query);
             let salonId = request.query.salon_id;
             let startDate = new SalonTime().setString(request.query.start_date);
             let endDate = new SalonTime().setString(request.query.end_date);
 
-            console.log('Start: ', startDate);
-            console.log('end: ', endDate);
             let salonSchedule = new SalonSchedule(salonId);
-            console.log('Salon: ', salonSchedule);
              
             let salonWeeklySchedules = await salonSchedule.getDailySchedule(startDate, endDate);
             if (salonWeeklySchedules.code === 200) {
@@ -58,6 +54,21 @@ export class ScheduleRouter {
                 response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.err);
             }
         });
+
+        this.router.get('/getemployeeweeklyschedule', async (request: Request, response: Response) => {
+
+            let salonId = request.query.salon_id;
+            let employeeId = request.query.employee_id;
+            console.log('employeeId:', employeeId);
+            let employeeSchedule = new EmployeeSchedule(salonId, employeeId);
+            let employeeWeeklySchedules = await employeeSchedule.getWeeklySchedule();
+            if (employeeWeeklySchedules.code === 200) {
+                response.status(employeeWeeklySchedules.code).json(employeeWeeklySchedules.data);
+            } else {
+                response.status(employeeWeeklySchedules.code).json(employeeWeeklySchedules.err);
+            }
+        });
+        
 
         this.router.post('/savesalonweeklyschedule', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
