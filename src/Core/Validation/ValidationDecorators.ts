@@ -558,8 +558,8 @@ export class IsValidEmployeeId extends DecoratingValidator {
 
 }
 
-//Validate if a name is valid.
-//Valid name string is a string which not only contains blank space(s).
+//Validate if a date string is valid.
+//Valid date string is a string which has form of 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD', or 'YYYY-MM-DD HH:mm'
 export class IsDateString extends DecoratingValidator {
     public errorType: any;
     public targetElement: any;
@@ -575,6 +575,32 @@ export class IsDateString extends DecoratingValidator {
             return undefined;
         } else {
             return this.errorType;
+        }
+    }
+
+}
+
+
+//Validate if a date string is after another date string.
+//Valid if the target date string is after the secondElement date string.
+//secondElement date string must be validated before being used in this validation.
+export class IsAfterSecondDate extends DecoratingValidator {
+    public errorType: any;
+    public targetElement: any;
+    public secondElement: any;
+    constructor(wrapedValidator: Validator, errorType: any, secondElement: any) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+        this.secondElement = secondElement;
+    };
+
+    public async validatingOperation() {
+        if (moment(this.targetElement).isBefore(this.secondElement)) {
+            return this.errorType;
+        } else {
+            return undefined;
         }
     }
 
