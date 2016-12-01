@@ -461,5 +461,11 @@ export const ErrorMessage = {
             'name': 'InvalidDayOfWeek',
             'message': 'Invalid Day Of Week'
         }
+    },
+    'EndDateIsBeforeStartDate': {
+        'err': {
+            'name': 'EndDateIsBeforeStartDate',
+            'message': 'End Date Is Before Start Date'
+        }
     }
 };
