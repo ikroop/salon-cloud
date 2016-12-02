@@ -605,3 +605,32 @@ export class IsAfterSecondDate extends DecoratingValidator {
     }
 
 }
+
+//Validate if a SalonTimeData is valid.
+//Valid if all the element are number type, and 0<day<31
+export class IsValidSalonTimeData extends DecoratingValidator {
+    public errorType: any;
+    public targetElement: any;
+    public secondElement: any;
+    constructor(wrapedValidator: Validator, errorType: any) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+        this.secondElement = secondElement;
+    };
+
+    public async validatingOperation() {
+        var data = this.targetElement;
+        var dateString = data.year+'-'+data.month+'-'+data.day+' '+data.hour+':'+data.min;
+        if (!moment(dateString,["'YYYY-MM-DD HH:mm:ss'", "YYYY-MM-DD", 'YYYY-MM-DD HH:mm']).isValid()) {
+            return this.errorType;
+        } else {
+            return undefined;
+        }
+    }
+
+}
+
+
+
