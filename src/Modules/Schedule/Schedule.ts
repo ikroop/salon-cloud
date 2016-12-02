@@ -14,7 +14,7 @@ import { SalonTime } from './../../Core/SalonTime/SalonTime'
 
 var ErrorMessage = require('./../../Core/ErrorMessage');
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
-import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId }
+import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidSalonTimeData }
     from './../../Core/Validation/ValidationDecorators';
 
 export abstract class Schedule implements ScheduleBehavior {
@@ -481,6 +481,14 @@ export abstract class Schedule implements ScheduleBehavior {
             return errorReturn = openTimeResult;
         }
         //Todo: validate date;
+        var dateValidator = new BaseValidator(dailySchedule.date);
+        dateValidator = new MissingCheck(dateValidator, ErrorMessage.MissingDate);
+        dateValidator = new IsValidSalonTimeData(dateValidator, ErrorMessage.InvalidSalonTimeData);
+        var dateError = await dateValidator.validate();
+        if (dateError) {
+            return errorReturn = dateError;
+        }
+
 
         return errorReturn;
     };
