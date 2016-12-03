@@ -226,7 +226,7 @@ export class ScheduleRouter {
             };
             let employeeIdValidation = new BaseValidator(employeeId);
             employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId);
-            employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, salonId);
+            employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, request.body.salon_id);
             var employeeIdError = await employeeIdValidation.validate();
 
             if (employeeIdError) {
@@ -263,10 +263,10 @@ export class ScheduleRouter {
                 employee_id: request.body.employee_id,
                 day: request.body.daily_schedule
             };
-            
+
             let employeeIdValidation = new BaseValidator(employeeId);
             employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId);
-            employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, salonId);
+            employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, request.body.salon_id);
             var employeeIdError = await employeeIdValidation.validate();
 
             if (employeeIdError) {

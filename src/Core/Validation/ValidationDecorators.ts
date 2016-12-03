@@ -617,7 +617,6 @@ export class IsValidSalonTimeData extends DecoratingValidator {
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
         this.targetElement = this.wrapedValidator.targetElement;
-        this.secondElement = secondElement;
     };
 
     public async validatingOperation() {
