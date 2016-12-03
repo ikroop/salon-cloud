@@ -21,7 +21,7 @@ import { AuthorizationRouter } from './Authorization';
 import { DailyDayData } from './../Modules/Schedule/ScheduleData'
 import { ErrorMessage } from './../Core/ErrorMessage'
 import { BaseValidator } from './../Core/Validation/BaseValidator'
-import { IsDateString, MissingCheck, IsAfterSecondDate, IsValidEmployeeId } from './../Core/Validation/ValidationDecorators'
+import { IsDateString, MissingCheck, IsAfterSecondDate, IsValidEmployeeId, IsValidSalonId } from './../Core/Validation/ValidationDecorators'
 
 export class ScheduleRouter {
     private router: Router = Router();
@@ -34,10 +34,23 @@ export class ScheduleRouter {
         this.router.get('/getsalonweeklyschedule', async (request: Request, response: Response) => {
 
             let salonId = request.query.salon_id;
+            let salonIdValidation = new BaseValidator(salonId);
+            salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
+            salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
+            let salonIdError = await salonIdValidation.validate();
+            if(salonIdError){
+                response.status(400).json({ 'err': salonIdError.err });
+                return;
+            }
             let salonSchedule = new SalonSchedule(salonId);
             let salonWeeklySchedules = await salonSchedule.getWeeklySchedule();
             if (salonWeeklySchedules.code === 200) {
-                response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.data);
+
+                var successfulResult = {
+                    weekly_schedules: salonWeeklySchedules.data.week
+                };
+                console.log(successfulResult);
+                response.status(salonWeeklySchedules.code).json(successfulResult);
             } else {
                 response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.err);
             }
