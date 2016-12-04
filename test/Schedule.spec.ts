@@ -338,7 +338,7 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(401);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
                     done();
                 });
         });
@@ -375,7 +375,7 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
                     done();
                 });
         });
