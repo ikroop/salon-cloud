@@ -49,7 +49,6 @@ export class ScheduleRouter {
                 var successfulResult = {
                     weekly_schedules: salonWeeklySchedules.data.week
                 };
-                console.log(successfulResult);
                 response.status(salonWeeklySchedules.code).json(successfulResult);
             } else {
                 response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.err);
@@ -71,7 +70,6 @@ export class ScheduleRouter {
             startDateValidation = new MissingCheck(startDateValidation, ErrorMessage.MissingStartDate);
             startDateValidation = new IsDateString(startDateValidation, ErrorMessage.InvalidStartDate);
             var startDateError = await startDateValidation.validate();
-            console.log('startDateError:', startDateError);
             if (startDateError) {
                 response.status(400).json({ 'err': startDateError.err });
                 return;
@@ -135,7 +133,6 @@ export class ScheduleRouter {
             startDateValidation = new MissingCheck(startDateValidation, ErrorMessage.MissingStartDate);
             startDateValidation = new IsDateString(startDateValidation, ErrorMessage.InvalidStartDate);
             var startDateError = await startDateValidation.validate();
-            console.log('startDateError:', startDateError);
             if (startDateError) {
                 response.status(400).json({ 'err': startDateError.err });
                 return;
