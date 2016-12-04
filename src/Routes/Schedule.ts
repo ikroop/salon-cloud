@@ -45,11 +45,7 @@ export class ScheduleRouter {
             let salonSchedule = new SalonSchedule(salonId);
             let salonWeeklySchedules = await salonSchedule.getWeeklySchedule();
             if (salonWeeklySchedules.code === 200) {
-
-                var successfulResult = {
-                    weekly_schedules: salonWeeklySchedules.data.week
-                };
-                response.status(salonWeeklySchedules.code).json(successfulResult);
+                response.status(salonWeeklySchedules.code).json({ 'weekly_schedules': salonWeeklySchedules.data.week });
             } else {
                 response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.err);
             }
@@ -105,6 +101,15 @@ export class ScheduleRouter {
             let salonId = request.query.salon_id;
             let employeeId = request.query.employee_id;
 
+            let salonIdValidation = new BaseValidator(salonId);
+            salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
+            salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
+            let salonIdError = await salonIdValidation.validate();
+            if (salonIdError) {
+                response.status(400).json({ 'err': salonIdError.err });
+                return;
+            }
+
             let employeeIdValidation = new BaseValidator(employeeId);
             employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId);
             employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, salonId);
@@ -118,14 +123,14 @@ export class ScheduleRouter {
             let employeeSchedule = new EmployeeSchedule(salonId, employeeId);
             let employeeWeeklySchedules = await employeeSchedule.getWeeklySchedule();
             if (employeeWeeklySchedules.code === 200) {
-                response.status(employeeWeeklySchedules.code).json(employeeWeeklySchedules.data);
+                response.status(employeeWeeklySchedules.code).json({ 'weekly_schedules': employeeWeeklySchedules.data.week });
             } else {
                 response.status(employeeWeeklySchedules.code).json(employeeWeeklySchedules.err);
             }
         });
 
         this.router.get('/getemployeedailyschedule', async (request: Request, response: Response) => {
-            
+
             let salonId = request.query.salon_id;
             let employeeId = request.query.employee_id;
 
@@ -173,7 +178,7 @@ export class ScheduleRouter {
             let employeeSchedule = new EmployeeSchedule(salonId, employeeId);
             let employeeDailySchedules = await employeeSchedule.getDailySchedule(startDate, endDate);
             if (employeeDailySchedules.code === 200) {
-                response.status(employeeDailySchedules.code).json({'daily_schedules':employeeDailySchedules.data.days});
+                response.status(employeeDailySchedules.code).json({ 'daily_schedules': employeeDailySchedules.data.days });
             } else {
                 response.status(employeeDailySchedules.code).json(employeeDailySchedules.err);
             }

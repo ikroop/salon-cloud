@@ -2045,54 +2045,8 @@ describe('Schedule Management', function() {
 
     });
 
-    /*describe('Get Employee Weekly Schedule', function() {
-        var apiUrl = '/api/v1/schedule/getemployeeweeklyschedule';
-
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get Employee Weekly schedule with invalidToken', function(done) {
-
-            var salonId = validSalonId;
-            var employeeId = validEmployeeId;
-
-            var parameterUrl = apiUrl + '?salon_id=' + salonId + '&employee_id=' + employeeId;
-            request(server)
-                .get(parameterUrl)
-                .set({ 'Authorization': invalidToken })
-                .end(function(err, res) {
-                    if (err) {
-                        throw err;
-                    }
-                    res.status.should.be.equal(401);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
-                    done();
-                });
-        });
-
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to get Employee Weekly schedule with Token no permission', async function(done) {
-            // Create new user
-            var authentication = new Authentication();
-            const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
-            await authentication.signUpWithUsernameAndPassword(anotherEmail, defaultPassword);
-            // Get Token
-            var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
-            var token = loginData.data.auth.token;
-            var salonId = validSalonId;
-            var employeeId = validEmployeeId;
-
-            var parameterUrl = apiUrl + '?salon_id=' + salonId + '&employee_id=' + employeeId;
-            request(server)
-                .get(parameterUrl)
-                .set({ 'Authorization': token })
-                .end(function(err, res) {
-                    if (err) {
-                        throw err;
-                    }
-                    res.status.should.be.equal(403);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
-                    done();
-                });
-        });
+    describe('Get Employee Weekly Schedule', function() {
+        var apiUrl = '/api/v1/schedule/getemployeeweeklyschedule';        
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to get Employee Weekly schedule without salonId', function(done) {
             var salonId = undefined;
@@ -2168,19 +2122,12 @@ describe('Schedule Management', function() {
                 });
         });
 
-        it('should return ' + ErrorMessage.EmployeeNotFound.err.name + ' error trying to Get Employee Daily schedule with invalid employee id', async function(done) {
-            // Create new user
-            var authentication = new Authentication();
-            const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
-            await authentication.signUpWithUsernameAndPassword(anotherEmail, defaultPassword);
-            // Get Token
-            var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
-            var userId = loginData.data.user._id;
+        it('should return ' + ErrorMessage.EmployeeNotFound.err.name + ' error trying to Get Employee Daily schedule with invalid employee id', function(done) {
 
             var salonId = validSalonId;
             var startDate = startDateMoment.format('YYYY-MM-DD');
             var endDate = endDateMoment.format('YYYY-MM-DD');
-            var employeeId = userId;
+            var employeeId = anotherUserId;
             var parameterUrl = apiUrl + '?salon_id=' + salonId + '&employee_id=' + employeeId;
             request(server)
                 .get(parameterUrl)
@@ -2209,7 +2156,7 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(200);
                     res.body.should.have.property('weekly_schedules');
-                    res.body.weekly_schedules.length.shoule.be.equal(7);
+                    res.body.weekly_schedules.length.should.be.equal(7);
                     done();
                 });
         });
