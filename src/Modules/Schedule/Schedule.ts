@@ -12,9 +12,9 @@ import DailyScheduleModel = require('./DailyScheduleModel');
 import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
 import { SalonTime } from './../../Core/SalonTime/SalonTime'
 
-var ErrorMessage = require('./../../Core/ErrorMessage');
+import { ErrorMessage } from './../../Core/ErrorMessage';
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
-import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidSalonTimeData }
+import { MissingCheck, IsInRangeExclusively, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidSalonTimeData }
     from './../../Core/Validation/ValidationDecorators';
 
 export abstract class Schedule implements ScheduleBehavior {
@@ -24,7 +24,6 @@ export abstract class Schedule implements ScheduleBehavior {
      */
     protected salonId: string;
     protected employeeId: string;
-
 
 
     //this constructor will only be called in subclass contructors;
@@ -47,7 +46,6 @@ export abstract class Schedule implements ScheduleBehavior {
     *Step 3: check the returned value in step 2 and return the proper reponse.
 	*/
     public async getDailySchedule(start: SalonTimeData, end: SalonTimeData): Promise<SalonCloudResponse<DailyScheduleArrayData>> {
-
         var resultReturn: DailyScheduleArrayData = {
             days: undefined,
             salon_id: undefined,
@@ -136,7 +134,6 @@ export abstract class Schedule implements ScheduleBehavior {
             err: undefined
         };
         var saveStatus;
-
         //Step 1: validation;
         var errorReturn = await this.dailyScheduleValidation(dailySchedule);
         if (errorReturn) {
@@ -147,7 +144,6 @@ export abstract class Schedule implements ScheduleBehavior {
 
         //Step 2: check docs existence by calling this.checkDailySchedule(dailySchedule)
         var existence = await this.checkDailySchedule(dailySchedule);
-
         //Step 3: if docs exists: call this.updateDailySchedule(dailySchedule);
         //        if docs does not exist: call this.addDailySchedule(dailySchedule);
         if (existence.err) {
@@ -162,7 +158,6 @@ export abstract class Schedule implements ScheduleBehavior {
 
         //Step 4: check result form step 3 and return proper response;
         response.data = saveStatus.data;
-
         if (!saveStatus.err) {
             response.code = 200;
             response.err = undefined;
@@ -332,7 +327,7 @@ export abstract class Schedule implements ScheduleBehavior {
             var openTimeValidator = new BaseValidator(weeklyScheduleList[i].open);
             openTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
             openTimeValidator = new IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime);
-            openTimeValidator = new IsInRange(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
+            openTimeValidator = new IsInRangeExclusively(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
             openTimeValidator = new IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, weeklyScheduleList[i].close);
             var openTimeResult = await openTimeValidator.validate();
             if (openTimeResult) {
@@ -342,7 +337,7 @@ export abstract class Schedule implements ScheduleBehavior {
             var closeTimeValidator = new BaseValidator(weeklyScheduleList[i].close);
             closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
             closeTimeValidator = new IsNumber(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime);
-            closeTimeValidator = new IsInRange(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
+            closeTimeValidator = new IsInRangeExclusively(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
             var closeTimeResult = await closeTimeValidator.validate();
             if (closeTimeResult) {
                 return errorReturn = closeTimeResult;
@@ -352,7 +347,7 @@ export abstract class Schedule implements ScheduleBehavior {
             dayOfWeekValidator = new MissingCheck(dayOfWeekValidator, ErrorMessage.MissingDayOfWeek);
             dayOfWeekValidator = new IsNumber(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek);
             dayOfWeekValidator = new IsInRange(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek, 0, 6);
-            dayOfWeekValidator = new IsNotInArray(dayOfWeekValidator, ErrorMessage.DuplicateDayOfWeek, tempArray);
+            dayOfWeekValidator = new IsNotInArray(dayOfWeekValidator, ErrorMessage.DuplicateDaysOfWeek, tempArray);
             var dayOfWeekResult = await dayOfWeekValidator.validate();
             if (dayOfWeekResult) {
                 return errorReturn = dayOfWeekResult;
@@ -462,22 +457,24 @@ export abstract class Schedule implements ScheduleBehavior {
     private async dailyScheduleValidation(dailySchedule: DailyDayData) {
         var errorReturn: any = undefined;
 
-        var openTimeValidator = new BaseValidator(dailySchedule.open);
-        openTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
-        openTimeValidator = new IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime);
-        openTimeValidator = new IsInRange(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
-        openTimeValidator = new IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, dailySchedule.close);
-        var openTimeResult = await openTimeValidator.validate();
-        if (openTimeResult) {
-            return errorReturn = openTimeResult;
-        }
-
         var closeTimeValidator = new BaseValidator(dailySchedule.close);
         closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
         closeTimeValidator = new IsNumber(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime);
-        closeTimeValidator = new IsInRange(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
+        console.log(closeTimeValidator.targetElement);
+        closeTimeValidator = new IsInRangeExclusively(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
+        
         var closeTimeResult = await closeTimeValidator.validate();
         if (closeTimeResult) {
+            return errorReturn = closeTimeResult;
+        }
+        
+        var openTimeValidator = new BaseValidator(dailySchedule.open);
+        openTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
+        openTimeValidator = new IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime);
+        openTimeValidator = new IsInRangeExclusively(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
+        openTimeValidator = new IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, dailySchedule.close);
+        var openTimeResult = await openTimeValidator.validate();
+        if (openTimeResult) {
             return errorReturn = openTimeResult;
         }
         //Todo: validate date;
