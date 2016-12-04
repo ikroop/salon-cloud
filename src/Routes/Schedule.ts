@@ -96,7 +96,7 @@ export class ScheduleRouter {
 
             let salonWeeklySchedules = await salonSchedule.getDailySchedule(startDate, endDate);
             if (salonWeeklySchedules.code === 200) {
-                response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.data);
+                response.status(salonWeeklySchedules.code).json({'daily_schedules': salonWeeklySchedules.data.days});
             } else {
                 response.status(salonWeeklySchedules.code).json(salonWeeklySchedules.err);
             }
