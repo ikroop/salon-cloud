@@ -311,7 +311,7 @@ describe('Schedule Management', function() {
 
     });
 
-    /*describe('Save Salon Daily Schedule', function() {
+    describe('Save Salon Daily Schedule', function() {
         var apiUrl = '/api/v1/schedule/savesalondailyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save salon daily schedule with invalidToken', function(done) {
