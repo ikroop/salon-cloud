@@ -551,6 +551,7 @@ export class IsValidEmployeeId extends DecoratingValidator {
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
         this.targetElement = this.wrapedValidator.targetElement;
+        this.salonId = salonId;
     };
 
     public async validatingOperation() {
@@ -564,20 +565,13 @@ export class IsValidEmployeeId extends DecoratingValidator {
     private async checkExistence(employeeId: string, salonId: string, errorType: any): Promise<any> {
         let promise = new Promise<any>(function (resolve, reject) {
             var response = undefined;
-            UserModel.findOne({ '_id': employeeId }, function (err, docs) {
+             UserModel.findOne({ "_id": employeeId }, { "profile": { "$elemMatch": { "salon_id": salonId } } }, ).exec(function (err, docs) {            
                 if (err) {
                     response = errorType;
-                } else if (!docs) {
+                } else if (docs.profile.length !== 1) {
                     response = errorType;
                 } else {
-                    for (let each of docs.profile) {
-                        if (each.salon_id == salonId) {
-                            response = undefined;
-                            resolve(response)
-                            return;
-                        }
-                    }
-                    response = errorType;
+                    response = undefined;
                 }
                 resolve(response);
             });
