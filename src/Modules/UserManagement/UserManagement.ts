@@ -50,25 +50,17 @@ export class UserManagement implements UserManagementBehavior {
             data: undefined,
             err: undefined
         };
-        console.log('AddPro: ', userProfile);
 
         var userDocs = UserModel.findOne({ '_id': userId }).exec();
-        console.log('AddPro1: ', userDocs);
-        console.log('AddPro111: ', userId);
 
         await userDocs.then(async function (docs) {
             if (docs) {
                 var checkExistArray = docs.profile.filter(profile => profile.salon_id === userProfile.salon_id);
-                console.log('AddPro2: ', checkExistArray);
 
                 if (checkExistArray.length == 0) {
-                    console.log('AddPro222: ', docs);
                     docs.profile.push(userProfile);
-                    console.log('NN: ', docs);
                     var saveAction = docs.save();
-                    console.log('AddPro222333: ', docs.profile);
                     await saveAction.then(function (innerDocs) {
-                        console.log('AddPro222333444: ', innerDocs);
                         returnResult.data = userProfile;
                         returnResult.code = 200;
 
@@ -78,7 +70,6 @@ export class UserManagement implements UserManagementBehavior {
                     });
 
                 } else {
-                    console.log('AddPro223: ', checkExistArray);
                     returnResult.err = ErrorMessage.ProfileAlreadyExist;
                     returnResult.code = 400;
                 }
@@ -95,27 +86,6 @@ export class UserManagement implements UserManagementBehavior {
         })
 
         return returnResult;
-        /*var checkExistArray = userDocs.profile.filter(profile => profile.salon_id === userProfile.salon_id);
-        console.log('AddPro2: ', userProfile);
-
-        if (checkExistArray.length == 0) {
-            userDocs.profile.push(userProfile);
-            var saveAction = userDocs.save();
-
-            await saveAction.then(function (docs) {
-                returnResult.data = userProfile;
-                return returnResult;
-
-            }, function (err) {
-                returnResult.err = err;
-                return returnResult;
-            });
-            return returnResult;
-
-        } else {
-            returnResult.err = ErrorMessage.ProfileAlreadyExist;
-            return returnResult;
-        }*/
 
     }
 
