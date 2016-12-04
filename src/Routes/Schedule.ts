@@ -58,8 +58,14 @@ export class ScheduleRouter {
 
         this.router.get('/getsalondailyschedule', async (request: Request, response: Response) => {
             let salonId = request.query.salon_id;
-            console.log('request.query.start_date:', request.query.start_date);
-            console.log('request.query.endDate:', request.query.end_date);
+            let salonIdValidation = new BaseValidator(salonId);
+            salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
+            salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
+            let salonIdError = await salonIdValidation.validate();
+            if(salonIdError){
+                response.status(400).json({ 'err': salonIdError.err });
+                return;
+            }
 
             var startDateValidation = new BaseValidator(request.query.start_date);
             startDateValidation = new MissingCheck(startDateValidation, ErrorMessage.MissingStartDate);
