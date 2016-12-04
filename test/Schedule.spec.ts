@@ -32,6 +32,7 @@ describe('Schedule Management', function() {
     let defaultPassword = '1234@1234';
     let validEmployeeId;
     let anotherUserId;
+    let anotherUserToken;
     const today: moment.Moment = moment();
     let startDateMoment = moment().add(1, 'months');
     let endDateMoment = moment().add(2, 'month');
@@ -96,6 +97,7 @@ describe('Schedule Management', function() {
         // Get Token
         var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
         anotherUserId = loginData.data.user._id;
+        anotherUserToken = loginData.data.auth.token;
 
     });
 
@@ -2046,7 +2048,7 @@ describe('Schedule Management', function() {
     });
 
     describe('Get Employee Weekly Schedule', function() {
-        var apiUrl = '/api/v1/schedule/getemployeeweeklyschedule';        
+        var apiUrl = '/api/v1/schedule/getemployeeweeklyschedule';
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to get Employee Weekly schedule without salonId', function(done) {
             var salonId = undefined;
@@ -2696,7 +2698,7 @@ describe('Schedule Management', function() {
                 });
         });
 
-    });
+    });*/
 
     describe('Save Employee Weekly Schedule', function() {
         var apiUrl = '/api/v1/schedule/savesalondailyschedule';
@@ -2775,12 +2777,7 @@ describe('Schedule Management', function() {
 
         it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to save Employee Weekly schedule with Token no permission', async function(done) {
             // Create new user
-            var authentication = new Authentication();
-            const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
-            await authentication.signUpWithUsernameAndPassword(anotherEmail, defaultPassword);
-            // Get Token
-            var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
-            var token = loginData.data.auth.token;
+            var token = anotherUserToken;
 
             var salonId = validSalonId;
             var employeeId = validEmployeeId;
@@ -3146,14 +3143,9 @@ describe('Schedule Management', function() {
                 });
         });
 
-        it('should return ' + ErrorMessage.EmployeeNotFound.err.name + ' error trying to save Employee Weekly schedule with invalid EmployeeId', async function(done) {
-            // Create new user
-            var authentication = new Authentication();
-            const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
-            await authentication.signUpWithUsernameAndPassword(anotherEmail, defaultPassword);
-            // Get User Id
-            var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
-            var employeeId = loginData.data.user._id;
+        it('should return ' + ErrorMessage.EmployeeNotFound.err.name + ' error trying to save Employee Weekly schedule with invalid EmployeeId', function(done) {
+
+            var employeeId = anotherUserId;
             var salonId = validSalonId;
 
             var status = true;
@@ -4081,5 +4073,5 @@ describe('Schedule Management', function() {
                 });
         });
 
-    });*/
+    });
 });
