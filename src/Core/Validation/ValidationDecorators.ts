@@ -82,8 +82,8 @@ export class IsNumber extends DecoratingValidator {
     }
 }
 
-//Validate if target element has type of string.
-//To pass the test: Target Element has to be smaller than floor and bigger than ceiling.
+//Validate if target element is in range of floor and ceiling.
+//To pass the test: Target Element has to be smaller than or equal to ceiling and bigger than or equal to floor.
 export class IsInRange extends DecoratingValidator {
 
     public errorType: any;
@@ -103,6 +103,35 @@ export class IsInRange extends DecoratingValidator {
 
     public validatingOperation() {
         if (this.targetElement < this.floor || this.targetElement > this.ceiling) {
+            return this.errorType;
+        } else {
+            return undefined;
+        }
+    }
+}
+
+//Validate if target element is in range of floor and ceiling.
+//To pass the test: Target Element has to be smaller than ceiling and bigger than floor.
+export class IsInRangeExclusively extends DecoratingValidator {
+
+    public errorType: any;
+    public floor: number;
+    public ceiling: number;
+    public targetElement: any;
+
+    constructor(wrapedValidator: Validator, errorType: any, floor: number, ceiling: number) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.floor = floor;
+        this.ceiling = ceiling;
+        this.targetElement = this.wrapedValidator.targetElement;
+
+    }
+
+    public validatingOperation() {
+        console.log(this.ceiling, this.targetElement);
+        if (this.targetElement <= this.floor || this.targetElement >= this.ceiling) {
             return this.errorType;
         } else {
             return undefined;
