@@ -200,14 +200,17 @@ export class ScheduleRouter {
 
         this.router.post('/savesalondailyschedule', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
+            console.log('USER', request.user);
             var admin: AdministratorBehavior;
 
             //create appropriate user object using UserFactory;
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
 
+            console.log('Admin',admin);
             //convert date string to salonTimeData;
             var salonTime = new SalonTime();
             request.body.daily_schedule.date = salonTime.setString(request.body.daily_schedule.date);
+            console.log('IIII');
 
             var dailySchedule: DailyScheduleData = {
                 salon_id: request.body.salon_id,
@@ -215,10 +218,10 @@ export class ScheduleRouter {
                 day: request.body.daily_schedule
             };
 
-
+            
             //updateDailySchedule
             let result = await admin.updateDailySchedule(undefined, dailySchedule);
-
+            console.log('result',result);
             var responseData;
             if (result.err) {
                 responseData = result.err;

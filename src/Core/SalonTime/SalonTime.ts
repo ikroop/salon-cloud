@@ -51,8 +51,10 @@ export class SalonTime implements SalonTimeData {
      * @memberOf SalonTime
      */
     public setString(dateString: string): SalonTime {
+        console.log('IINn');
         this.momentjs = moment.utc(dateString,  ["'YYYY-MM-DD HH:mm:ss'", "YYYY-MM-DD", 'YYYY-MM-DD HH:mm']);
         this.nomalize();
+        console.log('SalonTime: ', this);
         return this;
     }
 
