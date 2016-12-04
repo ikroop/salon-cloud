@@ -313,7 +313,7 @@ describe('Schedule Management', function() {
 
     });
 
-    /*describe('Save Salon Daily Schedule', function() {
+    describe('Save Salon Daily Schedule', function() {
         var apiUrl = '/api/v1/schedule/savesalondailyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save salon daily schedule with invalidToken', function(done) {
@@ -340,7 +340,7 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(401);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
                     done();
                 });
         });
@@ -377,12 +377,12 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to save salon daily schedule without salonId', function(done) {
+        it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to save salon daily schedule without salonId', function(done) {
             var salonId = undefined;
             var date = '2016-12-27';
             var status = true;
@@ -406,7 +406,7 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
                     done();
                 });
         });
@@ -495,7 +495,7 @@ describe('Schedule Management', function() {
                 });
         });
 
-        it('should return ' + ErrorMessage.InvalidScheduleOpenTime.err.name + ' error trying to save salon daily schedule without open_time', function(done) {
+        it('should return ' + ErrorMessage.MissingScheduleOpenTime.err.name + ' error trying to save salon daily schedule without open_time', function(done) {
             var salonId = validSalonId;
             var date = '2016-12-27';
             var status = true;
@@ -517,7 +517,7 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleOpenTime.err.name);
                     done();
                 });
         });
@@ -578,7 +578,7 @@ describe('Schedule Management', function() {
                 });
         });
 
-        it('should return ' + ErrorMessage.InvalidScheduleCloseTime.err.name + ' error trying to save salon daily schedule without close_time', function(done) {
+        it('should return ' + ErrorMessage.MissingScheduleCloseTime.err.name + ' error trying to save salon daily schedule without close_time', function(done) {
             var salonId = validSalonId;
             var date = '2016-12-27';
             var status = true;
@@ -599,7 +599,7 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleCloseTime.err.name);
                     done();
                 });
         });

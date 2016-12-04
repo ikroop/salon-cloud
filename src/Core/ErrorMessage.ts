@@ -467,5 +467,11 @@ export const ErrorMessage = {
             'name': 'EndDateIsBeforeStartDate',
             'message': 'End Date Is Before Start Date'
         }
+    },
+    'InvalidSalonTimeData': {
+        'err': {
+            'name': 'InvalidSalonTimeData',
+            'message': 'Salon Time Data Is Not Valid!'
+        }
     }
 };

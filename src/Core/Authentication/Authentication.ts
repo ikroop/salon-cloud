@@ -246,8 +246,8 @@ export class Authentication implements AuthenticationBehavior {
                 var cert = fs.readFileSync('./Config/Dev/Public.pem');  // get private key
                 jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, payload) {
                     if (err) {
-                        response.err = 'InvalidToken';
-                        response.code = 403;
+                        response.err = ErrorMessage.InvalidTokenError;
+                        response.code = 401;
                         response.data = undefined;
                     } else {
                         response.err = undefined;

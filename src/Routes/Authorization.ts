@@ -26,7 +26,7 @@ export class AuthorizationRouter {
         var authorization = new Authorization();
         var tokenStatus: any = await authentication.verifyToken(token);
         if (tokenStatus) { // authenticate successfully
-            if (tokenStatus.code = 200) {
+            if (tokenStatus.code == 200) {
                 var role = await authorization.checkPermission(tokenStatus.data._id, request.body.salon_id, request.originalUrl)
                 if (role.code === 200) {
                     request.user = tokenStatus.data;
@@ -38,6 +38,7 @@ export class AuthorizationRouter {
                 }
 
             } else {
+                console.log(tokenStatus);
                 response.statusCode = tokenStatus.code;
                 response.json(tokenStatus.err);
             }

@@ -210,33 +210,49 @@ export class ScheduleRouter {
 
         this.router.post('/savesalondailyschedule', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
-            console.log('USER', request.user);
             var admin: AdministratorBehavior;
 
             //create appropriate user object using UserFactory;
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
 
-            console.log('Admin', admin);
             //convert date string to salonTimeData;
             var salonTime = new SalonTime();
-            request.body.daily_schedule.date = salonTime.setString(request.body.daily_schedule.date);
-            console.log('IIII');
+
+            var dateValidation = new BaseValidator(request.body.date);
+            dateValidation = new MissingCheck(dateValidation, ErrorMessage.MissingDate);
+            dateValidation = new IsDateString(dateValidation, ErrorMessage.InvalidDate);
+            var endDateError = await dateValidation.validate();
+
+            if (endDateError) {
+                response.status(400).json({ 'err': endDateError.err });
+                return;
+            }
+
+            request.body.date = salonTime.setString(request.body.date);
 
             var dailySchedule: DailyScheduleData = {
                 salon_id: request.body.salon_id,
                 employee_id: undefined,
-                day: request.body.daily_schedule
+                day: {
+                    date: request.body.date,
+                    status: request.body.status,
+                    open: request.body.open_time,
+                    close: request.body.close_time
+                }
             };
 
 
             //updateDailySchedule
             let result = await admin.updateDailySchedule(undefined, dailySchedule);
-            console.log('result', result);
             var responseData;
             if (result.err) {
                 responseData = result.err;
             } else {
-                responseData = result.data;
+                responseData = {
+                    data: {
+                        _id: result.data
+                    }
+                }
             }
 
             response.status(result.code).json(responseData);
