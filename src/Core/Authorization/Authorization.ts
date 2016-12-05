@@ -36,6 +36,7 @@ export class Authorization {
 
         if(!roleAPI){
             console.log('Please Add API to file RoleConfig');
+            return undefined;
         }
         // Check userId
         if (!userId) {
@@ -69,7 +70,6 @@ export class Authorization {
                     response.code = 400; //Bad Request
                     return response;
                 }
-
                 // Get User Role
                 var user = new UserManagement(salonId);
                 var role = await user.getRole(userId);
@@ -79,6 +79,7 @@ export class Authorization {
                     response.code = 200; // OK
                 } else {
                     // Unallowed
+                    response.err = ErrorMessage.NoPermission.err;
                     response.code = 403; // Forbidden
                     response.data = undefined;
                 }

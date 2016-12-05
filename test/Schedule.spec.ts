@@ -345,15 +345,9 @@ describe('Schedule Management', function() {
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to save salon daily schedule with Token no permission', async function(done) {
-            // Create new user
-            var authentication = new Authentication();
-            const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
-            await authentication.signUpWithUsernameAndPassword(anotherEmail, defaultPassword);
-            // Get Token
-            var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
-            var token = loginData.data.auth.token;
+        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to save salon daily schedule with Token no permission', function(done) {
 
+            var token = anotherUserToken;
             var salonId = validSalonId;
             var date = '2016-12-27';
             var status = true;
@@ -375,6 +369,7 @@ describe('Schedule Management', function() {
                     if (err) {
                         throw err;
                     }
+                    console.log('res.body:', res.body);
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
@@ -717,8 +712,8 @@ describe('Schedule Management', function() {
         });
 
     });
-
-   /* describe('Save Salon Weekly Schedule', function() {
+    /*
+    describe('Save Salon Weekly Schedule', function() {
         var apiUrl = '/api/v1/schedule/savesalondailyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save salon weekly schedule with invalidToken', function(done) {
@@ -2165,7 +2160,8 @@ describe('Schedule Management', function() {
 
     });
 
-    /*describe('Save Employee Daily Schedule', function() {
+    /*
+    describe('Save Employee Daily Schedule', function() {
         var apiUrl = '/api/v1/schedule/savesalondailyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save Employee Daily schedule with invalidToken', function(done) {
@@ -2700,7 +2696,7 @@ describe('Schedule Management', function() {
 
     });*/
 
-    describe('Save Employee Weekly Schedule', function() {
+    /*describe('Save Employee Weekly Schedule', function() {
         var apiUrl = '/api/v1/schedule/savesalondailyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save Employee Weekly schedule with invalidToken', function(done) {
@@ -4073,5 +4069,5 @@ describe('Schedule Management', function() {
                 });
         });
 
-    });
+    });*/
 });
