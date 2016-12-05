@@ -263,7 +263,6 @@ export class ScheduleRouter {
         this.router.post('/saveemployeeweeklyschedule', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
             var admin: AdministratorBehavior;
-
             //create appropriate user object using UserFactory;
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
             var employeeId = request.body.employee_id;
@@ -289,7 +288,7 @@ export class ScheduleRouter {
             if (result.err) {
                 responseData = result.err;
             } else {
-                responseData = result.data;
+                responseData = {'_id': result.data._id};
             }
             response.status(result.code).json(responseData);
 
