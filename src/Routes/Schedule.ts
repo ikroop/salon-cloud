@@ -229,15 +229,14 @@ export class ScheduleRouter {
             }
 
             request.body.date = salonTime.setString(request.body.date);
-
             var dailySchedule: DailyScheduleData = {
                 salon_id: request.body.salon_id,
                 employee_id: undefined,
                 day: {
                     date: request.body.date,
                     status: request.body.status,
-                    open: request.body.open_time,
-                    close: request.body.close_time
+                    open: request.body.open,
+                    close: request.body.close
                 }
             };
 
