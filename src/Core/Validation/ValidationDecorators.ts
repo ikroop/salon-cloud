@@ -567,7 +567,7 @@ export class IsValidEmployeeId extends DecoratingValidator {
              UserModel.findOne({ "_id": employeeId }, { "profile": { "$elemMatch": { "salon_id": salonId } } }, ).exec(function (err, docs) {            
                 if (err) {
                     response = errorType;
-                } else if (docs.profile.length !== 1) {
+                } else if (!docs || !docs.profile || docs.profile.length !== 1) {
                     response = errorType;
                 } else {
                     response = undefined;
