@@ -475,15 +475,6 @@ export abstract class Schedule implements ScheduleBehavior {
         if (openTimeResult) {
             return errorReturn = openTimeResult;
         }
-        //Todo: validate date;
-        var dateValidator = new BaseValidator(dailySchedule.date);
-        dateValidator = new MissingCheck(dateValidator, ErrorMessage.MissingDate);
-        dateValidator = new IsValidSalonTimeData(dateValidator, ErrorMessage.InvalidSalonTimeData);
-        var dateError = await dateValidator.validate();
-        if (dateError) {
-            return errorReturn = dateError;
-        }
-
 
         return errorReturn;
     };
