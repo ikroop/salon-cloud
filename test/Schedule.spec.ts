@@ -325,8 +325,8 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
 
@@ -356,8 +356,8 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
 
@@ -385,8 +385,8 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
 
@@ -414,8 +414,8 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
 
@@ -443,8 +443,8 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime
+                "open": openTime,
+                "close": closeTime
             };
             request(server)
                 .post(apiUrl)
@@ -470,8 +470,8 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -498,7 +498,7 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "close_time": closeTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -525,8 +525,8 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -553,8 +553,8 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -580,7 +580,7 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "open_time": openTime,
+                "open": openTime,
                 "date": date
             };
             request(server)
@@ -607,8 +607,8 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -635,8 +635,8 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -663,8 +663,8 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -691,8 +691,8 @@ describe('Schedule Management', function() {
             var bodyRequest = {
                 "salon_id": salonId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -704,8 +704,7 @@ describe('Schedule Management', function() {
                         throw err;
                     }
                     res.status.should.be.equal(200);
-                    res.body.should.have.property('data');
-                    res.body.data.should.have.property('_id');
+                    res.body.should.have.property('_id');
                     done();
                 });
         });
@@ -727,44 +726,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -805,44 +804,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -875,44 +874,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -945,44 +944,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -1015,43 +1014,43 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -1084,44 +1083,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 8
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -1154,44 +1153,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": -1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -1223,44 +1222,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -1292,43 +1291,43 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "close_time": closeTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -1360,43 +1359,43 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": 24 * 3600,
-                            "close_time": closeTime,
+                            "open": 24 * 3600,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -1428,43 +1427,43 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": -1,
-                            "close_time": closeTime,
+                            "open": -1,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -1496,42 +1495,42 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
+                            "open": openTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -1563,43 +1562,43 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": 24 * 3600,
+                            "open": openTime,
+                            "close": 24 * 3600,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -1631,43 +1630,43 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": -1,
+                            "open": openTime,
+                            "close": -1,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -1699,43 +1698,43 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": 72000,
-                            "close_time": 36000,
+                            "open": 72000,
+                            "close": 36000,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -1767,43 +1766,43 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -2174,8 +2173,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
 
@@ -2213,8 +2212,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
 
@@ -2244,8 +2243,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
 
@@ -2275,8 +2274,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
 
@@ -2307,8 +2306,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
 
@@ -2338,8 +2337,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
 
@@ -2377,8 +2376,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": userId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
 
@@ -2408,8 +2407,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime
+                "open": openTime,
+                "close": closeTime
             };
             request(server)
                 .post(apiUrl)
@@ -2437,8 +2436,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -2467,7 +2466,7 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "close_time": closeTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -2496,8 +2495,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -2526,8 +2525,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -2555,7 +2554,7 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
+                "open": openTime,
                 "date": date
             };
             request(server)
@@ -2584,8 +2583,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -2614,8 +2613,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -2644,8 +2643,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -2674,8 +2673,8 @@ describe('Schedule Management', function() {
                 "salon_id": salonId,
                 "employee_id": employeeId,
                 "status": status,
-                "open_time": openTime,
-                "close_time": closeTime,
+                "open": openTime,
+                "close": closeTime,
                 "date": date
             };
             request(server)
@@ -2695,8 +2694,8 @@ describe('Schedule Management', function() {
 
     });*/
 
-    /*describe('Save Employee Weekly Schedule', function() {
-        var apiUrl = '/api/v1/schedule/savesalondailyschedule';
+    describe('Save Employee Weekly Schedule', function() {
+        var apiUrl = '/api/v1/schedule/saveemployeeweeklyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save Employee Weekly schedule with invalidToken', function(done) {
             var salonId = validSalonId;
@@ -2712,44 +2711,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -2765,12 +2764,12 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(401);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to save Employee Weekly schedule with Token no permission', async function(done) {
+        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to save Employee Weekly schedule with Token no permission', function(done) {
             // Create new user
             var token = anotherUserToken;
 
@@ -2788,44 +2787,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -2841,12 +2840,12 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to save Employee Weekly schedule without salonId', function(done) {
+        it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to save Employee Weekly schedule without salonId', function(done) {
             var salonId = undefined;
             var employeeId = validEmployeeId;
 
@@ -2861,44 +2860,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -2914,7 +2913,7 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
                     done();
                 });
         });
@@ -2934,44 +2933,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -3007,44 +3006,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -3080,44 +3079,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -3154,44 +3153,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -3227,43 +3226,43 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -3283,7 +3282,7 @@ describe('Schedule Management', function() {
                 });
         });
 
-        it('should return ' + ErrorMessage.InvalidDayOfWeek.err.name + ' error trying to save Employee Weekly schedule with invalid day_of_week', function(done) {
+        it('should return ' + ErrorMessage.InvalidScheduleDayOfWeek.err.name + ' error trying to save Employee Weekly schedule with invalid day_of_week', function(done) {
             var salonId = validSalonId;
             var employeeId = validEmployeeId;
 
@@ -3299,44 +3298,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 8
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -3351,12 +3350,12 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidDayOfWeek.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleDayOfWeek.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.InvalidDayOfWeek.err.name + ' error trying to save Employee Weekly schedule with invalid day_of_week', function(done) {
+        it('should return ' + ErrorMessage.InvalidScheduleDayOfWeek.err.name + ' error trying to save Employee Weekly schedule with invalid day_of_week', function(done) {
             var salonId = validSalonId;
             var employeeId = validEmployeeId;
 
@@ -3372,44 +3371,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": -1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -3424,7 +3423,7 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidDayOfWeek.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleDayOfWeek.err.name);
                     done();
                 });
         });
@@ -3444,44 +3443,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -3501,7 +3500,7 @@ describe('Schedule Management', function() {
                 });
         });
 
-        it('should return ' + ErrorMessage.InvalidScheduleOpenTime.err.name + ' error trying to save Employee Weekly schedule without open_time', function(done) {
+        it('should return ' + ErrorMessage.MissingScheduleOpenTime.err.name + ' error trying to save Employee Weekly schedule without open_time', function(done) {
             var salonId = validSalonId;
             var employeeId = validEmployeeId;
 
@@ -3516,43 +3515,115 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "close_time": closeTime,
+                            "close": closeTime,
                             "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
+                            "day_of_week": 6
+                        }
+                    ]
+                };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+                .end(function(err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleOpenTime.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidScheduleOpenTime.err.name + ' error trying to save Employee Weekly schedule with invalid open_time', function(done) {
+            var salonId = validSalonId;
+            var employeeId = validEmployeeId;
+
+            var status = true;
+            var openTime = 3600;
+            var closeTime = 7200;
+            var bodyRequest =
+                {
+                    "salon_id": salonId,
+                    "employee_id": employeeId,
+                    "weekly_schedules":
+                    [
+                        {
+                            "status": status,
+                            "open": openTime,
+                            "close": closeTime,
+                            "day_of_week": 0
+                        },
+                        {
+                            "status": status,
+                            "open": openTime,
+                            "close": closeTime,
+                            "day_of_week": 1
+                        },
+                        {
+                            "status": status,
+                            "open": openTime,
+                            "close": closeTime,
+                            "day_of_week": 2
+                        },
+                        {
+                            "status": status,
+                            "open": openTime,
+                            "close": closeTime,
+                            "day_of_week": 3
+                        },
+                        {
+                            "status": status,
+                            "open": 24 * 3600,
+                            "close": closeTime,
+                            "day_of_week": 4
+                        },
+                        {
+                            "status": status,
+                            "open": openTime,
+                            "close": closeTime,
+                            "day_of_week": 5
+                        },
+                        {
+                            "status": status,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -3587,43 +3658,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime,
+                            "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": 24 * 3600,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": -1,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -3643,7 +3715,7 @@ describe('Schedule Management', function() {
                 });
         });
 
-        it('should return ' + ErrorMessage.InvalidScheduleOpenTime.err.name + ' error trying to save Employee Weekly schedule with invalid open_time', function(done) {
+        it('should return ' + ErrorMessage.MissingScheduleCloseTime.err.name + ' error trying to save Employee Weekly schedule without close_time', function(done) {
             var salonId = validSalonId;
             var employeeId = validEmployeeId;
 
@@ -3658,43 +3730,43 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime,
+                            "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": -1,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -3709,77 +3781,7 @@ describe('Schedule Management', function() {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
-                    done();
-                });
-        });
-
-        it('should return ' + ErrorMessage.InvalidScheduleCloseTime.err.name + ' error trying to save Employee Weekly schedule without close_time', function(done) {
-            var salonId = validSalonId;
-            var employeeId = validEmployeeId;
-
-            var status = true;
-            var openTime = 3600;
-            var closeTime = 7200;
-            var bodyRequest =
-                {
-                    "salon_id": salonId,
-                    "employee_id": employeeId,
-                    "weekly_schedules":
-                    [
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "day_of_week": 0
-                        },
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
-                        },
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
-                            "day_of_week": 2
-                        },
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
-                            "day_of_week": 3
-                        },
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
-                            "day_of_week": 4
-                        },
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
-                            "day_of_week": 5
-                        },
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
-                            "day_of_week": 6
-                        }
-                    ]
-                };
-            request(server)
-                .post(apiUrl)
-                .send(bodyRequest)
-                .set({ 'Authorization': validToken })
-                .end(function(err, res) {
-                    if (err) {
-                        throw err;
-                    }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleCloseTime.err.name);
                     done();
                 });
         });
@@ -3799,43 +3801,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime,
+                            "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": 24 * 3600,
+                            "open": openTime,
+                            "close": 24 * 3600,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -3853,78 +3856,7 @@ describe('Schedule Management', function() {
                     res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
                     done();
                 });
-        });
-
-        it('should return ' + ErrorMessage.InvalidScheduleCloseTime.err.name + ' error trying to save Employee Weekly schedule with invalid close_time', function(done) {
-            var salonId = validSalonId;
-            var employeeId = validEmployeeId;
-
-            var status = true;
-            var openTime = 3600;
-            var closeTime = 7200;
-            var bodyRequest =
-                {
-                    "salon_id": salonId,
-                    "employee_id": employeeId,
-                    "weekly_schedules":
-                    [
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
-                            "day_of_week": 0
-                        },
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
-                        },
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
-                            "day_of_week": 2
-                        },
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "close_time": -1,
-                            "day_of_week": 3
-                        },
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
-                            "day_of_week": 4
-                        },
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
-                            "day_of_week": 5
-                        },
-                        {
-                            "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
-                            "day_of_week": 6
-                        }
-                    ]
-                };
-            request(server)
-                .post(apiUrl)
-                .send(bodyRequest)
-                .set({ 'Authorization': validToken })
-                .end(function(err, res) {
-                    if (err) {
-                        throw err;
-                    }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
-                    done();
-                });
-        });
+        });       
 
         it('should return ' + ErrorMessage.OpenTimeGreaterThanCloseTime.err.name + ' error trying to save Employee Weekly schedule with open_time is greater than close_time', function(done) {
             var salonId = validSalonId;
@@ -3941,43 +3873,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime,
+                            "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": 72000,
-                            "close_time": 36000,
+                            "open": 72000,
+                            "close": 36000,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -4012,43 +3945,44 @@ describe('Schedule Management', function() {
                     [
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 0
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime
+                            "open": openTime,
+                            "close": closeTime,
+                            "day_of_week": 1
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 2
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 3
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 4
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 5
                         },
                         {
                             "status": status,
-                            "open_time": openTime,
-                            "close_time": closeTime,
+                            "open": openTime,
+                            "close": closeTime,
                             "day_of_week": 6
                         }
                     ]
@@ -4062,11 +3996,10 @@ describe('Schedule Management', function() {
                         throw err;
                     }
                     res.status.should.be.equal(200);
-                    res.body.should.have.property('data');
-                    res.body.data.should.have.property('_id');
+                    res.body.should.have.property('_id');
                     done();
                 });
         });
 
-    });*/
+    });
 });
