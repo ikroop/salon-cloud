@@ -460,7 +460,6 @@ export abstract class Schedule implements ScheduleBehavior {
         var closeTimeValidator = new BaseValidator(dailySchedule.close);
         closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
         closeTimeValidator = new IsNumber(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime);
-        console.log(closeTimeValidator.targetElement);
         closeTimeValidator = new IsInRangeExclusively(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
         
         var closeTimeResult = await closeTimeValidator.validate();

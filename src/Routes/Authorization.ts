@@ -38,7 +38,6 @@ export class AuthorizationRouter {
                 }
 
             } else {
-                console.log(tokenStatus);
                 response.statusCode = tokenStatus.code;
                 response.json(tokenStatus.err);
             }
