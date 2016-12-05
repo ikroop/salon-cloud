@@ -248,15 +248,10 @@ export class ScheduleRouter {
                 responseData = result.err;
             } else {
                 responseData = {
-                    data: {
-                        _id: result.data
-                    }
+                    _id: result.data._id
                 }
             }
-
             response.status(result.code).json(responseData);
-
-
         });
 
         this.router.post('/saveemployeeweeklyschedule', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
@@ -287,7 +282,7 @@ export class ScheduleRouter {
             if (result.err) {
                 responseData = result.err;
             } else {
-                responseData = {'_id': result.data._id};
+                responseData = { '_id': result.data._id };
             }
             response.status(result.code).json(responseData);
 
