@@ -393,8 +393,8 @@ export abstract class Schedule implements ScheduleBehavior {
      * Step 2: return true if success
      *         return error if fail
      */
-    private async addDailySchedule(dailySchedule: DailyDayData) {
-        var returnResult: SalonCloudResponse<boolean> = {
+    private async addDailySchedule(dailySchedule: DailyDayData): Promise<SalonCloudResponse<IDailyScheduleData>> {
+        var returnResult: SalonCloudResponse<IDailyScheduleData> = {
             code: undefined,
             err: undefined,
             data: undefined,
@@ -405,8 +405,8 @@ export abstract class Schedule implements ScheduleBehavior {
             employee_id: this.employeeId,
             day: dailySchedule,
         })
-        await dataCreation.then(function (docs) {
-            returnResult.data = docs._id;
+        await dataCreation.then(function (docs: IDailyScheduleData) {
+            returnResult.data = docs;
             return;
         }, function (error) {
             returnResult.err = error
@@ -425,8 +425,8 @@ export abstract class Schedule implements ScheduleBehavior {
      * Step 4: return true if save success  
      *         return error if fail
      */
-    private async updateDailySchedule(dailySchedule: DailyDayData) {
-        var returnResult: SalonCloudResponse<boolean> = {
+    private async updateDailySchedule(dailySchedule: DailyDayData) : Promise<SalonCloudResponse<IDailyScheduleData>>{
+        var returnResult: SalonCloudResponse<IDailyScheduleData> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -437,13 +437,12 @@ export abstract class Schedule implements ScheduleBehavior {
 
         var saveAction = docsFound.save();
         //saveAction is a promise returned by mongoose so we must use 'await' on its resolution.
-        await saveAction.then(function (docs) {
-            returnResult.data = docs._id;
-
+        await saveAction.then(function (docs: IDailyScheduleData) {
+            returnResult.data = docs;
+            return;
         }, function (err) {
-
             returnResult.err = err;
-
+            return;
         })
         return returnResult;
     };
@@ -461,12 +460,12 @@ export abstract class Schedule implements ScheduleBehavior {
         closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
         closeTimeValidator = new IsNumber(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime);
         closeTimeValidator = new IsInRangeExclusively(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
-        
+
         var closeTimeResult = await closeTimeValidator.validate();
         if (closeTimeResult) {
             return errorReturn = closeTimeResult;
         }
-        
+
         var openTimeValidator = new BaseValidator(dailySchedule.open);
         openTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
         openTimeValidator = new IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime);
