@@ -202,7 +202,7 @@ export class ScheduleRouter {
             if (result.err) {
                 responseData = result.err;
             } else {
-                responseData = result.data;
+                responseData = {'_id': result.data._id};
             }
             response.status(result.code).json(responseData);
 
