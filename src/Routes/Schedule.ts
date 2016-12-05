@@ -202,7 +202,7 @@ export class ScheduleRouter {
             if (result.err) {
                 responseData = result.err;
             } else {
-                responseData = {'_id': result.data._id};
+                responseData = { '_id': result.data._id };
             }
             response.status(result.code).json(responseData);
 
@@ -297,19 +297,34 @@ export class ScheduleRouter {
 
             //convert date string to salonTimeData;
             var salonTime = new SalonTime();
+
+            // Validation date string
+            var dateValidation = new BaseValidator(request.body.date);
+            dateValidation = new MissingCheck(dateValidation, ErrorMessage.MissingDate);
+            dateValidation = new IsDateString(dateValidation, ErrorMessage.InvalidDate);
+            var endDateError = await dateValidation.validate();
+
+            if (endDateError) {
+                response.status(400).json({ 'err': endDateError.err });
+                return;
+            }
             var employeeId = request.body.employee_id;
-            request.body.daily_schedule.date = salonTime.setString(request.body.daily_schedule.date);
+            request.body.date = salonTime.setString(request.body.date);
             var dailySchedule: DailyScheduleData = {
                 salon_id: request.body.salon_id,
                 employee_id: request.body.employee_id,
-                day: request.body.daily_schedule
+                day: {
+                    date: request.body.date,
+                    status: request.body.status,
+                    open: request.body.open,
+                    close: request.body.close
+                }
             };
 
             let employeeIdValidation = new BaseValidator(employeeId);
             employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId);
             employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, request.body.salon_id);
             var employeeIdError = await employeeIdValidation.validate();
-
             if (employeeIdError) {
                 response.status(400).json({ 'err': employeeIdError.err });
                 return;
