@@ -12,6 +12,10 @@ import { Owner } from './../src/Core/User/Owner';
 import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
 import { ByPhoneVerification } from './../src/Core/Verification/ByPhoneVerification';
 import { SalonTime } from './../src/Core/SalonTime/SalonTime';
+import { EmployeeInput, EmployeeReturn } from './../src/Modules/UserManagement/EmployeeData';
+import { UserToken } from './../src/Core/Authentication/AuthenticationData';
+import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
+import { SalonInformation } from './../src/Modules/SalonManagement/SalonData'
 
 describe('Appointment Management', function () {
     var validToken;
@@ -31,9 +35,13 @@ describe('Appointment Management', function () {
     var existedEmployeeId = '';
     var notFoundEmployeeId = '5825e7bb1dac3e2804d015fl';
     var invalidEmployeeId = '1111';
+    var validEmployeeId;
+    var anotherUserId;
+    var anotherUserToken;
+
     const date = new Date(2018, 3, 13);
 
-    before(function (done) {
+    before(async function (done) {
 
         // Login and get token
         var user = {
@@ -41,96 +49,92 @@ describe('Appointment Management', function () {
             password: defaultPassword
         };
 
-        request(server)
-            .post('/api/v1/authentication/signinwithusernameandpassword')
-            .send(user)
-            .end(async function (err, res) {
-                if (err) {
-                    throw err;
+        // 1. Create Owner 
+        var authentication = new Authentication();
+        const ownerEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        await authentication.signUpWithUsernameAndPassword(ownerEmail, defaultPassword);
+
+        const AnotherWwnerEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        await authentication.signUpWithUsernameAndPassword(AnotherWwnerEmail, defaultPassword);
+        // 2. login to get access token
+        var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
+        validToken = loginData.data.auth.token;
+        // 3. Create salon
+        var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(undefined));
+        var salonInformationInput: SalonInformation = {
+            email: 'salon@salon.com',
+            phone: {
+                number: '7703456789',
+                is_verified: false
+            },
+            location: {
+                address: '2506 Bailey Dr NW, Norcross, GA 30071',
+                is_verified: false,
+                timezone_id: undefined
+            },
+            salon_name: 'Salon Appointment Test'
+        }
+        var salon: any = await signedInUser.createSalon(salonInformationInput);
+
+        validSalonId = salon.data.salon_id;
+        // 4. Add new employee
+        const owner = new Owner(loginData.data.user._id, salon.data.salon_id);
+        // Add new employee
+        const employeeInput: EmployeeInput = {
+            salon_id: validSalonId,
+            role: 2,
+            phone: "7703456789",
+            fullname: "Jimmy Tran",
+            nickname: "Jimmy",
+            salary_rate: 0.6,
+            cash_rate: 0.6
+        };
+        const employeeEmail = `${Math.random().toString(36).substring(7)}@gmail.com`;
+        const employee: SalonCloudResponse<EmployeeReturn> = await owner.addEmployee(employeeEmail, employeeInput, new ByPhoneVerification());
+        validEmployeeId = employee.data.uid;
+
+        // Create new user
+        var authentication = new Authentication();
+        const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        await authentication.signUpWithUsernameAndPassword(anotherEmail, defaultPassword);
+        // Get Token
+        var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
+        anotherUserId = loginData.data.user._id;
+        anotherUserToken = loginData.data.auth.token;
+        // Insert services
+        const groupServiceInput = {
+            "group_name": "sample group name",
+            "description": "description of group",
+            "salon_id": validSalonId,
+            "service_list": [
+                {
+                    name: "The first service",
+                    price: 20,
+                    time: 60 * 60
                 }
+            ]
+        };
 
-                // Set user information
-                validToken = res.body.auth.token;
-                var userId = res.body.user._id;
+        const services: any = await owner.addService(groupServiceInput);
+        //console.log("services: %j", services);
 
-                // Create new salon
-                var user = new SignedInUser(userId, new SalonManagement(undefined));
-                var salonInformationInput = {
-                    email: 'salon@salon.com',
-                    phone: {
-                        number: '7703456789',
-                        is_verified: false
-                    },
-                    location: {
-                        address: '2506 Bailey Dr NW, Norcross, GA 30071',
-                        is_verified: false,
-                        timezone_id: undefined
-                    },
-                    salon_name: 'Salon Appointment Test'
-                }
+        // Get services 
+        const serviceManagement = new ServiceManagement(validSalonId);
+        const service: any = serviceManagement.getServices();
+        //console.log("service: %j", service);
 
-                var salon: any = await user.createSalon(salonInformationInput);
-                //console.log(salon);
+        // Get Daily Schedule
+        const employeeSchedule = new EmployeeSchedule(validSalonId, existedEmployeeId);
+        //console.log("employeeSchedule: %j", employeeSchedule);
 
-                // Set salon information
-                validSalonId = salon.data.salon_id;
+        var salonTime = new SalonTime();
+        // set date to SalonTime Object
+        salonTime.setDate(date);
 
-                // Add new employee
-                const employeeInput = {
-                    salon_id: validSalonId,
-                    role: 2,
-                    phone: "7703456789",
-                    fullname: "Jimmy Tran",
-                    nickname: "Jimmy",
-                    salary_rate: 0.6,
-                    cash_rate: 0.6
-                };
+        const dailySchedule = employeeSchedule.getDailySchedule(salonTime, salonTime);
+        //console.log("employeeSchedule: %j", employeeSchedule);
 
-                const owner = new Owner(userId, validSalonId);
-                //console.log("owner: %j", owner);
-
-                const email = `${Math.random().toString(36).substring(7)}@gmail.com`;
-                const employee: any = await owner.addEmployee(email, employeeInput, new ByPhoneVerification());
-                //console.log("employee: %j", employee);
-
-                // Set employee information
-                existedEmployeeId = employee.data.uid;
-
-                // Insert services
-                const groupServiceInput = {
-                    "group_name": "sample group name",
-                    "description": "description of group",
-                    "salon_id": validSalonId,
-                    "service_list": [
-                        {
-                            name: "The first service",
-                            price: 20,
-                            time: 60 * 60
-                        }
-                    ]
-                };
-
-                const services: any = await owner.addService(groupServiceInput);
-                //console.log("services: %j", services);
-
-                // Get services 
-                const serviceManagement = new ServiceManagement(validSalonId);
-                const service: any = serviceManagement.getServices();
-                //console.log("service: %j", service);
-
-                // Get Daily Schedule
-                const employeeSchedule = new EmployeeSchedule(validSalonId, existedEmployeeId);
-                //console.log("employeeSchedule: %j", employeeSchedule);
-
-                var salonTime = new SalonTime();
-                // set date to SalonTime Object
-                salonTime.setDate(date);
-
-                const dailySchedule = employeeSchedule.getDailySchedule(salonTime, salonTime);
-                //console.log("employeeSchedule: %j", employeeSchedule);
-
-                done();
-            });
+        done();
     });
 
     describe('Unit Test Create Appointment By Phone', function () {
