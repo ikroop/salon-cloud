@@ -51,7 +51,8 @@ export abstract class Schedule implements ScheduleBehavior {
             salon_id: undefined,
             employee_id: undefined
         };
-
+        console.log('start: ', start);
+        console.log('end: ', end);
         var response: SalonCloudResponse<DailyScheduleArrayData> = {
             code: undefined,
             data: resultReturn,
@@ -62,7 +63,7 @@ export abstract class Schedule implements ScheduleBehavior {
 
         //Step 2: call this.getDailyScheduleProcess(date) to get DailyDayData
         var scheduleSearch = await this.getDailyScheduleProcess(start, end);
-
+        console.log('scheduleSearch: ', scheduleSearch);
         //parse data into resultReturn : dailyScheduleData 
         resultReturn.days = scheduleSearch;
         resultReturn.salon_id = this.salonId;
@@ -545,12 +546,20 @@ export abstract class Schedule implements ScheduleBehavior {
      */
     private async getDailyScheduleProcess(startDate: SalonTimeData, endDate: SalonTimeData): Promise<DailyDayData[]> {
 
+        var startSalonTime = new SalonTime();
+        startDate = startSalonTime.setString(startDate.toString());
+        var endSalonTime = new SalonTime();
+        endDate = endSalonTime.setString(endDate.toString());
         var targetSchedule: DailyDayData[] = [];
         var weeklyScheduleArray: WeeklyDayData[] = await this.getWeeklyScheduleRecord();
+
+        console.log('WEEKLYSCHEDULARRAY: ', weeklyScheduleArray);
         var dailyScheduleArray: IDailyScheduleData[] = await this.getDailyScheduleRecord(startDate, endDate);
 
+        console.log('DAILYSCHEDULEARRAY: ', dailyScheduleArray);
         var dailyScheduleArrayCount: number = 0;
         for (var date = startDate.date, count = 0; date <= endDate.date; date.setUTCDate(date.getUTCDate() + 1), count++) {
+            console.log('Date: ', date, endDate.date);
             var dailySchedule = undefined;
             if (dailyScheduleArrayCount < dailyScheduleArray.length) {
                 dailySchedule = dailyScheduleArray[dailyScheduleArrayCount];
@@ -578,6 +587,9 @@ export abstract class Schedule implements ScheduleBehavior {
                             targetSchedule[count].date = (new SalonTime()).setDate(date);
                         }
                     }
+                    console.log('AGAIN: ', weeklyScheduleArray);
+                }else{
+                    console.log('TODO: WeekScheduleArray undefined!');
                 }
             } else {
 
@@ -589,6 +601,7 @@ export abstract class Schedule implements ScheduleBehavior {
             }
         }
         var normalization = await this.normalizeDailySchedule(targetSchedule);
+        console.log('NORMAL: ', normalization);
         return normalization;
     }
 
