@@ -166,13 +166,16 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             code: undefined,
             err: undefined
         }
+        console.log('IN: ', servicesArray);
         var employeeIdList: Array<string> = [];
         var employeeScheduleList: Array<any> = [];
         var employeeAppointmentArrayList: Array<Array<AppointmentItemData>> = [];
         for (var eachService of servicesArray) {
             // get service data
             var serviceManagementDP = new ServiceManagement(this.salonId);
+            console.log('serviceManagementDP: ', serviceManagementDP);
             var serviceItem = await serviceManagementDP.getServiceItemById(eachService.service_id);
+            console.log('serviceItem: ', serviceItem);
             if (serviceItem.err) {
                 response.err = serviceItem.err;
                 response.code = serviceItem.code;
@@ -180,9 +183,12 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             }
             // get Time needed and end time
             var timeNeeded = serviceItem.data.time;
-            var endTime = new SalonTime(eachService.start);
-
+            var endTime = new SalonTime();
+            console.log('CHECK: ',eachService.start.toString());
+            endTime.setString(eachService.start.toString());
+            console.log('CHECKDATE: ',endTime.date);
             endTime.addMinute(timeNeeded / 60);
+            console.log('endTime: ', endTime);
             eachService.end = endTime;
 
             // get emloyee schedule
@@ -190,13 +196,16 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             var employeeAppointmentArray;
             var employeeIndex;
             if (employeeIdList.indexOf(eachService.employee_id) !== -1) {
+                console.log('There');
                 employeeIndex = employeeIdList.indexOf(eachService.employee_id);
                 employeeSchedule = employeeScheduleList[employeeIndex];
                 employeeAppointmentArray = employeeAppointmentArrayList[employeeIndex];
             } else {
                 var scheduleManagementDP = new EmployeeSchedule(this.salonId, eachService.employee_id)
-                var dayInput = new SalonTime(eachService.start);
+                var dayInput = eachService.start;
+                console.log('Here:');
                 var employeeDaySchedule = await scheduleManagementDP.getDailySchedule(dayInput, dayInput);
+                console.log('where:');
                 employeeSchedule = {
                     employee_id: eachService.employee_id,
                     close: employeeDaySchedule.data.days[0].close,
@@ -204,7 +213,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                     open: employeeDaySchedule.data.days[0].open
 
                 }
-
+                console.log('beforeSearch');
                 var appointmentSearch = await this.appointmentManagementDP.getEmployeeAppointmentByDate(eachService.employee_id, eachService.start);
                 console.log('AppointmentSearch: ', appointmentSearch);
                 if (appointmentSearch) {
