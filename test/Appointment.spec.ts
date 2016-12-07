@@ -89,6 +89,7 @@ describe('Appointment Management', function () {
             salary_rate: 0.6,
             cash_rate: 0.6
         };
+
         const employeeEmail = `${Math.random().toString(36).substring(7)}@gmail.com`;
         const employee: SalonCloudResponse<EmployeeReturn> = await owner.addEmployee(employeeEmail, employeeInput, new ByPhoneVerification());
         validEmployeeId = employee.data.uid;
@@ -166,7 +167,6 @@ describe('Appointment Management', function () {
                 .post(apiUrl)
                 .send(bodyRequest)
                 .set({ 'Authorization': invalidToken })
-
                 .end(function (err, res) {
                     if (err) {
                         throw err;
@@ -175,6 +175,41 @@ describe('Appointment Management', function () {
                     res.status.should.be.equal(401);
                     res.body.should.have.property('err');
                     res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to create appointment with no permission account', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: existedServiceId,
+                    employee_id: existedEmployeeId
+                }],
+                "booking_time": {
+                    day: 28,
+                    month: 2,
+                    year: 2016,
+                    hour: 10,
+                    min: 45
+                }
+            };
+            console.log('anotherUserToken:', anotherUserToken);
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': anotherUserToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
                     done();
                 });
         });

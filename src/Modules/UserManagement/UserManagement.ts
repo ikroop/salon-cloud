@@ -11,6 +11,7 @@ import { UserData, UserProfile } from './UserData'
 import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { ErrorMessage } from './../../Core/ErrorMessage'
+import { IUserData } from './UserData';
 
 export class UserManagement implements UserManagementBehavior {
 
@@ -97,24 +98,31 @@ export class UserManagement implements UserManagementBehavior {
      * 
      * @memberOf UserManagement
      */
-    public async getRole(userId: string) {
-        var role: number = undefined;
-
-
+    public async getRole(userId: string): Promise<string> {
+        var role: string = undefined;
+        console.log('userId:', userId);
+        var salonId = this.salonId;
         if (userId) {
-            if (this.salonId) {
-                await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs) {
-                    role = docs.profile[0].role;
+            if (salonId) {
+                await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": salonId } } }, ).exec(function (err, docs: IUserData) {
+                    console.log('docs:', docs);
+                    if (docs && docs.profile && docs.profile.length > 0) {
+                        role = this.roleToString(docs.profile[0].role);
+                    } else {
+                        role = 'SignedUser';
+                    }
                 });
-                return this.roleToString(role);
+
             }
             else {
-                return 'SignedUser';
+                role = 'SignedUser';
             }
         } else {
-            return 'Anonymouse';
+            role = 'Anonymouse';
         }
+        console.log('role:', role);
 
+        return role;
     }
 
     /**
