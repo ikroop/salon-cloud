@@ -74,7 +74,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         appointmentByPhone.normalizationData(newAppointment);
 
         // Get customer Id
-        var getCustomerId = await this.getCustomerID(salonId, inputData);
+        var getCustomerId = await this.getCustomerId(salonId, inputData);
         if (getCustomerId.err) {
             response.err = getCustomerId.err;
             response.code = getCustomerId.code;
@@ -114,7 +114,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
     };
 
 
-    private async getCustomerID(salonId: string, inputData: any): Promise<SalonCloudResponse<string>> {
+    private async getCustomerId(salonId: string, inputData: any): Promise<SalonCloudResponse<string>> {
         var response: SalonCloudResponse<string> = {
             data: undefined,
             code: undefined,
