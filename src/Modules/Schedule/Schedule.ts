@@ -14,7 +14,7 @@ import { SalonTime } from './../../Core/SalonTime/SalonTime'
 
 import { ErrorMessage } from './../../Core/ErrorMessage';
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
-import { MissingCheck, IsInRangeExclusively, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidSalonTimeData }
+import { MissingCheck, IsInRangeExclusively, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidSalonTimeData, IsSalonTime, IsAfterSecondDate }
     from './../../Core/Validation/ValidationDecorators';
 
 export abstract class Schedule implements ScheduleBehavior {
@@ -57,6 +57,36 @@ export abstract class Schedule implements ScheduleBehavior {
             err: undefined
         };
 
+        var commonValidation = await this.validateCommon();
+        if (commonValidation) {
+            return commonValidation;
+        }
+
+        // validation start date
+        var startDateValidation = new BaseValidator(start);
+        startDateValidation = new IsSalonTime(startDateValidation, ErrorMessage.InvalidStartDate);
+        var startDateError = await startDateValidation.validate();
+
+        if (startDateError) {
+            response.err = startDateError;
+            response.code = 400; //Bad Request
+            return response;
+        }
+
+        // validation end date
+        var endDateValidation = new BaseValidator(end);
+        endDateValidation = new IsSalonTime(endDateValidation, ErrorMessage.InvalidEndDate);
+        endDateValidation = new IsAfterSecondDate(endDateValidation, ErrorMessage.EndDateIsBeforeStartDate, start);
+        var endDateError = await endDateValidation.validate();
+
+        if (endDateError) {
+            response.err = endDateError;
+            response.code = 400; //Bad Request
+            return response;
+        }
+
+
+
         //TODO: Step 1: implement validation
 
         //Step 2: call this.getDailyScheduleProcess(date) to get DailyDayData
@@ -82,6 +112,13 @@ export abstract class Schedule implements ScheduleBehavior {
             data: undefined,
             err: undefined
         };
+
+        var commonValidation = await this.validateCommon();
+        if (commonValidation) {
+            return commonValidation;
+        }
+
+
         var resultReturn: WeeklyScheduleData = {
             salon_id: undefined,
             employee_id: undefined,
@@ -125,12 +162,17 @@ export abstract class Schedule implements ScheduleBehavior {
     *Step 4: check result form step 3 and return proper response;
 	*/
     public async saveDailySchedule(dailySchedule: DailyDayData) {
-
         var response: SalonCloudResponse<boolean> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
+
+        var commonValidation = await this.validateCommon();
+        if (commonValidation) {
+            return commonValidation;
+        }
+
         var saveStatus;
         //Step 1: validation;
         var errorReturn = await this.dailyScheduleValidation(dailySchedule);
@@ -183,6 +225,11 @@ export abstract class Schedule implements ScheduleBehavior {
             data: undefined,
             err: undefined
         };
+
+        var commonValidation = await this.validateCommon();
+        if (commonValidation) {
+            return commonValidation;
+        }
 
         var saveStatus;
 
@@ -423,7 +470,7 @@ export abstract class Schedule implements ScheduleBehavior {
      * Step 4: return true if save success  
      *         return error if fail
      */
-    private async updateDailySchedule(dailySchedule: DailyDayData) : Promise<SalonCloudResponse<IDailyScheduleData>>{
+    private async updateDailySchedule(dailySchedule: DailyDayData): Promise<SalonCloudResponse<IDailyScheduleData>> {
         var returnResult: SalonCloudResponse<IDailyScheduleData> = {
             code: undefined,
             data: undefined,
@@ -453,6 +500,15 @@ export abstract class Schedule implements ScheduleBehavior {
      */
     private async dailyScheduleValidation(dailySchedule: DailyDayData) {
         var errorReturn: any = undefined;
+
+        // validation start date
+        var dateValidation = new BaseValidator(dailySchedule.date);
+        dateValidation = new IsSalonTime(dateValidation, ErrorMessage.InvalidDate);
+        var dateError = await dateValidation.validate();
+
+        if (dateError) {
+            return errorReturn = dateError;
+        }
 
         var closeTimeValidator = new BaseValidator(dailySchedule.close);
         closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
@@ -581,7 +637,7 @@ export abstract class Schedule implements ScheduleBehavior {
                             targetSchedule[count].date = (new SalonTime()).setDate(date);
                         }
                     }
-                }else{
+                } else {
                     console.log('TODO: WeekScheduleArray undefined!');
                 }
             } else {
@@ -621,7 +677,39 @@ export abstract class Schedule implements ScheduleBehavior {
 
         return sortedArray;
     }
+
+    /**
+     * 
+     * 
+     * @protected
+     * @returns {Promise<SalonCloudResponse<any>>}
+     * 
+     * @memberOf Schedule
+     */
+    protected async validateCommon(): Promise<SalonCloudResponse<any>> {
+        var response: SalonCloudResponse<any> = {
+            code: undefined,
+            err: undefined,
+            data: undefined
+        };
+
+        // validation salonId
+        var salonIdValidation = new BaseValidator(this.salonId);
+        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
+        salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
+        var salonIdError = await salonIdValidation.validate();
+
+        if (salonIdError) {
+            response.err = salonIdError;
+            response.code = 400; //Bad Request
+            return response;
+        }
+        var extValidation = await this.validateExt();
+
+        return extValidation;
+    }
+
     protected abstract normalizeDailySchedule(dailySchedule: DailyDayData[]);
     protected abstract normalizeWeeklySchedule(weeklySchedule: WeeklyDayData[]);
-
+    protected abstract validateExt(): Promise<SalonCloudResponse<any>>;
 }
