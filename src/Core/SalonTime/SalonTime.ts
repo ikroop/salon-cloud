@@ -51,8 +51,10 @@ export class SalonTime implements SalonTimeData {
      * @memberOf SalonTime
      */
     public setString(dateString: string): SalonTime {
-        this.momentjs = moment.utc(dateString,  ["'YYYY-MM-DD HH:mm:ss'", "YYYY-MM-DD", 'YYYY-MM-DD HH:mm']);
-        this.nomalize();
+        this.momentjs = moment.utc(dateString, ["'YYYY-MM-DD HH:mm:ss'", "YYYY-MM-DD", 'YYYY-MM-DD HH:mm']);
+        if (this.momentjs.isValid()) {
+            this.nomalize();
+        }
         return this;
     }
 
@@ -268,9 +270,9 @@ export class SalonTime implements SalonTimeData {
         this.year = this.momentjs.year();
         this.date = new Date(Date.UTC(this.year, this.month, this.day, this.hour, this.min, 0));
     }
-    
+
     public toString() {
         var dateString = this.momentjs.format('YYYY-MM-DD HH:mm:ss');
-        return dateString; 
+        return dateString;
     }
 }
