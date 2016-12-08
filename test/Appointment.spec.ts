@@ -121,18 +121,16 @@ describe('Appointment Management', function () {
 
         // Get services 
         const serviceManagement = new ServiceManagement(validSalonId);
-        const service: any = serviceManagement.getServices();
+        const service: any = await serviceManagement.getServices();
         //console.log("service: %j", service);
 
         // Get Daily Schedule
-        const employeeSchedule = new EmployeeSchedule(validSalonId, existedEmployeeId);
+        const employeeSchedule = new EmployeeSchedule(validSalonId, validEmployeeId);
         //console.log("employeeSchedule: %j", employeeSchedule);
 
         var salonTime = new SalonTime();
         // set date to SalonTime Object
-        salonTime.setDate(date);
-
-        const dailySchedule = employeeSchedule.getDailySchedule(salonTime, salonTime);
+        const dailySchedule = await employeeSchedule.getDailySchedule(salonTime, salonTime);
         //console.log("employeeSchedule: %j", employeeSchedule);
 
     });
