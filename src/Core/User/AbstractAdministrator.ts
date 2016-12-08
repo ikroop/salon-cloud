@@ -17,8 +17,6 @@ import { CustomerManagement } from './../../Modules/UserManagement/CustomerManag
 import { Authentication } from './../Authentication/Authentication'
 import { DailyScheduleData, WeeklyScheduleData } from './../../Modules/Schedule/ScheduleData'
 import { ScheduleBehavior } from './../../Modules/Schedule/ScheduleBehavior'
-import { EmployeeSchedule } from './../../Modules/Schedule/EmployeeSchedule'
-import { SalonSchedule } from './../../Modules/Schedule/SalonSchedule'
 
 export abstract class AbstractAdministrator extends AbstractEmployee implements AdministratorBehavior {
 
@@ -168,25 +166,16 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
     public updateAppointment(appointment: AppointmentData) {
 
     };
-    public async updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData) {
+    public async updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData, schedule: ScheduleBehavior) {
         var response : SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
             err: undefined
         }
 
-        //validation;
-
-        //create schedule object;
-        var scheduleObject: ScheduleBehavior;
-        if(employeeId) {
-            scheduleObject = new EmployeeSchedule(employeeId, dailySchedule.salon_id);
-        }else{
-            scheduleObject = new SalonSchedule(dailySchedule.salon_id);
-        }
 
         //call saveDailySchedule method;
-        var result = await scheduleObject.saveDailySchedule(dailySchedule.day);
+        var result = await schedule.saveDailySchedule(dailySchedule.day);
 
         //get result;
         //TODO: review requirement for information returned;
@@ -201,25 +190,16 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
     };
 
-    public async updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData) {
+    public async updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData, schedule: ScheduleBehavior) {
         var response : SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
             err: undefined
         }
 
-        //validation;
-
-        //create schedule object;
-        var scheduleObject: ScheduleBehavior;
-        if(employeeId) {
-            scheduleObject = new EmployeeSchedule(employeeId, weeklySchedule.salon_id);
-        }else{
-            scheduleObject = new SalonSchedule(weeklySchedule.salon_id);
-        }
 
         //call saveDailySchedule method;
-        var result = await scheduleObject.saveWeeklySchedule(weeklySchedule.week);
+        var result = await schedule.saveWeeklySchedule(weeklySchedule.week);
 
         //get result;
         //TODO: review requirement for information returned;
