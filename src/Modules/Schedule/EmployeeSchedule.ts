@@ -9,10 +9,10 @@ import WeeklyScheduleModel = require('./WeeklyScheduleModel');
 import DailyScheduleModel = require('./DailyScheduleModel');
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
-import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId }
+import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidEmployeeId }
     from './../../Core/Validation/ValidationDecorators';
 import { SalonSchedule } from './SalonSchedule'
-var ErrorMessage = require('./../../Core/ErrorMessage');
+import { ErrorMessage } from './../../Core/ErrorMessage';
 export class EmployeeSchedule extends Schedule {
 
     constructor(salonId: string, employeeId: string) {
@@ -136,5 +136,27 @@ export class EmployeeSchedule extends Schedule {
         }
 
         return employeeDayData;
+    }
+
+    protected async validateExt(): Promise<SalonCloudResponse<any>> {
+        var response: SalonCloudResponse<any> = {
+            code: undefined,
+            err: undefined,
+            data: undefined
+        };
+        
+        let employeeIdValidation = new BaseValidator(this.employeeId);
+        employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId);
+        employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, this.salonId);
+        let employeeIdError = await employeeIdValidation.validate();
+
+        if (employeeIdError) {
+            response.code = 400;
+            response.err = employeeIdError;
+            return response;
+        } else {
+            return undefined
+        }
+
     }
 }
