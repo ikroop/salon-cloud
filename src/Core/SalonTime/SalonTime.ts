@@ -271,8 +271,26 @@ export class SalonTime implements SalonTimeData {
         this.date = new Date(Date.UTC(this.year, this.month, this.day, this.hour, this.min, 0));
     }
 
-    public toString() {
+    /**
+     * 
+     * 
+     * @returns {string}
+     * 
+     * @memberOf SalonTime
+     */
+    public toString(): string {
         var dateString = this.momentjs.format('YYYY-MM-DD HH:mm:ss');
         return dateString;
+    }
+
+    /**
+     * 
+     * 
+     * @returns {boolean}
+     * 
+     * @memberOf SalonTime
+     */
+    public isValid(): boolean {
+        return this.momentjs.isValid();
     }
 }
