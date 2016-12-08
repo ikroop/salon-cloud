@@ -197,7 +197,6 @@ describe('Appointment Management', function () {
                     min: 45
                 }
             };
-            console.log('anotherUserToken:', anotherUserToken);
             request(server)
                 .post(apiUrl)
                 .send(bodyRequest)
