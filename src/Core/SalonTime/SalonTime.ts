@@ -77,7 +77,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    public addMinute(minute: number) {
+    public addMinute(minute: number): SalonTime {
         this.momentjs.add(minute, 'minutes');
         this.nomalize();
         return this;
@@ -90,7 +90,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    public addHour(hour: number) {
+    public addHour(hour: number): SalonTime {
         this.momentjs.add(hour, 'hours');
         this.nomalize();
         return this;
@@ -103,7 +103,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    public addDay(day: number) {
+    public addDay(day: number): SalonTime {
         this.momentjs.add(day, 'days');
         this.nomalize();
         return this;
@@ -116,7 +116,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    public addMonth(month: number) {
+    public addMonth(month: number): SalonTime {
         this.momentjs.add(month, 'months');
         this.nomalize();
         return this;
@@ -129,7 +129,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    public addYear(year: number) {
+    public addYear(year: number): SalonTime {
         this.momentjs.add(year, 'years');
         this.nomalize();
         return this;
@@ -142,7 +142,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    public setMinute(minute: number) {
+    public setMinute(minute: number): SalonTime {
         this.momentjs.minute(minute);
         this.nomalize();
         return this;
@@ -155,7 +155,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    public setHour(hour: number) {
+    public setHour(hour: number): SalonTime {
         this.momentjs.hour(hour);
         this.nomalize();
         return this;
@@ -168,7 +168,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    public setDay(day: number) {
+    public setDay(day: number): SalonTime {
         this.momentjs.day(day);
         this.nomalize();
         return this;
@@ -181,7 +181,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    public setMonth(month: number) {
+    public setMonth(month: number): SalonTime {
         this.momentjs.month(month);
         this.nomalize();
         return this;
@@ -194,7 +194,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    public setYear(year: number) {
+    public setYear(year: number): SalonTime {
         this.momentjs.month(year);
         this.nomalize();
         return this;
@@ -262,7 +262,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    private nomalize() {
+    private nomalize(): void {
         this.min = this.momentjs.minute();
         this.hour = this.momentjs.hour();
         this.day = this.momentjs.date();
