@@ -1,7 +1,9 @@
 {
-  "name": "salon-cloud.server",
+  "name": "salon-cloud",
+  "repository": {},
+  "license": "SalonHelp",
   "version": "0.0.0",
-  "description": "SalonCloud.Server",
+  "description": "Salon Cloud Server",
   "main": "app.js",
   "author": {
     "name": "SalonHelps"
