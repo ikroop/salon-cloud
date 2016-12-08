@@ -142,7 +142,7 @@ describe('Schedule Management', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingStartDate.err.name + ' error trying to get salon daily schedule without start_date', function (done) {
+        it('should return ' + ErrorMessage.InvalidStartDate.err.name + ' error trying to get salon daily schedule without start_date', function (done) {
             var salonId = validSalonId;
             var endDate = '2016-12-27';
             var parameterUrl = apiUrl + '?salon_id=' + salonId + '&end_date=' + endDate;
@@ -155,12 +155,12 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingStartDate.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidStartDate.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingEndDate.err.name + ' error trying to get salon daily schedule without end_date', function (done) {
+        it('should return ' + ErrorMessage.InvalidEndDate.err.name + ' error trying to get salon daily schedule without end_date', function (done) {
             var salonId = validSalonId;
             var startDate = '2016-12-15';
             var parameterUrl = apiUrl + '?salon_id=' + salonId + '&start_date=' + startDate;
@@ -173,7 +173,7 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingEndDate.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidEndDate.err.name);
                     done();
                 });
         });
@@ -434,7 +434,7 @@ describe('Schedule Management', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingDate.err.name + ' error trying to save salon daily schedule without date', function (done) {
+        it('should return ' + ErrorMessage.InvalidDate.err.name + ' error trying to save salon daily schedule without date', function (done) {
             var salonId = validSalonId;
             var date = '2016-12-27';
             var status = true;
@@ -456,7 +456,7 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingDate.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidDate.err.name);
                     done();
                 });
         });
@@ -1853,7 +1853,7 @@ describe('Schedule Management', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingStartDate.err.name + ' error trying to Get Employee Daily schedule without start_date', function (done) {
+        it('should return ' + ErrorMessage.InvalidStartDate.err.name + ' error trying to Get Employee Daily schedule without start_date', function (done) {
             var salonId = validSalonId;
             var startDate = '2016-12-15';
             var endDate = '2016-12-27';
@@ -1867,12 +1867,12 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingStartDate.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidStartDate.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingEndDate.err.name + ' error trying to Get Employee Daily schedule without end_date', function (done) {
+        it('should return ' + ErrorMessage.InvalidEndDate.err.name + ' error trying to Get Employee Daily schedule without end_date', function (done) {
             var salonId = validSalonId;
             var startDate = '2016-12-15';
             var endDate = '2016-12-27';
@@ -1886,7 +1886,7 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingEndDate.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidEndDate.err.name);
                     done();
                 });
         });
@@ -2386,7 +2386,7 @@ describe('Schedule Management', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingEmployeeId + ' error trying to save Employee Weekly schedule without employee_id', function (done) {
+        it('should return ' + ErrorMessage.MissingEmployeeId.err.name + ' error trying to save Employee Weekly schedule without employee_id', function (done) {
             var salonId = validSalonId;
             var employeeId = undefined;
 
@@ -2609,7 +2609,6 @@ describe('Schedule Management', function () {
         it('should return ' + ErrorMessage.MissingDayOfWeek.err.name + ' error trying to save Employee Weekly schedule without day_of_week', function (done) {
             var salonId = validSalonId;
             var employeeId = validEmployeeId;
-
             var status = true;
             var openTime = 3600;
             var closeTime = 7200;
@@ -3623,7 +3622,7 @@ describe('Schedule Management', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingDate.err.name + ' error trying to save Employee Daily schedule without date', function (done) {
+        it('should return ' + ErrorMessage.InvalidDate.err.name + ' error trying to save Employee Daily schedule without date', function (done) {
             var salonId = validSalonId;
             var employeeId = validEmployeeId;
             var date = '2016-12-27';
@@ -3647,7 +3646,7 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingDate.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidDate.err.name);
                     done();
                 });
         });

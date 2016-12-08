@@ -21,7 +21,7 @@ import { AuthorizationRouter } from './Authorization';
 import { DailyDayData } from './../Modules/Schedule/ScheduleData'
 import { ErrorMessage } from './../Core/ErrorMessage'
 import { BaseValidator } from './../Core/Validation/BaseValidator'
-import { IsDateString, MissingCheck, IsAfterSecondDate, IsValidEmployeeId, IsValidSalonId } from './../Core/Validation/ValidationDecorators'
+import { MissingCheck, IsAfterSecondDate, IsValidEmployeeId, IsValidSalonId } from './../Core/Validation/ValidationDecorators'
 
 export class ScheduleRouter {
     private router: Router = Router();
@@ -34,14 +34,7 @@ export class ScheduleRouter {
         this.router.get('/getsalonweeklyschedule', async (request: Request, response: Response) => {
 
             let salonId = request.query.salon_id;
-            let salonIdValidation = new BaseValidator(salonId);
-            salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
-            salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
-            let salonIdError = await salonIdValidation.validate();
-            if (salonIdError) {
-                response.status(400).json({ 'err': salonIdError.err });
-                return;
-            }
+
             let salonSchedule = new SalonSchedule(salonId);
             let salonWeeklySchedules = await salonSchedule.getWeeklySchedule();
             if (salonWeeklySchedules.code === 200) {
@@ -53,36 +46,7 @@ export class ScheduleRouter {
 
         this.router.get('/getsalondailyschedule', async (request: Request, response: Response) => {
             let salonId = request.query.salon_id;
-            let salonIdValidation = new BaseValidator(salonId);
-            salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
-            salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
-            let salonIdError = await salonIdValidation.validate();
-            if (salonIdError) {
-                response.status(400).json({ 'err': salonIdError.err });
-                return;
-            }
-
-            var startDateValidation = new BaseValidator(request.query.start_date);
-            startDateValidation = new MissingCheck(startDateValidation, ErrorMessage.MissingStartDate);
-            startDateValidation = new IsDateString(startDateValidation, ErrorMessage.InvalidStartDate);
-            var startDateError = await startDateValidation.validate();
-            if (startDateError) {
-                response.status(400).json({ 'err': startDateError.err });
-                return;
-            }
-
-            var endDateValidation = new BaseValidator(request.query.end_date);
-            endDateValidation = new MissingCheck(endDateValidation, ErrorMessage.MissingEndDate);
-            endDateValidation = new IsDateString(endDateValidation, ErrorMessage.InvalidEndDate);
-            endDateValidation = new IsAfterSecondDate(endDateValidation, ErrorMessage.EndDateIsBeforeStartDate, request.query.start_date);
-            var endDateError = await endDateValidation.validate();
-
-            if (endDateError) {
-                response.status(400).json({ 'err': endDateError.err });
-                return;
-            }
-
-
+                       
             let startDate = new SalonTime().setString(request.query.start_date);
             let endDate = new SalonTime().setString(request.query.end_date);
 
@@ -101,25 +65,6 @@ export class ScheduleRouter {
             let salonId = request.query.salon_id;
             let employeeId = request.query.employee_id;
 
-            let salonIdValidation = new BaseValidator(salonId);
-            salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
-            salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
-            let salonIdError = await salonIdValidation.validate();
-            if (salonIdError) {
-                response.status(400).json({ 'err': salonIdError.err });
-                return;
-            }
-
-            let employeeIdValidation = new BaseValidator(employeeId);
-            employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId);
-            employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, salonId);
-            var employeeIdError = await employeeIdValidation.validate();
-
-            if (employeeIdError) {
-                response.status(400).json({ 'err': employeeIdError.err });
-                return;
-            }
-
             let employeeSchedule = new EmployeeSchedule(salonId, employeeId);
             let employeeWeeklySchedules = await employeeSchedule.getWeeklySchedule();
             if (employeeWeeklySchedules.code === 200) {
@@ -133,44 +78,6 @@ export class ScheduleRouter {
 
             let salonId = request.query.salon_id;
             let employeeId = request.query.employee_id;
-
-            let salonIdValidation = new BaseValidator(salonId);
-            salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
-            salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
-            let salonIdError = await salonIdValidation.validate();
-            if (salonIdError) {
-                response.status(400).json({ 'err': salonIdError.err });
-                return;
-            }
-
-            let startDateValidation = new BaseValidator(request.query.start_date);
-            startDateValidation = new MissingCheck(startDateValidation, ErrorMessage.MissingStartDate);
-            startDateValidation = new IsDateString(startDateValidation, ErrorMessage.InvalidStartDate);
-            let startDateError = await startDateValidation.validate();
-            if (startDateError) {
-                response.status(400).json({ 'err': startDateError.err });
-                return;
-            }
-
-            let employeeIdValidation = new BaseValidator(employeeId);
-            employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId);
-            employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, salonId);
-            let employeeIdError = await employeeIdValidation.validate();
-            if (employeeIdError) {
-                response.status(400).json({ 'err': employeeIdError.err });
-                return;
-            }
-
-            var endDateValidation = new BaseValidator(request.query.end_date);
-            endDateValidation = new MissingCheck(endDateValidation, ErrorMessage.MissingEndDate);
-            endDateValidation = new IsDateString(endDateValidation, ErrorMessage.InvalidEndDate);
-            endDateValidation = new IsAfterSecondDate(endDateValidation, ErrorMessage.EndDateIsBeforeStartDate, request.query.start_date);
-            var endDateError = await endDateValidation.validate();
-
-            if (endDateError) {
-                response.status(400).json({ 'err': endDateError.err });
-                return;
-            }
 
             let startDate = new SalonTime().setString(request.query.start_date);
             let endDate = new SalonTime().setString(request.query.end_date);
@@ -196,7 +103,7 @@ export class ScheduleRouter {
                 week: request.body.weekly_schedules
             };
 
-            let result = await admin.updateWeeklySchedule(undefined, weeklySchedule);
+            let result = await admin.updateWeeklySchedule(undefined, weeklySchedule, new SalonSchedule(request.body.salon_id));
 
             var responseData;
             if (result.err) {
@@ -218,16 +125,6 @@ export class ScheduleRouter {
             //convert date string to salonTimeData;
             var salonTime = new SalonTime();
 
-            var dateValidation = new BaseValidator(request.body.date);
-            dateValidation = new MissingCheck(dateValidation, ErrorMessage.MissingDate);
-            dateValidation = new IsDateString(dateValidation, ErrorMessage.InvalidDate);
-            var endDateError = await dateValidation.validate();
-
-            if (endDateError) {
-                response.status(400).json({ 'err': endDateError.err });
-                return;
-            }
-
             request.body.date = salonTime.setString(request.body.date);
             var dailySchedule: DailyScheduleData = {
                 salon_id: request.body.salon_id,
@@ -240,9 +137,8 @@ export class ScheduleRouter {
                 }
             };
 
-
             //updateDailySchedule
-            let result = await admin.updateDailySchedule(undefined, dailySchedule);
+            let result = await admin.updateDailySchedule(undefined, dailySchedule, new SalonSchedule(request.body.salon_id));
             var responseData;
             if (result.err) {
                 responseData = result.err;
@@ -264,19 +160,9 @@ export class ScheduleRouter {
                 salon_id: request.body.salon_id,
                 employee_id: request.body.employee_id,
                 week: request.body.weekly_schedules
-            };
-            let employeeIdValidation = new BaseValidator(employeeId);
-            employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId);
-            employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, request.body.salon_id);
-            var employeeIdError = await employeeIdValidation.validate();
-
-            if (employeeIdError) {
-                response.status(400).json({ 'err': employeeIdError.err });
-                return;
-            }
-
-
-            let result = await admin.updateWeeklySchedule(request.body.employee_id, weeklySchedule);
+            };          
+    
+            let result = await admin.updateWeeklySchedule(request.body.employee_id, weeklySchedule, new EmployeeSchedule(request.body.salon_id, employeeId));
 
             var responseData;
             if (result.err) {
@@ -298,16 +184,6 @@ export class ScheduleRouter {
             //convert date string to salonTimeData;
             var salonTime = new SalonTime();
 
-            // Validation date string
-            var dateValidation = new BaseValidator(request.body.date);
-            dateValidation = new MissingCheck(dateValidation, ErrorMessage.MissingDate);
-            dateValidation = new IsDateString(dateValidation, ErrorMessage.InvalidDate);
-            var endDateError = await dateValidation.validate();
-
-            if (endDateError) {
-                response.status(400).json({ 'err': endDateError.err });
-                return;
-            }
             var employeeId = request.body.employee_id;
             request.body.date = salonTime.setString(request.body.date);
             var dailySchedule: DailyScheduleData = {
@@ -321,17 +197,8 @@ export class ScheduleRouter {
                 }
             };
 
-            let employeeIdValidation = new BaseValidator(employeeId);
-            employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId);
-            employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, request.body.salon_id);
-            var employeeIdError = await employeeIdValidation.validate();
-            if (employeeIdError) {
-                response.status(400).json({ 'err': employeeIdError.err });
-                return;
-            }
 
-
-            let result = await admin.updateDailySchedule(request.body.employee_id, dailySchedule);
+            let result = await admin.updateDailySchedule(request.body.employee_id, dailySchedule, new EmployeeSchedule(request.body.salon_id, employeeId));
 
             var responseData;
             if (result.err) {
