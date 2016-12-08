@@ -61,12 +61,10 @@ export class Authorization {
                 // Validate salon
                 // 'salonId' Validation
                 // Role depends on salon.
-                console.log('salonId:', salonId);
                 var salonIdValidation = new BaseValidator(salonId);
                 salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
                 salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
                 var salonIdError = await salonIdValidation.validate();
-                                console.log('salonIdError:', salonIdError);
 
                 if (salonIdError) {
                     response.err = salonIdError.err;
@@ -76,7 +74,6 @@ export class Authorization {
                 // Get User Role
                 var user = new UserManagement(salonId);
                 var role = await user.getRole(userId);
-                console.log('role:', role);
                 if (roleAPI && roleAPI.role.indexOf(role) > -1) {
                     // Api allows to access from this role
                     response.data = role;
