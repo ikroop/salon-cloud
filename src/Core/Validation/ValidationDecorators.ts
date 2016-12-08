@@ -583,9 +583,9 @@ export class IsValidEmployeeId extends DecoratingValidator {
 
 //Validate if a date string is valid.
 //Valid date string is a string which has form of 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD', or 'YYYY-MM-DD HH:mm'
-export class IsDateString extends DecoratingValidator {
+export class IsSalonTime extends DecoratingValidator {
     public errorType: any;
-    public targetElement: any;
+    public targetElement: moment.Moment;
     constructor(wrapedValidator: Validator, errorType: any) {
         super();
         this.wrapedValidator = wrapedValidator;
@@ -594,7 +594,7 @@ export class IsDateString extends DecoratingValidator {
     };
 
     public async validatingOperation() {
-        if (moment(this.targetElement, ["'YYYY-MM-DD HH:mm:ss'", "YYYY-MM-DD", 'YYYY-MM-DD HH:mm']).isValid()) {
+        if (this.targetElement.isValid()) {
             return undefined;
         } else {
             return this.errorType;
