@@ -351,10 +351,8 @@ export class IsValidSalonId extends DecoratingValidator {
     private async checkSalonId(salonId: string, errorType: any): Promise<any> {
         let promise = new Promise<any>(function (resolve, reject) {
             var response = undefined;
-            console.log('validate salon Id:', salonId);
 
             SalonModel.findOne({ '_id': salonId }, function (err, docs) {
-                console.log('salon docs:', docs);
                 if (err) {
                     response = errorType;
                 } else if (!docs) {
