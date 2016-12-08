@@ -14,7 +14,7 @@ import { UserFactory } from './../Core/User/UserFactory';
 import { SalonTime } from './../Core/SalonTime/SalonTime';
 import { ErrorMessage } from './../Core/ErrorMessage'
 import { BaseValidator } from './../Core/Validation/BaseValidator'
-import { IsDateString, MissingCheck, IsAfterSecondDate, IsValidEmployeeId, IsValidSalonId } from './../Core/Validation/ValidationDecorators'
+import { MissingCheck, IsAfterSecondDate, IsValidEmployeeId, IsValidSalonId } from './../Core/Validation/ValidationDecorators'
 
 
 export class AppointmentManagementRouter {
@@ -39,7 +39,7 @@ export class AppointmentManagementRouter {
             for (let eachService in appointment.services) {
                 let startTimeValidation = new BaseValidator(appointment.services[eachService].start);
                 startTimeValidation = new MissingCheck(startTimeValidation, ErrorMessage.MissingStartDate);
-                startTimeValidation = new IsDateString(startTimeValidation, ErrorMessage.InvalidDate);
+                //startTimeValidation = new IsDateString(startTimeValidation, ErrorMessage.InvalidDate);
                 let startTimeError = await startTimeValidation.validate();
 
                 if (startTimeError) {
