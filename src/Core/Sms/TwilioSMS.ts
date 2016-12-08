@@ -8,7 +8,18 @@ import TwilioSecret from './TwilioSecret';
 var TwilioClient = require('twilio')(TwilioSecret.sid, TwilioSecret.token);
 
 export class Twilio {
-    static async sendSMS(phonenumber: string, content: string) {
+
+    /**
+     * 
+     * 
+     * @static
+     * @param {string} phonenumber
+     * @param {string} content
+     * @returns {string}
+     * 
+     * @memberOf Twilio
+     */
+    static async sendSMS(phonenumber: string, content: string): Promise<string> {
         var ErrorMessage: string = undefined;
         if (process.env.NODE_ENV == 'production') {
             await TwilioClient.sendSms({
