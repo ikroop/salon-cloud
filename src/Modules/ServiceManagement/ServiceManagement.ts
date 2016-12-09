@@ -254,29 +254,49 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * @SalonCloudResponse.data: ServiceItemData
      * 
      * 
-     *  */ 
-    public async getServiceItemById(serviceId: string): Promise<SalonCloudResponse<ServiceItemData>>{
-        var response : SalonCloudResponse<ServiceItemData> = {
+     *  */
+    public async getServiceItemById(serviceId: string): Promise<SalonCloudResponse<ServiceItemData>> {
+        var response: SalonCloudResponse<ServiceItemData> = {
             data: undefined,
             code: undefined,
             err: undefined
         }
-        var serviceSearch = ServiceGroupModel.findOne({'service_list' : {'$elemMatch': {'_id':serviceId }}}).exec();
-        await serviceSearch.then(function(docs){
-            if(docs){
-                response.data = docs.service_list[0];
+        var serviceSearch = ServiceGroupModel.findOne({ 'service_list': { '$elemMatch': { '_id': serviceId } } }).exec(function (err, docs: ServiceItemData) {
+            if (err) {
+                response.code = 500;
+                response.err = err;
+            } else if (!docs) {
                 response.code = 200;
-            }else {
-                response.err = ErrorMessage.ServiceNotFound;
-                response.code = 400;
+                response.data = undefined;
+            } else {
+                response.code = 200;
+                response.data = docs;
             }
-        }, function(err){
-            response.err = err;
-            response.code = 500;
-        })
+        });
 
         return response;
 
+    }
+
+    public async getServiceGroupByName(groupName: string): Promise<SalonCloudResponse<IServiceGroupData>> {
+
+        var response: SalonCloudResponse<IServiceGroupData> = {
+            data: undefined,
+            code: undefined,
+            err: undefined
+        }
+
+        await ServiceGroupModel.findOne({ 'name': groupName, 'salon_id': this.salonId }).exec(function (err, docs: IServiceGroupData) {
+            if (err) {
+                response.err = err;
+            } else if (!docs) {
+                response.data = undefined;
+            } else {
+                response.data = docs;
+            }
+        });
+
+        return response;
     }
 
 }

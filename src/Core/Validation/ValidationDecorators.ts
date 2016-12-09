@@ -11,6 +11,7 @@ import ServiceGroupModel = require('./../../Modules/ServiceManagement/ServiceMod
 import { IServiceGroupData } from './../../Modules/ServiceManagement/ServiceData';
 import { ErrorMessage } from './../ErrorMessage';
 import UserModel = require('./../../Modules/UserManagement/UserModel');
+import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceManagement';
 import * as moment from 'moment';
 
 //Validate if target element is missing.
@@ -306,30 +307,6 @@ export class IsNotInArray extends DecoratingValidator {
     }
 }
 
-//WE CAN USE IsInRange VALIDATOR FOR THIS ONE INSTEAD
-//Validate if target element is a salary rate.
-//To pass the test: target element must be in range of 0 and 10.
-/*export class IsSalaryRate extends DecoratingValidator {
-
-    public errorType: any;
-    public SalaryRate: number;
-
-    constructor (wrapedValidator: Validator, errorType: any, SalaryRate: number){
-        super();
-        this.wrapedValidator = wrapedValidator;
-        this.errorType = errorType;
-        this.SalaryRate = SalaryRate;
-    }
-
-    public validatingOperation(){
-        if (this.SalaryRate <= 0 || this.SalaryRate >= 10) {
-            return this.errorType;
-        }else{
-            return undefined;
-        }
-    }
-}*/
-
 export class IsValidSalonId extends DecoratingValidator {
     public errorType: any;
     public targetElement: any;
@@ -468,29 +445,14 @@ export class IsServiceGroupNameExisted extends DecoratingValidator {
     public async validatingOperation() {
         var groupName = this.targetElement;
         var salonId = this.salonId;
-        var response = await this.checkExistence(groupName, salonId, this.errorType);
-        return response;
-
+        var serviceManagement = new ServiceManagement(salonId);
+        var response = await serviceManagement.getServiceGroupByName(groupName);
+        if (response.data){
+            return this.errorType;
+        }else {
+            return undefined;
+        }
     }
-
-
-    private async checkExistence(groupName: string, salonId: string, errorType: any): Promise<any> {
-        let promise = new Promise<any>(function (resolve, reject) {
-            var response = undefined;
-            ServiceGroupModel.findOne({ 'name': groupName, 'salon_id': salonId }, function (err, docs) {
-                if (err) {
-                    response = errorType;
-                } else if (!docs) {
-                    response = undefined;
-                } else {
-                    response = errorType;
-                }
-                resolve(response);
-            });
-        });
-        return promise;
-    }
-
 }
 
 //validate if a service Id is valid
@@ -512,32 +474,14 @@ export class IsValidServiceId extends DecoratingValidator {
         var serviceId = this.targetElement;
         var groupName = this.groupName;
         var salonId = this.salonId;
-        var response = await this.checkExistence(serviceId, groupName, salonId, this.errorType);
-        return response;
-
+        var serviceManagement = new ServiceManagement(salonId);
+        var response = await serviceManagement.getServiceItemById(serviceId);
+        if (response.data){
+            return this.errorType;
+        }else {
+            return undefined;
+        }
     }
-
-    private async checkExistence(serviceId: string, groupName: string, salonId: string, errorType: any): Promise<any> {
-        let promise = new Promise<any>(function (resolve, reject) {
-            var response = undefined;
-            ServiceGroupModel.findOne({ 'name': groupName, 'salon_id': salonId }, function (err, docs: any) {
-                if (err) {
-                    response = errorType;
-                } else if (!docs) {
-                    response = errorType;
-                } else {
-                    if (docs.service_list.id(serviceId)) {
-                        response = undefined;
-                    } else {
-                        response = errorType;
-                    }
-                }
-                resolve(response);
-            });
-        });
-        return promise;
-    }
-
 }
 
 //validate if an employeeId is valid
