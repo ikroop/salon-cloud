@@ -73,6 +73,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         }
         appointmentByPhone.normalizationData(newAppointment);
 
+        // FIX ME: build UserProfile
         // Get customer Id
         var getCustomerId = await this.getCustomerId(salonId, inputData);
         if (getCustomerId.err) {
@@ -113,61 +114,66 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
     };
 
-
-    private async getCustomerId(salonId: string, inputData: any): Promise<SalonCloudResponse<string>> {
+    /**
+     * 
+     * 
+     * @private
+     * @param {string} phone
+     * @param {UserProfile} customerProfile
+     * @returns {Promise<SalonCloudResponse<string>>}
+     * 
+     * @memberOf AbstractAdministrator
+     */
+    private async getCustomerId(phone: string, customerProfile: UserProfile): Promise<SalonCloudResponse<string>> {
         var response: SalonCloudResponse<string> = {
             data: undefined,
             code: undefined,
             err: undefined
         };
-        var customerManagementDP = new CustomerManagement(salonId);
-        var userFinding = UserModel.findOne({ 'username': inputData.customer_phone }).exec();
-        await userFinding.then(async function (docs) {
-            // customer account existed, get Id and check if needed to create profile for salon;
-            if (docs) {
-                response.data = docs._id;
-                response.code = 200;
-                var flag = false;
-                // check if salon profile existed for the customer and create one if needed;
-                for (let each of docs.profile) {
-                    if (salonId === each.salon_id) {
-                        flag = true;
-                        break;
-                    }
-                }
-                if (flag === false) {
-                    var customerProfileCreation = await customerManagementDP.addCustomerProfile(docs._id, inputData)
-                }
+
+        var customerManagementDP = new CustomerManagement(customerProfile.salon_id);
+
+        var customer = await customerManagementDP.getUserByPhone(phone);
+        if (!customer) {
+            // customer account not existed, create account with salon profile for the user                
+            var customerCreation = await customerManagementDP.createCustomer(phone, customerProfile);
+            if (customerCreation.err) {
+                response.err = customerCreation.err;
+                response.code = customerCreation.code;
                 return response;
-
-
             } else {
-                // customer account not existed, create account with salon profile for the user
-                var customerCreation: any = await customerManagementDP.createCustomer(inputData);
-                if (customerCreation.err) {
-                    response.err = customerCreation.err;
-                    response.code = customerCreation.code;
-                    return response;
-                } else {
-                    response.data = customerCreation.data._id;
-                    response.code = 200;
-                    return response;
-                }
+                response.data = customerCreation.data.user._id;
+                response.code = 200;
+                return response;
             }
-        }, function (err) {
-            response.err = err;
-            response.code = 500;
-        })
-
-        return response;
+        } else {
+            if (customer.profile.length === 0) {
+                //create customer profile for this salon
+                var newCustomerProdile = await customerManagementDP.addCustomerProfile(customer._id, customerProfile);
+            }
+            response.data = customer._id;
+            response.code = 200;
+            return response;
+        }
 
     }
 
     public updateAppointment(appointment: AppointmentData) {
 
     };
-    public async updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData, schedule: ScheduleBehavior) {
-        var response : SalonCloudResponse<any> = {
+
+    /**
+     * 
+     * 
+     * @param {string} employeeId
+     * @param {DailyScheduleData} dailySchedule
+     * @param {ScheduleBehavior} schedule
+     * @returns {Promise<SalonCloudResponse<any>>}
+     * 
+     * @memberOf AbstractAdministrator
+     */
+    public async updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData, schedule: ScheduleBehavior): Promise<SalonCloudResponse<undefined>> {
+        var response: SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -179,10 +185,10 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         //get result;
         //TODO: review requirement for information returned;
-        if(result.err){
+        if (result.err) {
             response.err = result.err;
             response.code = result.code;
-        }else{
+        } else {
             response.code = result.code;
             response.data = result.data;
         }
@@ -190,8 +196,18 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
     };
 
-    public async updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData, schedule: ScheduleBehavior) {
-        var response : SalonCloudResponse<any> = {
+    /**
+     * 
+     * 
+     * @param {string} employeeId
+     * @param {WeeklyScheduleData} weeklySchedule
+     * @param {ScheduleBehavior} schedule
+     * @returns {Promise<SalonCloudResponse<any>>}
+     * 
+     * @memberOf AbstractAdministrator
+     */
+    public async updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData, schedule: ScheduleBehavior): Promise<SalonCloudResponse<undefined>> {
+        var response: SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -203,10 +219,10 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         //get result;
         //TODO: review requirement for information returned;
-        if(result.err){
+        if (result.err) {
             response.err = result.err;
             response.code = result.code;
-        }else{
+        } else {
             response.code = result.code;
             response.data = result.data;
         }
