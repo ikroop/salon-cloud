@@ -46,12 +46,7 @@ export class SalonManagementRouter {
                 }
             } else {
                 dataReturn = {
-                    'uid': salonCreation.data.uid,
-                    'salon_id': salonCreation.data.salon_id,
-                    'role': salonCreation.data.role,
-                    'default_schedule': salonCreation.data.default_schedule,
-                    'sample_services': salonCreation.data.sample_services,
-                    'salon_data': salonCreation.data.salon_data,
+                    '_id': salonCreation.data
                 }
             }
             response.status(salonCreation.code);
