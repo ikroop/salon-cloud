@@ -21,7 +21,7 @@ import { AuthorizationRouter } from './Authorization';
 import { DailyDayData } from './../Modules/Schedule/ScheduleData'
 import { ErrorMessage } from './../Core/ErrorMessage'
 import { BaseValidator } from './../Core/Validation/BaseValidator'
-import { MissingCheck, IsAfterSecondDate, IsValidEmployeeId, IsValidSalonId } from './../Core/Validation/ValidationDecorators'
+import { MissingCheck, IsAfterSecondDate, IsValidSalonId } from './../Core/Validation/ValidationDecorators'
 
 export class ScheduleRouter {
     private router: Router = Router();

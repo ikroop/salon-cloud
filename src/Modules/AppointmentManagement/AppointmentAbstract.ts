@@ -16,7 +16,6 @@ import { ServiceManagement } from './../ServiceManagement/ServiceManagement'
 import { EmployeeSchedule } from './../Schedule/EmployeeSchedule'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { BaseValidator } from './../../Core/Validation/BaseValidator'
-import { MissingCheck, IsValidEmployeeId } from './../../Core/Validation/ValidationDecorators'
 import { DailyScheduleData, DailyScheduleArrayData } from './../Schedule/ScheduleData'
 
 export abstract class AppointmentAbstract implements AppointmentBehavior {

@@ -9,7 +9,7 @@ import WeeklyScheduleModel = require('./WeeklyScheduleModel');
 import DailyScheduleModel = require('./DailyScheduleModel');
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
-import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidEmployeeId }
+import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidEmployeeId, IsMongooseId }
     from './../../Core/Validation/ValidationDecorators';
 import { SalonSchedule } from './SalonSchedule'
 import { ErrorMessage } from './../../Core/ErrorMessage';
@@ -147,6 +147,7 @@ export class EmployeeSchedule extends Schedule {
 
         let employeeIdValidation = new BaseValidator(this.employeeId);
         employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId);
+        employeeIdValidation = new IsMongooseId(employeeIdValidation, ErrorMessage.EmployeeNotFound);
         employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, this.salonId);
         let employeeIdError = await employeeIdValidation.validate();
 
