@@ -55,18 +55,18 @@ export class UserManagement implements UserManagementBehavior {
 
         var userDocs = UserModel.findOne({ '_id': userId }).exec();
 
-        await userDocs.then(async function(docs) {
+        await userDocs.then(async function (docs) {
             if (docs) {
                 var checkExistArray = docs.profile.filter(profile => profile.salon_id === userProfile.salon_id);
 
                 if (checkExistArray.length == 0) {
                     docs.profile.push(userProfile);
                     var saveAction = docs.save();
-                    await saveAction.then(function(innerDocs) {
+                    await saveAction.then(function (innerDocs) {
                         returnResult.data = userProfile;
                         returnResult.code = 200;
 
-                    }, function(err) {
+                    }, function (err) {
                         returnResult.err = err;
                         returnResult.code = 500;
                     });
@@ -80,7 +80,7 @@ export class UserManagement implements UserManagementBehavior {
                 returnResult.code = 404;
 
             }
-        }, function(err) {
+        }, function (err) {
             returnResult.err = err;
             returnResult.code = 500;
 
@@ -105,7 +105,7 @@ export class UserManagement implements UserManagementBehavior {
         var salonId = this.salonId;
         if (userId) {
             if (salonId) {
-                await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": salonId } } }, ).exec(function(err, docs: IUserData) {
+                await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": salonId } } }, ).exec(function (err, docs: IUserData) {
                     if (docs && docs.profile && docs.profile.length > 0) {
                         rolevalue = docs.profile[0].role;
                     } else {
@@ -113,9 +113,9 @@ export class UserManagement implements UserManagementBehavior {
                     }
                 });
 
-                if (rolevalue){
+                if (rolevalue) {
                     role = this.roleToString(rolevalue);
-                }else{
+                } else {
                     role = 'SignedUser';
                 }
 
@@ -127,6 +127,24 @@ export class UserManagement implements UserManagementBehavior {
             role = 'Anonymouse';
         }
         return role;
+    }
+
+    /**
+     * 
+     * 
+     * @param {string} phone
+     * @returns {Promise<IUserData>}
+     * 
+     * @memberOf UserManagement
+     */
+    public async getUserByPhone(phone: string): Promise<IUserData> {
+        var user: IUserData = undefined;
+        await UserModel.findOne({ "username": phone }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: IUserData) {
+            if (!err) {
+                user = docs;
+            }
+        });
+        return user;
     }
 
     /**
@@ -145,7 +163,7 @@ export class UserManagement implements UserManagementBehavior {
                 roleString = roleDef;
                 break;
             }
-        }     
+        }
 
         return roleString;
     }
