@@ -225,12 +225,8 @@ describe('Salon Management', function () {
                         throw err;
                     }
                     res.status.should.be.equal(200);
-                    res.body.should.have.property('uid');
-                    res.body.should.have.property('salon_id');
-                    res.body.should.have.property('role').eql(1);
-                    res.body.should.have.property('default_schedule');
-                    res.body.should.have.property('sample_services');
-                    res.body.should.have.property('salon_data');
+                    console.log('res.body:', res.body);
+                    res.body.should.have.property('_id');
                     done();
                 });
         });
@@ -252,12 +248,7 @@ describe('Salon Management', function () {
                         throw err;
                     }
                     res.status.should.be.equal(200);
-                    res.body.should.have.property('uid');
-                    res.body.should.have.property('salon_id');
-                    res.body.should.have.property('role').eql(1);
-                    res.body.should.have.property('default_schedule');
-                    res.body.should.have.property('sample_services');
-                    res.body.should.have.property('salon_data');
+                    res.body.should.have.property('_id');
                     done();
                 });
         });
