@@ -6,8 +6,24 @@
 
 export const RoleDefinition =
     {
-        'Owner': 1,
-        'Manager': 2,
-        'Technician': 3,
-        'Customer': 4
+        'Owner':
+        {
+            'value': 1,
+            'text': 'Owner'
+        },
+        'Manager':
+        {
+            'value': 2,
+            'text': 'Manager'
+        },
+        'Technician':
+        {
+            'value': 3,
+            'text': 'Technician'
+        },
+        'Customer':
+        {
+            'value': 4,
+            'text': 'Customer'
+        }
     };

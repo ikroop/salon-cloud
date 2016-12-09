@@ -159,7 +159,7 @@ export class UserManagement implements UserManagementBehavior {
     private roleToString(role: number): string {
         var roleString: string = undefined;
         for (var roleDef in RoleDefinition) {
-            if (RoleDefinition[roleDef] === role) {
+            if (RoleDefinition[roleDef].value === role) {
                 roleString = roleDef;
                 break;
             }

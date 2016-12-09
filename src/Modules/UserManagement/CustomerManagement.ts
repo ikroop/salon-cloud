@@ -17,7 +17,7 @@ export class CustomerManagement extends UserManagement implements CustomerManage
             err: undefined
         }
         var newProfile: UserProfile = {
-            role: RoleDefinition.Customer,
+            role: RoleDefinition.Customer.value,
             address: profile.address,
             birthday: profile.birthday,
             salon_id: this.salonId,
