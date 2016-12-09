@@ -225,7 +225,6 @@ describe('Salon Management', function () {
                         throw err;
                     }
                     res.status.should.be.equal(200);
-                    console.log('res.body:', res.body);
                     res.body.should.have.property('_id');
                     done();
                 });
