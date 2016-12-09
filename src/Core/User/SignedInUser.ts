@@ -31,32 +31,16 @@ export class SignedInUser implements SignedInUserBehavior {
     }
 
     /**
-	*@name: createSalon
-    *@parameter: SalonInformation
-    *@return: a promise resolved to SalonCloudResponse<data>
-    * - validation
-    * - Get Timezone from address
-    * - create default weekly schedule
-    * - Create sample Services
-    * - Update User Profile
-	*/
-
-    /**
-     * @method: createSalon
-     * @description create salon with sample data
-     *              - validation
-     *              - Get Timezone from address
-     *              - create default weekly schedule
-     *              - Create sample Services
-     *              - Update User Profile 
+     * 
+     * 
      * @param {SalonInformation} salonInformation
-     * @returns 
+     * @returns {Promise<SalonCloudResponse<string>>}
      * 
      * @memberOf SignedInUser
      */
-    public async createSalon(salonInformation: SalonInformation) {
+    public async createSalon(salonInformation: SalonInformation): Promise<SalonCloudResponse<string>> {
 
-        var returnResult: SalonCloudResponse<any> = {
+        var returnResult: SalonCloudResponse<string> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -90,14 +74,7 @@ export class SignedInUser implements SignedInUserBehavior {
         var ownerManagementDP = new OwnerManagement(salonData.data._id);
         var profile = await ownerManagementDP.addOwnerProfile(this.userId); //Todo
 
-        returnResult.data = {
-            salon_id: salonData.data._id,
-            uid: this.userId,
-            role: profile.data.role,
-            default_schedule: defaultSchedule.data,
-            sample_services: [addSample1Result.data, addSample2Result.data],
-            salon_data: salonData.data
-        }
+        returnResult.data = salonData.data._id;
         returnResult.code = 200;
         return returnResult;
     };
