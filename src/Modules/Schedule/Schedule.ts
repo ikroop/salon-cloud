@@ -106,7 +106,7 @@ export abstract class Schedule implements ScheduleBehavior {
     *Step 1: call this.getWeeklyScheduleRecord(date) to get WeeklyDayData[]
     *Step 2: check the returned value in step 1 and return the proper reponse.
 	*/
-    public async getWeeklySchedule() {
+    public async getWeeklySchedule(): Promise<SalonCloudResponse<WeeklyScheduleData>> {
         var response: SalonCloudResponse<WeeklyScheduleData> = {
             code: undefined,
             data: undefined,
@@ -161,8 +161,8 @@ export abstract class Schedule implements ScheduleBehavior {
              if docs does not exist: call this.addDailySchedule(dailySchedule);
     *Step 4: check result form step 3 and return proper response;
 	*/
-    public async saveDailySchedule(dailySchedule: DailyDayData) {
-        var response: SalonCloudResponse<boolean> = {
+    public async saveDailySchedule(dailySchedule: DailyDayData): Promise<SalonCloudResponse<IDailyScheduleData>> {
+        var response: SalonCloudResponse<IDailyScheduleData> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -219,7 +219,7 @@ export abstract class Schedule implements ScheduleBehavior {
              if docs does not exist: call this.addDailySchedule(weeklyScheduleList);
     *Step 4: check result form step 3 and return proper response;
 	*/
-    public async saveWeeklySchedule(weeklyScheduleList: WeeklyDayData[]) {
+    public async saveWeeklySchedule(weeklyScheduleList: WeeklyDayData[]): Promise<SalonCloudResponse<IWeeklyScheduleData>> {
         var response: SalonCloudResponse<IWeeklyScheduleData> = {
             code: undefined,
             data: undefined,
@@ -260,11 +260,7 @@ export abstract class Schedule implements ScheduleBehavior {
             response.code = 500;
             response.err = ErrorMessage.ServerError;
         }
-
-
         return response;
-
-
     }
 
     /**
@@ -686,7 +682,7 @@ export abstract class Schedule implements ScheduleBehavior {
      * 
      * @memberOf Schedule
      */
-    protected async validateCommon(): Promise<SalonCloudResponse<any>> {
+    protected async validateCommon(): Promise<SalonCloudResponse<undefined>> {
         var response: SalonCloudResponse<any> = {
             code: undefined,
             err: undefined,
@@ -711,5 +707,5 @@ export abstract class Schedule implements ScheduleBehavior {
 
     protected abstract normalizeDailySchedule(dailySchedule: DailyDayData[]);
     protected abstract normalizeWeeklySchedule(weeklySchedule: WeeklyDayData[]);
-    protected abstract validateExt(): Promise<SalonCloudResponse<any>>;
+    protected abstract validateExt(): Promise<SalonCloudResponse<undefined>>;
 }

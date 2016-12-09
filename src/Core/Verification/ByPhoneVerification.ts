@@ -10,7 +10,7 @@ import { SalonCloudResponse } from './../SalonCloudResponse'
 
 export class ByPhoneVerification extends Verification {
 
-    public async sendContent(username: string, content: string): Promise<SalonCloudResponse<any>>{
+    public async sendContent(username: string, content: string): Promise<SalonCloudResponse<undefined>>{
         var response : SalonCloudResponse<any> = {
             code: undefined,
             err: undefined,

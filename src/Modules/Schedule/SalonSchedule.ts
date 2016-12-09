@@ -27,7 +27,7 @@ export class SalonSchedule extends Schedule {
         return weeklySchedule
     }
 
-    protected async validateExt(): Promise<SalonCloudResponse<any>>{
+    protected async validateExt(): Promise<SalonCloudResponse<undefined>>{
         return undefined;
     }
 }

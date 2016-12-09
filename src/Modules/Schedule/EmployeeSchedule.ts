@@ -138,13 +138,13 @@ export class EmployeeSchedule extends Schedule {
         return employeeDayData;
     }
 
-    protected async validateExt(): Promise<SalonCloudResponse<any>> {
-        var response: SalonCloudResponse<any> = {
+    protected async validateExt(): Promise<SalonCloudResponse<undefined>> {
+        var response: SalonCloudResponse<undefined> = {
             code: undefined,
             err: undefined,
             data: undefined
         };
-        
+
         let employeeIdValidation = new BaseValidator(this.employeeId);
         employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId);
         employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, this.salonId);

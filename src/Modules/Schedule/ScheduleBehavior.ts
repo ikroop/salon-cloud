@@ -4,32 +4,50 @@
 //
 //
 //
-import { IDailyScheduleData, IWeeklyScheduleData, DailyDayData, WeeklyDayData } from './ScheduleData';
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
 import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
+import { DailyScheduleArrayData, IDailyScheduleData, IWeeklyScheduleData, WeeklyScheduleData, DailyDayData, WeeklyDayData, DailyScheduleData } from './ScheduleData';
 
 export interface ScheduleBehavior {
-    /**
-     * getDailySchedule
-	 *
-     */
-    getDailySchedule(start: SalonTimeData, end: SalonTimeData);
 
     /**
-     * name
+     * 
+     * 
+     * @param {SalonTimeData} start
+     * @param {SalonTimeData} end
+     * @returns {Promise<SalonCloudResponse<DailyScheduleArrayData>>}
+     * 
+     * @memberOf ScheduleBehavior
      */
-    getWeeklySchedule();
-
-
+    getDailySchedule(start: SalonTimeData, end: SalonTimeData): Promise<SalonCloudResponse<DailyScheduleArrayData>>;
 
     /**
-     * name
+     * 
+     * 
+     * @returns {Promise<SalonCloudResponse<WeeklyScheduleData>>}
+     * 
+     * @memberOf ScheduleBehavior
      */
-    saveWeeklySchedule(weeklyScheduleList: WeeklyDayData[]);
+    getWeeklySchedule(): Promise<SalonCloudResponse<WeeklyScheduleData>>;
 
     /**
-     * name
+     * 
+     * 
+     * @param {WeeklyDayData[]} weeklyScheduleList
+     * @returns {Promise<SalonCloudResponse<any>>}
+     * 
+     * @memberOf ScheduleBehavior
      */
-    saveDailySchedule(dailySchedule: DailyDayData);
+    saveWeeklySchedule(weeklyScheduleList: WeeklyDayData[]): Promise<SalonCloudResponse<undefined>>;
+
+    /**
+     * 
+     * 
+     * @param {DailyDayData} dailySchedule
+     * @returns {Promise<SalonCloudResponse<any>>}
+     * 
+     * @memberOf ScheduleBehavior
+     */
+    saveDailySchedule(dailySchedule: DailyDayData): Promise<SalonCloudResponse<undefined>>;
 
 }
