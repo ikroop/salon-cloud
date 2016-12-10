@@ -180,13 +180,6 @@ export class Owner extends AbstractAdministrator {
 
         }
 
-        // validation
-        response = await serviceManagementDP.validateServiceGroup(newServiceGroup);
-        if (response.err) {
-            return response;
-        }
-
-
         // adding service group
         var addingAction = await serviceManagementDP.addGroup(newServiceGroup);
         // return

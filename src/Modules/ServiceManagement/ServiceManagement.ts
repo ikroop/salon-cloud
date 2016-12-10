@@ -56,17 +56,22 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * @return: group id OR ErrorMessage.
      * Add new service group to database
      */
-    public async addGroup(group: ServiceGroupData) {
-        var response: SalonCloudResponse<ServiceGroupData> = {
+    public async addGroup(group: ServiceGroupData): Promise<SalonCloudResponse<IServiceGroupData>> {
+        var response: SalonCloudResponse<IServiceGroupData> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
         var saveStatus;
         //Add new service group to database
-
+        var validations = await this.validateServiceGroup(group);
+        if (validations.err){
+            response.err = validations.err;
+            response.code = validations.code;
+            return response;
+        }
         var dataCreation = ServiceGroupModel.create(group)
-        await dataCreation.then(function (docs) {
+        await dataCreation.then(function (docs: IServiceGroupData) {
             response.data = docs;
             response.code = 200;
             return;
@@ -141,7 +146,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * @return: error message.
      * Validate Service Item.
      */
-    private async validateServiceItem(item: ServiceItemData) {
+    private async validateServiceItem(item: ServiceItemData): Promise<SalonCloudResponse<undefined>> {
         var returnResult: SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
@@ -191,7 +196,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * @return: error message.
      * Validate Service Group.
      */
-    public async validateServiceGroup(group: ServiceGroupData) {
+    public async validateServiceGroup(group: ServiceGroupData): Promise<SalonCloudResponse<undefined>> {
         var returnResult: SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
