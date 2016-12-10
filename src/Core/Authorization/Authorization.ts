@@ -51,6 +51,16 @@ export class Authorization {
                 response.data = undefined;
             }
         } else {
+
+            // User logged in already and request API which require Anonymouse
+            if (roleAPI.role.indexOf('Anonymouse') > -1) {
+                // Api allows to access from Anonymouse
+                response.code = 403;
+                response.data = undefined;
+                response.err = ErrorMessage.NoPermission.err;
+                return response;
+            } 
+
             // userId is exsiting, it means this is SignedUser
             if (roleAPI.role.indexOf('SignedUser') > -1) {
                 // Api allow to access from SignedUser
