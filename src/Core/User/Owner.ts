@@ -21,7 +21,7 @@ import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceMana
 import { Schedule } from './../../Modules/Schedule/Schedule'
 import { defaultWeeklySchedule } from './../DefaultData'
 import { EmployeeSchedule } from './../../Modules/Schedule/EmployeeSchedule'
-import { EmployeeInput, EmployeeReturn } from './../../Modules/UserManagement/EmployeeData';
+import { EmployeeReturn } from './../../Modules/UserManagement/EmployeeData';
 import { UserToken } from './../Authentication/AuthenticationData';
 
 export class Owner extends AbstractAdministrator {
@@ -49,28 +49,11 @@ export class Owner extends AbstractAdministrator {
      *     - fullname: employeeProfile.fullname,
      *     - role: employeeProfile.role
      */
-    public async addEmployee(username: string, employeeProfile: EmployeeInput, verificationObj: Verification): Promise<SalonCloudResponse<EmployeeReturn>> {
+    public async addEmployee(username: string, employeeProfile: UserProfile, verificationObj: Verification): Promise<SalonCloudResponse<EmployeeReturn>> {
         var response: SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
             err: undefined
-        }        
-
-        // 'phone' validation
-        var phoneNumberValidation = new BaseValidator(employeeProfile.phone);
-        phoneNumberValidation = new MissingCheck(phoneNumberValidation, ErrorMessage.MissingPhoneNumber);
-        phoneNumberValidation = new IsPhoneNumber(phoneNumberValidation, ErrorMessage.WrongPhoneNumberFormat);
-        var phoneNumberError = await phoneNumberValidation.validate();
-        if (phoneNumberError) {
-            response.err = phoneNumberError.err;
-            response.code = 400;
-            return response;
-        }
-
-        let employeeManagementDP = new EmployeeManagement(employeeProfile.salon_id);
-        response = await employeeManagementDP.validation(employeeProfile);
-        if (response.err) {
-            return response;
         }
 
         // create employee account with username;
@@ -84,17 +67,42 @@ export class Owner extends AbstractAdministrator {
         if (accountCreation.err) {
             response.err = accountCreation.err;
             response.code = accountCreation.code;
-            return response;
+            return response; // Return Error if registering error
         } else {
             let content = 'Your account with Salonhelp has been successfully created! Username: ' + username + ', Password: ' + randomPasswordString;
             verificationObj.sendContent(username, content);
         }
-        
+
         //Signin new employee
         let signinData: SalonCloudResponse<UserToken> = await authObject.signInWithUsernameAndPassword(username, randomPasswordString);
 
+        if (signinData.err) {
+            response.err = signinData.err;
+            response.code = signinData.code;
+            return response; // Return Error if signing in error
+        }
+
         // add new profile to the account
+        let employeeManagementDP = new EmployeeManagement(employeeProfile.salon_id);
         let addProfileAction = await employeeManagementDP.addEmployeeProfile(signinData.data.user._id, employeeProfile);
+
+        if (addProfileAction.err) {
+            response.err = addProfileAction.err;
+            response.code = addProfileAction.code;
+            return response; //Return Error if adding employee error
+        }
+
+        // add default weeklySchedule Schedule
+        // Create default Schedule
+        var scheduleDP = new EmployeeSchedule(employeeProfile.salon_id, signinData.data.user._id);
+        var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule);
+
+        if (defaultSchedule.err) {
+            response.err = defaultSchedule.err;
+            response.code = defaultSchedule.code;
+            return response; //Return Error if adding default schedule error
+        }
+
         response.data = {
             uid: signinData.data.user._id,
             salon_id: employeeProfile.salon_id,
@@ -104,16 +112,8 @@ export class Owner extends AbstractAdministrator {
             role: employeeProfile.role,
         }
 
-        // add default weeklySchedule Schedule
-        // Create default Schedule
-        var scheduleDP = new EmployeeSchedule(employeeProfile.salon_id, signinData.data.user._id);
-        var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule);
-        
         response.code = 200;
-
         return response;
-
-
     }
 
     public activateEmployee(employeeId: string): SalonCloudResponse<boolean> {

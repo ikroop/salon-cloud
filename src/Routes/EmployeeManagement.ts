@@ -31,9 +31,7 @@ export class EmployeeManagementRouter {
             result = await userObject.addEmployee(request.body.phone, request.body, new ByPhoneVerification());
             let dataReturn;
             if (result.err) {
-                dataReturn = {
-                    'err': result.err,
-                };
+                dataReturn = result.err
             } else {
                 dataReturn = {
                     '_id': result.data.uid

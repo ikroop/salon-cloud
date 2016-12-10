@@ -9,7 +9,6 @@ import { BaseValidator } from './../../Core/Validation/BaseValidator'
 import {
     IsInArray, IsNumber, IsPhoneNumber, IsString, IsSSN, MissingCheck, IsValidNameString, IsInRange, IsValidSalonId
 } from './../../Core/Validation/ValidationDecorators'
-import { EmployeeInput } from './../../Modules/UserManagement/EmployeeData';
 
 export class EmployeeManagement extends UserManagement implements EmployeeManagementBehavior {
 
@@ -26,13 +25,20 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
      * 
      * @memberOf EmployeeManagement
      */
-    public async addEmployeeProfile(employeeId: string, profile: any): Promise<SalonCloudResponse<UserProfile>> {
+    public async addEmployeeProfile(employeeId: string, profile: UserProfile): Promise<SalonCloudResponse<UserProfile>> {
 
         var returnResult: SalonCloudResponse<UserProfile> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
+
+        var validations = await this.validation(profile);
+        if (validations.err){
+            returnResult.code = validations.code;
+            returnResult.err = validations.err;
+            return returnResult;
+        }
         var newProfile: UserProfile = {
             role: profile.role,
             fullname: profile.fullname,
@@ -41,7 +47,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
             nickname: profile.nickname,
             salary_rate: profile.salary_rate,
             cash_rate: profile.cash_rate,
-            social_security_number: profile.social_serurity_number,
+            social_security_number: profile.social_security_number,
 
         }
         let addProfileAction = await this.addProfile(employeeId, newProfile);
@@ -65,13 +71,23 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
      * 
      * @memberOf EmployeeManagement
      */
-    public async validation(employeeProfile: EmployeeInput) {
+    public async validation(employeeProfile: UserProfile) {
 
         var response: SalonCloudResponse<UserProfile> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
+         // 'phone' validation
+        var phoneNumberValidation = new BaseValidator(employeeProfile.phone);
+        phoneNumberValidation = new MissingCheck(phoneNumberValidation, ErrorMessage.MissingPhoneNumber);
+        phoneNumberValidation = new IsPhoneNumber(phoneNumberValidation, ErrorMessage.WrongPhoneNumberFormat);
+        var phoneNumberError = await phoneNumberValidation.validate();
+        if (phoneNumberError) {
+            response.err = phoneNumberError;
+            response.code = 400;
+            return response;
+        }
 
         // validation:
         // 'role' validation:
@@ -81,7 +97,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         roleValidation = new IsInArray(roleValidation, ErrorMessage.UnacceptedRoleForAddedEmployeeError, [2, 3]);
         var roleError = await roleValidation.validate();
         if (roleError) {
-            response.err = roleError.err;
+            response.err = roleError;
             response.code = 400;
             return response;
         }
@@ -92,7 +108,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         fullnameValidation = new IsValidNameString(fullnameValidation, ErrorMessage.InvalidNameString);
         var fullnameError = await fullnameValidation.validate();
         if (fullnameError) {
-            response.err = fullnameError.err;
+            response.err = fullnameError;
             response.code = 400;
             return response;
         }
@@ -103,7 +119,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         nicknameValidation = new IsValidNameString(nicknameValidation, ErrorMessage.InvalidNameString);
         var nicknameError = await nicknameValidation.validate();
         if (nicknameError) {
-            response.err = nicknameError.err;
+            response.err = nicknameError;
             response.code = 400;
             return response;
         }
@@ -114,7 +130,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         salaryRateValidation = new IsInRange(salaryRateValidation, ErrorMessage.SalaryRateRangeError, 0, 10);
         var salaryRateError = await salaryRateValidation.validate();
         if (salaryRateError) {
-            response.err = salaryRateError.err;
+            response.err = salaryRateError;
             response.code = 400;
             return response;
         }
@@ -125,7 +141,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         cashRateValidation = new IsInRange(cashRateValidation, ErrorMessage.CashRateRangeError, 0, 10);
         var cashRateError = await cashRateValidation.validate();
         if (cashRateError) {
-            response.err = cashRateError.err;
+            response.err = cashRateError;
             response.code = 400;
             return response;
         }
@@ -136,7 +152,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
             ssnValidation = new IsSSN(ssnValidation, ErrorMessage.WrongSSNFormat);
             var ssnError = await ssnValidation.validate();
             if (ssnError) {
-                response.err = ssnError.err;
+                response.err = ssnError;
                 response.code = 400;
                 return response;
             }

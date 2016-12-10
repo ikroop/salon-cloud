@@ -17,11 +17,12 @@ import { SignedInUser } from './../src/Core/User/SignedInUser';
 import { Owner } from './../src/Core/User/Owner';
 import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
 import { ByPhoneVerification } from './../src/Core/Verification/ByPhoneVerification';
-import { EmployeeInput, EmployeeReturn } from './../src/Modules/UserManagement/EmployeeData';
+import { EmployeeReturn } from './../src/Modules/UserManagement/EmployeeData';
 import { UserToken } from './../src/Core/Authentication/AuthenticationData';
 import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
 import { SalonInformation } from './../src/Modules/SalonManagement/SalonData'
 import * as moment from 'moment';
+import { UserProfile } from './../src/Modules/UserManagement/UserData';
 
 describe('Schedule Management', function () {
     let validToken;
@@ -75,7 +76,7 @@ describe('Schedule Management', function () {
         // 4. Add new employee
         const owner = new Owner(loginData.data.user._id, new SalonManagement(validSalonId));
         // Add new employee
-        const employeeInput: EmployeeInput = {
+        const employeeInput: UserProfile = {
             salon_id: validSalonId,
             role: 2,
             phone: "7703456789",

@@ -14,7 +14,7 @@ import { SignedInUser } from './../src/Core/User/SignedInUser';
 import { Owner } from './../src/Core/User/Owner';
 import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
 import { ByPhoneVerification } from './../src/Core/Verification/ByPhoneVerification';
-import { EmployeeInput, EmployeeReturn } from './../src/Modules/UserManagement/EmployeeData';
+import { EmployeeReturn } from './../src/Modules/UserManagement/EmployeeData';
 import { UserToken } from './../src/Core/Authentication/AuthenticationData';
 import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
 import { SalonInformation } from './../src/Modules/SalonManagement/SalonData'
@@ -367,7 +367,7 @@ describe('Employee Management', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to create new employee without phone number', function (done) {
+        it('should return ' + ErrorMessage.MissingUsername.err.name + ' error trying to create new employee without phone number', function (done) {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
@@ -388,15 +388,14 @@ describe('Employee Management', function () {
                     if (err) {
                         throw err;
                     }
-
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingPhoneNumber.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingUsername.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.WrongPhoneNumberFormat.err.name + ' error trying to create new employee with wrong phone format', function (done) {
+        it('should return ' + ErrorMessage.NotEmailOrPhoneNumber.err.name + ' error trying to create new employee with wrong phone format', function (done) {
             var token = validToken;
             var salonId = validSalonId;
             var bodyRequest = {
@@ -421,7 +420,7 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.WrongPhoneNumberFormat.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.NotEmailOrPhoneNumber.err.name);
                     done();
                 });
         });

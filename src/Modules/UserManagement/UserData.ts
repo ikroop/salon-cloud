@@ -16,7 +16,8 @@ export interface UserProfile {
     salary_rate?: number;
     salon_id: string;
     social_security_number?: string;
-    status: boolean;
+    status?: boolean;
+    phone?: string;
 }
 
 export interface UserData {
