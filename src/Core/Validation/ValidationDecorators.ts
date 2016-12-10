@@ -15,7 +15,7 @@ import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceMana
 import { UserManagement } from './../../Modules/UserManagement/UserManagement';
 import { SalonManagement } from './../../Modules/SalonManagement/SalonManagement';
 import * as moment from 'moment';
-
+import { SalonTime } from './../SalonTime/SalonTime';
 //Validate if target element is missing.
 //To pass the test: Target Element must not be undefined.
 export class MissingCheck extends DecoratingValidator {
@@ -518,7 +518,7 @@ export class IsValidEmployeeId extends DecoratingValidator {
 //Valid date string is a string which has form of 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD', or 'YYYY-MM-DD HH:mm'
 export class IsSalonTime extends DecoratingValidator {
     public errorType: any;
-    public targetElement: moment.Moment;
+    public targetElement: SalonTime;
     constructor(wrapedValidator: Validator, errorType: any) {
         super();
         this.wrapedValidator = wrapedValidator;
