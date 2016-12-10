@@ -142,8 +142,34 @@ export class UserManagement implements UserManagementBehavior {
         await UserModel.findOne({ "username": phone }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: IUserData) {
             if (!err) {
                 user = docs;
+            } else {
+                user = undefined;
             }
         });
+        return user;
+    }
+
+    /**
+     * 
+     * 
+     * @param {string} Id
+     * @returns {Promise<IUserData>}
+     * 
+     * @memberOf UserManagement
+     */
+    public async getUserById(Id: string): Promise<IUserData> {
+        var user: IUserData = undefined;
+        try {
+            await UserModel.findOne({ "_id": Id }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: IUserData) {
+                if (!err) {
+                    user = docs;
+                } else {
+                    user = undefined;
+                }
+            });
+        } catch (e) {
+            user = undefined;
+        }
         return user;
     }
 

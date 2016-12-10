@@ -12,6 +12,8 @@ import { IServiceGroupData } from './../../Modules/ServiceManagement/ServiceData
 import { ErrorMessage } from './../ErrorMessage';
 import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceManagement';
+import { UserManagement } from './../../Modules/UserManagement/UserManagement';
+import { SalonManagement } from './../../Modules/SalonManagement/SalonManagement';
 import * as moment from 'moment';
 
 //Validate if target element is missing.
@@ -319,30 +321,19 @@ export class IsValidSalonId extends DecoratingValidator {
 
     public async validatingOperation() {
         var salonId = this.targetElement;
-        var response = await this.checkSalonId(salonId, this.errorType);
-        return response;
+        // Check Id valid or not
+        if (!this.isMongooseId(salonId)){
+            return this.errorType;
+        }
 
+        var salonManagement = new SalonManagement(salonId);
+        var response = await salonManagement.getSalonById();
+        if (response && response._id) {
+            return undefined;
+        } else {
+            return this.errorType;
+        }
     }
-
-
-    private async checkSalonId(salonId: string, errorType: any): Promise<any> {
-        let promise = new Promise<any>(function (resolve, reject) {
-            var response = undefined;
-
-            SalonModel.findOne({ '_id': salonId }, function (err, docs) {
-                if (err) {
-                    response = errorType;
-                } else if (!docs) {
-                    response = errorType;
-                } else {
-                    response = undefined;
-                }
-                resolve(response);
-            });
-        });
-        return promise;
-    }
-
 }
 
 //Validate if a name is valid.
@@ -447,9 +438,9 @@ export class IsServiceGroupNameExisted extends DecoratingValidator {
         var salonId = this.salonId;
         var serviceManagement = new ServiceManagement(salonId);
         var response = await serviceManagement.getServiceGroupByName(groupName);
-        if (response.data){
+        if (response.data) {
             return this.errorType;
-        }else {
+        } else {
             return undefined;
         }
     }
@@ -474,11 +465,16 @@ export class IsValidServiceId extends DecoratingValidator {
         var serviceId = this.targetElement;
         var groupName = this.groupName;
         var salonId = this.salonId;
+        // Check Id valid or not
+        if (!this.isMongooseId(serviceId)){
+            return this.errorType;
+        }
+
         var serviceManagement = new ServiceManagement(salonId);
         var response = await serviceManagement.getServiceItemById(serviceId);
-        if (response.data){
+        if (response.data) {
             return this.errorType;
-        }else {
+        } else {
             return undefined;
         }
     }
@@ -501,26 +497,19 @@ export class IsValidEmployeeId extends DecoratingValidator {
     public async validatingOperation() {
         var employeeId = this.targetElement;
         var salonId = this.salonId;
-        var response = await this.checkExistence(employeeId, salonId, this.errorType);
-        return response;
 
-    }
+        // Check Id valid or not
+        if (!this.isMongooseId(salonId)){
+            return this.errorType;
+        }
+        var userManagement = new UserManagement(this.salonId);
 
-    private async checkExistence(employeeId: string, salonId: string, errorType: any): Promise<any> {
-        let promise = new Promise<any>(function (resolve, reject) {
-            var response = undefined;
-             UserModel.findOne({ "_id": employeeId }, { "profile": { "$elemMatch": { "salon_id": salonId } } }, ).exec(function (err, docs) {            
-                if (err) {
-                    response = errorType;
-                } else if (!docs || !docs.profile || docs.profile.length !== 1) {
-                    response = errorType;
-                } else {
-                    response = undefined;
-                }
-                resolve(response);
-            });
-        });
-        return promise;
+        var response = await userManagement.getUserById(employeeId);
+        if (response && response.profile.length === 1) {
+            return undefined;
+        } else {
+            return this.errorType;
+        }
     }
 
 }
@@ -588,8 +577,8 @@ export class IsValidSalonTimeData extends DecoratingValidator {
 
     public async validatingOperation() {
         var data = this.targetElement;
-        var dateString = data.year+'-'+data.month+'-'+data.day+' '+data.hour+':'+data.min;
-        if (!moment(dateString,["'YYYY-MM-DD HH:mm:ss'", "YYYY-MM-DD", 'YYYY-MM-DD HH:mm']).isValid()) {
+        var dateString = data.year + '-' + data.month + '-' + data.day + ' ' + data.hour + ':' + data.min;
+        if (!moment(dateString, ["'YYYY-MM-DD HH:mm:ss'", "YYYY-MM-DD", 'YYYY-MM-DD HH:mm']).isValid()) {
             return this.errorType;
         } else {
             return undefined;

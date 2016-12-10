@@ -4,7 +4,7 @@
  * 
  */
 import { SalonManagementBehavior } from './SalonManagementBehavior'
-import { ISalonModel, SalonData, SalonInformation, SalonSetting } from './SalonData'
+import { ISalonData, SalonData, SalonInformation, SalonSetting } from './SalonData'
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import SalonModel = require('./SalonModel');
 import { defaultSalonSetting } from './../../Core/DefaultData'
@@ -36,7 +36,7 @@ export class SalonManagement implements SalonManagementBehavior {
 	*/
     public async createSalonDocs(salonInformation: SalonInformation) {
 
-        var returnResult: SalonCloudResponse<ISalonModel> = {
+        var returnResult: SalonCloudResponse<ISalonData> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -76,12 +76,19 @@ export class SalonManagement implements SalonManagementBehavior {
     public updateSetting(setting: SalonSetting): SalonCloudResponse<boolean> {
         return;
     };
-
+    
+    /**
+     * 
+     * 
+     * @returns {Promise<number>}
+     * 
+     * @memberOf SalonManagement
+     */
     public getFlexibleTime(): Promise<number> {
         let salonId = this.salonId;
         let promise = new Promise<any>(function (resolve, reject) {
             var flexibleTime = 0;
-            SalonModel.findOne({ '_id': salonId }, function (err, docs: ISalonModel) {
+            SalonModel.findOne({ '_id': salonId }, function (err, docs: ISalonData) {
                 if (err) {
                     flexibleTime = 0;
                 } else if (!docs) {
@@ -95,6 +102,14 @@ export class SalonManagement implements SalonManagementBehavior {
         return promise;
     }
 
+    /**
+     * 
+     * 
+     * @param {SalonInformation} salonInformation
+     * @returns
+     * 
+     * @memberOf SalonManagement
+     */
     public async validation(salonInformation: SalonInformation) {
         var returnResult: SalonCloudResponse<any> = {
             code: undefined,
@@ -149,5 +164,27 @@ export class SalonManagement implements SalonManagementBehavior {
         return returnResult;
     }
 
+    /**
+     * 
+     * 
+     * @returns {Promise<ISalonData>}
+     * 
+     * @memberOf SalonManagement
+     */
+    public async getSalonById(): Promise<ISalonData> {
+        var salon: ISalonData = undefined;
+        try {
+            await SalonModel.findOne({ "_id": this.salonId }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: ISalonData) {
+                if (!err) {
+                    salon = docs;
+                } else {
+                    salon = undefined;
+                }
+            });
+        } catch (e) {
+            salon = undefined;
+        }
+        return salon;
+    }
 
 }
