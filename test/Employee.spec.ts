@@ -9,47 +9,99 @@ import * as chai from 'chai';
 var expect = chai.expect;
 var should = chai.should();
 import { ErrorMessage } from './../src/Core/ErrorMessage';
+import { Authentication } from './../src/Core/Authentication/Authentication';
+import { SignedInUser } from './../src/Core/User/SignedInUser';
+import { Owner } from './../src/Core/User/Owner';
+import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
+import { ByPhoneVerification } from './../src/Core/Verification/ByPhoneVerification';
+import { EmployeeInput, EmployeeReturn } from './../src/Modules/UserManagement/EmployeeData';
+import { UserToken } from './../src/Core/Authentication/AuthenticationData';
+import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
+import { SalonInformation } from './../src/Modules/SalonManagement/SalonData'
 
 describe('Employee Management', function () {
-    var validToken;
-    var invalidToken;
-    var validSalonId;
-    var invalidSalonId;
-    var notFoundSalonId;
-    var defaultPassword = '1234@1234';
-    var phone = ((new Date()).getTime() % 10000000000).toString();
+    let validToken;
+    let invalidToken = 'eyJhbGciOiJSUz';
+    let validSalonId;
+    let invalidSalonId = "5825e0365193422";
+    let notFoundSalonId = "5825e03651934227174513d8";
+    let defaultPassword = '1234@1234';
+    let validEmployeeId;
+    let anotherUserId;
+    let anotherUserToken;
 
-    before(function (done) {
+    before(async function () {
+        // 1. Create Owner 
+        var authentication = new Authentication();
+        const ownerEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        await authentication.signUpWithUsernameAndPassword(ownerEmail, defaultPassword);
 
-        // Login and get token
-        var user = {
-            username: 'unittest1473044833007@gmail.com',
-            password: defaultPassword
-        };
-        request(server)
-            .post('/api/v1/authentication/signinwithusernameandpassword')
-            .send(user)
-            .end(function (err, res) {
-                if (err) {
-                    throw err;
-                }
-
-                validToken = res.body.auth.token;
-                invalidToken = 'eyJhbGciOiJSUz';
-                validSalonId = "5816b9ddca5a6c2aa9bfd8c9";
-                invalidSalonId = "00";
-                notFoundSalonId = '97ba653d54a6e5';
-                done();
-            });
-    });
-    after(function () {
+        // 2. login to get access token
+        var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
+        validToken = loginData.data.auth.token;
+        // 3. Create salon
+        var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(undefined));
+        var salonInformationInput: SalonInformation = {
+            email: 'salon@salon.com',
+            phone: {
+                number: '7703456789',
+                is_verified: false
+            },
+            location: {
+                address: '2506 Bailey Dr NW, Norcross, GA 30071',
+                is_verified: false,
+                timezone_id: undefined
+            },
+            salon_name: 'Salon Appointment Test'
+        }
+        var salon = await signedInUser.createSalon(salonInformationInput);
+        validSalonId = salon.data;
+        
+        var authentication = new Authentication();
+        const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        await authentication.signUpWithUsernameAndPassword(anotherEmail, defaultPassword);
+        // Get Token
+        var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
+        anotherUserId = loginData.data.user._id;
+        anotherUserToken = loginData.data.auth.token;
+        
     });
 
     describe('Unit Test Add New Employee', function () {
         var apiUrl = '/api/v1/employee/create';
 
-        /*it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
             var token = invalidToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId,
+                'role': 2,
+                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'fullname': 'Thanh Le',
+                'nickname': 'Lee',
+                'salary_rate': 6,
+                'cash_rate': 6,
+                'social_security_number': '165374245'
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to request with token no permission', function (done) {
+            var token = anotherUserToken;
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
@@ -73,10 +125,10 @@ describe('Employee Management', function () {
 
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
                     done();
                 });
-        });*/
+        });
 
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to create new employee without salon id', function (done) {
             var token = validToken;
@@ -722,13 +774,8 @@ describe('Employee Management', function () {
                         throw err;
                     }
                     res.status.should.be.equal(200);
+                    res.body.should.have.property('_id');
 
-                    res.body.should.have.property('uid');
-                    // TODO: check uid format: Id must be a single String of 12 bytes or a string of 24 hex characters
-                    res.body.salon_id.should.be.equal(bodyRequest.salon_id);
-                    res.body.phone.should.be.equal(bodyRequest.phone);
-                    res.body.fullname.should.be.equal(bodyRequest.fullname);
-                    res.body.role.should.be.equal(bodyRequest.role);
                     done();
                 });
         });
@@ -756,19 +803,7 @@ describe('Employee Management', function () {
                         throw err;
                     }
                     res.status.should.be.equal(200);
-
-                    res.body.should.have.property('uid');
-                    // TODO: check uid format: Id must be a single String of 12 bytes or a string of 24 hex characters
-                    // let uid = res.body.property('uid');
-                    // uid.should.be.
-                    // let isHex: Boolean = res.body.property(uid).matches("[0-9A-F]+");//http://stackoverflow.com/questions/5317320/regex-to-check-string-contains-only-hex-characters
-                    // let twelveBytes: Boolean = Buffer.byteLength(str, 'utf8');//http://stackoverflow.com/questions/9864662/how-to-get-the-string-length-in-bytes-in-nodejs
-
-
-                    res.body.salon_id.should.be.equal(bodyRequest.salon_id);
-                    res.body.phone.should.be.equal(bodyRequest.phone);
-                    res.body.fullname.should.be.equal(bodyRequest.fullname);
-                    res.body.role.should.be.equal(bodyRequest.role);
+                    res.body.should.have.property('_id');
                     done();
                 });
         });

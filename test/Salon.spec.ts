@@ -4,39 +4,53 @@ import * as chai from 'chai';
 var expect = chai.expect;
 var should = chai.should();
 import { ErrorMessage } from './../src/Core/ErrorMessage';
+import { ServiceManagement } from './../src/Modules/ServiceManagement/ServiceManagement';
+import { EmployeeSchedule } from './../src/Modules/Schedule/EmployeeSchedule';
+import { Authentication } from './../src/Core/Authentication/Authentication';
+import { SignedInUser } from './../src/Core/User/SignedInUser';
+import { Owner } from './../src/Core/User/Owner';
+import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
+import { ByPhoneVerification } from './../src/Core/Verification/ByPhoneVerification';
+import { EmployeeInput, EmployeeReturn } from './../src/Modules/UserManagement/EmployeeData';
+import { UserToken } from './../src/Core/Authentication/AuthenticationData';
+import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
+import { SalonInformation } from './../src/Modules/SalonManagement/SalonData'
+import * as moment from 'moment';
 
 describe('Salon Management', function () {
-    var validToken;
-    var invalidToken;
-    var defaultPassword = '1234@1234'
+    let validToken;
+    let invalidToken = 'eyJhbGciOiJSUz';
+    let validSalonId;
+    let invalidSalonId = "5825e0365193422";
+    let notFoundSalonId = "5825e03651934227174513d8";
+    let defaultPassword = '1234@1234';
+    let validEmployeeId;
+    let anotherUserId;
+    let anotherUserToken;
 
-    before(function (done) {
+    before(async function () {
 
         // Login and get token
         var user = {
             username: 'unittest1473044833007@gmail.com',
             password: defaultPassword
         };
-        request(server)
-            .post('/api/v1/authentication/signinwithusernameandpassword')
-            .send(user)
-            .end(function (err, res) {
-                if (err) {
-                    throw err;
-                }
-                validToken = res.body.auth.token;
-                invalidToken = 'eyJhbGciOiJSUz';
-                done();
-            });
-    });
 
-    after(function () {
+        // 1. Create Owner 
+        var authentication = new Authentication();
+        const ownerEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        await authentication.signUpWithUsernameAndPassword(ownerEmail, defaultPassword);
+
+        // 2. login to get access token
+        var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
+        validToken = loginData.data.auth.token;
+
     });
 
     describe('Unit Test Create Salon API', function () {
         var apiUrl = '/api/v1/salon/create';
 
-        /*it('should return "InvalidTokenError" error trying to create salon information with invalid token', function (done) {
+        it('should return '+ErrorMessage.InvalidTokenError.err.name+' error trying to create salon information with invalid token', function (done) {
             var token = invalidToken;
             var bodyRequest = {
                 'salon_name': 'SunshineNails VA',
@@ -54,12 +68,12 @@ describe('Salon Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(401);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('InvalidTokenError');
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
                     done();
                 });
-        });*/
+        });
 
         it('should return "MissingSalonName" error trying to create salon information without salon name', function (done) {
             var token = validToken;

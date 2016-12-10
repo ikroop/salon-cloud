@@ -4,48 +4,132 @@ import * as chai from 'chai';
 var expect = chai.expect;
 var should = chai.should();
 import { ErrorMessage } from './../src/Core/ErrorMessage';
+import { ServiceManagement } from './../src/Modules/ServiceManagement/ServiceManagement';
+import { EmployeeSchedule } from './../src/Modules/Schedule/EmployeeSchedule';
+import { Authentication } from './../src/Core/Authentication/Authentication';
+import { SignedInUser } from './../src/Core/User/SignedInUser';
+import { Owner } from './../src/Core/User/Owner';
+import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
+import { ByPhoneVerification } from './../src/Core/Verification/ByPhoneVerification';
+import { EmployeeInput, EmployeeReturn } from './../src/Modules/UserManagement/EmployeeData';
+import { UserToken } from './../src/Core/Authentication/AuthenticationData';
+import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
+import { SalonInformation } from './../src/Modules/SalonManagement/SalonData'
+import * as moment from 'moment';
 
 describe('Service Management', function () {
-    var validToken;
-    var invalidToken;
-    var validSalonId;
-    var invalidSalonId;
-    var notFoundSalonId;
-    var premadeGroupName = 'Successful Name' + (new Date().getTime().toString());
-    var defaultPassword = '1234@1234'
-    before(function (done) {
+    let validToken;
+    let invalidToken = 'eyJhbGciOiJSUz';
+    let validSalonId;
+    let invalidSalonId = "5825e0365193422";
+    let notFoundSalonId = "5825e03651934227174513d8";
+    let defaultPassword = '1234@1234';
+    let validEmployeeId;
+    let anotherUserId;
+    let anotherUserToken;
+    const today: moment.Moment = moment();
+    let startDateMoment = moment().add(1, 'months');
+    let endDateMoment = moment().add(2, 'month');
+    let totalDays = endDateMoment.diff(startDateMoment, 'days') + 1;
+    let premadeGroupName = 'Successful Name' + (new Date().getTime().toString());
+
+    before(async function () {
 
         // Login and get token
         var user = {
             username: 'unittest1473044833007@gmail.com',
             password: defaultPassword
         };
-        request(server)
-            .post('/api/v1/authentication/signinwithusernameandpassword')
-            .send(user)
-            .end(function (err, res) {
-                if (err) {
-                    throw err;
-                }
 
-                validToken = res.body.auth.token;
-                invalidToken = 'eyJhbGciOiJSUz';
+        // 1. Create Owner 
+        var authentication = new Authentication();
+        const ownerEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        await authentication.signUpWithUsernameAndPassword(ownerEmail, defaultPassword);
 
-                validSalonId = '5816b9ddca5a6c2aa9bfd8c9';//salon_id
-                invalidSalonId = '00';
-                notFoundSalonId = '97ba6280f531d1b53d54a6e5';
-                done();
-            });
-    });
+        // 2. login to get access token
+        var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
+        validToken = loginData.data.auth.token;
+        // 3. Create salon
+        var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(undefined));
+        var salonInformationInput: SalonInformation = {
+            email: 'salon@salon.com',
+            phone: {
+                number: '7703456789',
+                is_verified: false
+            },
+            location: {
+                address: '2506 Bailey Dr NW, Norcross, GA 30071',
+                is_verified: false,
+                timezone_id: undefined
+            },
+            salon_name: 'Salon Appointment Test'
+        }
+        var salon = await signedInUser.createSalon(salonInformationInput);
 
-    after(function () {
+        validSalonId = salon.data;
+        // 4. Add new employee
+        const owner = new Owner(loginData.data.user._id, new SalonManagement(validSalonId));
+        // Add new employee
+        const employeeInput: EmployeeInput = {
+            salon_id: validSalonId,
+            role: 2,
+            phone: "7703456789",
+            fullname: "Jimmy Tran",
+            nickname: "Jimmy",
+            salary_rate: 0.6,
+            cash_rate: 0.6
+        };
+        const employeeEmail = `${Math.random().toString(36).substring(7)}@gmail.com`;
+        const employee: SalonCloudResponse<EmployeeReturn> = await owner.addEmployee(employeeEmail, employeeInput, new ByPhoneVerification());
+        validEmployeeId = employee.data.uid;
+
+        // Create new user
+        var authentication = new Authentication();
+        const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        await authentication.signUpWithUsernameAndPassword(anotherEmail, defaultPassword);
+        // Get Token
+        var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
+        anotherUserId = loginData.data.user._id;
+        anotherUserToken = loginData.data.auth.token;
+
     });
 
     describe('Unit Test Add Service', function () {
         var apiUrl = '/api/v1/service/create';
 
-        /*it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
             var token = invalidToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
+                'description': 'Traditional Pedicure is a normal Pedicure.',
+                'salon_id': salonId,
+                'service_list': [
+                     {
+                        'name': 'Traditional Pedicure 0',
+                        'price': 5,
+                        'time': 5
+                     }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to request with token no permission', function (done) {
+            var token = anotherUserToken;
             var salonId = validSalonId;
             var bodyRequest = {
                 'group_name': 'Traditional Pedicure'+(new Date().getTime().toString()),
@@ -70,10 +154,10 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
                     done();
                 });
-        });*/
+        });
 
         it('should return ' + ErrorMessage.MissingGroupName.err.name + ' error trying to create new service(s) without specifying its group', function (done) {
             var token = validToken;

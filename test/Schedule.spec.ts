@@ -51,8 +51,6 @@ describe('Schedule Management', function () {
         const ownerEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
         await authentication.signUpWithUsernameAndPassword(ownerEmail, defaultPassword);
 
-        const AnotherWwnerEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
-        await authentication.signUpWithUsernameAndPassword(AnotherWwnerEmail, defaultPassword);
         // 2. login to get access token
         var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
         validToken = loginData.data.auth.token;
