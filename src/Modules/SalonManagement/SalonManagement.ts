@@ -29,11 +29,13 @@ export class SalonManagement implements SalonManagementBehavior {
     };
 
     /**
-	*@name: createSalonDocs
-    *@parameter: SalonInformation
-    *@return: Mongoose result
-    * - Connect database and create salon record
-	*/
+     * 
+     * 
+     * @param {SalonInformation} salonInformation
+     * @returns
+     * 
+     * @memberOf SalonManagement
+     */
     public async createSalonDocs(salonInformation: SalonInformation) {
 
         var returnResult: SalonCloudResponse<ISalonData> = {

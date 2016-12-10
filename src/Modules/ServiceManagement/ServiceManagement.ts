@@ -245,16 +245,13 @@ export class ServiceManagement implements ServiceManagementBehavior {
 
 
     /**
-     * @name: getServiceItemById 
-     * @parameter: {serviceId: string}
-     * 
-     * @note: 
-     * @steps: 
-     * 
-     * @SalonCloudResponse.data: ServiceItemData
      * 
      * 
-     *  */
+     * @param {string} serviceId
+     * @returns {Promise<SalonCloudResponse<ServiceItemData>>}
+     * 
+     * @memberOf ServiceManagement
+     */
     public async getServiceItemById(serviceId: string): Promise<SalonCloudResponse<ServiceItemData>> {
         var response: SalonCloudResponse<ServiceItemData> = {
             data: undefined,
@@ -278,6 +275,14 @@ export class ServiceManagement implements ServiceManagementBehavior {
 
     }
 
+    /**
+     * 
+     * 
+     * @param {string} groupName
+     * @returns {Promise<SalonCloudResponse<IServiceGroupData>>}
+     * 
+     * @memberOf ServiceManagement
+     */
     public async getServiceGroupByName(groupName: string): Promise<SalonCloudResponse<IServiceGroupData>> {
 
         var response: SalonCloudResponse<IServiceGroupData> = {

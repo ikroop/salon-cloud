@@ -23,6 +23,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     public salonId: string;
 
+    /**
+     * Creates an instance of AppointmentAbstract.
+     * 
+     * @param {string} salonId
+     * @param {AppointmentManagement} appointmentManagementDP
+     * 
+     * @memberOf AppointmentAbstract
+     */
     constructor(salonId: string, appointmentManagementDP: AppointmentManagement) {
         this.salonId = salonId;
         this.appointmentManagementDP = appointmentManagementDP;
@@ -32,6 +40,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         return;
     };
 
+    /**
+     * 
+     * 
+     * @param {AppointmentData} appointment
+     * @returns {Promise<SalonCloudResponse<AppointmentData>>}
+     * 
+     * @memberOf AppointmentAbstract
+     */
     public async createAppointment(appointment: AppointmentData): Promise<SalonCloudResponse<AppointmentData>> {
         var response: SalonCloudResponse<AppointmentData> = {
             data: undefined,
@@ -68,6 +84,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
     public updateAppointmentStatus(appointmentId: string, status: number) {
         return
     };
+
     /**
      * 
      * @name: checkBookingAvailableTimes
@@ -159,7 +176,15 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         return response;
     }
 
-    public async checkBookingAvailableTime(servicesArray: Array<any>) {
+    /**
+     * 
+     * 
+     * @param {Array<any>} servicesArray
+     * @returns
+     * 
+     * @memberOf AppointmentAbstract
+     */
+    public async checkBookingAvailableTime(servicesArray: Array<any>) { //FIX ME: must have return data
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
             data: undefined,
             code: undefined,

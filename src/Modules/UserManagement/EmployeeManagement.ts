@@ -16,6 +16,16 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
     activateEmployee(employeeId: string): boolean {
         return;
     };
+
+    /**
+     * 
+     * 
+     * @param {string} employeeId
+     * @param {*} profile
+     * @returns {Promise<SalonCloudResponse<UserProfile>>}
+     * 
+     * @memberOf EmployeeManagement
+     */
     public async addEmployeeProfile(employeeId: string, profile: any): Promise<SalonCloudResponse<UserProfile>> {
 
         var returnResult: SalonCloudResponse<UserProfile> = {
@@ -46,8 +56,14 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         }
 
     };
+    
     /**
-     * @param  {EmployeeInput} employeeProfile
+     * 
+     * 
+     * @param {EmployeeInput} employeeProfile
+     * @returns
+     * 
+     * @memberOf EmployeeManagement
      */
     public async validation(employeeProfile: EmployeeInput) {
 
@@ -133,6 +149,13 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         return;
     };
 
+    /**
+     * 
+     * 
+     * @returns {Promise<SalonCloudResponse<Array<UserData>>>}
+     * 
+     * @memberOf EmployeeManagement
+     */
     public async getAllEmployee(): Promise<SalonCloudResponse<Array<UserData>>> {
         var response: SalonCloudResponse<Array<UserData>> = {
             data: undefined,

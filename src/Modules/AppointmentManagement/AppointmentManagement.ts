@@ -23,6 +23,14 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
         return;
     };
 
+    /**
+     * 
+     * 
+     * @param {AppointmentData} appointment
+     * @returns {Promise<SalonCloudResponse<AppointmentData>>}
+     * 
+     * @memberOf AppointmentManagement
+     */
     public async createAppointment(appointment: AppointmentData): Promise<SalonCloudResponse<AppointmentData>> {
         var response: SalonCloudResponse<AppointmentData> = {
             data: undefined,
@@ -61,6 +69,15 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
         return;
     };
 
+    /**
+     * 
+     * 
+     * @param {string} employeeId
+     * @param {SalonTimeData} date
+     * @returns {Promise<SalonCloudResponse<Array<AppointmentItemData>>>}
+     * 
+     * @memberOf AppointmentManagement
+     */
     public async getEmployeeAppointmentByDate(employeeId: string, date: SalonTimeData): Promise<SalonCloudResponse<Array<AppointmentItemData>>> {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
             data: undefined,

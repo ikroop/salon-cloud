@@ -10,6 +10,15 @@ import { RoleDefinition } from './../../Core/Authorization/RoleDefinition';
 
 export class CustomerManagement extends UserManagement implements CustomerManagementBehavior {
 
+    /**
+     * 
+     * 
+     * @param {string} customerId
+     * @param {UserProfile} profile
+     * @returns {Promise<SalonCloudResponse<UserProfile>>}
+     * 
+     * @memberOf CustomerManagement
+     */
     public async addCustomerProfile(customerId: string, profile: UserProfile): Promise<SalonCloudResponse<UserProfile>> {
         var returnResult: SalonCloudResponse<UserProfile> = {
             code: undefined,
@@ -40,6 +49,15 @@ export class CustomerManagement extends UserManagement implements CustomerManage
         }
     };
 
+    /**
+     * 
+     * 
+     * @param {string} customerPhone
+     * @param {UserProfile} customerData
+     * @returns {Promise<SalonCloudResponse<UserToken>>}
+     * 
+     * @memberOf CustomerManagement
+     */
     public async createCustomer(customerPhone: string, customerData: UserProfile): Promise<SalonCloudResponse<UserToken>> {
         var response: SalonCloudResponse<UserToken> = {
             code: undefined,

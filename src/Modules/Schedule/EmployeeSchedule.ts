@@ -42,7 +42,7 @@ export class EmployeeSchedule extends Schedule {
             //Step 2: logically choose the best schedule for that day;
             var employeeDailyDayData: DailyDayData[] = dailySchedule;
             for (var index in employeeDailyDayData) {
-                employeeDailyDayData[index] = this.updateDailyDayDataAccordingToSalon(employeeDailyDayData[index], salonDailyScheduleData.days[index]);
+                employeeDailyDayData[index] = this.updateEmployeeDataAccordingToSalon<DailyDayData>(employeeDailyDayData[index], salonDailyScheduleData.days[index]);
             }
 
             //Step 3: case 1: return updated DailyDayData;
@@ -64,7 +64,7 @@ export class EmployeeSchedule extends Schedule {
      * @param {WeeklyDayData[]} WeeklySchedule: array of WeeklyDayDatas of employee
      * @returns {WeeklyDayData[]}
      */
-    protected async normalizeWeeklySchedule(WeeklySchedule: WeeklyDayData[]) {
+    protected async normalizeWeeklySchedule(WeeklySchedule: WeeklyDayData[]): Promise<WeeklyDayData[]> {
 
         //Step 1: get salon's WeeklyDayData[];
         let salonSchedule = new SalonSchedule(this.salonId);
@@ -82,7 +82,7 @@ export class EmployeeSchedule extends Schedule {
                 var employeeWeeklyDayData = employeeWeeklyDayDataArray[i];
                 var salonWeeklyDayData = salonWeeklyDayDataArray[i];
 
-                employeeWeeklyDayData = this.updateDailyDayDataAccordingToSalon(employeeWeeklyDayData, salonWeeklyDayData);
+                employeeWeeklyDayData = this.updateEmployeeDataAccordingToSalon<WeeklyDayData>(employeeWeeklyDayData, salonWeeklyDayData);
             }
             //Step 3: case 1: return updated WeeklyDayData[]
             return employeeWeeklyDayDataArray;
@@ -105,7 +105,7 @@ export class EmployeeSchedule extends Schedule {
      * @param {<T extends ScheduleItemData>} salonDayData: ScheduleItemData of salon
      * @returns {<T extends ScheduleItemData>}
      */
-    private updateDailyDayDataAccordingToSalon<T extends ScheduleItemData>(employeeDayData: T, salonDayData: T) {
+    private updateEmployeeDataAccordingToSalon<T extends ScheduleItemData>(employeeDayData: T, salonDayData: T): T {
         // Employee's end time is later than salon's openning time ==> employee OFF
         // Return immediately
         if (employeeDayData.close < salonDayData.open) {
@@ -138,6 +138,14 @@ export class EmployeeSchedule extends Schedule {
         return employeeDayData;
     }
 
+    /**
+     * 
+     * 
+     * @protected
+     * @returns {Promise<SalonCloudResponse<undefined>>}
+     * 
+     * @memberOf EmployeeSchedule
+     */
     protected async validateExt(): Promise<SalonCloudResponse<undefined>> {
         var response: SalonCloudResponse<undefined> = {
             code: undefined,

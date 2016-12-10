@@ -18,16 +18,22 @@ import { MissingCheck, IsInRangeExclusively, IsInRange, IsString, IsNumber, IsGr
     from './../../Core/Validation/ValidationDecorators';
 
 export abstract class Schedule implements ScheduleBehavior {
-	/**
-     * getDailySchedule
-	 *
-     */
+
     protected salonId: string;
     protected employeeId: string;
 
 
     //this constructor will only be called in subclass contructors;
     //we defer the identification of salonId and employeeId to subclass.
+
+    /**
+     * Creates an instance of Schedule.
+     * 
+     * @param {string} salonId
+     * @param {string} employeeId
+     * 
+     * @memberOf Schedule
+     */
     constructor(salonId: string, employeeId: string) {
         this.salonId = salonId;
         this.employeeId = employeeId;
@@ -38,13 +44,15 @@ export abstract class Schedule implements ScheduleBehavior {
     }
 
     /**
-	*@name: getDailySchedule(date: Date)
-    *@parameter: {date: Date}
-    *@return: a promise resolved to SalonCloudResponse<DailyScheduleData>
-    *Step 1: validation;
-    *Step 2: call this.getDailyScheduleProcess(date) to get DailyDayData
-    *Step 3: check the returned value in step 2 and return the proper reponse.
-	*/
+     * Step 1: validation;
+     * Step 2: call this.getDailyScheduleProcess(date) to get DailyDayData
+     * Step 3: check the returned value in step 2 and return the proper reponse. 
+     * @param {SalonTimeData} start
+     * @param {SalonTimeData} end
+     * @returns {Promise<SalonCloudResponse<DailyScheduleArrayData>>}
+     * 
+     * @memberOf Schedule
+     */
     public async getDailySchedule(start: SalonTimeData, end: SalonTimeData): Promise<SalonCloudResponse<DailyScheduleArrayData>> {
         var resultReturn: DailyScheduleArrayData = {
             days: undefined,
@@ -100,12 +108,13 @@ export abstract class Schedule implements ScheduleBehavior {
     }
 
     /**
-	*@name: getWeeklySchedule()
-    *@parameter: { }
-    *@return: a promise resolved to SalonCloudResponse<WeeklyScheduleData>
-    *Step 1: call this.getWeeklyScheduleRecord(date) to get WeeklyDayData[]
-    *Step 2: check the returned value in step 1 and return the proper reponse.
-	*/
+     * 
+     * Step 1: call this.getWeeklyScheduleRecord(date) to get WeeklyDayData[]
+     * Step 2: check the returned value in step 1 and return the proper reponse.
+     * @returns {Promise<SalonCloudResponse<WeeklyScheduleData>>}
+     * 
+     * @memberOf Schedule
+     */
     public async getWeeklySchedule(): Promise<SalonCloudResponse<WeeklyScheduleData>> {
         var response: SalonCloudResponse<WeeklyScheduleData> = {
             code: undefined,
@@ -152,15 +161,16 @@ export abstract class Schedule implements ScheduleBehavior {
     }
 
     /**
-	*@name: saveDailySchedule(dailySchedule: DailyDayData)
-    *@parameter: {dailySchedule: DailyDayData}
-    *@return: a promise resolved to SalonCloudResponse<boolean>
-    *Step 1: validation;
-    *Step 2: check docs existence by calling this.checkDailySchedule(dailySchedule)
-    *Step 3: if docs exists: call this.updateDailySchedule(dailySchedule);
+     * Step 1: validation;
+     * Step 2: check docs existence by calling this.checkDailySchedule(dailySchedule)
+     * Step 3: if docs exists: call this.updateDailySchedule(dailySchedule);
              if docs does not exist: call this.addDailySchedule(dailySchedule);
-    *Step 4: check result form step 3 and return proper response;
-	*/
+     * Step 4: check result form step 3 and return proper response;
+     * @param {DailyDayData} dailySchedule
+     * @returns {Promise<SalonCloudResponse<IDailyScheduleData>>}
+     * 
+     * @memberOf Schedule
+     */
     public async saveDailySchedule(dailySchedule: DailyDayData): Promise<SalonCloudResponse<IDailyScheduleData>> {
         var response: SalonCloudResponse<IDailyScheduleData> = {
             code: undefined,
@@ -210,15 +220,16 @@ export abstract class Schedule implements ScheduleBehavior {
     }
 
     /**
-	*@name: saveWeeklySchedule(weeklyScheduleList: WeeklyDayData[])
-    *@parameter: {weeklyScheduleList: WeeklyDayData[]}
-    *@return: a promise resolved to SalonCloudResponse<boolean>
-    *Step 1: validation;
-    *Step 2: check docs existence by calling this.checkWeeklySchedule(weeklyScheduleList)
-    *Step 3: if docs exists: call this.updateDailySchedule(weeklyScheduleList);
+     * Step 1: validation;
+     * Step 2: check docs existence by calling this.checkWeeklySchedule(weeklyScheduleList)
+     * Step 3: if docs exists: call this.updateDailySchedule(weeklyScheduleList);
              if docs does not exist: call this.addDailySchedule(weeklyScheduleList);
-    *Step 4: check result form step 3 and return proper response;
-	*/
+     * Step 4: check result form step 3 and return proper response;
+     * @param {WeeklyDayData[]} weeklyScheduleList
+     * @returns {Promise<SalonCloudResponse<IWeeklyScheduleData>>}
+     * 
+     * @memberOf Schedule
+     */
     public async saveWeeklySchedule(weeklyScheduleList: WeeklyDayData[]): Promise<SalonCloudResponse<IWeeklyScheduleData>> {
         var response: SalonCloudResponse<IWeeklyScheduleData> = {
             code: undefined,
@@ -584,6 +595,7 @@ export abstract class Schedule implements ScheduleBehavior {
         });
         return returnResult;
     }
+
     /**
      * @name: getDailyScheduleRecord(date: Date)
      * @parameter: {date: Date}
