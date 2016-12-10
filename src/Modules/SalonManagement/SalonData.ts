@@ -32,4 +32,4 @@ export interface SalonData {
     setting: SalonSetting
 }
 
-export interface ISalonModel extends SalonData, mongoose.Document{}
+export interface ISalonData extends SalonData, mongoose.Document{}
