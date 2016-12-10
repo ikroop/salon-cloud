@@ -8,26 +8,72 @@ import * as request from 'supertest';
 import * as chai from 'chai';
 var expect = chai.expect;
 var should = chai.should();
+import { ErrorMessage } from './../src/Core/ErrorMessage';
+import { Authentication } from './../src/Core/Authentication/Authentication';
+import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
+import { UserToken } from './../src/Core/Authentication/AuthenticationData';
 
 describe('Authentication', function () {
     var timestamp = new Date().getTime();
     var defaultPassword = '1234@1234'
-    /*before(function (done) {
-        delete require.cache[require.resolve('./../src/App')];
-        server = require('./../src/App');
-        done();
-    });
-    after(function () {
-        server.close();
-    });*/
+    var validToken;
+    var invalidToken = '12dfab3bc554ad';
 
-    beforeEach(function () {
-    });
-    afterEach(function () {
+    before(async function () {
+        // 1. Create Owner 
+        var authentication = new Authentication();
+        const ownerEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        await authentication.signUpWithUsernameAndPassword(ownerEmail, defaultPassword);
+
+        const AnotherWwnerEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        await authentication.signUpWithUsernameAndPassword(AnotherWwnerEmail, defaultPassword);
+        // 2. login to get access token
+        var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
+        validToken = loginData.data.auth.token;
     });
 
     describe('User SignUp with Username & Password', function () {
         var apiUrl = '/api/v1/authentication/signupwithusernameandpassword';
+
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' trying to register with invalidToken', function (done) {
+            var user = {
+                username: 'unittest' + timestamp + '@gmail.com',
+                password: defaultPassword
+            };
+            request(server)
+                .post(apiUrl)
+                .set({ 'Authorization': invalidToken })
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.NoPermission.err.name + ' trying to register with valid token', function (done) {
+            var user = {
+                username: 'unittest' + timestamp + '@gmail.com',
+                password: defaultPassword
+            };
+            request(server)
+                .post(apiUrl)
+                .set({ 'Authorization': validToken })
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    done();
+                });
+        });
 
         it('should return "MissingUsername" error trying to register without username', function (done) {
             var user = {
@@ -163,6 +209,46 @@ describe('Authentication', function () {
     describe('User Signin with Username & Password', function () {
         var apiUrl = '/api/v1/Authentication/signinwithusernameandpassword';
 
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' trying to register with invalidToken', function (done) {
+            var user = {
+                username: 'unittest' + timestamp + '@gmail.com',
+                password: defaultPassword
+            };
+            request(server)
+                .post(apiUrl)
+                .set({ 'Authorization': invalidToken })
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.NoPermission.err.name + ' trying to register with valid token', function (done) {
+            var user = {
+                username: 'unittest' + timestamp + '@gmail.com',
+                password: defaultPassword
+            };
+            request(server)
+                .post(apiUrl)
+                .set({ 'Authorization': validToken })
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    done();
+                });
+        });
+        
         it('should return "MissingUsername" error trying to Signin without username', function (done) {
             var user = {
                 password: defaultPassword
