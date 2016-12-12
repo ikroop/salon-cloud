@@ -50,10 +50,10 @@ export class SalonManagement implements SalonManagementBehavior {
         }
 
         var validations = await this.validation(salonInformation);
-        console.log('validations:', validations);
         if (validations.err){
             returnResult.err = validations.err;
             returnResult.code = validations.code;
+            return validations;
         }
          // get Timezone from address and puts that into salon information constructor
         // TODO:
@@ -133,7 +133,6 @@ export class SalonManagement implements SalonManagementBehavior {
         };
         // Validation
         // salon name validation
-        console.log('salonInformation:', salonInformation);
         var salonNameValidator = new BaseValidator(salonInformation.salon_name);
         salonNameValidator = new MissingCheck(salonNameValidator, ErrorMessage.MissingSalonName);
         var salonNameError = await salonNameValidator.validate();

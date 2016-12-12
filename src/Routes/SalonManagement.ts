@@ -41,9 +41,7 @@ export class SalonManagementRouter {
             var salonCreation = await signedUser.createSalon(salonInformationInput);
             var dataReturn;
             if (salonCreation.err) {
-                dataReturn = {
-                    'err': salonCreation.err,
-                }
+                dataReturn = salonCreation.err                
             } else {
                 dataReturn = {
                     '_id': salonCreation.data
