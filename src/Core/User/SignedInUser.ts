@@ -48,7 +48,6 @@ export class SignedInUser implements SignedInUserBehavior {
 
         // Create Salon Document
         var salonData = await this.salonManagementDP.createSalonDocs(salonInformation);
-        console.log('SalonData:', salonData);
         if (salonData.err){
             returnResult.err = salonData.err;
             returnResult.code = salonData.code;
