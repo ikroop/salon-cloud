@@ -11,6 +11,7 @@ import { defaultSalonSetting } from './../../Core/DefaultData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator'
 import { MissingCheck, IsPhoneNumber, IsEmail, IsString } from './../../Core/Validation/ValidationDecorators'
 import { ErrorMessage } from './../../Core/ErrorMessage'
+import { GoogleMap } from './../../Core/GoogleMap/GoogleMap';
 
 export class SalonManagement implements SalonManagementBehavior {
 
@@ -47,6 +48,18 @@ export class SalonManagement implements SalonManagementBehavior {
             information: salonInformation,
             setting: defaultSalonSetting,
         }
+
+        var validations = await this.validation(salonInformation);
+        console.log('validations:', validations);
+        if (validations.err){
+            returnResult.err = validations.err;
+            returnResult.code = validations.code;
+        }
+         // get Timezone from address and puts that into salon information constructor
+        // TODO:
+        var Timezone: any = await GoogleMap.getTimeZone(salonInformation.location.address);
+        salonInformation.location.timezone_id = Timezone['timeZoneId'];
+
         // create Salon record
         var salon = new SalonModel(salonData);
         var SalonCreation = salon.save();
@@ -120,11 +133,12 @@ export class SalonManagement implements SalonManagementBehavior {
         };
         // Validation
         // salon name validation
+        console.log('salonInformation:', salonInformation);
         var salonNameValidator = new BaseValidator(salonInformation.salon_name);
         salonNameValidator = new MissingCheck(salonNameValidator, ErrorMessage.MissingSalonName);
         var salonNameError = await salonNameValidator.validate();
         if (salonNameError) {
-            returnResult.err = salonNameError.err;
+            returnResult.err = salonNameError;
             returnResult.code = 400;
             return returnResult;
         }
@@ -134,7 +148,7 @@ export class SalonManagement implements SalonManagementBehavior {
         // TODO: validator for IsAddress
         var addressError = await addressValidator.validate();
         if (addressError) {
-            returnResult.err = addressError.err;
+            returnResult.err = addressError;
             returnResult.code = 400;
             return returnResult;
         }
@@ -145,7 +159,7 @@ export class SalonManagement implements SalonManagementBehavior {
         phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat);
         var phoneNumberError = await phoneNumberValidator.validate();
         if (phoneNumberError) {
-            returnResult.err = phoneNumberError.err;
+            returnResult.err = phoneNumberError;
             returnResult.code = 400;
             return returnResult;
         }
@@ -157,7 +171,7 @@ export class SalonManagement implements SalonManagementBehavior {
             emailValidator = new IsEmail(emailValidator, ErrorMessage.WrongEmailFormat);
             var emailError = await emailValidator.validate();
             if (emailError) {
-                returnResult.err = emailError.err;
+                returnResult.err = emailError;
                 returnResult.code = 400;
                 return returnResult;
             }

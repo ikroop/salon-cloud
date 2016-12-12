@@ -46,19 +46,14 @@ export class SignedInUser implements SignedInUserBehavior {
             err: undefined
         };
 
-        // validation
-        returnResult = await this.salonManagementDP.validation(salonInformation);
-        if (returnResult.err) {
-            return returnResult;
-        }
-        // get Timezone from address and puts that into salon information constructor
-        // TODO:
-        var Timezone: any = await GoogleMap.getTimeZone(salonInformation.location.address);
-        salonInformation.location.timezone_id = Timezone['timeZoneId'];
-
         // Create Salon Document
         var salonData = await this.salonManagementDP.createSalonDocs(salonInformation);
-
+        console.log('SalonData:', salonData);
+        if (salonData.err){
+            returnResult.err = salonData.err;
+            returnResult.code = salonData.code;
+            return returnResult;
+        }
         // Create default Schedule
         var scheduleDP = new SalonSchedule(salonData.data._id);
         var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule);
