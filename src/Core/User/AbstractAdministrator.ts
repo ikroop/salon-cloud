@@ -9,7 +9,7 @@ import { UserProfile, UserData } from './../../Modules/UserManagement/UserData'
 import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { AppointmentItemData, AppointmentData } from './../../Modules/AppointmentManagement/AppointmentData'
 import { AppointmentManagement } from './../../Modules/AppointmentManagement/AppointmentManagement'
-import { AdministratorBehavior } from './AdministratorBehavior'
+import { AdministratorBehavior, SaveAppointmentData } from './AdministratorBehavior'
 import { BookingAppointment } from './../../Modules/AppointmentManagement/BookingAppointment';
 import { SalonCloudResponse } from './../SalonCloudResponse'
 import { ErrorMessage } from './../ErrorMessage'
@@ -17,6 +17,8 @@ import { CustomerManagement } from './../../Modules/UserManagement/CustomerManag
 import { Authentication } from './../Authentication/Authentication'
 import { DailyScheduleData, WeeklyScheduleData } from './../../Modules/Schedule/ScheduleData'
 import { ScheduleBehavior } from './../../Modules/Schedule/ScheduleBehavior'
+import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
+
 
 export abstract class AbstractAdministrator extends AbstractEmployee implements AdministratorBehavior {
 
@@ -41,7 +43,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         return;
     };
 
-    public async saveAppointment(inputData: any): Promise<SalonCloudResponse<string>> {
+    public async saveAppointment(inputData: SaveAppointmentData): Promise<SalonCloudResponse<string>> {
         var response: SalonCloudResponse<any> = {
             data: undefined,
             code: undefined,
@@ -51,7 +53,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         var salonId = inputData.salon_id;
         var newAppointment: AppointmentData = {
-            customer_id: inputData.customer_id,
+            customer_id: undefined,
             device: undefined,
             appointment_items: undefined,
             payment_id: undefined,
@@ -65,23 +67,29 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
 
         var appointmentByPhone: BookingAppointment = new BookingAppointment(salonId, new AppointmentManagement(salonId));
-        var validation = await appointmentByPhone.validation(newAppointment);
+        /*var validation = await appointmentByPhone.validation(newAppointment);
         if (validation.err) {
             response.err = validation.err;
             response.code = validation.code;
             return response;
-        }
+        }*/
         appointmentByPhone.normalizationData(newAppointment);
 
         // FIX ME: build UserProfile
+        var userProfile: UserProfile = {
+            role: 4,
+            fullname: inputData.customer_name,
+            salon_id: inputData.salon_id
+        }
         // Get customer Id
-        var getCustomerId = await this.getCustomerId(salonId, inputData);
+        var getCustomerId = await this.getCustomerId(inputData.customer_phone, userProfile);
         if (getCustomerId.err) {
             response.err = getCustomerId.err;
             response.code = getCustomerId.code;
             return response;
         }
 
+        newAppointment.customer_id = getCustomerId.data;
         // get available time
         var appointmentItemsArray: Array<AppointmentItemData>;
         // create Service
@@ -130,7 +138,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             code: undefined,
             err: undefined
         };
-
+        console.log('PHONE: ', phone)
         var customerManagementDP = new CustomerManagement(customerProfile.salon_id);
 
         var customer = await customerManagementDP.getUserByPhone(phone);
@@ -236,3 +244,4 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
     protected abstract filterProfileData(user: UserProfile): UserProfile;
 }
+
