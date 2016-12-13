@@ -37,7 +37,7 @@ export class AppointmentManagementRouter {
 
             console.log(request.body);
             for (let eachService in appointment.services) {
-                let startTimeValidation = new BaseValidator(appointment.services[eachService].start);
+               /* let startTimeValidation = new BaseValidator(appointment.services[eachService].start);
                 startTimeValidation = new MissingCheck(startTimeValidation, ErrorMessage.MissingStartDate);
                 //startTimeValidation = new IsDateString(startTimeValidation, ErrorMessage.InvalidDate);
                 let startTimeError = await startTimeValidation.validate();
@@ -46,6 +46,7 @@ export class AppointmentManagementRouter {
                     response.status(400).json({ 'err': startTimeError.err });
                     return;
                 }
+                */
                 appointment.services[eachService].start = salonTime.setString(appointment.services[eachService].start);
                 console.log('TEST: ', appointment.services[eachService].start.month, appointment.services[eachService].start.date);
             }
