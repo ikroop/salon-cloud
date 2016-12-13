@@ -61,38 +61,41 @@ export const defaultWeeklySchedule: [WeeklyDayData] = [defaultDay1, defaultDay2,
 const regularServiceItem1: ServiceItemData = {
     name: 'Regular Pedicure',
     price: 20,
-    time: 20
+    time: 1800
 }
 
 const regularServiceItem2: ServiceItemData = {
     name: 'Regular Manicure',
     price: 15,
-    time: 15
+    time: 1800
 }
 
 const gelServiceItem1: ServiceItemData = {
     name: 'Gel Pedicure',
     price: 30,
-    time: 30
+    time: 1800
 }
 
 const gelServiceItem2: ServiceItemData = {
     name: 'Gel Manicure',
     price: 25,
-    time: 25
+    time: 1800
 }
 
 
 export let samplesService1: ServiceGroupData = {
     name: 'Regular',
     salon_id: 'trool',
-    service_list: [regularServiceItem1, regularServiceItem2]
+    service_list: [regularServiceItem1, regularServiceItem2],
+    description: 'description regularServiceItem1'
 }
 
 export let samplesService2: ServiceGroupData = {
     name: 'Gel',
     salon_id: 'trool',
-    service_list: [gelServiceItem1, gelServiceItem2]
+    service_list: [gelServiceItem1, gelServiceItem2],
+    description: 'description regularServiceItem1'
+
 }
 
-export const SmallestTimeTick : number = 15;
+export const SmallestTimeTick: number = 15;

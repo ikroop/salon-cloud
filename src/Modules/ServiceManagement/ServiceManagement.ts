@@ -5,7 +5,7 @@
  */
 
 import { ServiceManagementBehavior } from './ServiceManagementBehavior';
-import { ServiceGroupData, ServiceItemData, IServiceGroupData } from './ServiceData'
+import { ServiceGroupData, ServiceItemData, IServiceGroupData, IServiceItemData } from './ServiceData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
 import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidNameString, IsServiceGroupNameExisted }
     from './../../Core/Validation/ValidationDecorators';
@@ -93,11 +93,12 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * Get all service groups and services.
      */
     public async getServices() {
-        var returnResult: SalonCloudResponse<[IServiceGroupData]> = {
+        var returnResult: SalonCloudResponse<IServiceGroupData[]> = {
             err: undefined,
             code: undefined,
             data: undefined
         };
+        console.log('salon_id:', this.salonId);
         await ServiceGroupModel.find({ salon_id: this.salonId }).exec(function (err, docs: [IServiceGroupData]) {
             if (err) {
                 returnResult.err = err;
@@ -257,14 +258,14 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * 
      * @memberOf ServiceManagement
      */
-    public async getServiceItemById(serviceId: string): Promise<SalonCloudResponse<ServiceItemData>> {
-        var response: SalonCloudResponse<ServiceItemData> = {
+    public async getServiceItemById(serviceId: string): Promise<SalonCloudResponse<IServiceItemData>> {
+        var response: SalonCloudResponse<IServiceItemData> = {
             data: undefined,
             code: undefined,
             err: undefined
         }
         console.log('SERVICEID: ',serviceId);
-        var serviceSearch = await ServiceGroupModel.findOne({ 'service_list': { '$elemMatch': { '_id': serviceId } } }).exec(function (err, docs: ServiceItemData) {
+        var serviceSearch = await ServiceGroupModel.findOne({ 'service_list': { '$elemMatch': { '_id': serviceId } } }).exec(function (err, docs: IServiceItemData) {
             if (err) {
                 console.log('1');
                 response.code = 500;

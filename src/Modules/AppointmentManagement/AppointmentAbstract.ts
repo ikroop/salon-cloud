@@ -156,7 +156,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                                 start: start,
                                 end: endTime,
                                 service: {
-                                    service_id: serviceItem.data.id,
+                                    service_id: serviceItem.data._id,
                                     time: serviceItem.data.time,
                                     price: serviceItem.data.price,
                                     service_name: serviceItem.data.name
@@ -286,7 +286,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                                     start: eachService.start,
                                     end: eachService.end,
                                     service: {
-                                        service_id: serviceItem.data.id,
+                                        service_id: serviceItem.data._id,
                                         time: serviceItem.data.time,
                                         price: serviceItem.data.price,
                                         service_name: serviceItem.data.name

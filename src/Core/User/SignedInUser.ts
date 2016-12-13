@@ -48,7 +48,7 @@ export class SignedInUser implements SignedInUserBehavior {
 
         // Create Salon Document
         var salonData = await this.salonManagementDP.createSalonDocs(salonInformation);
-        if (salonData.err){
+        if (salonData.err) {
             returnResult.err = salonData.err;
             returnResult.code = salonData.code;
             return returnResult;
@@ -56,17 +56,38 @@ export class SignedInUser implements SignedInUserBehavior {
         // Create default Schedule
         var scheduleDP = new SalonSchedule(salonData.data._id);
         var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule);
-
+        if (defaultSchedule.err) {
+            returnResult.err = defaultSchedule.err;
+            returnResult.code = defaultSchedule.code;
+            return returnResult;
+        }
         // Create Sample Services
         var serviceDP = new ServiceManagement(salonData.data._id);
         samplesService2.salon_id = salonData.data._id.toString();
         samplesService1.salon_id = salonData.data._id.toString();
         var addSample1Result = await serviceDP.addGroup(samplesService1);
+        if (addSample1Result.err) {
+            returnResult.err = addSample1Result.err;
+            returnResult.code = addSample1Result.code;
+            return returnResult;
+        }
         var addSample2Result = await serviceDP.addGroup(samplesService2);
+
+        if (addSample2Result.err) {
+            returnResult.err = addSample2Result.err;
+            returnResult.code = addSample2Result.code;
+            return returnResult;
+        }
 
         // Update User Profile
         var ownerManagementDP = new OwnerManagement(salonData.data._id);
         var profile = await ownerManagementDP.addOwnerProfile(this.userId); //Todo
+
+        if (profile.err) {
+            returnResult.err = profile.err;
+            returnResult.code = profile.code;
+            return returnResult;
+        }
 
         returnResult.data = salonData.data._id;
         returnResult.code = 200;

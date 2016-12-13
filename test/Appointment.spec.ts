@@ -30,10 +30,8 @@ describe('Appointment Management', function () {
     var rightFormattedName = 'Tom Hanks';
     var emptyName = '   ';
     var tooLongName = 'Alibaba Nam Tren Ghe Sopha Mo Ve Noi Xa Xong Pha Tran Mac Cuop Duoc Dola Thiet Thiet La Nhieu Dola Xay Nha Cho Mafia'
-    var existedServiceId = '';
-    var notFoundServiceId = '';
+    var validServiceId = '';
     var invalidServiceId = '0000';
-    var existedEmployeeId = '';
     var notFoundEmployeeId = '5825e7bb1dac3e2804d015fl';
     var invalidEmployeeId = '1111';
     var validEmployeeId;
@@ -117,13 +115,10 @@ describe('Appointment Management', function () {
             ]
         };
 
-        const services: any = await owner.addService(groupServiceInput);
-        //console.log("services: %j", services);
-
         // Get services 
         const serviceManagement = new ServiceManagement(validSalonId);
-        const service: any = await serviceManagement.getServices();
-        //console.log("service: %j", service);
+        const service_array = await serviceManagement.getServices();
+        validServiceId = service_array.data[0]._id;
 
         // Get Daily Schedule
         const employeeSchedule = new EmployeeSchedule(validSalonId, validEmployeeId);
@@ -131,7 +126,7 @@ describe('Appointment Management', function () {
 
         var salonTime = new SalonTime();
         // set date to SalonTime Object
-        const dailySchedule = await employeeSchedule.getDailySchedule(salonTime, salonTime);
+        const employeeDailySchedule = await employeeSchedule.getDailySchedule(salonTime, salonTime);
         //console.log("employeeSchedule: %j", employeeSchedule);
 
     });
@@ -151,8 +146,8 @@ describe('Appointment Management', function () {
                 "salon_id": validSalonId,
                 "note": "Appointment note",
                 "services": [{
-                    service_id: existedServiceId,
-                    employee_id: existedEmployeeId
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId
                 }],
                 "booking_time": {
                     day: 28,
@@ -185,8 +180,8 @@ describe('Appointment Management', function () {
                 "salon_id": validSalonId,
                 "note": "Appointment note",
                 "services": [{
-                    service_id: existedServiceId,
-                    employee_id: existedEmployeeId
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId
                 }],
                 "booking_time": {
                     day: 28,
@@ -217,33 +212,33 @@ describe('Appointment Management', function () {
                     - name: 'MissingPhoneNumber' 
                     - message: 'Missing Phone Number'
         */
-        // it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to create appointment without customer\'s phone', function (done) {
-        //     var bodyRequest = {
-        //         "customer_name": rightFormattedName,
-        //         "salon_id": validSalonId,
-        //         "note": "Appointment note",
-        //         "services": [{
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 10:45:00"
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to create appointment without customer\'s phone', function (done) {
+            var bodyRequest = {
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId
+                }],
+                "booking_time": "2016-02-28 10:45:00"
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.MissingPhoneNumber.err.name);
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingPhoneNumber.err.name);
+                    done();
+                });
+        });
 
         // /* 3	Wrong Phone Number Format	400	
         //         error : 
