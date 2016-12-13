@@ -64,3 +64,13 @@ $ ssh-keygen
 $ openssl rsa -in private_key_filename -pubout -outform PEM -out public_key_output_filename
 ```
 
+Debug with mocha and visual studio 
+=============
+```
+$ mocha --debug-brk -t 30000
+Debug port is listening at 5858
+Open Visual Studio Code -> Debug tab -> select configuration: Debug Mocha Test-> Click start icon
+Note: You have to mark break point in your code.
+```
+
+
