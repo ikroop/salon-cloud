@@ -40,7 +40,7 @@ export class BookingAppointment extends AppointmentAbstract {
         }
 
         var deviceValidator = new BaseValidator(appointment.device);
-        deviceValidator = new MissingCheck(deviceValidator, ErrorMessage.MissingdeviceField);
+        deviceValidator = new MissingCheck(deviceValidator, ErrorMessage.MissingDeviceField);
         var deviceError = await deviceValidator.validate();
         if (deviceError) {
             response.err = deviceError.err;
@@ -49,7 +49,7 @@ export class BookingAppointment extends AppointmentAbstract {
         }
 
         var statusValidator = new BaseValidator(appointment.status);
-        statusValidator = new MissingCheck(statusValidator, ErrorMessage.MissingstatusField);
+        statusValidator = new MissingCheck(statusValidator, ErrorMessage.MissingStatus);
         var statusError = await statusValidator.validate();
         if (statusError) {
             response.err = statusError.err;
@@ -58,7 +58,7 @@ export class BookingAppointment extends AppointmentAbstract {
         }
 
         var typeValidator = new BaseValidator(appointment.type);
-        typeValidator = new MissingCheck(typeValidator, ErrorMessage.MissingtypeField);
+        typeValidator = new MissingCheck(typeValidator, ErrorMessage.MissingTypeField);
         var typeError = await typeValidator.validate();
         if (typeError) {
             response.err = typeError.err;
@@ -159,7 +159,7 @@ export class BookingAppointment extends AppointmentAbstract {
 
 
             let overLapValidator = new BaseValidator(eachItem.overlapped);
-            overLapValidator = new MissingCheck(overLapValidator, ErrorMessage.MissingOverlap);
+            overLapValidator = new MissingCheck(overLapValidator, ErrorMessage.MissingOverlappedObject);
             let overLapError = await overLapValidator.validate();
             if (overLapError) {
                 response.err = overLapError.err;
@@ -168,7 +168,7 @@ export class BookingAppointment extends AppointmentAbstract {
             }
 
             let overlapStatusValidator = new BaseValidator(eachItem.overlapped.status);
-            overlapStatusValidator = new MissingCheck(overlapStatusValidator, ErrorMessage.MissingOverlapStatus);
+            overlapStatusValidator = new MissingCheck(overlapStatusValidator, ErrorMessage.MissingOverlappedStatus);
             let overlapStatusError = await overlapStatusValidator.validate();
             if (overlapStatusError) {
                 response.err = overlapStatusError.err;
@@ -179,6 +179,7 @@ export class BookingAppointment extends AppointmentAbstract {
             if (eachItem.overlapped.status) {
                 let overlapAppointmentIdValidator = new BaseValidator(eachItem.overlapped.overlapped_appointment_id);
                 overlapAppointmentIdValidator = new MissingCheck(overlapAppointmentIdValidator, ErrorMessage.MissingAppointmentId);
+
                 let overlapAppointmentIdError = await overlapAppointmentIdValidator.validate();
                 if (overlapAppointmentIdError) {
                     response.err = overlapAppointmentIdError.err;

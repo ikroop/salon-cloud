@@ -473,5 +473,59 @@ export const ErrorMessage = {
             'name': 'InvalidSalonTimeData',
             'message': 'Salon Time Data Is Not Valid!'
         }
+    },
+    'MissingIsRemindedField': {
+        'err': {
+            'name': 'MissingIsRemindedField',
+            'message': 'Is-Reminded Field Is Missing'
+        }
+    },
+    'MissingDeviceField': {
+        'err': {
+            'name': 'MissingDeviceField',
+            'message': 'Device Field Is Missing'
+        }
+    },
+    'MissingTypeField': {
+        'err': {
+            'name': 'MissingTypeField',
+            'message': 'Type Field Is Missing'
+        }
+    },
+    'MissingCustomerId': {
+        'err': {
+            'name': 'MissingCustomerId',
+            'message': 'Customer Id Is Missing'
+        }
+    },
+    'MissingAppointmentItemsArray': {
+        'err': {
+            'name': 'MissingAppointmentItemsArray',
+            'message': 'Appointment Items Array Is Missing'
+        }
+    },
+    'MissingServiceItem': {
+        'err': {
+            'name': 'MissingServiceItem',
+            'message': 'Service Item Is Missing'
+        }
+    },
+    'MissingOverlappedObject': {
+        'err': {
+            'name': 'MissingOverlappedObject',
+            'message': 'Overlapped Object Is Missing'
+        }
+    },
+    'MissingOverlappedStatus': {
+        'err': {
+            'name': 'MissingOverlappedStatus',
+            'message': 'Overlapped Status Is Missing'
+        }
+    },
+    'MissingAppointmentId': {
+        'err': {
+            'name': 'MissingAppointmentId',
+            'message': 'Appointment Id Is Missing'
+        }
     }
 };
