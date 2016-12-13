@@ -152,7 +152,7 @@ export class BookingAppointment extends AppointmentAbstract {
             let serviceTimeValidator = new BaseValidator(eachItem.service.price);
             serviceValidator = new MissingCheck(serviceTimeValidator, ErrorMessage.MissingServicePrice);
             let serviceTimeError = await serviceTimeValidator.validate();
-            if(serviceTimeError){
+            if (serviceTimeError) {
                 response.err = serviceTimeError.err;
                 return response;
             }
@@ -170,19 +170,21 @@ export class BookingAppointment extends AppointmentAbstract {
             let overlapStatusValidator = new BaseValidator(eachItem.overlapped.status);
             overlapStatusValidator = new MissingCheck(overlapStatusValidator, ErrorMessage.MissingOverlapStatus);
             let overlapStatusError = await overlapStatusValidator.validate();
-            if(overlapStatusError){
+            if (overlapStatusError) {
                 response.err = overlapStatusError.err;
                 response.code = 400;
                 return response;
             }
 
-            let overlapAppointmentIdValidator = new BaseValidator(eachItem.overlapped.overlapped_appointment_id);
-            overlapAppointmentIdValidator = new MissingCheck(overlapAppointmentIdValidator, ErrorMessage.MissingAppointmentId);
-            let overlapAppointmentIdError = await overlapAppointmentIdValidator.validate();
-            if(overlapAppointmentIdError){
-                response.err = overlapAppointmentIdError.err;
-                response.code = 500;
-                return response;
+            if (eachItem.overlapped.status) {
+                let overlapAppointmentIdValidator = new BaseValidator(eachItem.overlapped.overlapped_appointment_id);
+                overlapAppointmentIdValidator = new MissingCheck(overlapAppointmentIdValidator, ErrorMessage.MissingAppointmentId);
+                let overlapAppointmentIdError = await overlapAppointmentIdValidator.validate();
+                if (overlapAppointmentIdError) {
+                    response.err = overlapAppointmentIdError.err;
+                    response.code = 500;
+                    return response;
+                }
             }
 
         }

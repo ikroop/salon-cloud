@@ -27,7 +27,7 @@ export interface AppointmentItemData {
 export interface AppointmentData {
     id?: string,
     appointment_items: AppointmentItemData[],
-    total: number,
+    total?: number,
     payment_id?: string,
     device: number,
     is_reminded: boolean,
