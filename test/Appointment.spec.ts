@@ -240,39 +240,39 @@ describe('Appointment Management', function () {
                 });
         });
 
-        // /* 3	Wrong Phone Number Format	400	
-        //         error : 
-        //             - name: 'WrongPhoneNumberFormat' 
-        //             - message: 'Wrong Phone Number Format'
-        // */
-        // it('should return ' + ErrorMessage.WrongPhoneNumberFormat.err.name + ' error trying to create appointment with wrong-formatted phone number', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": wrongFormattedPhoneNumber,
-        //         "customer_name": rightFormattedName,
-        //         "salon_id": validSalonId,
-        //         "note": "Appointment note",
-        //         "services": [{
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 10:45:00"
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        /* 3	Wrong Phone Number Format	400	
+                error : 
+                    - name: 'WrongPhoneNumberFormat' 
+                    - message: 'Wrong Phone Number Format'
+        */
+        it('should return ' + ErrorMessage.NotEmailOrPhoneNumber.err.name + ' error trying to create appointment with wrong-formatted phone number', function (done) {
+            var bodyRequest = {
+                "customer_phone": wrongFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId
+                }],
+                "booking_time": "2016-02-28 10:45:00"
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.WrongPhoneNumberFormat.err.name);
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.NotEmailOrPhoneNumber.err.name);
+                    done();
+                });
+        });
 
         // /* 4	Missing Customer Name	400	
         //         error : 
@@ -285,8 +285,8 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 10:45:00"
         //     };
@@ -319,8 +319,8 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 10:45:00"
         //     };
@@ -353,8 +353,8 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 10:45:00"
         //     };
@@ -386,8 +386,8 @@ describe('Appointment Management', function () {
         //         "customer_name": rightFormattedName,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 10:45:00"
         //     };
@@ -420,8 +420,8 @@ describe('Appointment Management', function () {
         //         "salon_id": notFoundSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 10:45:00"
         //     };
@@ -484,10 +484,10 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }, {
-        //             employee_id: existedEmployeeId
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 10:45:00"
         //     };
@@ -520,11 +520,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }, {
         //             service_id: notFoundServiceId,
-        //             employee_id: existedEmployeeId
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 10:45:00"
         //     };
@@ -557,10 +557,10 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId
+        //             service_id: validServiceId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 10:45:00"
         //     };
@@ -593,11 +593,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 10:45:00"
         //     };
@@ -630,8 +630,8 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //     };
         //     request(server)
@@ -657,11 +657,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02 10:45:00"
         //     };
@@ -689,11 +689,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-28 10:45:00"
         //     };
@@ -721,11 +721,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "02-28 10:45:00"
         //     };
@@ -753,11 +753,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 45:00"
         //     };
@@ -785,11 +785,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 10:00"
         //     };
@@ -822,11 +822,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 10:45:00"
         //     };
@@ -859,11 +859,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 23:15:00"
         //     };
@@ -896,11 +896,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 20:55:00"
         //     };
@@ -933,11 +933,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 20:55:00"
         //     };
@@ -970,11 +970,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 20:55:00"
         //     };
@@ -1007,11 +1007,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 20:55:00"
         //     };
@@ -1044,11 +1044,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 20:55:00"
         //     };
@@ -1082,11 +1082,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 20:55:00"
         //     };
@@ -1120,11 +1120,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 20:55:00"
         //     };
@@ -1158,11 +1158,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 20:55:00"
         //     };
@@ -1196,11 +1196,11 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
+        //             service_id: validServiceId,
         //             employee_id: notFoundEmployeeId
         //         }, {
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 20:55:00"
         //     };
@@ -1266,8 +1266,8 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2016-02-28 20:55:00"
         //     };
@@ -1295,8 +1295,8 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Any appointment note, even blank one, is acceptable",
         //         "services": [{
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2017-02-28 10:45:00"
         //     };
@@ -1322,8 +1322,8 @@ describe('Appointment Management', function () {
         //         "customer_name": rightFormattedName,
         //         "salon_id": validSalonId,
         //         "services": [{
-        //             service_id: existedServiceId,
-        //             employee_id: existedEmployeeId
+        //             service_id: validServiceId,
+        //             employee_id: validEmployeeId
         //         }],
         //         "booking_time": "2017-02-27 10:45:00"
         //     };
