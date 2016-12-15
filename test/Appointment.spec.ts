@@ -398,35 +398,34 @@ describe('Appointment Management', function () {
                 });
         });
 
-        // /* 9	Missing Booked Service List	400	
-        //         error : 
-        //             - name: 'MissingBookedServiceList' 
-        //             - message: 'Missing Booked Service List'
-        // */
-        // it('should return ' + ErrorMessage.MissingBookedServiceList.err.name + ' error trying to create appointment without service(s)', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "customer_name": rightFormattedName,
-        //         "salon_id": validSalonId,
-        //         "note": "Appointment note",
-        //         "booking_time": "2016-02-28 10:45:00"
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        /* 9	Missing Booked Service List	400	
+                error : 
+                    - name: 'MissingBookedServiceList' 
+                    - message: 'Missing Booked Service List'
+        */
+        it('should return ' + ErrorMessage.MissingBookedServiceList.err.name + ' error trying to create appointment without service(s)', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note"
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.MissingBookedServiceList.err.name);
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingBookedServiceList.err.name);
+                    done();
+                });
+        });
 
         // /* 10	Missing Service Id	400	
         //         error : 
@@ -441,11 +440,11 @@ describe('Appointment Management', function () {
         //         "note": "Appointment note",
         //         "services": [{
         //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
+        //             employee_id: validEmployeeId,
+        //             start: "2017-02-28 10:45:00"
         //         }, {
         //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 10:45:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -477,12 +476,13 @@ describe('Appointment Management', function () {
         //         "note": "Appointment note",
         //         "services": [{
         //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
+        //             employee_id: validEmployeeId,
+        //             start: "2017-02-28 10:45:00"
         //         }, {
         //             service_id: notFoundServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 10:45:00"
+        //             employee_id: validEmployeeId,
+        //             start: "2017-02-28 11:45:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -513,12 +513,13 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
         //         "services": [{
-        //             service_id: validServiceId
+        //             service_id: validServiceId,
+        //             start: "2017-02-28 10:45:00"
         //         }, {
         //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 10:45:00"
+        //             employee_id: validEmployeeId,
+        //             start: "2017-02-28 11:45:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -550,12 +551,13 @@ describe('Appointment Management', function () {
         //         "note": "Appointment note",
         //         "services": [{
         //             service_id: validServiceId,
-        //             employee_id: notFoundEmployeeId
+        //             employee_id: notFoundEmployeeId,
+        //             start: "2017-02-28 10:45:00"
         //         }, {
         //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 10:45:00"
+        //             employee_id: validEmployeeId,
+        //             start: "2017-02-28 10:45:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -614,12 +616,13 @@ describe('Appointment Management', function () {
         //         "note": "Appointment note",
         //         "services": [{
         //             service_id: validServiceId,
-        //             employee_id: notFoundEmployeeId
+        //             employee_id: notFoundEmployeeId,
+        //             start: "2017-02-28 10:45:00"
         //         }, {
         //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02 10:45:00"
+        //             employee_id: validEmployeeId,
+        //             start: "2017-02-28 10:45:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -646,12 +649,13 @@ describe('Appointment Management', function () {
         //         "note": "Appointment note",
         //         "services": [{
         //             service_id: validServiceId,
-        //             employee_id: notFoundEmployeeId
+        //             employee_id: notFoundEmployeeId,
+        //             start: "2017-02-28 10:45:00"
         //         }, {
         //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-28 10:45:00"
+        //             employee_id: validEmployeeId,
+        //             start: "2017-02-28 11:45:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -678,12 +682,13 @@ describe('Appointment Management', function () {
         //         "note": "Appointment note",
         //         "services": [{
         //             service_id: validServiceId,
-        //             employee_id: notFoundEmployeeId
+        //             employee_id: notFoundEmployeeId,
+        //             start: "2017-02-28 11:45:00"
         //         }, {
         //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "02-28 10:45:00"
+        //             employee_id: validEmployeeId,
+        //             start: "2017-02-28 11:45:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -710,12 +715,13 @@ describe('Appointment Management', function () {
         //         "note": "Appointment note",
         //         "services": [{
         //             service_id: validServiceId,
-        //             employee_id: notFoundEmployeeId
+        //             employee_id: notFoundEmployeeId,
+        //             start: "2017-02-28 11:45:00"
         //         }, {
         //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 45:00"
+        //             employee_id: validEmployeeId,
+        //             start: "2017-02-28 11:45:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -742,12 +748,13 @@ describe('Appointment Management', function () {
         //         "note": "Appointment note",
         //         "services": [{
         //             service_id: validServiceId,
-        //             employee_id: notFoundEmployeeId
+        //             employee_id: notFoundEmployeeId,
+        //             start: "2017-02-28 11:45:00"
         //         }, {
         //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 10:00"
+        //             employee_id: validEmployeeId,
+        //             start: "2017-02-28 11:45:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -779,12 +786,13 @@ describe('Appointment Management', function () {
         //         "note": "Appointment note",
         //         "services": [{
         //             service_id: validServiceId,
-        //             employee_id: notFoundEmployeeId
+        //             employee_id: notFoundEmployeeId,
+        //             start: "2017-02-28 10:45:00"
         //         }, {
         //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 10:45:00"
+        //             employee_id: validEmployeeId,
+        //             start: "2017-02-28 11:45:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -816,12 +824,13 @@ describe('Appointment Management', function () {
         //         "note": "Appointment note",
         //         "services": [{
         //             service_id: validServiceId,
-        //             employee_id: notFoundEmployeeId
+        //             employee_id: notFoundEmployeeId,
+        //             start: "2017-02-28 23:45:00"
         //         }, {
         //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 23:15:00"
+        //             employee_id: validEmployeeId,
+        //             start: "2017-02-28 23:45:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -857,8 +866,7 @@ describe('Appointment Management', function () {
         //         }, {
         //             service_id: validServiceId,
         //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 20:55:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -894,8 +902,7 @@ describe('Appointment Management', function () {
         //         }, {
         //             service_id: validServiceId,
         //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 20:55:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -931,8 +938,7 @@ describe('Appointment Management', function () {
         //         }, {
         //             service_id: validServiceId,
         //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 20:55:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -968,8 +974,7 @@ describe('Appointment Management', function () {
         //         }, {
         //             service_id: validServiceId,
         //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 20:55:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -1005,8 +1010,7 @@ describe('Appointment Management', function () {
         //         }, {
         //             service_id: validServiceId,
         //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 20:55:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -1043,8 +1047,7 @@ describe('Appointment Management', function () {
         //         }, {
         //             service_id: validServiceId,
         //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 20:55:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -1081,8 +1084,7 @@ describe('Appointment Management', function () {
         //         }, {
         //             service_id: validServiceId,
         //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 20:55:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -1119,8 +1121,7 @@ describe('Appointment Management', function () {
         //         }, {
         //             service_id: validServiceId,
         //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 20:55:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -1157,8 +1158,7 @@ describe('Appointment Management', function () {
         //         }, {
         //             service_id: validServiceId,
         //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 20:55:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -1189,8 +1189,7 @@ describe('Appointment Management', function () {
         //         "customer_name": rightFormattedName,
         //         "salon_id": validSalonId,
         //         "note": "Appointment note",
-        //         "services": 33,
-        //         "booking_time": "2016-02-28 20:55:00"
+        //         "services": 33
         //     };
         //     request(server)
         //         .post(apiUrl)
@@ -1224,9 +1223,7 @@ describe('Appointment Management', function () {
         //         "services": [{
         //             service_id: validServiceId,
         //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 20:55:00"
-        //     };
+        //         }]
         //     request(server)
         //         .post(apiUrl)
         //         .send(bodyRequest)
@@ -1279,9 +1276,9 @@ describe('Appointment Management', function () {
         //         "salon_id": validSalonId,
         //         "services": [{
         //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2017-02-27 10:45:00"
+        //             employee_id: validEmployeeId,
+        //             start: "2017-02-28 10:45:00"
+        //         }]
         //     };
         //     request(server)
         //         .post(apiUrl)

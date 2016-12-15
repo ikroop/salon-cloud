@@ -97,7 +97,6 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         if (timeAvalibilityCheck.err) {
             response.err = timeAvalibilityCheck.err;
-            response.data = timeAvalibilityCheck.data;
             response.code = timeAvalibilityCheck.code;
             return response;
         } else {

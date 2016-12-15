@@ -15,8 +15,9 @@ import { SmallestTimeTick } from './../../Core/DefaultData'
 import { ServiceManagement } from './../ServiceManagement/ServiceManagement'
 import { EmployeeSchedule } from './../Schedule/EmployeeSchedule'
 import { ErrorMessage } from './../../Core/ErrorMessage'
-import { BaseValidator } from './../../Core/Validation/BaseValidator'
 import { DailyScheduleData, DailyScheduleArrayData } from './../Schedule/ScheduleData'
+import { BaseValidator } from './../../Core/Validation/BaseValidator';
+import { MissingCheck, IsValidNameString } from './../../Core/Validation/ValidationDecorators';
 
 export abstract class AppointmentAbstract implements AppointmentBehavior {
     private appointmentManagementDP: AppointmentManagement;
@@ -190,6 +191,17 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             code: undefined,
             err: undefined
         }
+
+        let servicesValidation = new BaseValidator(servicesArray);
+        servicesValidation = new MissingCheck(servicesValidation, ErrorMessage.MissingBookedServiceList);
+        let servicesError = await servicesValidation.validate();
+
+        if (servicesError) {
+            response.code = 400;
+            response.err = servicesError;
+            return response;
+        }
+
         console.log('IN: ', servicesArray);
         var employeeIdList: Array<string> = [];
         var employeeScheduleList: Array<any> = [];
