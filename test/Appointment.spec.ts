@@ -213,7 +213,7 @@ describe('Appointment Management', function () {
                     - name: 'MissingPhoneNumber' 
                     - message: 'Missing Phone Number'
         */
-        it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to create appointment without customer\'s phone', function (done) {
+        it('should return ' + ErrorMessage.MissingUsername.err.name + ' error trying to create appointment without customer\'s phone', function (done) {
             var bodyRequest = {
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
@@ -236,7 +236,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingPhoneNumber.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingUsername.err.name);
                     done();
                 });
         });
