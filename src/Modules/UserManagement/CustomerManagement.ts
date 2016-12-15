@@ -7,6 +7,10 @@ import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
 import { Authentication } from './../../Core/Authentication/Authentication';
 import { UserToken } from './../../Core/Authentication/AuthenticationData';
 import { RoleDefinition } from './../../Core/Authorization/RoleDefinition';
+import { BaseValidator } from './../../Core/Validation/BaseValidator';
+import { MissingCheck, IsValidNameString }
+    from './../../Core/Validation/ValidationDecorators';
+import { ErrorMessage } from './../../Core/ErrorMessage';
 
 export class CustomerManagement extends UserManagement implements CustomerManagementBehavior {
 
@@ -37,6 +41,13 @@ export class CustomerManagement extends UserManagement implements CustomerManage
             social_security_number: undefined,
             status: true
         }
+
+        var validation = await this.validateCustomerProfile(profile);
+        if (validation.err) {
+            returnResult.code = validation.code;
+            returnResult.err = validation.err;
+            return returnResult;
+        }
         var addProfileAction = await this.addProfile(customerId, newProfile);
         if (addProfileAction.err) {
             returnResult.err = addProfileAction.err;
@@ -58,12 +69,20 @@ export class CustomerManagement extends UserManagement implements CustomerManage
      * 
      * @memberOf CustomerManagement
      */
-    public async createCustomer(customerPhone: string, customerData: UserProfile): Promise<SalonCloudResponse<UserToken>> {
+    public async createCustomer(customerPhone: string, customerProfile: UserProfile): Promise<SalonCloudResponse<UserToken>> {
         var response: SalonCloudResponse<UserToken> = {
             code: undefined,
             data: undefined,
             err: undefined
         }
+
+        var validation = await this.validateCustomerProfile(customerProfile);
+        if (validation.err) {
+            response.code = validation.code;
+            response.err = validation.err;
+            return response;
+        }
+
         // create customer account with phone
 
         var authObject = new Authentication();
@@ -82,7 +101,7 @@ export class CustomerManagement extends UserManagement implements CustomerManage
         let signinData: SalonCloudResponse<UserToken> = await authObject.signInWithUsernameAndPassword(customerPhone, randomPasswordString);
 
         // add salon profile to customer account
-        var profileCreation = await this.addCustomerProfile(signinData.data.user._id, customerData);
+        var profileCreation = await this.addCustomerProfile(signinData.data.user._id, customerProfile);
         if (profileCreation.err) {
             response.err = profileCreation.err;
             response.code = profileCreation.code;
@@ -105,4 +124,24 @@ export class CustomerManagement extends UserManagement implements CustomerManage
     updateCustomer(customerId: string, profile: UserProfile): boolean {
         return;
     };
+
+    private async validateCustomerProfile(profile: UserProfile): Promise<SalonCloudResponse<undefined>> {
+        var response: SalonCloudResponse<undefined> = {
+            code: undefined,
+            err: undefined,
+            data: undefined
+        };
+
+        let fullnameValidation = new BaseValidator(profile.fullname);
+        fullnameValidation = new MissingCheck(fullnameValidation, ErrorMessage.MissingCustomerName);
+        fullnameValidation = new IsValidNameString(fullnameValidation, ErrorMessage.MissingCustomerName);
+        let fullnameError = await fullnameValidation.validate();
+
+        if (fullnameError) {
+            response.code = 400;
+            response.err = fullnameError;
+        }
+
+        return response;
+    }
 }

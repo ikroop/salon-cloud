@@ -160,6 +160,11 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             if (customer.profile.length === 0) {
                 //create customer profile for this salon
                 var newCustomerProdile = await customerManagementDP.addCustomerProfile(customer._id, customerProfile);
+                if (newCustomerProdile.err) {
+                    response.err = newCustomerProdile.err;
+                    response.code = newCustomerProdile.code;
+                    return response;
+                }
             }
             response.data = customer._id;
             response.code = 200;
