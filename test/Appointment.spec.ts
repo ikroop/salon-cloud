@@ -297,39 +297,39 @@ describe('Appointment Management', function () {
                 });
         });
 
-        // /* 5	Invalid Name String (name is empty)	400	
-        //         error : 
-        //             - name: 'InvalidNameString' 
-        //             - message: 'Invalid Name String (Name is empty)'
-        // */
-        // it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create appointment with customer\'s name = empty string', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "customer_name": emptyName,
-        //         "salon_id": validSalonId,
-        //         "note": "Appointment note",
-        //         "services": [{
-        //             service_id: validServiceId,
-        //             employee_id: validEmployeeId,
-        //         }],
-        //         "booking_time": "2016-02-28 10:45:00"
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        /* 5	Invalid Name String (name is empty)	400	
+                error : 
+                    - name: 'InvalidNameString' 
+                    - message: 'Invalid Name String (Name is empty)'
+        */
+        it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create appointment with customer\'s name = empty string', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": emptyName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 10:45:00"
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
+                    done();
+                });
+        });
 
         // /* 6	Invalid Name String (name is too long)	400	
         //         error : 
