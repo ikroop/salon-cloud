@@ -114,7 +114,9 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             return response;
         }
         // Normalization return data
-        response.data = result.data._id;
+        response.data = {
+            appointment_id: result.data._id
+        };
         response.code = 200;
         // TODO:
 
