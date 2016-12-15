@@ -229,6 +229,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 var dayInput = eachService.start;
                 console.log('Here:');
                 var employeeDaySchedule = await scheduleManagementDP.getDailySchedule(dayInput, dayInput);
+                console.log('E: ', employeeDaySchedule);
+                if(employeeDaySchedule.err){
+                    console.log('1231');
+                    response.err = employeeDaySchedule.err;
+                    response.code = employeeDaySchedule.code;
+                    response.data = undefined;
+                    return response;
+                }
                 console.log('where:');
                 employeeSchedule = {
                     employee_id: eachService.employee_id,
