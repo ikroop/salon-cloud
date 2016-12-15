@@ -10,7 +10,7 @@ import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
 import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId }
     from './../../Core/Validation/ValidationDecorators';
-var ErrorMessage = require('./../../Core/ErrorMessage');
+import { ErrorMessage } from './../../Core/ErrorMessage';
 
 export class SalonSchedule extends Schedule {
 
@@ -27,7 +27,7 @@ export class SalonSchedule extends Schedule {
         return weeklySchedule
     }
 
-    protected async validateExt(): Promise<SalonCloudResponse<undefined>>{
+    protected async validateExt(): Promise<SalonCloudResponse<undefined>> {
         return undefined;
     }
 }
