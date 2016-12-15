@@ -18,5 +18,8 @@ export interface ServiceGroupData {
     service_list?: [ServiceItemData];
 }
 
-export interface IServiceGroupData extends ServiceGroupData, mongoose.Document { }
+export interface IServiceGroupData extends ServiceGroupData, mongoose.Document { 
+    service_list?: [IServiceItemData]
+}
+
 export interface IServiceItemData extends ServiceItemData, mongoose.Document { }

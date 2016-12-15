@@ -118,7 +118,8 @@ describe('Appointment Management', function () {
         // Get services 
         const serviceManagement = new ServiceManagement(validSalonId);
         const service_array = await serviceManagement.getServices();
-        validServiceId = service_array.data[0]._id;
+        var validGroupService = service_array.data[0];
+        validServiceId = validGroupService.service_list[0]._id;
 
         // Get Daily Schedule
         const employeeSchedule = new EmployeeSchedule(validSalonId, validEmployeeId);
@@ -1288,33 +1289,33 @@ describe('Appointment Management', function () {
         //         });
         // });
 
-        // it('should return appointment_id if request proceeds successfully with note', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "customer_name": rightFormattedName,
-        //         "salon_id": validSalonId,
-        //         "note": "Any appointment note, even blank one, is acceptable",
-        //         "services": [{
-        //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2017-02-28 10:45:00"
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        it('should return appointment_id if request proceeds successfully with note', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Any appointment note, even blank one, is acceptable",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId
+                }],
+                "booking_time": "2017-02-28 10:45:00"
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(200);
-        //             res.body.should.have.property('appointment_id');
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('appointment_id');
+                    done();
+                });
+        });
 
         // it('should return appointment_id if request proceeds successfully without note', function (done) {
         //     var bodyRequest = {
