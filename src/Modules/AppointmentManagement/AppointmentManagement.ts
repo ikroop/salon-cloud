@@ -93,14 +93,12 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
         }).exec();
 
         await appointmentSearch.then(function (docs) {
-            console.log('Docs: ', docs);
             if (!docs) {
                 response.data = [];
                 response.code = 200;
             } else {
                 var appointmentArray: Array<AppointmentItemData> =[];
                 for (let eachAppointment of docs) {
-                    console.log('AAA: ', eachAppointment.appointment_items);
                     for (let eachItem of eachAppointment.appointment_items) {
                         if (eachItem.employee_id == employeeId) {
                             appointmentArray.push(eachItem);
@@ -109,7 +107,6 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
                 }
 
                 response.data = appointmentArray;
-                console.log('AppointmentArray: ',appointmentArray);
                 response.code = 200;
             }
         }, function (err) {

@@ -27,13 +27,11 @@ export class AppointmentManagementRouter {
             var admin: AdministratorBehavior;
             // User Factory get Owner or Manager by Id
             // TODO
-            console.log('ONE');
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
 
             // Get data for request.body
             var salonTime = new SalonTime();
 
-            console.log(request.body);
             for (let eachService in request.body.services) {
                /* let startTimeValidation = new BaseValidator(appointment.services[eachService].start);
                 startTimeValidation = new MissingCheck(startTimeValidation, ErrorMessage.MissingStartDate);
@@ -57,10 +55,8 @@ export class AppointmentManagementRouter {
             }
 
             // call create appointment function
-            console.log('TWO', admin, appointment);
             var result = await admin.saveAppointment(appointment);
 
-            console.log('Three', result);
             //return data
             var responseData;
             if (result.err) {

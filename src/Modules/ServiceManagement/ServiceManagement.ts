@@ -98,7 +98,6 @@ export class ServiceManagement implements ServiceManagementBehavior {
             code: undefined,
             data: undefined
         };
-        console.log('salon_id:', this.salonId);
         await ServiceGroupModel.find({ salon_id: this.salonId }).exec(function (err, docs: [IServiceGroupData]) {
             if (err) {
                 returnResult.err = err;
@@ -264,22 +263,16 @@ export class ServiceManagement implements ServiceManagementBehavior {
             code: undefined,
             err: undefined
         }
-        console.log('SERVICEID: ',serviceId);
         var serviceSearch = await ServiceGroupModel.findOne({ 'service_list': { '$elemMatch': { '_id': serviceId } } }).exec(function (err, docs: IServiceItemData) {
             if (err) {
-                console.log('1');
                 response.code = 500;
                 response.err = err;
             } else if (!docs) {
-                console.log('2');
                 response.code = 200;
                 response.data = undefined;
             } else {
-                console.log('3');
                 response.code = 200;
                 response.data = docs;
-                console.log('DOcs:', docs);
-                console.log('Response: ',response);
             }
         });
 

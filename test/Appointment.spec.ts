@@ -123,12 +123,10 @@ describe('Appointment Management', function () {
 
         // Get Daily Schedule
         const employeeSchedule = new EmployeeSchedule(validSalonId, validEmployeeId);
-        //console.log("employeeSchedule: %j", employeeSchedule);
 
         var salonTime = new SalonTime();
         // set date to SalonTime Object
         const employeeDailySchedule = await employeeSchedule.getDailySchedule(salonTime, salonTime);
-        //console.log("employeeSchedule: %j", employeeSchedule);
 
     });
 

@@ -139,7 +139,6 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             code: undefined,
             err: undefined
         };
-        console.log('PHONE: ', phone)
         var customerManagementDP = new CustomerManagement(customerProfile.salon_id);
 
         var customer = await customerManagementDP.getUserByPhone(phone);
