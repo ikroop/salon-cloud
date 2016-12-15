@@ -7,7 +7,7 @@ import { SalonCloudResponse } from './../Core/SalonCloudResponse';
 import { Authentication } from '../Core/Authentication/Authentication';
 import { Authorization } from './../Core/Authorization/Authorization';
 import { AuthorizationRouter } from './Authorization';
-import { AdministratorBehavior } from './../Core/User/AdministratorBehavior';
+import { AdministratorBehavior, SaveAppointmentData } from './../Core/User/AdministratorBehavior';
 import { AbstractAdministrator } from './../Core/User/AbstractAdministrator'
 import { AppointmentData } from './../Modules/AppointmentManagement/AppointmentData';
 import { UserFactory } from './../Core/User/UserFactory';
@@ -15,7 +15,6 @@ import { SalonTime } from './../Core/SalonTime/SalonTime';
 import { ErrorMessage } from './../Core/ErrorMessage'
 import { BaseValidator } from './../Core/Validation/BaseValidator'
 import { MissingCheck, IsAfterSecondDate, IsValidSalonId } from './../Core/Validation/ValidationDecorators'
-
 
 export class AppointmentManagementRouter {
     private router: Router = Router();
@@ -32,11 +31,10 @@ export class AppointmentManagementRouter {
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
 
             // Get data for request.body
-            var appointment = request.body;
             var salonTime = new SalonTime();
 
             console.log(request.body);
-            for (let eachService in appointment.services) {
+            for (let eachService in request.body.services) {
                /* let startTimeValidation = new BaseValidator(appointment.services[eachService].start);
                 startTimeValidation = new MissingCheck(startTimeValidation, ErrorMessage.MissingStartDate);
                 //startTimeValidation = new IsDateString(startTimeValidation, ErrorMessage.InvalidDate);
@@ -47,9 +45,17 @@ export class AppointmentManagementRouter {
                     return;
                 }
                 */
-                appointment.services[eachService].start = salonTime.setString(appointment.services[eachService].start);
-                console.log('TEST: ', appointment.services[eachService].start.month, appointment.services[eachService].start.date);
+                request.body.services[eachService].start = salonTime.setString(request.body.services[eachService].start);
             }
+            var appointment : SaveAppointmentData = {
+
+                customer_name: request.body.customer_name,
+                customer_phone: request.body.customer_phone,
+                salon_id: request.body.salon_id,
+                services: request.body.services
+
+            }
+
             // call create appointment function
             console.log('TWO', admin, appointment);
             var result = await admin.saveAppointment(appointment);
