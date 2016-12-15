@@ -88,7 +88,7 @@ export class BookingAppointment extends AppointmentAbstract {
         for (var eachItem of appointment.appointment_items) {
             let employeeIdValidator = new BaseValidator(eachItem.employee_id);
             employeeIdValidator = new MissingCheck(employeeIdValidator, ErrorMessage.MissingEmployeeId);
-            employeeIdValidator = new IsValidSalonId(employeeIdValidator, ErrorMessage.EmployeeNotFound);
+            employeeIdValidator = new IsValidEmployeeId(employeeIdValidator,  ErrorMessage.EmployeeNotFound, appointment.salon_id);
             let employeeIdError = await employeeIdValidator.validate();
             if (employeeIdError) {
                 response.err = employeeIdError.err;
