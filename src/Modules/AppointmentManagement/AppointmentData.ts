@@ -38,4 +38,19 @@ export interface AppointmentData {
     note: string,
 }
 
+export interface SaveAppointmentData {
+    note?: string,
+    customer_phone: string,
+    customer_name?: string,
+    salon_id: string,
+    services: Array<AppointmentService>
+}
+
+export interface AppointmentService {
+    service_id: string,
+    employee_id: string,
+    start: SalonTimeData,
+    end?: SalonTimeData
+}
+
 export interface IAppointmentData extends AppointmentData, mongoose.Document { };

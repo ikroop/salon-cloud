@@ -7,9 +7,9 @@
 import { AbstractEmployee } from './AbstractEmployee'
 import { UserProfile, UserData } from './../../Modules/UserManagement/UserData'
 import UserModel = require('./../../Modules/UserManagement/UserModel');
-import { AppointmentItemData, AppointmentData } from './../../Modules/AppointmentManagement/AppointmentData'
+import { AppointmentItemData, AppointmentData, SaveAppointmentData } from './../../Modules/AppointmentManagement/AppointmentData'
 import { AppointmentManagement } from './../../Modules/AppointmentManagement/AppointmentManagement'
-import { AdministratorBehavior, SaveAppointmentData } from './AdministratorBehavior'
+import { AdministratorBehavior } from './AdministratorBehavior'
 import { BookingAppointment } from './../../Modules/AppointmentManagement/BookingAppointment';
 import { SalonCloudResponse } from './../SalonCloudResponse'
 import { ErrorMessage } from './../ErrorMessage'

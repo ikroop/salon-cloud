@@ -7,9 +7,9 @@ import { SalonCloudResponse } from './../Core/SalonCloudResponse';
 import { Authentication } from '../Core/Authentication/Authentication';
 import { Authorization } from './../Core/Authorization/Authorization';
 import { AuthorizationRouter } from './Authorization';
-import { AdministratorBehavior, SaveAppointmentData } from './../Core/User/AdministratorBehavior';
+import { AdministratorBehavior } from './../Core/User/AdministratorBehavior';
 import { AbstractAdministrator } from './../Core/User/AbstractAdministrator'
-import { AppointmentData } from './../Modules/AppointmentManagement/AppointmentData';
+import { AppointmentData, SaveAppointmentData } from './../Modules/AppointmentManagement/AppointmentData';
 import { UserFactory } from './../Core/User/UserFactory';
 import { SalonTime } from './../Core/SalonTime/SalonTime';
 import { ErrorMessage } from './../Core/ErrorMessage'
