@@ -148,15 +148,9 @@ describe('Appointment Management', function () {
                 "note": "Appointment note",
                 "services": [{
                     service_id: validServiceId,
-                    employee_id: validEmployeeId
-                }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                    employee_id: validEmployeeId, 
+                    start: "2017-02-28 10:45:00"
+                }]
             };
             request(server)
                 .post(apiUrl)
@@ -182,15 +176,9 @@ describe('Appointment Management', function () {
                 "note": "Appointment note",
                 "services": [{
                     service_id: validServiceId,
-                    employee_id: validEmployeeId
-                }],
-                "booking_time": {
-                    day: 28,
-                    month: 2,
-                    year: 2016,
-                    hour: 10,
-                    min: 45
-                }
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 10:45:00"
+                }]
             };
             request(server)
                 .post(apiUrl)
@@ -220,9 +208,9 @@ describe('Appointment Management', function () {
                 "note": "Appointment note",
                 "services": [{
                     service_id: validServiceId,
-                    employee_id: validEmployeeId
-                }],
-                "booking_time": "2016-02-28 10:45:00"
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 10:45:00"
+                }]
             };
             request(server)
                 .post(apiUrl)
@@ -254,9 +242,9 @@ describe('Appointment Management', function () {
                 "note": "Appointment note",
                 "services": [{
                     service_id: validServiceId,
-                    employee_id: validEmployeeId
-                }],
-                "booking_time": "2016-02-28 10:45:00"
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 10:45:00"
+                }]
             };
             request(server)
                 .post(apiUrl)
@@ -276,38 +264,38 @@ describe('Appointment Management', function () {
         });
         
 
-        // /* 4	Missing Customer Name	400	
-        //         error : 
-        //             - name: 'MissingCustomerName' 
-        //             - message: 'Missing Customer Name' 
-        // */
-        // it('should return ' + ErrorMessage.MissingCustomerName.err.name + ' error trying to create appointment without customer\'s name', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "salon_id": validSalonId,
-        //         "note": "Appointment note",
-        //         "services": [{
-        //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 10:45:00"
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        /* 4	Missing Customer Name	400	
+                error : 
+                    - name: 'MissingCustomerName' 
+                    - message: 'Missing Customer Name' 
+        */
+        it('should return ' + ErrorMessage.MissingCustomerName.err.name + ' error trying to create appointment without customer\'s name', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 10:45:00"
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.MissingCustomerName.err.name);
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingCustomerName.err.name);
+                    done();
+                });
+        });
 
         // /* 5	Invalid Name String (name is empty)	400	
         //         error : 
@@ -322,7 +310,7 @@ describe('Appointment Management', function () {
         //         "note": "Appointment note",
         //         "services": [{
         //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
+        //             employee_id: validEmployeeId,
         //         }],
         //         "booking_time": "2016-02-28 10:45:00"
         //     };
