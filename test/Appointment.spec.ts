@@ -331,72 +331,38 @@ describe('Appointment Management', function () {
                 });
         });
 
-        // /* 6	Invalid Name String (name is too long)	400	
-        //         error : 
-        //             - name: 'InvalidNameString' 
-        //             - message: 'Invalid Name String (Name is too long)'
-        // */
-        // it('should return ' + ErrorMessage.InvalidNameString.err.name + ' error trying to create appointment with too long customer\'s name', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "customer_name": tooLongName,
-        //         "salon_id": validSalonId,
-        //         "note": "Appointment note",
-        //         "services": [{
-        //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 10:45:00"
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        /* 7	Missing SalonID	400	
+                error : 
+                    - name: 'MissingSalonID' 
+                    - message: 'Missing SalonID'
+        */
+        it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to create appointment without salonId', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 10:45:00"
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
-        //             done();
-        //         });
-        // });
-
-        // /* 7	Missing SalonID	400	
-        //         error : 
-        //             - name: 'MissingSalonID' 
-        //             - message: 'Missing SalonID'
-        // */
-        // it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to create appointment without salonId', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "customer_name": rightFormattedName,
-        //         "note": "Appointment note",
-        //         "services": [{
-        //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 10:45:00"
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
-
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
-
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
+                    done();
+                });
+        });
 
         // /* 8	Salon Not Found	400
         //         error : 
