@@ -364,39 +364,39 @@ describe('Appointment Management', function () {
                 });
         });
 
-        // /* 8	Salon Not Found	400
-        //         error : 
-        //             - name: 'SalonNotFound' 
-        //             - message: 'Salon Not Found'
-        // */
-        // it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to create appointment with wrong salonId', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "customer_name": rightFormattedName,
-        //         "salon_id": notFoundSalonId,
-        //         "note": "Appointment note",
-        //         "services": [{
-        //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }],
-        //         "booking_time": "2016-02-28 10:45:00"
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        /* 8	Salon Not Found	400
+                error : 
+                    - name: 'SalonNotFound' 
+                    - message: 'Salon Not Found'
+        */
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to create appointment with wrong salonId', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": notFoundSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 10:45:00"
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
 
         // /* 9	Missing Booked Service List	400	
         //         error : 
