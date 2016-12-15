@@ -240,7 +240,7 @@ describe('Appointment Management', function () {
                     done();
                 });
         });
-
+        
         /* 3	Wrong Phone Number Format	400	
                 error : 
                     - name: 'WrongPhoneNumberFormat' 
@@ -274,6 +274,7 @@ describe('Appointment Management', function () {
                     done();
                 });
         });
+        
 
         // /* 4	Missing Customer Name	400	
         //         error : 
@@ -1297,9 +1298,9 @@ describe('Appointment Management', function () {
                 "note": "Any appointment note, even blank one, is acceptable",
                 "services": [{
                     service_id: validServiceId,
-                    employee_id: validEmployeeId
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 10:45:00"
                 }],
-                "booking_time": "2017-02-28 10:45:00"
             };
             request(server)
                 .post(apiUrl)
