@@ -228,64 +228,6 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     }
 
-
-    /**
-     * Ham nay` thua`, co the mai mot can, gio chua can
-     * Ham chua hoan thien
-     * @name: getAvailableTime
-     * @param:  timeNeeded: number, date: SalonTimeData
-     * @note: This function will get all available time-points for a service  of all employees.
-     *        The timeNeeded param is the amount of time that the service requires.
-     * @steps: Todo
-     * 
-     * @SalonCloudResponse.Data: an Array 
-     *          [{
-     *           employee_id: string,
-     *           time_array: [{         //timeArray
-     *                          
-     *                status: boolean,
-     *                time:  number,        //timePoint
-     *                overlapped: {         //If booked, this overlapped data will be the appointment' overlapped data
-     *                     status: boolean,  
-     *                     apointment_id: string
-     *                      }         
-     *              }]
-     *          }]
-     * 
-     */
-    /* public async getAvailableTime(timeNeeded: number, date: SalonTimeData): Promise<SalonCloudResponse<Array<any>>> {
-         var response: SalonCloudResponse<Array<any>> = {
-             data: undefined,
-             code: undefined,
-             err: undefined
-         }
-         // get employee list with open and close time;
-         // get all employee
-         var EmployeeManagementDP = new EmployeeManagement(this.salonId);
-         var employeeList = await EmployeeManagementDP.getAllEmployee();
- 
-         // init the result array
-         var resultArray: Array<any>;
- 
-         //TODO: GET EMPLOYEE SCHEDULE 
- 
-         // run loop method getEmployeeAvailableTime for each employee, push result to result array;
-         for (var each of employeeList.data) {
-             var process = await this.getEmployeeAvailableTime(timeNeeded, date, each, null);
-             if (process.err) {
- 
-             } else {
-                 resultArray.push(process.data);
-             }
-         }
-         response.data = resultArray;
-         response.code = 200;
-         // return
-         return response;
- 
-     }*/
-
-
     /**
     * @name: getEmployeeAvailableTime
     * @param:  timeNeeded: number, date: SalonTimeData, employee: any // expecting 'employee': {status: boolean, close: number, open: number, employee_id: string}  
