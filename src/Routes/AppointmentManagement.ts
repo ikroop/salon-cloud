@@ -9,7 +9,7 @@ import { Authorization } from './../Core/Authorization/Authorization';
 import { AuthorizationRouter } from './Authorization';
 import { AdministratorBehavior } from './../Core/User/AdministratorBehavior';
 import { AbstractAdministrator } from './../Core/User/AbstractAdministrator'
-import { AppointmentData, SaveAppointmentData } from './../Modules/AppointmentManagement/AppointmentData';
+import { AppointmentData, SaveAppointmentData, AppointmentItemData } from './../Modules/AppointmentManagement/AppointmentData';
 import { UserFactory } from './../Core/User/UserFactory';
 import { SalonTime } from './../Core/SalonTime/SalonTime';
 import { ErrorMessage } from './../Core/ErrorMessage'
@@ -28,31 +28,30 @@ export class AppointmentManagementRouter {
             // User Factory get Owner or Manager by Id
             // TODO
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
+            var appointment: SaveAppointmentData = {
+                customer_name: request.body.customer_name,
+                customer_phone: request.body.customer_phone,
+                salon_id: request.body.salon_id,
+                services: []
+            }
 
             // Get data for request.body
             var salonTime = new SalonTime();
 
-            for (let eachService in request.body.services) {
-               /* let startTimeValidation = new BaseValidator(appointment.services[eachService].start);
-                startTimeValidation = new MissingCheck(startTimeValidation, ErrorMessage.MissingStartDate);
-                //startTimeValidation = new IsDateString(startTimeValidation, ErrorMessage.InvalidDate);
-                let startTimeError = await startTimeValidation.validate();
-
-                if (startTimeError) {
-                    response.status(400).json({ 'err': startTimeError.err });
-                    return;
+            for (let eachService of request.body.services) {
+                var appointmentItem: AppointmentItemData = {
+                    employee_id: eachService.employee_id,
+                    start: salonTime.setString(eachService.start),
+                    service: {
+                        service_id: eachService.service_id
+                    },
+                    overlapped: {
+                        status: false,
+                    }
                 }
-                */
-                request.body.services[eachService].start = salonTime.setString(request.body.services[eachService].start);
+                appointment.services.push(appointmentItem);
             }
-            var appointment : SaveAppointmentData = {
 
-                customer_name: request.body.customer_name,
-                customer_phone: request.body.customer_phone,
-                salon_id: request.body.salon_id,
-                services: request.body.services
-
-            }
 
             // call create appointment function
             var result = await admin.saveAppointment(appointment);

@@ -9,14 +9,14 @@ import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
 
 export interface BookedServiceData {
     service_id: string,
-    service_name: string,
-    price: number,
-    time: number
+    service_name?: string,
+    price?: number,
+    time?: number
 }
 export interface AppointmentItemData {
     employee_id: string,
     start: SalonTimeData,
-    end: SalonTimeData,
+    end?: SalonTimeData,
     service: BookedServiceData,
     overlapped: {
         status: boolean;
@@ -43,14 +43,7 @@ export interface SaveAppointmentData {
     customer_phone: string,
     customer_name?: string,
     salon_id: string,
-    services: Array<AppointmentService>
-}
-
-export interface AppointmentService {
-    service_id: string,
-    employee_id: string,
-    start: SalonTimeData,
-    end?: SalonTimeData
+    services: AppointmentItemData[];
 }
 
 export interface IAppointmentData extends AppointmentData, mongoose.Document { };
