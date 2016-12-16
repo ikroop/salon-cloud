@@ -1,7 +1,7 @@
 {
   "name": "salon-cloud",
   "repository": {},
-  "license": "SalonHelp",
+  "license": "UNLICENSED",
   "version": "0.0.0",
   "description": "Salon Cloud Server",
   "main": "app.js",
@@ -33,7 +33,7 @@
     "@types/assertion-error": "^1.0.30",
     "@types/body-parser": "0.0.33",
     "@types/chai": "^3.4.34",
-    "@types/express": "^4.0.33",
+    "@types/express": "^4.0.34",
     "@types/jsonwebtoken": "^7.1.33",
     "@types/lodash": "^4.14.37",
     "@types/mocha": "^2.2.32",
