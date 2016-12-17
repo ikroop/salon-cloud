@@ -453,8 +453,7 @@ export class IsValidServiceId extends DecoratingValidator {
     public errorType: any;
     public targetElement: any;
     public salonId: string
-    public groupName: string;
-    constructor(wrapedValidator: Validator, errorType: any, groupName: string, salonId: string) {
+    constructor(wrapedValidator: Validator, errorType: any, salonId: string) {
         super();
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
@@ -463,7 +462,6 @@ export class IsValidServiceId extends DecoratingValidator {
 
     public async validatingOperation() {
         var serviceId = this.targetElement;
-        var groupName = this.groupName;
         var salonId = this.salonId;
         // Check Id valid or not
         if (!this.isMongooseId(serviceId)){
@@ -473,9 +471,9 @@ export class IsValidServiceId extends DecoratingValidator {
         var serviceManagement = new ServiceManagement(salonId);
         var response = await serviceManagement.getServiceItemById(serviceId);
         if (response.data) {
-            return this.errorType;
-        } else {
             return undefined;
+        } else {
+            return this.errorType;
         }
     }
 }

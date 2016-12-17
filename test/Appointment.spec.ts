@@ -37,6 +37,7 @@ describe('Appointment Management', function () {
     var validEmployeeId;
     var anotherUserId;
     var anotherUserToken;
+    var notFoundServiceId = '5825e03651934227174516d8';
 
     const date = new Date(2018, 3, 13);
 
@@ -462,43 +463,43 @@ describe('Appointment Management', function () {
                 });
         });
 
-        // /* 11	Service Not Found	400	
-        //         error : 
-        //             - name: 'ServiceNotFound' 
-        //             - message: 'Service Not Found'
-        // */
-        // it('should return ' + ErrorMessage.ServiceNotFound.err.name + ' error trying to create appointment which has not-found service', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "customer_name": rightFormattedName,
-        //         "salon_id": validSalonId,
-        //         "note": "Appointment note",
-        //         "services": [{
-        //             service_id: validServiceId,
-        //             employee_id: validEmployeeId,
-        //             start: "2017-02-28 10:45:00"
-        //         }, {
-        //             service_id: notFoundServiceId,
-        //             employee_id: validEmployeeId,
-        //             start: "2017-02-28 11:45:00"
-        //         }]
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        /* 11	Service Not Found	400	
+                error : 
+                    - name: 'ServiceNotFound' 
+                    - message: 'Service Not Found'
+        */
+        it('should return ' + ErrorMessage.ServiceNotFound.err.name + ' error trying to create appointment which has not-found service', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 10:45:00"
+                }, {
+                    service_id: notFoundServiceId,
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 11:45:00"
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.ServiceNotFound.err.name);
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.ServiceNotFound.err.name);
+                    done();
+                });
+        });
 
         // /* 12	Missing Employee Id	400	
         //         error : 

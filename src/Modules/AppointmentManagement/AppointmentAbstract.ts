@@ -17,7 +17,7 @@ import { EmployeeSchedule } from './../Schedule/EmployeeSchedule'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { DailyScheduleData, DailyScheduleArrayData } from './../Schedule/ScheduleData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
-import { MissingCheck, IsValidNameString, IsValidEmployeeId, IsSalonTime } from './../../Core/Validation/ValidationDecorators';
+import { MissingCheck, IsValidNameString, IsValidEmployeeId, IsSalonTime, IsValidServiceId } from './../../Core/Validation/ValidationDecorators';
 
 export abstract class AppointmentAbstract implements AppointmentBehavior {
     private appointmentManagementDP: AppointmentManagement;
@@ -486,6 +486,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
             let serviceIdValidator = new BaseValidator(eachItem.service.service_id);
             serviceIdValidator = new MissingCheck(serviceIdValidator, ErrorMessage.MissingServiceId);
+            serviceIdValidator = new IsValidServiceId(serviceIdValidator, ErrorMessage.ServiceNotFound, this.salonId);
             let serviceIdError = await serviceIdValidator.validate();
             if (serviceIdError) {
                 response.err = serviceIdError;
