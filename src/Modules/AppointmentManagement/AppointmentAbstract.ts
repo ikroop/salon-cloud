@@ -5,7 +5,7 @@
  */
 
 import { AppointmentManagement } from './AppointmentManagement'
-import { AppointmentData, AppointmentItemData, AppointmentService } from './AppointmentData'
+import { AppointmentData, AppointmentItemData } from './AppointmentData'
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { AppointmentBehavior } from './AppointmentBehavior';
 import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
@@ -17,7 +17,7 @@ import { EmployeeSchedule } from './../Schedule/EmployeeSchedule'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { DailyScheduleData, DailyScheduleArrayData } from './../Schedule/ScheduleData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
-import { MissingCheck, IsValidNameString } from './../../Core/Validation/ValidationDecorators';
+import { MissingCheck, IsValidNameString, IsValidEmployeeId, IsSalonTime } from './../../Core/Validation/ValidationDecorators';
 
 export abstract class AppointmentAbstract implements AppointmentBehavior {
     private appointmentManagementDP: AppointmentManagement;
@@ -55,18 +55,37 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             code: undefined,
             err: undefined
         }
+
+        //validate appointment data
         var validationResult = await this.validation(appointment);
         if (validationResult.code != 200) {
+            response.code = validationResult.code;
             response = validationResult;
             return response;
         }
+
+         // get available time
+        var appointmentItemsArray: Array<AppointmentItemData>;
+        // create Service
+        var timeAvalibilityCheck = await this.checkBookingAvailableTime(appointment.appointment_items);
+
+        if (timeAvalibilityCheck.err) {
+            response.err = timeAvalibilityCheck.err;
+            response.code = timeAvalibilityCheck.code;
+            return response;
+        } else {
+            appointmentItemsArray = timeAvalibilityCheck.data;
+        }
+
+        // Salon has available time for appointment, process to save appointment
+        appointment.appointment_items = appointmentItemsArray;
 
         //Normalization Data
         var newAppointment = this.normalizationData(appointment);
 
         // Create appointment document
         //var result = this.createAppointmentDoc(appointment);
-        var result: any = await this.appointmentManagementDP.createAppointment(newAppointment);
+        var result: SalonCloudResponse<AppointmentData> = await this.appointmentManagementDP.createAppointment(newAppointment);
         if (result.err) {
             response.err = result.err;
             response.code = result.code;
@@ -94,22 +113,13 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
      * 
      * @memberOf AppointmentAbstract
      */
-    public async checkBookingAvailableTime(servicesArray: AppointmentService[]): Promise<SalonCloudResponse<AppointmentItemData[]>> {
+    public async checkBookingAvailableTime(servicesArray: AppointmentItemData[]): Promise<SalonCloudResponse<AppointmentItemData[]>> {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
             data: undefined,
             code: undefined,
             err: undefined
         }
 
-        let servicesValidation = new BaseValidator(servicesArray);
-        servicesValidation = new MissingCheck(servicesValidation, ErrorMessage.MissingBookedServiceList);
-        let servicesError = await servicesValidation.validate();
-
-        if (servicesError) {
-            response.code = 400;
-            response.err = servicesError;
-            return response;
-        }
 
         var employeeIdList: Array<string> = [];
         var employeeScheduleList: Array<any> = [];
@@ -117,7 +127,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         for (var eachService of servicesArray) {
             // get service data
             var serviceManagementDP = new ServiceManagement(this.salonId);
-            var serviceItem = await serviceManagementDP.getServiceItemById(eachService.service_id);
+            var serviceItem = await serviceManagementDP.getServiceItemById(eachService.service.service_id);
             if (serviceItem.err) {
                 response.err = serviceItem.err;
                 response.code = serviceItem.code;
@@ -265,8 +275,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
         var timeNeededNumberOfTicks = timeNeeded / SmallestTimeTick;
         var day = new SalonTime(date);
-        var flexibleTime;       
-         // Todo: 
+        var flexibleTime;
+        // Todo: 
         var openTime = new SalonTime(date);
         openTime.setHour(employee.days[0].open / 3600);
         openTime.setMinute(employee.days[0].open % 3600 / 60);
@@ -426,6 +436,97 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             }
         }
         return;
+
+    }
+
+    protected async validateServices(serviceArray: AppointmentItemData[]): Promise<SalonCloudResponse<any>> {
+        var response: SalonCloudResponse<Array<AppointmentItemData>> = {
+            data: undefined,
+            code: undefined,
+            err: undefined
+        }
+        let servicesValidation = new BaseValidator(serviceArray);
+        servicesValidation = new MissingCheck(servicesValidation, ErrorMessage.MissingBookedServiceList);
+        let servicesError = await servicesValidation.validate();
+        if (servicesError) {
+            response.code = 400;
+            response.err = servicesError;
+            return response;
+        }
+
+         for (var eachItem of serviceArray) {
+            let employeeIdValidator = new BaseValidator(eachItem.employee_id);
+            employeeIdValidator = new MissingCheck(employeeIdValidator, ErrorMessage.MissingEmployeeId);
+            employeeIdValidator = new IsValidEmployeeId(employeeIdValidator,  ErrorMessage.EmployeeNotFound, this.salonId);
+            let employeeIdError = await employeeIdValidator.validate();
+            if (employeeIdError) {
+                response.err = employeeIdError;
+                response.code = 400;
+                return response;
+            }
+
+            let startValidator = new BaseValidator(eachItem.start);
+            startValidator = new MissingCheck(startValidator, ErrorMessage.MissingStartDate);
+            startValidator = new IsSalonTime(startValidator, ErrorMessage.InvalidDate)
+            let startError = await startValidator.validate();
+            if (startError) {
+                response.err = startError;
+                response.code = 400;
+                return response;
+            }
+
+            let serviceValidator = new BaseValidator(eachItem.service);
+            serviceValidator = new MissingCheck(serviceValidator, ErrorMessage.MissingServiceItem);
+            let serviceError = await serviceValidator.validate();
+            if (serviceError) {
+                response.err = serviceError;
+                response.code = 400;
+                return response;
+            }
+
+            let serviceIdValidator = new BaseValidator(eachItem.service.service_id);
+            serviceIdValidator = new MissingCheck(serviceIdValidator, ErrorMessage.MissingServiceId);
+            let serviceIdError = await serviceIdValidator.validate();
+            if (serviceIdError) {
+                response.err = serviceIdError;
+                response.code = 400;
+                return response;
+            }
+
+            let overLapValidator = new BaseValidator(eachItem.overlapped);
+            overLapValidator = new MissingCheck(overLapValidator, ErrorMessage.MissingOverlappedObject);
+            let overLapError = await overLapValidator.validate();
+            if (overLapError) {
+                response.err = overLapError;
+                response.code = 400;
+                return response;
+            }
+
+            let overlapStatusValidator = new BaseValidator(eachItem.overlapped.status);
+            overlapStatusValidator = new MissingCheck(overlapStatusValidator, ErrorMessage.MissingOverlappedStatus);
+            let overlapStatusError = await overlapStatusValidator.validate();
+            if (overlapStatusError) {
+                response.err = overlapStatusError;
+                response.code = 400;
+                return response;
+            }
+
+            if (eachItem.overlapped.status) {
+                let overlapAppointmentIdValidator = new BaseValidator(eachItem.overlapped.overlapped_appointment_id);
+                overlapAppointmentIdValidator = new MissingCheck(overlapAppointmentIdValidator, ErrorMessage.MissingAppointmentId);
+
+                let overlapAppointmentIdError = await overlapAppointmentIdValidator.validate();
+                if (overlapAppointmentIdError) {
+                    response.err = overlapAppointmentIdError;
+                    response.code = 500;
+                    return response;
+                }
+            }
+
+        }
+
+        return response;
+
 
     }
     protected abstract validation(appointment: AppointmentData): Promise<SalonCloudResponse<any>>;

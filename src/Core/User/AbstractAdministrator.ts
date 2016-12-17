@@ -18,7 +18,7 @@ import { Authentication } from './../Authentication/Authentication'
 import { DailyScheduleData, WeeklyScheduleData } from './../../Modules/Schedule/ScheduleData'
 import { ScheduleBehavior } from './../../Modules/Schedule/ScheduleBehavior'
 import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
-
+import { RoleDefinition } from './../../Core/Authorization/RoleDefinition'
 
 export abstract class AbstractAdministrator extends AbstractEmployee implements AdministratorBehavior {
 
@@ -49,13 +49,29 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             code: undefined,
             err: undefined
         }
+        var salonId = inputData.salon_id;
+
+        // FIX ME: build UserProfile
+        var userProfile: UserProfile = {
+            role: RoleDefinition.Customer.value,
+            fullname: inputData.customer_name,
+            salon_id: salonId
+        }
+
+        // Get customer Id
+        var getCustomerId = await this.getCustomerId(inputData.customer_phone, userProfile);
+        if (getCustomerId.err) {
+            response.err = getCustomerId.err;
+            response.code = getCustomerId.code;
+            return response;
+        }
+
         //Todo:  validation
 
-        var salonId = inputData.salon_id;
         var newAppointment: AppointmentData = {
-            customer_id: undefined,
+            customer_id: getCustomerId.data,
             device: undefined,
-            appointment_items: undefined,
+            appointment_items: inputData.services,
             payment_id: undefined,
             total: undefined,
             salon_id: salonId,
@@ -67,43 +83,8 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
 
         var appointmentByPhone: BookingAppointment = new BookingAppointment(salonId, new AppointmentManagement(salonId));
-        /*var validation = await appointmentByPhone.validation(newAppointment);
-        if (validation.err) {
-            response.err = validation.err;
-            response.code = validation.code;
-            return response;
-        }*/
-        appointmentByPhone.normalizationData(newAppointment);
 
-        // FIX ME: build UserProfile
-        var userProfile: UserProfile = {
-            role: 4,
-            fullname: inputData.customer_name,
-            salon_id: inputData.salon_id
-        }
-        // Get customer Id
-        var getCustomerId = await this.getCustomerId(inputData.customer_phone, userProfile);
-        if (getCustomerId.err) {
-            response.err = getCustomerId.err;
-            response.code = getCustomerId.code;
-            return response;
-        }
-
-        newAppointment.customer_id = getCustomerId.data;
-        // get available time
-        var appointmentItemsArray: Array<AppointmentItemData>;
-        // create Service
-        var timeAvalibilityCheck = await appointmentByPhone.checkBookingAvailableTime(inputData.services);
-
-        if (timeAvalibilityCheck.err) {
-            response.err = timeAvalibilityCheck.err;
-            response.code = timeAvalibilityCheck.code;
-            return response;
-        } else {
-            appointmentItemsArray = timeAvalibilityCheck.data;
-        }
-        // Salon has available time for appointment, process to save appointment
-        newAppointment.appointment_items = appointmentItemsArray;
+        appointmentByPhone.normalizationData(newAppointment);               
 
         // create appointment
         var result: any = await appointmentByPhone.createAppointment(newAppointment);

@@ -146,7 +146,7 @@ describe('Appointment Management', function () {
                 "note": "Appointment note",
                 "services": [{
                     service_id: validServiceId,
-                    employee_id: validEmployeeId, 
+                    employee_id: validEmployeeId,
                     start: "2017-02-28 10:45:00"
                 }]
             };
@@ -226,7 +226,7 @@ describe('Appointment Management', function () {
                     done();
                 });
         });
-        
+
         /* 3	Wrong Phone Number Format	400	
                 error : 
                     - name: 'WrongPhoneNumberFormat' 
@@ -260,7 +260,7 @@ describe('Appointment Management', function () {
                     done();
                 });
         });
-        
+
 
         /* 4	Missing Customer Name	400	
                 error : 
@@ -425,41 +425,42 @@ describe('Appointment Management', function () {
                 });
         });
 
-        // /* 10	Missing Service Id	400	
-        //         error : 
-        //             - name: 'MissingServiceId' 
-        //             - message: 'Missing Service Id'
-        // */
-        // it('should return ' + ErrorMessage.MissingServiceId.err.name + ' error trying to create appointment which has service with no serviceId', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "customer_name": rightFormattedName,
-        //         "salon_id": validSalonId,
-        //         "note": "Appointment note",
-        //         "services": [{
-        //             service_id: validServiceId,
-        //             employee_id: validEmployeeId,
-        //             start: "2017-02-28 10:45:00"
-        //         }, {
-        //             employee_id: validEmployeeId
-        //         }]
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        /* 10	Missing Service Id	400	
+                error : 
+                    - name: 'MissingServiceId' 
+                    - message: 'Missing Service Id'
+        */
+        it('should return ' + ErrorMessage.MissingServiceId.err.name + ' error trying to create appointment which has service with no serviceId', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 10:45:00"
+                }, {
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 10:45:00"
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.MissingServiceId.err.name);
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingServiceId.err.name);
+                    done();
+                });
+        });
 
         // /* 11	Service Not Found	400	
         //         error : 
