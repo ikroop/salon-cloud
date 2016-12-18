@@ -501,42 +501,42 @@ describe('Appointment Management', function () {
                 });
         });
 
-        // /* 12	Missing Employee Id	400	
-        //         error : 
-        //             - name: 'MissingEmployeeId' 
-        //             - message: 'Missing Employee Id'
-        // */
-        // it('should return ' + ErrorMessage.MissingEmployeeId.err.name + ' error trying to create appointment which has service with no employeeId', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "customer_name": rightFormattedName,
-        //         "salon_id": validSalonId,
-        //         "note": "Appointment note",
-        //         "services": [{
-        //             service_id: validServiceId,
-        //             start: "2017-02-28 10:45:00"
-        //         }, {
-        //             service_id: validServiceId,
-        //             employee_id: validEmployeeId,
-        //             start: "2017-02-28 11:45:00"
-        //         }]
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        /* 12	Missing Employee Id	400	
+                error : 
+                    - name: 'MissingEmployeeId' 
+                    - message: 'Missing Employee Id'
+        */
+        it('should return ' + ErrorMessage.MissingEmployeeId.err.name + ' error trying to create appointment which has service with no employeeId', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    start: "2017-02-28 10:45:00"
+                }, {
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 11:45:00"
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.MissingEmployeeId.err.name);
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingEmployeeId.err.name);
+                    done();
+                });
+        });
 
         // /* 13	Employee Not Found	400	
         //         error : 
