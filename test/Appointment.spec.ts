@@ -538,43 +538,43 @@ describe('Appointment Management', function () {
                 });
         });
 
-        // /* 13	Employee Not Found	400	
-        //         error : 
-        //             - name: 'EmployeeNotFound' 
-        //             - message: 'Employee Not Found'
-        // */
-        // it('should return ' + ErrorMessage.EmployeeNotFound.err.name + ' error trying to create appointment which has not-found employee', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "customer_name": rightFormattedName,
-        //         "salon_id": validSalonId,
-        //         "note": "Appointment note",
-        //         "services": [{
-        //             service_id: validServiceId,
-        //             employee_id: notFoundEmployeeId,
-        //             start: "2017-02-28 10:45:00"
-        //         }, {
-        //             service_id: validServiceId,
-        //             employee_id: validEmployeeId,
-        //             start: "2017-02-28 10:45:00"
-        //         }]
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        /* 13	Employee Not Found	400	
+                error : 
+                    - name: 'EmployeeNotFound' 
+                    - message: 'Employee Not Found'
+        */
+        it('should return ' + ErrorMessage.EmployeeNotFound.err.name + ' error trying to create appointment which has not-found employee', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: notFoundEmployeeId,
+                    start: "2017-02-28 10:45:00"
+                }, {
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 10:45:00"
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.EmployeeNotFound.err.name);
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.EmployeeNotFound.err.name);
+                    done();
+                });
+        });
 
         // /* 14	Missing Appointment Time	400	
         //         error : 
