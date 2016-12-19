@@ -126,22 +126,6 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         var employeeAppointmentArrayList: Array<Array<AppointmentItemData>> = [];
 
         for (var eachService of servicesArray) {
-            /*
-            // get service data
-            var serviceManagementDP = new ServiceManagement(this.salonId);
-            var serviceItem = await serviceManagementDP.getServiceItemById(eachService.service.service_id);
-            if (serviceItem.err) {
-                response.err = serviceItem.err;
-                response.code = serviceItem.code;
-                return response;
-            }
-            // get Time needed and end time
-            var timeNeeded = serviceItem.data.time;
-            var endTime = new SalonTime();
-            endTime.setString(eachService.start.toString());
-            endTime.addMinute(timeNeeded / 60);
-            eachService.end = endTime;
-            */
 
             var getServiceData = await this.getServiceData(eachService);
             if (getServiceData.err) {
@@ -159,48 +143,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 employeeSchedule = employeeScheduleList[employeeIndex];
                 employeeAppointmentArray = employeeAppointmentArrayList[employeeIndex];
             } else {
-                /*
-                var scheduleManagementDP = new EmployeeSchedule(this.salonId, eachService.employee_id)
-                var dayInput = eachService.start;
-                var employeeDaySchedule = await scheduleManagementDP.getDailySchedule(dayInput, dayInput);
-                if (employeeDaySchedule.err) {
-                    response.err = employeeDaySchedule.err;
-                    response.code = employeeDaySchedule.code;
-                    response.data = undefined;
-                    return response;
-                }
-                employeeSchedule = {
-                    employee_id: eachService.employee_id,
-                    close: employeeDaySchedule.data.days[0].close,
-                    status: employeeDaySchedule.data.days[0].status,
-                    open: employeeDaySchedule.data.days[0].open
-
-                }
-                var appointmentSearch = await this.appointmentManagementDP.getEmployeeAppointmentByDate(eachService.employee_id, eachService.start);
-                if (appointmentSearch) {
-                    if (appointmentSearch.err) {
-                        response.err = appointmentSearch.err;
-                        response.code = appointmentSearch.code;
-                        return response;
-                    } else {
-                        if (appointmentSearch.data) {
-                            employeeAppointmentArray = appointmentSearch.data;
-                        } else {
-                            employeeAppointmentArray = [];
-                        }
-                    }
-                } else {
-                    employeeAppointmentArray = [];
-                }
-                */
                 var employeeDaySchedule = await this.getEmployeeScheduleForAddedEmployee(eachService, employeeSchedule);
-                if(employeeDaySchedule.err){
+                if (employeeDaySchedule.err) {
                     response.err = employeeDaySchedule.err;
                     response.code = employeeDaySchedule.code;
                     return response;
                 }
                 var appointmentSearch = await this.getAppointmentForAddedEmployee(eachService, employeeAppointmentArray);
-                if(appointmentSearch){
+                if (appointmentSearch) {
                     response.err = appointmentSearch.err;
                     response.code = appointmentSearch.code;
                     return response;
@@ -224,34 +174,15 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                     response.code = 500;
                     return response;
                 } else {
-                    response.data = [];
-                    let startTimePoint = eachService.start.hour * 60 + eachService.start.min;
-                    for (var eachPoint of getTimeArray.data.time_array) {
-                        if (eachPoint.time == startTimePoint) {
-                            if (eachPoint.available == true) {
-                                let appointmentItem: AppointmentItemData = {
-                                    employee_id: eachService.employee_id,
-                                    start: eachService.start,
-                                    end: eachService.end,
-                                    service: {
-                                        service_id: getServiceData.data._id,
-                                        time: getServiceData.data.time,
-                                        price: getServiceData.data.price,
-                                        service_name: getServiceData.data.name
-                                    },
-                                    overlapped: eachPoint.overlapped
-                                }
-                                employeeAppointmentArrayList[employeeIndex].push(appointmentItem);
-                                response.data.push(appointmentItem);
-                                response.code = 200;
-                            } else {
-                                response.err = ErrorMessage.AppointmentTimeNotAvailable;
-                                response.err.data = eachService;
-                                response.code = 500;
-                                return response;
-                            }
-                            break;
-                        }
+
+                    var appointmentArrayResult = await this.makeAppointmentArrayForCreation(eachService, getTimeArray, getServiceData, employeeAppointmentArrayList, employeeIndex);
+                    if(appointmentArrayResult.err){
+                        response.err = appointmentArrayResult.err;
+                        response.code = appointmentArrayResult.code;
+                        return response;
+                    }else{
+                        response.data = appointmentArrayResult.data;
+                        response.code = appointmentArrayResult.code;
                     }
                 }
             }
@@ -315,7 +246,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     }
 
-    private async getAppointmentForAddedEmployee(eachService: AppointmentItemData, employeeAppointmentArray: AppointmentItemData[] ) {
+    private async getAppointmentForAddedEmployee(eachService: AppointmentItemData, employeeAppointmentArray: AppointmentItemData[]) {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
             data: undefined,
             code: undefined,
@@ -339,6 +270,44 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         }
         return response;
 
+    }
+
+    private async makeAppointmentArrayForCreation(eachService: AppointmentItemData, getTimeArray: any, getServiceData: any, employeeAppointmentArrayList: Array<Array<AppointmentItemData>>, employeeIndex: number) {
+        var response: SalonCloudResponse<Array<AppointmentItemData>> = {
+            data: undefined,
+            code: undefined,
+            err: undefined
+        }
+        response.data = [];
+        let startTimePoint = eachService.start.hour * 60 + eachService.start.min;
+        for (var eachPoint of getTimeArray.data.time_array) {
+            if (eachPoint.time == startTimePoint) {
+                if (eachPoint.available == true) {
+                    let appointmentItem: AppointmentItemData = {
+                        employee_id: eachService.employee_id,
+                        start: eachService.start,
+                        end: eachService.end,
+                        service: {
+                            service_id: getServiceData.data._id,
+                            time: getServiceData.data.time,
+                            price: getServiceData.data.price,
+                            service_name: getServiceData.data.name
+                        },
+                        overlapped: eachPoint.overlapped
+                    }
+                    employeeAppointmentArrayList[employeeIndex].push(appointmentItem);
+                    response.data.push(appointmentItem);
+                    response.code = 200;
+                } else {
+                    response.err = ErrorMessage.AppointmentTimeNotAvailable;
+                    response.err.data = eachService;
+                    response.code = 500;
+                    return response;
+                }
+                break;
+            }
+        }
+        return response;
     }
 
     private createAppointmentDoc(appointment: AppointmentData) {
