@@ -414,7 +414,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
         }
         // initilize timArray
-        var timeArray: Array<any> = [];
+        var timeArray: Array<TimeArrayItem> = [];
         for (let i = 0; i < timeArrayLength; i++) {
             let obj = {
                 available: true,
@@ -491,7 +491,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
      *                     |---|---|---|---|---|---|---|---|---|---|---|---|---|---|         
      * 
      * */
-    private filterTimeArray(appointment: any, timeArray: any, openTimePoint: number, closeTimePoint: number, timeNeededNumberOfTicks: number, flexibleTime: number) {
+    private filterTimeArray(appointment: any, timeArray: Array<TimeArrayItem>, openTimePoint: number, closeTimePoint: number, timeNeededNumberOfTicks: number, flexibleTime: number) {
         // init leftPoleIndex
         let startPointOfAppointment = appointment.start.min + appointment.start.hour * 60;
         let leftPoleIndex = (startPointOfAppointment - openTimePoint) / SmallestTimeTick;
@@ -637,5 +637,17 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
     protected abstract validation(appointment: AppointmentData): Promise<SalonCloudResponse<any>>;
     protected abstract normalizationData(appointment: AppointmentData): AppointmentData;
 
+
+}
+
+export interface TimeArrayItem {
+
+    available: boolean,
+    overlapped: {
+        status: boolean,
+        appointment_id?: string,
+    },
+    time: number,
+            
 
 }
