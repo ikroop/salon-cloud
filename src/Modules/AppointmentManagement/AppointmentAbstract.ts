@@ -64,7 +64,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             return response;
         }
 
-         // get available time
+        // get available time
         var appointmentItemsArray: Array<AppointmentItemData>;
         // create Service
         var timeAvalibilityCheck = await this.checkBookingAvailableTime(appointment.appointment_items);
@@ -124,7 +124,9 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         var employeeIdList: Array<string> = [];
         var employeeScheduleList: Array<any> = [];
         var employeeAppointmentArrayList: Array<Array<AppointmentItemData>> = [];
+
         for (var eachService of servicesArray) {
+            /*
             // get service data
             var serviceManagementDP = new ServiceManagement(this.salonId);
             var serviceItem = await serviceManagementDP.getServiceItemById(eachService.service.service_id);
@@ -139,6 +141,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             endTime.setString(eachService.start.toString());
             endTime.addMinute(timeNeeded / 60);
             eachService.end = endTime;
+            */
+
+            var getServiceData = await this.getServiceData(eachService);
+            if (getServiceData.err) {
+                response.err = getServiceData.err;
+                response.code = getServiceData.code;
+                return response;
+            }
 
             // get emloyee schedule
             var employeeSchedule;
@@ -149,6 +159,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 employeeSchedule = employeeScheduleList[employeeIndex];
                 employeeAppointmentArray = employeeAppointmentArrayList[employeeIndex];
             } else {
+                /*
                 var scheduleManagementDP = new EmployeeSchedule(this.salonId, eachService.employee_id)
                 var dayInput = eachService.start;
                 var employeeDaySchedule = await scheduleManagementDP.getDailySchedule(dayInput, dayInput);
@@ -181,6 +192,19 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 } else {
                     employeeAppointmentArray = [];
                 }
+                */
+                var employeeDaySchedule = await this.getEmployeeScheduleForAddedEmployee(eachService, employeeSchedule);
+                if(employeeDaySchedule.err){
+                    response.err = employeeDaySchedule.err;
+                    response.code = employeeDaySchedule.code;
+                    return response;
+                }
+                var appointmentSearch = await this.getAppointmentForAddedEmployee(eachService, employeeAppointmentArray);
+                if(appointmentSearch){
+                    response.err = appointmentSearch.err;
+                    response.code = appointmentSearch.code;
+                    return response;
+                }
 
                 employeeIdList.push(eachService.employee_id);
                 employeeScheduleList.push(employeeSchedule);
@@ -189,7 +213,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
 
             }
-            var getTimeArray = await this.getEmployeeAvailableTime(timeNeeded, eachService.start, employeeDaySchedule.data, employeeAppointmentArray);
+            var getTimeArray = await this.getEmployeeAvailableTime(getServiceData.data.time, eachService.start, employeeDaySchedule.data, employeeAppointmentArray);
             if (getTimeArray.err) {
                 response.err = getTimeArray.err;
                 response.code = getTimeArray.code;
@@ -210,10 +234,10 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                                     start: eachService.start,
                                     end: eachService.end,
                                     service: {
-                                        service_id: serviceItem.data._id,
-                                        time: serviceItem.data.time,
-                                        price: serviceItem.data.price,
-                                        service_name: serviceItem.data.name
+                                        service_id: getServiceData.data._id,
+                                        time: getServiceData.data.time,
+                                        price: getServiceData.data.price,
+                                        service_name: getServiceData.data.name
                                     },
                                     overlapped: eachPoint.overlapped
                                 }
@@ -234,6 +258,89 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         }
         return response;
     }
+
+    private async getServiceData(eachService: AppointmentItemData) {
+        var response: SalonCloudResponse<any> = {
+            data: undefined,
+            code: undefined,
+            err: undefined
+        }
+
+        var serviceManagementDP = new ServiceManagement(this.salonId);
+        var serviceItem = await serviceManagementDP.getServiceItemById(eachService.service.service_id);
+        if (serviceItem.err) {
+            response.err = serviceItem.err;
+            response.code = serviceItem.code;
+            return response;
+        } else {
+            response.data = serviceItem.data;
+        }
+        // get Time needed and end time
+        var timeNeeded = serviceItem.data.time;
+        var endTime = new SalonTime();
+        endTime.setString(eachService.start.toString());
+        endTime.addMinute(timeNeeded / 60);
+        eachService.end = endTime;
+
+        return response;
+
+    }
+
+    private async getEmployeeScheduleForAddedEmployee(eachService: AppointmentItemData, employeeSchedule: any) {
+
+        var response: SalonCloudResponse<DailyScheduleArrayData> = {
+            data: undefined,
+            code: undefined,
+            err: undefined
+        }
+
+        var scheduleManagementDP = new EmployeeSchedule(this.salonId, eachService.employee_id)
+        var dayInput = eachService.start;
+        var employeeDaySchedule = await scheduleManagementDP.getDailySchedule(dayInput, dayInput);
+        if (employeeDaySchedule.err) {
+            response.err = employeeDaySchedule.err;
+            response.code = employeeDaySchedule.code;
+            response.data = undefined;
+            return response;
+        }
+        employeeSchedule = {
+            employee_id: eachService.employee_id,
+            close: employeeDaySchedule.data.days[0].close,
+            status: employeeDaySchedule.data.days[0].status,
+            open: employeeDaySchedule.data.days[0].open
+
+        }
+        return response;
+
+
+    }
+
+    private async getAppointmentForAddedEmployee(eachService: AppointmentItemData, employeeAppointmentArray: AppointmentItemData[] ) {
+        var response: SalonCloudResponse<Array<AppointmentItemData>> = {
+            data: undefined,
+            code: undefined,
+            err: undefined
+        }
+        var appointmentSearch = await this.appointmentManagementDP.getEmployeeAppointmentByDate(eachService.employee_id, eachService.start);
+        if (appointmentSearch) {
+            if (appointmentSearch.err) {
+                response.err = appointmentSearch.err;
+                response.code = appointmentSearch.code;
+                return response;
+            } else {
+                if (appointmentSearch.data) {
+                    employeeAppointmentArray = appointmentSearch.data;
+                } else {
+                    employeeAppointmentArray = [];
+                }
+            }
+        } else {
+            employeeAppointmentArray = [];
+        }
+        return response;
+
+    }
+
     private createAppointmentDoc(appointment: AppointmentData) {
 
     }
@@ -454,10 +561,10 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             return response;
         }
 
-         for (var eachItem of serviceArray) {
+        for (var eachItem of serviceArray) {
             let employeeIdValidator = new BaseValidator(eachItem.employee_id);
             employeeIdValidator = new MissingCheck(employeeIdValidator, ErrorMessage.MissingEmployeeId);
-            employeeIdValidator = new IsValidEmployeeId(employeeIdValidator,  ErrorMessage.EmployeeNotFound, this.salonId);
+            employeeIdValidator = new IsValidEmployeeId(employeeIdValidator, ErrorMessage.EmployeeNotFound, this.salonId);
             let employeeIdError = await employeeIdValidator.validate();
             if (employeeIdError) {
                 response.err = employeeIdError;
