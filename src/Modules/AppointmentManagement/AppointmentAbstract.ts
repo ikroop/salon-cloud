@@ -108,7 +108,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
     /**
      * 
      * 
-     * @param {Array<any>} servicesArray
+     * @param {Array<AppointmentItemData>} servicesArray
      * @returns
      * 
      * @memberOf AppointmentAbstract
@@ -119,6 +119,20 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
      *      - Get Time Array with available and unavailable time point for making appointment   
      *      - Push data to appointment array for return
      * 
+     * ReturnDataStructure: {
+     *  [{
+     *      employee_id: string,
+            start: SalonTime,
+            end: SalonTime,
+            service: {
+                    service_id: string,
+                    time: number,
+                    price: number,
+                    service_name: string
+                    },
+            overlapped: overlappedObject
+     * }]
+     * }
      */
     public async checkBookingAvailableTime(servicesArray: AppointmentItemData[]): Promise<SalonCloudResponse<AppointmentItemData[]>> {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
@@ -188,8 +202,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                     return response;
                 } else {
 
-                    //push data to appointment array 
-                    var appointmentArrayResult = await this.makeAppointmentArrayForCreation(eachService, getTimeArray, getServiceData, employeeAppointmentArrayList, employeeIndex);
+                    //push data to appointment time array 
+                    var appointmentArrayResult = await this.makeAppointmentArrayForChecking(eachService, getTimeArray, getServiceData, employeeAppointmentArrayList, employeeIndex);
                     if (appointmentArrayResult.err) {
                         response.err = appointmentArrayResult.err;
                         response.code = appointmentArrayResult.code;
@@ -286,7 +300,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     }
 
-    private async makeAppointmentArrayForCreation(eachService: AppointmentItemData, getTimeArray: any, getServiceData: any, employeeAppointmentArrayList: Array<Array<AppointmentItemData>>, employeeIndex: number) {
+    private async makeAppointmentArrayForChecking(eachService: AppointmentItemData, getTimeArray: any, getServiceData: any, employeeAppointmentArrayList: Array<Array<AppointmentItemData>>, employeeIndex: number) {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
             data: undefined,
             code: undefined,
