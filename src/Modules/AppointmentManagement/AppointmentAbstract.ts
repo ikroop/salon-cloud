@@ -112,6 +112,13 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
      * @returns
      * 
      * @memberOf AppointmentAbstract
+     * 
+     * Include a big for-loop running through the appointment-service array, each loop has the following step:
+     *      - Get Service data
+     *      - Get Employee Schedule and Appointment for that day
+     *      - Get Time Array with available and unavailable time point for making appointment   
+     *      - Push data to appointment array for return
+     * 
      */
     public async checkBookingAvailableTime(servicesArray: AppointmentItemData[]): Promise<SalonCloudResponse<AppointmentItemData[]>> {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
@@ -120,13 +127,13 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             err: undefined
         }
 
-
         var employeeIdList: Array<string> = [];
         var employeeScheduleList: Array<any> = [];
         var employeeAppointmentArrayList: Array<Array<AppointmentItemData>> = [];
 
-        for (var eachService of servicesArray) {
 
+        for (var eachService of servicesArray) {
+            //get Service Data 
             var getServiceData = await this.getServiceData(eachService);
             if (getServiceData.err) {
                 response.err = getServiceData.err;
@@ -134,21 +141,26 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 return response;
             }
 
-            // get emloyee schedule
             var employeeSchedule;
             var employeeAppointmentArray;
             var employeeIndex;
+            // get employee schedule and appointment of the employee on that day
             if (employeeIdList.indexOf(eachService.employee_id) !== -1) {
+                //this case the employee is already in the array, just retrieve data from it
                 employeeIndex = employeeIdList.indexOf(eachService.employee_id);
                 employeeSchedule = employeeScheduleList[employeeIndex];
                 employeeAppointmentArray = employeeAppointmentArrayList[employeeIndex];
             } else {
+                //this case the employee is not in the arrays yet
+
+                //get employee schedule
                 var employeeDaySchedule = await this.getEmployeeScheduleForAddedEmployee(eachService, employeeSchedule);
                 if (employeeDaySchedule.err) {
                     response.err = employeeDaySchedule.err;
                     response.code = employeeDaySchedule.code;
                     return response;
                 }
+                //get appointment for the employee on that day
                 var appointmentSearch = await this.getAppointmentForAddedEmployee(eachService, employeeAppointmentArray);
                 if (appointmentSearch) {
                     response.err = appointmentSearch.err;
@@ -156,13 +168,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                     return response;
                 }
 
+                //push the employee data into the arrays
                 employeeIdList.push(eachService.employee_id);
                 employeeScheduleList.push(employeeSchedule);
                 employeeAppointmentArrayList.push(employeeAppointmentArray);
                 employeeIndex = employeeIdList.indexOf(eachService.employee_id);
-
-
             }
+
+            //get time array with avail and unvail points
             var getTimeArray = await this.getEmployeeAvailableTime(getServiceData.data.time, eachService.start, employeeDaySchedule.data, employeeAppointmentArray);
             if (getTimeArray.err) {
                 response.err = getTimeArray.err;
@@ -175,12 +188,13 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                     return response;
                 } else {
 
+                    //push data to appointment array 
                     var appointmentArrayResult = await this.makeAppointmentArrayForCreation(eachService, getTimeArray, getServiceData, employeeAppointmentArrayList, employeeIndex);
-                    if(appointmentArrayResult.err){
+                    if (appointmentArrayResult.err) {
                         response.err = appointmentArrayResult.err;
                         response.code = appointmentArrayResult.code;
                         return response;
-                    }else{
+                    } else {
                         response.data = appointmentArrayResult.data;
                         response.code = appointmentArrayResult.code;
                     }
