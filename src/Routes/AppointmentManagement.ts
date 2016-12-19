@@ -36,11 +36,12 @@ export class AppointmentManagementRouter {
             }
 
             // Get data for request.body
-            var salonTime = new SalonTime();
             if (request.body.services) {
                 appointment.services = [];
                 for (let eachService of request.body.services) {
-                    var appointmentItem: AppointmentItemData = {
+                    var salonTime = new SalonTime();
+
+                    appointment.services.push({
                         employee_id: eachService.employee_id,
                         start: salonTime.setString(eachService.start),
                         service: {
@@ -49,8 +50,7 @@ export class AppointmentManagementRouter {
                         overlapped: {
                             status: false,
                         }
-                    }
-                    appointment.services.push(appointmentItem);
+                    });
                 }
             }
 

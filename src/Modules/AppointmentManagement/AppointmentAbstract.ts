@@ -467,7 +467,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
             let startValidator = new BaseValidator(eachItem.start);
             startValidator = new MissingCheck(startValidator, ErrorMessage.MissingStartDate);
-            startValidator = new IsSalonTime(startValidator, ErrorMessage.InvalidDate)
+            startValidator = new IsSalonTime(startValidator, ErrorMessage.WrongBookingTimeFormat)
             let startError = await startValidator.validate();
             if (startError) {
                 response.err = startError;

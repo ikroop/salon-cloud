@@ -51,9 +51,16 @@ export class SalonTime implements SalonTimeData {
      * @memberOf SalonTime
      */
     public setString(dateString: string): SalonTime {
-        this.momentjs = moment.utc(dateString, ["'YYYY-MM-DD HH:mm:ss'", "YYYY-MM-DD", 'YYYY-MM-DD HH:mm']);
+        this.momentjs = moment.utc(dateString, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD', 'YYYY-MM-DD HH:mm'], true);
         if (this.momentjs.isValid()) {
             this.nomalize();
+        }else{
+            this.day = undefined;
+            this.month = undefined;
+            this.year = undefined;
+            this.hour =  undefined;
+            this.min = undefined;
+            this.date = undefined;
         }
         return this;
     }
