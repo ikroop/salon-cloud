@@ -15,7 +15,7 @@ import { SmallestTimeTick } from './../../Core/DefaultData'
 import { ServiceManagement } from './../ServiceManagement/ServiceManagement'
 import { EmployeeSchedule } from './../Schedule/EmployeeSchedule'
 import { ErrorMessage } from './../../Core/ErrorMessage'
-import { DailyScheduleData, DailyScheduleArrayData } from './../Schedule/ScheduleData'
+import { DailyScheduleData, DailyScheduleArrayData, DailyDayData } from './../Schedule/ScheduleData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
 import { MissingCheck, IsValidNameString, IsValidEmployeeId, IsSalonTime, IsValidServiceId } from './../../Core/Validation/ValidationDecorators';
 
@@ -142,10 +142,10 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         }
 
         var employeeIdList: Array<string> = [];
-        var employeeScheduleList: Array<any> = [];
+        var employeeScheduleList: Array<DailyDayData> = [];
         var employeeAppointmentArrayList: Array<Array<AppointmentItemData>> = [];
 
-
+        console.log('test');
         for (var eachService of servicesArray) {
             //get Service Data 
             var getServiceData = await this.getServiceData(eachService);
@@ -155,9 +155,10 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 return response;
             }
 
-            var employeeSchedule;
+            var employeeSchedule = undefined;
             var employeeAppointmentArray;
             var employeeIndex;
+
             // get employee schedule and appointment of the employee on that day
             if (employeeIdList.indexOf(eachService.employee_id) !== -1) {
                 //this case the employee is already in the array, just retrieve data from it
@@ -173,10 +174,20 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                     response.err = employeeDaySchedule.err;
                     response.code = employeeDaySchedule.code;
                     return response;
+                } else {
+                    employeeSchedule = employeeDaySchedule.data;
+                }
+
+                employeeSchedule = {
+                    employee_id: eachService.employee_id,
+                    close: employeeDaySchedule.data.days[0].close,
+                    status: employeeDaySchedule.data.days[0].status,
+                    open: employeeDaySchedule.data.days[0].open
+
                 }
                 //get appointment for the employee on that day
                 var appointmentSearch = await this.getAppointmentForAddedEmployee(eachService, employeeAppointmentArray);
-                if (appointmentSearch) {
+                if (appointmentSearch.err) {
                     response.err = appointmentSearch.err;
                     response.code = appointmentSearch.code;
                     return response;
@@ -190,10 +201,12 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             }
 
             //get time array with avail and unvail points
+            console.log('AARAY');
             var getTimeArray = await this.getEmployeeAvailableTime(getServiceData.data.time, eachService.start, employeeDaySchedule.data, employeeAppointmentArray);
             if (getTimeArray.err) {
                 response.err = getTimeArray.err;
                 response.code = getTimeArray.code;
+                return response;
             } else {
                 if (!getTimeArray.data) {
                     response.err = ErrorMessage.AppointmentTimeNotAvailable;
@@ -262,13 +275,9 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             response.data = undefined;
             return response;
         }
-        employeeSchedule = {
-            employee_id: eachService.employee_id,
-            close: employeeDaySchedule.data.days[0].close,
-            status: employeeDaySchedule.data.days[0].status,
-            open: employeeDaySchedule.data.days[0].open
 
-        }
+        response.data = employeeDaySchedule.data;
+        response.code = employeeDaySchedule.code;
         return response;
 
 
@@ -280,6 +289,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             code: undefined,
             err: undefined
         }
+
+        console.log('GETT:');
         var appointmentSearch = await this.appointmentManagementDP.getEmployeeAppointmentByDate(eachService.employee_id, eachService.start);
         if (appointmentSearch) {
             if (appointmentSearch.err) {
@@ -369,6 +380,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             code: undefined,
             err: undefined
         }
+
+        console.log('IIIIINNNN');
         var operatingTime = (employee.days[0].close - employee.days[0].open) / 60;
         if (operatingTime <= 0 || employee.days[0].status == false) {
             response.data = undefined;
@@ -413,6 +426,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             }
 
         }
+
+        console.log('In2: ', appointmentArray)
         // initilize timArray
         var timeArray: Array<TimeArrayItem> = [];
         for (let i = 0; i < timeArrayLength; i++) {
@@ -430,6 +445,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         if (appointmentArray) {
             // loop appointmentArray to work with each busy appointed time period
             for (let eachAppointment of appointmentArray) {
+                console.log('LAAAA');
                 var filterProcess = this.filterTimeArray(eachAppointment, timeArray, openTimePoint, closeTimePoint, timeNeededNumberOfTicks, flexibleTime);
 
             }
@@ -539,6 +555,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 timeArray[i].available = false;
             }
         }
+        console.log('TIMEARRAY:', timeArray);
         return;
 
     }
@@ -648,6 +665,6 @@ export interface TimeArrayItem {
         appointment_id?: string,
     },
     time: number,
-            
+
 
 }
