@@ -560,6 +560,31 @@ export class IsAfterSecondDate extends DecoratingValidator {
 
 }
 
+//Validate if a date string is after another date string.
+//Valid if the target date string is after the secondElement date string.
+//secondElement date string must be validated before being used in this validation.
+export class IsBeforeSecondDate extends DecoratingValidator {
+    public errorType: any;
+    public targetElement: any;
+    public secondElement: any;
+    constructor(wrapedValidator: Validator, errorType: any, secondElement: any) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+        this.secondElement = secondElement;
+    };
+
+    public async validatingOperation() {
+        if (moment(this.targetElement).isAfter(this.secondElement)) {
+            return this.errorType;
+        } else {
+            return undefined;
+        }
+    }
+
+}
+
 //Validate if a SalonTimeData is valid.
 //Valid if all the element are number type, and 0<day<31
 export class IsValidSalonTimeData extends DecoratingValidator {
