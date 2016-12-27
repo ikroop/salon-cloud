@@ -416,7 +416,7 @@ export const ErrorMessage = {
     },
     'BookingTimeNotAvailable': {
         'err': {
-            'name': 'EarlierAppointmentTimeThanSalonTimeOnCertainDate',
+            'name': 'BookingTimeNotAvailable',
             'message': 'Booking Time is not available'
         }
     },
@@ -526,6 +526,12 @@ export const ErrorMessage = {
         'err': {
             'name': 'MissingAppointmentId',
             'message': 'Appointment Id Is Missing'
+        }
+    }, 
+    'EarlierAppointmentTimeThanSalonTimeOnCertainDate': {
+        'err': {
+            'name': 'EarlierAppointmentTimeThanSalonTimeOnCertainDate',
+            'message': 'Appointment Time Is Earlier Than Salon Open Time!'
         }
     }
 };
