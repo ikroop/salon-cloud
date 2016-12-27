@@ -17,7 +17,7 @@ import { EmployeeSchedule } from './../Schedule/EmployeeSchedule'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { DailyScheduleData, DailyScheduleArrayData, DailyDayData } from './../Schedule/ScheduleData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
-import { MissingCheck, IsValidNameString, IsValidEmployeeId, IsSalonTime, IsValidServiceId } from './../../Core/Validation/ValidationDecorators';
+import { MissingCheck, IsValidNameString, IsValidEmployeeId, IsSalonTime, IsValidServiceId, IsAfterSecondDate, IsBeforeSecondDate } from './../../Core/Validation/ValidationDecorators';
 
 export abstract class AppointmentAbstract implements AppointmentBehavior {
     private appointmentManagementDP: AppointmentManagement;
@@ -191,6 +191,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                     response.err = appointmentSearch.err;
                     response.code = appointmentSearch.code;
                     return response;
+                }else{
+                    employeeAppointmentArray = appointmentSearch.data;
                 }
 
                 //push the employee data into the arrays
@@ -198,6 +200,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 employeeScheduleList.push(employeeSchedule);
                 employeeAppointmentArrayList.push(employeeAppointmentArray);
                 employeeIndex = employeeIdList.indexOf(eachService.employee_id);
+                console.log(employeeAppointmentArrayList);
             }
 
             //get time array with avail and unvail points
@@ -307,6 +310,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         } else {
             employeeAppointmentArray = [];
         }
+        response.data = employeeAppointmentArray;
+        response.code = 200;
         return response;
 
     }
@@ -407,6 +412,22 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
         var closeTimeData = closeTime;
         var closeTimePoint = closeTimeData.min + closeTimeData.hour * 60;
+
+        //validate
+        var startDateString = day.toString();
+        var openDateString = openTime.toString();
+        var closeDateString = closeTime.toString();
+        var startTimeValidation = new BaseValidator(startDateString);
+        startTimeValidation = new MissingCheck(startTimeValidation, ErrorMessage.MissingStartDate);
+        startTimeValidation = new IsAfterSecondDate(startTimeValidation, ErrorMessage.BookingTimeNotAvailable, openDateString);
+        startTimeValidation = new IsBeforeSecondDate(startTimeValidation, ErrorMessage.BookingTimeNotAvailable, closeDateString)
+        var startTimeError = await startTimeValidation.validate();
+        if(startTimeError){
+            response.err = startTimeError;
+            response.code = 400;
+            return response;
+        }
+
         var appointmentArray;
         if (appointmentList) {
             appointmentArray = appointmentList;
