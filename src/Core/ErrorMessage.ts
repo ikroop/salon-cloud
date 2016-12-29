@@ -527,11 +527,29 @@ export const ErrorMessage = {
             'name': 'MissingAppointmentId',
             'message': 'Appointment Id Is Missing'
         }
-    }, 
+    },
     'EarlierAppointmentTimeThanSalonTimeOnCertainDate': {
         'err': {
             'name': 'EarlierAppointmentTimeThanSalonTimeOnCertainDate',
             'message': 'Appointment Time Is Earlier Than Salon Open Time!'
+        }
+    },
+    'UserBlocked': {
+        'err': {
+            'name': 'UserBlocked',
+            'message': 'User is blocked'
+        }
+    },
+    'Unknown': {
+        'err': {
+            'name': 'Unknown',
+            'message': 'Unknown'
+        }
+    },
+    'WrongUsernameOrPassword':{
+        'err': {
+            'name': 'WrongUsernameOrPassword',
+            'message': 'Wrong Useranme or Password.'
         }
     }
 };
