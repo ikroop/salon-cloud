@@ -1266,31 +1266,31 @@ describe('Appointment Management', function () {
                 });
         });
 
-        // it('should return appointment_id if request proceeds successfully without note', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "customer_name": rightFormattedName,
-        //         "salon_id": validSalonId,
-        //         "services": [{
-        //             service_id: validServiceId,
-        //             employee_id: validEmployeeId,
-        //             start: "2017-02-28 10:45:00"
-        //         }]
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        it('should return appointment_id if request proceeds successfully without note', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 10:45:00"
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(200);
-        //             res.body.should.have.property('appointment_id');
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('appointment_id');
+                    done();
+                });
+        });
     });
 });
