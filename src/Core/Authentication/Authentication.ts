@@ -20,7 +20,7 @@ import { MongoAuthenticationDatabase } from './MongoAuthenticationDatabase';
 
 export class Authentication {
     private authenticationDatabase: AuthenticationDatabaseInterface;
-    Authentication() {
+    constructor() {
         this.authenticationDatabase = new FirebaseAuthenticationDatabase();
     }
     changePassword(oldPasswords: string, newPassword: string, code: string) {

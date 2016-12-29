@@ -1,7 +1,9 @@
 /**
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
+
 import mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;

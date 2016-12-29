@@ -13,8 +13,6 @@ import jwt = require('jsonwebtoken');
 import fs = require('fs');
 
 import { UserToken } from './AuthenticationData';
-import * as FirebaseAdmin from "firebase-admin";
-import * as FirebaseClient from "firebase-client";
 
 export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterface {
     public async signInWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<UserToken>> {

@@ -14,10 +14,11 @@ import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
 import { UserToken } from './../src/Core/Authentication/AuthenticationData';
 
 describe('Authentication', function () {
-    var timestamp = new Date().getTime();
     var defaultPassword = '1234@1234'
     var validToken;
     var invalidToken = '12dfab3bc554ad';
+    var username = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+    var invalidPassword = "123456";
 
     before(async function () {
         // 1. Create Owner 
@@ -37,7 +38,7 @@ describe('Authentication', function () {
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' trying to register with invalidToken', function (done) {
             var user = {
-                username: 'unittest' + timestamp + '@gmail.com',
+                username: username,
                 password: defaultPassword
             };
             request(server)
@@ -57,7 +58,7 @@ describe('Authentication', function () {
 
         it('should return ' + ErrorMessage.NoPermission.err.name + ' trying to register with valid token', function (done) {
             var user = {
-                username: 'unittest' + timestamp + '@gmail.com',
+                username: username,
                 password: defaultPassword
             };
             request(server)
@@ -68,7 +69,7 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(401);
                     res.body.should.have.property('err');
                     res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
                     done();
@@ -133,7 +134,7 @@ describe('Authentication', function () {
 
         it('should return "MissingPassword" error trying to register without password', function (done) {
             var user = {
-                username: 'unittest@gmail.com'
+                username: username
             };
             request(server)
                 .post(apiUrl)
@@ -151,7 +152,7 @@ describe('Authentication', function () {
 
         it('should return "PasswordTooShort" error trying to register with password which length < 6', function (done) {
             var user = {
-                username: 'unittest@gmail.com',
+                username: username,
                 password: '12345'
             };
             request(server)
@@ -170,7 +171,7 @@ describe('Authentication', function () {
 
         it('should return user object trying to register sucessfully', function (done) {
             var user = {
-                username: 'unittest' + timestamp + '@gmail.com',
+                username: username,
                 password: defaultPassword
             };
             request(server)
@@ -185,9 +186,9 @@ describe('Authentication', function () {
                 });
         });
 
-        it('should return "UserExistsError" trying to register with existing username', function (done) {
+        it('should return "UsernameAlreadyExists" trying to register with existing username', function (done) {
             var user = {
-                username: 'unittest' + timestamp + '@gmail.com',
+                username: username,
                 password: defaultPassword,
                 fullname: 'salonhelps'
             };
@@ -200,7 +201,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(409);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('UserExistsError');
+                    res.body.err.name.should.be.equal('UsernameAlreadyExists');
                     done();
                 });
         });
@@ -211,7 +212,7 @@ describe('Authentication', function () {
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' trying to register with invalidToken', function (done) {
             var user = {
-                username: 'unittest' + timestamp + '@gmail.com',
+                username: username,
                 password: defaultPassword
             };
             request(server)
@@ -231,7 +232,7 @@ describe('Authentication', function () {
 
         it('should return ' + ErrorMessage.NoPermission.err.name + ' trying to register with valid token', function (done) {
             var user = {
-                username: 'unittest' + timestamp + '@gmail.com',
+                username: username,
                 password: defaultPassword
             };
             request(server)
@@ -242,7 +243,7 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(403);
+                    res.status.should.be.equal(401);
                     res.body.should.have.property('err');
                     res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
                     done();
@@ -269,7 +270,7 @@ describe('Authentication', function () {
 
         it('should return "MissingPassword" error trying to Signin without password', function (done) {
             var user = {
-                username: 'test@salonhelps.com'
+                username: username
             };
             request(server)
                 .post(apiUrl)
@@ -287,8 +288,8 @@ describe('Authentication', function () {
 
         it('should return "SignInFailed" error trying to Signin wrong password or username', function (done) {
             var user = {
-                username: 'test@salonhelps.com',
-                password: defaultPassword
+                username: username,
+                password: invalidPassword
             };
             request(server)
                 .post(apiUrl)
@@ -306,7 +307,7 @@ describe('Authentication', function () {
 
         it('should return user & auth object trying to Signin sucessfully', function (done) {
             var user = {
-                username: 'unittest' + timestamp + '@gmail.com',
+                username: username,
                 password: defaultPassword
             };
             request(server)

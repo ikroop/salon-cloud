@@ -13,19 +13,18 @@ import jwt = require('jsonwebtoken');
 
 
 import { UserToken } from './AuthenticationData';
-import * as FirebaseAdmin from "firebase-admin";
-import * as FirebaseClient from "firebase-client";
+import { firebase } from './../../Services/Firebase';
 
 export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInterface {
-    signInWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<UserToken>> {
+    public async signInWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<UserToken>> {
         var response: SalonCloudResponse<UserToken> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
         let promise = new Promise<SalonCloudResponse<UserToken>>(function (resolve, reject) {
-            FirebaseClient.auth().signInWithEmailAndPassword(username, password)
-                .then(function (user: FirebaseClient.FirebaseUser) {
+            firebase.auth().signInWithEmailAndPassword(username, password)
+                .then(function (user) {
 
                     user.getToken().then(function (token) {
                         response.code = 200;
@@ -45,13 +44,13 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                     });
 
                 })
-                .catch(function (error: FirebaseClient.FirebaseError) {
+                .catch(function (error) {
                     // Handle Errors here.
                     var errorCode = error.code;
                     var errorMessage = error.message;
                     if (errorCode === 'auth/wrong-password') {
-                        response.code = 400;
-                        response.err = ErrorMessage.WrongUsernameOrPassword;
+                        response.code = 403;
+                        response.err = ErrorMessage.SignInFailed;
                     } else {
                         response.code = 400;
                         response.err = ErrorMessage.Unknown;
@@ -64,7 +63,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
     }
 
 
-    signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<undefined>> {
+    public async signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<undefined>> {
 
         var response: SalonCloudResponse<undefined> = {
             code: undefined,
@@ -73,10 +72,10 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
         };
 
         let promise = new Promise<SalonCloudResponse<undefined>>(function (resolve, reject) {
-            FirebaseClient.auth().createUserWithEmailAndPassword(username, password).then(function (user: FirebaseClient.FirebaseUser) {
+            firebase.auth().createUserWithEmailAndPassword(username, password).then(function (user) {
                 response.code = 200;
                 resolve(response);
-            }, function (error: FirebaseClient.FirebaseError) {
+            }, function (error) {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
