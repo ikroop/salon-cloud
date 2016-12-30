@@ -50,7 +50,7 @@ OR
 $  mocha -t 5000 test/<filename>.spec.js
 ```
 
-Debug with mocha and visual studio 
+Debug with mocha and visual studio code
 =============
 ```
 $ mocha --debug-brk -t 30000
