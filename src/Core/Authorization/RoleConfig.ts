@@ -35,6 +35,32 @@ export const RoleConfig =
             'role': [
                 'Owner'
             ]
+        },
+        {
+            'api': '/api/v1/appointment/createbyphone',
+            'role': [
+                'Owner', 'Manager'
+            ]
+        },{
+            'api': '/api/v1/schedule/saveemployeeweeklyschedule',
+            'role': [
+                'Owner', 'Manager'
+            ]
+        },{
+            'api': '/api/v1/schedule/savesalonweeklyschedule',
+            'role': [
+                'Owner'
+            ]
+        },{
+            'api': '/api/v1/schedule/savesalondailyschedule',
+            'role': [
+                'Owner'
+            ]
+        },{
+            'api': '/api/v1/schedule/saveemployeedailyschedule',
+            'role': [
+                'Owner'
+            ]
         }
     ]
     ;

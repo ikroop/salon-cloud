@@ -6,13 +6,12 @@ import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 export class OwnerManagement extends UserManagement {
 
     /**
-     * addOwnerProfile
-     * create new user with username (phone or email) & password
-     * @param : 
-     *     userId: string
-     * @returns 
-     *     - Validation Error
-     *     - Profile data
+     * 
+     * 
+     * @param {string} userId
+     * @returns {Promise<SalonCloudResponse<UserProfile>>}
+     * 
+     * @memberOf OwnerManagement
      */
     public async addOwnerProfile(userId: string): Promise<SalonCloudResponse<UserProfile>> {
         let response: SalonCloudResponse<UserProfile> = {

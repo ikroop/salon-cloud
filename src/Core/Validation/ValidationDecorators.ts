@@ -11,7 +11,11 @@ import ServiceGroupModel = require('./../../Modules/ServiceManagement/ServiceMod
 import { IServiceGroupData } from './../../Modules/ServiceManagement/ServiceData';
 import { ErrorMessage } from './../ErrorMessage';
 import UserModel = require('./../../Modules/UserManagement/UserModel');
-
+import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceManagement';
+import { UserManagement } from './../../Modules/UserManagement/UserManagement';
+import { SalonManagement } from './../../Modules/SalonManagement/SalonManagement';
+import * as moment from 'moment';
+import { SalonTime } from './../SalonTime/SalonTime';
 //Validate if target element is missing.
 //To pass the test: Target Element must not be undefined.
 export class MissingCheck extends DecoratingValidator {
@@ -81,8 +85,8 @@ export class IsNumber extends DecoratingValidator {
     }
 }
 
-//Validate if target element has type of string.
-//To pass the test: Target Element has to be smaller than floor and bigger than ceiling.
+//Validate if target element is in range of floor and ceiling.
+//To pass the test: Target Element has to be smaller than or equal to ceiling and bigger than or equal to floor.
 export class IsInRange extends DecoratingValidator {
 
     public errorType: any;
@@ -102,6 +106,34 @@ export class IsInRange extends DecoratingValidator {
 
     public validatingOperation() {
         if (this.targetElement < this.floor || this.targetElement > this.ceiling) {
+            return this.errorType;
+        } else {
+            return undefined;
+        }
+    }
+}
+
+//Validate if target element is in range of floor and ceiling.
+//To pass the test: Target Element has to be smaller than ceiling and bigger than floor.
+export class IsInRangeExclusively extends DecoratingValidator {
+
+    public errorType: any;
+    public floor: number;
+    public ceiling: number;
+    public targetElement: any;
+
+    constructor(wrapedValidator: Validator, errorType: any, floor: number, ceiling: number) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.floor = floor;
+        this.ceiling = ceiling;
+        this.targetElement = this.wrapedValidator.targetElement;
+
+    }
+
+    public validatingOperation() {
+        if (this.targetElement <= this.floor || this.targetElement >= this.ceiling) {
             return this.errorType;
         } else {
             return undefined;
@@ -277,30 +309,6 @@ export class IsNotInArray extends DecoratingValidator {
     }
 }
 
-//WE CAN USE IsInRange VALIDATOR FOR THIS ONE INSTEAD
-//Validate if target element is a salary rate.
-//To pass the test: target element must be in range of 0 and 10.
-/*export class IsSalaryRate extends DecoratingValidator {
-
-    public errorType: any;
-    public SalaryRate: number;
-
-    constructor (wrapedValidator: Validator, errorType: any, SalaryRate: number){
-        super();
-        this.wrapedValidator = wrapedValidator;
-        this.errorType = errorType;
-        this.SalaryRate = SalaryRate;
-    }
-
-    public validatingOperation(){
-        if (this.SalaryRate <= 0 || this.SalaryRate >= 10) {
-            return this.errorType;
-        }else{
-            return undefined;
-        }
-    }
-}*/
-
 export class IsValidSalonId extends DecoratingValidator {
     public errorType: any;
     public targetElement: any;
@@ -313,29 +321,19 @@ export class IsValidSalonId extends DecoratingValidator {
 
     public async validatingOperation() {
         var salonId = this.targetElement;
-        var response = await this.checkSalonId(salonId, this.errorType);
-        return response;
+        // Check Id valid or not
+        if (!this.isMongooseId(salonId)){
+            return this.errorType;
+        }
 
+        var salonManagement = new SalonManagement(salonId);
+        var response = await salonManagement.getSalonById();
+        if (response && response._id) {
+            return undefined;
+        } else {
+            return this.errorType;
+        }
     }
-
-
-    private async checkSalonId(salonId: string, errorType: any): Promise<any> {
-        let promise = new Promise<any>(function (resolve, reject) {
-            var response = undefined;
-            SalonModel.findOne({ '_id': salonId }, function (err, docs) {
-                if (err) {
-                    response = errorType;
-                } else if (!docs) {
-                    response = errorType;
-                } else {
-                    response = undefined;
-                }
-                resolve(response);
-            });
-        });
-        return promise;
-    }
-
 }
 
 //Validate if a name is valid.
@@ -438,29 +436,14 @@ export class IsServiceGroupNameExisted extends DecoratingValidator {
     public async validatingOperation() {
         var groupName = this.targetElement;
         var salonId = this.salonId;
-        var response = await this.checkExistence(groupName, salonId, this.errorType);
-        return response;
-
+        var serviceManagement = new ServiceManagement(salonId);
+        var response = await serviceManagement.getServiceGroupByName(groupName);
+        if (response.data) {
+            return this.errorType;
+        } else {
+            return undefined;
+        }
     }
-
-
-    private async checkExistence(groupName: string, salonId: string, errorType: any): Promise<any> {
-        let promise = new Promise<any>(function (resolve, reject) {
-            var response = undefined;
-            ServiceGroupModel.findOne({ 'name': groupName, 'salon_id': salonId }, function (err, docs) {
-                if (err) {
-                    response = errorType;
-                } else if (!docs) {
-                    response = undefined;
-                } else {
-                    response = errorType;
-                }
-                resolve(response);
-            });
-        });
-        return promise;
-    }
-
 }
 
 //validate if a service Id is valid
@@ -470,8 +453,7 @@ export class IsValidServiceId extends DecoratingValidator {
     public errorType: any;
     public targetElement: any;
     public salonId: string
-    public groupName: string;
-    constructor(wrapedValidator: Validator, errorType: any, groupName: string, salonId: string) {
+    constructor(wrapedValidator: Validator, errorType: any, salonId: string) {
         super();
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
@@ -480,34 +462,20 @@ export class IsValidServiceId extends DecoratingValidator {
 
     public async validatingOperation() {
         var serviceId = this.targetElement;
-        var groupName = this.groupName;
         var salonId = this.salonId;
-        var response = await this.checkExistence(serviceId, groupName, salonId, this.errorType);
-        return response;
+        // Check Id valid or not
+        if (!this.isMongooseId(serviceId)){
+            return this.errorType;
+        }
 
+        var serviceManagement = new ServiceManagement(salonId);
+        var response = await serviceManagement.getServiceItemById(serviceId);
+        if (response.data) {
+            return undefined;
+        } else {
+            return this.errorType;
+        }
     }
-
-    private async checkExistence(serviceId: string, groupName: string, salonId: string, errorType: any): Promise<any> {
-        let promise = new Promise<any>(function (resolve, reject) {
-            var response = undefined;
-            ServiceGroupModel.findOne({ 'name': groupName, 'salon_id': salonId }, function (err, docs:any) {
-                if (err) {
-                    response = errorType;
-                } else if (!docs) {
-                    response = errorType;
-                } else {
-                    if (docs.service_list.id(serviceId)) {
-                        response = undefined;
-                    } else {
-                        response = errorType;
-                    }
-                }
-                resolve(response);
-            });
-        });
-        return promise;
-    }
-
 }
 
 //validate if an employeeId is valid
@@ -521,40 +489,126 @@ export class IsValidEmployeeId extends DecoratingValidator {
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
         this.targetElement = this.wrapedValidator.targetElement;
+        this.salonId = salonId;
     };
 
     public async validatingOperation() {
         var employeeId = this.targetElement;
         var salonId = this.salonId;
-        var response = await this.checkExistence(employeeId, salonId, this.errorType);
-        return response;
 
-    }
+        // Check Id valid or not
+        if (!this.isMongooseId(salonId)){
+            return this.errorType;
+        }
+        var userManagement = new UserManagement(this.salonId);
 
-    private async checkExistence(employeeId: string, salonId: string, errorType: any): Promise<any> {
-        let promise = new Promise<any>(function (resolve, reject) {
-            var response = undefined;
-            UserModel.findOne({ '_id': employeeId }, function (err, docs) {
-                if (err) {
-                    response = errorType;
-                } else if (!docs) {
-                    response = errorType;
-                } else {
-                   for(let each of docs.profile){
-                       if(each.salon_id == salonId){
-                           response = undefined;
-                           resolve(response)
-                           return;
-                       }
-                   }
-                   response = errorType;
-                }
-                resolve(response);
-            });
-        });
-        return promise;
+        var response = await userManagement.getUserById(employeeId);
+        if (response && response.profile.length === 1) {
+            return undefined;
+        } else {
+            return this.errorType;
+        }
     }
 
 }
+
+//Validate if a date string is valid.
+//Valid date string is a string which has form of 'YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD', or 'YYYY-MM-DD HH:mm'
+export class IsSalonTime extends DecoratingValidator {
+    public errorType: any;
+    public targetElement: SalonTime;
+    constructor(wrapedValidator: Validator, errorType: any) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+    };
+
+    public async validatingOperation() {
+        if (this.targetElement.isValid()) {
+            return undefined;
+        } else {
+            return this.errorType;
+        }
+    }
+
+}
+
+
+//Validate if a date string is after another date string.
+//Valid if the target date string is after the secondElement date string.
+//secondElement date string must be validated before being used in this validation.
+export class IsAfterSecondDate extends DecoratingValidator {
+    public errorType: any;
+    public targetElement: any;
+    public secondElement: any;
+    constructor(wrapedValidator: Validator, errorType: any, secondElement: any) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+        this.secondElement = secondElement;
+    };
+
+    public async validatingOperation() {
+        if (moment(this.targetElement).isBefore(this.secondElement)) {
+            return this.errorType;
+        } else {
+            return undefined;
+        }
+    }
+
+}
+
+//Validate if a date string is after another date string.
+//Valid if the target date string is after the secondElement date string.
+//secondElement date string must be validated before being used in this validation.
+export class IsBeforeSecondDate extends DecoratingValidator {
+    public errorType: any;
+    public targetElement: any;
+    public secondElement: any;
+    constructor(wrapedValidator: Validator, errorType: any, secondElement: any) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+        this.secondElement = secondElement;
+    };
+
+    public async validatingOperation() {
+        if (moment(this.targetElement).isAfter(this.secondElement)) {
+            return this.errorType;
+        } else {
+            return undefined;
+        }
+    }
+
+}
+
+//Validate if a SalonTimeData is valid.
+//Valid if all the element are number type, and 0<day<31
+export class IsValidSalonTimeData extends DecoratingValidator {
+    public errorType: any;
+    public targetElement: any;
+    public secondElement: any;
+    constructor(wrapedValidator: Validator, errorType: any) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+    };
+
+    public async validatingOperation() {
+        var data = this.targetElement;
+        var dateString = data.year + '-' + data.month + '-' + data.day + ' ' + data.hour + ':' + data.min;
+        if (!moment(dateString, ["'YYYY-MM-DD HH:mm:ss'", "YYYY-MM-DD", 'YYYY-MM-DD HH:mm']).isValid()) {
+            return this.errorType;
+        } else {
+            return undefined;
+        }
+    }
+
+}
+
 
 

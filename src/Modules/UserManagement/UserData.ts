@@ -1,8 +1,9 @@
 /**
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
+
 import { mongoose } from './../../Services/Database';
 
 export interface UserProfile {
@@ -10,12 +11,13 @@ export interface UserProfile {
     birthday?: string;
     cash_rate?: number;
     fullname: string;
-    nickname: string;
+    nickname?: string;
     role: number;
     salary_rate?: number;
     salon_id: string;
     social_security_number?: string;
-    status: boolean;
+    status?: boolean;
+    phone?: string;
 }
 
 export interface UserData {

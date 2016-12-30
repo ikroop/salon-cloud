@@ -1,19 +1,20 @@
 
-import {UserData, UserProfile} from './UserData'
+import { UserData, UserProfile } from './UserData'
+import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 
 
-export interface EmployeeManagementBehavior{
+export interface EmployeeManagementBehavior {
 
-    activateEmployee(employeeId : string) : boolean;
+    activateEmployee(employeeId: string): boolean;
 
-    addEmployeeProfile(employeeId: string, profile : any);
+    addEmployeeProfile(employeeId: string, profile: any);
 
-    deactivateEmployee(employeeId : string) : boolean;
+    deactivateEmployee(employeeId: string): boolean;
 
-    getAllEmployee() : Array<UserData>;
+    getAllEmployee(): Promise<SalonCloudResponse<Array<UserData>>>;
 
-    getEmployee(employeeId : string) :UserData;
+    getEmployee(employeeId: string): UserData;
 
-    updateEmployee(employeeId : string, profile : UserProfile) : boolean;
+    updateEmployee(employeeId: string, profile: UserProfile): boolean;
 
 }

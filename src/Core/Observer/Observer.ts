@@ -5,5 +5,5 @@
  */
 
 export interface Observer {
-    update(): void;
+    update(inputData: any);
 }

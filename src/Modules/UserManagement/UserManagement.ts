@@ -11,6 +11,8 @@ import { UserData, UserProfile } from './UserData'
 import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { ErrorMessage } from './../../Core/ErrorMessage'
+import { IUserData } from './UserData';
+import { RoleDefinition } from './../../Core/Authorization/RoleDefinition';
 
 export class UserManagement implements UserManagementBehavior {
 
@@ -51,26 +53,41 @@ export class UserManagement implements UserManagementBehavior {
             err: undefined
         };
 
-        var userDocs = await UserModel.findOne({ '_id': userId }).exec();
-        var checkExistArray = userDocs.profile.filter(profile => profile.salon_id === userProfile.salon_id);
-        if (checkExistArray.length == 0) {
-            userDocs.profile.push(userProfile);
-            var saveAction = userDocs.save();
+        var userDocs = UserModel.findOne({ '_id': userId }).exec();
 
-            await saveAction.then(function (docs) {
-                returnResult.data = userProfile;
-                return returnResult;
+        await userDocs.then(async function (docs) {
+            if (docs) {
+                var checkExistArray = docs.profile.filter(profile => profile.salon_id === userProfile.salon_id);
 
-            }, function (err) {
-                returnResult.err = err;
-                return returnResult;
-            });
-            return returnResult;
+                if (checkExistArray.length == 0) {
+                    docs.profile.push(userProfile);
+                    var saveAction = docs.save();
+                    await saveAction.then(function (innerDocs) {
+                        returnResult.data = userProfile;
+                        returnResult.code = 200;
 
-        } else {
-            returnResult.err = ErrorMessage.ProfileAlreadyExist;
-            return returnResult;
-        }
+                    }, function (err) {
+                        returnResult.err = err;
+                        returnResult.code = 500;
+                    });
+
+                } else {
+                    returnResult.err = ErrorMessage.ProfileAlreadyExist;
+                    returnResult.code = 400;
+                }
+            } else {
+                returnResult.err = ErrorMessage.UserNotFound;
+                returnResult.code = 404;
+
+            }
+        }, function (err) {
+            returnResult.err = err;
+            returnResult.code = 500;
+
+
+        })
+
+        return returnResult;
 
     }
 
@@ -82,24 +99,78 @@ export class UserManagement implements UserManagementBehavior {
      * 
      * @memberOf UserManagement
      */
-    public async getRole(userId: string) {
-        var role: number = undefined;
-
-
+    public async getRole(userId: string): Promise<string> {
+        var role: string = undefined;
+        var rolevalue: number = undefined;
+        var salonId = this.salonId;
         if (userId) {
-            if (this.salonId) {
-                await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs) {
-                    role = docs.profile[0].role;
+            if (salonId) {
+                await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": salonId } } }, ).exec(function (err, docs: IUserData) {
+                    if (docs && docs.profile && docs.profile.length > 0) {
+                        rolevalue = docs.profile[0].role;
+                    } else {
+                        rolevalue = undefined;
+                    }
                 });
-                return this.roleToString(role);
+
+                if (rolevalue) {
+                    role = this.roleToString(rolevalue);
+                } else {
+                    role = 'SignedUser';
+                }
+
             }
             else {
-                return 'SignedUser';
+                role = 'SignedUser';
             }
         } else {
-            return 'Anonymouse';
+            role = 'Anonymouse';
         }
+        return role;
+    }
 
+    /**
+     * 
+     * 
+     * @param {string} phone
+     * @returns {Promise<IUserData>}
+     * 
+     * @memberOf UserManagement
+     */
+    public async getUserByPhone(phone: string): Promise<IUserData> {
+        var user: IUserData = undefined;
+        await UserModel.findOne({ "username": phone }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: IUserData) {
+            if (!err) {
+                user = docs;
+            } else {
+                user = undefined;
+            }
+        });
+        return user;
+    }
+
+    /**
+     * 
+     * 
+     * @param {string} Id
+     * @returns {Promise<IUserData>}
+     * 
+     * @memberOf UserManagement
+     */
+    public async getUserById(Id: string): Promise<IUserData> {
+        var user: IUserData = undefined;
+        try {
+            await UserModel.findOne({ "_id": Id }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: IUserData) {
+                if (!err) {
+                    user = docs;
+                } else {
+                    user = undefined;
+                }
+            });
+        } catch (e) {
+            user = undefined;
+        }
+        return user;
     }
 
     /**
@@ -113,25 +184,11 @@ export class UserManagement implements UserManagementBehavior {
      */
     private roleToString(role: number): string {
         var roleString: string = undefined;
-        switch (role) {
-            case 0:
-                roleString = 'SignedUser';
+        for (var roleDef in RoleDefinition) {
+            if (RoleDefinition[roleDef].value === role) {
+                roleString = roleDef;
                 break;
-            case 1:
-                roleString = 'Owner';
-                break;
-            case 2:
-                roleString = 'Manager';
-                break;
-            case 3:
-                roleString = 'Technician';
-                break;
-            case 4:
-                roleString = 'Customer';
-                break;
-            default:
-                roleString = undefined;
-                break;
+            }
         }
 
         return roleString;

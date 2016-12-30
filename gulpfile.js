@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
+
 'use strict';
 
 var gulp = require('gulp');

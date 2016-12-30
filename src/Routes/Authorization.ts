@@ -26,19 +26,19 @@ export class AuthorizationRouter {
         var authorization = new Authorization();
         var tokenStatus: any = await authentication.verifyToken(token);
         if (tokenStatus) { // authenticate successfully
-            if (tokenStatus.code = 200) {
+            if (tokenStatus.code == 200) {
                 var role = await authorization.checkPermission(tokenStatus.data._id, request.body.salon_id, request.originalUrl)
                 if (role.code === 200) {
                     request.user = tokenStatus.data;
                     request.user.role = role.data;
                     next();
                 } else {
-                    response.statusCode = role.code;
+                    response.status(role.code);
                     response.json({ 'err': role.err });
                 }
 
             } else {
-                response.statusCode = tokenStatus.code;
+                response.status(tokenStatus.code);
                 response.json(tokenStatus.err);
             }
         } else { // anonymous
@@ -46,7 +46,7 @@ export class AuthorizationRouter {
             if (role.data) {
                 next();
             } else {
-                response.statusCode = 403;
+                response.status(403);
                 response.json();
             }
         }

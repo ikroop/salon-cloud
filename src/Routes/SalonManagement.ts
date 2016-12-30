@@ -9,6 +9,7 @@ import { SignedInUser } from './../Core/User/SignedInUser';
 import { SalonManagement } from './../Modules/SalonManagement/SalonManagement';
 import { UserManagement } from './../Modules/UserManagement/UserManagement';
 import { SalonInformation } from './../Modules/SalonManagement/SalonData'
+import {EmployeeManagement} from './../Modules/UserManagement/EmployeeManagement';
 
 export class SalonManagementRouter {
     private router: Router = Router();
@@ -16,7 +17,11 @@ export class SalonManagementRouter {
     getRouter(): Router {
         var authentication = new Authentication();
         var authorizationRouter = new AuthorizationRouter();
+        this.router.post('/test', async (request: Request, response: Response)=>{
 
+            var testObj = new EmployeeManagement('57faa2692579df79216a153c');
+            await testObj.getAllEmployee();
+        })
         this.router.post('/create', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
             var signedUser = new SignedInUser(request.user._id, new SalonManagement(undefined));//Todo
             var salonInformationInput: SalonInformation = {
@@ -36,17 +41,10 @@ export class SalonManagementRouter {
             var salonCreation = await signedUser.createSalon(salonInformationInput);
             var dataReturn;
             if (salonCreation.err) {
-                dataReturn = {
-                    'err': salonCreation.err,
-                }
+                dataReturn = salonCreation.err                
             } else {
                 dataReturn = {
-                    'uid': salonCreation.data.uid,
-                    'salon_id': salonCreation.data.salon_id,
-                    'role': salonCreation.data.role,
-                    'default_schedule': salonCreation.data.default_schedule,
-                    'sample_services': salonCreation.data.sample_services,
-                    'salon_data': salonCreation.data.salon_data,
+                    '_id': salonCreation.data
                 }
             }
             response.status(salonCreation.code);

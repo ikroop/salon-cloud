@@ -5,7 +5,6 @@
  */
 
 import { SalonCloudResponse } from './../SalonCloudResponse';
-import { AuthenticationBehavior } from './AuthenticationBehavior';
 import { ErrorMessage } from './../ErrorMessage';
 import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { IUserData, UserData, UserProfile } from './../../Modules/UserManagement/UserData'
@@ -14,33 +13,40 @@ import fs = require('fs');
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
 import { MissingCheck, IsString, IsLengthGreaterThan, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidUserName }
     from './../../Core/Validation/ValidationDecorators';
+import { UserToken } from './AuthenticationData';
+import { AuthenticationDatabaseInterface } from './AuthenticationDatabaseInterface';
+import { FirebaseAuthenticationDatabase } from './FirebaseAuthenticationDatabase';
+import { MongoAuthenticationDatabase } from './MongoAuthenticationDatabase';
 
-export class Authentication implements AuthenticationBehavior {
+export class Authentication {
+    private authenticationDatabase: AuthenticationDatabaseInterface;
+    constructor() {
+        this.authenticationDatabase = new FirebaseAuthenticationDatabase();
+    }
     changePassword(oldPasswords: string, newPassword: string, code: string) {
 
     }
 
-    
     sendVerifyCode(username: string) {
         var response: SalonCloudResponse<boolean>;
 
         return response;
     }
 
-   /**
-     * @method signUpWithUsernameAndPassword
-     * @description create new user with username (phone or email) & password
-     * @param {string} username
-     * @param {string} password
-     * @returns {Promise<SalonCloudResponse<any>>}
-     *      Error:  - validation Error, code: 400
-     *              - username is existing already, code: 409                    
-     *      Successful: 
-     *              - code: 200
-     * @memberOf Authentication
-     */
-    public async signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<any>> {
-        var response: SalonCloudResponse<any> = {
+    /**
+      * @method signUpWithUsernameAndPassword
+      * @description create new user with username (phone or email) & password
+      * @param {string} username
+      * @param {string} password
+      * @returns {Promise<SalonCloudResponse<any>>}
+      *      Error:  - validation Error, code: 400
+      *              - username is existing already, code: 409                    
+      *      Successful: 
+      *              - code: 200
+      * @memberOf Authentication
+      */
+    public async signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<undefined>> {
+        var response: SalonCloudResponse<undefined> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -67,27 +73,8 @@ export class Authentication implements AuthenticationBehavior {
             return response;
         }
 
-        var user: UserData = {
-            username: username,
-            status: true,
-            is_verified: false,
-            is_temporary: false
-        };
-        // Kill callback function
-        let promise = new Promise<SalonCloudResponse<any>>(function (resolve, reject) {
-            UserModel.register(new UserModel(user), password, function (err) {
-                if (err) {
-                    response.err = { 'err': err };
-                    response.code = 409;
-                    response.data = undefined;
-                } else {
-                    response.err = undefined;
-                    response.code = 200;
-                }
-                resolve(response);
-            });
-        });
-        return promise;
+        response = await this.authenticationDatabase.signUpWithUsernameAndPassword(username, password);
+        return response;
 
     }
 
@@ -113,9 +100,9 @@ export class Authentication implements AuthenticationBehavior {
      *             }
      * @memberOf Authentication
      */
-    public async signInWithUsernameAndPassword(username: string, password: string) {
+    public async signInWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<UserToken>> {
 
-        var response: SalonCloudResponse<any> = {
+        var response: SalonCloudResponse<UserToken> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -140,122 +127,21 @@ export class Authentication implements AuthenticationBehavior {
             response.code = 400;
             return response;
         }
-        let promise = new Promise(function (resolve, reject) {
-
-            UserModel.authenticate()(username, password, function (err: any, user: IUserData, error: any) {
-                if (err) {
-                    response.err = { 'err': err };
-                    response.code = 409;
-                    response.data = undefined;
-                }
-                if (!user) {
-                    response.err = ErrorMessage.SignInFailed;
-                    response.code = 403;
-                    response.data = undefined;
-                } else {
-                    var created_at = new Date().getTime();
-                    var cert = fs.readFileSync('./Config/Dev/Private.key');  // get private key
-
-                    var UserToken = {
-                        _id: user._id,
-                        username: user.username,
-                        status: user.status
-                    };
-
-                    var token = jwt.sign(UserToken, cert, { algorithm: 'RS256' });
-                    response.err = undefined;
-                    response.code = 200;
-                    response.data = {
-                        user: UserToken,
-                        auth: {
-                            token: token
-                        }
-                    };
-                }
-                resolve(response);
-
-            });
-        });
-        return promise;
+        response = await this.authenticationDatabase.signInWithUsernameAndPassword(username, password);
+        return response;
     }
-    
+
     /**
-     * @method signUpWithAutoGeneratedPassword
-     * @description Sign Up with username, only for customer & employee in salon.
-     * @param {string} username
-     * @returns {Promise<SalonCloudResponse<any>>}
-     *      Error:  - Validation Error, code: 400
-     *              - Username or Password is wrong, code: 403
-     *              - Another: code 409
-     *      Successful: 
-     *             {
-     *                  user:{
-     *                     username: string
-     *                     status: boolean
-     *                     _id: string
-     *                  },
-     *                  auth:{
-     *                     token: string
-     *                  }
-     *             }
-     * 
+     * @method verifyToken
+     * @description verify User Token
+     * @param {string} token
+     * @returns
+     *     {undefined} User Token is undefined.
+     *     {SalonCloudResponse} code 403, error = 'InvalidToken' || code 200, data = { _id: string, username: string, status: boolean }
      * @memberOf Authentication
      */
-    public async signUpWithAutoGeneratedPassword(username: string): Promise<SalonCloudResponse<any>> {
-        var response: SalonCloudResponse<any> = {
-            code: undefined,
-            err: undefined,
-            data: undefined
-        }
-        var randomPassword = 100000 + Math.floor(Math.random() * 900000);
-        var randomPasswordString = randomPassword.toString();
-
-        var registerProcess = await this.signUpWithUsernameAndPassword(username, randomPasswordString);
-
-        if (registerProcess.err) {
-            response.err = registerProcess.err;
-            response.code = 409;
-        } else {
-            let signinData: any = await this.signInWithUsernameAndPassword(username, randomPasswordString);
-            response.data = signinData.data;
-            response.data.password = randomPasswordString;
-            response.code = 200;
-        }
+    public async verifyToken(token: string) {
+        var response = await this.authenticationDatabase.verifyToken(token);
         return response;
-
-    }
-
-     /**
-      * @method verifyToken
-      * @description verify User Token
-      * @param {string} token
-      * @returns
-      *     {undefined} User Token is undefined.
-      *     {SalonCloudResponse} code 403, error = 'InvalidToken' || code 200, data = { _id: string, username: string, status: boolean }
-      * @memberOf Authentication
-      */
-     public verifyToken(token: string) {
-        var response: any = {};
-        let promise = new Promise(function (resolve, reject) {
-
-            if (!token) {
-                response = undefined;
-            } else {
-                var cert = fs.readFileSync('./Config/Dev/Public.pem');  // get private key
-                jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, payload) {
-                    if (err) {
-                        response.err = 'InvalidToken';
-                        response.code = 403;
-                        response.data = undefined;
-                    } else {
-                        response.err = undefined;
-                        response.code = 200;
-                        response.data = payload;
-                    }
-                });
-            }
-            resolve(response);
-        });
-        return promise;
     }
 }

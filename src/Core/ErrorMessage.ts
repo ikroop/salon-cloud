@@ -155,10 +155,10 @@ export const ErrorMessage = {
             'message': 'end-date param is an invalid date!'
         }
     },
-    'InvalidEndDateForStartDate': {
+    'EndDateLessThanStartDate': {
         'err': {
-            'name': 'InvalidEndDateForStartDate',
-            'message': 'end-date is earlier than start-date!'
+            'name': 'EndDateLessThanStartDate',
+            'message': 'End Date Less Than Start Date'
         }
     },
     'MissingEmployeeId': {
@@ -402,34 +402,154 @@ export const ErrorMessage = {
             'message': 'Time of appointment is required!'
         }
     },
-    'MissingBookingTimeDay': {
+    'WrongBookingTimeFormat': {
         'err': {
-            'name': 'MissingBookingTimeDay',
-            'message': 'Day of appointment time is required!'
+            'name': 'WrongBookingTimeFormat',
+            'message': 'SalonTime format: yyyy-MM-dd HH:mm:ss'
         }
     },
-    'MissingBookingTimeMonth': {
+    'AppointmentTimeNotAvailable': {
         'err': {
-            'name': 'MissingBookingTimeMonth',
-            'message': 'Month of appointment time is required!'
+            'name': 'AppointmentTimeNotAvailable',
+            'message': 'The time of the appointment is not available to be booked!'
         }
     },
-    'MissingBookingTimeYear': {
+    'BookingTimeNotAvailable': {
         'err': {
-            'name': 'MissingBookingTimeYear',
-            'message': 'Year of appointment time is required!'
+            'name': 'BookingTimeNotAvailable',
+            'message': 'Booking Time is not available'
         }
     },
-    'MissingBookingTimeHour': {
+    'InvalidAppointmentStartTime': {
         'err': {
-            'name': 'MissingBookingTimeHour',
-            'message': 'Hour of appointment time is required!'
+            'name': 'InvalidAppointmentStartTime',
+            'message': 'This appointment has start time which is in the past!'
         }
     },
-    'MissingBookingTimeMinute': {
+    'InvalidDataTypeService': {
         'err': {
-            'name': 'MissingBookingTimeMinute',
-            'message': 'Minute of appointment time is required!'
+            'name': 'InvalidDataTypeService',
+            'message': 'The data type of services must be an array!'
+        }
+    },
+    'InvalidDataTypeBookingTime': {
+        'err': {
+            'name': 'InvalidDataTypeBookingTime',
+            'message': 'Invalid data type of booking time!'
+        }
+    },
+    'MissingDate': {
+        'err': {
+            'name': 'MissingDate',
+            'message': 'Missing Date Field'
+        }
+    },
+    'InvalidDate': {
+        'err': {
+            'name': 'InvalidDate',
+            'message': 'Invalid Date Field'
+        }
+    },
+    'MissingDayOfWeek': {
+        'err': {
+            'name': 'MissingDayOfWeek',
+            'message': 'Missing Day Of Week'
+        }
+    },
+    'InvalidDayOfWeek': {
+        'err': {
+            'name': 'InvalidDayOfWeek',
+            'message': 'Invalid Day Of Week'
+        }
+    },
+    'EndDateIsBeforeStartDate': {
+        'err': {
+            'name': 'EndDateIsBeforeStartDate',
+            'message': 'End Date Is Before Start Date'
+        }
+    },
+    'InvalidSalonTimeData': {
+        'err': {
+            'name': 'InvalidSalonTimeData',
+            'message': 'Salon Time Data Is Not Valid!'
+        }
+    },
+    'MissingIsRemindedField': {
+        'err': {
+            'name': 'MissingIsRemindedField',
+            'message': 'Is-Reminded Field Is Missing'
+        }
+    },
+    'MissingDeviceField': {
+        'err': {
+            'name': 'MissingDeviceField',
+            'message': 'Device Field Is Missing'
+        }
+    },
+    'MissingTypeField': {
+        'err': {
+            'name': 'MissingTypeField',
+            'message': 'Type Field Is Missing'
+        }
+    },
+    'MissingCustomerId': {
+        'err': {
+            'name': 'MissingCustomerId',
+            'message': 'Customer Id Is Missing'
+        }
+    },
+    'MissingAppointmentItemsArray': {
+        'err': {
+            'name': 'MissingAppointmentItemsArray',
+            'message': 'Appointment Items Array Is Missing'
+        }
+    },
+    'MissingServiceItem': {
+        'err': {
+            'name': 'MissingServiceItem',
+            'message': 'Service Item Is Missing'
+        }
+    },
+    'MissingOverlappedObject': {
+        'err': {
+            'name': 'MissingOverlappedObject',
+            'message': 'Overlapped Object Is Missing'
+        }
+    },
+    'MissingOverlappedStatus': {
+        'err': {
+            'name': 'MissingOverlappedStatus',
+            'message': 'Overlapped Status Is Missing'
+        }
+    },
+    'MissingAppointmentId': {
+        'err': {
+            'name': 'MissingAppointmentId',
+            'message': 'Appointment Id Is Missing'
+        }
+    },
+    'EarlierAppointmentTimeThanSalonTimeOnCertainDate': {
+        'err': {
+            'name': 'EarlierAppointmentTimeThanSalonTimeOnCertainDate',
+            'message': 'Appointment Time Is Earlier Than Salon Open Time!'
+        }
+    },
+    'UserBlocked': {
+        'err': {
+            'name': 'UserBlocked',
+            'message': 'User is blocked'
+        }
+    },
+    'Unknown': {
+        'err': {
+            'name': 'Unknown',
+            'message': 'Unknown'
+        }
+    },
+    'WrongUsernameOrPassword':{
+        'err': {
+            'name': 'WrongUsernameOrPassword',
+            'message': 'Wrong Useranme or Password.'
         }
     }
 };

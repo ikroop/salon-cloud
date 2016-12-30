@@ -4,13 +4,14 @@
  * 
  */
 import { SalonManagementBehavior } from './SalonManagementBehavior'
-import { ISalonModel, SalonData, SalonInformation, SalonSetting } from './SalonData'
+import { ISalonData, SalonData, SalonInformation, SalonSetting } from './SalonData'
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import SalonModel = require('./SalonModel');
 import { defaultSalonSetting } from './../../Core/DefaultData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator'
 import { MissingCheck, IsPhoneNumber, IsEmail, IsString } from './../../Core/Validation/ValidationDecorators'
 import { ErrorMessage } from './../../Core/ErrorMessage'
+import { GoogleMap } from './../../Core/GoogleMap/GoogleMap';
 
 export class SalonManagement implements SalonManagementBehavior {
 
@@ -29,14 +30,16 @@ export class SalonManagement implements SalonManagementBehavior {
     };
 
     /**
-	*@name: createSalonDocs
-    *@parameter: SalonInformation
-    *@return: Mongoose result
-    * - Connect database and create salon record
-	*/
+     * 
+     * 
+     * @param {SalonInformation} salonInformation
+     * @returns
+     * 
+     * @memberOf SalonManagement
+     */
     public async createSalonDocs(salonInformation: SalonInformation) {
 
-        var returnResult: SalonCloudResponse<ISalonModel> = {
+        var returnResult: SalonCloudResponse<ISalonData> = {
             code: undefined,
             data: undefined,
             err: undefined
@@ -45,6 +48,18 @@ export class SalonManagement implements SalonManagementBehavior {
             information: salonInformation,
             setting: defaultSalonSetting,
         }
+
+        var validations = await this.validation(salonInformation);
+        if (validations.err){
+            returnResult.err = validations.err;
+            returnResult.code = validations.code;
+            return validations;
+        }
+         // get Timezone from address and puts that into salon information constructor
+        // TODO:
+        var Timezone: any = await GoogleMap.getTimeZone(salonInformation.location.address);
+        salonInformation.location.timezone_id = Timezone['timeZoneId'];
+
         // create Salon record
         var salon = new SalonModel(salonData);
         var SalonCreation = salon.save();
@@ -76,7 +91,40 @@ export class SalonManagement implements SalonManagementBehavior {
     public updateSetting(setting: SalonSetting): SalonCloudResponse<boolean> {
         return;
     };
+    
+    /**
+     * 
+     * 
+     * @returns {Promise<number>}
+     * 
+     * @memberOf SalonManagement
+     */
+    public getFlexibleTime(): Promise<number> {
+        let salonId = this.salonId;
+        let promise = new Promise<any>(function (resolve, reject) {
+            var flexibleTime = 0;
+            SalonModel.findOne({ '_id': salonId }, function (err, docs: ISalonData) {
+                if (err) {
+                    flexibleTime = 0;
+                } else if (!docs) {
+                    flexibleTime = 0;
+                } else {
+                    flexibleTime = docs.setting.flexible_time;
+                }
+                resolve(flexibleTime);
+            });
+        });
+        return promise;
+    }
 
+    /**
+     * 
+     * 
+     * @param {SalonInformation} salonInformation
+     * @returns
+     * 
+     * @memberOf SalonManagement
+     */
     public async validation(salonInformation: SalonInformation) {
         var returnResult: SalonCloudResponse<any> = {
             code: undefined,
@@ -89,7 +137,7 @@ export class SalonManagement implements SalonManagementBehavior {
         salonNameValidator = new MissingCheck(salonNameValidator, ErrorMessage.MissingSalonName);
         var salonNameError = await salonNameValidator.validate();
         if (salonNameError) {
-            returnResult.err = salonNameError.err;
+            returnResult.err = salonNameError;
             returnResult.code = 400;
             return returnResult;
         }
@@ -99,7 +147,7 @@ export class SalonManagement implements SalonManagementBehavior {
         // TODO: validator for IsAddress
         var addressError = await addressValidator.validate();
         if (addressError) {
-            returnResult.err = addressError.err;
+            returnResult.err = addressError;
             returnResult.code = 400;
             return returnResult;
         }
@@ -110,7 +158,7 @@ export class SalonManagement implements SalonManagementBehavior {
         phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat);
         var phoneNumberError = await phoneNumberValidator.validate();
         if (phoneNumberError) {
-            returnResult.err = phoneNumberError.err;
+            returnResult.err = phoneNumberError;
             returnResult.code = 400;
             return returnResult;
         }
@@ -122,7 +170,7 @@ export class SalonManagement implements SalonManagementBehavior {
             emailValidator = new IsEmail(emailValidator, ErrorMessage.WrongEmailFormat);
             var emailError = await emailValidator.validate();
             if (emailError) {
-                returnResult.err = emailError.err;
+                returnResult.err = emailError;
                 returnResult.code = 400;
                 return returnResult;
             }
@@ -131,5 +179,27 @@ export class SalonManagement implements SalonManagementBehavior {
         return returnResult;
     }
 
+    /**
+     * 
+     * 
+     * @returns {Promise<ISalonData>}
+     * 
+     * @memberOf SalonManagement
+     */
+    public async getSalonById(): Promise<ISalonData> {
+        var salon: ISalonData = undefined;
+        try {
+            await SalonModel.findOne({ "_id": this.salonId }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: ISalonData) {
+                if (!err) {
+                    salon = docs;
+                } else {
+                    salon = undefined;
+                }
+            });
+        } catch (e) {
+            salon = undefined;
+        }
+        return salon;
+    }
 
 }

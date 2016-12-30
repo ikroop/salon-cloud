@@ -4,8 +4,9 @@
  *
  */
 
-import { AppointmentData } from './AppointmentData'
+import { AppointmentData, AppointmentItemData } from './AppointmentData'
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
+import {SalonTimeData} from './../../Core/SalonTime/SalonTimeData'
 
 export interface AppointmentManagementBehavior {
 
@@ -17,7 +18,7 @@ export interface AppointmentManagementBehavior {
 
     getAppointmentByCustomer(customerId: string): Array<AppointmentData>;
 
-    getAppointmentByDate(date: Date): Array<AppointmentData>;
+    getEmployeeAppointmentByDate(employeeId: string, date: SalonTimeData): Promise<SalonCloudResponse<Array<AppointmentItemData>>> ;
 
     updateAppointment(appointmentId: string, appointment: AppointmentData): boolean;
 

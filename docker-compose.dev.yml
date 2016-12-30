@@ -1,0 +1,13 @@
+
+version: '2'
+
+services:
+  salon-cloud:
+    image: salon-cloud-dev:lastest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3000:3000

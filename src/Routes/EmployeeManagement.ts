@@ -10,21 +10,16 @@ import { AuthorizationRouter } from './Authorization';
 import { EmployeeManagement } from './../Modules/UserManagement/EmployeeManagement';
 import { SalonManagement } from './../Modules/SalonManagement/SalonManagement'
 import { Owner } from './../Core/User/Owner'
-import {ByPhoneVerification} from './../Core/Verification/ByPhoneVerification'
+import { ByPhoneVerification } from './../Core/Verification/ByPhoneVerification'
 
-export class UserManagementRouter {
+export class EmployeeManagementRouter {
     private router: Router = Router();
 
     getRouter(): Router {
         var authentication = new Authentication();
         var authorizationRouter = new AuthorizationRouter();
 
-        this.router.post('/API-NAME', function (request: Request, response: Response) {
-
-        });
-
-        this.router.post('/create', authorizationRouter.checkPermission , async (request: Request, response: Response) => {
-
+        this.router.post('/create', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
             var result: SalonCloudResponse<any> = {
                 code: undefined,
@@ -32,20 +27,14 @@ export class UserManagementRouter {
                 err: undefined
             };
             var userObject = new Owner(request.user._id, new SalonManagement(request.body.salon_id));
-            
+
             result = await userObject.addEmployee(request.body.phone, request.body, new ByPhoneVerification());
             let dataReturn;
             if (result.err) {
-                dataReturn = {
-                    'err': result.err,
-                };
+                dataReturn = result.err
             } else {
                 dataReturn = {
-                    'salon_id': result.data.salon_id,
-                    'uid': result.data.uid,
-                    'phone': result.data.phone,
-                    'fullname': result.data.fullname,
-                    'role': result.data.role
+                    '_id': result.data.uid
                 }
             }
             response.status(result.code);

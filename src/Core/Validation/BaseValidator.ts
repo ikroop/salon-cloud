@@ -1,14 +1,14 @@
- /**
- * @license
- * Copyright SalonHelps. All Rights Reserved.
- *
- */
+/**
+* @license
+* Copyright SalonHelps. All Rights Reserved.
+*
+*/
 
 var errorMessage = require('./../ErrorMessage');
 //Parent Validator;
 export abstract class Validator {
     public targetElement: any;
-    public abstract validate (): any;
+    public abstract validate(): any;
 }
 
 
@@ -17,13 +17,13 @@ export class BaseValidator extends Validator {
 
     public errorType: any;    //The error that method validate() will return if validation fails.
 
-    constructor (targetElement: any){
+    constructor(targetElement: any) {
         super();
         this.targetElement = targetElement;
 
     }
-    public validate (): any{
-        
+    public validate(): any {
+
         return undefined;
 
     }
@@ -33,16 +33,26 @@ export class BaseValidator extends Validator {
 export abstract class DecoratingValidator extends Validator {
     public wrapedValidator: Validator;
 
-    public async validate (){
-         let error: any = await this.wrapedValidator.validate();
-        if(error!==undefined){
+    public async validate() {
+        let error: any = await this.wrapedValidator.validate();
+        if (error !== undefined) {
             return error;
-        }else{
-            error = this.validatingOperation();
+        } else {
+            error = await this.validatingOperation();
             return error;
         }
-        
+
     };
+
+    protected isMongooseId(id: string): boolean {
+        id = String(id);
+        var match = id.match(/^[0-9a-fA-F]{24}$/);
+        if (match) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public abstract validatingOperation();
 }

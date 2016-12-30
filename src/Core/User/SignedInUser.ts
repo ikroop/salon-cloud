@@ -17,7 +17,7 @@ import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceMana
 import { ServiceGroupData } from './../../Modules/ServiceManagement/ServiceData'
 import { samplesService1, samplesService2 } from './../DefaultData'
 import { GoogleMap } from './../GoogleMap/GoogleMap';
-import {OwnerManagement} from './../../Modules/UserManagement/OwnerManagement'
+import { OwnerManagement } from './../../Modules/UserManagement/OwnerManagement'
 
 export class SignedInUser implements SignedInUserBehavior {
 
@@ -31,59 +31,65 @@ export class SignedInUser implements SignedInUserBehavior {
     }
 
     /**
-	*@name: createSalon
-    *@parameter: SalonInformation
-    *@return: a promise resolved to SalonCloudResponse<data>
-    * - validation
-    * - Get Timezone from address
-    * - create default weekly schedule
-    * - Create sample Services
-    * - Update User Profile
-	*/
-    public async createSalon(salonInformation: SalonInformation) {
+     * 
+     * 
+     * @param {SalonInformation} salonInformation
+     * @returns {Promise<SalonCloudResponse<string>>}
+     * 
+     * @memberOf SignedInUser
+     */
+    public async createSalon(salonInformation: SalonInformation): Promise<SalonCloudResponse<string>> {
 
-        var returnResult: SalonCloudResponse<any> = {
+        var returnResult: SalonCloudResponse<string> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
 
-        // validation
-        returnResult = await this.salonManagementDP.validation(salonInformation);
-        if (returnResult.err){
-            return returnResult;
-        }
-        // get Timezone from address and puts that into salon information constructor
-        // TODO:
-        var Timezone:any = await GoogleMap.getTimeZone(salonInformation.location.address);
-        salonInformation.location.timezone_id = Timezone['timeZoneId'];
-        
         // Create Salon Document
         var salonData = await this.salonManagementDP.createSalonDocs(salonInformation);
-
+        if (salonData.err) {
+            returnResult.err = salonData.err;
+            returnResult.code = salonData.code;
+            return returnResult;
+        }
         // Create default Schedule
         var scheduleDP = new SalonSchedule(salonData.data._id);
         var defaultSchedule = await scheduleDP.saveWeeklySchedule(defaultWeeklySchedule);
-
+        if (defaultSchedule.err) {
+            returnResult.err = defaultSchedule.err;
+            returnResult.code = defaultSchedule.code;
+            return returnResult;
+        }
         // Create Sample Services
         var serviceDP = new ServiceManagement(salonData.data._id);
         samplesService2.salon_id = salonData.data._id.toString();
         samplesService1.salon_id = salonData.data._id.toString();
         var addSample1Result = await serviceDP.addGroup(samplesService1);
+        if (addSample1Result.err) {
+            returnResult.err = addSample1Result.err;
+            returnResult.code = addSample1Result.code;
+            return returnResult;
+        }
         var addSample2Result = await serviceDP.addGroup(samplesService2);
+
+        if (addSample2Result.err) {
+            returnResult.err = addSample2Result.err;
+            returnResult.code = addSample2Result.code;
+            return returnResult;
+        }
 
         // Update User Profile
         var ownerManagementDP = new OwnerManagement(salonData.data._id);
         var profile = await ownerManagementDP.addOwnerProfile(this.userId); //Todo
 
-        returnResult.data = {
-            salon_id: salonData.data._id,
-            uid: this.userId,
-            role: profile.data.role,
-            default_schedule: defaultSchedule.data,
-            sample_services: [addSample1Result.data, addSample2Result.data],
-            salon_data: salonData.data
+        if (profile.err) {
+            returnResult.err = profile.err;
+            returnResult.code = profile.code;
+            return returnResult;
         }
+
+        returnResult.data = salonData.data._id;
         returnResult.code = 200;
         return returnResult;
     };
@@ -97,6 +103,6 @@ export class SignedInUser implements SignedInUserBehavior {
         return;
     };
 
-   
+
 
 }

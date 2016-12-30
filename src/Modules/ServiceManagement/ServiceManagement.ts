@@ -5,7 +5,7 @@
  */
 
 import { ServiceManagementBehavior } from './ServiceManagementBehavior';
-import { ServiceGroupData, ServiceItemData } from './ServiceData'
+import { ServiceGroupData, ServiceItemData, IServiceGroupData, IServiceItemData } from './ServiceData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
 import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidNameString, IsServiceGroupNameExisted }
     from './../../Core/Validation/ValidationDecorators';
@@ -56,17 +56,22 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * @return: group id OR ErrorMessage.
      * Add new service group to database
      */
-    public async addGroup(group: ServiceGroupData) {
-        var response: SalonCloudResponse<ServiceGroupData> = {
+    public async addGroup(group: ServiceGroupData): Promise<SalonCloudResponse<IServiceGroupData>> {
+        var response: SalonCloudResponse<IServiceGroupData> = {
             code: undefined,
             data: undefined,
             err: undefined
         };
         var saveStatus;
         //Add new service group to database
-
+        var validations = await this.validateServiceGroup(group);
+        if (validations.err){
+            response.err = validations.err;
+            response.code = validations.code;
+            return response;
+        }
         var dataCreation = ServiceGroupModel.create(group)
-        await dataCreation.then(function (docs) {
+        await dataCreation.then(function (docs: IServiceGroupData) {
             response.data = docs;
             response.code = 200;
             return;
@@ -88,12 +93,12 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * Get all service groups and services.
      */
     public async getServices() {
-        /*var returnResult: SalonCloudResponse<[ServiceGroupData]> = {
+        var returnResult: SalonCloudResponse<IServiceGroupData[]> = {
             err: undefined,
             code: undefined,
             data: undefined
         };
-        await ServiceGroupModel.find({ salonId: this.salonId }).exec(function (err, docs) {
+        await ServiceGroupModel.find({ salon_id: this.salonId }).exec(function (err, docs: [IServiceGroupData]) {
             if (err) {
                 returnResult.err = err;
             } else {
@@ -104,7 +109,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
                 }
             }
         });
-        return returnResult;*/
+        return returnResult;
     };
 
     /**
@@ -141,7 +146,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * @return: error message.
      * Validate Service Item.
      */
-    private async validateServiceItem(item: ServiceItemData) {
+    private async validateServiceItem(item: ServiceItemData): Promise<SalonCloudResponse<undefined>> {
         var returnResult: SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
@@ -191,7 +196,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
      * @return: error message.
      * Validate Service Group.
      */
-    public async validateServiceGroup(group: ServiceGroupData) {
+    public async validateServiceGroup(group: ServiceGroupData): Promise<SalonCloudResponse<undefined>> {
         var returnResult: SalonCloudResponse<any> = {
             code: undefined,
             data: undefined,
@@ -241,6 +246,67 @@ export class ServiceManagement implements ServiceManagementBehavior {
             }
         }
         return returnResult;
+    }
+
+
+    /**
+     * 
+     * 
+     * @param {string} serviceId
+     * @returns {Promise<SalonCloudResponse<ServiceItemData>>}
+     * 
+     * @memberOf ServiceManagement
+     */
+    public async getServiceItemById(serviceId: string): Promise<SalonCloudResponse<IServiceItemData>> {
+        var response: SalonCloudResponse<IServiceItemData> = {
+            data: undefined,
+            code: undefined,
+            err: undefined
+        }
+        var serviceSearch = await ServiceGroupModel.findOne({ 'service_list': { '$elemMatch': { '_id': serviceId } } }).exec(function (err, docs: IServiceItemData) {
+            if (err) {
+                response.code = 500;
+                response.err = err;
+            } else if (!docs) {
+                response.code = 200;
+                response.data = undefined;
+            } else {
+                response.code = 200;
+                response.data = docs;
+            }
+        });
+
+        return response;
+
+    }
+
+    /**
+     * 
+     * 
+     * @param {string} groupName
+     * @returns {Promise<SalonCloudResponse<IServiceGroupData>>}
+     * 
+     * @memberOf ServiceManagement
+     */
+    public async getServiceGroupByName(groupName: string): Promise<SalonCloudResponse<IServiceGroupData>> {
+
+        var response: SalonCloudResponse<IServiceGroupData> = {
+            data: undefined,
+            code: undefined,
+            err: undefined
+        }
+
+        await ServiceGroupModel.findOne({ 'name': groupName, 'salon_id': this.salonId }).exec(function (err, docs: IServiceGroupData) {
+            if (err) {
+                response.err = err;
+            } else if (!docs) {
+                response.data = undefined;
+            } else {
+                response.data = docs;
+            }
+        });
+
+        return response;
     }
 
 }

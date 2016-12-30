@@ -33,6 +33,11 @@ export class Authorization {
         };
 
         var roleAPI = RoleConfig.filter(item => item.api.toLowerCase() == apiName.toLowerCase())[0];
+
+        if(!roleAPI){
+            console.log('Please Add API to file RoleConfig');
+            return undefined;
+        }
         // Check userId
         if (!userId) {
             // User is Anonymouse
@@ -46,6 +51,16 @@ export class Authorization {
                 response.data = undefined;
             }
         } else {
+
+            // User logged in already and request API which require Anonymouse
+            if (roleAPI.role.indexOf('Anonymouse') > -1) {
+                // Api allows to access from Anonymouse
+                response.code = 403;
+                response.data = undefined;
+                response.err = ErrorMessage.NoPermission.err;
+                return response;
+            } 
+
             // userId is exsiting, it means this is SignedUser
             if (roleAPI.role.indexOf('SignedUser') > -1) {
                 // Api allow to access from SignedUser
@@ -60,12 +75,12 @@ export class Authorization {
                 salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
                 salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
                 var salonIdError = await salonIdValidation.validate();
+
                 if (salonIdError) {
                     response.err = salonIdError.err;
                     response.code = 400; //Bad Request
                     return response;
                 }
-
                 // Get User Role
                 var user = new UserManagement(salonId);
                 var role = await user.getRole(userId);
@@ -75,6 +90,7 @@ export class Authorization {
                     response.code = 200; // OK
                 } else {
                     // Unallowed
+                    response.err = ErrorMessage.NoPermission.err;
                     response.code = 403; // Forbidden
                     response.data = undefined;
                 }

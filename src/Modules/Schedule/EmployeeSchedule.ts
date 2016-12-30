@@ -7,15 +7,15 @@ import { Schedule } from './Schedule';
 import { ScheduleItemData, IDailyScheduleData, IWeeklyScheduleData, DailyDayData, WeeklyDayData } from './ScheduleData';
 import WeeklyScheduleModel = require('./WeeklyScheduleModel');
 import DailyScheduleModel = require('./DailyScheduleModel');
-import {SalonCloudResponse} from './../../Core/SalonCloudResponse';
-import {BaseValidator} from './../../Core/Validation/BaseValidator';
-import {MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId}
+import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
+import { BaseValidator } from './../../Core/Validation/BaseValidator';
+import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidEmployeeId }
     from './../../Core/Validation/ValidationDecorators';
-import {SalonSchedule} from './SalonSchedule'
-var ErrorMessage = require  ('./../../Core/ErrorMessage');
+import { SalonSchedule } from './SalonSchedule'
+import { ErrorMessage } from './../../Core/ErrorMessage';
 export class EmployeeSchedule extends Schedule {
 
-    constructor (salonId: string, employeeId: string){
+    constructor(salonId: string, employeeId: string) {
         super(salonId, employeeId);
     }
 
@@ -29,18 +29,22 @@ export class EmployeeSchedule extends Schedule {
      * @param {DailyDayData} dailySchedule: DailyDayData of employee
      * @returns {DailyDayData}
      */
-    protected async normalizeDailySchedule(dailySchedule: DailyDayData){
-        
+    public async normalizeDailySchedule(dailySchedule: DailyDayData[]): Promise<DailyDayData[]> {
+
         //Step 1: get salon's [DailyDayData] for same date;
         let salonSchedule = new SalonSchedule(this.salonId);
-        let promiseSalonDailyScheduleData = await salonSchedule.getDailySchedule(dailySchedule.date);
+        let promiseSalonDailyScheduleData = await salonSchedule.getDailySchedule(dailySchedule[0].date, dailySchedule[dailySchedule.length - 1].date);
         let salonDailyScheduleData = promiseSalonDailyScheduleData.data;
+
+
 
         if (salonDailyScheduleData) {
             //Step 2: logically choose the best schedule for that day;
-            var employeeDailyDayData = dailySchedule;
-            employeeDailyDayData = this.updateDailyDayDataAccordingToSalon(employeeDailyDayData, salonDailyScheduleData.day);
-            
+            var employeeDailyDayData: DailyDayData[] = dailySchedule;
+            for (var index in employeeDailyDayData) {
+                employeeDailyDayData[index] = this.updateEmployeeDataAccordingToSalon<DailyDayData>(employeeDailyDayData[index], salonDailyScheduleData.days[index]);
+            }
+
             //Step 3: case 1: return updated DailyDayData;
             return employeeDailyDayData;
         } else {
@@ -57,12 +61,12 @@ export class EmployeeSchedule extends Schedule {
      * If Salon OFF --> Employee OFF
      * Employee.DailySchedule(date).open >= Salon.DailySchedule(date).open
      * Employee.DailySchedule(date).close <= Salon.DailySchedule(date).close
-     * @param {[WeeklyDayData]} WeeklySchedule: array of WeeklyDayDatas of employee
-     * @returns {[WeeklyDayData]}
+     * @param {WeeklyDayData[]} WeeklySchedule: array of WeeklyDayDatas of employee
+     * @returns {WeeklyDayData[]}
      */
-    protected async normalizeWeeklySchedule(WeeklySchedule: [WeeklyDayData]){
+    protected async normalizeWeeklySchedule(WeeklySchedule: WeeklyDayData[]): Promise<WeeklyDayData[]> {
 
-        //Step 1: get salon's [WeeklyDayData];
+        //Step 1: get salon's WeeklyDayData[];
         let salonSchedule = new SalonSchedule(this.salonId);
         let promiseSalonWeeklyScheduleData = await salonSchedule.getWeeklySchedule();
         let salonWeeklyScheduleData = promiseSalonWeeklyScheduleData.data;
@@ -78,10 +82,9 @@ export class EmployeeSchedule extends Schedule {
                 var employeeWeeklyDayData = employeeWeeklyDayDataArray[i];
                 var salonWeeklyDayData = salonWeeklyDayDataArray[i];
 
-                employeeWeeklyDayData = this.updateDailyDayDataAccordingToSalon(employeeWeeklyDayData, salonWeeklyDayData);
+                employeeWeeklyDayData = this.updateEmployeeDataAccordingToSalon<WeeklyDayData>(employeeWeeklyDayData, salonWeeklyDayData);
             }
-
-            //Step 3: case 1: return updated [WeeklyDayData]
+            //Step 3: case 1: return updated WeeklyDayData[]
             return employeeWeeklyDayDataArray;
         } else {
             //Step 3: case 2: return undefined if salon has no weeklySchedule
@@ -102,7 +105,7 @@ export class EmployeeSchedule extends Schedule {
      * @param {<T extends ScheduleItemData>} salonDayData: ScheduleItemData of salon
      * @returns {<T extends ScheduleItemData>}
      */
-    private updateDailyDayDataAccordingToSalon<T extends ScheduleItemData>(employeeDayData: T, salonDayData: T) {
+    private updateEmployeeDataAccordingToSalon<T extends ScheduleItemData>(employeeDayData: T, salonDayData: T): T {
         // Employee's end time is later than salon's openning time ==> employee OFF
         // Return immediately
         if (employeeDayData.close < salonDayData.open) {
@@ -121,7 +124,7 @@ export class EmployeeSchedule extends Schedule {
         if (salonDayData.status == false) {
             employeeDayData.status = false;
         }
-        
+
         // Employee's start time is earlier than salon's openning time ==> re-assign salon's openning time to employee's
         if (employeeDayData.open < salonDayData.open) {
             employeeDayData.open = salonDayData.open;
@@ -133,5 +136,35 @@ export class EmployeeSchedule extends Schedule {
         }
 
         return employeeDayData;
+    }
+
+    /**
+     * 
+     * 
+     * @protected
+     * @returns {Promise<SalonCloudResponse<undefined>>}
+     * 
+     * @memberOf EmployeeSchedule
+     */
+    protected async validateExt(): Promise<SalonCloudResponse<undefined>> {
+        var response: SalonCloudResponse<undefined> = {
+            code: undefined,
+            err: undefined,
+            data: undefined
+        };
+
+        let employeeIdValidation = new BaseValidator(this.employeeId);
+        employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId);
+        employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, this.salonId);
+        let employeeIdError = await employeeIdValidation.validate();
+
+        if (employeeIdError) {
+            response.code = 400;
+            response.err = employeeIdError;
+            return response;
+        } else {
+            return undefined
+        }
+
     }
 }

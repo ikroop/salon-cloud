@@ -1,10 +1,12 @@
 /**
-*
-*
-*
-*/
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
+
 import { mongoose } from './../../Services/Database';
 import { Document } from 'mongoose';
+import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
 
 export interface ScheduleItemData {
     close: number,
@@ -17,13 +19,13 @@ export interface WeeklyDayData extends ScheduleItemData {
 };
 
 export interface DailyDayData extends ScheduleItemData {
-    date: Date
+    date: SalonTimeData
 };
 
 export interface WeeklyScheduleData {
     salon_id: string, //<salon_id>
     employee_id: string,
-    week: [WeeklyDayData]
+    week: WeeklyDayData[]
 };
 
 export interface DailyScheduleData {
@@ -32,10 +34,10 @@ export interface DailyScheduleData {
     day: DailyDayData
 };
 
-export interface MonthlyScheduleData {
+export interface DailyScheduleArrayData {
     salon_id: string, //<salon_id>
     employee_id: string,
-    month: [DailyDayData]
+    days: DailyDayData[]
 }
 
 export interface IWeeklyScheduleData extends WeeklyScheduleData, mongoose.Document { }

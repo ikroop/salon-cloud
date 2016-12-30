@@ -3,7 +3,7 @@
  * 
  */
 import { mongoose } from './../../Services/Database';
-import { ISalonModel } from './SalonData';
+import { ISalonData } from './SalonData';
 
 const SalonProfileSchema = new mongoose.Schema({
     setting: {
@@ -31,7 +31,7 @@ try {
   // Throws an error if 'Name' hasn't been registered
   SalonModel = mongoose.model('Salon')
 } catch (e) {
-  SalonModel = mongoose.model<ISalonModel>('Salon', SalonProfileSchema);
+  SalonModel = mongoose.model<ISalonData>('Salon', SalonProfileSchema);
 }
 
 export = SalonModel;
