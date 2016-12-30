@@ -69,7 +69,7 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(401);
+                    res.status.should.be.equal(403);
                     res.body.should.have.property('err');
                     res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
                     done();
@@ -243,7 +243,7 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(401);
+                    res.status.should.be.equal(403);
                     res.body.should.have.property('err');
                     res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
                     done();

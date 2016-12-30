@@ -140,28 +140,8 @@ export class Authentication {
      *     {SalonCloudResponse} code 403, error = 'InvalidToken' || code 200, data = { _id: string, username: string, status: boolean }
      * @memberOf Authentication
      */
-    public verifyToken(token: string) {
-        var response: any = {};
-        let promise = new Promise(function (resolve, reject) {
-
-            if (!token) {
-                response = undefined;
-            } else {
-                var cert = fs.readFileSync('./Config/Dev/Public.pem');  // get private key
-                jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, payload) {
-                    if (err) {
-                        response.err = ErrorMessage.InvalidTokenError;
-                        response.code = 401;
-                        response.data = undefined;
-                    } else {
-                        response.err = undefined;
-                        response.code = 200;
-                        response.data = payload;
-                    }
-                });
-            }
-            resolve(response);
-        });
-        return promise;
+    public async verifyToken(token: string) {
+        var response = await this.authenticationDatabase.verifyToken(token);
+        return response;
     }
 }

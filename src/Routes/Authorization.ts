@@ -33,12 +33,12 @@ export class AuthorizationRouter {
                     request.user.role = role.data;
                     next();
                 } else {
-                    response.statusCode = role.code;
+                    response.status(role.code);
                     response.json({ 'err': role.err });
                 }
 
             } else {
-                response.statusCode = tokenStatus.code;
+                response.status(tokenStatus.code);
                 response.json(tokenStatus.err);
             }
         } else { // anonymous
@@ -46,7 +46,7 @@ export class AuthorizationRouter {
             if (role.data) {
                 next();
             } else {
-                response.statusCode = 403;
+                response.status(403);
                 response.json();
             }
         }

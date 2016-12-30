@@ -14,6 +14,7 @@ import jwt = require('jsonwebtoken');
 
 import { UserToken } from './AuthenticationData';
 import { firebase } from './../../Services/Firebase';
+import { firebaseAdmin } from './../../Services/FirebaseAdmin';
 
 export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInterface {
     public async signInWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<UserToken>> {
@@ -95,7 +96,31 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
         return promise;
     }
 
-    verifyToken(token: string) {
+    verifyToken(token: string): Promise<SalonCloudResponse<undefined>> {
+        var response: any = {};
+        let promise = new Promise(function (resolve, reject) {
 
+            if (!token) {
+                response = undefined;
+                resolve(response);
+            } else {
+                firebaseAdmin.auth().verifyIdToken(token)
+                    .then(function (decodedToken) {
+                        var uid = decodedToken.uid;
+                        response.err = undefined;
+                        response.code = 200;
+                        response.data = { _id: uid };
+                        resolve(response);
+                    }).catch(function (error) {
+                        // Handle error
+                        response.err = ErrorMessage.InvalidTokenError;
+                        response.code = 401;
+                        response.data = undefined;
+                        resolve(response);
+                    });
+            }
+
+        });
+        return promise;
     }
 }

@@ -94,7 +94,38 @@ export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterf
         return promise;
     }
 
-    verifyToken(token: string) {
+    /**
+     * @method verifyToken
+     * @description verify User Token
+     * @param {string} token
+     * @returns
+     *     {undefined} User Token is undefined.
+     *     {SalonCloudResponse} code 403, error = 'InvalidToken' || code 200, data = { _id: string, username: string, status: boolean }
+     * @memberOf Authentication
+     */
+    public async verifyToken(token: string) {
+        var response: any = {};
+        let promise = new Promise(function (resolve, reject) {
 
+            if (!token) {
+                response = undefined;
+                resolve(response);
+            } else {
+                var cert = fs.readFileSync('./Config/Dev/Public.pem');  // get private key
+                jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, payload) {
+                    if (err) {
+                        response.err = ErrorMessage.InvalidTokenError;
+                        response.code = 401;
+                        response.data = undefined;
+                    } else {
+                        response.err = undefined;
+                        response.code = 200;
+                        response.data = payload;
+                    }
+                });
+            }
+            resolve(response);
+        });
+        return promise;
     }
 }
