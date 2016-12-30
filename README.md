@@ -9,7 +9,7 @@ SalonCloud – a software will change all your definition about managing a salon
 
 
 # Database Structure
-[DATABASE.md](https://github.com/thanhtruong0315/salon-cloud/blob/master/DATABASE.md)
+[DATABASE.md](https://github.com/salonhelps/salon-cloud/blob/master/FirebaseDatabase.md)
 
 API References
 ==============
@@ -34,11 +34,29 @@ $ cd <project_path> (ex: workspace/salon-cloud)
 $ npm install
 ```
 
+Build code
+=============
+```
+$ cd <project_path> (ex: workspace/salon-cloud)
+$ tsc test/*.ts --module commonjs --sourcemap --target es6
+```
+
 Testing
 =============
 ```
 $ cd <project_path> (ex: workspace/salon-cloud)
-$ npm test
+$ mocha -t 5000 test
+OR
+$  mocha -t 5000 test/<filename>.spec.js
+```
+
+Debug with mocha and visual studio 
+=============
+```
+$ mocha --debug-brk -t 30000
+Debug port is listening at 5858
+Open Visual Studio Code -> Debug tab -> select configuration: Debug Mocha Test-> Click start icon
+Note: You have to mark break point in your code.
 ```
 
 Run web server
@@ -62,15 +80,6 @@ Generate Secret Key
 ```
 $ ssh-keygen
 $ openssl rsa -in private_key_filename -pubout -outform PEM -out public_key_output_filename
-```
-
-Debug with mocha and visual studio 
-=============
-```
-$ mocha --debug-brk -t 30000
-Debug port is listening at 5858
-Open Visual Studio Code -> Debug tab -> select configuration: Debug Mocha Test-> Click start icon
-Note: You have to mark break point in your code.
 ```
 
 
