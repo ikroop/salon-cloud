@@ -1,8 +1,9 @@
-Root
+```
+root
   |----users
   |     |----<user_id>
   |           |----salons
-              |     |----<salon_id>
+  |           |     |----<salon_id>
   |           |           |----status: boolean
   |           |           |----role: number
   |           |           |----fullname: string
@@ -77,3 +78,4 @@ Root
   |     |     |           |----status: number, 1: booked, 2: checked in, 3: in-process, 4: done, 5: paid
   |     |     |           |----type: number, 1: booking, 2: check-in
   |     |     |           |----is_reminded: boolean
+  ```
