@@ -6,11 +6,9 @@
 
 import { Validator, DecoratingValidator, BaseValidator } from './BaseValidator';
 
-import SalonModel = require('./../../Modules/SalonManagement/SalonModel');
 import ServiceGroupModel = require('./../../Modules/ServiceManagement/ServiceModel');
 import { IServiceGroupData } from './../../Modules/ServiceManagement/ServiceData';
 import { ErrorMessage } from './../ErrorMessage';
-import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceManagement';
 import { UserManagement } from './../../Modules/UserManagement/UserManagement';
 import { SalonManagement } from './../../Modules/SalonManagement/SalonManagement';

@@ -6,22 +6,21 @@
 import { SalonManagementBehavior } from './SalonManagementBehavior'
 import { ISalonData, SalonData, SalonInformation, SalonSetting } from './SalonData'
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
-import SalonModel = require('./SalonModel');
 import { defaultSalonSetting } from './../../Core/DefaultData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator'
 import { MissingCheck, IsPhoneNumber, IsEmail, IsString } from './../../Core/Validation/ValidationDecorators'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { GoogleMap } from './../../Core/GoogleMap/GoogleMap';
-import { SalonManagementDatabaseInterface } from './SalonManagementDatabaseInterface';
-import { MongoSalonManagement } from './MongoSalonManagement'
+import { SalonManagementDatabaseInterface } from './../../Services/SalonDatabase/SalonManagementDatabaseInterface';
+import { MongoSalonManagement } from './../../Services/SalonDatabase/MongoDB/MongoSalonManagement'
 
 export class SalonManagement implements SalonManagementBehavior {
 
     private salonId: string;
-    private salonDatabase: MongoSalonManagement;
+    private salonDatabase: SalonManagementDatabaseInterface<ISalonData>;
     constructor(salonId: string) {
         this.salonId = salonId;
-        this.salonDatabase = new MongoSalonManagement();
+        this.salonDatabase = new MongoSalonManagement<ISalonData>();
     }
 
     public activate(): SalonCloudResponse<boolean> {
@@ -31,7 +30,7 @@ export class SalonManagement implements SalonManagementBehavior {
     public createInformation(salonId: string, data: SalonInformation): SalonCloudResponse<string> {
         return;
     };
-    
+
     /**
      * 
      * 

@@ -4,17 +4,15 @@
  *
  */
 
-import { SalonCloudResponse } from './../SalonCloudResponse';
-import { AuthenticationDatabaseInterface } from './AuthenticationDatabaseInterface';
-import { ErrorMessage } from './../ErrorMessage';
-import UserModel = require('./../../Modules/UserManagement/UserModel');
-import { IUserData, UserData, UserProfile } from './../../Modules/UserManagement/UserData'
-import jwt = require('jsonwebtoken');
+import { SalonCloudResponse } from './../../../Core/SalonCloudResponse';
+import { AuthenticationDatabaseInterface } from './../AuthenticationDatabaseInterface';
+import { ErrorMessage } from './../../../Core/ErrorMessage';
+import { IUserData, UserData, UserProfile } from './../../../Modules/UserManagement/UserData'
 
+import { UserToken } from './../../../Core/Authentication/AuthenticationData';
 
-import { UserToken } from './AuthenticationData';
-import { firebase } from './../../Services/Firebase';
-import { firebaseAdmin } from './../../Services/FirebaseAdmin';
+import { firebase } from './../../Firebase';
+import { firebaseAdmin } from './../../FirebaseAdmin';
 
 export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInterface {
     public async signInWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<UserToken>> {

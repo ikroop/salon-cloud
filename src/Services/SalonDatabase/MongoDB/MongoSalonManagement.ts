@@ -4,14 +4,14 @@
  *
  */
 
-import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
-import { ErrorMessage } from './../../Core/ErrorMessage';
-import { SalonData, ISalonData } from './SalonData'
+import { SalonCloudResponse } from './../../../Core/SalonCloudResponse';
+import { ErrorMessage } from './../../../Core/ErrorMessage';
+import { SalonData, ISalonData } from './../../../Modules/SalonManagement/SalonData'
 import SalonModel = require('./SalonModel');
 
-import { SalonManagementDatabaseInterface } from './SalonManagementDatabaseInterface';
+import { SalonManagementDatabaseInterface } from './../SalonManagementDatabaseInterface';
 
-export class MongoSalonManagement implements SalonManagementDatabaseInterface {
+export class MongoSalonManagement<ISalonData> implements SalonManagementDatabaseInterface<ISalonData> {
 
     /**
      * 

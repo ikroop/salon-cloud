@@ -1,6 +1,5 @@
 
-import { UserData, UserProfile } from './UserData'
-import UserModel = require('./UserModel')
+import { UserData, UserProfile, IUserData } from './UserData'
 import { EmployeeManagementBehavior } from './EmployeeManagementBehavior'
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { ErrorMessage } from './../../Core/ErrorMessage'
@@ -34,7 +33,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         };
 
         var validations = await this.validation(profile);
-        if (validations.err){
+        if (validations.err) {
             returnResult.code = validations.code;
             returnResult.err = validations.err;
             return returnResult;
@@ -62,7 +61,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         }
 
     };
-    
+
     /**
      * 
      * 
@@ -78,7 +77,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
             data: undefined,
             err: undefined
         };
-         // 'phone' validation
+        // 'phone' validation
         var phoneNumberValidation = new BaseValidator(employeeProfile.phone);
         phoneNumberValidation = new MissingCheck(phoneNumberValidation, ErrorMessage.MissingPhoneNumber);
         phoneNumberValidation = new IsPhoneNumber(phoneNumberValidation, ErrorMessage.WrongPhoneNumberFormat);
@@ -178,16 +177,14 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
             code: undefined,
             err: undefined
         }
-        var userSearch = UserModel.find({ 'profile.salon_id': this.salonId, 'profile.status': true, 'profile.role': { $in: [2, 3] } }).exec();
-        await userSearch.then(function (docs) {
-            response.data = docs;
+        var employees: IUserData[] = await this.userDatabase.getAllEmployees(this.salonId);
+        if (employees) {
+            response.data = employees;
             response.code = 200;
-
-
-        }, function (err) {
-            response.err = err;
+        } else {
+            response.err = ErrorMessage.ServerError;
             response.code = 500;
-        });
+        }
         return response;
     };
 

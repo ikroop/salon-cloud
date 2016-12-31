@@ -6,20 +6,21 @@
  */
 
 import { UserManagementBehavior } from './UserManagementBehavior'
-import { UserData, UserProfile } from './UserData'
+import { UserData, UserProfile, IUserData } from './UserData'
 // FIX ME: the path have to contain modules/UserManagement
-import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { ErrorMessage } from './../../Core/ErrorMessage'
-import { IUserData } from './UserData';
 import { RoleDefinition } from './../../Core/Authorization/RoleDefinition';
+import { UserManagementDatabaseInterface } from './../../Services/UserDatabase/UserManagementDatabaseInterface';
+import { MongoUserManagement } from './../../Services/UserDatabase/MongoDB/MongoUserManagement';
 
 export class UserManagement implements UserManagementBehavior {
 
-    salonId: string;
-
+    protected salonId: string;
+    protected userDatabase: UserManagementDatabaseInterface<IUserData>;
     constructor(salonId: string) {
         this.salonId = salonId;
+        this.userDatabase = new MongoUserManagement<IUserData>();
     }
 
     addUser(phone, profile: UserProfile): boolean {
@@ -46,49 +47,8 @@ export class UserManagement implements UserManagementBehavior {
     *  - Error if existing or internal error
 	*/
     public async addProfile(userId: string, userProfile: UserProfile) {
-
-        var returnResult: SalonCloudResponse<UserProfile> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
-        };
-
-        var userDocs = UserModel.findOne({ '_id': userId }).exec();
-
-        await userDocs.then(async function (docs) {
-            if (docs) {
-                var checkExistArray = docs.profile.filter(profile => profile.salon_id === userProfile.salon_id);
-
-                if (checkExistArray.length == 0) {
-                    docs.profile.push(userProfile);
-                    var saveAction = docs.save();
-                    await saveAction.then(function (innerDocs) {
-                        returnResult.data = userProfile;
-                        returnResult.code = 200;
-
-                    }, function (err) {
-                        returnResult.err = err;
-                        returnResult.code = 500;
-                    });
-
-                } else {
-                    returnResult.err = ErrorMessage.ProfileAlreadyExist;
-                    returnResult.code = 400;
-                }
-            } else {
-                returnResult.err = ErrorMessage.UserNotFound;
-                returnResult.code = 404;
-
-            }
-        }, function (err) {
-            returnResult.err = err;
-            returnResult.code = 500;
-
-
-        })
-
+        var returnResult: SalonCloudResponse<UserProfile> = await this.userDatabase.createProfile(userId, userProfile);
         return returnResult;
-
     }
 
     /**
@@ -105,14 +65,14 @@ export class UserManagement implements UserManagementBehavior {
         var salonId = this.salonId;
         if (userId) {
             if (salonId) {
-                await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": salonId } } }, ).exec(function (err, docs: IUserData) {
-                    if (docs && docs.profile && docs.profile.length > 0) {
-                        rolevalue = docs.profile[0].role;
-                    } else {
-                        rolevalue = undefined;
-                    }
-                });
+                var user = await this.userDatabase.getUserById(userId, this.salonId);
+                if (user && user.profile && user.profile.length > 0) {
+                    rolevalue = user.profile[0].role;
+                } else {
+                    rolevalue = undefined;
+                }
 
+                // check role value
                 if (rolevalue) {
                     role = this.roleToString(rolevalue);
                 } else {
@@ -139,13 +99,7 @@ export class UserManagement implements UserManagementBehavior {
      */
     public async getUserByPhone(phone: string): Promise<IUserData> {
         var user: IUserData = undefined;
-        await UserModel.findOne({ "username": phone }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: IUserData) {
-            if (!err) {
-                user = docs;
-            } else {
-                user = undefined;
-            }
-        });
+        user = await this.userDatabase.getUserByPhone(phone, this.salonId)
         return user;
     }
 
@@ -159,17 +113,7 @@ export class UserManagement implements UserManagementBehavior {
      */
     public async getUserById(Id: string): Promise<IUserData> {
         var user: IUserData = undefined;
-        try {
-            await UserModel.findOne({ "_id": Id }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: IUserData) {
-                if (!err) {
-                    user = docs;
-                } else {
-                    user = undefined;
-                }
-            });
-        } catch (e) {
-            user = undefined;
-        }
+        user = await this.userDatabase.getUserById(Id, this.salonId);
         return user;
     }
 

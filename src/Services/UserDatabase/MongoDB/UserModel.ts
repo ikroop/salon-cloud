@@ -5,8 +5,8 @@
  * 
  */
 
-import { IUserData } from './UserData';
-import { mongoose } from './../../Services/Database';
+import { IUserData } from './../../../Modules/UserManagement/UserData';
+import { mongoose } from './../../Database';
 
 import passportLocalMongoose = require('passport-local-mongoose');
 import Schema = mongoose.Schema;

@@ -6,7 +6,6 @@
 
 import { SalonCloudResponse } from './../SalonCloudResponse';
 import { ErrorMessage } from './../ErrorMessage';
-import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { IUserData, UserData, UserProfile } from './../../Modules/UserManagement/UserData'
 import jwt = require('jsonwebtoken');
 import fs = require('fs');
@@ -14,9 +13,9 @@ import { BaseValidator } from './../../Core/Validation/BaseValidator';
 import { MissingCheck, IsString, IsLengthGreaterThan, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidUserName }
     from './../../Core/Validation/ValidationDecorators';
 import { UserToken } from './AuthenticationData';
-import { AuthenticationDatabaseInterface } from './AuthenticationDatabaseInterface';
-import { FirebaseAuthenticationDatabase } from './FirebaseAuthenticationDatabase';
-import { MongoAuthenticationDatabase } from './MongoAuthenticationDatabase';
+import { AuthenticationDatabaseInterface } from './../../Services/AuthenticationDatabase/AuthenticationDatabaseInterface';
+import { FirebaseAuthenticationDatabase } from './../../Services/AuthenticationDatabase/Firebase/FirebaseAuthenticationDatabase';
+import { MongoAuthenticationDatabase } from './../../Services/AuthenticationDatabase/MongoDB/MongoAuthenticationDatabase';
 
 export class Authentication {
     private authenticationDatabase: AuthenticationDatabaseInterface;

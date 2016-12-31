@@ -11,7 +11,7 @@ import { SalonManagementRouter } from './Routes/SalonManagement';
 import { ServiceManagementRouter } from './Routes/ServiceManagement';
 import { AppointmentManagementRouter } from './Routes/AppointmentManagement';
 
-import UserModel = require('./Modules/UserManagement/UserModel');
+import UserModel = require('./Services/UserDatabase/MongoDB/UserModel');
 
 const app: express.Application = express();
 //var authorizationRouter: AuthorizationRouter = new AuthorizationRouter();

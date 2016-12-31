@@ -4,15 +4,15 @@
  *
  */
 
-import { SalonCloudResponse } from './../SalonCloudResponse';
-import { AuthenticationDatabaseInterface } from './AuthenticationDatabaseInterface';
-import { ErrorMessage } from './../ErrorMessage';
-import UserModel = require('./../../Modules/UserManagement/UserModel');
-import { IUserData, UserData, UserProfile } from './../../Modules/UserManagement/UserData'
+import { SalonCloudResponse } from './../../../Core/SalonCloudResponse';
+import { AuthenticationDatabaseInterface } from './../AuthenticationDatabaseInterface';
+import { ErrorMessage } from './../../../Core/ErrorMessage';
+import UserModel = require('./../../UserDatabase/MongoDB/UserModel');
+import { IUserData, UserData, UserProfile } from './../../../Modules/UserManagement/UserData'
 import jwt = require('jsonwebtoken');
 import fs = require('fs');
 
-import { UserToken } from './AuthenticationData';
+import { UserToken } from './../../../Core/Authentication/AuthenticationData';
 
 export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterface {
     public async signInWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<UserToken>> {

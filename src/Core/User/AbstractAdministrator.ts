@@ -6,7 +6,6 @@
 
 import { AbstractEmployee } from './AbstractEmployee'
 import { UserProfile, UserData } from './../../Modules/UserManagement/UserData'
-import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { AppointmentItemData, AppointmentData, SaveAppointmentData } from './../../Modules/AppointmentManagement/AppointmentData'
 import { AppointmentManagement } from './../../Modules/AppointmentManagement/AppointmentManagement'
 import { AdministratorBehavior } from './AdministratorBehavior'
