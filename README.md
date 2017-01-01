@@ -20,7 +20,7 @@ Wiki](https://github.com/thanhtruong0315/salon-cloud/wiki/REST-API-Preferences)
 Global packages
 =============
 ```
-Install NodeJS v4.5 (LTS - Recommended For Most Users): https://nodejs.org/en/download/
+Install NodeJS v6.9.1 (LTS - Recommended For Most Users): https://nodejs.org/en/download/
 # WINDOWS
 $ npm install -g typescript nodemon mocha nyc codecov
 # MAC OS
