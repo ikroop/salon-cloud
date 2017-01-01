@@ -25,7 +25,6 @@ describe('Service Management', function () {
     let invalidSalonId = "5825e0365193422";
     let notFoundSalonId = "5825e03651934227174513d8";
     let defaultPassword = '1234@1234';
-    let validEmployeeId;
     let anotherUserId;
     let anotherUserToken;
     const today: moment.Moment = moment();
@@ -68,21 +67,6 @@ describe('Service Management', function () {
         var salon = await signedInUser.createSalon(salonInformationInput);
 
         validSalonId = salon.data;
-        // 4. Add new employee
-        const owner = new Owner(loginData.data.user._id, new SalonManagement(validSalonId));
-        // Add new employee
-        const employeeInput: UserProfile = {
-            salon_id: validSalonId,
-            role: 2,
-            phone: "7703456789",
-            fullname: "Jimmy Tran",
-            nickname: "Jimmy",
-            salary_rate: 0.6,
-            cash_rate: 0.6
-        };
-        const employeeEmail = `${Math.random().toString(36).substring(7)}@gmail.com`;
-        const employee: SalonCloudResponse<EmployeeReturn> = await owner.addEmployee(employeeEmail, employeeInput, new ByPhoneVerification());
-        validEmployeeId = employee.data.uid;
 
         // Create new user
         var authentication = new Authentication();

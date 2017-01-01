@@ -6,7 +6,6 @@
 
 import { Validator, DecoratingValidator, BaseValidator } from './BaseValidator';
 
-import ServiceGroupModel = require('./../../Modules/ServiceManagement/ServiceModel');
 import { IServiceGroupData } from './../../Modules/ServiceManagement/ServiceData';
 import { ErrorMessage } from './../ErrorMessage';
 import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceManagement';
