@@ -17,15 +17,16 @@ import { MongoSalonManagement } from './../../Services/SalonDatabase/MongoDB/Mon
 export class SalonManagement implements SalonManagementBehavior {
 
     private salonId: string;
-    
+    private salonDatabase: SalonManagementDatabaseInterface<ISalonData>;
+
+
     /**
+     * Creates an instance of SalonManagement.
      * 
+     * @param {string} salonId
      * 
-     * @private
-     * @type {SalonManagementDatabaseInterface<ISalonData>}
      * @memberOf SalonManagement
      */
-    private salonDatabase: SalonManagementDatabaseInterface<ISalonData>;
     constructor(salonId: string) {
         this.salonId = salonId;
         this.salonDatabase = new MongoSalonManagement(this.salonId);
@@ -71,11 +72,11 @@ export class SalonManagement implements SalonManagementBehavior {
         salonInformation.location.timezone_id = Timezone['timeZoneId'];
 
         // create Salon record
-        var rs = await this.salonDatabase.createSalon(salonData);
-        if (rs) {
+        try {
+            var rs = await this.salonDatabase.createSalon(salonData);
             returnResult.code = 200;
             returnResult.data = rs;
-        } else {
+        } catch (error) {
             returnResult.code = 500;
             returnResult.err = ErrorMessage.ServerError;
         }

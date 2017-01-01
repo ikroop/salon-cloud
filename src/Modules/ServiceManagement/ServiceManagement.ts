@@ -21,7 +21,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
         this.salonId = $salonId;
         this.serviceDatabase = new MongoServiceManagement(this.salonId);
     }
-    
+
     /**
      * 
      * 
@@ -75,14 +75,13 @@ export class ServiceManagement implements ServiceManagementBehavior {
             response.code = validations.code;
             return response;
         }
-        var serviceGroup = await this.serviceDatabase.createGroup(group);
-        if (serviceGroup) {
+        try {
+            var serviceGroup = await this.serviceDatabase.createGroup(group);
             response.data = serviceGroup;
             response.code = 200;
-        } else {
+        } catch (error) {
             response.err = ErrorMessage.ServerError;
             response.code = 500;
-            return;
         }
 
         return response;
@@ -102,12 +101,11 @@ export class ServiceManagement implements ServiceManagementBehavior {
             code: undefined,
             data: undefined
         };
-
-        var rs = await this.serviceDatabase.getAllServices();
-        if (rs) {
+        try {
+            var rs = await this.serviceDatabase.getAllServices();
             returnResult.data = rs;
             returnResult.code = 200;
-        } else {
+        } catch (error) {
             returnResult.err = ErrorMessage.ServerError;
             returnResult.code = 500;
         }
@@ -265,11 +263,11 @@ export class ServiceManagement implements ServiceManagementBehavior {
             code: undefined,
             err: undefined
         }
-        var rs = await this.serviceDatabase.getServiceItemById(serviceId);
-        if (rs) {
+        try {
+            var rs = await this.serviceDatabase.getServiceItemById(serviceId);
             response.code = 200;
             response.data = rs;
-        } else {
+        } catch (error) {
             response.code = 500;
             response.err = ErrorMessage.ServerError;
         }
@@ -291,12 +289,11 @@ export class ServiceManagement implements ServiceManagementBehavior {
             code: undefined,
             err: undefined
         }
-
-        var rs = await this.serviceDatabase.getServiceGroupByName(groupName);
-        if (rs) {
+        try {
+            var rs = await this.serviceDatabase.getServiceGroupByName(groupName);
             response.code = 200;
             response.data = rs;
-        } else {
+        } catch (error) {
             response.code = 500;
             response.err = ErrorMessage.ServerError;
         }
