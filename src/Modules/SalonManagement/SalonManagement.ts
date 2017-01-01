@@ -17,10 +17,18 @@ import { MongoSalonManagement } from './../../Services/SalonDatabase/MongoDB/Mon
 export class SalonManagement implements SalonManagementBehavior {
 
     private salonId: string;
+    
+    /**
+     * 
+     * 
+     * @private
+     * @type {SalonManagementDatabaseInterface<ISalonData>}
+     * @memberOf SalonManagement
+     */
     private salonDatabase: SalonManagementDatabaseInterface<ISalonData>;
     constructor(salonId: string) {
         this.salonId = salonId;
-        this.salonDatabase = new MongoSalonManagement<ISalonData>();
+        this.salonDatabase = new MongoSalonManagement(this.salonId);
     }
 
     public activate(): SalonCloudResponse<boolean> {

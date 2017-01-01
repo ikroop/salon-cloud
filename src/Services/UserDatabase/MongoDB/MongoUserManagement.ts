@@ -11,8 +11,30 @@ import { SalonCloudResponse } from './../../../Core/SalonCloudResponse';
 
 import { UserManagementDatabaseInterface } from './../UserManagementDatabaseInterface';
 
-export class MongoUserManagement<IUserData> implements UserManagementDatabaseInterface<IUserData> {
+export class MongoUserManagement implements UserManagementDatabaseInterface<IUserData> {
+    private salonId:string;
 
+    
+    /**
+     * Creates an instance of MongoUserManagement.
+     * 
+     * @param {string} salonId
+     * 
+     * @memberOf MongoUserManagement
+     */
+    constructor(salonId: string) {
+        this.salonId = salonId;
+    }
+    
+    /**
+     * 
+     * 
+     * @param {string} userId
+     * @param {string} salonId
+     * @returns {Promise<IUserData>}
+     * 
+     * @memberOf MongoUserManagement
+     */
     public async getUserById(userId: string, salonId: string): Promise<IUserData> {
         var user: IUserData = undefined;
         try {
@@ -29,6 +51,16 @@ export class MongoUserManagement<IUserData> implements UserManagementDatabaseInt
         return user;
     }
 
+    
+    /**
+     * 
+     * 
+     * @param {string} phone
+     * @param {string} salonId
+     * @returns {Promise<IUserData>}
+     * 
+     * @memberOf MongoUserManagement
+     */
     public async getUserByPhone(phone: string, salonId: string): Promise<IUserData> {
         var user: IUserData = undefined;
         await UserModel.findOne({ "username": phone }, { "profile": { "$elemMatch": { "salon_id": salonId } } }, ).exec(function (err, docs: IUserData) {
@@ -41,6 +73,16 @@ export class MongoUserManagement<IUserData> implements UserManagementDatabaseInt
         return user;
     }
 
+    
+    /**
+     * 
+     * 
+     * @param {string} userId
+     * @param {UserProfile} userProfile
+     * @returns {Promise<SalonCloudResponse<UserProfile>>}
+     * 
+     * @memberOf MongoUserManagement
+     */
     public async createProfile(userId: string, userProfile: UserProfile): Promise<SalonCloudResponse<UserProfile>> {
         var returnResult: SalonCloudResponse<UserProfile> = {
             code: undefined,
@@ -84,10 +126,18 @@ export class MongoUserManagement<IUserData> implements UserManagementDatabaseInt
 
         return returnResult;
     }
-
-    public async getAllEmployees(salonId: string): Promise<IUserData[]>{
+    
+    /**
+     * 
+     * 
+     * @param {string} salonId
+     * @returns {Promise<IUserData[]>}
+     * 
+     * @memberOf MongoUserManagement
+     */
+    public async getAllEmployees(salonId: string): Promise<IUserData[]> {
         var rs: IUserData[] = undefined;
-         var userSearch = UserModel.find({ 'profile.salon_id': salonId, 'profile.status': true, 'profile.role': { $in: [2, 3] } }).exec();
+        var userSearch = UserModel.find({ 'profile.salon_id': salonId, 'profile.status': true, 'profile.role': { $in: [2, 3] } }).exec();
         await userSearch.then(function (docs) {
             rs = docs;
         }, function (err) {

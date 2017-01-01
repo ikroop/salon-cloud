@@ -11,7 +11,21 @@ import SalonModel = require('./SalonModel');
 
 import { SalonManagementDatabaseInterface } from './../SalonManagementDatabaseInterface';
 
-export class MongoSalonManagement<ISalonData> implements SalonManagementDatabaseInterface<ISalonData> {
+export class MongoSalonManagement implements SalonManagementDatabaseInterface<ISalonData> {
+    
+    private salonId: string;
+
+    
+    /**
+     * Creates an instance of MongoSalonManagement.
+     * 
+     * @param {string} salonId
+     * 
+     * @memberOf MongoSalonManagement
+     */
+    constructor(salonId:string){
+        this.salonId = salonId;
+    }
 
     /**
      * 

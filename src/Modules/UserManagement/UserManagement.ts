@@ -20,7 +20,7 @@ export class UserManagement implements UserManagementBehavior {
     protected userDatabase: UserManagementDatabaseInterface<IUserData>;
     constructor(salonId: string) {
         this.salonId = salonId;
-        this.userDatabase = new MongoUserManagement<IUserData>();
+        this.userDatabase = new MongoUserManagement(this.salonId);
     }
 
     addUser(phone, profile: UserProfile): boolean {
