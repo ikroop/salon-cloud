@@ -12,10 +12,10 @@ import SalonModel = require('./SalonModel');
 import { SalonManagementDatabaseInterface } from './../SalonManagementDatabaseInterface';
 
 export class MongoSalonManagement implements SalonManagementDatabaseInterface<ISalonData> {
-    
+
     private salonId: string;
 
-    
+
     /**
      * Creates an instance of MongoSalonManagement.
      * 
@@ -23,7 +23,7 @@ export class MongoSalonManagement implements SalonManagementDatabaseInterface<IS
      * 
      * @memberOf MongoSalonManagement
      */
-    constructor(salonId:string){
+    constructor(salonId: string) {
         this.salonId = salonId;
     }
 
@@ -43,7 +43,7 @@ export class MongoSalonManagement implements SalonManagementDatabaseInterface<IS
         await SalonCreation.then(function (docs) {
             rs = docs;
         }, function (err) {
-            rs = undefined;
+            throw err;
         })
 
         return rs;
@@ -61,17 +61,15 @@ export class MongoSalonManagement implements SalonManagementDatabaseInterface<IS
     public async getSalonById(salonId: string): Promise<ISalonData> {
 
         var salon: ISalonData = undefined;
-        try {
-            await SalonModel.findOne({ "_id": salonId }).exec(function (err, docs: ISalonData) {
-                if (!err) {
-                    salon = docs;
-                } else {
-                    salon = undefined;
-                }
-            });
-        } catch (e) {
-            salon = undefined;
-        }
+
+        await SalonModel.findOne({ "_id": salonId }).exec(function (err, docs: ISalonData) {
+            if (!err) {
+                salon = docs;
+            } else {
+                throw err;
+            }
+        });
+
         return salon;
     }
 }

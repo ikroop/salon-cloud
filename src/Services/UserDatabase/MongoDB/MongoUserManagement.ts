@@ -12,9 +12,9 @@ import { SalonCloudResponse } from './../../../Core/SalonCloudResponse';
 import { UserManagementDatabaseInterface } from './../UserManagementDatabaseInterface';
 
 export class MongoUserManagement implements UserManagementDatabaseInterface<IUserData> {
-    private salonId:string;
+    private salonId: string;
 
-    
+
     /**
      * Creates an instance of MongoUserManagement.
      * 
@@ -25,7 +25,7 @@ export class MongoUserManagement implements UserManagementDatabaseInterface<IUse
     constructor(salonId: string) {
         this.salonId = salonId;
     }
-    
+
     /**
      * 
      * 
@@ -37,21 +37,19 @@ export class MongoUserManagement implements UserManagementDatabaseInterface<IUse
      */
     public async getUserById(userId: string, salonId: string): Promise<IUserData> {
         var user: IUserData = undefined;
-        try {
-            await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": salonId } } }, ).exec(function (err, docs: IUserData) {
-                if (!err) {
-                    user = docs;
-                } else {
-                    user = undefined;
-                }
-            });
-        } catch (e) {
-            user = undefined;
-        }
+
+        await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": salonId } } }, ).exec(function (err, docs: IUserData) {
+            if (!err) {
+                user = docs;
+            } else {
+                throw err;
+            }
+        });
+
         return user;
     }
 
-    
+
     /**
      * 
      * 
@@ -67,13 +65,13 @@ export class MongoUserManagement implements UserManagementDatabaseInterface<IUse
             if (!err) {
                 user = docs;
             } else {
-                user = undefined;
+                throw err;
             }
         });
         return user;
     }
 
-    
+
     /**
      * 
      * 
@@ -120,13 +118,11 @@ export class MongoUserManagement implements UserManagementDatabaseInterface<IUse
         }, function (err) {
             returnResult.err = err;
             returnResult.code = 500;
-
-
         })
 
         return returnResult;
     }
-    
+
     /**
      * 
      * 
@@ -141,7 +137,7 @@ export class MongoUserManagement implements UserManagementDatabaseInterface<IUse
         await userSearch.then(function (docs) {
             rs = docs;
         }, function (err) {
-            rs = undefined;
+            throw err;
         });
 
         return rs;

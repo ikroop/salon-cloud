@@ -14,7 +14,7 @@ import { ServiceManagementDatabaseInterface } from './../ServiceManagementDataba
 export class MongoServiceManagement implements ServiceManagementDatabaseInterface<IServiceGroupData, IServiceItemData> {
     private salonId: string;
 
-    
+
     /**
      * Creates an instance of MongoServiceManagement.
      * 
@@ -34,7 +34,7 @@ export class MongoServiceManagement implements ServiceManagementDatabaseInterfac
         await serviceCreation.then(function (docs) {
             rs = docs;
         }, function (err) {
-            rs = undefined;
+            throw err;
         })
         return rs;
     }
@@ -43,7 +43,7 @@ export class MongoServiceManagement implements ServiceManagementDatabaseInterfac
         var rs: IServiceGroupData[] = undefined;
         await ServiceGroupModel.find({ salon_id: this.salonId }).exec(function (err, docs: IServiceGroupData[]) {
             if (err) {
-                rs = undefined;
+                throw err;
             } else {
                 rs = docs;
             }
@@ -56,7 +56,7 @@ export class MongoServiceManagement implements ServiceManagementDatabaseInterfac
         var rs: IServiceItemData = undefined;
         await ServiceGroupModel.findOne({ 'service_list': { '$elemMatch': { '_id': serviceId } } }).exec(function (err, docs: IServiceItemData) {
             if (err) {
-                rs = undefined
+                throw err;
             } else {
                 rs = docs;
             }
@@ -69,7 +69,7 @@ export class MongoServiceManagement implements ServiceManagementDatabaseInterfac
         var rs: IServiceGroupData = undefined;
         await ServiceGroupModel.findOne({ 'name': groupName, 'salon_id': this.salonId }).exec(function (err, docs: IServiceGroupData) {
             if (err) {
-                rs = undefined;
+                throw err;
             } else {
                 rs = docs;
             }
