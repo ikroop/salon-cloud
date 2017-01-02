@@ -319,15 +319,16 @@ export class IsValidSalonId extends DecoratingValidator {
     public async validatingOperation() {
         var salonId = this.targetElement;
         // Check Id valid or not
-        if (!this.isMongooseId(salonId)){
-            return this.errorType;
-        }
 
         var salonManagement = new SalonManagement(salonId);
-        var response = await salonManagement.getSalonById();
-        if (response && response._id) {
-            return undefined;
-        } else {
+        try {
+            var response = await salonManagement.getSalonById();
+            if (response && response._id) {
+                return undefined;
+            } else {
+                return this.errorType;
+            }
+        } catch (error) {
             return this.errorType;
         }
     }
@@ -461,10 +462,7 @@ export class IsValidServiceId extends DecoratingValidator {
         var serviceId = this.targetElement;
         var salonId = this.salonId;
         // Check Id valid or not
-        if (!this.isMongooseId(serviceId)){
-            return this.errorType;
-        }
-
+        
         var serviceManagement = new ServiceManagement(salonId);
         var response = await serviceManagement.getServiceItemById(serviceId);
         if (response.data) {
@@ -493,18 +491,18 @@ export class IsValidEmployeeId extends DecoratingValidator {
         var employeeId = this.targetElement;
         var salonId = this.salonId;
 
-        // Check Id valid or not
-        if (!this.isMongooseId(employeeId)){
-            return this.errorType;
-        }
         var userManagement = new UserManagement(this.salonId);
-
-        var response = await userManagement.getUserById(employeeId);
-        if (response && response.profile.length === 1) {
-            return undefined;
-        } else {
+        try {
+            var response = await userManagement.getUserById(employeeId);
+            if (response && response.profile.length === 1) {
+                return undefined;
+            } else {
+                return this.errorType;
+            }
+        } catch (error) {
             return this.errorType;
         }
+
     }
 
 }
