@@ -7,7 +7,6 @@
 import { DailyScheduleArrayData, IDailyScheduleData, IWeeklyScheduleData, WeeklyScheduleData, DailyDayData, WeeklyDayData, DailyScheduleData } from './ScheduleData';
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
 import { ScheduleBehavior } from './ScheduleBehavior';
-import DailyScheduleModel = require('./DailyScheduleModel');
 import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
 import { SalonTime } from './../../Core/SalonTime/SalonTime'
 
@@ -419,16 +418,15 @@ export abstract class Schedule implements ScheduleBehavior {
             code: undefined,
             data: undefined
         }
+        try {
+            var result = await this.scheduleDatabase.getDailySchedule(this.employeeId, dailySchedule.date, dailySchedule.date);
+            returnResult.code = 200;
+            returnResult.data = result.length > 0 ? true : false;
 
-        var result = await DailyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId, 'day.date.year': dailySchedule.date.year, 'day.date.month': dailySchedule.date.month, 'day.date.day': dailySchedule.date.day }).exec(function (err, docs) {
-            if (err) {
-                return returnResult.err = err;
-            } else if (docs) {
-                return returnResult.data = true;
-            } else {
-                return returnResult.data = false;
-            }
-        })
+        } catch (error) {
+            returnResult.code = 500;
+            returnResult.err = ErrorMessage.ServerError;
+        }
         return returnResult;
     };
 
@@ -447,18 +445,13 @@ export abstract class Schedule implements ScheduleBehavior {
             data: undefined,
         };
 
-        var dataCreation = DailyScheduleModel.create({
-            salon_id: this.salonId,
-            employee_id: this.employeeId,
-            day: dailySchedule,
-        })
-        await dataCreation.then(function (docs: IDailyScheduleData) {
-            returnResult.data = docs;
-            return;
-        }, function (error) {
-            returnResult.err = error
-            return;
-        })
+        try {
+            returnResult.data = await this.scheduleDatabase.saveDailySchedule(this.employeeId, dailySchedule);
+            returnResult.code = 200;
+        } catch (error) {
+            returnResult.code = 500;
+            returnResult.err = ErrorMessage.ServerError;
+        }
         return returnResult;
     };
 
@@ -478,19 +471,13 @@ export abstract class Schedule implements ScheduleBehavior {
             data: undefined,
             err: undefined
         };
-        var docsFound = await DailyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId }).exec();
-
-        docsFound.day = dailySchedule;
-
-        var saveAction = docsFound.save();
-        //saveAction is a promise returned by mongoose so we must use 'await' on its resolution.
-        await saveAction.then(function (docs: IDailyScheduleData) {
-            returnResult.data = docs;
-            return;
-        }, function (err) {
-            returnResult.err = err;
-            return;
-        })
+        try {
+            returnResult.data = await this.scheduleDatabase.updateDailySchedule(this.employeeId, dailySchedule);
+            returnResult.code = 200;
+        } catch (error) {
+            returnResult.code = 500;
+            returnResult.err = ErrorMessage.ServerError;
+        }
         return returnResult;
     };
 
@@ -546,23 +533,12 @@ export abstract class Schedule implements ScheduleBehavior {
      */
     protected async getDailyScheduleRecord(startDate: SalonTimeData, endDate: SalonTimeData): Promise<IDailyScheduleData[]> {
         var returnResult: IDailyScheduleData[] = undefined;
-
-        var dailyDocsReturn = await DailyScheduleModel.find({
-            salon_id: this.salonId, employee_id: this.employeeId, 'day.date.date': {
-                $gte: startDate.date, $lte: endDate.date
-            }
-        }).exec(function (err, docs: IDailyScheduleData[]) {
-            if (err) {
-                console.log('err: ', err);
-            } else {
-                if (!docs) {
-                    returnResult = undefined;
-                } else {
-                    returnResult = docs;
-                }
-            }
-        });
-        return returnResult;
+        try {
+            var returnResult = await this.scheduleDatabase.getDailySchedule(this.employeeId, startDate, endDate);
+            return returnResult;
+        } catch (error) {
+            throw error;
+        }
     }
 
     /**
