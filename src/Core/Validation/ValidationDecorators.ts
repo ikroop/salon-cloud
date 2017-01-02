@@ -494,7 +494,7 @@ export class IsValidEmployeeId extends DecoratingValidator {
         var salonId = this.salonId;
 
         // Check Id valid or not
-        if (!this.isMongooseId(salonId)){
+        if (!this.isMongooseId(employeeId)){
             return this.errorType;
         }
         var userManagement = new UserManagement(this.salonId);
