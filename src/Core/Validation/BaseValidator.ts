@@ -44,16 +44,6 @@ export abstract class DecoratingValidator extends Validator {
 
     };
 
-    protected isMongooseId(id: string): boolean {
-        id = String(id);
-        var match = id.match(/^[0-9a-fA-F]{24}$/);
-        if (match) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public abstract validatingOperation();
 }
 
