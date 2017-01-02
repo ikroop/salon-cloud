@@ -113,8 +113,12 @@ export class UserManagement implements UserManagementBehavior {
      */
     public async getUserById(Id: string): Promise<IUserData> {
         var user: IUserData = undefined;
-        user = await this.userDatabase.getUserById(Id, this.salonId);
-        return user;
+        try {
+            user = await this.userDatabase.getUserById(Id, this.salonId);
+            return user;
+        } catch (error) {
+            throw error;
+        }
     }
 
     /**

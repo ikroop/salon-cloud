@@ -188,8 +188,13 @@ export class SalonManagement implements SalonManagementBehavior {
      */
     public async getSalonById(): Promise<ISalonData> {
         var salon: ISalonData = undefined;
-        salon = await this.salonDatabase.getSalonById(this.salonId);
-        return salon;
+        try {
+            salon = await this.salonDatabase.getSalonById(this.salonId);
+            return salon;
+        } catch (error) {
+            throw error;
+        }
+
     }
 
 }
