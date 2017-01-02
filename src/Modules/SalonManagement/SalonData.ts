@@ -1,10 +1,11 @@
-//
-//
-//
-//
-//
-//
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
+
 import { mongoose } from './../../Services/Database';
+import { FirebaseDocument } from './../../Services/FirebaseDocument';
 
 export interface SalonInformation {
     salon_name: string;
@@ -33,3 +34,4 @@ export interface SalonData {
 }
 
 export interface ISalonData extends SalonData, mongoose.Document{}
+export interface FirebaseSalonData extends SalonData, FirebaseDocument{}
