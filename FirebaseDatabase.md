@@ -19,22 +19,23 @@ root
   |           |----is_temporary: boolean           
   |----salons
   |     |----<salon_id>
-  |     |     |----settings
-  |     |     |     |----appointment_reminder: boolean
-  |     |     |     |----flexible_time: number
-  |     |     |     |----technician_checkout: boolean
-  |     |     |----information
-  |     |     |     |----salon_name: string
-  |     |     |     |----phone
-  |     |     |     |     |----number: string
-  |     |     |     |     |----is_verified: boolean
-  |     |     |     |----location
-  |     |     |     |     |----address: string
-  |     |     |     |     |----is_verified: boolean
-  |     |     |     |     |----timezone: number
-  |     |     |     |----email
-  |     |     |           |----address: string
-  |     |     |           |----is_verified: boolean
+  |     |     |----profile  
+  |     |           |----settings
+  |     |           |     |----appointment_reminder: boolean
+  |     |           |     |----flexible_time: number
+  |     |           |     |----technician_checkout: boolean
+  |     |           |----information
+  |     |           |     |----salon_name: string
+  |     |           |     |----phone
+  |     |           |     |     |----number: string
+  |     |           |     |     |----is_verified: boolean
+  |     |           |     |----location
+  |     |           |     |     |----address: string
+  |     |           |     |     |----is_verified: boolean
+  |     |           |     |     |----timezone: number
+  |     |           |     |----email
+  |     |           |           |----address: string
+  |     |           |           |----is_verified: boolean
   |     |     |----service_groups
   |     |     |     |----<service_group_id>
   |     |     |           |----group_name: string
