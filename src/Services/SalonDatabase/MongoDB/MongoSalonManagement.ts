@@ -59,13 +59,13 @@ export class MongoSalonManagement implements SalonManagementDatabaseInterface<IS
      * 
      * @memberOf MongoSalonManagement
      */
-    public async getSalonById(salonId: string): Promise<ISalonData> {
+    public async getSalonById(): Promise<ISalonData> {
 
         var salon: ISalonData = undefined;
-        if (!mongoose.Types.ObjectId.isValid(salonId)) {
+        if (!mongoose.Types.ObjectId.isValid(this.salonId)) {
             return undefined;
         }
-        await SalonModel.findOne({ "_id": salonId }).exec(function (err, docs: ISalonData) {
+        await SalonModel.findOne({ "_id": this.salonId }).exec(function (err, docs: ISalonData) {
             if (!err) {
                 salon = docs;
             } else {

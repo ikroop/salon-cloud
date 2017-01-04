@@ -12,7 +12,8 @@ import { MissingCheck, IsPhoneNumber, IsEmail, IsString } from './../../Core/Val
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { GoogleMap } from './../../Core/GoogleMap/GoogleMap';
 import { SalonManagementDatabaseInterface } from './../../Services/SalonDatabase/SalonManagementDatabaseInterface';
-import { MongoSalonManagement } from './../../Services/SalonDatabase/MongoDB/MongoSalonManagement'
+//import { MongoSalonManagement } from './../../Services/SalonDatabase/MongoDB/MongoSalonManagement'
+import { FirebaseSalonManagement } from './../../Services/SalonDatabase/Firebase/FirebaseSalonManagement'
 
 export class SalonManagement implements SalonManagementBehavior {
 
@@ -29,7 +30,7 @@ export class SalonManagement implements SalonManagementBehavior {
      */
     constructor(salonId: string) {
         this.salonId = salonId;
-        this.salonDatabase = new MongoSalonManagement(this.salonId);
+        this.salonDatabase = new FirebaseSalonManagement(this.salonId);//MongoSalonManagement(this.salonId);
     }
 
     public activate(): SalonCloudResponse<boolean> {
@@ -113,7 +114,7 @@ export class SalonManagement implements SalonManagementBehavior {
      */
     public async getFlexibleTime(): Promise<number> {
         var salon: ISalonData = undefined;
-        salon = await this.salonDatabase.getSalonById(this.salonId);
+        salon = await this.salonDatabase.getSalonById();
         return salon.setting.flexible_time;
     }
 
@@ -189,7 +190,7 @@ export class SalonManagement implements SalonManagementBehavior {
     public async getSalonById(): Promise<ISalonData> {
         var salon: ISalonData = undefined;
         try {
-            salon = await this.salonDatabase.getSalonById(this.salonId);
+            salon = await this.salonDatabase.getSalonById();
             return salon;
         } catch (error) {
             throw error;

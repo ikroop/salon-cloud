@@ -8,5 +8,5 @@ import { SalonData } from './../../Modules/SalonManagement/SalonData';
 
 export interface SalonManagementDatabaseInterface<T> {
     createSalon(salon: SalonData): Promise<T>;
-    getSalonById(id: string): Promise<T>;
+    getSalonById(): Promise<T>;
 }

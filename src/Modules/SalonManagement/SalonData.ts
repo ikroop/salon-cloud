@@ -33,5 +33,5 @@ export interface SalonData {
     setting: SalonSetting
 }
 
-export interface ISalonData extends SalonData, mongoose.Document{}
-export interface FirebaseSalonData extends SalonData, FirebaseDocument{}
+export interface ISalonData extends SalonData, FirebaseDocument{}//mongoose.Document{}
+//export interface FirebaseSalonData extends SalonData, FirebaseDocument{}

@@ -9,7 +9,7 @@ import { SignedInUser } from './../Core/User/SignedInUser';
 import { SalonManagement } from './../Modules/SalonManagement/SalonManagement';
 import { UserManagement } from './../Modules/UserManagement/UserManagement';
 import { SalonInformation } from './../Modules/SalonManagement/SalonData'
-import {EmployeeManagement} from './../Modules/UserManagement/EmployeeManagement';
+import { EmployeeManagement } from './../Modules/UserManagement/EmployeeManagement';
 
 export class SalonManagementRouter {
     private router: Router = Router();
@@ -17,7 +17,7 @@ export class SalonManagementRouter {
     getRouter(): Router {
         var authentication = new Authentication();
         var authorizationRouter = new AuthorizationRouter();
-        this.router.post('/test', async (request: Request, response: Response)=>{
+        this.router.post('/test', async (request: Request, response: Response) => {
 
             var testObj = new EmployeeManagement('57faa2692579df79216a153c');
             await testObj.getAllEmployee();
@@ -41,7 +41,7 @@ export class SalonManagementRouter {
             var salonCreation = await signedUser.createSalon(salonInformationInput);
             var dataReturn;
             if (salonCreation.err) {
-                dataReturn = salonCreation.err                
+                dataReturn = salonCreation.err
             } else {
                 dataReturn = {
                     '_id': salonCreation.data

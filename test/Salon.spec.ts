@@ -50,7 +50,7 @@ describe('Salon Management', function () {
     describe('Unit Test Create Salon API', function () {
         var apiUrl = '/api/v1/salon/create';
 
-        it('should return '+ErrorMessage.InvalidTokenError.err.name+' error trying to create salon information with invalid token', function (done) {
+        /*it('should return '+ErrorMessage.InvalidTokenError.err.name+' error trying to create salon information with invalid token', function (done) {
             var token = invalidToken;
             var bodyRequest = {
                 'salon_name': 'SunshineNails VA',
@@ -123,31 +123,6 @@ describe('Salon Management', function () {
                 });
         });
 
-        /*it('should return "WrongAddressFormat" error trying to create salon information with wrong address format', function (done) {
-            var token = validToken;
-            var bodyRequest = {
-                'salon_name': 'SunshineNails VA',
-                'address': '2506 Bailey Dr NW',
-                'phonenumber': '4049806189',
-                'email': 'salon@salonhelps.com'
-            };
-
-            request(server)
-                .post(apiUrl)
-                .send(bodyRequest)
-                .set('Authorization', token)
-
-                .end(function (err, res) {
-                    if (err) {
-                        throw err;
-                    }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('WrongAddressFormat');
-                    done();
-                });
-        });*/
-
         it('should return "MissingPhoneNumber" error trying to create salon information without phone number', function (done) {
             var token = validToken;
             var bodyRequest = {
@@ -219,7 +194,7 @@ describe('Salon Management', function () {
                     res.body.err.name.should.be.equal('WrongEmailFormat');
                     done();
                 });
-        });
+        });*/
 
         it('should return salon object with id trying to create salon information successfully', function (done) {
             var token = validToken;

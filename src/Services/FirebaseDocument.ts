@@ -5,7 +5,7 @@
  */
 
 export interface FirebaseDocument {
-    id: string,
-    created_at: number;
-    updated_at: number;
+    _id?: string,
+    created_at?: number;
+    updated_at?: number;
 }
