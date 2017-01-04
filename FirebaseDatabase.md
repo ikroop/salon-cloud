@@ -16,6 +16,9 @@ root
   |           |----phone
   |           |     |----number: string
   |           |     |----is_verified: boolean
+  |           |----email
+  |           |     |----addess: string
+  |           |     |----is_verified: boolean
   |           |----is_temporary: boolean           
   |----salons
   |     |----<salon_id>
