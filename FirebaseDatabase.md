@@ -2,7 +2,7 @@
 root
   |----users
   |     |----<user_id>
-  |           |----salons
+  |           |----profile
   |           |     |----<salon_id>
   |           |           |----status: boolean
   |           |           |----role: number
