@@ -672,7 +672,7 @@ export abstract class Schedule implements ScheduleBehavior {
 
         // validation salonId
         var salonIdValidation = new BaseValidator(this.salonId);
-        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
+        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.SalonNotFound);
         salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
         var salonIdError = await salonIdValidation.validate();
 

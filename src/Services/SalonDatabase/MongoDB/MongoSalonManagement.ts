@@ -8,6 +8,7 @@ import { SalonCloudResponse } from './../../../Core/SalonCloudResponse';
 import { ErrorMessage } from './../../../Core/ErrorMessage';
 import { SalonData, ISalonData } from './../../../Modules/SalonManagement/SalonData'
 import SalonModel = require('./SalonModel');
+import { mongoose } from './../../Database';
 
 import { SalonManagementDatabaseInterface } from './../SalonManagementDatabaseInterface';
 
@@ -61,7 +62,9 @@ export class MongoSalonManagement implements SalonManagementDatabaseInterface<IS
     public async getSalonById(salonId: string): Promise<ISalonData> {
 
         var salon: ISalonData = undefined;
-
+        if (!mongoose.Types.ObjectId.isValid(salonId)) {
+            return undefined;
+        }
         await SalonModel.findOne({ "_id": salonId }).exec(function (err, docs: ISalonData) {
             if (!err) {
                 salon = docs;

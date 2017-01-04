@@ -28,7 +28,7 @@ export class MissingCheck extends DecoratingValidator {
     }
 
     public validatingOperation() {
-        if (this.targetElement === undefined) {
+        if (this.targetElement === undefined || this.targetElement === 'undefined') {
             return this.errorType;
         } else {
             return undefined;
@@ -462,7 +462,7 @@ export class IsValidServiceId extends DecoratingValidator {
         var serviceId = this.targetElement;
         var salonId = this.salonId;
         // Check Id valid or not
-        
+
         var serviceManagement = new ServiceManagement(salonId);
         var response = await serviceManagement.getServiceItemById(serviceId);
         if (response.data) {
