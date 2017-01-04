@@ -46,18 +46,34 @@ root
   |     |     |                       |----time: number
   |     |     |----schedule
   |     |     |     |----daily
-  |     |     |     |     |----<daily_id>
-  |     |     |     |           |----employee_id: string
-  |     |     |     |                 |----day
-  |     |     |     |                       |----close: number
-  |     |     |     |                       |----open: number
-  |     |     |     |                       |----status: boolean
-  |     |     |     |                       |----date: SalonTime
+  |     |     |     |     |----employees
+  |     |     |     |     |    |----<daily_id>
+  |     |     |     |     |           |----employee_id: string
+  |     |     |     |     |                 |----day
+  |     |     |     |     |                       |----close: number
+  |     |     |     |     |                       |----open: number
+  |     |     |     |     |                       |----status: boolean
+  |     |     |     |     |                       |----date: SalonTime
+  |     |     |     |     |----salon
+  |     |     |     |           |----<daily_id>
+  |     |     |     |                 |----employee_id: string
+  |     |     |     |                       |----day
+  |     |     |     |                             |----close: number
+  |     |     |     |                             |----open: number
+  |     |     |     |                             |----status: boolean
+  |     |     |     |                             |----date: SalonTime  
   |     |     |     |----weekly
-  |     |     |           |----close: number
-  |     |     |           |----open: number,
-  |     |     |           |----status: true,
-  |     |     |           |----day_of_week: number
+  |     |     |           |----salon: Array
+  |     |     |           |     |----close: number
+  |     |     |           |     |----open: number,
+  |     |     |           |     |----status: true,
+  |     |     |           |     |----day_of_week: number
+  |     |     |           |----employees:
+  |     |     |                 |----<employee_id>:Array
+  |     |     |                       |----close: number
+  |     |     |                       |----open: number,
+  |     |     |                       |----status: true,
+  |     |     |                       |----day_of_week: number       
   |     |     |----appointments
   |     |     |     |----<appointment_id>
   |     |     |           |----comment: string
