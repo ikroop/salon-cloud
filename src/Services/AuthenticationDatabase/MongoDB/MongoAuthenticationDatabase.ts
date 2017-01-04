@@ -81,7 +81,7 @@ export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterf
         let promise = new Promise<SalonCloudResponse<undefined>>(function (resolve, reject) {
             UserModel.register(new UserModel(user), password, function (err) {
                 if (err) {
-                    response.err = { 'err': err };
+                    response.err = ErrorMessage.UsernameAlreadyExists;
                     response.code = 409;
                     response.data = undefined;
                 } else {
