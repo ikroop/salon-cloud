@@ -12,6 +12,7 @@ export const defaultSalonSetting: SalonSetting = {
     appointment_reminder: true,
     flexible_time: 15,
     technician_checkout: true,
+    enable_online_booking: true
 };
 
 const defaultDay1: WeeklyDayData = {

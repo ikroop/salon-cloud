@@ -26,6 +26,7 @@ export interface SalonSetting {
     appointment_reminder: boolean;
     flexible_time: number;
     technician_checkout: boolean;
+    enable_online_booking: boolean;
 }
 
 export interface SalonData {
