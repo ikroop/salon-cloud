@@ -19,7 +19,6 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
     private userRef: any;
     private readonly USER_KEY_NAME: string = 'users';
     private salonDatabase: FirebaseSalonManagement;
-
     /**
      * Creates an instance of MongoSalonManagement.
      * 
@@ -30,8 +29,9 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
     constructor(salonId: string) {
         this.salonId = salonId;
         this.database = firebaseAdmin.database();
-        this.userRef = this.database.ref(this.USER_KEY_NAME);
         this.salonDatabase = new FirebaseSalonManagement(salonId);
+        var salonRef = this.salonDatabase.getSalonFirebaseRef();
+        this.userRef = salonRef.ref(salonId + '/' + this.USER_KEY_NAME);
     }
 
     /**
