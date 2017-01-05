@@ -2,17 +2,6 @@
 root
   |----users
   |     |----<user_id>
-  |           |----profile
-  |           |     |----<salon_id>
-  |           |           |----status: boolean
-  |           |           |----role: number
-  |           |           |----fullname: string
-  |           |           |----nickname: string
-  |           |           |----social_security_number: string (optional)
-  |           |           |----salary_rate: double (optional)
-  |           |           |----cash_rate: double (optional)
-  |           |           |----birthday: string (optional)
-  |           |           |----address: string (optional)
   |           |----phone
   |           |     |----number: string
   |           |     |----is_verified: boolean
@@ -22,6 +11,17 @@ root
   |           |----is_temporary: boolean           
   |----salons
   |     |----<salon_id>
+  |     |     |----users
+  |     |     |     |----<user_id>
+  |     |     |           |----status: boolean
+  |     |     |           |----role: number
+  |     |     |           |----fullname: string
+  |     |     |           |----nickname: string
+  |     |     |           |----social_security_number: string (optional)
+  |     |     |           |----salary_rate: double (optional)
+  |     |     |           |----cash_rate: double (optional)
+  |     |     |           |----birthday: string (optional)
+  |     |     |           |----address: string (optional)
   |     |     |----profile  
   |     |           |----settings
   |     |           |     |----appointment_reminder: boolean
