@@ -8,7 +8,10 @@ root
   |           |----email
   |           |     |----addess: string
   |           |     |----is_verified: boolean
-  |           |----is_temporary: boolean           
+  |           |----is_temporary: boolean
+  |           |----salons
+  |                 |----<salon_id>
+  |                       |----status: boolean
   |----salons
   |     |----<salon_id>
   |     |     |----users
