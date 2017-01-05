@@ -10,11 +10,23 @@ import { ErrorMessage } from './../../../Core/ErrorMessage';
 import { IUserData, UserData, UserProfile } from './../../../Modules/UserManagement/UserData'
 
 import { UserToken } from './../../../Core/Authentication/AuthenticationData';
+import { FirebaseUserManagement } from './../../UserDatabase/Firebase/FirebaseUserManagement';
 
 import { firebase } from './../../Firebase';
 import { firebaseAdmin } from './../../FirebaseAdmin';
 
 export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInterface {
+
+    
+    /**
+     * 
+     * 
+     * @param {string} username
+     * @param {string} password
+     * @returns {Promise<SalonCloudResponse<UserToken>>}
+     * 
+     * @memberOf FirebaseAuthenticationDatabase
+     */
     public async signInWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<UserToken>> {
         var response: SalonCloudResponse<UserToken> = {
             code: undefined,
@@ -61,7 +73,16 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
 
     }
 
-
+    
+    /**
+     * 
+     * 
+     * @param {string} username
+     * @param {string} password
+     * @returns {Promise<SalonCloudResponse<undefined>>}
+     * 
+     * @memberOf FirebaseAuthenticationDatabase
+     */
     public async signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<undefined>> {
 
         var response: SalonCloudResponse<undefined> = {
@@ -70,9 +91,30 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
             err: undefined
         };
 
+        var phoneNumber:string = null;
+        var email:string = null;
+        var phoneReg = /^\d{10}$/;
+        if (username.match(phoneReg)) {
+            phoneNumber = username;
+            username = username + '@salonhelps.com';
+        } else { // username is email
+            email = username;
+        }
         let promise = new Promise<SalonCloudResponse<undefined>>(function (resolve, reject) {
-            firebase.auth().createUserWithEmailAndPassword(username, password).then(function (user) {
+            firebase.auth().createUserWithEmailAndPassword(username, password).then(async function (user) {
                 response.code = 200;
+
+                var userData: UserData = {
+                    username: username,
+                    status: true,
+                    is_verified: false,
+                    is_temporary: false,
+                    phone: phoneNumber,
+                    email: email
+                };
+                //Add user data to new user at /users/<user_id>
+                var userDatabase = new FirebaseUserManagement(undefined);
+                await userDatabase.addUserData(user.uid, userData);                
                 resolve(response);
             }, function (error) {
                 // Handle Errors here.
@@ -93,7 +135,15 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
         });
         return promise;
     }
-
+    
+    /**
+     * 
+     * 
+     * @param {string} token
+     * @returns {Promise<SalonCloudResponse<undefined>>}
+     * 
+     * @memberOf FirebaseAuthenticationDatabase
+     */
     verifyToken(token: string): Promise<SalonCloudResponse<undefined>> {
         var response: any = {};
         let promise = new Promise(function (resolve, reject) {

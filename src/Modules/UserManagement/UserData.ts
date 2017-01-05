@@ -27,6 +27,8 @@ export interface UserData {
     status: boolean;
     // Todo: add phone and email, not requided field
     username: string;
+    phone?: string;
+    email?: string;
 }
 
 export interface IUserData extends UserData, mongoose.Document, mongoose.PassportLocalDocument { };   
