@@ -35,7 +35,17 @@ export class FirebaseSalonManagement implements SalonManagementDatabaseInterface
             console.error('error:', error);
         }
     }
-
+    
+    /**
+     * 
+     * 
+     * @returns
+     * 
+     * @memberOf FirebaseSalonManagement
+     */
+    public getSalonFirebaseRef(){
+        return this.salonRef;
+    }
 
     /**
      * 

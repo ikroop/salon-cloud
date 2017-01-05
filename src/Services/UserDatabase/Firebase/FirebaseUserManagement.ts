@@ -11,12 +11,15 @@ import { SalonCloudResponse } from './../../../Core/SalonCloudResponse';
 import { UserManagementDatabaseInterface } from './../UserManagementDatabaseInterface';
 import { firebase } from './../../Firebase';
 import { firebaseAdmin } from './../../FirebaseAdmin';
+import { FirebaseSalonManagement } from './../../SalonDatabase/Firebase/FirebaseSalonManagement';
 
 export class FirebaseUserManagement implements UserManagementDatabaseInterface<IUserData> {
     private salonId: string;
     private database: any;
     private userRef: any;
     private readonly USER_KEY_NAME: string = 'users';
+    private salonDatabase: FirebaseSalonManagement;
+
     /**
      * Creates an instance of MongoSalonManagement.
      * 
@@ -26,12 +29,9 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      */
     constructor(salonId: string) {
         this.salonId = salonId;
-        try {
-            this.database = firebaseAdmin.database();
-            this.userRef = this.database.ref(this.USER_KEY_NAME);
-        } catch (error) {
-            console.error('error:', error);
-        }
+        this.database = firebaseAdmin.database();
+        this.userRef = this.database.ref(this.USER_KEY_NAME);
+        this.salonDatabase = new FirebaseSalonManagement(salonId);
     }
 
     /**
@@ -43,10 +43,33 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      * 
      * @memberOf MongoUserManagement
      */
-    public async getUserById(userId: string, salonId: string): Promise<IUserData> {
-        return;
-    }
+    public async getUserById(userId: string): Promise<IUserData> {
+        var userDatabase: IUserData = undefined;
+        var userProfileRef = this.userRef.child(userId);
+        await userProfileRef.once('value', async function (snapshot) {
+            userDatabase = snapshot.val();
+            if (userDatabase) {
+                userDatabase._id = userId;
+            }
+            var salonRef = this.salonDatabase.getSalonFirebaseRef();
 
+            //get User Salon Profile which is employee.
+            await salonRef.child('users/' + userId).once('value', function (snapshot) {
+                //TODO: implement get Salon UserProfile
+                var profile = snapshot.val();
+                if (profile) {
+                    userDatabase.profile.push(profile);
+                }
+
+            }, function (errorObject) {
+                throw errorObject;
+            });
+
+        }, function (errorObject) {
+            throw errorObject;
+        });
+        return userDatabase;
+    }
 
     /**
      * 
@@ -57,8 +80,34 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      * 
      * @memberOf MongoUserManagement
      */
-    public async getUserByPhone(phone: string, salonId: string): Promise<IUserData> {
-        return;
+    public async getUserByPhone(phone: string): Promise<IUserData> {
+        var userDatabase: IUserData = undefined;
+        await this.userRef.orderByChild('phone').equalTo(phone).once('value', async function (snapshot) {
+            userDatabase = snapshot.val();
+            if (userDatabase) {
+                userDatabase._id = snapshot.key;
+            } else {
+                return;
+            }
+            
+            var salonRef = this.salonDatabase.getSalonFirebaseRef();
+
+            //get User Salon Profile which is employee.
+            await salonRef.child('users/' + userDatabase._id).once('value', function (snapshot) {
+                //TODO: implement get Salon UserProfile
+                var profile = snapshot.val();
+                if (profile) {
+                    userDatabase.profile.push(profile);
+                }
+
+            }, function (errorObject) {
+                throw errorObject;
+            });
+
+        }, function (errorObject) {
+            throw errorObject;
+        });
+        return userDatabase;
     }
 
     /**
@@ -88,8 +137,22 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      */
     public async createProfile(userId: string, userProfile: UserProfile): Promise<SalonCloudResponse<UserProfile>> {
 
-        //Find user by user id
+        var returnResult: SalonCloudResponse<UserProfile> = {
+            code: undefined,
+            data: undefined,
+            err: undefined
+        };
+        try {
 
+            // create salon user Profile
+            var salonRef = this.salonDatabase.getSalonFirebaseRef();
+            await salonRef.child('users/' + userId).set(userProfile);
+            returnResult.code = 200;
+            returnResult.data = userProfile;
+        } catch (error) {
+            returnResult.code = 500;
+            returnResult.err = ErrorMessage.ServerError;
+        }
         return;
     }
 
@@ -101,7 +164,28 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      * 
      * @memberOf MongoUserManagement
      */
-    public async getAllEmployees(salonId: string): Promise<IUserData[]> {
-        return;
+    public async getAllEmployees(): Promise<IUserData[]> {
+        var emplpoyeeList: IUserData[] = [];
+        var salonRef = this.salonDatabase.getSalonFirebaseRef();
+
+        //get User Salon Profile which is employee.
+        await salonRef.child('users').orderByChild('role').startAt(2).endAt(3).once('value', function (snapshot) {
+            var userProfile: UserProfile = snapshot.val();
+            var uid = snapshot.key;
+            var userData: IUserData = undefined;
+
+            //FIX ME: check data is overwrited or not.    
+            //get User Data
+            this.userRef.child(uid).once('value', function (snapshot) {
+                userData = snapshot.val();
+                userData._id = uid;
+                userData.profile.push(userProfile);
+                emplpoyeeList.push(userData);
+            });
+        }, function (errorObject) {
+            throw errorObject;
+        });
+
+        return emplpoyeeList;
     }
 }

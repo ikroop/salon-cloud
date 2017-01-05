@@ -35,10 +35,10 @@ export class MongoUserManagement implements UserManagementDatabaseInterface<IUse
      * 
      * @memberOf MongoUserManagement
      */
-    public async getUserById(userId: string, salonId: string): Promise<IUserData> {
+    public async getUserById(userId: string): Promise<IUserData> {
         var user: IUserData = undefined;
 
-        await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": salonId } } }, ).exec(function (err, docs: IUserData) {
+        await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: IUserData) {
             if (!err) {
                 user = docs;
             } else {
@@ -59,9 +59,9 @@ export class MongoUserManagement implements UserManagementDatabaseInterface<IUse
      * 
      * @memberOf MongoUserManagement
      */
-    public async getUserByPhone(phone: string, salonId: string): Promise<IUserData> {
+    public async getUserByPhone(phone: string): Promise<IUserData> {
         var user: IUserData = undefined;
-        await UserModel.findOne({ "username": phone }, { "profile": { "$elemMatch": { "salon_id": salonId } } }, ).exec(function (err, docs: IUserData) {
+        await UserModel.findOne({ "username": phone }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: IUserData) {
             if (!err) {
                 user = docs;
             } else {
@@ -131,9 +131,9 @@ export class MongoUserManagement implements UserManagementDatabaseInterface<IUse
      * 
      * @memberOf MongoUserManagement
      */
-    public async getAllEmployees(salonId: string): Promise<IUserData[]> {
+    public async getAllEmployees(): Promise<IUserData[]> {
         var rs: IUserData[] = undefined;
-        var userSearch = UserModel.find({ 'profile.salon_id': salonId, 'profile.status': true, 'profile.role': { $in: [2, 3] } }).exec();
+        var userSearch = UserModel.find({ 'profile.salon_id': this.salonId, 'profile.status': true, 'profile.role': { $in: [2, 3] } }).exec();
         await userSearch.then(function (docs) {
             rs = docs;
         }, function (err) {
