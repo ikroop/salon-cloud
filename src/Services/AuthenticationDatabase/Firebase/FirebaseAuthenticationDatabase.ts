@@ -17,7 +17,7 @@ import { firebaseAdmin } from './../../FirebaseAdmin';
 
 export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInterface {
 
-    
+
     /**
      * 
      * 
@@ -33,6 +33,15 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
             data: null,
             err: null
         };
+
+        var phoneNumber: string = null;
+        var email: string = null;
+        var phoneReg = /^\d{10}$/;
+        if (username.match(phoneReg)) {
+            phoneNumber = username;
+            username = username + '@salonhelps.com';
+        }
+
         let promise = new Promise<SalonCloudResponse<UserToken>>(function (resolve, reject) {
             firebase.auth().signInWithEmailAndPassword(username, password)
                 .then(function (user) {
@@ -73,7 +82,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
 
     }
 
-    
+
     /**
      * 
      * 
@@ -91,8 +100,8 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
             err: null
         };
 
-        var phoneNumber:string = null;
-        var email:string = null;
+        var phoneNumber: string = null;
+        var email: string = null;
         var phoneReg = /^\d{10}$/;
         if (username.match(phoneReg)) {
             phoneNumber = username;
@@ -114,7 +123,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                 };
                 //Add user data to new user at /users/<user_id>
                 var userDatabase = new FirebaseUserManagement(null);
-                await userDatabase.addUserData(user.uid, userData);                
+                await userDatabase.addUserData(user.uid, userData);
                 resolve(response);
             }, function (error) {
                 // Handle Errors here.
@@ -135,7 +144,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
         });
         return promise;
     }
-    
+
     /**
      * 
      * 

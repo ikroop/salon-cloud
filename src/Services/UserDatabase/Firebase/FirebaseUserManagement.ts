@@ -31,7 +31,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
         this.database = firebaseAdmin.database();
         this.salonDatabase = new FirebaseSalonManagement(salonId);
         var salonRef = this.salonDatabase.getSalonFirebaseRef();
-        this.userRef = salonRef.child(salonId + '/' + this.USER_KEY_NAME);
+        this.userRef = this.database.ref(this.USER_KEY_NAME);
     }
 
     /**
@@ -45,29 +45,17 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      */
     public async getUserById(userId: string): Promise<IUserData> {
         var userDatabase: IUserData = null;
-        var userProfileRef = this.userRef.child(userId);
-        await userProfileRef.once('value', async function (snapshot) {
-            userDatabase = snapshot.val();
-            if (userDatabase) {
-                userDatabase._id = userId;
+        try {
+            userDatabase = await this.getUserData(userId);
+            var profile = await this.getUserProfile(userId);
+            if (profile) {
+                userDatabase.profile = [];
+                userDatabase.profile.push(profile);
             }
-            var salonRef = this.salonDatabase.getSalonFirebaseRef();
 
-            //get User Salon Profile which is employee.
-            await salonRef.child('users/' + userId).once('value', function (snapshot) {
-                //TODO: implement get Salon UserProfile
-                var profile = snapshot.val();
-                if (profile) {
-                    userDatabase.profile.push(profile);
-                }
-
-            }, function (errorObject) {
-                throw errorObject;
-            });
-
-        }, function (errorObject) {
-            throw errorObject;
-        });
+        } catch (error) {
+            throw error
+        }
         return userDatabase;
     }
 
@@ -89,7 +77,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
             } else {
                 return;
             }
-            
+
             var salonRef = this.salonDatabase.getSalonFirebaseRef();
 
             //get User Salon Profile which is employee.
@@ -187,5 +175,30 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
         });
 
         return emplpoyeeList;
+    }
+
+    private async getUserData(userId: string): Promise<IUserData> {
+        var userDatabase: IUserData = null;
+        await this.userRef.child(userId).once('value', function (snapshot) {
+            userDatabase = snapshot.val();
+            if (userDatabase) {
+                userDatabase._id = userId;
+            }
+        }, function (errorObject) {
+            throw errorObject;
+        });
+        return userDatabase;
+    }
+
+    private async getUserProfile(userId: string): Promise<UserProfile> {
+        var userProfile: UserProfile = null;
+        var salonRef = this.salonDatabase.getSalonFirebaseRef();
+        await salonRef.child('users/' + userId).once('value', function (snapshot) {
+            userProfile = snapshot.val();
+        }, function (errorObject) {
+            throw errorObject;
+        });
+
+        return userProfile;
     }
 }

@@ -24,7 +24,7 @@ export interface UserProfile {
 export interface UserData {
     is_temporary: boolean;
     is_verified: boolean;
-    profile?: [UserProfile];
+    profile?: UserProfile[];
     status: boolean;
     // Todo: add phone and email, not requided field
     username: string;
