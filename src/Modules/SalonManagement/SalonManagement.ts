@@ -12,7 +12,6 @@ import { MissingCheck, IsPhoneNumber, IsEmail, IsString } from './../../Core/Val
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { GoogleMap } from './../../Core/GoogleMap/GoogleMap';
 import { SalonManagementDatabaseInterface } from './../../Services/SalonDatabase/SalonManagementDatabaseInterface';
-//import { MongoSalonManagement } from './../../Services/SalonDatabase/MongoDB/MongoSalonManagement'
 import { FirebaseSalonManagement } from './../../Services/SalonDatabase/Firebase/FirebaseSalonManagement'
 
 export class SalonManagement implements SalonManagementBehavior {
@@ -30,7 +29,7 @@ export class SalonManagement implements SalonManagementBehavior {
      */
     constructor(salonId: string) {
         this.salonId = salonId;
-        this.salonDatabase = new FirebaseSalonManagement(this.salonId);//MongoSalonManagement(this.salonId);
+        this.salonDatabase = new FirebaseSalonManagement(this.salonId);
     }
 
     public activate(): SalonCloudResponse<boolean> {

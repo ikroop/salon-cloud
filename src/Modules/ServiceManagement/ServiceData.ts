@@ -1,9 +1,11 @@
 /**
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
+
 import { mongoose } from './../../Services/Database';
+import { FirebaseDocument } from './../../Services/FirebaseDocument';
 
 export interface ServiceItemData {
     name: string;
@@ -22,4 +24,4 @@ export interface IServiceGroupData extends ServiceGroupData, mongoose.Document {
     service_list?: [IServiceItemData]
 }
 
-export interface IServiceItemData extends ServiceItemData, mongoose.Document { }
+export interface IServiceItemData extends ServiceItemData, FirebaseDocument{};//mongoose.Document { }

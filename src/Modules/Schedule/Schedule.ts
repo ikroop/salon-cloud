@@ -15,7 +15,7 @@ import { BaseValidator } from './../../Core/Validation/BaseValidator';
 import { MissingCheck, IsInRangeExclusively, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidSalonTimeData, IsSalonTime, IsAfterSecondDate }
     from './../../Core/Validation/ValidationDecorators';
 import { ScheduleManagementDatabaseInterface } from './../../Services/ScheduleDatabase/ScheduleManagementDatabaseInterface';
-import { MongoScheduleManagement } from './../../Services/ScheduleDatabase/MongoDB/MongoScheduleManagement';
+import { FirebaseScheduleManagement } from './../../Services/ScheduleDatabase/Firebase/FirebaseScheduleManagement';
 
 export abstract class Schedule implements ScheduleBehavior {
 
@@ -37,7 +37,7 @@ export abstract class Schedule implements ScheduleBehavior {
     constructor(salonId: string, employeeId: string) {
         this.salonId = salonId;
         this.employeeId = employeeId;
-        this.scheduleDatabase = new MongoScheduleManagement(this.salonId);
+        this.scheduleDatabase = new FirebaseScheduleManagement(this.salonId);
     };
 
     public static addDefaultSchedule(salonId: string) {

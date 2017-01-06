@@ -12,14 +12,14 @@ import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan,
 import { ErrorMessage } from './../../Core/ErrorMessage';
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
 import { ServiceManagementDatabaseInterface } from './../../Services/ServiceDatabase/ServiceManagementDatabaseInterface'
-import { MongoServiceManagement } from './../../Services/ServiceDatabase/MongoDB/MongoServiceManagement';
+import { FirebaseServiceManagement } from './../../Services/ServiceDatabase/Firebase/FirebaseServiceManagement';
 
 export class ServiceManagement implements ServiceManagementBehavior {
     private salonId: string;
     private serviceDatabase: ServiceManagementDatabaseInterface<IServiceGroupData, IServiceItemData>
     constructor($salonId: string) {
         this.salonId = $salonId;
-        this.serviceDatabase = new MongoServiceManagement(this.salonId);
+        this.serviceDatabase = new FirebaseServiceManagement(this.salonId);
     }
 
     /**

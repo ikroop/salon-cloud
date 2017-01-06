@@ -12,7 +12,7 @@ import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { RoleDefinition } from './../../Core/Authorization/RoleDefinition';
 import { UserManagementDatabaseInterface } from './../../Services/UserDatabase/UserManagementDatabaseInterface';
-import { MongoUserManagement } from './../../Services/UserDatabase/MongoDB/MongoUserManagement';
+import { FirebaseUserManagement } from './../../Services/UserDatabase/Firebase/FirebaseUserManagement';
 
 export class UserManagement implements UserManagementBehavior {
 
@@ -20,7 +20,7 @@ export class UserManagement implements UserManagementBehavior {
     protected userDatabase: UserManagementDatabaseInterface<IUserData>;
     constructor(salonId: string) {
         this.salonId = salonId;
-        this.userDatabase = new MongoUserManagement(this.salonId);
+        this.userDatabase = new FirebaseUserManagement(this.salonId);
     }
 
     addUser(phone, profile: UserProfile): boolean {

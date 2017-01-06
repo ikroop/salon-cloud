@@ -31,7 +31,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
         this.database = firebaseAdmin.database();
         this.salonDatabase = new FirebaseSalonManagement(salonId);
         var salonRef = this.salonDatabase.getSalonFirebaseRef();
-        this.userRef = salonRef.ref(salonId + '/' + this.USER_KEY_NAME);
+        this.userRef = salonRef.child(salonId + '/' + this.USER_KEY_NAME);
     }
 
     /**

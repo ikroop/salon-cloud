@@ -15,7 +15,6 @@ import { MissingCheck, IsString, IsLengthGreaterThan, IsGreaterThan, IsLessThan,
 import { UserToken } from './AuthenticationData';
 import { AuthenticationDatabaseInterface } from './../../Services/AuthenticationDatabase/AuthenticationDatabaseInterface';
 import { FirebaseAuthenticationDatabase } from './../../Services/AuthenticationDatabase/Firebase/FirebaseAuthenticationDatabase';
-//import { MongoAuthenticationDatabase } from './../../Services/AuthenticationDatabase/MongoDB/MongoAuthenticationDatabase';
 
 export class Authentication {
     private authenticationDatabase: AuthenticationDatabaseInterface;

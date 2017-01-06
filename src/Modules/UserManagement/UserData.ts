@@ -5,6 +5,7 @@
  */
 
 import { mongoose } from './../../Services/Database';
+import { FirebaseDocument } from './../../Services/FirebaseDocument';
 
 export interface UserProfile {
     address?: string;
@@ -31,4 +32,4 @@ export interface UserData {
     email?: string;
 }
 
-export interface IUserData extends UserData, mongoose.Document, mongoose.PassportLocalDocument { };   
+export interface IUserData extends UserData, FirebaseDocument { };   

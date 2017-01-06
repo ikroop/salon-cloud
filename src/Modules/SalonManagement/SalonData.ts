@@ -35,4 +35,3 @@ export interface SalonData {
 }
 
 export interface ISalonData extends SalonData, FirebaseDocument{}//mongoose.Document{}
-//export interface FirebaseSalonData extends SalonData, FirebaseDocument{}
