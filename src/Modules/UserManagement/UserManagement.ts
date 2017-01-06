@@ -65,7 +65,7 @@ export class UserManagement implements UserManagementBehavior {
         var salonId = this.salonId;
         if (userId) {
             if (salonId) {
-                var user = await this.userDatabase.getUserById(userId, this.salonId);
+                var user = await this.userDatabase.getUserById(userId);
                 if (user && user.profile && user.profile.length > 0) {
                     rolevalue = user.profile[0].role;
                 } else {
@@ -99,7 +99,7 @@ export class UserManagement implements UserManagementBehavior {
      */
     public async getUserByPhone(phone: string): Promise<IUserData> {
         var user: IUserData = undefined;
-        user = await this.userDatabase.getUserByPhone(phone, this.salonId)
+        user = await this.userDatabase.getUserByPhone(phone)
         return user;
     }
 
@@ -114,7 +114,7 @@ export class UserManagement implements UserManagementBehavior {
     public async getUserById(Id: string): Promise<IUserData> {
         var user: IUserData = undefined;
         try {
-            user = await this.userDatabase.getUserById(Id, this.salonId);
+            user = await this.userDatabase.getUserById(Id);
             return user;
         } catch (error) {
             throw error;

@@ -177,7 +177,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
             code: undefined,
             err: undefined
         }
-        var employees: IUserData[] = await this.userDatabase.getAllEmployees(this.salonId);
+        var employees: IUserData[] = await this.userDatabase.getAllEmployees();
         if (employees) {
             response.data = employees;
             response.code = 200;
