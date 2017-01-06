@@ -60,8 +60,8 @@ export class UserManagement implements UserManagementBehavior {
      * @memberOf UserManagement
      */
     public async getRole(userId: string): Promise<string> {
-        var role: string = undefined;
-        var rolevalue: number = undefined;
+        var role: string = null;
+        var rolevalue: number = null;
         var salonId = this.salonId;
         if (userId) {
             if (salonId) {
@@ -69,7 +69,7 @@ export class UserManagement implements UserManagementBehavior {
                 if (user && user.profile && user.profile.length > 0) {
                     rolevalue = user.profile[0].role;
                 } else {
-                    rolevalue = undefined;
+                    rolevalue = null;
                 }
 
                 // check role value
@@ -98,7 +98,7 @@ export class UserManagement implements UserManagementBehavior {
      * @memberOf UserManagement
      */
     public async getUserByPhone(phone: string): Promise<IUserData> {
-        var user: IUserData = undefined;
+        var user: IUserData = null;
         user = await this.userDatabase.getUserByPhone(phone)
         return user;
     }
@@ -112,7 +112,7 @@ export class UserManagement implements UserManagementBehavior {
      * @memberOf UserManagement
      */
     public async getUserById(Id: string): Promise<IUserData> {
-        var user: IUserData = undefined;
+        var user: IUserData = null;
         try {
             user = await this.userDatabase.getUserById(Id);
             return user;
@@ -131,7 +131,7 @@ export class UserManagement implements UserManagementBehavior {
      * @memberOf UserManagement
      */
     private roleToString(role: number): string {
-        var roleString: string = undefined;
+        var roleString: string = null;
         for (var roleDef in RoleDefinition) {
             if (RoleDefinition[roleDef].value === role) {
                 roleString = roleDef;

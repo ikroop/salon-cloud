@@ -44,9 +44,9 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
     public async saveAppointment(inputData: SaveAppointmentData): Promise<SalonCloudResponse<string>> {
         var response: SalonCloudResponse<any> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
         var salonId = inputData.salon_id;
 
@@ -69,15 +69,15 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         var newAppointment: AppointmentData = {
             customer_id: getCustomerId.data,
-            device: undefined,
+            device: null,
             appointment_items: inputData.services,
-            payment_id: undefined,
-            total: undefined,
+            payment_id: null,
+            total: null,
             salon_id: salonId,
-            status: undefined, //TODO: add default data
-            is_reminded: undefined,
+            status: null, //TODO: add default data
+            is_reminded: null,
             note: inputData.note,
-            type: undefined
+            type: null
         };
 
 
@@ -115,9 +115,9 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
      */
     private async getCustomerId(phone: string, customerProfile: UserProfile): Promise<SalonCloudResponse<string>> {
         var response: SalonCloudResponse<string> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         };
         var customerManagementDP = new CustomerManagement(customerProfile.salon_id);
 
@@ -165,11 +165,11 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
      * 
      * @memberOf AbstractAdministrator
      */
-    public async updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData, schedule: ScheduleBehavior): Promise<SalonCloudResponse<undefined>> {
+    public async updateDailySchedule(employeeId: string, dailySchedule: DailyScheduleData, schedule: ScheduleBehavior): Promise<SalonCloudResponse<null>> {
         var response: SalonCloudResponse<any> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         }
 
 
@@ -199,11 +199,11 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
      * 
      * @memberOf AbstractAdministrator
      */
-    public async updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData, schedule: ScheduleBehavior): Promise<SalonCloudResponse<undefined>> {
+    public async updateWeeklySchedule(employeeId: string, weeklySchedule: WeeklyScheduleData, schedule: ScheduleBehavior): Promise<SalonCloudResponse<null>> {
         var response: SalonCloudResponse<any> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         }
 
 

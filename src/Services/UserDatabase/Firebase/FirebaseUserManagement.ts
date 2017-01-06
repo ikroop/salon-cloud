@@ -44,7 +44,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      * @memberOf MongoUserManagement
      */
     public async getUserById(userId: string): Promise<IUserData> {
-        var userDatabase: IUserData = undefined;
+        var userDatabase: IUserData = null;
         var userProfileRef = this.userRef.child(userId);
         await userProfileRef.once('value', async function (snapshot) {
             userDatabase = snapshot.val();
@@ -81,7 +81,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      * @memberOf MongoUserManagement
      */
     public async getUserByPhone(phone: string): Promise<IUserData> {
-        var userDatabase: IUserData = undefined;
+        var userDatabase: IUserData = null;
         await this.userRef.orderByChild('phone').equalTo(phone).once('value', async function (snapshot) {
             userDatabase = snapshot.val();
             if (userDatabase) {
@@ -138,9 +138,9 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
     public async createProfile(userId: string, userProfile: UserProfile): Promise<SalonCloudResponse<UserProfile>> {
 
         var returnResult: SalonCloudResponse<UserProfile> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
         try {
 
@@ -153,7 +153,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
             returnResult.code = 500;
             returnResult.err = ErrorMessage.ServerError;
         }
-        return;
+        return returnResult;
     }
 
     /**
@@ -172,7 +172,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
         await salonRef.child('users').orderByChild('role').startAt(2).endAt(3).once('value', function (snapshot) {
             var userProfile: UserProfile = snapshot.val();
             var uid = snapshot.key;
-            var userData: IUserData = undefined;
+            var userData: IUserData = null;
 
             //FIX ME: check data is overwrited or not.    
             //get User Data

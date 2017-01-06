@@ -16,9 +16,9 @@ export class BookingAppointment extends AppointmentAbstract {
     public async validation(appointment: AppointmentData): Promise<SalonCloudResponse<any>> {
         // validate salon_id field
         var response: SalonCloudResponse<any> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
         var salonIdValidator = new BaseValidator(appointment.salon_id);
         salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId);

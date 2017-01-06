@@ -15,8 +15,8 @@ export class GoogleMap {
     *@return: timezone object
 	*/
     static async getTimeZone(address: string) {
-        var geocode: any = undefined;
-        var timezone: any = undefined;
+        var geocode: any = null;
+        var timezone: any = null;
 
         let promise = new Promise(function(resolve, reject) {
             googleMapsClient.geocode({ // get geocode

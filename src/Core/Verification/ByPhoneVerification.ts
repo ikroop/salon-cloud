@@ -10,11 +10,11 @@ import { SalonCloudResponse } from './../SalonCloudResponse'
 
 export class ByPhoneVerification extends Verification {
 
-    public async sendContent(username: string, content: string): Promise<SalonCloudResponse<undefined>>{
+    public async sendContent(username: string, content: string): Promise<SalonCloudResponse<null>>{
         var response : SalonCloudResponse<any> = {
-            code: undefined,
-            err: undefined,
-            data: undefined
+            code: null,
+            err: null,
+            data: null
         }
         response.err = await Twilio.sendSMS(username, content);
         return response;

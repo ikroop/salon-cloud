@@ -27,9 +27,9 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
     public async addEmployeeProfile(employeeId: string, profile: UserProfile): Promise<SalonCloudResponse<UserProfile>> {
 
         var returnResult: SalonCloudResponse<UserProfile> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
 
         var validations = await this.validation(profile);
@@ -73,9 +73,9 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
     public async validation(employeeProfile: UserProfile) {
 
         var response: SalonCloudResponse<UserProfile> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
         // 'phone' validation
         var phoneNumberValidation = new BaseValidator(employeeProfile.phone);
@@ -173,9 +173,9 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
      */
     public async getAllEmployee(): Promise<SalonCloudResponse<Array<UserData>>> {
         var response: SalonCloudResponse<Array<UserData>> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
         var employees: IUserData[] = await this.userDatabase.getAllEmployees();
         if (employees) {

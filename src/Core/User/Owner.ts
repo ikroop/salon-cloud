@@ -51,9 +51,9 @@ export class Owner extends AbstractAdministrator {
      */
     public async addEmployee(username: string, employeeProfile: UserProfile, verificationObj: Verification): Promise<SalonCloudResponse<EmployeeReturn>> {
         var response: SalonCloudResponse<any> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         }
 
         // create employee account with username;
@@ -166,9 +166,9 @@ export class Owner extends AbstractAdministrator {
      */
     public async addService(serviceGroup: any): Promise<SalonCloudResponse<ServiceGroupData>> {
         var response: SalonCloudResponse<ServiceGroupData> = {
-            code: undefined,
-            err: undefined,
-            data: undefined
+            code: null,
+            err: null,
+            data: null
         };
         let serviceManagementDP = new ServiceManagement(serviceGroup.salon_id);
         // init and declare;

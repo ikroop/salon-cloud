@@ -43,11 +43,11 @@ export class Authentication {
       *              - code: 200
       * @memberOf Authentication
       */
-    public async signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<undefined>> {
-        var response: SalonCloudResponse<undefined> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+    public async signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<null>> {
+        var response: SalonCloudResponse<null> = {
+            code: null,
+            data: null,
+            err: null
         };
         // Validate Username
         var usernameValidator = new BaseValidator(username);
@@ -101,9 +101,9 @@ export class Authentication {
     public async signInWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<UserToken>> {
 
         var response: SalonCloudResponse<UserToken> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
 
         // Validate Username
@@ -134,7 +134,7 @@ export class Authentication {
      * @description verify User Token
      * @param {string} token
      * @returns
-     *     {undefined} User Token is undefined.
+     *     {null} User Token is null.
      *     {SalonCloudResponse} code 403, error = 'InvalidToken' || code 200, data = { _id: string, username: string, status: boolean }
      * @memberOf Authentication
      */

@@ -20,7 +20,7 @@ export class Twilio {
      * @memberOf Twilio
      */
     static async sendSMS(phonenumber: string, content: string): Promise<string> {
-        var ErrorMessage: string = undefined;
+        var ErrorMessage: string = null;
         if (process.env.NODE_ENV == 'production') {
             await TwilioClient.sendSms({
                 to: phonenumber,

@@ -36,7 +36,7 @@ export class MongoUserManagement implements UserManagementDatabaseInterface<IUse
      * @memberOf MongoUserManagement
      */
     public async getUserById(userId: string): Promise<IUserData> {
-        var user: IUserData = undefined;
+        var user: IUserData = null;
 
         await UserModel.findOne({ "_id": userId }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: IUserData) {
             if (!err) {
@@ -60,7 +60,7 @@ export class MongoUserManagement implements UserManagementDatabaseInterface<IUse
      * @memberOf MongoUserManagement
      */
     public async getUserByPhone(phone: string): Promise<IUserData> {
-        var user: IUserData = undefined;
+        var user: IUserData = null;
         await UserModel.findOne({ "username": phone }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: IUserData) {
             if (!err) {
                 user = docs;
@@ -83,9 +83,9 @@ export class MongoUserManagement implements UserManagementDatabaseInterface<IUse
      */
     public async createProfile(userId: string, userProfile: UserProfile): Promise<SalonCloudResponse<UserProfile>> {
         var returnResult: SalonCloudResponse<UserProfile> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
 
         var userDocs = UserModel.findOne({ '_id': userId }).exec();
@@ -132,7 +132,7 @@ export class MongoUserManagement implements UserManagementDatabaseInterface<IUse
      * @memberOf MongoUserManagement
      */
     public async getAllEmployees(): Promise<IUserData[]> {
-        var rs: IUserData[] = undefined;
+        var rs: IUserData[] = null;
         var userSearch = UserModel.find({ 'profile.salon_id': this.salonId, 'profile.status': true, 'profile.role': { $in: [2, 3] } }).exec();
         await userSearch.then(function (docs) {
             rs = docs;

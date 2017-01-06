@@ -38,7 +38,7 @@ export interface ScheduleBehavior {
      * 
      * @memberOf ScheduleBehavior
      */
-    saveWeeklySchedule(weeklyScheduleList: WeeklyDayData[]): Promise<SalonCloudResponse<undefined>>;
+    saveWeeklySchedule(weeklyScheduleList: WeeklyDayData[]): Promise<SalonCloudResponse<null>>;
 
     /**
      * 
@@ -48,6 +48,6 @@ export interface ScheduleBehavior {
      * 
      * @memberOf ScheduleBehavior
      */
-    saveDailySchedule(dailySchedule: DailyDayData): Promise<SalonCloudResponse<undefined>>;
+    saveDailySchedule(dailySchedule: DailyDayData): Promise<SalonCloudResponse<null>>;
 
 }

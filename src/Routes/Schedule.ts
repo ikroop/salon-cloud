@@ -99,11 +99,11 @@ export class ScheduleRouter {
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
             var weeklySchedule: WeeklyScheduleData = {
                 salon_id: request.body.salon_id,
-                employee_id: undefined,
+                employee_id: null,
                 week: request.body.weekly_schedules
             };
 
-            let result = await admin.updateWeeklySchedule(undefined, weeklySchedule, new SalonSchedule(request.body.salon_id));
+            let result = await admin.updateWeeklySchedule(null, weeklySchedule, new SalonSchedule(request.body.salon_id));
 
             var responseData;
             if (result.err) {
@@ -128,7 +128,7 @@ export class ScheduleRouter {
             request.body.date = salonTime.setString(request.body.date);
             var dailySchedule: DailyScheduleData = {
                 salon_id: request.body.salon_id,
-                employee_id: undefined,
+                employee_id: null,
                 day: {
                     date: request.body.date,
                     status: request.body.status,
@@ -138,7 +138,7 @@ export class ScheduleRouter {
             };
 
             //updateDailySchedule
-            let result = await admin.updateDailySchedule(undefined, dailySchedule, new SalonSchedule(request.body.salon_id));
+            let result = await admin.updateDailySchedule(null, dailySchedule, new SalonSchedule(request.body.salon_id));
             var responseData;
             if (result.err) {
                 responseData = result.err;

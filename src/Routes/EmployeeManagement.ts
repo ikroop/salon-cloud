@@ -22,9 +22,9 @@ export class EmployeeManagementRouter {
         this.router.post('/create', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
             var result: SalonCloudResponse<any> = {
-                code: undefined,
-                data: undefined,
-                err: undefined
+                code: null,
+                data: null,
+                err: null
             };
             var userObject = new Owner(request.user._id, new SalonManagement(request.body.salon_id));
 

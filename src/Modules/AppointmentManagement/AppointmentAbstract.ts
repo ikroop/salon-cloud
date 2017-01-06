@@ -51,9 +51,9 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
      */
     public async createAppointment(appointment: AppointmentData): Promise<SalonCloudResponse<AppointmentData>> {
         var response: SalonCloudResponse<AppointmentData> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
 
         //validate appointment data
@@ -136,9 +136,9 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
      */
     public async checkBookingAvailableTime(servicesArray: AppointmentItemData[]): Promise<SalonCloudResponse<AppointmentItemData[]>> {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
 
         var employeeIdList: Array<string> = [];
@@ -155,7 +155,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 return response;
             }
 
-            var employeeSchedule = undefined;
+            var employeeSchedule = null;
             var employeeAppointmentArray;
             var employeeIndex;
 
@@ -236,9 +236,9 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     private async getServiceData(eachService: AppointmentItemData) {
         var response: SalonCloudResponse<any> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
 
         var serviceManagementDP = new ServiceManagement(this.salonId);
@@ -264,9 +264,9 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
     private async getEmployeeScheduleForAddedEmployee(eachService: AppointmentItemData, employeeSchedule: any) {
 
         var response: SalonCloudResponse<DailyScheduleArrayData> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
 
         var scheduleManagementDP = new EmployeeSchedule(this.salonId, eachService.employee_id)
@@ -275,7 +275,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         if (employeeDaySchedule.err) {
             response.err = employeeDaySchedule.err;
             response.code = employeeDaySchedule.code;
-            response.data = undefined;
+            response.data = null;
             return response;
         }
 
@@ -288,9 +288,9 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     private async getAppointmentForAddedEmployee(eachService: AppointmentItemData, employeeAppointmentArray: AppointmentItemData[]) {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
 
         console.log('GETT:');
@@ -318,9 +318,9 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     private async makeAppointmentArrayForChecking(eachService: AppointmentItemData, getTimeArray: any, getServiceData: any, employeeAppointmentArrayList: Array<Array<AppointmentItemData>>, employeeIndex: number) {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
         response.data = [];
         let startTimePoint = eachService.start.hour * 60 + eachService.start.min;
@@ -381,15 +381,15 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
     */
     public async getEmployeeAvailableTime(timeNeeded: number, date: SalonTimeData, employee: DailyScheduleArrayData, appointmentList: Array<AppointmentItemData>): Promise<SalonCloudResponse<any>> {
         var response: SalonCloudResponse<any> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
 
         console.log('IIIIINNNN');
         var operatingTime = (employee.days[0].close - employee.days[0].open) / 60;
         if (operatingTime <= 0 || employee.days[0].status == false) {
-            response.data = undefined;
+            response.data = null;
             response.code = 200;
             return response;
         }
@@ -456,7 +456,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 available: true,
                 overlapped: {
                     status: false,
-                    appointment_id: undefined,
+                    appointment_id: null,
                 },
                 time: openTimePoint + SmallestTimeTick * i,
             }
@@ -583,9 +583,9 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     protected async validateServices(serviceArray: AppointmentItemData[]): Promise<SalonCloudResponse<any>> {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
         let servicesValidation = new BaseValidator(serviceArray);
         servicesValidation = new MissingCheck(servicesValidation, ErrorMessage.MissingBookedServiceList);

@@ -27,7 +27,7 @@ export class MongoServiceManagement implements ServiceManagementDatabaseInterfac
     }
 
     public async createGroup(group: ServiceGroupData): Promise<IServiceGroupData> {
-        var rs: IServiceGroupData = undefined;
+        var rs: IServiceGroupData = null;
 
         var serviceGroupModel = new ServiceGroupModel(group);
         var serviceCreation = serviceGroupModel.save();
@@ -40,7 +40,7 @@ export class MongoServiceManagement implements ServiceManagementDatabaseInterfac
     }
 
     public async getAllServices(): Promise<IServiceGroupData[]> {
-        var rs: IServiceGroupData[] = undefined;
+        var rs: IServiceGroupData[] = null;
         await ServiceGroupModel.find({ salon_id: this.salonId }).exec(function (err, docs: IServiceGroupData[]) {
             if (err) {
                 throw err;
@@ -53,7 +53,7 @@ export class MongoServiceManagement implements ServiceManagementDatabaseInterfac
     }
 
     public async getServiceItemById(serviceId: string): Promise<IServiceItemData> {
-        var rs: IServiceItemData = undefined;
+        var rs: IServiceItemData = null;
         await ServiceGroupModel.findOne({ 'service_list': { '$elemMatch': { '_id': serviceId } } }).exec(function (err, docs: IServiceItemData) {
             if (err) {
                 throw err;
@@ -66,7 +66,7 @@ export class MongoServiceManagement implements ServiceManagementDatabaseInterfac
     }
 
     public async getServiceGroupByName(groupName: string): Promise<IServiceGroupData> {
-        var rs: IServiceGroupData = undefined;
+        var rs: IServiceGroupData = null;
         await ServiceGroupModel.findOne({ 'name': groupName, 'salon_id': this.salonId }).exec(function (err, docs: IServiceGroupData) {
             if (err) {
                 throw err;

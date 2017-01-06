@@ -45,7 +45,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     public async getWeeklySchedule(employeeId: string): Promise<IWeeklyScheduleData> {
-        var weeklySchedule: IWeeklyScheduleData = undefined;
+        var weeklySchedule: IWeeklyScheduleData = null;
         if (employeeId) {
             weeklySchedule = await this.getEmployeeWeeklySchedule(employeeId);
         } else {
@@ -64,7 +64,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     public async updateWeeklySchedule(employeeId: string, weeklyScheduleList: WeeklyDayData[]): Promise<IWeeklyScheduleData> {
-        var weeklySchedule: IWeeklyScheduleData = undefined;
+        var weeklySchedule: IWeeklyScheduleData = null;
         if (employeeId) {
             weeklySchedule = await this.updateEmployeeWeeklySchedule(employeeId, weeklyScheduleList);
         } else {
@@ -83,7 +83,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     public async saveWeeklySchedule(employeeId: string, weeklyScheduleList: WeeklyDayData[]): Promise<IWeeklyScheduleData> {
-        var weeklySchedule: IWeeklyScheduleData = undefined;
+        var weeklySchedule: IWeeklyScheduleData = null;
         if (employeeId) {
             weeklySchedule = await this.saveEmployeeWeeklySchedule(employeeId, weeklyScheduleList);
         } else {
@@ -103,7 +103,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     public async getDailySchedule(employeeId: string, startDate: SalonTimeData, endDate: SalonTimeData): Promise<IDailyScheduleData[]> {
-        var dailySchedule: IDailyScheduleData[] = undefined;
+        var dailySchedule: IDailyScheduleData[] = null;
         if (employeeId) {
             dailySchedule = await this.getEmployeeDailychedule(employeeId, startDate, endDate);
         } else {
@@ -123,8 +123,13 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      */
     public async updateDailySchedule(employeeId: string, dailySchedule: DailyDayData): Promise<IDailyScheduleData> {
 
-
-        return;
+        var rs: IDailyScheduleData = null;
+        if (employeeId) {
+            rs = await this.updateEmployeeDailySchedule(employeeId, dailySchedule);
+        } else {
+            rs = await this.updateSalonDailySchedule(dailySchedule);
+        }
+        return rs;
 
     }
 
@@ -138,7 +143,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     public async saveDailySchedule(employeeId: string, dailySchedule: DailyDayData): Promise<IDailyScheduleData> {
-        var dailyScheduleReturn: IDailyScheduleData = undefined;
+        var dailyScheduleReturn: IDailyScheduleData = null;
         if (employeeId) {
             dailyScheduleReturn = await this.saveDailySchedule(employeeId, dailySchedule);
         } else {
@@ -157,7 +162,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     private async getEmployeeWeeklySchedule(employeeId: string): Promise<IWeeklyScheduleData> {
-        var employeeWeeklySchedule: IWeeklyScheduleData = undefined;
+        var employeeWeeklySchedule: IWeeklyScheduleData = null;
         await this.scheduleRef.child('weekly/employees/' + employeeId).orderByChild('day_of_week').once('value', async function (snapshot) {
             employeeWeeklySchedule = snapshot.val();
         });
@@ -173,7 +178,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     private async getSalonWeeklySchedule(): Promise<IWeeklyScheduleData> {
-        var salonWeeklySchedule: IWeeklyScheduleData = undefined;
+        var salonWeeklySchedule: IWeeklyScheduleData = null;
         await this.scheduleRef.child('weekly/salon').orderByChild('day_of_week').once('value', async function (snapshot) {
             salonWeeklySchedule = snapshot.val();
         });
@@ -191,7 +196,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     private async updateEmployeeWeeklySchedule(employeeId: string, weeklyScheduleList: WeeklyDayData[]): Promise<IWeeklyScheduleData> {
-        var employeeWeeklySchedule: IWeeklyScheduleData = undefined;
+        var employeeWeeklySchedule: IWeeklyScheduleData = null;
         await this.scheduleRef.child('weekly/employees/' + employeeId).update(weeklyScheduleList);
         employeeWeeklySchedule = await this.getEmployeeWeeklySchedule(employeeId);
         return employeeWeeklySchedule;
@@ -207,7 +212,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     private async updateSalonWeeklySchedule(weeklyScheduleList: WeeklyDayData[]): Promise<IWeeklyScheduleData> {
-        var salonWeeklySchedule: IWeeklyScheduleData = undefined;
+        var salonWeeklySchedule: IWeeklyScheduleData = null;
         await this.scheduleRef.child('weekly/salon').update(weeklyScheduleList);
         salonWeeklySchedule = await this.getSalonWeeklySchedule();
         return salonWeeklySchedule;
@@ -224,8 +229,8 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     private async saveEmployeeWeeklySchedule(employeeId: string, weeklyScheduleList: WeeklyDayData[]): Promise<IWeeklyScheduleData> {
-        var employeeWeeklySchedule: IWeeklyScheduleData = undefined;
-        await this.scheduleRef.child('weekly/employees/' + employeeId).save(weeklyScheduleList);
+        var employeeWeeklySchedule: IWeeklyScheduleData = null;
+        await this.scheduleRef.child('weekly/employees/' + employeeId).set(weeklyScheduleList);
         employeeWeeklySchedule = await this.getEmployeeWeeklySchedule(employeeId);
         return employeeWeeklySchedule;
     }
@@ -241,9 +246,13 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     private async saveSalonWeeklySchedule(weeklyScheduleList: WeeklyDayData[]): Promise<IWeeklyScheduleData> {
-        var salonWeeklySchedule: IWeeklyScheduleData = undefined;
-        await this.scheduleRef.child('weekly/salon').save(weeklyScheduleList);
-        salonWeeklySchedule = await this.getSalonWeeklySchedule();
+        var salonWeeklySchedule: IWeeklyScheduleData = null;
+        try {
+            await this.scheduleRef.child('weekly/salon').set(weeklyScheduleList);
+            salonWeeklySchedule = await this.getSalonWeeklySchedule();
+        } catch (error) {
+            throw error;
+        }
         return salonWeeklySchedule;
     }
 
@@ -259,7 +268,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     private async getEmployeeDailychedule(employeeId: string, startDate: SalonTimeData, endDate: SalonTimeData): Promise<IDailyScheduleData[]> {
-        var employeeDailyScheduleList: IDailyScheduleData[] = undefined;
+        var employeeDailyScheduleList: IDailyScheduleData[] = null;
         await this.scheduleRef.child('daily/employees/' + employeeId).orderByChild('date/date').startAt(startDate.date).endAt(endDate.date).once('value', async function (snapshot) {
             var employeeDailySchedule: IDailyScheduleData = snapshot.val();
             employeeDailySchedule._id = snapshot.key;
@@ -279,7 +288,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     private async getSalonDailychedule(startDate: SalonTimeData, endDate: SalonTimeData): Promise<IDailyScheduleData[]> {
-        var salonDailyScheduleList: IDailyScheduleData[] = undefined;
+        var salonDailyScheduleList: IDailyScheduleData[] = null;
         await this.scheduleRef.child('daily/salon').orderByChild('date/date').startAt(startDate.date).endAt(endDate.date).once('value', async function (snapshot) {
             var salonDailySchedule: IDailyScheduleData = snapshot.val();
             salonDailySchedule._id = snapshot.key;
@@ -298,8 +307,8 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     public async saveEmployeeDailySchedule(employeeId: string, dailySchedule: DailyDayData): Promise<IDailyScheduleData> {
-        var employeeDailySchedule: IDailyScheduleData = undefined;
-        await this.scheduleRef.child('daily/employees/' + employeeId).push().save(dailySchedule);
+        var employeeDailySchedule: IDailyScheduleData = null;
+        await this.scheduleRef.child('daily/employees/' + employeeId).push().set(dailySchedule);
         employeeDailySchedule = (await this.getEmployeeDailychedule(employeeId, dailySchedule.date, dailySchedule.date))[0];
         return employeeDailySchedule;
     }
@@ -313,8 +322,8 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     public async saveSalonDailySchedule(dailySchedule: DailyDayData): Promise<IDailyScheduleData> {
-        var employeeDailySchedule: IDailyScheduleData = undefined;
-        await this.scheduleRef.child('daily/salon').push().save(dailySchedule);
+        var employeeDailySchedule: IDailyScheduleData = null;
+        await this.scheduleRef.child('daily/salon').push().set(dailySchedule);
         employeeDailySchedule = (await this.getSalonDailychedule(dailySchedule.date, dailySchedule.date))[0];
         return employeeDailySchedule;
     }
@@ -331,7 +340,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
     public async updateEmployeeDailySchedule(employeeId: string, dailySchedule: DailyDayData): Promise<IDailyScheduleData> {
         var oldDailyScheduleList = await this.getEmployeeDailychedule(employeeId, dailySchedule.date, dailySchedule.date);
         var oldDailySchedule = oldDailyScheduleList[0];
-        await this.scheduleRef.child('daily/employees/' + employeeId + '/' + oldDailySchedule._id).save(dailySchedule);
+        await this.scheduleRef.child('daily/employees/' + employeeId + '/' + oldDailySchedule._id).set(dailySchedule);
         var newDailyScheduleList = await this.getEmployeeDailychedule(employeeId, dailySchedule.date, dailySchedule.date);
         return newDailyScheduleList[0];
     }
@@ -345,10 +354,10 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * 
      * @memberOf FirebaseScheduleManagement
      */
-    public async updateSalonDailySchedule(employeeId: string, dailySchedule: DailyDayData): Promise<IDailyScheduleData> {
+    public async updateSalonDailySchedule(dailySchedule: DailyDayData): Promise<IDailyScheduleData> {
         var oldDailyScheduleList = await this.getSalonDailychedule(dailySchedule.date, dailySchedule.date);
         var oldDailySchedule = oldDailyScheduleList[0];
-        await this.scheduleRef.child('daily/salon/' + oldDailySchedule._id).save(dailySchedule);
+        await this.scheduleRef.child('daily/salon/' + oldDailySchedule._id).set(dailySchedule);
         var newDailyScheduleList = await this.getSalonDailychedule(dailySchedule.date, dailySchedule.date);
         return newDailyScheduleList[0];
     }

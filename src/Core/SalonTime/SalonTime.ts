@@ -29,7 +29,7 @@ export class SalonTime implements SalonTimeData {
      * @constructor
      * @memberOf SalonTime
      */
-    constructor(salonTime: SalonTimeData = undefined) {
+    constructor(salonTime: SalonTimeData = null) {
         this.momentjs = moment();
 
         if (salonTime) {
@@ -55,12 +55,12 @@ export class SalonTime implements SalonTimeData {
         if (this.momentjs.isValid()) {
             this.nomalize();
         }else{
-            this.day = undefined;
-            this.month = undefined;
-            this.year = undefined;
-            this.hour =  undefined;
-            this.min = undefined;
-            this.date = undefined;
+            this.day = null;
+            this.month = null;
+            this.year = null;
+            this.hour =  null;
+            this.min = null;
+            this.date = null;
         }
         return this;
     }

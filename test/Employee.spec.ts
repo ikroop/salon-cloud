@@ -40,7 +40,7 @@ describe('Employee Management', function () {
         var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
         validToken = loginData.data.auth.token;
         // 3. Create salon
-        var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(undefined));
+        var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(null));
         var salonInformationInput: SalonInformation = {
             email: 'salon@salon.com',
             phone: {
@@ -50,7 +50,7 @@ describe('Employee Management', function () {
             location: {
                 address: '2506 Bailey Dr NW, Norcross, GA 30071',
                 is_verified: false,
-                timezone_id: undefined
+                timezone_id: null
             },
             salon_name: 'Salon Appointment Test'
         }

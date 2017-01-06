@@ -23,19 +23,19 @@ export class SalonManagementRouter {
             await testObj.getAllEmployee();
         })
         this.router.post('/create', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
-            var signedUser = new SignedInUser(request.user._id, new SalonManagement(undefined));//Todo
+            var signedUser = new SignedInUser(request.user._id, new SalonManagement(null));//Todo
             var salonInformationInput: SalonInformation = {
-                email: request.body.email,
+                email: request.body.email || null,
                 phone: {
-                    number: request.body.phonenumber,
+                    number: request.body.phonenumber || null,
                     is_verified: false
                 },
                 location: {
-                    address: request.body.address,
+                    address: request.body.address || null,
                     is_verified: false,
-                    timezone_id: undefined
+                    timezone_id: null
                 },
-                salon_name: request.body.salon_name,
+                salon_name: request.body.salon_name || null,
             }
 
             var salonCreation = await signedUser.createSalon(salonInformationInput);

@@ -43,9 +43,9 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
      * @memberOf FirebaseServiceManagement
      */
     public async createGroup(group: ServiceGroupData): Promise<IServiceGroupData> {
-        var serviceGroup: IServiceGroupData = undefined;
+        var serviceGroup: IServiceGroupData = null;
         var newGroup = await this.serviceRef.push();
-        await newGroup.save(group);
+        await newGroup.set(group);
         serviceGroup = await this.getServiceGroupById(newGroup.key);
         return serviceGroup;
     }
@@ -58,7 +58,7 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
      * @memberOf FirebaseServiceManagement
      */
     public async getAllServices(): Promise<IServiceGroupData[]> {
-        var rs: IServiceGroupData[] = undefined;
+        var rs: IServiceGroupData[] = null;
         await this.serviceRef.orderByChild('group_name').once('value', async function (snapshot) {
             var serviceGroup: IServiceGroupData = snapshot.val();
             if (serviceGroup) {
@@ -78,7 +78,7 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
      * @memberOf FirebaseServiceManagement
      */
     public async getServiceItemById(serviceId: string): Promise<IServiceItemData> {
-        var rs: IServiceItemData = undefined;
+        var rs: IServiceItemData = null;
         await this.serviceRef.orderByChild('service_list/' + serviceId).once('value', async function (snapshot) {
             rs = snapshot.val();
             if (rs) {
@@ -97,7 +97,7 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
      * @memberOf FirebaseServiceManagement
      */
     public async getServiceGroupByName(groupName: string): Promise<IServiceGroupData> {
-        var rs: IServiceGroupData = undefined;
+        var rs: IServiceGroupData = null;
         await this.serviceRef.orderByChild('group_name').equalTo(groupName).once('value', async function (snapshot) {
             rs = snapshot.val();
             if (rs) {
@@ -117,7 +117,7 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
      * @memberOf FirebaseServiceManagement
      */
     private async getServiceGroupById(id: string): Promise<IServiceGroupData> {
-        var serviceGroup: IServiceGroupData = undefined;
+        var serviceGroup: IServiceGroupData = null;
         await this.serviceRef.child(id).once('value', async function (snapshot) {
             serviceGroup = snapshot.val();
             if (serviceGroup) {

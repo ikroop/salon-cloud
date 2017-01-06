@@ -29,9 +29,9 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
      */
     public async signInWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<UserToken>> {
         var response: SalonCloudResponse<UserToken> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
         let promise = new Promise<SalonCloudResponse<UserToken>>(function (resolve, reject) {
             firebase.auth().signInWithEmailAndPassword(username, password)
@@ -79,16 +79,16 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
      * 
      * @param {string} username
      * @param {string} password
-     * @returns {Promise<SalonCloudResponse<undefined>>}
+     * @returns {Promise<SalonCloudResponse<null>>}
      * 
      * @memberOf FirebaseAuthenticationDatabase
      */
-    public async signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<undefined>> {
+    public async signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<null>> {
 
-        var response: SalonCloudResponse<undefined> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+        var response: SalonCloudResponse<null> = {
+            code: null,
+            data: null,
+            err: null
         };
 
         var phoneNumber:string = null;
@@ -100,7 +100,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
         } else { // username is email
             email = username;
         }
-        let promise = new Promise<SalonCloudResponse<undefined>>(function (resolve, reject) {
+        let promise = new Promise<SalonCloudResponse<null>>(function (resolve, reject) {
             firebase.auth().createUserWithEmailAndPassword(username, password).then(async function (user) {
                 response.code = 200;
 
@@ -113,7 +113,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                     email: email
                 };
                 //Add user data to new user at /users/<user_id>
-                var userDatabase = new FirebaseUserManagement(undefined);
+                var userDatabase = new FirebaseUserManagement(null);
                 await userDatabase.addUserData(user.uid, userData);                
                 resolve(response);
             }, function (error) {
@@ -140,22 +140,22 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
      * 
      * 
      * @param {string} token
-     * @returns {Promise<SalonCloudResponse<undefined>>}
+     * @returns {Promise<SalonCloudResponse<null>>}
      * 
      * @memberOf FirebaseAuthenticationDatabase
      */
-    verifyToken(token: string): Promise<SalonCloudResponse<undefined>> {
+    verifyToken(token: string): Promise<SalonCloudResponse<null>> {
         var response: any = {};
         let promise = new Promise(function (resolve, reject) {
 
             if (!token) {
-                response = undefined;
+                response = null;
                 resolve(response);
             } else {
                 firebaseAdmin.auth().verifyIdToken(token)
                     .then(function (decodedToken) {
                         var uid = decodedToken.uid;
-                        response.err = undefined;
+                        response.err = null;
                         response.code = 200;
                         response.data = { _id: uid };
                         resolve(response);
@@ -163,7 +163,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                         // Handle error
                         response.err = ErrorMessage.InvalidTokenError;
                         response.code = 401;
-                        response.data = undefined;
+                        response.data = null;
                         resolve(response);
                     });
             }

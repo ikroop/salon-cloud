@@ -15,9 +15,9 @@ export class OwnerManagement extends UserManagement {
      */
     public async addOwnerProfile(userId: string): Promise<SalonCloudResponse<UserProfile>> {
         let response: SalonCloudResponse<UserProfile> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         }
         var newProfile: UserProfile = {
             fullname: '',

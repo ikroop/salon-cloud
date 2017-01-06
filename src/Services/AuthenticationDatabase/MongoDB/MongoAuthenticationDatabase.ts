@@ -17,9 +17,9 @@ import { UserToken } from './../../../Core/Authentication/AuthenticationData';
 export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterface {
     public async signInWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<UserToken>> {
         var response: SalonCloudResponse<UserToken> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
         let promise = new Promise<SalonCloudResponse<UserToken>>(function (resolve, reject) {
 
@@ -27,12 +27,12 @@ export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterf
                 if (err) {
                     response.err = { 'err': err };
                     response.code = 409;
-                    response.data = undefined;
+                    response.data = null;
                 }
                 if (!user) {
                     response.err = ErrorMessage.SignInFailed;
                     response.code = 403;
-                    response.data = undefined;
+                    response.data = null;
                 } else {
                     var created_at = new Date().getTime();
                     var cert = fs.readFileSync('./Config/Dev/Private.key');  // get private key
@@ -44,13 +44,13 @@ export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterf
                             status: user.status
                         },
                         auth: {
-                            token: undefined
+                            token: null
                         }
                     };
 
                     var token = jwt.sign(userToken.user, cert, { algorithm: 'RS256' });
                     userToken.auth.token = token;
-                    response.err = undefined;
+                    response.err = null;
                     response.code = 200;
                     response.data = userToken
                 }
@@ -63,11 +63,11 @@ export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterf
     }
 
 
-    public async signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<undefined>> {
-        var response: SalonCloudResponse<undefined> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+    public async signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<null>> {
+        var response: SalonCloudResponse<null> = {
+            code: null,
+            data: null,
+            err: null
         };
 
         var user: UserData = {
@@ -78,14 +78,14 @@ export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterf
         };
 
 
-        let promise = new Promise<SalonCloudResponse<undefined>>(function (resolve, reject) {
+        let promise = new Promise<SalonCloudResponse<null>>(function (resolve, reject) {
             UserModel.register(new UserModel(user), password, function (err) {
                 if (err) {
                     response.err = ErrorMessage.UsernameAlreadyExists;
                     response.code = 409;
-                    response.data = undefined;
+                    response.data = null;
                 } else {
-                    response.err = undefined;
+                    response.err = null;
                     response.code = 200;
                 }
                 resolve(response);
@@ -99,7 +99,7 @@ export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterf
      * @description verify User Token
      * @param {string} token
      * @returns
-     *     {undefined} User Token is undefined.
+     *     {null} User Token is null.
      *     {SalonCloudResponse} code 403, error = 'InvalidToken' || code 200, data = { _id: string, username: string, status: boolean }
      * @memberOf Authentication
      */
@@ -108,7 +108,7 @@ export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterf
         let promise = new Promise(function (resolve, reject) {
 
             if (!token) {
-                response = undefined;
+                response = null;
                 resolve(response);
             } else {
                 var cert = fs.readFileSync('./Config/Dev/Public.pem');  // get private key
@@ -116,9 +116,9 @@ export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterf
                     if (err) {
                         response.err = ErrorMessage.InvalidTokenError;
                         response.code = 401;
-                        response.data = undefined;
+                        response.data = null;
                     } else {
-                        response.err = undefined;
+                        response.err = null;
                         response.code = 200;
                         response.data = payload;
                     }

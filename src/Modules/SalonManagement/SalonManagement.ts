@@ -51,9 +51,9 @@ export class SalonManagement implements SalonManagementBehavior {
     public async createSalonDocs(salonInformation: SalonInformation): Promise<SalonCloudResponse<ISalonData>> {
 
         var returnResult: SalonCloudResponse<ISalonData> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
         var salonData: SalonData = {
             information: salonInformation,
@@ -112,7 +112,7 @@ export class SalonManagement implements SalonManagementBehavior {
      * @memberOf SalonManagement
      */
     public async getFlexibleTime(): Promise<number> {
-        var salon: ISalonData = undefined;
+        var salon: ISalonData = null;
         salon = await this.salonDatabase.getSalonById();
         return salon.setting.flexible_time;
     }
@@ -127,9 +127,9 @@ export class SalonManagement implements SalonManagementBehavior {
      */
     public async validation(salonInformation: SalonInformation) {
         var returnResult: SalonCloudResponse<any> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
         // Validation
         // salon name validation
@@ -187,7 +187,7 @@ export class SalonManagement implements SalonManagementBehavior {
      * @memberOf SalonManagement
      */
     public async getSalonById(): Promise<ISalonData> {
-        var salon: ISalonData = undefined;
+        var salon: ISalonData = null;
         try {
             salon = await this.salonDatabase.getSalonById();
             return salon;

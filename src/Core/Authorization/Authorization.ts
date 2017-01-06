@@ -27,16 +27,16 @@ export class Authorization {
      */
     public async checkPermission(userId: string, salonId: string, apiName: string): Promise<SalonCloudResponse<string>> {
         var response: SalonCloudResponse<string> = {
-            code: undefined,
-            err: undefined,
-            data: undefined
+            code: null,
+            err: null,
+            data: null
         };
 
         var roleAPI = RoleConfig.filter(item => item.api.toLowerCase() == apiName.toLowerCase())[0];
 
         if(!roleAPI){
             console.log('Please Add API to file RoleConfig');
-            return undefined;
+            return null;
         }
         // Check userId
         if (!userId) {
@@ -48,7 +48,7 @@ export class Authorization {
             } else {
                 // Unallowed  
                 response.code = 401; // Unauthorized
-                response.data = undefined;
+                response.data = null;
             }
         } else {
 
@@ -56,7 +56,7 @@ export class Authorization {
             if (roleAPI.role.indexOf('Anonymouse') > -1) {
                 // Api allows to access from Anonymouse
                 response.code = 403;
-                response.data = undefined;
+                response.data = null;
                 response.err = ErrorMessage.NoPermission.err;
                 return response;
             } 
@@ -92,7 +92,7 @@ export class Authorization {
                     // Unallowed
                     response.err = ErrorMessage.NoPermission.err;
                     response.code = 403; // Forbidden
-                    response.data = undefined;
+                    response.data = null;
                 }
             }
         }

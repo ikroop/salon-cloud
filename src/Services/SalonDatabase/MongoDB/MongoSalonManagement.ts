@@ -38,7 +38,7 @@ export class MongoSalonManagement implements SalonManagementDatabaseInterface<IS
      */
     public async createSalon(salonInfo: SalonData): Promise<ISalonData> {
         // create Salon record
-        var rs: ISalonData = undefined;
+        var rs: ISalonData = null;
         var salon = new SalonModel(salonInfo);
         var SalonCreation = salon.save();
         await SalonCreation.then(function (docs) {
@@ -61,9 +61,9 @@ export class MongoSalonManagement implements SalonManagementDatabaseInterface<IS
      */
     public async getSalonById(): Promise<ISalonData> {
 
-        var salon: ISalonData = undefined;
+        var salon: ISalonData = null;
         if (!mongoose.Types.ObjectId.isValid(this.salonId)) {
-            return undefined;
+            return null;
         }
         await SalonModel.findOne({ "_id": this.salonId }).exec(function (err, docs: ISalonData) {
             if (!err) {

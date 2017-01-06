@@ -20,7 +20,7 @@ export class MongoScheduleManagement implements ScheduleManagementDatabaseInterf
     }
 
     public async getWeeklySchedule(employeeId: string): Promise<IWeeklyScheduleData> {
-        var rs: IWeeklyScheduleData = undefined;
+        var rs: IWeeklyScheduleData = null;
         await WeeklyScheduleModel.findOne({ salon_id: this.salonId, employee_id: employeeId }).exec(function (err, docs) {
             if (err) {
                 throw err;
@@ -31,7 +31,7 @@ export class MongoScheduleManagement implements ScheduleManagementDatabaseInterf
         return rs;
     }
     public async updateWeeklySchedule(employeeId: string, weeklyScheduleList: WeeklyDayData[]): Promise<IWeeklyScheduleData> {
-        var rs: IWeeklyScheduleData = undefined;
+        var rs: IWeeklyScheduleData = null;
         var docsFound = await WeeklyScheduleModel.findOne({ salon_id: this.salonId, employee_id: employeeId }).exec();
         docsFound.week = weeklyScheduleList;
         var saveAction = docsFound.save();
@@ -45,7 +45,7 @@ export class MongoScheduleManagement implements ScheduleManagementDatabaseInterf
         return rs;
     }
     public async saveWeeklySchedule(employeeId: string, weeklyScheduleList: WeeklyDayData[]): Promise<IWeeklyScheduleData> {
-        var rs: IWeeklyScheduleData = undefined;
+        var rs: IWeeklyScheduleData = null;
         var weeklySchedule = new WeeklyScheduleModel({
             salon_id: this.salonId,
             employee_id: employeeId,
@@ -63,7 +63,7 @@ export class MongoScheduleManagement implements ScheduleManagementDatabaseInterf
 
     public async getDailySchedule(employeeId: string, startDate: SalonTime, endDate: SalonTime): Promise<IDailyScheduleData[]> {
 
-        var returnResult: IDailyScheduleData[] = undefined;
+        var returnResult: IDailyScheduleData[] = null;
 
         await DailyScheduleModel.find({
             salon_id: this.salonId, employee_id: employeeId, 'day.date.date': {
@@ -81,7 +81,7 @@ export class MongoScheduleManagement implements ScheduleManagementDatabaseInterf
 
     public async updateDailySchedule(employeeId: string, dailySchedule: DailyDayData): Promise<IDailyScheduleData> {
 
-        var rs: IDailyScheduleData = undefined;
+        var rs: IDailyScheduleData = null;
         var docsFound = await DailyScheduleModel.findOne({ salon_id: this.salonId, employee_id: employeeId }).exec();
 
         docsFound.day = dailySchedule;
@@ -98,7 +98,7 @@ export class MongoScheduleManagement implements ScheduleManagementDatabaseInterf
 
     }
     public async saveDailySchedule(employeeId: string, dailySchedule: DailyDayData): Promise<IDailyScheduleData> {
-        var rs: IDailyScheduleData = undefined;
+        var rs: IDailyScheduleData = null;
         var dataCreation = DailyScheduleModel.create({
             salon_id: this.salonId,
             employee_id: employeeId,

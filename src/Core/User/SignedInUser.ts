@@ -41,9 +41,9 @@ export class SignedInUser implements SignedInUserBehavior {
     public async createSalon(salonInformation: SalonInformation): Promise<SalonCloudResponse<string>> {
 
         var returnResult: SalonCloudResponse<string> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
 
         // Create Salon Document

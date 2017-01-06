@@ -85,7 +85,7 @@ export class FirebaseSalonManagement implements SalonManagementDatabaseInterface
      * @memberOf FirebaseSalonManagement
      */
     public async getSalonById(): Promise<ISalonData> {
-        var salonDatabase: ISalonData = undefined;
+        var salonDatabase: ISalonData = null;
         var salonId = this.salonId;
         var salonProfileRef = this.salonRef.child(this.salonId + '/profile');
         await salonProfileRef.once('value', function (snapshot) {

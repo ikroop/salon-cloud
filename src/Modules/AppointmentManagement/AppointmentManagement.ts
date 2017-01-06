@@ -33,9 +33,9 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
      */
     public async createAppointment(appointment: AppointmentData): Promise<SalonCloudResponse<AppointmentData>> {
         var response: SalonCloudResponse<AppointmentData> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
 
         var newAppointment: AppointmentData = {
@@ -80,9 +80,9 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
      */
     public async getEmployeeAppointmentByDate(employeeId: string, date: SalonTimeData): Promise<SalonCloudResponse<Array<AppointmentItemData>>> {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
 
         var appointmentSearch = AppointmentModel.find({
