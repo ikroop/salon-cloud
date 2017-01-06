@@ -56,19 +56,16 @@ root
   |     |     |     |     |----employees
   |     |     |     |     |    |----<daily_id>
   |     |     |     |     |           |----employee_id: string
-  |     |     |     |     |                 |----day
-  |     |     |     |     |                       |----close: number
-  |     |     |     |     |                       |----open: number
-  |     |     |     |     |                       |----status: boolean
-  |     |     |     |     |                       |----date: SalonTime
+  |     |     |     |     |                 |----close: number
+  |     |     |     |     |                 |----open: number
+  |     |     |     |     |                 |----status: boolean
+  |     |     |     |     |                 |----date: SalonTime
   |     |     |     |     |----salon
   |     |     |     |           |----<daily_id>
-  |     |     |     |                 |----employee_id: string
-  |     |     |     |                       |----day
-  |     |     |     |                             |----close: number
-  |     |     |     |                             |----open: number
-  |     |     |     |                             |----status: boolean
-  |     |     |     |                             |----date: SalonTime  
+  |     |     |     |                 |----close: number
+  |     |     |     |                 |----open: number
+  |     |     |     |                 |----status: boolean
+  |     |     |     |                 |----date: SalonTime  
   |     |     |     |----weekly
   |     |     |           |----salon: Array
   |     |     |           |     |----close: number
