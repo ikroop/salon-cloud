@@ -28,7 +28,7 @@ export class MissingCheck extends DecoratingValidator {
     }
 
     public validatingOperation() {
-        if (this.targetElement === null || this.targetElement === 'null') {
+        if (this.targetElement === null || this.targetElement === 'undefined' || this.targetElement === undefined) {
             return this.errorType;
         } else {
             return null;
