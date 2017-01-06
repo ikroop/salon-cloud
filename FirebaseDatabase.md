@@ -54,8 +54,8 @@ root
   |     |     |----schedule
   |     |     |     |----daily
   |     |     |     |     |----employees
-  |     |     |     |     |    |----<daily_id>
-  |     |     |     |     |           |----employee_id: string
+  |     |     |     |     |    |----<employee_id>
+  |     |     |     |     |           |----<daily_id>: string
   |     |     |     |     |                 |----close: number
   |     |     |     |     |                 |----open: number
   |     |     |     |     |                 |----status: boolean
