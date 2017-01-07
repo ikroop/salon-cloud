@@ -20,7 +20,6 @@ export class SalonTime implements SalonTimeData {
     public day: number;
     public hour: number;
     public min: number;
-    public date: Date;
     public timestamp: number;
     /**
      * Creates an instance of SalonTime.
@@ -60,7 +59,6 @@ export class SalonTime implements SalonTimeData {
             this.year = null;
             this.hour =  null;
             this.min = null;
-            this.date = null;
         }
         return this;
     }
@@ -275,8 +273,8 @@ export class SalonTime implements SalonTimeData {
         this.day = this.momentjs.date();
         this.month = this.momentjs.month();
         this.year = this.momentjs.year();
-        this.date = new Date(Date.UTC(this.year, this.month, this.day, this.hour, this.min, 0));
-        this.timestamp = this.date.getTime();
+        var date = new Date(Date.UTC(this.year, this.month, this.day, this.hour, this.min, 0));
+        this.timestamp = date.getTime();
     }
 
     /**

@@ -101,7 +101,7 @@ describe('Schedule Management', function () {
 
     });
 
-    describe('Get Salon Daily Schedule', function () {
+    /*describe('Get Salon Daily Schedule', function () {
         var apiUrl = '/api/v1/schedule/getsalondailyschedule';
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to get salon daily schedule without salonId', function (done) {
@@ -311,7 +311,7 @@ describe('Schedule Management', function () {
                 });
         });
 
-    });
+    });*/
 
     describe('Save Salon Daily Schedule', function () {
         var apiUrl = '/api/v1/schedule/savesalondailyschedule';
@@ -711,7 +711,7 @@ describe('Schedule Management', function () {
 
     });
 
-    describe('Save Salon Weekly Schedule', function () {
+    /*describe('Save Salon Weekly Schedule', function () {
         var apiUrl = '/api/v1/schedule/savesalonweeklyschedule';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save salon weekly schedule with invalidToken', function (done) {
@@ -3917,6 +3917,6 @@ describe('Schedule Management', function () {
                 });
         });
 
-    });
+    });*/
 
 });
