@@ -503,10 +503,11 @@ export abstract class Schedule implements ScheduleBehavior {
         var returnResult: IDailyScheduleData[] = null;
         try {
             var returnResult = await this.scheduleDatabase.getDailySchedule(this.employeeId, startDate, endDate);
-            return returnResult;
         } catch (error) {
             throw error;
         }
+        return returnResult;
+
     }
 
     /**
