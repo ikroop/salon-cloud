@@ -19,6 +19,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
     private userRef: any;
     private readonly USER_KEY_NAME: string = 'users';
     private salonDatabase: FirebaseSalonManagement;
+    private profilePath:string = null;
     /**
      * Creates an instance of MongoSalonManagement.
      * 
@@ -46,7 +47,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
     public async getUserById(userId: string): Promise<IUserData> {
         var userDatabase: IUserData = null;
         try {
-            userDatabase = await this.getUserData(userId);
+            userDatabase = await this.getUserDataById(userId);
             var profile = await this.getUserProfile(userId);
             if (profile) {
                 userDatabase.profile = [];
@@ -134,7 +135,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
 
             // create salon user Profile
             var salonRef = this.salonDatabase.getSalonFirebaseRef();
-            await salonRef.child('users/' + userId).set(userProfile);
+            await salonRef.child(this.salonId + '/users/' + userId).set(userProfile);
             returnResult.code = 200;
             returnResult.data = userProfile;
         } catch (error) {
@@ -177,7 +178,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
         return emplpoyeeList;
     }
 
-    private async getUserData(userId: string): Promise<IUserData> {
+    private async getUserDataById(userId: string): Promise<IUserData> {
         var userDatabase: IUserData = null;
         await this.userRef.child(userId).once('value', function (snapshot) {
             userDatabase = snapshot.val();
@@ -193,7 +194,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
     private async getUserProfile(userId: string): Promise<UserProfile> {
         var userProfile: UserProfile = null;
         var salonRef = this.salonDatabase.getSalonFirebaseRef();
-        await salonRef.child('users/' + userId).once('value', function (snapshot) {
+        await salonRef.child(this.salonId + '/users/' + userId).once('value', function (snapshot) {
             userProfile = snapshot.val();
         }, function (errorObject) {
             throw errorObject;
