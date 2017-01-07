@@ -16,7 +16,7 @@ import { EmployeeManagement } from './../../Modules/UserManagement/EmployeeManag
 import { ErrorMessage } from './../ErrorMessage'
 import { BaseValidator } from './../Validation/BaseValidator'
 import { IsPhoneNumber, IsValidSalonId, MissingCheck } from './../Validation/ValidationDecorators'
-import { ServiceGroupData, ServiceItemData } from './../../Modules/ServiceManagement/ServiceData'
+import { ServiceGroupData, ServiceItemData, IServiceGroupData } from './../../Modules/ServiceManagement/ServiceData'
 import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceManagement'
 import { Schedule } from './../../Modules/Schedule/Schedule'
 import { defaultWeeklySchedule } from './../DefaultData'
@@ -164,24 +164,15 @@ export class Owner extends AbstractAdministrator {
      * -- return
      * 
      */
-    public async addService(serviceGroup: any): Promise<SalonCloudResponse<ServiceGroupData>> {
-        var response: SalonCloudResponse<ServiceGroupData> = {
+    public async addService(serviceGroup: ServiceGroupData): Promise<SalonCloudResponse<IServiceGroupData>> {
+        var response: SalonCloudResponse<IServiceGroupData> = {
             code: null,
             err: null,
             data: null
         };
         let serviceManagementDP = new ServiceManagement(serviceGroup.salon_id);
-        // init and declare;
-        var newServiceGroup: ServiceGroupData = {
-            salon_id: serviceGroup.salon_id,
-            description: serviceGroup.description,
-            name: serviceGroup.group_name,
-            service_list: serviceGroup.service_list,
-
-        }
-
         // adding service group
-        var addingAction = await serviceManagementDP.addGroup(newServiceGroup);
+        var addingAction = await serviceManagementDP.addGroup(serviceGroup);
         // return
         if (addingAction.err) {
             response.err = addingAction.err;
