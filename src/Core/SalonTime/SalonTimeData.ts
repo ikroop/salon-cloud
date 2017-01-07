@@ -13,4 +13,5 @@ export interface SalonTimeData {
     month: number;
     year: number;
     date?: Date;
+    timestamp?: number;
 }
