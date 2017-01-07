@@ -19,7 +19,6 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
     private userRef: any;
     private readonly USER_KEY_NAME: string = 'users';
     private salonDatabase: FirebaseSalonManagement;
-    private profilePath:string = null;
     /**
      * Creates an instance of MongoSalonManagement.
      * 
@@ -71,31 +70,12 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      */
     public async getUserByPhone(phone: string): Promise<IUserData> {
         var userDatabase: IUserData = null;
-        await this.userRef.orderByChild('phone').equalTo(phone).once('value', async function (snapshot) {
-            userDatabase = snapshot.val();
-            if (userDatabase) {
-                userDatabase._id = snapshot.key;
-            } else {
-                return;
-            }
-
-            var salonRef = this.salonDatabase.getSalonFirebaseRef();
-
-            //get User Salon Profile which is employee.
-            await salonRef.child('users/' + userDatabase._id).once('value', function (snapshot) {
-                //TODO: implement get Salon UserProfile
-                var profile = snapshot.val();
-                if (profile) {
-                    userDatabase.profile.push(profile);
-                }
-
-            }, function (errorObject) {
-                throw errorObject;
-            });
-
-        }, function (errorObject) {
-            throw errorObject;
-        });
+        userDatabase = await this.getUserDataByPhone(phone);
+        var profile = await this.getUserProfile(userDatabase._id);
+        if (profile) {
+            userDatabase.profile = [];
+            userDatabase.profile.push(profile);
+        }
         return userDatabase;
     }
 
@@ -177,7 +157,37 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
 
         return emplpoyeeList;
     }
+    
+    /**
+     * 
+     * 
+     * @private
+     * @param {string} phone
+     * @returns {Promise<IUserData>}
+     * 
+     * @memberOf FirebaseUserManagement
+     */
+    private async getUserDataByPhone(phone: string): Promise<IUserData> {
+        var userDatabase: IUserData = null;
+        await this.userRef.orderByChild('phone').equalTo(phone).once('value', async function (snapshot) {
+            userDatabase = snapshot.val();
+            if (userDatabase) {
+                userDatabase._id = snapshot.key;
+            }
+        });
 
+        return userDatabase;
+    }
+    
+    /**
+     * 
+     * 
+     * @private
+     * @param {string} userId
+     * @returns {Promise<IUserData>}
+     * 
+     * @memberOf FirebaseUserManagement
+     */
     private async getUserDataById(userId: string): Promise<IUserData> {
         var userDatabase: IUserData = null;
         await this.userRef.child(userId).once('value', function (snapshot) {
@@ -190,7 +200,16 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
         });
         return userDatabase;
     }
-
+    
+    /**
+     * 
+     * 
+     * @private
+     * @param {string} userId
+     * @returns {Promise<UserProfile>}
+     * 
+     * @memberOf FirebaseUserManagement
+     */
     private async getUserProfile(userId: string): Promise<UserProfile> {
         var userProfile: UserProfile = null;
         var salonRef = this.salonDatabase.getSalonFirebaseRef();
