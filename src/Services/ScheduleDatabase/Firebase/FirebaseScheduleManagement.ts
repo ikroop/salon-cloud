@@ -109,7 +109,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
         } else {
             dailySchedule = await this.getSalonDailychedule(startDate, endDate);
         }
-        return;
+        return dailySchedule;
     }
 
     /**
@@ -162,9 +162,14 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     private async getEmployeeWeeklySchedule(employeeId: string): Promise<IWeeklyScheduleData> {
-        var employeeWeeklySchedule: IWeeklyScheduleData = null;
-        await this.scheduleRef.child('weekly/employees/' + employeeId).orderByChild('day_of_week').once('value', async function (snapshot) {
-            employeeWeeklySchedule = snapshot.val();
+        var employeeWeeklySchedule: IWeeklyScheduleData = {
+            salon_id: this.salonId,
+            employee_id: null,
+            week: null
+        };
+        await this.scheduleRef.child('weekly/employees/' + employeeId).once('value', function (snapshot) {
+            var weekScheduleArray: WeeklyDayData[] = snapshot.val();
+            employeeWeeklySchedule.week = weekScheduleArray;
         });
         return employeeWeeklySchedule;
     }
@@ -178,9 +183,14 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     private async getSalonWeeklySchedule(): Promise<IWeeklyScheduleData> {
-        var salonWeeklySchedule: IWeeklyScheduleData = null;
-        await this.scheduleRef.child('weekly/salon').orderByChild('day_of_week').once('value', async function (snapshot) {
-            salonWeeklySchedule = snapshot.val();
+        var salonWeeklySchedule: IWeeklyScheduleData = {
+            salon_id: this.salonId,
+            employee_id: null,
+            week: null
+        };
+        await this.scheduleRef.child('weekly/salon').once('value', function (snapshot) {
+            var weekScheduleArray: WeeklyDayData[] = snapshot.val();
+            salonWeeklySchedule.week = weekScheduleArray;
         });
         return salonWeeklySchedule;
     }
@@ -268,11 +278,13 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     private async getEmployeeDailychedule(employeeId: string, startDate: SalonTimeData, endDate: SalonTimeData): Promise<IDailyScheduleData[]> {
-        var employeeDailyScheduleList: IDailyScheduleData[] = null;
-        await this.scheduleRef.child('daily/employees/' + employeeId).orderByChild('date/date').startAt(startDate.date).endAt(endDate.date).once('value', async function (snapshot) {
+        var employeeDailyScheduleList: IDailyScheduleData[] = new Array();
+        await this.scheduleRef.child('daily/employees/' + employeeId).orderByChild('date/date').startAt(startDate.timestamp).endAt(endDate.timestamp).once('value', async function (snapshot) {
             var employeeDailySchedule: IDailyScheduleData = snapshot.val();
-            employeeDailySchedule._id = snapshot.key;
-            employeeDailyScheduleList.push(employeeDailySchedule);
+            if (employeeDailyScheduleList) {
+                employeeDailySchedule._id = snapshot.key;
+                employeeDailyScheduleList.push(employeeDailySchedule);
+            }
         });
         return employeeDailyScheduleList;
     }
@@ -288,11 +300,13 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      * @memberOf FirebaseScheduleManagement
      */
     private async getSalonDailychedule(startDate: SalonTimeData, endDate: SalonTimeData): Promise<IDailyScheduleData[]> {
-        var salonDailyScheduleList: IDailyScheduleData[] = null;
-        await this.scheduleRef.child('daily/salon').orderByChild('date/date').startAt(startDate.date).endAt(endDate.date).once('value', async function (snapshot) {
+        var salonDailyScheduleList: IDailyScheduleData[] = new Array();
+        await this.scheduleRef.child('daily/salon').orderByChild('date/date').startAt(startDate.timestamp).endAt(endDate.timestamp).once('value', async function (snapshot) {
             var salonDailySchedule: IDailyScheduleData = snapshot.val();
-            salonDailySchedule._id = snapshot.key;
-            salonDailyScheduleList.push(salonDailySchedule);
+            if (salonDailySchedule) {
+                salonDailySchedule._id = snapshot.key;
+                salonDailyScheduleList.push(salonDailySchedule);
+            }
         });
         return salonDailyScheduleList;
     }
