@@ -105,14 +105,12 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      * @memberOf MongoUserManagement
      */
     public async createProfile(userId: string, userProfile: UserProfile): Promise<SalonCloudResponse<UserProfile>> {
-
         var returnResult: SalonCloudResponse<UserProfile> = {
             code: null,
             data: null,
             err: null
         };
         try {
-
             // create salon user Profile
             var salonRef = this.salonDatabase.getSalonFirebaseRef();
             await salonRef.child(this.salonId + '/users/' + userId).set(userProfile);
