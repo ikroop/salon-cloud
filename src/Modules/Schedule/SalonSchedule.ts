@@ -15,7 +15,7 @@ import { ErrorMessage } from './../../Core/ErrorMessage';
 export class SalonSchedule extends Schedule {
 
     constructor(salonId: string) {
-        super(salonId, undefined);
+        super(salonId, null);
     }
 
     protected normalizeDailySchedule(dailySchedule: DailyDayData[]) {
@@ -27,7 +27,7 @@ export class SalonSchedule extends Schedule {
         return weeklySchedule
     }
 
-    protected async validateExt(): Promise<SalonCloudResponse<undefined>> {
-        return undefined;
+    protected async validateExt(): Promise<SalonCloudResponse<null>> {
+        return null;
     }
 }

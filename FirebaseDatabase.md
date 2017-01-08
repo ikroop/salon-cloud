@@ -2,39 +2,46 @@
 root
   |----users
   |     |----<user_id>
-  |           |----salons
-  |           |     |----<salon_id>
-  |           |           |----status: boolean
-  |           |           |----role: number
-  |           |           |----fullname: string
-  |           |           |----nickname: string
-  |           |           |----social_security_number: string (optional)
-  |           |           |----salary_rate: double (optional)
-  |           |           |----cash_rate: double (optional)
-  |           |           |----birthday: string (optional)
-  |           |           |----address: string (optional)
   |           |----phone
   |           |     |----number: string
   |           |     |----is_verified: boolean
-  |           |----is_temporary: boolean           
+  |           |----email
+  |           |     |----addess: string
+  |           |     |----is_verified: boolean
+  |           |----is_temporary: boolean
+  |           |----salons
+  |                 |----<salon_id>
+  |                       |----status: boolean
   |----salons
   |     |----<salon_id>
-  |     |     |----settings
-  |     |     |     |----appointment_reminder: boolean
-  |     |     |     |----flexible_time: number
-  |     |     |     |----technician_checkout: boolean
-  |     |     |----information
-  |     |     |     |----salon_name: string
-  |     |     |     |----phone
-  |     |     |     |     |----number: string
-  |     |     |     |     |----is_verified: boolean
-  |     |     |     |----location
-  |     |     |     |     |----address: string
-  |     |     |     |     |----is_verified: boolean
-  |     |     |     |     |----timezone: number
-  |     |     |     |----email
-  |     |     |           |----address: string
-  |     |     |           |----is_verified: boolean
+  |     |     |----users
+  |     |     |     |----<user_id>
+  |     |     |           |----status: boolean
+  |     |     |           |----role: number
+  |     |     |           |----fullname: string
+  |     |     |           |----nickname: string
+  |     |     |           |----social_security_number: string (optional)
+  |     |     |           |----salary_rate: double (optional)
+  |     |     |           |----cash_rate: double (optional)
+  |     |     |           |----birthday: string (optional)
+  |     |     |           |----address: string (optional)
+  |     |     |----profile  
+  |     |           |----settings
+  |     |           |     |----appointment_reminder: boolean
+  |     |           |     |----flexible_time: number
+  |     |           |     |----technician_checkout: boolean
+  |     |           |----information
+  |     |           |     |----salon_name: string
+  |     |           |     |----phone
+  |     |           |     |     |----number: string
+  |     |           |     |     |----is_verified: boolean
+  |     |           |     |----location
+  |     |           |     |     |----address: string
+  |     |           |     |     |----is_verified: boolean
+  |     |           |     |     |----timezone: number
+  |     |           |     |----email
+  |     |           |           |----address: string
+  |     |           |           |----is_verified: boolean
   |     |     |----service_groups
   |     |     |     |----<service_group_id>
   |     |     |           |----group_name: string
@@ -47,21 +54,18 @@ root
   |     |     |----schedule
   |     |     |     |----daily
   |     |     |     |     |----employees
-  |     |     |     |     |    |----<daily_id>
-  |     |     |     |     |           |----employee_id: string
-  |     |     |     |     |                 |----day
-  |     |     |     |     |                       |----close: number
-  |     |     |     |     |                       |----open: number
-  |     |     |     |     |                       |----status: boolean
-  |     |     |     |     |                       |----date: SalonTime
+  |     |     |     |     |    |----<employee_id>
+  |     |     |     |     |           |----<daily_id>: string
+  |     |     |     |     |                 |----close: number
+  |     |     |     |     |                 |----open: number
+  |     |     |     |     |                 |----status: boolean
+  |     |     |     |     |                 |----date: SalonTime
   |     |     |     |     |----salon
   |     |     |     |           |----<daily_id>
-  |     |     |     |                 |----employee_id: string
-  |     |     |     |                       |----day
-  |     |     |     |                             |----close: number
-  |     |     |     |                             |----open: number
-  |     |     |     |                             |----status: boolean
-  |     |     |     |                             |----date: SalonTime  
+  |     |     |     |                 |----close: number
+  |     |     |     |                 |----open: number
+  |     |     |     |                 |----status: boolean
+  |     |     |     |                 |----date: SalonTime  
   |     |     |     |----weekly
   |     |     |           |----salon: Array
   |     |     |           |     |----close: number

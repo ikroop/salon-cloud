@@ -11,6 +11,7 @@ import { EmployeeManagement } from './../Modules/UserManagement/EmployeeManageme
 import { SalonManagement } from './../Modules/SalonManagement/SalonManagement'
 import { Owner } from './../Core/User/Owner'
 import { ByPhoneVerification } from './../Core/Verification/ByPhoneVerification'
+import { UserProfile } from './../Modules/UserManagement/UserData';
 
 export class EmployeeManagementRouter {
     private router: Router = Router();
@@ -22,13 +23,23 @@ export class EmployeeManagementRouter {
         this.router.post('/create', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
             var result: SalonCloudResponse<any> = {
-                code: undefined,
-                data: undefined,
-                err: undefined
+                code: null,
+                data: null,
+                err: null
             };
             var userObject = new Owner(request.user._id, new SalonManagement(request.body.salon_id));
 
-            result = await userObject.addEmployee(request.body.phone, request.body, new ByPhoneVerification());
+            var userProfile: UserProfile = {
+                fullname: request.body.fullname || null,
+                role: request.body.role,
+                salon_id: request.body.salon_id || null,
+                salary_rate: request.body.salary_rate || null,
+                cash_rate: request.body.cash_rate || null,
+                social_security_number: request.body.social_security_number || null,
+                nickname: request.body.nickname || null,
+                phone: request.body.phone || null
+            }
+            result = await userObject.addEmployee(request.body.phone, userProfile, new ByPhoneVerification());
             let dataReturn;
             if (result.err) {
                 dataReturn = result.err

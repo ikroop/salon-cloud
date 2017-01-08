@@ -9,7 +9,8 @@
 			"type": "node",
 			"address": "localhost",
 			"port": 5858,
-			"sourceMaps": true
+			"sourceMaps": true,
+            "timeout": 100000
 		}
     ]
 }

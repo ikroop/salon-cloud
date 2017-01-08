@@ -5,6 +5,7 @@
  */
 
 import { mongoose } from './../../Services/Database';
+import { FirebaseDocument } from './../../Services/FirebaseDocument';
 
 export interface UserProfile {
     address?: string;
@@ -23,10 +24,12 @@ export interface UserProfile {
 export interface UserData {
     is_temporary: boolean;
     is_verified: boolean;
-    profile?: [UserProfile];
+    profile?: UserProfile[];
     status: boolean;
     // Todo: add phone and email, not requided field
     username: string;
+    phone?: string;
+    email?: string;
 }
 
-export interface IUserData extends UserData, mongoose.Document, mongoose.PassportLocalDocument { };   
+export interface IUserData extends UserData, FirebaseDocument { };   

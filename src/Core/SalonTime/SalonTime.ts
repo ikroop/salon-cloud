@@ -20,8 +20,7 @@ export class SalonTime implements SalonTimeData {
     public day: number;
     public hour: number;
     public min: number;
-    public date: Date;
-
+    public timestamp: number;
     /**
      * Creates an instance of SalonTime.
      * 
@@ -29,7 +28,7 @@ export class SalonTime implements SalonTimeData {
      * @constructor
      * @memberOf SalonTime
      */
-    constructor(salonTime: SalonTimeData = undefined) {
+    constructor(salonTime: SalonTimeData = null) {
         this.momentjs = moment();
 
         if (salonTime) {
@@ -55,12 +54,11 @@ export class SalonTime implements SalonTimeData {
         if (this.momentjs.isValid()) {
             this.nomalize();
         }else{
-            this.day = undefined;
-            this.month = undefined;
-            this.year = undefined;
-            this.hour =  undefined;
-            this.min = undefined;
-            this.date = undefined;
+            this.day = null;
+            this.month = null;
+            this.year = null;
+            this.hour =  null;
+            this.min = null;
         }
         return this;
     }
@@ -275,7 +273,8 @@ export class SalonTime implements SalonTimeData {
         this.day = this.momentjs.date();
         this.month = this.momentjs.month();
         this.year = this.momentjs.year();
-        this.date = new Date(Date.UTC(this.year, this.month, this.day, this.hour, this.min, 0));
+        var date = new Date(Date.UTC(this.year, this.month, this.day, this.hour, this.min, 0));
+        this.timestamp = date.getTime();
     }
 
     /**
@@ -299,5 +298,18 @@ export class SalonTime implements SalonTimeData {
      */
     public isValid(): boolean {
         return this.momentjs.isValid();
+    }
+
+    public static exportJSON(time:SalonTimeData): SalonTimeData{
+        var JSONData:SalonTimeData = {
+            hour: time.hour,
+            min: time.min,
+            year: time.year,
+            month: time.month,
+            day: time.day,
+            timestamp: time.timestamp
+        };
+
+        return JSONData;
     }
 }

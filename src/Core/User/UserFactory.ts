@@ -14,7 +14,7 @@ import { RoleDefinition } from '../../Core/Authorization/RoleDefinition'
 
 export class UserFactory {
     public static createAdminUserObject(userId: string, salonId: string, role: string): AdministratorBehavior {
-        let admin: AdministratorBehavior = undefined;
+        let admin: AdministratorBehavior = null;
         switch (role) {
             case RoleDefinition.Owner.text:
                 admin = new Owner(userId, new SalonManagement(salonId));
@@ -23,7 +23,7 @@ export class UserFactory {
                 admin = new Manager(userId, new SalonManagement(salonId));
                 break;
             default:
-                admin = undefined;
+                admin = null;
                 break;
         }
 

@@ -6,19 +6,30 @@
 import { SalonManagementBehavior } from './SalonManagementBehavior'
 import { ISalonData, SalonData, SalonInformation, SalonSetting } from './SalonData'
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
-import SalonModel = require('./SalonModel');
 import { defaultSalonSetting } from './../../Core/DefaultData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator'
 import { MissingCheck, IsPhoneNumber, IsEmail, IsString } from './../../Core/Validation/ValidationDecorators'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { GoogleMap } from './../../Core/GoogleMap/GoogleMap';
+import { SalonManagementDatabaseInterface } from './../../Services/SalonDatabase/SalonManagementDatabaseInterface';
+import { FirebaseSalonManagement } from './../../Services/SalonDatabase/Firebase/FirebaseSalonManagement'
 
 export class SalonManagement implements SalonManagementBehavior {
 
-    salonId: string;
+    private salonId: string;
+    private salonDatabase: SalonManagementDatabaseInterface<ISalonData>;
 
+
+    /**
+     * Creates an instance of SalonManagement.
+     * 
+     * @param {string} salonId
+     * 
+     * @memberOf SalonManagement
+     */
     constructor(salonId: string) {
         this.salonId = salonId;
+        this.salonDatabase = new FirebaseSalonManagement(this.salonId);
     }
 
     public activate(): SalonCloudResponse<boolean> {
@@ -33,16 +44,16 @@ export class SalonManagement implements SalonManagementBehavior {
      * 
      * 
      * @param {SalonInformation} salonInformation
-     * @returns
+     * @returns {Promise<SalonCloudResponse<ISalonData>>}
      * 
      * @memberOf SalonManagement
      */
-    public async createSalonDocs(salonInformation: SalonInformation) {
+    public async createSalonDocs(salonInformation: SalonInformation): Promise<SalonCloudResponse<ISalonData>> {
 
         var returnResult: SalonCloudResponse<ISalonData> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
         var salonData: SalonData = {
             information: salonInformation,
@@ -50,24 +61,25 @@ export class SalonManagement implements SalonManagementBehavior {
         }
 
         var validations = await this.validation(salonInformation);
-        if (validations.err){
+        if (validations.err) {
             returnResult.err = validations.err;
             returnResult.code = validations.code;
             return validations;
         }
-         // get Timezone from address and puts that into salon information constructor
+        // get Timezone from address and puts that into salon information constructor
         // TODO:
         var Timezone: any = await GoogleMap.getTimeZone(salonInformation.location.address);
         salonInformation.location.timezone_id = Timezone['timeZoneId'];
 
         // create Salon record
-        var salon = new SalonModel(salonData);
-        var SalonCreation = salon.save();
-        await SalonCreation.then(function (docs) {
-            returnResult.data = docs;
-        }, function (err) {
-            returnResult.err = err;
-        })
+        try {
+            var rs = await this.salonDatabase.createSalon(salonData);
+            returnResult.code = 200;
+            returnResult.data = rs;
+        } catch (error) {
+            returnResult.code = 500;
+            returnResult.err = ErrorMessage.ServerError;
+        }
 
         return returnResult;
     };
@@ -91,7 +103,7 @@ export class SalonManagement implements SalonManagementBehavior {
     public updateSetting(setting: SalonSetting): SalonCloudResponse<boolean> {
         return;
     };
-    
+
     /**
      * 
      * 
@@ -99,22 +111,10 @@ export class SalonManagement implements SalonManagementBehavior {
      * 
      * @memberOf SalonManagement
      */
-    public getFlexibleTime(): Promise<number> {
-        let salonId = this.salonId;
-        let promise = new Promise<any>(function (resolve, reject) {
-            var flexibleTime = 0;
-            SalonModel.findOne({ '_id': salonId }, function (err, docs: ISalonData) {
-                if (err) {
-                    flexibleTime = 0;
-                } else if (!docs) {
-                    flexibleTime = 0;
-                } else {
-                    flexibleTime = docs.setting.flexible_time;
-                }
-                resolve(flexibleTime);
-            });
-        });
-        return promise;
+    public async getFlexibleTime(): Promise<number> {
+        var salon: ISalonData = null;
+        salon = await this.salonDatabase.getSalonById();
+        return salon.setting.flexible_time;
     }
 
     /**
@@ -127,9 +127,9 @@ export class SalonManagement implements SalonManagementBehavior {
      */
     public async validation(salonInformation: SalonInformation) {
         var returnResult: SalonCloudResponse<any> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
         // Validation
         // salon name validation
@@ -187,19 +187,14 @@ export class SalonManagement implements SalonManagementBehavior {
      * @memberOf SalonManagement
      */
     public async getSalonById(): Promise<ISalonData> {
-        var salon: ISalonData = undefined;
+        var salon: ISalonData = null;
         try {
-            await SalonModel.findOne({ "_id": this.salonId }, { "profile": { "$elemMatch": { "salon_id": this.salonId } } }, ).exec(function (err, docs: ISalonData) {
-                if (!err) {
-                    salon = docs;
-                } else {
-                    salon = undefined;
-                }
-            });
-        } catch (e) {
-            salon = undefined;
+            salon = await this.salonDatabase.getSalonById();
+            return salon;
+        } catch (error) {
+            throw error;
         }
-        return salon;
+
     }
 
 }

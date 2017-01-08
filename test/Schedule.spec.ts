@@ -56,7 +56,7 @@ describe('Schedule Management', function () {
         var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
         validToken = loginData.data.auth.token;
         // 3. Create salon
-        var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(undefined));
+        var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(null));
         var salonInformationInput: SalonInformation = {
             email: 'salon@salon.com',
             phone: {
@@ -66,7 +66,7 @@ describe('Schedule Management', function () {
             location: {
                 address: '2506 Bailey Dr NW, Norcross, GA 30071',
                 is_verified: false,
-                timezone_id: undefined
+                timezone_id: null
             },
             salon_name: 'Salon Appointment Test'
         }
@@ -83,7 +83,8 @@ describe('Schedule Management', function () {
             fullname: "Jimmy Tran",
             nickname: "Jimmy",
             salary_rate: 0.6,
-            cash_rate: 0.6
+            cash_rate: 0.6,
+            social_security_number: null
         };
         const employeeEmail = `${Math.random().toString(36).substring(7)}@gmail.com`;
         const employee: SalonCloudResponse<EmployeeReturn> = await owner.addEmployee(employeeEmail, employeeInput, new ByPhoneVerification());
@@ -104,7 +105,7 @@ describe('Schedule Management', function () {
         var apiUrl = '/api/v1/schedule/getsalondailyschedule';
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to get salon daily schedule without salonId', function (done) {
-            var salonId = undefined;
+            var salonId = null;
             var startDate = '2016-12-15';
             var endDate = '2016-12-27';
             var parameterUrl = apiUrl + '?salon_id=' + salonId + '&start_date=' + startDate + '&end_date=' + endDate;
@@ -260,7 +261,7 @@ describe('Schedule Management', function () {
         var apiUrl = '/api/v1/schedule/getsalonweeklyschedule';
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to get Salon Weekly schedule without salonId', function (done) {
-            var salonId = undefined;
+            var salonId = null;
             var parameterUrl = apiUrl + '?salon_id=' + salonId
             request(server)
                 .get(parameterUrl)
@@ -376,7 +377,7 @@ describe('Schedule Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to save salon daily schedule without salonId', function (done) {
-            var salonId = undefined;
+            var salonId = null;
             var date = '2016-12-27';
             var status = true;
             var openTime = 3600;
@@ -492,7 +493,7 @@ describe('Schedule Management', function () {
             var salonId = validSalonId;
             var date = '2016-12-27';
             var status = true;
-            var openTime = undefined;
+            var openTime = null;
             var closeTime = 7200;
             var bodyRequest = {
                 "salon_id": salonId,
@@ -710,6 +711,7 @@ describe('Schedule Management', function () {
 
     });
 
+
     describe('Save Salon Weekly Schedule', function () {
         var apiUrl = '/api/v1/schedule/savesalonweeklyschedule';
 
@@ -856,7 +858,7 @@ describe('Schedule Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to save salon weekly schedule without salonId', function (done) {
-            var salonId = undefined;
+            var salonId = null;
             var status = true;
             var openTime = 3600;
             var closeTime = 7200;
@@ -1747,10 +1749,10 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.status.should.be.equal(200);
-                    res.body.should.have.property('_id');
                     done();
                 });
         });
+
 
     });
 
@@ -1758,7 +1760,7 @@ describe('Schedule Management', function () {
         var apiUrl = '/api/v1/schedule/getemployeedailyschedule';
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to Get Employee Daily schedule without salonId', function (done) {
-            var salonId = undefined;
+            var salonId = null;
             var employeeId = validEmployeeId;
             var startDate = '2016-12-15';
             var endDate = '2016-12-27';
@@ -1974,7 +1976,7 @@ describe('Schedule Management', function () {
         var apiUrl = '/api/v1/schedule/getemployeeweeklyschedule';
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to get Employee Weekly schedule without salonId', function (done) {
-            var salonId = undefined;
+            var salonId = null;
             var employeeId = validEmployeeId;
 
             var parameterUrl = apiUrl + '?salon_id=' + salonId + '&employee_id=' + employeeId;
@@ -2240,7 +2242,7 @@ describe('Schedule Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to save Employee Weekly schedule without salonId', function (done) {
-            var salonId = undefined;
+            var salonId = null;
             var employeeId = validEmployeeId;
 
             var status = true;
@@ -2387,7 +2389,7 @@ describe('Schedule Management', function () {
 
         it('should return ' + ErrorMessage.MissingEmployeeId.err.name + ' error trying to save Employee Weekly schedule without employee_id', function (done) {
             var salonId = validSalonId;
-            var employeeId = undefined;
+            var employeeId = null;
 
             var status = true;
             var openTime = 3600;
@@ -3389,13 +3391,11 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.status.should.be.equal(200);
-                    res.body.should.have.property('_id');
                     done();
                 });
         });
 
     });
-
     describe('Save Employee Daily Schedule', function () {
         var apiUrl = '/api/v1/schedule/saveemployeedailyschedule';
 
@@ -3430,7 +3430,7 @@ describe('Schedule Management', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to save Employee Daily schedule with Token no permission', function (done) {          
+        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to save Employee Daily schedule with Token no permission', function (done) {
             var token = anotherUserToken;
             var salonId = validSalonId;
             var employeeId = validEmployeeId;
@@ -3463,7 +3463,7 @@ describe('Schedule Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to save Employee Daily schedule without salonId', function (done) {
-            var salonId = undefined;
+            var salonId = null;
             var employeeId = validEmployeeId;
             var date = '2016-12-27';
             var status = true;
@@ -3527,7 +3527,7 @@ describe('Schedule Management', function () {
         it('should return ' + ErrorMessage.MissingEmployeeId.err.name + ' error trying to save Employee Daily schedule without employee id', function (done) {
             var salonId = validSalonId;
 
-            var employeeId = undefined;
+            var employeeId = null;
             var date = '2016-12-27';
             var status = true;
             var openTime = 3600;
@@ -3685,7 +3685,7 @@ describe('Schedule Management', function () {
             var employeeId = validEmployeeId;
             var date = '2016-12-27';
             var status = true;
-            var openTime = undefined;
+            var openTime = null;
             var closeTime = 7200;
             var bodyRequest = {
                 "salon_id": salonId,

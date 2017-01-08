@@ -25,9 +25,9 @@ export class CustomerManagement extends UserManagement implements CustomerManage
      */
     public async addCustomerProfile(customerId: string, profile: UserProfile): Promise<SalonCloudResponse<UserProfile>> {
         var returnResult: SalonCloudResponse<UserProfile> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         }
         var newProfile: UserProfile = {
             role: RoleDefinition.Customer.value,
@@ -38,7 +38,7 @@ export class CustomerManagement extends UserManagement implements CustomerManage
             cash_rate: 0,
             fullname: profile.fullname,
             nickname: profile.nickname,
-            social_security_number: undefined,
+            social_security_number: null,
             status: true
         }
 
@@ -71,9 +71,9 @@ export class CustomerManagement extends UserManagement implements CustomerManage
      */
     public async createCustomer(customerPhone: string, customerProfile: UserProfile): Promise<SalonCloudResponse<UserToken>> {
         var response: SalonCloudResponse<UserToken> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         }
 
         var validation = await this.validateCustomerProfile(customerProfile);
@@ -125,11 +125,11 @@ export class CustomerManagement extends UserManagement implements CustomerManage
         return;
     };
 
-    private async validateCustomerProfile(profile: UserProfile): Promise<SalonCloudResponse<undefined>> {
-        var response: SalonCloudResponse<undefined> = {
-            code: undefined,
-            err: undefined,
-            data: undefined
+    private async validateCustomerProfile(profile: UserProfile): Promise<SalonCloudResponse<null>> {
+        var response: SalonCloudResponse<null> = {
+            code: null,
+            err: null,
+            data: null
         };
 
         let fullnameValidation = new BaseValidator(profile.fullname);
