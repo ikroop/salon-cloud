@@ -105,12 +105,10 @@ export class ScheduleRouter {
 
             let result = await admin.updateWeeklySchedule(null, weeklySchedule, new SalonSchedule(request.body.salon_id));
 
-            var responseData;
+            var responseData = null;
             if (result.err) {
                 responseData = result.err;
-            } else {
-                responseData = { '_id': result.data._id };
-            }
+            } 
             response.status(result.code).json(responseData);
 
         });
