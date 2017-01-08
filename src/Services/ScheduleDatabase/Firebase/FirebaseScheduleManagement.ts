@@ -144,6 +144,10 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      */
     public async saveDailySchedule(employeeId: string, dailySchedule: DailyDayData): Promise<IDailyScheduleData> {
         var dailyScheduleReturn: IDailyScheduleData = null;
+
+        // convert SalonTime to SalonTimeData JSON
+        dailySchedule.date = SalonTime.exportJSON(dailySchedule.date);
+        
         if (employeeId) {
             dailyScheduleReturn = await this.saveDailySchedule(employeeId, dailySchedule);
         } else {
@@ -279,7 +283,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      */
     private async getEmployeeDailychedule(employeeId: string, startDate: SalonTimeData, endDate: SalonTimeData): Promise<IDailyScheduleData[]> {
         var employeeDailyScheduleList: IDailyScheduleData[] = new Array();
-        await this.scheduleRef.child('daily/employees/' + employeeId).orderByChild('date/date').startAt(startDate.timestamp).endAt(endDate.timestamp).once('value', async function (snapshot) {
+        await this.scheduleRef.child('daily/employees/' + employeeId).orderByChild('date/timestamp').startAt(startDate.timestamp).endAt(endDate.timestamp).once('value', async function (snapshot) {
             var employeeDailySchedule: IDailyScheduleData = snapshot.val();
             if (employeeDailyScheduleList) {
                 employeeDailySchedule._id = snapshot.key;
@@ -301,13 +305,17 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      */
     private async getSalonDailychedule(startDate: SalonTimeData, endDate: SalonTimeData): Promise<IDailyScheduleData[]> {
         var salonDailyScheduleList: IDailyScheduleData[] = new Array();
-        await this.scheduleRef.child('daily/salon').orderByChild('date/date').startAt(startDate.timestamp).endAt(endDate.timestamp).once('value', async function (snapshot) {
+        try{
+        await this.scheduleRef.child('daily/salon').orderByChild('date/timestamp').startAt(startDate.timestamp).endAt(endDate.timestamp).once('value', async function (snapshot) {
             var salonDailySchedule: IDailyScheduleData = snapshot.val();
             if (salonDailySchedule) {
                 salonDailySchedule._id = snapshot.key;
                 salonDailyScheduleList.push(salonDailySchedule);
             }
         });
+        }catch(error){
+            throw error;
+        }
         return salonDailyScheduleList;
     }
 
@@ -337,8 +345,13 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      */
     public async saveSalonDailySchedule(dailySchedule: DailyDayData): Promise<IDailyScheduleData> {
         var employeeDailySchedule: IDailyScheduleData = null;
-        await this.scheduleRef.child('daily/salon').push().set(dailySchedule);
-        employeeDailySchedule = (await this.getSalonDailychedule(dailySchedule.date, dailySchedule.date))[0];
+
+        try {
+            await this.scheduleRef.child('daily/salon').push().set(dailySchedule);
+            employeeDailySchedule = (await this.getSalonDailychedule(dailySchedule.date, dailySchedule.date))[0];
+        } catch (error) {
+            throw error;
+        }
         return employeeDailySchedule;
     }
 

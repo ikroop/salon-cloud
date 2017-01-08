@@ -299,4 +299,17 @@ export class SalonTime implements SalonTimeData {
     public isValid(): boolean {
         return this.momentjs.isValid();
     }
+
+    public static exportJSON(time:SalonTimeData): SalonTimeData{
+        var JSONData:SalonTimeData = {
+            hour: time.hour,
+            min: time.min,
+            year: time.year,
+            month: time.month,
+            day: time.day,
+            timestamp: time.timestamp
+        };
+
+        return JSONData;
+    }
 }
