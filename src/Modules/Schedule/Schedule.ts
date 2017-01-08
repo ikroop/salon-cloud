@@ -556,8 +556,11 @@ export abstract class Schedule implements ScheduleBehavior {
 
         var dailyScheduleArrayCount: number = 0;
 
-        var start = 
-        for (var date = startDate.date, count = 0; date <= endDate.date; date.setUTCDate(date.getUTCDate() + 1), count++) {
+        // convert to Date
+        var start = new Date(startDate.timestamp);
+        var end = new Date(endDate.timestamp);
+
+        for (var date = start, count = 0; date <= end; date.setUTCDate(date.getUTCDate() + 1), count++) {
             var dailySchedule = null;
             if (dailyScheduleArrayCount < dailyScheduleArray.length) {
                 dailySchedule = dailyScheduleArray[dailyScheduleArrayCount];
