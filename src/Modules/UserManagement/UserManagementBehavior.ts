@@ -4,8 +4,6 @@ import {UserData, UserProfile} from './UserData';
 
 export interface UserManagementBehavior{
 
-    salonId: string;
-
     addUser(phone, profile : UserProfile) : boolean;
 
     getProfile(employeeId : string) :UserData;

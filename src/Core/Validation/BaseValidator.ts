@@ -24,7 +24,7 @@ export class BaseValidator extends Validator {
     }
     public validate(): any {
 
-        return undefined;
+        return null;
 
     }
 }
@@ -35,7 +35,7 @@ export abstract class DecoratingValidator extends Validator {
 
     public async validate() {
         let error: any = await this.wrapedValidator.validate();
-        if (error !== undefined) {
+        if (error !== null) {
             return error;
         } else {
             error = await this.validatingOperation();
@@ -43,16 +43,6 @@ export abstract class DecoratingValidator extends Validator {
         }
 
     };
-
-    protected isMongooseId(id: string): boolean {
-        id = String(id);
-        var match = id.match(/^[0-9a-fA-F]{24}$/);
-        if (match) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     public abstract validatingOperation();
 }

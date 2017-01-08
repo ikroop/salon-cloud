@@ -9,9 +9,9 @@ import { ErrorMessage } from './../../ErrorMessage'
 export class OverlappedAppointment implements Observer {
     public async update(inputData: any) {
         var response: SalonCloudResponse<boolean> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
         var overlappedAppointmentId = inputData.overlappedAppointmentId;
         var appointmentId = inputData.appointment.Id;

@@ -1,6 +1,11 @@
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
-import { mongoose } from './../../Services/Database';
-import { IServiceGroupData} from './ServiceData'
+import { mongoose } from './../../Database';
+import { IServiceGroupData} from './../../../Modules/ServiceManagement/ServiceData'
 
 const ServiceItemSchema = new mongoose.Schema(
     {

@@ -7,8 +7,6 @@
 import { DailyScheduleArrayData, IDailyScheduleData, IWeeklyScheduleData, WeeklyScheduleData, DailyDayData, WeeklyDayData, DailyScheduleData } from './ScheduleData';
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
 import { ScheduleBehavior } from './ScheduleBehavior';
-import WeeklyScheduleModel = require('./WeeklyScheduleModel');
-import DailyScheduleModel = require('./DailyScheduleModel');
 import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
 import { SalonTime } from './../../Core/SalonTime/SalonTime'
 
@@ -16,12 +14,14 @@ import { ErrorMessage } from './../../Core/ErrorMessage';
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
 import { MissingCheck, IsInRangeExclusively, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidSalonTimeData, IsSalonTime, IsAfterSecondDate }
     from './../../Core/Validation/ValidationDecorators';
+import { ScheduleManagementDatabaseInterface } from './../../Services/ScheduleDatabase/ScheduleManagementDatabaseInterface';
+import { FirebaseScheduleManagement } from './../../Services/ScheduleDatabase/Firebase/FirebaseScheduleManagement';
 
 export abstract class Schedule implements ScheduleBehavior {
 
     protected salonId: string;
     protected employeeId: string;
-
+    protected scheduleDatabase: ScheduleManagementDatabaseInterface<IDailyScheduleData, IWeeklyScheduleData>;
 
     //this constructor will only be called in subclass contructors;
     //we defer the identification of salonId and employeeId to subclass.
@@ -37,6 +37,7 @@ export abstract class Schedule implements ScheduleBehavior {
     constructor(salonId: string, employeeId: string) {
         this.salonId = salonId;
         this.employeeId = employeeId;
+        this.scheduleDatabase = new FirebaseScheduleManagement(this.salonId);
     };
 
     public static addDefaultSchedule(salonId: string) {
@@ -55,14 +56,14 @@ export abstract class Schedule implements ScheduleBehavior {
      */
     public async getDailySchedule(start: SalonTimeData, end: SalonTimeData): Promise<SalonCloudResponse<DailyScheduleArrayData>> {
         var resultReturn: DailyScheduleArrayData = {
-            days: undefined,
-            salon_id: undefined,
-            employee_id: undefined
+            days: null,
+            salon_id: null,
+            employee_id: null
         };
         var response: SalonCloudResponse<DailyScheduleArrayData> = {
-            code: undefined,
+            code: null,
             data: resultReturn,
-            err: undefined
+            err: null
         };
 
         var commonValidation = await this.validateCommon();
@@ -117,9 +118,9 @@ export abstract class Schedule implements ScheduleBehavior {
      */
     public async getWeeklySchedule(): Promise<SalonCloudResponse<WeeklyScheduleData>> {
         var response: SalonCloudResponse<WeeklyScheduleData> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
 
         var commonValidation = await this.validateCommon();
@@ -129,9 +130,9 @@ export abstract class Schedule implements ScheduleBehavior {
 
 
         var resultReturn: WeeklyScheduleData = {
-            salon_id: undefined,
-            employee_id: undefined,
-            week: undefined
+            salon_id: null,
+            employee_id: null,
+            week: null
         };
 
         //Step 1: call this.getWeeklyScheduleRecord(date) to get WeeklyDayData[]
@@ -149,13 +150,13 @@ export abstract class Schedule implements ScheduleBehavior {
             resultReturn.salon_id = this.salonId;
             resultReturn.employee_id = this.employeeId;
 
-            response.err = undefined;
+            response.err = null;
             response.code = 200;
             response.data = resultReturn;
         } else {
             response.err = ErrorMessage.ServerError;
             response.code = 500;
-            response.data = undefined;
+            response.data = null;
         }
         return response;
     }
@@ -173,9 +174,9 @@ export abstract class Schedule implements ScheduleBehavior {
      */
     public async saveDailySchedule(dailySchedule: DailyDayData): Promise<SalonCloudResponse<IDailyScheduleData>> {
         var response: SalonCloudResponse<IDailyScheduleData> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
 
         var commonValidation = await this.validateCommon();
@@ -193,24 +194,22 @@ export abstract class Schedule implements ScheduleBehavior {
         }
 
         //Step 2: check docs existence by calling this.checkDailySchedule(dailySchedule)
-        var existence = await this.checkDailySchedule(dailySchedule);
+        var existence = await this.scheduleDatabase.getDailySchedule(this.employeeId, dailySchedule.date, dailySchedule.date);
         //Step 3: if docs exists: call this.updateDailySchedule(dailySchedule);
         //        if docs does not exist: call this.addDailySchedule(dailySchedule);
-        if (existence.err) {
-            saveStatus = undefined;
+
+        if (existence && existence.length > 0) {
+            saveStatus = await this.updateDailySchedule(dailySchedule);
         } else {
-            if (existence.data) {
-                saveStatus = await this.updateDailySchedule(dailySchedule);
-            } else {
-                saveStatus = await this.addDailySchedule(dailySchedule);
-            }
+            saveStatus = await this.addDailySchedule(dailySchedule);
         }
+
 
         //Step 4: check result form step 3 and return proper response;
         response.data = saveStatus.data;
         if (!saveStatus.err) {
             response.code = 200;
-            response.err = undefined;
+            response.err = null;
         } else {
             response.code = 500;
             response.err = ErrorMessage.ServerError;
@@ -232,9 +231,9 @@ export abstract class Schedule implements ScheduleBehavior {
      */
     public async saveWeeklySchedule(weeklyScheduleList: WeeklyDayData[]): Promise<SalonCloudResponse<IWeeklyScheduleData>> {
         var response: SalonCloudResponse<IWeeklyScheduleData> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
 
         var commonValidation = await this.validateCommon();
@@ -252,53 +251,25 @@ export abstract class Schedule implements ScheduleBehavior {
             return response;
         }
         //check docs existence: yes>>>process update, no>>>> procee add
-        var k = await this.checkWeeklySchedule();
-        if (k.err) {
-            saveStatus = undefined;
+        var oldWeeklySchedule = await this.scheduleDatabase.getWeeklySchedule(this.employeeId);
+
+        if (oldWeeklySchedule) {
+            saveStatus = await this.updateWeeklySchedule(weeklyScheduleList);
         } else {
-            if (k.data) {
-                saveStatus = await this.updateWeeklySchedule(weeklyScheduleList);
-            } else {
-                saveStatus = await this.addWeeklySchedule(weeklyScheduleList);
-            }
+            saveStatus = await this.addWeeklySchedule(weeklyScheduleList);
         }
+
 
         response.data = saveStatus.data;
         if (!saveStatus.err) {
             response.code = 200;
-            response.err = undefined;
+            response.err = null;
         } else {
             response.code = 500;
             response.err = ErrorMessage.ServerError;
         }
         return response;
     }
-
-    /**
-     * @name checkWeeklySchedule()
-     * @parameter: { }
-     * @return: a promise resolved to SalonCloudResponse<boolean>
-     * Step 1: find WeeklyScheduleModel docs with salonId and employeeId
-     * Step 2: if docs exist, return data as true
-     *         if docs does not exist, return data as false
-     */
-    private async checkWeeklySchedule() {
-        var returnResult: SalonCloudResponse<boolean> = {
-            err: undefined,
-            code: undefined,
-            data: undefined
-        };
-        var result = await WeeklyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId }).exec(function (err, docs) {
-            if (err) {
-                return returnResult.err = err;
-            } else if (docs) {
-                return returnResult.data = true;
-            } else {
-                return returnResult.data = false;
-            }
-        });
-        return returnResult;
-    };
 
     /**
      * @name: addWeeklySchedule(weeklyScheduleList: WeeklyDayData[])
@@ -308,25 +279,20 @@ export abstract class Schedule implements ScheduleBehavior {
      * Step 2: return true if success
      *         return error if fail
      */
-    private async addWeeklySchedule(weeklyScheduleList: WeeklyDayData[]) {
+    private async addWeeklySchedule(weeklyScheduleList: WeeklyDayData[]): Promise<SalonCloudResponse<IWeeklyScheduleData>> {
         var returnResult: SalonCloudResponse<IWeeklyScheduleData> = {
-            code: undefined,
-            err: undefined,
-            data: undefined,
+            code: null,
+            err: null,
+            data: null,
         };
-        var weeklySchedule = new WeeklyScheduleModel({
-            salon_id: this.salonId,
-            employee_id: this.employeeId,
-            week: weeklyScheduleList,
-        });
-        var dataCreation = weeklySchedule.save();
-        await dataCreation.then(function (docs) {
-            returnResult.data = docs;
-            return;
-        }, function (error) {
-            returnResult.err = error
-            return;
-        })
+        try {
+            var rs = await this.scheduleDatabase.saveWeeklySchedule(this.employeeId, weeklyScheduleList);
+            returnResult.code = 200;
+            returnResult.data = rs;
+        } catch (error) {
+            returnResult.code = 500;
+            returnResult.err = ErrorMessage.ServerError;
+        }
 
         return returnResult;
     };
@@ -341,27 +307,21 @@ export abstract class Schedule implements ScheduleBehavior {
      * Step 4: return true if save success  
      *         return error if fail
      */
-    private async updateWeeklySchedule(weeklyScheduleList: WeeklyDayData[]) {
+    private async updateWeeklySchedule(weeklyScheduleList: WeeklyDayData[]): Promise<SalonCloudResponse<IWeeklyScheduleData>> {
         var returnResult: SalonCloudResponse<IWeeklyScheduleData> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
-        var docsFound = await WeeklyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId }).exec();
+        try {
+            var rs = await this.scheduleDatabase.updateWeeklySchedule(this.employeeId, weeklyScheduleList);
+            returnResult.code = 200;
+            returnResult.data = rs;
+        } catch (error) {
+            returnResult.code = 500;
+            returnResult.err = ErrorMessage.ServerError;
+        }
 
-        docsFound.week = weeklyScheduleList;
-
-        var saveAction = docsFound.save();
-        //saveAction is a promise returned by mongoose so we must use 'await' on its resolution.
-        await saveAction.then(function (docs) {
-
-            returnResult.data = docs;
-
-        }, function (err) {
-
-            returnResult.err = err;
-
-        })
         return returnResult;
     };
 
@@ -372,7 +332,7 @@ export abstract class Schedule implements ScheduleBehavior {
      * Use Validator in core
      */
     private async weeklyScheduleValidation(weeklyScheduleList: WeeklyDayData[]) {
-        var errorReturn: any = undefined;
+        var errorReturn: any = null;
 
         var tempArray: [any] = <any>[];
         for (let i = 0; i <= 6; i++) {
@@ -420,20 +380,19 @@ export abstract class Schedule implements ScheduleBehavior {
      */
     private async checkDailySchedule(dailySchedule: DailyDayData) {
         var returnResult: SalonCloudResponse<boolean> = {
-            err: undefined,
-            code: undefined,
-            data: undefined
+            err: null,
+            code: null,
+            data: null
         }
+        try {
+            var result = await this.scheduleDatabase.getDailySchedule(this.employeeId, dailySchedule.date, dailySchedule.date);
+            returnResult.code = 200;
+            returnResult.data = result.length > 0 ? true : false;
 
-        var result = await DailyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId, 'day.date.year': dailySchedule.date.year, 'day.date.month': dailySchedule.date.month, 'day.date.day': dailySchedule.date.day }).exec(function (err, docs) {
-            if (err) {
-                return returnResult.err = err;
-            } else if (docs) {
-                return returnResult.data = true;
-            } else {
-                return returnResult.data = false;
-            }
-        })
+        } catch (error) {
+            returnResult.code = 500;
+            returnResult.err = ErrorMessage.ServerError;
+        }
         return returnResult;
     };
 
@@ -447,23 +406,18 @@ export abstract class Schedule implements ScheduleBehavior {
      */
     private async addDailySchedule(dailySchedule: DailyDayData): Promise<SalonCloudResponse<IDailyScheduleData>> {
         var returnResult: SalonCloudResponse<IDailyScheduleData> = {
-            code: undefined,
-            err: undefined,
-            data: undefined,
+            code: null,
+            err: null,
+            data: null,
         };
 
-        var dataCreation = DailyScheduleModel.create({
-            salon_id: this.salonId,
-            employee_id: this.employeeId,
-            day: dailySchedule,
-        })
-        await dataCreation.then(function (docs: IDailyScheduleData) {
-            returnResult.data = docs;
-            return;
-        }, function (error) {
-            returnResult.err = error
-            return;
-        })
+        try {
+            returnResult.data = await this.scheduleDatabase.saveDailySchedule(this.employeeId, dailySchedule);
+            returnResult.code = 200;
+        } catch (error) {
+            returnResult.code = 500;
+            returnResult.err = ErrorMessage.ServerError;
+        }
         return returnResult;
     };
 
@@ -479,23 +433,17 @@ export abstract class Schedule implements ScheduleBehavior {
      */
     private async updateDailySchedule(dailySchedule: DailyDayData): Promise<SalonCloudResponse<IDailyScheduleData>> {
         var returnResult: SalonCloudResponse<IDailyScheduleData> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
-        var docsFound = await DailyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId }).exec();
-
-        docsFound.day = dailySchedule;
-
-        var saveAction = docsFound.save();
-        //saveAction is a promise returned by mongoose so we must use 'await' on its resolution.
-        await saveAction.then(function (docs: IDailyScheduleData) {
-            returnResult.data = docs;
-            return;
-        }, function (err) {
-            returnResult.err = err;
-            return;
-        })
+        try {
+            returnResult.data = await this.scheduleDatabase.updateDailySchedule(this.employeeId, dailySchedule);
+            returnResult.code = 200;
+        } catch (error) {
+            returnResult.code = 500;
+            returnResult.err = ErrorMessage.ServerError;
+        }
         return returnResult;
     };
 
@@ -506,7 +454,7 @@ export abstract class Schedule implements ScheduleBehavior {
      * Use Validator in core
      */
     private async dailyScheduleValidation(dailySchedule: DailyDayData) {
-        var errorReturn: any = undefined;
+        var errorReturn: any = null;
 
         // validation start date
         var dateValidation = new BaseValidator(dailySchedule.date);
@@ -546,28 +494,18 @@ export abstract class Schedule implements ScheduleBehavior {
      * @return: a promise resolved to SalonCloudResponse<DailyDayData>
      * Step 1: find docs of DailyScheduleModel with salonId, employeeId, and date
      * Step 2: return err if fail
-     *         return undefined if docs not found
+     *         return null if docs not found
      *         return docs.day date if found
      */
     protected async getDailyScheduleRecord(startDate: SalonTimeData, endDate: SalonTimeData): Promise<IDailyScheduleData[]> {
-        var returnResult: IDailyScheduleData[] = undefined;
-
-        var dailyDocsReturn = await DailyScheduleModel.find({
-            salon_id: this.salonId, employee_id: this.employeeId, 'day.date.date': {
-                $gte: startDate.date, $lte: endDate.date
-            }
-        }).exec(function (err, docs: IDailyScheduleData[]) {
-            if (err) {
-                console.log('err: ', err);
-            } else {
-                if (!docs) {
-                    returnResult = undefined;
-                } else {
-                    returnResult = docs;
-                }
-            }
-        });
+        var returnResult: IDailyScheduleData[] = null;
+        try {
+            var returnResult = await this.scheduleDatabase.getDailySchedule(this.employeeId, startDate, endDate);
+        } catch (error) {
+            throw error;
+        }
         return returnResult;
+
     }
 
     /**
@@ -576,24 +514,22 @@ export abstract class Schedule implements ScheduleBehavior {
      * @return: a promise resolved to SalonCloudResponse<WeeklyDayData[]>
      * Step 1: find docs of WeeklyScheduleModel with salonId, employeeId
      * Step 2: return err if fail
-     *         return undefined if docs not found
+     *         return null if docs not found
      *         return docs.day date if found
      */
     protected async getWeeklyScheduleRecord(): Promise<WeeklyDayData[]> {
-        var returnResult: WeeklyDayData[] = undefined;
-        var weeklyDocsReturn = await WeeklyScheduleModel.findOne({ salon_id: this.salonId, employee_id: this.employeeId }).exec(function (err, docs: IWeeklyScheduleData) {
-            if (err) {
-                returnResult = undefined;
-                console.log(err)
+        try {
+            var rs = await this.scheduleDatabase.getWeeklySchedule(this.employeeId);
+            if (rs) {
+                return rs.week;
             } else {
-                if (!docs) {
-                    returnResult = undefined;
-                } else {
-                    returnResult = docs.week;
-                }
+                return null;
             }
-        });
-        return returnResult;
+        } catch (error) {
+            throw error;
+        }
+
+
     }
 
     /**
@@ -617,8 +553,13 @@ export abstract class Schedule implements ScheduleBehavior {
         var dailyScheduleArray: IDailyScheduleData[] = await this.getDailyScheduleRecord(startDate, endDate);
 
         var dailyScheduleArrayCount: number = 0;
-        for (var date = startDate.date, count = 0; date <= endDate.date; date.setUTCDate(date.getUTCDate() + 1), count++) {
-            var dailySchedule = undefined;
+
+        // convert to Date
+        var start = new Date(startDate.timestamp);
+        var end = new Date(endDate.timestamp);
+
+        for (var date = start, count = 0; date <= end; date.setUTCDate(date.getUTCDate() + 1), count++) {
+            var dailySchedule = null;
             if (dailyScheduleArrayCount < dailyScheduleArray.length) {
                 dailySchedule = dailyScheduleArray[dailyScheduleArrayCount];
                 dailySchedule.day.date.date.setUTCHours(0, 0, 0, 0);
@@ -627,10 +568,10 @@ export abstract class Schedule implements ScheduleBehavior {
 
             date.setUTCHours(0, 0, 0, 0);
             targetSchedule[count] = {
-                open: undefined,
-                close: undefined,
-                status: undefined,
-                date: undefined
+                open: null,
+                close: null,
+                status: null,
+                date: null
             };
             if (!dailySchedule || date.getTime() != dailySchedule.day.date.date.getTime()) {
 
@@ -646,7 +587,7 @@ export abstract class Schedule implements ScheduleBehavior {
                         }
                     }
                 } else {
-                    console.log('TODO: WeekScheduleArray undefined!');
+                    console.log('TODO: WeekScheduleArray null!');
                 }
             } else {
 
@@ -694,16 +635,16 @@ export abstract class Schedule implements ScheduleBehavior {
      * 
      * @memberOf Schedule
      */
-    protected async validateCommon(): Promise<SalonCloudResponse<undefined>> {
+    protected async validateCommon(): Promise<SalonCloudResponse<null>> {
         var response: SalonCloudResponse<any> = {
-            code: undefined,
-            err: undefined,
-            data: undefined
+            code: null,
+            err: null,
+            data: null
         };
 
         // validation salonId
         var salonIdValidation = new BaseValidator(this.salonId);
-        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
+        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.SalonNotFound);
         salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
         var salonIdError = await salonIdValidation.validate();
 
@@ -719,5 +660,5 @@ export abstract class Schedule implements ScheduleBehavior {
 
     protected abstract normalizeDailySchedule(dailySchedule: DailyDayData[]);
     protected abstract normalizeWeeklySchedule(weeklySchedule: WeeklyDayData[]);
-    protected abstract validateExt(): Promise<SalonCloudResponse<undefined>>;
+    protected abstract validateExt(): Promise<SalonCloudResponse<null>>;
 }

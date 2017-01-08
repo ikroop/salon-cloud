@@ -1,6 +1,5 @@
 
-import { UserData, UserProfile } from './UserData'
-import UserModel = require('./UserModel')
+import { UserData, UserProfile, IUserData } from './UserData'
 import { EmployeeManagementBehavior } from './EmployeeManagementBehavior'
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { ErrorMessage } from './../../Core/ErrorMessage'
@@ -28,13 +27,13 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
     public async addEmployeeProfile(employeeId: string, profile: UserProfile): Promise<SalonCloudResponse<UserProfile>> {
 
         var returnResult: SalonCloudResponse<UserProfile> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
 
         var validations = await this.validation(profile);
-        if (validations.err){
+        if (validations.err) {
             returnResult.code = validations.code;
             returnResult.err = validations.err;
             return returnResult;
@@ -62,7 +61,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         }
 
     };
-    
+
     /**
      * 
      * 
@@ -74,11 +73,11 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
     public async validation(employeeProfile: UserProfile) {
 
         var response: SalonCloudResponse<UserProfile> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
-         // 'phone' validation
+        // 'phone' validation
         var phoneNumberValidation = new BaseValidator(employeeProfile.phone);
         phoneNumberValidation = new MissingCheck(phoneNumberValidation, ErrorMessage.MissingPhoneNumber);
         phoneNumberValidation = new IsPhoneNumber(phoneNumberValidation, ErrorMessage.WrongPhoneNumberFormat);
@@ -174,20 +173,18 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
      */
     public async getAllEmployee(): Promise<SalonCloudResponse<Array<UserData>>> {
         var response: SalonCloudResponse<Array<UserData>> = {
-            data: undefined,
-            code: undefined,
-            err: undefined
+            data: null,
+            code: null,
+            err: null
         }
-        var userSearch = UserModel.find({ 'profile.salon_id': this.salonId, 'profile.status': true, 'profile.role': { $in: [2, 3] } }).exec();
-        await userSearch.then(function (docs) {
-            response.data = docs;
+        var employees: IUserData[] = await this.userDatabase.getAllEmployees();
+        if (employees) {
+            response.data = employees;
             response.code = 200;
-
-
-        }, function (err) {
-            response.err = err;
+        } else {
+            response.err = ErrorMessage.ServerError;
             response.code = 500;
-        });
+        }
         return response;
     };
 

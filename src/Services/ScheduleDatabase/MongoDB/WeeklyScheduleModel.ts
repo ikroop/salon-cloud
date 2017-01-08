@@ -1,6 +1,6 @@
 
-import { mongoose } from './../../Services/Database';
-import { IWeeklyScheduleData } from './ScheduleData'
+import { mongoose } from './../../../Services/Database';
+import { IWeeklyScheduleData } from './../../../Modules/Schedule/ScheduleData'
 
 const WeeklyDaySchema = new mongoose.Schema({
     close: { type: Number, required: true },

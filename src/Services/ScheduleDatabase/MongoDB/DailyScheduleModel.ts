@@ -4,9 +4,9 @@
  *
  */
 
-import { mongoose } from './../../Services/Database';
-import { IDailyScheduleData } from './ScheduleData'
-import { SalonTimeSchema } from './../../Core/SalonTime/SalonTimeSchema';
+import { mongoose } from './../../../Services/Database';
+import { IDailyScheduleData } from './../../../Modules/Schedule/ScheduleData'
+import { SalonTimeSchema } from './../../../Core/SalonTime/SalonTimeSchema';
 const DailyDaySchema = new mongoose.Schema({
     close: { type: Number, required: true },
     open: { type: Number, required: true },

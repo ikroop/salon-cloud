@@ -7,6 +7,7 @@
 import { mongoose } from './../../Services/Database';
 import { Document } from 'mongoose';
 import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
+import { FirebaseDocument } from './../../Services/FirebaseDocument';
 
 export interface ScheduleItemData {
     close: number,
@@ -40,5 +41,5 @@ export interface DailyScheduleArrayData {
     days: DailyDayData[]
 }
 
-export interface IWeeklyScheduleData extends WeeklyScheduleData, mongoose.Document { }
-export interface IDailyScheduleData extends DailyScheduleData, mongoose.Document { }
+export interface IWeeklyScheduleData extends WeeklyScheduleData, FirebaseDocument{};//mongoose.Document { }
+export interface IDailyScheduleData extends DailyScheduleData, FirebaseDocument{};

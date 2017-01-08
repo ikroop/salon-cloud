@@ -1,10 +1,11 @@
-//
-//
-//
-//
-//
-//
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
+
 import { mongoose } from './../../Services/Database';
+import { FirebaseDocument } from './../../Services/FirebaseDocument';
 
 export interface SalonInformation {
     salon_name: string;
@@ -25,6 +26,7 @@ export interface SalonSetting {
     appointment_reminder: boolean;
     flexible_time: number;
     technician_checkout: boolean;
+    enable_online_booking: boolean;
 }
 
 export interface SalonData {
@@ -32,4 +34,4 @@ export interface SalonData {
     setting: SalonSetting
 }
 
-export interface ISalonData extends SalonData, mongoose.Document{}
+export interface ISalonData extends SalonData, FirebaseDocument{}//mongoose.Document{}

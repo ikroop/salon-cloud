@@ -2,8 +2,8 @@
  * 
  * 
  */
-import { mongoose } from './../../Services/Database';
-import { ISalonData } from './SalonData';
+import { mongoose } from './../../Database';
+import { ISalonData } from './../../../Modules/SalonManagement/SalonData';
 
 const SalonProfileSchema = new mongoose.Schema({
     setting: {

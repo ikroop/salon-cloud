@@ -6,7 +6,6 @@
 
 import { SalonCloudResponse } from './../SalonCloudResponse';
 import { ErrorMessage } from './../ErrorMessage';
-import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { IUserData, UserData, UserProfile } from './../../Modules/UserManagement/UserData'
 import jwt = require('jsonwebtoken');
 import fs = require('fs');
@@ -14,14 +13,13 @@ import { BaseValidator } from './../../Core/Validation/BaseValidator';
 import { MissingCheck, IsString, IsLengthGreaterThan, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidUserName }
     from './../../Core/Validation/ValidationDecorators';
 import { UserToken } from './AuthenticationData';
-import { AuthenticationDatabaseInterface } from './AuthenticationDatabaseInterface';
-import { FirebaseAuthenticationDatabase } from './FirebaseAuthenticationDatabase';
-import { MongoAuthenticationDatabase } from './MongoAuthenticationDatabase';
+import { AuthenticationDatabaseInterface } from './../../Services/AuthenticationDatabase/AuthenticationDatabaseInterface';
+import { FirebaseAuthenticationDatabase } from './../../Services/AuthenticationDatabase/Firebase/FirebaseAuthenticationDatabase';
 
 export class Authentication {
     private authenticationDatabase: AuthenticationDatabaseInterface;
     constructor() {
-        this.authenticationDatabase = new MongoAuthenticationDatabase();
+        this.authenticationDatabase = new FirebaseAuthenticationDatabase();
     }
     changePassword(oldPasswords: string, newPassword: string, code: string) {
 
@@ -45,11 +43,11 @@ export class Authentication {
       *              - code: 200
       * @memberOf Authentication
       */
-    public async signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<undefined>> {
-        var response: SalonCloudResponse<undefined> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+    public async signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<null>> {
+        var response: SalonCloudResponse<null> = {
+            code: null,
+            data: null,
+            err: null
         };
         // Validate Username
         var usernameValidator = new BaseValidator(username);
@@ -103,9 +101,9 @@ export class Authentication {
     public async signInWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<UserToken>> {
 
         var response: SalonCloudResponse<UserToken> = {
-            code: undefined,
-            data: undefined,
-            err: undefined
+            code: null,
+            data: null,
+            err: null
         };
 
         // Validate Username
@@ -136,7 +134,7 @@ export class Authentication {
      * @description verify User Token
      * @param {string} token
      * @returns
-     *     {undefined} User Token is undefined.
+     *     {null} User Token is null.
      *     {SalonCloudResponse} code 403, error = 'InvalidToken' || code 200, data = { _id: string, username: string, status: boolean }
      * @memberOf Authentication
      */

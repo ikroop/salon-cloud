@@ -5,8 +5,6 @@
 import { mongoose } from './../../Services/Database';
 import { Schedule } from './Schedule';
 import { ScheduleItemData, IDailyScheduleData, IWeeklyScheduleData, DailyDayData, WeeklyDayData } from './ScheduleData';
-import WeeklyScheduleModel = require('./WeeklyScheduleModel');
-import DailyScheduleModel = require('./DailyScheduleModel');
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
 import { MissingCheck, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidEmployeeId }
@@ -48,8 +46,8 @@ export class EmployeeSchedule extends Schedule {
             //Step 3: case 1: return updated DailyDayData;
             return employeeDailyDayData;
         } else {
-            //Step 3: case 2: return undefined if salon has no schedule on that date
-            return undefined;
+            //Step 3: case 2: return null if salon has no schedule on that date
+            return null;
         }
 
     }
@@ -87,8 +85,8 @@ export class EmployeeSchedule extends Schedule {
             //Step 3: case 1: return updated WeeklyDayData[]
             return employeeWeeklyDayDataArray;
         } else {
-            //Step 3: case 2: return undefined if salon has no weeklySchedule
-            return undefined;
+            //Step 3: case 2: return null if salon has no weeklySchedule
+            return null;
         }
 
     };
@@ -142,15 +140,15 @@ export class EmployeeSchedule extends Schedule {
      * 
      * 
      * @protected
-     * @returns {Promise<SalonCloudResponse<undefined>>}
+     * @returns {Promise<SalonCloudResponse<null>>}
      * 
      * @memberOf EmployeeSchedule
      */
-    protected async validateExt(): Promise<SalonCloudResponse<undefined>> {
-        var response: SalonCloudResponse<undefined> = {
-            code: undefined,
-            err: undefined,
-            data: undefined
+    protected async validateExt(): Promise<SalonCloudResponse<null>> {
+        var response: SalonCloudResponse<null> = {
+            code: null,
+            err: null,
+            data: null
         };
 
         let employeeIdValidation = new BaseValidator(this.employeeId);
@@ -163,7 +161,7 @@ export class EmployeeSchedule extends Schedule {
             response.err = employeeIdError;
             return response;
         } else {
-            return undefined
+            return null
         }
 
     }

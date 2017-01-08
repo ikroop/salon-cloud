@@ -6,18 +6,15 @@
 
 import { Validator, DecoratingValidator, BaseValidator } from './BaseValidator';
 
-import SalonModel = require('./../../Modules/SalonManagement/SalonModel');
-import ServiceGroupModel = require('./../../Modules/ServiceManagement/ServiceModel');
 import { IServiceGroupData } from './../../Modules/ServiceManagement/ServiceData';
 import { ErrorMessage } from './../ErrorMessage';
-import UserModel = require('./../../Modules/UserManagement/UserModel');
 import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceManagement';
 import { UserManagement } from './../../Modules/UserManagement/UserManagement';
 import { SalonManagement } from './../../Modules/SalonManagement/SalonManagement';
 import * as moment from 'moment';
 import { SalonTime } from './../SalonTime/SalonTime';
 //Validate if target element is missing.
-//To pass the test: Target Element must not be undefined.
+//To pass the test: Target Element must not be null.
 export class MissingCheck extends DecoratingValidator {
 
     public errorType: any;
@@ -31,10 +28,10 @@ export class MissingCheck extends DecoratingValidator {
     }
 
     public validatingOperation() {
-        if (this.targetElement === undefined) {
+        if (this.targetElement === null || this.targetElement === 'undefined' || this.targetElement === undefined) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 }
@@ -57,7 +54,7 @@ export class IsString extends DecoratingValidator {
         if (typeof this.targetElement !== 'string') {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 }
@@ -80,7 +77,7 @@ export class IsNumber extends DecoratingValidator {
         if (typeof this.targetElement !== 'number') {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 }
@@ -108,7 +105,7 @@ export class IsInRange extends DecoratingValidator {
         if (this.targetElement < this.floor || this.targetElement > this.ceiling) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 }
@@ -136,7 +133,7 @@ export class IsInRangeExclusively extends DecoratingValidator {
         if (this.targetElement <= this.floor || this.targetElement >= this.ceiling) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 }
@@ -161,7 +158,7 @@ export class IsGreaterThan extends DecoratingValidator {
         if (this.targetElement <= this.secondElement) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 }
@@ -185,7 +182,7 @@ export class IsLessThan extends DecoratingValidator {
         if (this.targetElement >= this.secondElement) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 }
@@ -209,7 +206,7 @@ export class IsEmail extends DecoratingValidator {
         if (!this.targetElement.match(emailReg)) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 }
@@ -233,7 +230,7 @@ export class IsPhoneNumber extends DecoratingValidator {
         if (!this.targetElement.match(phoneReg)) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 }
@@ -257,7 +254,7 @@ export class IsSSN extends DecoratingValidator {
         if (!this.targetElement.match(SSNReg)) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 }
@@ -281,7 +278,7 @@ export class IsInArray extends DecoratingValidator {
         if (this.usedArray.indexOf(this.targetElement) == -1) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 }
@@ -304,7 +301,7 @@ export class IsNotInArray extends DecoratingValidator {
         if (this.usedArray.indexOf(this.targetElement) !== -1) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 }
@@ -322,15 +319,16 @@ export class IsValidSalonId extends DecoratingValidator {
     public async validatingOperation() {
         var salonId = this.targetElement;
         // Check Id valid or not
-        if (!this.isMongooseId(salonId)){
-            return this.errorType;
-        }
 
         var salonManagement = new SalonManagement(salonId);
-        var response = await salonManagement.getSalonById();
-        if (response && response._id) {
-            return undefined;
-        } else {
+        try {
+            var response = await salonManagement.getSalonById();
+            if (response && response._id) {
+                return null;
+            } else {
+                return this.errorType;
+            }
+        } catch (error) {
             return this.errorType;
         }
     }
@@ -354,7 +352,7 @@ export class IsValidNameString extends DecoratingValidator {
         if (strimmedString.length == 0) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 
@@ -385,7 +383,7 @@ export class IsValidUserName extends DecoratingValidator {
         if (usernameEmailResult && usernamePhoneResult) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
 
     }
@@ -411,7 +409,7 @@ export class IsLengthGreaterThan extends DecoratingValidator {
         if (name.length < this.minimumLength) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 
@@ -441,7 +439,7 @@ export class IsServiceGroupNameExisted extends DecoratingValidator {
         if (response.data) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 }
@@ -464,14 +462,11 @@ export class IsValidServiceId extends DecoratingValidator {
         var serviceId = this.targetElement;
         var salonId = this.salonId;
         // Check Id valid or not
-        if (!this.isMongooseId(serviceId)){
-            return this.errorType;
-        }
 
         var serviceManagement = new ServiceManagement(salonId);
         var response = await serviceManagement.getServiceItemById(serviceId);
         if (response.data) {
-            return undefined;
+            return null;
         } else {
             return this.errorType;
         }
@@ -496,18 +491,18 @@ export class IsValidEmployeeId extends DecoratingValidator {
         var employeeId = this.targetElement;
         var salonId = this.salonId;
 
-        // Check Id valid or not
-        if (!this.isMongooseId(salonId)){
-            return this.errorType;
-        }
         var userManagement = new UserManagement(this.salonId);
-
-        var response = await userManagement.getUserById(employeeId);
-        if (response && response.profile.length === 1) {
-            return undefined;
-        } else {
+        try {
+            var response = await userManagement.getUserById(employeeId);
+            if (response && response.profile.length === 1) {
+                return null;
+            } else {
+                return this.errorType;
+            }
+        } catch (error) {
             return this.errorType;
         }
+
     }
 
 }
@@ -526,7 +521,7 @@ export class IsSalonTime extends DecoratingValidator {
 
     public async validatingOperation() {
         if (this.targetElement.isValid()) {
-            return undefined;
+            return null;
         } else {
             return this.errorType;
         }
@@ -554,7 +549,7 @@ export class IsAfterSecondDate extends DecoratingValidator {
         if (moment(this.targetElement).isBefore(this.secondElement)) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 
@@ -579,7 +574,7 @@ export class IsBeforeSecondDate extends DecoratingValidator {
         if (moment(this.targetElement).isAfter(this.secondElement)) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 
@@ -604,7 +599,7 @@ export class IsValidSalonTimeData extends DecoratingValidator {
         if (!moment(dateString, ["'YYYY-MM-DD HH:mm:ss'", "YYYY-MM-DD", 'YYYY-MM-DD HH:mm']).isValid()) {
             return this.errorType;
         } else {
-            return undefined;
+            return null;
         }
     }
 

@@ -11,8 +11,6 @@ import { SalonManagementRouter } from './Routes/SalonManagement';
 import { ServiceManagementRouter } from './Routes/ServiceManagement';
 import { AppointmentManagementRouter } from './Routes/AppointmentManagement';
 
-import UserModel = require('./Modules/UserManagement/UserModel');
-
 const app: express.Application = express();
 //var authorizationRouter: AuthorizationRouter = new AuthorizationRouter();
 // Configuration
@@ -20,7 +18,7 @@ const app: express.Application = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(passport.initialize());
+/*app.use(passport.initialize());
 app.use(passport.session());
 
 // passport config
@@ -28,7 +26,7 @@ var LocalStrategy = passportLocal.Strategy;
 
 passport.use(new LocalStrategy(UserModel.authenticate()));
 passport.serializeUser(UserModel.serializeUser());
-passport.deserializeUser(UserModel.deserializeUser());
+passport.deserializeUser(UserModel.deserializeUser());*/
 
 app.get('/', (req, res) => {
     res.json({ 'name': 'SalonCloud Server' });

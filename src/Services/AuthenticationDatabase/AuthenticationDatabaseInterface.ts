@@ -3,11 +3,11 @@
  * Copyright SalonHelps. All Rights Reserved.
  *
  */
-import { SalonCloudResponse } from './../SalonCloudResponse';
-import { UserToken } from './AuthenticationData';
+import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
+import { UserToken } from './../../Core/Authentication/AuthenticationData';
 
 export interface AuthenticationDatabaseInterface {
-    signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<undefined>>;
+    signUpWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<null>>;
     signInWithUsernameAndPassword(username: string, password: string):Promise<SalonCloudResponse<UserToken>>;
     verifyToken(token:string);
 }

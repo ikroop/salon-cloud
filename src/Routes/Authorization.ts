@@ -42,7 +42,7 @@ export class AuthorizationRouter {
                 response.json(tokenStatus.err);
             }
         } else { // anonymous
-            var role = await authorization.checkPermission(undefined, request.body.salon_id, request.originalUrl);
+            var role = await authorization.checkPermission(null, request.body.salon_id, request.originalUrl);
             if (role.data) {
                 next();
             } else {

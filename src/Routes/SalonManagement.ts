@@ -9,7 +9,7 @@ import { SignedInUser } from './../Core/User/SignedInUser';
 import { SalonManagement } from './../Modules/SalonManagement/SalonManagement';
 import { UserManagement } from './../Modules/UserManagement/UserManagement';
 import { SalonInformation } from './../Modules/SalonManagement/SalonData'
-import {EmployeeManagement} from './../Modules/UserManagement/EmployeeManagement';
+import { EmployeeManagement } from './../Modules/UserManagement/EmployeeManagement';
 
 export class SalonManagementRouter {
     private router: Router = Router();
@@ -17,31 +17,31 @@ export class SalonManagementRouter {
     getRouter(): Router {
         var authentication = new Authentication();
         var authorizationRouter = new AuthorizationRouter();
-        this.router.post('/test', async (request: Request, response: Response)=>{
+        this.router.post('/test', async (request: Request, response: Response) => {
 
             var testObj = new EmployeeManagement('57faa2692579df79216a153c');
             await testObj.getAllEmployee();
         })
         this.router.post('/create', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
-            var signedUser = new SignedInUser(request.user._id, new SalonManagement(undefined));//Todo
+            var signedUser = new SignedInUser(request.user._id, new SalonManagement(null));//Todo
             var salonInformationInput: SalonInformation = {
-                email: request.body.email,
+                email: request.body.email || null,
                 phone: {
-                    number: request.body.phonenumber,
+                    number: request.body.phonenumber || null,
                     is_verified: false
                 },
                 location: {
-                    address: request.body.address,
+                    address: request.body.address || null,
                     is_verified: false,
-                    timezone_id: undefined
+                    timezone_id: null
                 },
-                salon_name: request.body.salon_name,
+                salon_name: request.body.salon_name || null,
             }
 
             var salonCreation = await signedUser.createSalon(salonInformationInput);
             var dataReturn;
             if (salonCreation.err) {
-                dataReturn = salonCreation.err                
+                dataReturn = salonCreation.err
             } else {
                 dataReturn = {
                     '_id': salonCreation.data

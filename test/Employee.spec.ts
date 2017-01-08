@@ -40,7 +40,7 @@ describe('Employee Management', function () {
         var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
         validToken = loginData.data.auth.token;
         // 3. Create salon
-        var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(undefined));
+        var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(null));
         var salonInformationInput: SalonInformation = {
             email: 'salon@salon.com',
             phone: {
@@ -50,7 +50,7 @@ describe('Employee Management', function () {
             location: {
                 address: '2506 Bailey Dr NW, Norcross, GA 30071',
                 is_verified: false,
-                timezone_id: undefined
+                timezone_id: null
             },
             salon_name: 'Salon Appointment Test'
         }
@@ -157,36 +157,6 @@ describe('Employee Management', function () {
                     done();
                 });
         });
-
-        /*it('should return ' + ErrorMessage.WrongIdFormat.err.name + ' error trying to create new employee wrong-format salon id', function (done) {
-            var token = validToken;
-            var salonId = invalidSalonId;
-            var bodyRequest = {
-                'salon_id': salonId,
-                'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
-                'fullname': 'Thanh Le',
-                'nickname': 'Lee',
-                'salary_rate': 6,
-                'cash_rate': 6,
-                'social_security_number': '165374245'
-            };
-            request(server)
-                .post(apiUrl)
-                .send(bodyRequest)
-                .set({ 'Authorization': token })
-
-                .end(function (err, res) {
-                    if (err) {
-                        throw err;
-                    }
-
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.WrongIdFormat.err.name);
-                    done();
-                });
-        });*/
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to create new employee wrong salon id', function (done) {
             var token = validToken;
