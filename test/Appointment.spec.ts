@@ -121,10 +121,11 @@ describe('Appointment Management', function () {
         const service_array = await serviceManagement.getServices();
         var validGroupService = service_array.data[0];
         validServiceId = validGroupService.service_list[0]._id;
-
+        
         // Get Daily Schedule
         const employeeSchedule = new EmployeeSchedule(validSalonId, validEmployeeId);
 
+        //employeeDailySchedule = EmployeeSchedule.getDailySchedule()
         var salonTime = new SalonTime();
         // set date to SalonTime Object
         const employeeDailySchedule = await employeeSchedule.getDailySchedule(salonTime, salonTime);
@@ -851,36 +852,34 @@ describe('Appointment Management', function () {
         //             - name: 'AppointmentCanNotBeDoneWithinSalonWorkingTime' 
         //             - message: 'Appointment cannot be done within salon's working time'
         // */
-        // it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which cannot be done within salon\'s working time', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "customer_name": rightFormattedName,
-        //         "salon_id": validSalonId,
-        //         "note": "Appointment note",
-        //         "services": [{
-        //             service_id: validServiceId,
-        //             employee_id: notFoundEmployeeId
-        //         }, {
-        //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }]
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which cannot be done within salon\'s working time', function (done) {
+            var bodyRequest = {
+                 "customer_phone": rightFormattedPhoneNumber,
+                 "customer_name": rightFormattedName,
+                 "salon_id": validSalonId,
+                 "note": "Appointment note",
+                "services": [{
+                    start: "2017-02-01 21:50:00",
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
-        //             done();
-        //         });
-        // });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    done();
+                });
+        });
 
         // /* 18	currentAppointment.Start < anotherAppointment.End 	400	
         //         error : 
