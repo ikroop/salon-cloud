@@ -149,7 +149,7 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
         dailySchedule.date = SalonTime.exportJSON(dailySchedule.date);
 
         if (employeeId) {
-            dailyScheduleReturn = await this.saveDailySchedule(employeeId, dailySchedule);
+            dailyScheduleReturn = await this.saveEmployeeDailySchedule(employeeId, dailySchedule);
         } else {
             dailyScheduleReturn = await this.saveSalonDailySchedule(dailySchedule);
         }
@@ -294,13 +294,17 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      */
     private async getEmployeeDailychedule(employeeId: string, startDate: SalonTimeData, endDate: SalonTimeData): Promise<IDailyScheduleData[]> {
         var employeeDailyScheduleList: IDailyScheduleData[] = new Array();
-        await this.scheduleRef.child('daily/employees/' + employeeId).orderByChild('date/timestamp').startAt(startDate.timestamp).endAt(endDate.timestamp).once('value', async function (snapshot) {
-            var employeeDailySchedule: IDailyScheduleData = snapshot.val();
-            if (employeeDailyScheduleList) {
-                employeeDailySchedule._id = snapshot.key;
-                employeeDailyScheduleList.push(employeeDailySchedule);
-            }
-        });
+        try {
+            await this.scheduleRef.child('daily/employees/' + employeeId).orderByChild('date/timestamp').startAt(startDate.timestamp).endAt(endDate.timestamp).once('value', async function (snapshot) {
+                var employeeDailySchedule: IDailyScheduleData = snapshot.val();
+                if (employeeDailySchedule) {
+                    employeeDailySchedule._id = snapshot.key;
+                    employeeDailyScheduleList.push(employeeDailySchedule);
+                }
+            });
+        } catch (error) {
+            throw error;
+        }
         return employeeDailyScheduleList;
     }
 
@@ -341,8 +345,12 @@ export class FirebaseScheduleManagement implements ScheduleManagementDatabaseInt
      */
     public async saveEmployeeDailySchedule(employeeId: string, dailySchedule: DailyDayData): Promise<IDailyScheduleData> {
         var employeeDailySchedule: IDailyScheduleData = null;
-        await this.scheduleRef.child('daily/employees/' + employeeId).push().set(dailySchedule);
-        employeeDailySchedule = (await this.getEmployeeDailychedule(employeeId, dailySchedule.date, dailySchedule.date))[0];
+        try {
+            await this.scheduleRef.child('daily/employees/' + employeeId).push().set(dailySchedule);
+            employeeDailySchedule = (await this.getEmployeeDailychedule(employeeId, dailySchedule.date, dailySchedule.date))[0];
+        } catch (error) {
+            throw error;
+        }
         return employeeDailySchedule;
     }
 

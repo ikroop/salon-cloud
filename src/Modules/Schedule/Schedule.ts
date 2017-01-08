@@ -194,18 +194,16 @@ export abstract class Schedule implements ScheduleBehavior {
         }
 
         //Step 2: check docs existence by calling this.checkDailySchedule(dailySchedule)
-        var existence = await this.checkDailySchedule(dailySchedule);
+        var existence = await this.scheduleDatabase.getDailySchedule(this.employeeId, dailySchedule.date, dailySchedule.date);
         //Step 3: if docs exists: call this.updateDailySchedule(dailySchedule);
         //        if docs does not exist: call this.addDailySchedule(dailySchedule);
-        if (existence.err) {
-            saveStatus = null;
+
+        if (existence && existence.length > 0) {
+            saveStatus = await this.updateDailySchedule(dailySchedule);
         } else {
-            if (existence.data) {
-                saveStatus = await this.updateDailySchedule(dailySchedule);
-            } else {
-                saveStatus = await this.addDailySchedule(dailySchedule);
-            }
+            saveStatus = await this.addDailySchedule(dailySchedule);
         }
+
 
         //Step 4: check result form step 3 and return proper response;
         response.data = saveStatus.data;

@@ -165,8 +165,6 @@ export class ScheduleRouter {
             var responseData;
             if (result.err) {
                 responseData = result.err;
-            } else {
-                responseData = { '_id': result.data._id };
             }
             response.status(result.code).json(responseData);
 
