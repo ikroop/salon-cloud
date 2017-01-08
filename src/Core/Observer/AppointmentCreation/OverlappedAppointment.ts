@@ -2,7 +2,7 @@ import { AppointmentItemData } from './../../../Modules/AppointmentManagement/Ap
 import AppointmentModel = require('./../../../Modules/AppointmentManagement/AppointmentModel');
 import { Observable } from './../Observable'
 import { Observer } from './../Observer'
-import { SalonTime } from './../../SalonTime/salonTime'
+import { SalonTime } from './../../SalonTime/SalonTime'
 import { SalonCloudResponse } from './../../SalonCloudResponse'
 import { ErrorMessage } from './../../ErrorMessage'
 

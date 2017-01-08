@@ -4,7 +4,7 @@
  *
  */
 
-import { mongoose } from '../../Services/Database';
+import { FirebaseDocument } from './../../Services/FirebaseDocument';
 import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
 
 export interface BookedServiceData {
@@ -46,4 +46,4 @@ export interface SaveAppointmentData {
     services: AppointmentItemData[];
 }
 
-export interface IAppointmentData extends AppointmentData, mongoose.Document { };
+export interface IAppointmentData extends AppointmentData, FirebaseDocument { };
