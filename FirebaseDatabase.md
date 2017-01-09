@@ -82,18 +82,18 @@ root
   |     |     |     |----<appointment_id>
   |     |     |           |----comment: string
   |     |     |           |----device: number, 1: phone, 2: web, 3: app
-  |     |     |           |----appointment_items:Array
-  |     |     |           |----id: string
-  |     |     |           |----employee_id: string
-  |     |     |           |----services
-  |     |     |           |     |----<service_id>
-  |     |     |           |           |----service_name: string
-  |     |     |           |           |----time: number
-  |     |     |           |           |----price: number
-  |     |     |           |----start: SalonTime
-  |     |     |           |----overlapped:
-  |     |     |           |     |----status: boolean
-  |     |     |           |     |----appointment_id: string (optional)
+  |     |     |           |----appointment_items
+  |     |     |                 |----id: string
+  |     |     |                 |----employee_id: string
+  |     |     |                 |----services
+  |     |     |                 |     |----<service_id>
+  |     |     |                 |           |----service_name: string
+  |     |     |                 |           |----time: number
+  |     |     |                 |           |----price: number
+  |     |     |                 |----start: SalonTime
+  |     |     |                 |----overlapped:
+  |     |     |                 |     |----status: boolean
+  |     |     |                 |     |----appointment_id: string (optional)
   |     |     |           |----customer_id(uid): string
   |     |     |           |----status: number, 1: booked, 2: checked in, 3: in-process, 4: done, 5: paid
   |     |     |           |----type: number, 1: booking, 2: check-in
