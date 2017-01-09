@@ -38,6 +38,10 @@ describe('Appointment Management', function () {
     var anotherUserId;
     var anotherUserToken;
     var notFoundServiceId = '5825e03651934227174516d8';
+    var employeeScheduleOpenTime, employeeScheduleCloseTime;
+    var aTimeCase15, aTimeCase16, aTimeCase17, aTimeCase18, aTimeCase19;//TODO
+    var aTimeCase20, aTimeCase21, aTimeCase22, aTimeCase23, aTimeCase24;//TODO
+    var aTimeCase25, aTimeCase26, aTimeCase271, aTimeCase272, aTimeCase28, aTimeCase29;//TODO
 
     const date = new Date(2018, 3, 13);
 
@@ -121,7 +125,7 @@ describe('Appointment Management', function () {
         const service_array = await serviceManagement.getServices();
         var validGroupService = service_array.data[0];
         validServiceId = validGroupService.service_list[0]._id;
-        
+
         // Get Daily Schedule
         const employeeSchedule = new EmployeeSchedule(validSalonId, validEmployeeId);
 
@@ -129,6 +133,27 @@ describe('Appointment Management', function () {
         var salonTime = new SalonTime();
         // set date to SalonTime Object
         const employeeDailySchedule = await employeeSchedule.getDailySchedule(salonTime, salonTime);
+
+        employeeScheduleOpenTime = employeeDailySchedule.data.days[0].open;
+        employeeScheduleCloseTime = employeeDailySchedule.data.days[0].close;
+
+        aTimeCase15 = employeeScheduleOpenTime - 70 * 60;
+        aTimeCase16 = employeeScheduleCloseTime + 70 * 60;
+        aTimeCase17 = employeeScheduleCloseTime - 30 * 60;
+        aTimeCase18 = employeeScheduleOpenTime;
+        aTimeCase19 = employeeScheduleCloseTime - 60 * 60;
+        aTimeCase20 = employeeScheduleOpenTime + 30 * 60;
+        aTimeCase21 = employeeScheduleCloseTime - 90 * 60;
+        aTimeCase22 = employeeScheduleOpenTime + 45 * 60;
+        aTimeCase23 = employeeScheduleCloseTime - 75 * 60;
+        aTimeCase24 = employeeScheduleOpenTime + 90 * 60;
+        aTimeCase25 = employeeScheduleCloseTime - 120 * 60;
+        aTimeCase26 = employeeScheduleCloseTime - 70 * 60;
+        aTimeCase271 = employeeScheduleOpenTime + 180 * 60;
+        aTimeCase272 = employeeScheduleOpenTime + 280 * 60;
+        aTimeCase28 = employeeScheduleOpenTime + 170 * 60; //Need a longer Service Time
+        aTimeCase29 = employeeScheduleOpenTime + 230 * 60;
+
 
     });
 
@@ -809,43 +834,43 @@ describe('Appointment Management', function () {
                 });
         });
 
-         /* 16	AppointmentTime.Start > SalonDailySchedule.Close	400	
-                 error : 
-                     - name: 'LaterAppointmentTimeThanSalonTimeOnCertainDate' 
-                     - message: 'Appointment's start time is later than salon's open time on appointment date on that date'
-         */
-         it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has late booking_time', function (done) {
-             var bodyRequest = {
-                 "customer_phone": rightFormattedPhoneNumber,
-                 "customer_name": rightFormattedName,
-                 "salon_id": validSalonId,
-                 "note": "Appointment note",
-                 "services": [{
-                     service_id: validServiceId,
-                     employee_id: validEmployeeId,
-                     start: "2017-02-28 23:45:00"
-                 }, {
-                     service_id: validServiceId,
-                     employee_id: validEmployeeId,
-                     start: "2017-02-28 23:45:00"
-                 }]
-             };
-             request(server)
-                 .post(apiUrl)
-                 .send(bodyRequest)
-                 .set({ 'Authorization': validToken })
+        /* 16	AppointmentTime.Start > SalonDailySchedule.Close	400	
+                error : 
+                    - name: 'LaterAppointmentTimeThanSalonTimeOnCertainDate' 
+                    - message: 'Appointment's start time is later than salon's open time on appointment date on that date'
+        */
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has late booking_time', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 23:45:00"
+                }, {
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: "2017-02-28 23:45:00"
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-                 .end(function (err, res) {
-                     if (err) {
-                         throw err;
-                     }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-                     res.status.should.be.equal(400);
-                     res.body.should.have.property('err');
-                     res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
-                     done();
-                 });
-         });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    done();
+                });
+        });
 
         // /* 17	AppointmentTime.End > SalonDailySchedule.Close	400	
         //         error : 
@@ -854,10 +879,10 @@ describe('Appointment Management', function () {
         // */
         it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which cannot be done within salon\'s working time', function (done) {
             var bodyRequest = {
-                 "customer_phone": rightFormattedPhoneNumber,
-                 "customer_name": rightFormattedName,
-                 "salon_id": validSalonId,
-                 "note": "Appointment note",
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
                 "services": [{
                     start: "2017-02-01 21:50:00",
                     service_id: validServiceId,
