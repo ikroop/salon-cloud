@@ -5,18 +5,21 @@
  */
 
 import { AppointmentManagementBehavior } from './AppointmentManagementBehavior'
-import { AppointmentData, AppointmentItemData } from './AppointmentData'
-import AppointmentModel = require('./AppointmentModel');
+import { AppointmentData, AppointmentItemData, IAppointmentData } from './AppointmentData'
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { SalonTime } from './../../Core/SalonTime/SalonTime'
 import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
+import { AppointmentManagementDatabaseInterface } from './../../Services/AppointmentDatabase/AppointmentManagementDatabaseInterface';
+import { FirebaseAppointmentManagement } from './../../Services/AppointmentDatabase/Firebase/FirebaseAppointmentDatabase';
 
 export class AppointmentManagement implements AppointmentManagementBehavior {
 
     public salonId: string;
+    private appointmentSchedule: AppointmentManagementDatabaseInterface<IAppointmentData>;
 
-    constructor(salonId: string){
+    constructor(salonId: string) {
         this.salonId = salonId;
+        this.appointmentSchedule = new FirebaseAppointmentManagement(this.salonId);
     }
 
     public cancelAppointment(appointmentId: string): boolean {
@@ -31,7 +34,7 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
      * 
      * @memberOf AppointmentManagement
      */
-    public async createAppointment(appointment: AppointmentData): Promise<SalonCloudResponse<AppointmentData>> {
+    public async createAppointment(appointment: AppointmentData): Promise<SalonCloudResponse<IAppointmentData>> {
         var response: SalonCloudResponse<AppointmentData> = {
             data: null,
             code: null,
@@ -49,14 +52,15 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
             type: appointment.type,
             total: appointment.total,
         }
-        var appointmentCreation = AppointmentModel.create(newAppointment);
-        await appointmentCreation.then(function (docs) {
-            response.data = docs;
+
+        try {
+            var appointmentCreation = await this.appointmentSchedule.createAppointment(newAppointment);
+            response.data = appointmentCreation;
             response.code = 200;
-        }, function (err) {
-            response.err = err;
+        } catch (error) {
+            response.err = error;
             response.code = 500;
-        })
+        }
 
         return response;
     };
@@ -84,35 +88,15 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
             code: null,
             err: null
         }
-
-        var appointmentSearch = AppointmentModel.find({
-            'appointment_items.employee_id': employeeId,
-            'appointment_items.start.year': date.year,
-            'appointment_items.start.month': date.month,
-            'appointment_items.start.day': date.day
-        }).exec();
-
-        await appointmentSearch.then(function (docs) {
-            if (!docs) {
-                response.data = [];
-                response.code = 200;
-            } else {
-                var appointmentArray: Array<AppointmentItemData> =[];
-                for (let eachAppointment of docs) {
-                    for (let eachItem of eachAppointment.appointment_items) {
-                        if (eachItem.employee_id == employeeId) {
-                            appointmentArray.push(eachItem);
-                        }
-                    }
-                }
-
-                response.data = appointmentArray;
-                response.code = 200;
-            }
-        }, function (err) {
-            response.err = err;
+        try {
+            var appointmentItemList = await this.appointmentSchedule.getEmployeeAppointmentByDate(employeeId, date);
+            response.data = appointmentItemList;
+            response.code = 200;
+        } catch (error) {
+            response.err = error;
             response.code = 500;
-        })
+        }
+        
         return response;
     };
 

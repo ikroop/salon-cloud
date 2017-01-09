@@ -1,5 +1,4 @@
 import { AppointmentItemData } from './../../../Modules/AppointmentManagement/AppointmentData'
-import AppointmentModel = require('./../../../Modules/AppointmentManagement/AppointmentModel');
 import { Observable } from './../Observable'
 import { Observer } from './../Observer'
 import { SalonTime } from './../../SalonTime/SalonTime'
@@ -19,6 +18,10 @@ export class OverlappedAppointment implements Observer {
             status: true,
             appointment_id: appointmentId
         }
+
+        // FIX ME: we have to update firebase layer;
+        
+        /*
         var docsSearch = AppointmentModel.findOne({ 'appointment_items.$.id': overlappedAppointmentId }).exec();
         await docsSearch.then(async function (docs) {
             if (docs) {
@@ -39,6 +42,6 @@ export class OverlappedAppointment implements Observer {
         }, function (err) {
             response.err = err;
             response.code = 500;
-        })
+        })*/
     }
 }
