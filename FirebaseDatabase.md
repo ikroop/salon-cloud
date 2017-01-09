@@ -87,8 +87,8 @@ root
   |     |     |           |----type: number, 1: booking, 2: check-in
   |     |     |           |----is_reminded: boolean
   |     |     |----appointment_items
-  |     |     |     |----<appointment_id>: string
   |     |     |           |----<id>
+  |     |     |                 |----<appointment_id>: string
   |     |     |                 |----employee_id: string
   |     |     |                 |----services
   |     |     |                 |     |----<service_id>
