@@ -68,13 +68,13 @@ const regularServiceItem1: ServiceItemData = {
 const regularServiceItem2: ServiceItemData = {
     name: 'Regular Manicure',
     price: 15,
-    time: 1800
+    time: 1200
 }
 
 const gelServiceItem1: ServiceItemData = {
     name: 'Gel Pedicure',
     price: 30,
-    time: 1800
+    time: 2400
 }
 
 const gelServiceItem2: ServiceItemData = {
