@@ -17,6 +17,9 @@ import { UserToken } from './../src/Core/Authentication/AuthenticationData';
 import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
 import { SalonInformation } from './../src/Modules/SalonManagement/SalonData';
 import { UserProfile } from './../src/Modules/UserManagement/UserData';
+import * as moment from 'moment';
+
+
 
 describe('Appointment Management', function () {
     var validToken;
@@ -97,6 +100,7 @@ describe('Appointment Management', function () {
 
         const employeeEmail = `${Math.random().toString(36).substring(7)}@gmail.com`;
         const employee: SalonCloudResponse<EmployeeReturn> = await owner.addEmployee(employeeEmail, employeeInput, new ByPhoneVerification());
+        console.log('EmPloyeEE: ', employee);
         validEmployeeId = employee.data.uid;
 
         // Create new user
@@ -140,20 +144,38 @@ describe('Appointment Management', function () {
 
         aTimeCase15 = employeeScheduleOpenTime - 70 * 60;
         aTimeCase16 = employeeScheduleCloseTime + 70 * 60;
-        aTimeCase17 = employeeScheduleCloseTime - 30 * 60;
+        aTimeCase17 = employeeScheduleCloseTime - 10 * 60;
         aTimeCase18 = employeeScheduleOpenTime;
-        aTimeCase19 = employeeScheduleCloseTime - 60 * 60;
-        aTimeCase20 = employeeScheduleOpenTime + 30 * 60;
-        aTimeCase21 = employeeScheduleCloseTime - 90 * 60;
-        aTimeCase22 = employeeScheduleOpenTime + 45 * 60;
-        aTimeCase23 = employeeScheduleCloseTime - 75 * 60;
-        aTimeCase24 = employeeScheduleOpenTime + 90 * 60;
-        aTimeCase25 = employeeScheduleCloseTime - 120 * 60;
-        aTimeCase26 = employeeScheduleCloseTime - 70 * 60;
-        aTimeCase271 = employeeScheduleOpenTime + 180 * 60;
-        aTimeCase272 = employeeScheduleOpenTime + 280 * 60;
-        aTimeCase28 = employeeScheduleOpenTime + 170 * 60; //Need a longer Service Time
-        aTimeCase29 = employeeScheduleOpenTime + 230 * 60;
+        aTimeCase19 = employeeScheduleCloseTime - 30 * 60;
+        aTimeCase20 = employeeScheduleOpenTime + 10 * 60;
+        aTimeCase21 = employeeScheduleCloseTime - 40 * 60;
+        aTimeCase22 = employeeScheduleOpenTime + 15 * 60;
+        aTimeCase23 = employeeScheduleCloseTime - 45 * 60;
+        aTimeCase24 = employeeScheduleOpenTime + 45 * 60;
+        aTimeCase25 = employeeScheduleCloseTime - 75 * 60;
+        aTimeCase26 = employeeScheduleCloseTime - 40* 60; //Need a shorter Service Time
+        aTimeCase271 = employeeScheduleOpenTime + 90 * 60;
+        aTimeCase272 = employeeScheduleOpenTime + 140 * 60;
+        aTimeCase28 = employeeScheduleOpenTime + 85 * 60; //Need a longer Service Time
+        aTimeCase29 = employeeScheduleOpenTime + 115 * 60;
+
+        
+        function getDateString(dateString: string, time: number) : string{
+            var date = moment(dateString,'YYYY-MM-DD HH:mm:ss');
+            var hour = time/3600;
+            var minute = time%3600/60;
+            date.hour(hour);
+            date.min(minute);
+            date.second(0);
+            var returnString = date.format('YYYY-MM-DD HH:mm:ss');
+            return returnString;
+
+        }
+
+        var dateString = "2017-02-28 10:45:00";
+
+        var test = getDateString(dateString,aTimeCase15);
+        console.log('TEst: ', test);
 
 
     });
