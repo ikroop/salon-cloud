@@ -167,7 +167,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      */
     private async getUserDataByPhone(phone: string): Promise<IUserData> {
         var userDatabase: IUserData = null;
-        await this.userRef.orderByChild('phone').equalTo(phone).once('value', async function (snapshot) {
+        await this.userRef.orderByChild('phone').equalTo(phone).once('value', function (snapshot) {
             userDatabase = snapshot.val();
             if (userDatabase) {
                 userDatabase._id = snapshot.key;

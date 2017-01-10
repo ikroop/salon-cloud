@@ -29,9 +29,9 @@ export class AppointmentManagementRouter {
             // TODO
             admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
             var appointment: SaveAppointmentData = {
-                customer_name: request.body.customer_name,
-                customer_phone: request.body.customer_phone,
-                salon_id: request.body.salon_id,
+                customer_name: request.body.customer_name || null,
+                customer_phone: request.body.customer_phone || null,
+                salon_id: request.body.salon_id || null,
                 services: null
             }
 
@@ -42,10 +42,10 @@ export class AppointmentManagementRouter {
                     var salonTime = new SalonTime();
 
                     appointment.services.push({
-                        employee_id: eachService.employee_id,
-                        start: salonTime.setString(eachService.start),
+                        employee_id: eachService.employee_id || null,
+                        start: salonTime.setString(eachService.start) || null,
                         service: {
-                            service_id: eachService.service_id
+                            service_id: eachService.service_id || null
                         },
                         overlapped: {
                             status: false,

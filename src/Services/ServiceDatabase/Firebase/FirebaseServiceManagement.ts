@@ -18,7 +18,7 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
     private database: any;
     private serviceRef: any;
     private SERVICE_GROUP_KEY_NAME: string = 'service_groups';
-    
+
     /**
      * Creates an instance of FirebaseServiceManagement.
      * 
@@ -44,12 +44,22 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
      */
     public async createGroup(group: ServiceGroupData): Promise<IServiceGroupData> {
         var serviceGroup: IServiceGroupData = null;
+
+        //ready for creating service item id
+        var serviceList = group.service_list;
+        group.service_list = null;
+
         var newGroup = await this.serviceRef.push();
         await newGroup.set(group);
         serviceGroup = await this.getServiceGroupById(newGroup.key);
+
+        //push service item;
+        serviceList.forEach(async item => {
+            await newGroup.child('service_list').push().set(item);
+        });
         return serviceGroup;
     }
-    
+
     /**
      * 
      * 
@@ -61,18 +71,25 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
         var rs: IServiceGroupData[] = [];
         var allServiceGroups = null;
         await this.serviceRef.orderByChild('group_name').once('value', function (snapshot) {
-            allServiceGroups = snapshot.val();            
+            allServiceGroups = snapshot.val();
         });
-        if (allServiceGroups){
-           for (var key in allServiceGroups){
-               var serviceGroup: IServiceGroupData = allServiceGroups[key];
-               serviceGroup._id = key;
-               rs.push(serviceGroup);
-           }
+        if (allServiceGroups) {
+            for (var key in allServiceGroups) {
+                var serviceGroup: IServiceGroupData = allServiceGroups[key];
+                serviceGroup._id = key;
+                var serviceList: IServiceItemData[] = [];
+                for (var serviceListKey in serviceGroup.service_list) {
+                    var serviceItem: IServiceItemData = serviceGroup.service_list[serviceListKey];
+                    serviceItem._id = serviceListKey;
+                    serviceList.push(serviceItem);
+                }
+                serviceGroup.service_list = serviceList;
+                rs.push(serviceGroup);
+            }
         }
         return rs;
     }
-    
+
     /**
      * 
      * 
@@ -91,7 +108,7 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
         });
         return rs;
     }
-    
+
     /**
      * 
      * 
@@ -110,7 +127,7 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
         });
         return rs;
     }
-    
+
     /**
      * 
      * 

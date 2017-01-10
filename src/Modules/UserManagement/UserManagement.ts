@@ -1,8 +1,7 @@
 /**
- * 
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
 
 import { UserManagementBehavior } from './UserManagementBehavior'
@@ -13,6 +12,9 @@ import { ErrorMessage } from './../../Core/ErrorMessage'
 import { RoleDefinition } from './../../Core/Authorization/RoleDefinition';
 import { UserManagementDatabaseInterface } from './../../Services/UserDatabase/UserManagementDatabaseInterface';
 import { FirebaseUserManagement } from './../../Services/UserDatabase/Firebase/FirebaseUserManagement';
+import { MissingCheck, IsPhoneNumber, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidSalonTimeData, IsSalonTime, IsAfterSecondDate }
+    from './../../Core/Validation/ValidationDecorators';
+import { BaseValidator } from './../../Core/Validation/BaseValidator';
 
 export class UserManagement implements UserManagementBehavior {
 
@@ -97,10 +99,29 @@ export class UserManagement implements UserManagementBehavior {
      * 
      * @memberOf UserManagement
      */
-    public async getUserByPhone(phone: string): Promise<IUserData> {
+    public async getUserByPhone(phone: string): Promise<SalonCloudResponse<IUserData>> {
+        var response: SalonCloudResponse<any> = {
+            code: null,
+            err: null,
+            data: null
+        };
+
+        var phoneValidation = new BaseValidator(this.salonId);
+        phoneValidation = new MissingCheck(phoneValidation, ErrorMessage.MissingPhoneNumber);
+        phoneValidation = new IsPhoneNumber(phoneValidation, ErrorMessage.WrongPhoneNumberFormat);
+        var phoneError = await phoneValidation.validate();
+
+        if (phoneError) {
+            response.err = phoneError;
+            response.code = 400; //Bad Request
+            return response;
+        }
+
         var user: IUserData = null;
         user = await this.userDatabase.getUserByPhone(phone)
-        return user;
+        response.code = 200;
+        response.data = user;
+        return response;
     }
 
     /**

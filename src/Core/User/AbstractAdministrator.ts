@@ -122,7 +122,12 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         var customerManagementDP = new CustomerManagement(customerProfile.salon_id);
 
         var customer = await customerManagementDP.getUserByPhone(phone);
-        if (!customer) {
+        if (customer.err){
+            response.err = customer.err;
+            response.code = customer.code;
+            return response;
+        }
+        if (!customer.data) {
             // customer account not existed, create account with salon profile for the user                
             var customerCreation = await customerManagementDP.createCustomer(phone, customerProfile);
             if (customerCreation.err) {
@@ -135,16 +140,16 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
                 return response;
             }
         } else {
-            if (customer.profile.length === 0) {
+            if (customer.data.profile.length === 0) {
                 //create customer profile for this salon
-                var newCustomerProdile = await customerManagementDP.addCustomerProfile(customer._id, customerProfile);
+                var newCustomerProdile = await customerManagementDP.addCustomerProfile(customer.data._id, customerProfile);
                 if (newCustomerProdile.err) {
                     response.err = newCustomerProdile.err;
                     response.code = newCustomerProdile.code;
                     return response;
                 }
             }
-            response.data = customer._id;
+            response.data = customer.data._id;
             response.code = 200;
             return response;
         }

@@ -1,3 +1,8 @@
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import { UserManagement } from './UserManagement'
 import { UserProfile } from './UserData'
