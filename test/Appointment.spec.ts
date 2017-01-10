@@ -885,7 +885,7 @@ describe('Appointment Management', function () {
                 "salon_id": validSalonId,
                 "note": "Appointment note",
                 "services": [{
-                    start: "2017-02-01 21:50:00",
+                    start: "2017-02-01 19:50:00",
                     service_id: validServiceId,
                     employee_id: validEmployeeId
                 }]
