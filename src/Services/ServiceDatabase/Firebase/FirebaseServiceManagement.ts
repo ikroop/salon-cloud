@@ -58,14 +58,18 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
      * @memberOf FirebaseServiceManagement
      */
     public async getAllServices(): Promise<IServiceGroupData[]> {
-        var rs: IServiceGroupData[] = null;
-        await this.serviceRef.orderByChild('group_name').once('value', async function (snapshot) {
-            var serviceGroup: IServiceGroupData = snapshot.val();
-            if (serviceGroup) {
-                serviceGroup._id = snapshot.key;
-                rs.push(serviceGroup);
-            }
+        var rs: IServiceGroupData[] = [];
+        var allServiceGroups = null;
+        await this.serviceRef.orderByChild('group_name').once('value', function (snapshot) {
+            allServiceGroups = snapshot.val();            
         });
+        if (allServiceGroups){
+           for (var key in allServiceGroups){
+               var serviceGroup: IServiceGroupData = allServiceGroups[key];
+               serviceGroup._id = key;
+               rs.push(serviceGroup);
+           }
+        }
         return rs;
     }
     
