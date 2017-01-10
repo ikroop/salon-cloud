@@ -91,7 +91,8 @@ describe('Appointment Management', function () {
             fullname: "Jimmy Tran",
             nickname: "Jimmy",
             salary_rate: 0.6,
-            cash_rate: 0.6
+            cash_rate: 0.6,
+            social_security_number: null
         };
 
         const employeeEmail = `${Math.random().toString(36).substring(7)}@gmail.com`;
