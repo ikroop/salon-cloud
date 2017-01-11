@@ -54,7 +54,14 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         var userProfile: UserProfile = {
             role: RoleDefinition.Customer.value,
             fullname: inputData.customer_name,
-            salon_id: salonId
+            salon_id: salonId,
+            address: null,
+            status: true,
+            nickname: null,
+            social_security_number: null,
+            salary_rate: null,
+            cash_rate: null,
+            birthday: null
         }
 
         // Get customer Id
