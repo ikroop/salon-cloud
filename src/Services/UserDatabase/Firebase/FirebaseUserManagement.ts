@@ -71,11 +71,15 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
     public async getUserByPhone(phone: string): Promise<IUserData> {
         var userDatabase: IUserData = null;
         userDatabase = await this.getUserDataByPhone(phone);
-        var profile = await this.getUserProfile(userDatabase._id);
-        if (profile) {
+        if (userDatabase) {
+            var profile = await this.getUserProfile(userDatabase._id);
             userDatabase.profile = [];
-            userDatabase.profile.push(profile);
+
+            if (profile) {
+                userDatabase.profile.push(profile);
+            }
         }
+
         return userDatabase;
     }
 
@@ -155,7 +159,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
 
         return emplpoyeeList;
     }
-    
+
     /**
      * 
      * 
@@ -167,16 +171,24 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      */
     private async getUserDataByPhone(phone: string): Promise<IUserData> {
         var userDatabase: IUserData = null;
-        await this.userRef.orderByChild('phone').equalTo(phone).once('value', function (snapshot) {
-            userDatabase = snapshot.val();
-            if (userDatabase) {
-                userDatabase._id = snapshot.key;
-            }
-        });
-
+        if (!phone) {
+            return null;
+        }
+        try {
+            await this.userRef.orderByChild('phone').equalTo(phone).once('value', function (snapshot) {
+                var object = snapshot.val();
+                if (object) {
+                    var id = Object.keys(object)[0];
+                    userDatabase = object[id];
+                    userDatabase._id = id;
+                }
+            });
+        } catch (error) {
+            throw error;
+        }
         return userDatabase;
     }
-    
+
     /**
      * 
      * 
@@ -198,7 +210,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
         });
         return userDatabase;
     }
-    
+
     /**
      * 
      * 
