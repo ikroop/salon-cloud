@@ -140,12 +140,12 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
                 return response;
             }
         } else {
-            if (customer.data.profile.length === 0) {
+            if (customer.data.profile === null || customer.data.profile.length === 0) {
                 //create customer profile for this salon
-                var newCustomerProdile = await customerManagementDP.addCustomerProfile(customer.data._id, customerProfile);
-                if (newCustomerProdile.err) {
-                    response.err = newCustomerProdile.err;
-                    response.code = newCustomerProdile.code;
+                var newCustomerProfile = await customerManagementDP.addCustomerProfile(customer.data._id, customerProfile);
+                if (newCustomerProfile.err) {
+                    response.err = newCustomerProfile.err;
+                    response.code = newCustomerProfile.code;
                     return response;
                 }
             }
