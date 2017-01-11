@@ -165,7 +165,7 @@ describe('Appointment Management', function () {
             var hour = time/3600;
             var minute = time%3600/60;
             date.hour(hour);
-            date.min(minute);
+            date.minute(minute);
             date.second(0);
             var returnString = date.format('YYYY-MM-DD HH:mm:ss');
             return returnString;
