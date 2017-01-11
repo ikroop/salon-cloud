@@ -15,11 +15,11 @@ import { FirebaseAppointmentManagement } from './../../Services/AppointmentDatab
 export class AppointmentManagement implements AppointmentManagementBehavior {
 
     public salonId: string;
-    private appointmentSchedule: AppointmentManagementDatabaseInterface<IAppointmentData>;
+    private appointmentDatabase: AppointmentManagementDatabaseInterface<IAppointmentData>;
 
     constructor(salonId: string) {
         this.salonId = salonId;
-        this.appointmentSchedule = new FirebaseAppointmentManagement(this.salonId);
+        this.appointmentDatabase = new FirebaseAppointmentManagement(this.salonId);
     }
 
     public cancelAppointment(appointmentId: string): boolean {
@@ -54,7 +54,7 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
         }
 
         try {
-            var appointmentCreation = await this.appointmentSchedule.createAppointment(newAppointment);
+            var appointmentCreation = await this.appointmentDatabase.createAppointment(newAppointment);
             response.data = appointmentCreation;
             response.code = 200;
         } catch (error) {
@@ -89,7 +89,7 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
             err: null
         }
         try {
-            var appointmentItemList = await this.appointmentSchedule.getEmployeeAppointmentByDate(employeeId, date);
+            var appointmentItemList = await this.appointmentDatabase.getEmployeeAppointmentByDate(employeeId, date);
             response.data = appointmentItemList;
             response.code = 200;
         } catch (error) {
