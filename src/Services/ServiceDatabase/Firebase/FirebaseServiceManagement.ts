@@ -17,7 +17,7 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
     private salonId: string;
     private database: any;
     private serviceRef: any;
-    private SERVICE_GROUP_KEY_NAME: string = 'service_groups';
+    private readonly SERVICE_GROUP_KEY_NAME: string = 'service_groups';
 
     /**
      * Creates an instance of FirebaseServiceManagement.
@@ -70,7 +70,7 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
     public async getAllServices(): Promise<IServiceGroupData[]> {
         var rs: IServiceGroupData[] = [];
         var allServiceGroups = null;
-        await this.serviceRef.orderByChild('group_name').once('value', function (snapshot) {
+        await this.serviceRef.orderByChild('name').once('value', function (snapshot) {
             allServiceGroups = snapshot.val();
         });
         if (allServiceGroups) {
@@ -100,12 +100,24 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
      */
     public async getServiceItemById(serviceId: string): Promise<IServiceItemData> {
         var rs: IServiceItemData = null;
-        await this.serviceRef.orderByChild('service_list/' + serviceId).once('value', async function (snapshot) {
-            rs = snapshot.val();
-            if (rs) {
-                rs._id = snapshot.key;
+        var serviceGroupList: IServiceGroupData[] = null;
+        try {
+            await this.serviceRef.orderByChild('name').once('value', function (snapshot) {
+                serviceGroupList = snapshot.val();
+            });
+
+            if (serviceGroupList && serviceId) {
+                for (var servicegroupId in serviceGroupList) {
+                    var serviceList = serviceGroupList[servicegroupId].service_list;
+                    if (serviceList[serviceId]) {
+                        rs = serviceList[serviceId];
+                        rs._id = serviceId;
+                    }
+                }
             }
-        });
+        } catch (error) {
+            throw error;
+        }
         return rs;
     }
 

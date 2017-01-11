@@ -456,6 +456,7 @@ export class IsValidServiceId extends DecoratingValidator {
         this.wrapedValidator = wrapedValidator;
         this.errorType = errorType;
         this.targetElement = this.wrapedValidator.targetElement;
+        this.salonId = salonId;
     };
 
     public async validatingOperation() {
