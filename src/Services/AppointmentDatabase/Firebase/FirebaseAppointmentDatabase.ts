@@ -9,6 +9,7 @@ import { ErrorMessage } from './../../../Core/ErrorMessage';
 import { AppointmentData, AppointmentItemData, IAppointmentData } from './../../../Modules/AppointmentManagement/AppointmentData';
 import { mongoose } from './../../Database';
 import { SalonTimeData } from './../../../Core/SalonTime/SalonTimeData';
+import { SalonTime } from './../../../Core/SalonTime/SalonTime';
 import { FirebaseSalonManagement } from './../../SalonDatabase/Firebase/FirebaseSalonManagement';
 
 import { AppointmentManagementDatabaseInterface } from './../AppointmentManagementDatabaseInterface';
@@ -99,6 +100,9 @@ export class FirebaseAppointmentManagement implements AppointmentManagementDatab
         var baseAppointmentItemRef = this.appointmentItemsRef.child(appointmentId);
         appointmentItemList.forEach(async item => {
             try {
+                item.end = SalonTime.exportJSON(item.end);
+                item.start = SalonTime.exportJSON(item.start);
+                
                 var newAppointmentItemRef = await baseAppointmentItemRef.push();
                 await newAppointmentItemRef.set(item);
             } catch (error) {
