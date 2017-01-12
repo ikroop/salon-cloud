@@ -953,10 +953,16 @@ describe('Appointment Management', function () {
         });
 
         // Case 4 - OK: (CurrentAppointmentTime.Start = SalonDailySchedule.Start)
+        /* 18
+        */
 
         // Case 5 - OK: (CurrentAppointmentTime.End = SalonDailySchedule.End)
+        /* 19
+        */
 
         // Case 6 - ERROR: (AnotherAppointmentTime.End - CurrentAppointmentTime.Start) > Flexibale time
+        /* 20
+        */
         it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which cannot be done within salon\'s working time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -987,25 +993,40 @@ describe('Appointment Management', function () {
         });
 
         // Case 7 - ERROR: (CurrentAppointmentTime.End - AnotherAppointmentTime.End) > Flexibale time
-
+        /* 21
+        */
 
         // Case 8 - OK: (CurrentAppointmentTime.End - AnotherAppointmentTime.End) = Flexibale time
-
+        /* 22
+        */
        
         // Case 9 - OK: (CurrentAppointmentTime.End - AnotherAppointmentTime.Start) = Flexibale time
+        /* 23
+        */
 
         // Case 10 - ERROR: (AnotherAppointmentTime1.End - AnotherAppointmentTime2.Start = Flexibale time) AND (AnotherAppointmentTime2.End - CurrentAppointmentTime.Start = Flexibale time)
+        /* 24
+        */
 
         // Case 11 - ERROR: (AnotherAppointmentTime1.End - AnotherAppointmentTime2.Start = Flexibale time) AND (CurrentAppointmentTime.End - AnotherAppointmentTime1.Start = Flexibale time)
+        /* 25
+        */
 
         // Case 12 - ERROR: (CurrentAppointmentTime.Start > AnotherAppointmentTime.Start) AND (CurrentAppointmentTime.End < AnotherAppointmentTime.End)
+        /* 26
+        */
 
         // Case 13 - OK: (CurrentAppointmentTime.Start > AnotherAppointmentTime1.End) AND (CurrentAppointmentTime.End < AnotherAppointmentTime2.Start)
+        /* 27
+        */
 
         // Case 14 - ERROR: (CurrentAppointmentTime.Start < AnotherAppointmentTime.Start) AND (CurrentAppointmentTime.End > AnotherAppointmentTime.End)
+        /* 28
+        */
 
         // Case 15 - ERROR: ((CurrentAppointmentTime.Start > AnotherAppointmentTime1.End) < Flexible time) AND ((CurrentAppointmentTime.End < AnotherAppointmentTime2.Start) < Flexible time)
-
+        /* 29
+        */
 
 
         /* 17	AppointmentTime.End > SalonDailySchedule.Close	400	
