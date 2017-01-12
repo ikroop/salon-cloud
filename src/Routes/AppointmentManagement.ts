@@ -32,7 +32,8 @@ export class AppointmentManagementRouter {
                 customer_name: request.body.customer_name || null,
                 customer_phone: request.body.customer_phone || null,
                 salon_id: request.body.salon_id || null,
-                services: null
+                services: null,
+                note: request.body.note || null
             }
 
             // Get data for request.body
