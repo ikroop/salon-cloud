@@ -34,6 +34,8 @@ describe('Appointment Management', function () {
     var emptyName = '   ';
     var tooLongName = 'Alibaba Nam Tren Ghe Sopha Mo Ve Noi Xa Xong Pha Tran Mac Cuop Duoc Dola Thiet Thiet La Nhieu Dola Xay Nha Cho Mafia'
     var validServiceId = '';
+    var validServiceIdWithShorterTime = '';
+    var validServiceIdWithLongerTime = '';
     var invalidServiceId = '0000';
     var notFoundEmployeeId = '5825e7bb1dac3e2804d015fl';
     var invalidEmployeeId = '1111';
@@ -129,7 +131,11 @@ describe('Appointment Management', function () {
         const serviceManagement = new ServiceManagement(validSalonId);
         const service_array = await serviceManagement.getServices();
         var validGroupService = service_array.data[0];
+        var validGroupService1 = service_array.data[1];
         validServiceId = validGroupService.service_list[0]._id;
+        validServiceIdWithShorterTime = validGroupService.service_list[1]._id; //1200
+        validServiceIdWithLongerTime = validGroupService1.service_list[0]._id; //2400
+        console.log('SERVICES: ', service_array.data[0].service_list, service_array.data[1].service_list);
 
         // Get Daily Schedule
         const employeeSchedule = new EmployeeSchedule(validSalonId, validEmployeeId);
