@@ -142,22 +142,22 @@ describe('Appointment Management', function () {
         employeeScheduleOpenTime = employeeDailySchedule.data.days[0].open;
         employeeScheduleCloseTime = employeeDailySchedule.data.days[0].close;
 
-        aTimeCase15 = employeeScheduleOpenTime - 70 * 60;
-        aTimeCase16 = employeeScheduleCloseTime + 70 * 60;
-        aTimeCase17 = employeeScheduleCloseTime - 10 * 60;
-        aTimeCase18 = employeeScheduleOpenTime;
-        aTimeCase19 = employeeScheduleCloseTime - 30 * 60;
-        aTimeCase20 = employeeScheduleOpenTime + 10 * 60;
-        aTimeCase21 = employeeScheduleCloseTime - 40 * 60;
-        aTimeCase22 = employeeScheduleOpenTime + 15 * 60;
-        aTimeCase23 = employeeScheduleCloseTime - 45 * 60;
-        aTimeCase24 = employeeScheduleOpenTime + 45 * 60;
-        aTimeCase25 = employeeScheduleCloseTime - 75 * 60;
-        aTimeCase26 = employeeScheduleCloseTime - 40* 60; //Need a shorter Service Time
-        aTimeCase271 = employeeScheduleOpenTime + 90 * 60;
-        aTimeCase272 = employeeScheduleOpenTime + 140 * 60;
-        aTimeCase28 = employeeScheduleOpenTime + 85 * 60; //Need a longer Service Time
-        aTimeCase29 = employeeScheduleOpenTime + 115 * 60;
+        var aTimeCase15InSecond = employeeScheduleOpenTime - 70 * 60;
+        var aTimeCase16InSecond = employeeScheduleCloseTime + 70 * 60;
+        var aTimeCase17InSecond = employeeScheduleCloseTime - 10 * 60;
+        var aTimeCase18InSecond = employeeScheduleOpenTime;
+        var aTimeCase19InSecond = employeeScheduleCloseTime - 30 * 60;
+        var aTimeCase20InSecond = employeeScheduleOpenTime + 10 * 60;
+        var aTimeCase21InSecond = employeeScheduleCloseTime - 40 * 60;
+        var aTimeCase22InSecond = employeeScheduleOpenTime + 15 * 60;
+        var aTimeCase23InSecond = employeeScheduleCloseTime - 45 * 60;
+        var aTimeCase24InSecond = employeeScheduleOpenTime + 45 * 60;
+        var aTimeCase25InSecond = employeeScheduleCloseTime - 75 * 60;
+        var aTimeCase26InSecond = employeeScheduleCloseTime - 40* 60; //Need a shorter Service Time
+        var aTimeCase271InSecond = employeeScheduleOpenTime + 90 * 60;
+        var aTimeCase272InSecond = employeeScheduleOpenTime + 140 * 60;
+        var aTimeCase28InSecond = employeeScheduleOpenTime + 85 * 60; //Need a longer Service Time
+        var aTimeCase29InSecond = employeeScheduleOpenTime + 115 * 60;
 
         
         function getDateString(dateString: string, time: number) : string{
@@ -174,6 +174,22 @@ describe('Appointment Management', function () {
 
         var dateString = "2017-02-28 10:45:00";
 
+        aTimeCase15 = getDateString(dateString, aTimeCase15InSecond);
+        aTimeCase16 = getDateString(dateString, aTimeCase16InSecond);
+        aTimeCase17 = getDateString(dateString, aTimeCase17InSecond);
+        aTimeCase18 = getDateString(dateString, aTimeCase18InSecond);
+        aTimeCase19 = getDateString(dateString, aTimeCase19InSecond);
+        aTimeCase20 = getDateString(dateString, aTimeCase20InSecond);
+        aTimeCase21 = getDateString(dateString, aTimeCase21InSecond);
+        aTimeCase22 = getDateString(dateString, aTimeCase22InSecond);
+        aTimeCase23 = getDateString(dateString, aTimeCase23InSecond);
+        aTimeCase24 = getDateString(dateString, aTimeCase24InSecond);
+        aTimeCase25 = getDateString(dateString, aTimeCase25InSecond);
+        aTimeCase26 = getDateString(dateString, aTimeCase26InSecond);
+        aTimeCase271 = getDateString(dateString, aTimeCase271InSecond);
+        aTimeCase272 = getDateString(dateString, aTimeCase272InSecond);
+        aTimeCase28 = getDateString(dateString, aTimeCase28InSecond);
+        aTimeCase29 = getDateString(dateString, aTimeCase29InSecond);
         var test = getDateString(dateString,aTimeCase15);
         console.log('TEst: ', test);
 
