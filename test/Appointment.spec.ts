@@ -951,7 +951,34 @@ describe('Appointment Management', function () {
         // Case 5 - OK: (CurrentAppointmentTime.End = SalonDailySchedule.End)
 
         // Case 6 - ERROR: (AnotherAppointmentTime.End - CurrentAppointmentTime.Start) > Flexibale time
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which cannot be done within salon\'s working time', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase17
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    done();
+                });
+        });
 
         // Case 7 - ERROR: (CurrentAppointmentTime.End - AnotherAppointmentTime.End) > Flexibale time
 
@@ -972,6 +999,8 @@ describe('Appointment Management', function () {
         // Case 14 - ERROR: (CurrentAppointmentTime.Start < AnotherAppointmentTime.Start) AND (CurrentAppointmentTime.End > AnotherAppointmentTime.End)
 
         // Case 15 - ERROR: ((CurrentAppointmentTime.Start > AnotherAppointmentTime1.End) < Flexible time) AND ((CurrentAppointmentTime.End < AnotherAppointmentTime2.Start) < Flexible time)
+
+
 
         /* 17	AppointmentTime.End > SalonDailySchedule.Close	400	
         //         error : 
