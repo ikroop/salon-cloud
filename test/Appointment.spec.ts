@@ -265,7 +265,7 @@ describe('Appointment Management', function () {
                     - name: 'MissingPhoneNumber' 
                     - message: 'Missing Phone Number'
         */
-        it('should return ' + ErrorMessage.MissingUsername.err.name + ' error trying to create appointment without customer\'s phone', function (done) {
+        it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to create appointment without customer\'s phone', function (done) {
             var bodyRequest = {
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
@@ -839,6 +839,9 @@ describe('Appointment Management', function () {
                 });
         });
 
+        // Mapping from case 1 to case 15 follow discussion with @Truong Thanh
+
+        // Case 1 - ERROR: AppointmentTime.Start < SalonDailySchedule.Open
         /* 15	AppointmentTime.Start < SalonDailySchedule.Open	400	
                 error : 
                     - name: 'EarlierAppointmentTimeThanSalonTimeOnCertainDate' 
@@ -853,7 +856,7 @@ describe('Appointment Management', function () {
                 "services": [{
                     service_id: validServiceId,
                     employee_id: validEmployeeId,
-                    start: "2017-02-28 05:45:00"
+                    start: aTimeCase15
                 }]
             };
             request(server)
@@ -873,6 +876,7 @@ describe('Appointment Management', function () {
                 });
         });
 
+        // Case 2 - ERROR: AppointmentTime.Start > SalonDailySchedule.Close
         /* 16	AppointmentTime.Start > SalonDailySchedule.Close	400	
                 error : 
                     - name: 'LaterAppointmentTimeThanSalonTimeOnCertainDate' 
@@ -887,11 +891,7 @@ describe('Appointment Management', function () {
                 "services": [{
                     service_id: validServiceId,
                     employee_id: validEmployeeId,
-                    start: "2017-02-28 23:45:00"
-                }, {
-                    service_id: validServiceId,
-                    employee_id: validEmployeeId,
-                    start: "2017-02-28 23:45:00"
+                    start: aTimeCase16
                 }]
             };
             request(server)
@@ -911,11 +911,12 @@ describe('Appointment Management', function () {
                 });
         });
 
-        // /* 17	AppointmentTime.End > SalonDailySchedule.Close	400	
-        //         error : 
-        //             - name: 'AppointmentCanNotBeDoneWithinSalonWorkingTime' 
-        //             - message: 'Appointment cannot be done within salon's working time'
-        // */
+        // Case 3 - ERROR: (SalonDailySchedule.Close - AppointmentTime.End) > Flexibale time
+        /* 17	AppointmentTime.End > SalonDailySchedule.Close	400	
+                error : 
+                    - name: 'AppointmentCanNotBeDoneWithinSalonWorkingTime' 
+                    - message: 'Appointment cannot be done within salon's working time'
+        */
         it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which cannot be done within salon\'s working time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
@@ -923,9 +924,9 @@ describe('Appointment Management', function () {
                 "salon_id": validSalonId,
                 "note": "Appointment note",
                 "services": [{
-                    start: "2017-02-01 19:50:00",
                     service_id: validServiceId,
-                    employee_id: validEmployeeId
+                    employee_id: validEmployeeId,
+                    start: aTimeCase17
                 }]
             };
             request(server)
@@ -944,6 +945,67 @@ describe('Appointment Management', function () {
                     done();
                 });
         });
+
+        // Case 4 - OK: (CurrentAppointmentTime.Start = SalonDailySchedule.Start)
+
+        // Case 5 - OK: (CurrentAppointmentTime.End = SalonDailySchedule.End)
+
+        // Case 6 - ERROR: (AnotherAppointmentTime.End - CurrentAppointmentTime.Start) > Flexibale time
+
+
+        // Case 7 - ERROR: (CurrentAppointmentTime.End - AnotherAppointmentTime.End) > Flexibale time
+
+
+        // Case 8 - OK: (CurrentAppointmentTime.End - AnotherAppointmentTime.End) = Flexibale time
+
+       
+        // Case 9 - OK: (CurrentAppointmentTime.End - AnotherAppointmentTime.Start) = Flexibale time
+
+        // Case 10 - ERROR: (AnotherAppointmentTime1.End - AnotherAppointmentTime2.Start = Flexibale time) AND (AnotherAppointmentTime2.End - CurrentAppointmentTime.Start = Flexibale time)
+
+        // Case 11 - ERROR: (AnotherAppointmentTime1.End - AnotherAppointmentTime2.Start = Flexibale time) AND (CurrentAppointmentTime.End - AnotherAppointmentTime1.Start = Flexibale time)
+
+        // Case 12 - ERROR: (CurrentAppointmentTime.Start > AnotherAppointmentTime.Start) AND (CurrentAppointmentTime.End < AnotherAppointmentTime.End)
+
+        // Case 13 - OK: (CurrentAppointmentTime.Start > AnotherAppointmentTime1.End) AND (CurrentAppointmentTime.End < AnotherAppointmentTime2.Start)
+
+        // Case 14 - ERROR: (CurrentAppointmentTime.Start < AnotherAppointmentTime.Start) AND (CurrentAppointmentTime.End > AnotherAppointmentTime.End)
+
+        // Case 15 - ERROR: ((CurrentAppointmentTime.Start > AnotherAppointmentTime1.End) < Flexible time) AND ((CurrentAppointmentTime.End < AnotherAppointmentTime2.Start) < Flexible time)
+
+        /* 17	AppointmentTime.End > SalonDailySchedule.Close	400	
+        //         error : 
+        //             - name: 'AppointmentCanNotBeDoneWithinSalonWorkingTime' 
+        //             - message: 'Appointment cannot be done within salon's working time'
+        // */
+        // it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which cannot be done within salon\'s working time', function (done) {
+        //    var bodyRequest = {
+        //        "customer_phone": rightFormattedPhoneNumber,
+        //        "customer_name": rightFormattedName,
+        //        "salon_id": validSalonId,
+        //        "note": "Appointment note",
+        //        "services": [{
+        //            service_id: validServiceId,
+        //            employee_id: validEmployeeId,
+        //            start: aTimeCase17
+        //        }]
+        //    };
+        //    request(server)
+        //        .post(apiUrl)
+        //        .send(bodyRequest)
+        //        .set({ 'Authorization': validToken })
+        //
+        //       .end(function (err, res) {
+        //            if (err) {
+        //                throw err;
+        //            }
+        //
+        //          res.status.should.be.equal(400);
+        //            res.body.should.have.property('err');
+        //            res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+        //            done();
+        //        });
+        // });
 
         // /* 18	currentAppointment.Start < anotherAppointment.End 	400	
         //         error : 
