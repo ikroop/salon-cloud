@@ -963,7 +963,7 @@ describe('Appointment Management', function () {
         // Case 6 - ERROR: (AnotherAppointmentTime.End - CurrentAppointmentTime.Start) > Flexibale time
         /* 20
         */
-        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which cannot be done within salon\'s working time', function (done) {
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has overlapped time at the start side that is greater than the flexible time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -972,7 +972,7 @@ describe('Appointment Management', function () {
                 "services": [{
                     service_id: validServiceId,
                     employee_id: validEmployeeId,
-                    start: aTimeCase17
+                    start: aTimeCase20
                 }]
             };
             request(server)
@@ -995,7 +995,34 @@ describe('Appointment Management', function () {
         // Case 7 - ERROR: (CurrentAppointmentTime.End - AnotherAppointmentTime.End) > Flexibale time
         /* 21
         */
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has overlapped time at the end side that is greater than the flexible time', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase21
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    done();
+                });
+        });
         // Case 8 - OK: (CurrentAppointmentTime.End - AnotherAppointmentTime.End) = Flexibale time
         /* 22
         */
