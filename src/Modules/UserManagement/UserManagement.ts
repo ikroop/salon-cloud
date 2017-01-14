@@ -1,8 +1,7 @@
 /**
- * 
- * 
- * 
- * 
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
 
 import { UserManagementBehavior } from './UserManagementBehavior'
@@ -13,6 +12,9 @@ import { ErrorMessage } from './../../Core/ErrorMessage'
 import { RoleDefinition } from './../../Core/Authorization/RoleDefinition';
 import { UserManagementDatabaseInterface } from './../../Services/UserDatabase/UserManagementDatabaseInterface';
 import { FirebaseUserManagement } from './../../Services/UserDatabase/Firebase/FirebaseUserManagement';
+import { MissingCheck, IsPhoneNumber, IsInRange, IsString, IsNumber, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidSalonTimeData, IsSalonTime, IsAfterSecondDate }
+    from './../../Core/Validation/ValidationDecorators';
+import { BaseValidator } from './../../Core/Validation/BaseValidator';
 
 export class UserManagement implements UserManagementBehavior {
 
@@ -97,10 +99,22 @@ export class UserManagement implements UserManagementBehavior {
      * 
      * @memberOf UserManagement
      */
-    public async getUserByPhone(phone: string): Promise<IUserData> {
-        var user: IUserData = null;
-        user = await this.userDatabase.getUserByPhone(phone)
-        return user;
+    public async getUserByPhone(phone: string): Promise<SalonCloudResponse<IUserData>> {
+        var response: SalonCloudResponse<any> = {
+            code: null,
+            err: null,
+            data: null
+        };
+        try {
+            var user: IUserData = null;
+            user = await this.userDatabase.getUserByPhone(phone)
+            response.code = 200;
+            response.data = user;
+        } catch (error) {
+            response.code = 500;
+            response.err = ErrorMessage.ServerError;
+        }
+        return response;
     }
 
     /**

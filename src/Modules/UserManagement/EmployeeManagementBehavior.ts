@@ -1,3 +1,8 @@
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
 
 import { UserData, UserProfile } from './UserData'
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'

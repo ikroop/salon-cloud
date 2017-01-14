@@ -17,11 +17,11 @@ export interface ServiceGroupData {
     description: string;
     name: string;
     salon_id: string;
-    service_list?: [ServiceItemData];
+    service_list?: ServiceItemData[];
 }
 
 export interface IServiceGroupData extends ServiceGroupData, mongoose.Document { 
-    service_list?: [IServiceItemData]
+    service_list?: IServiceItemData[]
 }
 
 export interface IServiceItemData extends ServiceItemData, FirebaseDocument{};//mongoose.Document { }

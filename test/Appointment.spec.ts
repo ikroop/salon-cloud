@@ -17,6 +17,9 @@ import { UserToken } from './../src/Core/Authentication/AuthenticationData';
 import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
 import { SalonInformation } from './../src/Modules/SalonManagement/SalonData';
 import { UserProfile } from './../src/Modules/UserManagement/UserData';
+import * as moment from 'moment';
+
+
 
 describe('Appointment Management', function () {
     var validToken;
@@ -31,6 +34,8 @@ describe('Appointment Management', function () {
     var emptyName = '   ';
     var tooLongName = 'Alibaba Nam Tren Ghe Sopha Mo Ve Noi Xa Xong Pha Tran Mac Cuop Duoc Dola Thiet Thiet La Nhieu Dola Xay Nha Cho Mafia'
     var validServiceId = '';
+    var validServiceIdWithShorterTime = '';
+    var validServiceIdWithLongerTime = '';
     var invalidServiceId = '0000';
     var notFoundEmployeeId = '5825e7bb1dac3e2804d015fl';
     var invalidEmployeeId = '1111';
@@ -38,6 +43,10 @@ describe('Appointment Management', function () {
     var anotherUserId;
     var anotherUserToken;
     var notFoundServiceId = '5825e03651934227174516d8';
+    var employeeScheduleOpenTime, employeeScheduleCloseTime;
+    var aTimeCase15, aTimeCase16, aTimeCase17, aTimeCase18, aTimeCase19;//TODO
+    var aTimeCase20, aTimeCase21, aTimeCase22, aTimeCase23, aTimeCase24;//TODO
+    var aTimeCase25, aTimeCase261, aTimeCase262, aTimeCase27, aTimeCase28, aTimeCase29;//TODO
 
     const date = new Date(2018, 3, 13);
 
@@ -87,11 +96,13 @@ describe('Appointment Management', function () {
             fullname: "Jimmy Tran",
             nickname: "Jimmy",
             salary_rate: 0.6,
-            cash_rate: 0.6
+            cash_rate: 0.6,
+            social_security_number: null
         };
 
         const employeeEmail = `${Math.random().toString(36).substring(7)}@gmail.com`;
         const employee: SalonCloudResponse<EmployeeReturn> = await owner.addEmployee(employeeEmail, employeeInput, new ByPhoneVerification());
+        console.log('EmPloyeEE: ', employee);
         validEmployeeId = employee.data.uid;
 
         // Create new user
@@ -120,14 +131,74 @@ describe('Appointment Management', function () {
         const serviceManagement = new ServiceManagement(validSalonId);
         const service_array = await serviceManagement.getServices();
         var validGroupService = service_array.data[0];
+        var validGroupService1 = service_array.data[1];
         validServiceId = validGroupService.service_list[0]._id;
+        validServiceIdWithShorterTime = validGroupService.service_list[1]._id; //1200
+        validServiceIdWithLongerTime = validGroupService1.service_list[0]._id; //2400
+        console.log('SERVICES: ', service_array.data[0].service_list, service_array.data[1].service_list);
 
         // Get Daily Schedule
         const employeeSchedule = new EmployeeSchedule(validSalonId, validEmployeeId);
 
+        //employeeDailySchedule = EmployeeSchedule.getDailySchedule()
         var salonTime = new SalonTime();
         // set date to SalonTime Object
         const employeeDailySchedule = await employeeSchedule.getDailySchedule(salonTime, salonTime);
+
+        employeeScheduleOpenTime = employeeDailySchedule.data.days[0].open;
+        employeeScheduleCloseTime = employeeDailySchedule.data.days[0].close;
+
+        var aTimeCase15InSecond = employeeScheduleOpenTime - 70 * 60; //1
+        var aTimeCase16InSecond = employeeScheduleCloseTime + 70 * 60; //2
+        var aTimeCase17InSecond = employeeScheduleCloseTime - 10 * 60; //3
+        var aTimeCase18InSecond = employeeScheduleOpenTime; //4
+        var aTimeCase19InSecond = employeeScheduleCloseTime - 30 * 60; //5
+        var aTimeCase20InSecond = employeeScheduleOpenTime + 10 * 60; //6
+        var aTimeCase21InSecond = employeeScheduleCloseTime - 40 * 60; //7
+        var aTimeCase22InSecond = employeeScheduleOpenTime + 15 * 60; //8
+        var aTimeCase23InSecond = employeeScheduleCloseTime - 45 * 60; //9
+        var aTimeCase24InSecond = employeeScheduleOpenTime + 45 * 60; //10
+        var aTimeCase25InSecond = employeeScheduleCloseTime - 75 * 60; //11
+        var aTimeCase261InSecond = employeeScheduleOpenTime + 90 * 60; //12
+        var aTimeCase262InSecond = employeeScheduleOpenTime + 140 * 60; //12
+        var aTimeCase27InSecond = employeeScheduleCloseTime - 95* 60; //13 Need a shorter Service Time
+        var aTimeCase28InSecond = employeeScheduleOpenTime + 85 * 60; //14 Need a longer Service Time
+        var aTimeCase29InSecond = employeeScheduleOpenTime + 115 * 60; //15
+
+        
+        function getDateString(dateString: string, time: number) : string{
+            var date = moment(dateString,'YYYY-MM-DD HH:mm:ss');
+            var hour = time/3600;
+            var minute = time%3600/60;
+            date.hour(hour);
+            date.minute(minute);
+            date.second(0);
+            var returnString = date.format('YYYY-MM-DD HH:mm:ss');
+            return returnString;
+
+        }
+
+        var dateString = "2017-02-28 10:45:00";
+
+        aTimeCase15 = getDateString(dateString, aTimeCase15InSecond);
+        aTimeCase16 = getDateString(dateString, aTimeCase16InSecond);
+        aTimeCase17 = getDateString(dateString, aTimeCase17InSecond);
+        aTimeCase18 = getDateString(dateString, aTimeCase18InSecond);
+        aTimeCase19 = getDateString(dateString, aTimeCase19InSecond);
+        aTimeCase20 = getDateString(dateString, aTimeCase20InSecond);
+        aTimeCase21 = getDateString(dateString, aTimeCase21InSecond);
+        aTimeCase22 = getDateString(dateString, aTimeCase22InSecond);
+        aTimeCase23 = getDateString(dateString, aTimeCase23InSecond);
+        aTimeCase24 = getDateString(dateString, aTimeCase24InSecond);
+        aTimeCase25 = getDateString(dateString, aTimeCase25InSecond);
+        aTimeCase261 = getDateString(dateString, aTimeCase261InSecond);
+        aTimeCase262 = getDateString(dateString, aTimeCase262InSecond);
+        aTimeCase27 = getDateString(dateString, aTimeCase27InSecond);
+        aTimeCase28 = getDateString(dateString, aTimeCase28InSecond);
+        aTimeCase29 = getDateString(dateString, aTimeCase29InSecond);
+        var test = getDateString(dateString,aTimeCase15);
+        console.log('TEst: ', test);
+
 
     });
 
@@ -200,7 +271,7 @@ describe('Appointment Management', function () {
                     - name: 'MissingPhoneNumber' 
                     - message: 'Missing Phone Number'
         */
-        it('should return ' + ErrorMessage.MissingUsername.err.name + ' error trying to create appointment without customer\'s phone', function (done) {
+        it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to create appointment without customer\'s phone', function (done) {
             var bodyRequest = {
                 "customer_name": rightFormattedName,
                 "salon_id": validSalonId,
@@ -774,6 +845,9 @@ describe('Appointment Management', function () {
                 });
         });
 
+        // Mapping from case 1 to case 15 follow discussion with @Truong Thanh
+
+        // Case 1 - ERROR: AppointmentTime.Start < SalonDailySchedule.Open
         /* 15	AppointmentTime.Start < SalonDailySchedule.Open	400	
                 error : 
                     - name: 'EarlierAppointmentTimeThanSalonTimeOnCertainDate' 
@@ -788,7 +862,7 @@ describe('Appointment Management', function () {
                 "services": [{
                     service_id: validServiceId,
                     employee_id: validEmployeeId,
-                    start: "2017-02-28 05:45:00"
+                    start: aTimeCase15
                 }]
             };
             request(server)
@@ -808,78 +882,493 @@ describe('Appointment Management', function () {
                 });
         });
 
-         /* 16	AppointmentTime.Start > SalonDailySchedule.Close	400	
-                 error : 
-                     - name: 'LaterAppointmentTimeThanSalonTimeOnCertainDate' 
-                     - message: 'Appointment's start time is later than salon's open time on appointment date on that date'
-         */
-         it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has late booking_time', function (done) {
-             var bodyRequest = {
-                 "customer_phone": rightFormattedPhoneNumber,
-                 "customer_name": rightFormattedName,
-                 "salon_id": validSalonId,
-                 "note": "Appointment note",
-                 "services": [{
-                     service_id: validServiceId,
-                     employee_id: validEmployeeId,
-                     start: "2017-02-28 23:45:00"
-                 }, {
-                     service_id: validServiceId,
-                     employee_id: validEmployeeId,
-                     start: "2017-02-28 23:45:00"
-                 }]
-             };
-             request(server)
-                 .post(apiUrl)
-                 .send(bodyRequest)
-                 .set({ 'Authorization': validToken })
+        // Case 2 - ERROR: AppointmentTime.Start > SalonDailySchedule.Close
+        /* 16	AppointmentTime.Start > SalonDailySchedule.Close	400	
+                error : 
+                    - name: 'LaterAppointmentTimeThanSalonTimeOnCertainDate' 
+                    - message: 'Appointment's start time is later than salon's open time on appointment date on that date'
+        */
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has late booking_time', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase16
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
-                 .end(function (err, res) {
-                     if (err) {
-                         throw err;
-                     }
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
 
-                     res.status.should.be.equal(400);
-                     res.body.should.have.property('err');
-                     res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
-                     done();
-                 });
-         });
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    done();
+                });
+        });
 
-        // /* 17	AppointmentTime.End > SalonDailySchedule.Close	400	
+        // Case 3 - ERROR: (SalonDailySchedule.Close - AppointmentTime.End) > Flexibale time
+        /* 17	AppointmentTime.End > SalonDailySchedule.Close	400	
+                error : 
+                    - name: 'AppointmentCanNotBeDoneWithinSalonWorkingTime' 
+                    - message: 'Appointment cannot be done within salon's working time'
+        */
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which cannot be done within salon\'s working time', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase17
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    done();
+                });
+        });
+
+        // Case 4 - OK: (CurrentAppointmentTime.Start = SalonDailySchedule.Start)
+        /* 18
+        */
+        it('should return appointment_id if request proceeds successfully with note (case 4 in the plot)', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Any appointment note, even blank one, is acceptable",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase18
+                }],
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('appointment_id');
+                    done();
+                });
+        });
+        
+        // Case 5 - OK: (CurrentAppointmentTime.End = SalonDailySchedule.End)
+        /* 19
+        */
+        it('should return appointment_id if request proceeds successfully with note (case 5 in the plot)', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Any appointment note, even blank one, is acceptable",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase19
+                }],
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('appointment_id');
+                    done();
+                });
+        });
+
+        // Case 6 - ERROR: (AnotherAppointmentTime.End - CurrentAppointmentTime.Start) > Flexibale time
+        /* 20
+        */
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has overlapped time at the start side that is greater than the flexible time', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase20
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    done();
+                });
+        });
+
+        // Case 7 - ERROR: (CurrentAppointmentTime.End - AnotherAppointmentTime.End) > Flexibale time
+        /* 21
+        */
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which has overlapped time at the end side that is greater than the flexible time', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase21
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    done();
+                });
+        });
+
+        // Case 8 - OK: (CurrentAppointmentTime.End - AnotherAppointmentTime.End) = Flexibale time
+        /* 22
+        */
+        it('should return appointment_id if request proceeds successfully with note (case 8 in the plot)', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Any appointment note, even blank one, is acceptable",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase22
+                }],
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('appointment_id');
+                    done();
+                });
+        });
+        
+        // Case 9 - OK: (CurrentAppointmentTime.End - AnotherAppointmentTime.Start) = Flexibale time
+        /* 23
+        */
+        it('should return appointment_id if request proceeds successfully with note (case 9 in the plot)', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Any appointment note, even blank one, is acceptable",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase23
+                }],
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('appointment_id');
+                    done();
+                });
+        });
+
+        // Case 10 - ERROR: (AnotherAppointmentTime1.End - AnotherAppointmentTime2.Start = Flexibale time) AND (AnotherAppointmentTime2.End - CurrentAppointmentTime.Start = Flexibale time)
+        /* 24
+        */
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which overlaps on the start side with another already overlapped appointment ', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase24
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    done();
+                });
+        });
+
+        // Case 11 - ERROR: (AnotherAppointmentTime1.End - AnotherAppointmentTime2.Start = Flexibale time) AND (CurrentAppointmentTime.End - AnotherAppointmentTime1.Start = Flexibale time)
+        /* 25
+        */
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which overlaps on the end side with another already overlapped appointment ', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase25
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    done();
+                });
+        });
+
+        // Case 12 - OK: (CurrentAppointmentTime.Start > AnotherAppointmentTime1.End) AND (CurrentAppointmentTime.End < AnotherAppointmentTime2.Start)
+        /* 26
+        */
+        it('should return appointment_id if request proceeds successfully with note (case 12 in the plot)', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Any appointment note, even blank one, is acceptable",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase261
+                },{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase262
+                }],
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('appointment_id');
+                    done();
+                });
+        });
+
+        // Case 13 - ERROR: (CurrentAppointmentTime.Start > AnotherAppointmentTime.Start) AND (CurrentAppointmentTime.End < AnotherAppointmentTime.End)
+        /* 27
+        */
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which is totally within another appointment ', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase27
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    done();
+                });
+        });
+
+        // Case 14 - ERROR: (CurrentAppointmentTime.Start < AnotherAppointmentTime.Start) AND (CurrentAppointmentTime.End > AnotherAppointmentTime.End)
+        /* 28
+        */
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which total wraps another appointment ', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase28
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    done();
+                });
+        });
+
+        // Case 15 - ERROR: ((CurrentAppointmentTime.Start > AnotherAppointmentTime1.End) < Flexible time) AND ((CurrentAppointmentTime.End < AnotherAppointmentTime2.Start) < Flexible time)
+        /* 29
+        */
+        it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which overlaps other appointments on both side ', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Appointment note",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase29
+                }]
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    done();
+                });
+        });
+
+
+
+        /* 17	AppointmentTime.End > SalonDailySchedule.Close	400	
         //         error : 
         //             - name: 'AppointmentCanNotBeDoneWithinSalonWorkingTime' 
         //             - message: 'Appointment cannot be done within salon's working time'
         // */
         // it('should return ' + ErrorMessage.BookingTimeNotAvailable.err.name + ' error trying to create appointment which cannot be done within salon\'s working time', function (done) {
-        //     var bodyRequest = {
-        //         "customer_phone": rightFormattedPhoneNumber,
-        //         "customer_name": rightFormattedName,
-        //         "salon_id": validSalonId,
-        //         "note": "Appointment note",
-        //         "services": [{
-        //             service_id: validServiceId,
-        //             employee_id: notFoundEmployeeId
-        //         }, {
-        //             service_id: validServiceId,
-        //             employee_id: validEmployeeId
-        //         }]
-        //     };
-        //     request(server)
-        //         .post(apiUrl)
-        //         .send(bodyRequest)
-        //         .set({ 'Authorization': validToken })
-
-        //         .end(function (err, res) {
-        //             if (err) {
-        //                 throw err;
-        //             }
-
-        //             res.status.should.be.equal(400);
-        //             res.body.should.have.property('err');
-        //             res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
-        //             done();
-        //         });
+        //    var bodyRequest = {
+        //        "customer_phone": rightFormattedPhoneNumber,
+        //        "customer_name": rightFormattedName,
+        //        "salon_id": validSalonId,
+        //        "note": "Appointment note",
+        //        "services": [{
+        //            service_id: validServiceId,
+        //            employee_id: validEmployeeId,
+        //            start: aTimeCase17
+        //        }]
+        //    };
+        //    request(server)
+        //        .post(apiUrl)
+        //        .send(bodyRequest)
+        //        .set({ 'Authorization': validToken })
+        //
+        //       .end(function (err, res) {
+        //            if (err) {
+        //                throw err;
+        //            }
+        //
+        //          res.status.should.be.equal(400);
+        //            res.body.should.have.property('err');
+        //            res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+        //            done();
+        //        });
         // });
 
         // /* 18	currentAppointment.Start < anotherAppointment.End 	400	

@@ -3,7 +3,6 @@
  * Copyright SalonHelps. All Rights Reserved.
  *
  */
-import { SalonCloudResponse } from './../../Core/SalonCloudResponse';
 import { WeeklyDayData, DailyDayData } from './../../Modules/Schedule/ScheduleData'
 import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData';
 
