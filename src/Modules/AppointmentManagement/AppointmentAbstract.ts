@@ -397,30 +397,38 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
         var timeNeededNumberOfTicks = timeNeeded / SmallestTimeTick;
         var day = new SalonTime(date);
-        var flexibleTime;
+        var flexibleTime = 15*60;
         // Todo: 
         var openTime = new SalonTime(date);
         openTime.setHour(employee.days[0].open / 3600);
         openTime.setMinute(employee.days[0].open % 3600 / 60);
-
         var openTimeData = openTime;
         var openTimePoint = openTimeData.min + openTimeData.hour * 60;
+
+
+
 
         var closeTime = new SalonTime(date);
         closeTime.setHour(employee.days[0].close / 3600);
         closeTime.setMinute(employee.days[0].close % 3600 / 60);
-
         var closeTimeData = closeTime;
         var closeTimePoint = closeTimeData.min + closeTimeData.hour * 60;
+        //update the last available time in the day for booking with flexible time;
+        var lastAvailableTimePoint = employee.days[0].close - flexibleTime;
+        var lastAvaliableTime = new SalonTime(date);
+        lastAvaliableTime.setHour(lastAvailableTimePoint/3600);
+        lastAvaliableTime.setMinute(lastAvailableTimePoint%3600/60);
 
         //validate
         var startDateString = day.toString();
         var openDateString = openTime.toString();
         var closeDateString = closeTime.toString();
+        var lastAvaliableTimeString = lastAvaliableTime.toString();
+        console.log('TIMES: ', startDateString, closeDateString, lastAvaliableTimeString);
         var startTimeValidation = new BaseValidator(startDateString);
         startTimeValidation = new MissingCheck(startTimeValidation, ErrorMessage.MissingStartDate);
         startTimeValidation = new IsAfterSecondDate(startTimeValidation, ErrorMessage.BookingTimeNotAvailable, openDateString);
-        startTimeValidation = new IsBeforeSecondDate(startTimeValidation, ErrorMessage.BookingTimeNotAvailable, closeDateString)
+        startTimeValidation = new IsBeforeSecondDate(startTimeValidation, ErrorMessage.BookingTimeNotAvailable, lastAvaliableTimeString);
         var startTimeError = await startTimeValidation.validate();
         if(startTimeError){
             response.err = startTimeError;
