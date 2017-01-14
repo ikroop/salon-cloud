@@ -955,10 +955,64 @@ describe('Appointment Management', function () {
         // Case 4 - OK: (CurrentAppointmentTime.Start = SalonDailySchedule.Start)
         /* 18
         */
+        it('should return appointment_id if request proceeds successfully with note (case 4 in the plot)', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Any appointment note, even blank one, is acceptable",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase18
+                }],
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
 
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('appointment_id');
+                    done();
+                });
+        });
+        
         // Case 5 - OK: (CurrentAppointmentTime.End = SalonDailySchedule.End)
         /* 19
         */
+        it('should return appointment_id if request proceeds successfully with note (case 5 in the plot)', function (done) {
+            var bodyRequest = {
+                "customer_phone": rightFormattedPhoneNumber,
+                "customer_name": rightFormattedName,
+                "salon_id": validSalonId,
+                "note": "Any appointment note, even blank one, is acceptable",
+                "services": [{
+                    service_id: validServiceId,
+                    employee_id: validEmployeeId,
+                    start: aTimeCase19
+                }],
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': validToken })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('appointment_id');
+                    done();
+                });
+        });
 
         // Case 6 - ERROR: (AnotherAppointmentTime.End - CurrentAppointmentTime.Start) > Flexibale time
         /* 20
