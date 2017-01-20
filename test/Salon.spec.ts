@@ -1,4 +1,10 @@
-import * as server from '../src/App';
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
+
+import * as server from './Config';
 import * as request from 'supertest';
 import * as chai from 'chai';
 var expect = chai.expect;
@@ -50,7 +56,7 @@ describe('Salon Management', function () {
     describe('Unit Test Create Salon API', function () {
         var apiUrl = '/api/v1/salon/create';
 
-        it('should return '+ErrorMessage.InvalidTokenError.err.name+' error trying to create salon information with invalid token', function (done) {
+        /*it('should return '+ErrorMessage.InvalidTokenError.err.name+' error trying to create salon information with invalid token', function (done) {
             var token = invalidToken;
             var bodyRequest = {
                 'salon_name': 'SunshineNails VA',
@@ -194,7 +200,7 @@ describe('Salon Management', function () {
                     res.body.err.name.should.be.equal('WrongEmailFormat');
                     done();
                 });
-        });
+        });*/
 
         it('should return salon object with id trying to create salon information successfully', function (done) {
             var token = validToken;

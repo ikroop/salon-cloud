@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
+
 import * as server from '../src/App';
 import * as request from 'supertest';
 import * as chai from 'chai';

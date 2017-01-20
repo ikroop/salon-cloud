@@ -4,7 +4,7 @@
  *
  */
 
-import * as server from '../src/App';
+import * as server from './Config';
 import * as request from 'supertest';
 import * as chai from 'chai';
 var expect = chai.expect;
