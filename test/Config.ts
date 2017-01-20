@@ -3,9 +3,13 @@
  * Copyright SalonHelps. All Rights Reserved.
  *
  */
+var serverConfig = process.env.SERVER
+var server = require('../src/App');
+if (serverConfig === 'NET') {
+    server = 'http://dev.salonhelps.com';
+} else {
+    server = require('../src/App');
+}
 
-var localServer = require('../src/App');
 
-var netServer = 'http://dev.salonhelps.com';
-
-export = localServer;
+export = server;
