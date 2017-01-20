@@ -47,8 +47,10 @@ app.use('/api/v1/salon', new SalonManagementRouter().getRouter());
 app.use('/api/v1/service', new ServiceManagementRouter().getRouter());
 app.use('/api/v1/appointment', new AppointmentManagementRouter().getRouter());
 
-const server: http.Server = app.listen(3000, function () {
-    console.log('OMG!!! NO BUGS! SalonCloud server listening on port %d in %s mode', 3000, app.settings.env);
+var port = process.env.PORT || 3000;
+
+const server: http.Server = app.listen(port, function () {
+    console.log('OMG!!! NO BUGS! SalonCloud server listening on port %d in %s mode', port, app.settings.env);
 });
 
 module.exports = server;
