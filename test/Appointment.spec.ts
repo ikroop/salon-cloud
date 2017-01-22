@@ -28,6 +28,7 @@ import * as moment from 'moment';
 
 
 describe('Appointment Management', function () {
+    console.log('JJJ');
     var validToken;
     var invalidToken = 'eyJhbGciOiJSUz';
     var validSalonId;
@@ -92,6 +93,7 @@ describe('Appointment Management', function () {
         var salon = await signedInUser.createSalon(salonInformationInput);
 
         validSalonId = salon.data;
+        console.log('VALIDSALONDID: ', validSalonId);
         // 4. Add new employee
         const owner = new Owner(loginData.data.user._id, new SalonManagement(validSalonId));
         // Add new employee
@@ -154,22 +156,22 @@ describe('Appointment Management', function () {
         employeeScheduleOpenTime = employeeDailySchedule.data.days[0].open;
         employeeScheduleCloseTime = employeeDailySchedule.data.days[0].close;
 
-        var aTimeCase15InSecond = employeeScheduleOpenTime - 70 * 60; //1
-        var aTimeCase16InSecond = employeeScheduleCloseTime + 70 * 60; //2
-        var aTimeCase17InSecond = employeeScheduleCloseTime - 10 * 60; //3
-        var aTimeCase18InSecond = employeeScheduleOpenTime; //4
-        var aTimeCase19InSecond = employeeScheduleCloseTime - 30 * 60; //5
-        var aTimeCase20InSecond = employeeScheduleOpenTime + 10 * 60; //6
-        var aTimeCase21InSecond = employeeScheduleCloseTime - 40 * 60; //7
-        var aTimeCase22InSecond = employeeScheduleOpenTime + 15 * 60; //8
-        var aTimeCase23InSecond = employeeScheduleCloseTime - 45 * 60; //9
-        var aTimeCase24InSecond = employeeScheduleOpenTime + 45 * 60; //10
-        var aTimeCase25InSecond = employeeScheduleCloseTime - 75 * 60; //11
-        var aTimeCase261InSecond = employeeScheduleOpenTime + 90 * 60; //12
-        var aTimeCase262InSecond = employeeScheduleOpenTime + 140 * 60; //12
-        var aTimeCase27InSecond = employeeScheduleCloseTime - 95* 60; //13 Need a shorter Service Time
-        var aTimeCase28InSecond = employeeScheduleOpenTime + 85 * 60; //14 Need a longer Service Time
-        var aTimeCase29InSecond = employeeScheduleOpenTime + 115 * 60; //15
+        var aTimeCase15InSecond = employeeScheduleOpenTime - 75 * 60; //1
+        var aTimeCase16InSecond = employeeScheduleCloseTime + 75 * 60; //2
+        var aTimeCase17InSecond = employeeScheduleCloseTime - 15 * 60; //3 longer service 45' 
+        var aTimeCase18InSecond = employeeScheduleOpenTime; //4 30' OK
+        var aTimeCase19InSecond = employeeScheduleCloseTime - 30 * 60; //5 30' OK
+        var aTimeCase20InSecond = employeeScheduleOpenTime; //6 longer service time 45'
+        var aTimeCase21InSecond = employeeScheduleCloseTime - 45 * 60; //7 longer service 45'
+        var aTimeCase22InSecond = employeeScheduleOpenTime + 15 * 60; //8 30' OK
+        var aTimeCase23InSecond = employeeScheduleCloseTime - 45 * 60; //9 30' OK
+        var aTimeCase24InSecond = employeeScheduleOpenTime + 30 * 60; //10 30' Error
+        var aTimeCase25InSecond = employeeScheduleCloseTime - 60 * 60; //11 30' Error
+        var aTimeCase261InSecond = employeeScheduleOpenTime + 90 * 60; //12 shorter service 15' ok
+        var aTimeCase262InSecond = employeeScheduleOpenTime + 120 * 60; //12 longer service time 45' OK 
+        var aTimeCase27InSecond = employeeScheduleCloseTime - 135* 60; //13 shorter Service Time 15' 
+        var aTimeCase28InSecond = employeeScheduleOpenTime + 75 * 60; //14 longer Service Time 45'
+        var aTimeCase29InSecond = employeeScheduleOpenTime + 90 * 60; //15 longer service time 45'
 
         
         function getDateString(dateString: string, time: number) : string{
@@ -203,6 +205,10 @@ describe('Appointment Management', function () {
         aTimeCase28 = getDateString(dateString, aTimeCase28InSecond);
         aTimeCase29 = getDateString(dateString, aTimeCase29InSecond);
         var test = getDateString(dateString,aTimeCase15);
+        console.log(aTimeCase15, aTimeCase16, aTimeCase17, aTimeCase18);
+        console.log(aTimeCase19, aTimeCase20, aTimeCase21, aTimeCase22, aTimeCase23);
+        console.log(aTimeCase24, aTimeCase25, aTimeCase261, aTimeCase262, aTimeCase27);
+        console.log(aTimeCase28, aTimeCase29);
         console.log('TEst: ', test);
 
 
@@ -936,7 +942,7 @@ describe('Appointment Management', function () {
                 "salon_id": validSalonId,
                 "note": "Appointment note",
                 "services": [{
-                    service_id: validServiceId,
+                    service_id: validServiceIdWithLongerTime,
                     employee_id: validEmployeeId,
                     start: aTimeCase17
                 }]
@@ -1030,7 +1036,7 @@ describe('Appointment Management', function () {
                 "salon_id": validSalonId,
                 "note": "Appointment note",
                 "services": [{
-                    service_id: validServiceId,
+                    service_id: validServiceIdWithLongerTime,
                     employee_id: validEmployeeId,
                     start: aTimeCase20
                 }]
@@ -1062,7 +1068,7 @@ describe('Appointment Management', function () {
                 "salon_id": validSalonId,
                 "note": "Appointment note",
                 "services": [{
-                    service_id: validServiceId,
+                    service_id: validServiceIdWithLongerTime,
                     employee_id: validEmployeeId,
                     start: aTimeCase21
                 }]
@@ -1220,11 +1226,11 @@ describe('Appointment Management', function () {
                 "salon_id": validSalonId,
                 "note": "Any appointment note, even blank one, is acceptable",
                 "services": [{
-                    service_id: validServiceId,
+                    service_id: validServiceIdWithShorterTime,
                     employee_id: validEmployeeId,
                     start: aTimeCase261
                 },{
-                    service_id: validServiceId,
+                    service_id: validServiceIdWithLongerTime,
                     employee_id: validEmployeeId,
                     start: aTimeCase262
                 }],
@@ -1255,7 +1261,7 @@ describe('Appointment Management', function () {
                 "salon_id": validSalonId,
                 "note": "Appointment note",
                 "services": [{
-                    service_id: validServiceId,
+                    service_id: validServiceIdWithShorterTime,
                     employee_id: validEmployeeId,
                     start: aTimeCase27
                 }]
@@ -1287,7 +1293,7 @@ describe('Appointment Management', function () {
                 "salon_id": validSalonId,
                 "note": "Appointment note",
                 "services": [{
-                    service_id: validServiceId,
+                    service_id: validServiceIdWithLongerTime,
                     employee_id: validEmployeeId,
                     start: aTimeCase28
                 }]
@@ -1319,7 +1325,7 @@ describe('Appointment Management', function () {
                 "salon_id": validSalonId,
                 "note": "Appointment note",
                 "services": [{
-                    service_id: validServiceId,
+                    service_id: validServiceIdWithLongerTime,
                     employee_id: validEmployeeId,
                     start: aTimeCase29
                 }]

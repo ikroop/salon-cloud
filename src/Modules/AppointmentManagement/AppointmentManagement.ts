@@ -52,7 +52,6 @@ export class AppointmentManagement implements AppointmentManagementBehavior {
             type: appointment.type,
             total: appointment.total,
         }
-
         try {
             var appointmentCreation = await this.appointmentDatabase.createAppointment(newAppointment);
             response.data = appointmentCreation;

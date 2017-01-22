@@ -14,6 +14,7 @@ export interface BookedServiceData {
     time?: number
 }
 export interface AppointmentItemData {
+    appointment_id?: string,
     employee_id: string,
     start: SalonTimeData,
     end?: SalonTimeData,

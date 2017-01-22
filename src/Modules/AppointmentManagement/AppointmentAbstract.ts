@@ -23,6 +23,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
     private appointmentManagementDP: AppointmentManagement;
 
     public salonId: string;
+    private SmallestTimeTick: number = SmallestTimeTick;
 
     /**
      * Creates an instance of AppointmentAbstract.
@@ -72,7 +73,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         if (timeAvalibilityCheck.err) {
             response.err = timeAvalibilityCheck.err;
             response.code = timeAvalibilityCheck.code;
-            return response;
+            return response;  
         } else {
             appointmentItemsArray = timeAvalibilityCheck.data;
         }
@@ -82,6 +83,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
         //Normalization Data
         var newAppointment = this.normalizationData(appointment);
+
+
 
         // Create appointment document
         //var result = this.createAppointmentDoc(appointment);
@@ -145,7 +148,6 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         var employeeScheduleList: Array<DailyDayData> = [];
         var employeeAppointmentArrayList: Array<Array<AppointmentItemData>> = [];
 
-        console.log('test');
         for (var eachService of servicesArray) {
             //get Service Data 
             var getServiceData = await this.getServiceData(eachService);
@@ -200,11 +202,9 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 employeeScheduleList.push(employeeSchedule);
                 employeeAppointmentArrayList.push(employeeAppointmentArray);
                 employeeIndex = employeeIdList.indexOf(eachService.employee_id);
-                console.log(employeeAppointmentArrayList);
             }
 
             //get time array with avail and unvail points
-            console.log('AARAY');
             var getTimeArray = await this.getEmployeeAvailableTime(getServiceData.data.time, eachService.start, employeeDaySchedule.data, employeeAppointmentArray);
             if (getTimeArray.err) {
                 response.err = getTimeArray.err;
@@ -293,7 +293,6 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             err: null
         }
 
-        console.log('GETT:');
         var appointmentSearch = await this.appointmentManagementDP.getEmployeeAppointmentByDate(eachService.employee_id, eachService.start);
         if (appointmentSearch) {
             if (appointmentSearch.err) {
@@ -339,13 +338,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                         },
                         overlapped: eachPoint.overlapped
                     }
+                    
                     employeeAppointmentArrayList[employeeIndex].push(appointmentItem);
                     response.data.push(appointmentItem);
                     response.code = 200;
                 } else {
-                    response.err = ErrorMessage.AppointmentTimeNotAvailable;
+                    response.err = ErrorMessage.BookingTimeNotAvailable;
                     response.err.data = eachService;
-                    response.code = 500;
+                    response.code =400;
                     return response;
                 }
                 break;
@@ -379,69 +379,77 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
     *          }
     * 
     */
-    public async getEmployeeAvailableTime(timeNeeded: number, date: SalonTimeData, employee: DailyScheduleArrayData, appointmentList: Array<AppointmentItemData>): Promise<SalonCloudResponse<any>> {
+    public async getEmployeeAvailableTime(timeNeeded: number, startDate: SalonTimeData, employee: DailyScheduleArrayData, appointmentList: Array<AppointmentItemData>): Promise<SalonCloudResponse<any>> {
         var response: SalonCloudResponse<any> = {
             data: null,
             code: null,
             err: null
         }
 
-        console.log('IIIIINNNN');
         var operatingTime = (employee.days[0].close - employee.days[0].open) / 60;
         if (operatingTime <= 0 || employee.days[0].status == false) {
             response.data = null;
             response.code = 200;
             return response;
         }
-        var timeArrayLength = operatingTime / SmallestTimeTick + 1;
+        var timeArrayLength = operatingTime / this.SmallestTimeTick + 1;
 
-        var timeNeededNumberOfTicks = timeNeeded / SmallestTimeTick;
-        var day = new SalonTime(date);
-        var flexibleTime = 15*60;
+        var timeNeededNumberOfTicks = timeNeeded / (this.SmallestTimeTick*60);
+        var startTime = new SalonTime(startDate);
+        var flexibleTime = 15; //minutes
         // Todo: 
-        var openTime = new SalonTime(date);
+        var endTime = new SalonTime(startDate);
+        endTime.addMinute(timeNeeded/60);
+
+        var openTime = new SalonTime(startDate);
         openTime.setHour(employee.days[0].open / 3600);
         openTime.setMinute(employee.days[0].open % 3600 / 60);
         var openTimeData = openTime;
         var openTimePoint = openTimeData.min + openTimeData.hour * 60;
 
-
-
-
-        var closeTime = new SalonTime(date);
+        var closeTime = new SalonTime(startDate);
         closeTime.setHour(employee.days[0].close / 3600);
         closeTime.setMinute(employee.days[0].close % 3600 / 60);
         var closeTimeData = closeTime;
         var closeTimePoint = closeTimeData.min + closeTimeData.hour * 60;
         //update the last available time in the day for booking with flexible time;
-        var lastAvailableTimePoint = employee.days[0].close - flexibleTime;
-        var lastAvaliableTime = new SalonTime(date);
+        var lastAvailableTimePoint = employee.days[0].close + flexibleTime*60;
+        var lastAvaliableTime = new SalonTime(startDate);
         lastAvaliableTime.setHour(lastAvailableTimePoint/3600);
         lastAvaliableTime.setMinute(lastAvailableTimePoint%3600/60);
 
         //validate
-        var startDateString = day.toString();
+        var startDateString = startTime.toString();
+        var endDateString = endTime.toString();
         var openDateString = openTime.toString();
         var closeDateString = closeTime.toString();
-        var lastAvaliableTimeString = lastAvaliableTime.toString();
-        console.log('TIMES: ', startDateString, closeDateString, lastAvaliableTimeString);
+        var lastAvalaibleTimeString = lastAvaliableTime.toString();
         var startTimeValidation = new BaseValidator(startDateString);
         startTimeValidation = new MissingCheck(startTimeValidation, ErrorMessage.MissingStartDate);
         startTimeValidation = new IsAfterSecondDate(startTimeValidation, ErrorMessage.BookingTimeNotAvailable, openDateString);
-        startTimeValidation = new IsBeforeSecondDate(startTimeValidation, ErrorMessage.BookingTimeNotAvailable, lastAvaliableTimeString);
         var startTimeError = await startTimeValidation.validate();
         if(startTimeError){
             response.err = startTimeError;
             response.code = 400;
             return response;
         }
+        var endTimeValidation = new BaseValidator(endDateString);
+        endTimeValidation = new MissingCheck(endTimeValidation, ErrorMessage.MissingStartDate);
+        endTimeValidation = new IsBeforeSecondDate(endTimeValidation, ErrorMessage.BookingTimeNotAvailable, lastAvalaibleTimeString);
+        var endTimeError = await endTimeValidation.validate();
+        if(endTimeError){
+            response.err = endTimeError;
+            response.code = 400;
+            return response;
+        }
+
 
         var appointmentArray;
-        if (appointmentList) {
+        if (appointmentList&&appointmentList.length>0) {
             appointmentArray = appointmentList;
         } else {
             // get all employee's appointments in the day;
-            var appointmentSearch = await this.appointmentManagementDP.getEmployeeAppointmentByDate(employee.employee_id, date);
+            var appointmentSearch = await this.appointmentManagementDP.getEmployeeAppointmentByDate(employee.employee_id, startDate);
             if (appointmentSearch.err) {
                 response.err = appointmentSearch.err;
                 response.code = appointmentSearch.code;
@@ -456,7 +464,6 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
         }
 
-        console.log('In2: ', appointmentArray)
         // initilize timArray
         var timeArray: Array<TimeArrayItem> = [];
         for (let i = 0; i < timeArrayLength; i++) {
@@ -466,7 +473,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                     status: false,
                     appointment_id: null,
                 },
-                time: openTimePoint + SmallestTimeTick * i,
+                time: openTimePoint + this.SmallestTimeTick * i,
             }
             timeArray.push(obj);
         }
@@ -474,7 +481,6 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         if (appointmentArray) {
             // loop appointmentArray to work with each busy appointed time period
             for (let eachAppointment of appointmentArray) {
-                console.log('LAAAA');
                 var filterProcess = this.filterTimeArray(eachAppointment, timeArray, openTimePoint, closeTimePoint, timeNeededNumberOfTicks, flexibleTime);
 
             }
@@ -504,9 +510,9 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
      * rightPoleIndex = endTime =  11
      * 
      * updated timeArray :   0   1   2   3   4   5   6   7   8   9   10  11  12  13  14   
-     *                       |---xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx---|---|---|---|
+     *                       |---|---xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx---|---|---|---|
      * 
-     * Notice: 11 is still available.
+     * Notice: 1 and 11 is still available.
      * 
      * 
      * Example 2: Time needed is 45 minutes (timeNeededNumberOfTicks = 3 ticks).
@@ -518,9 +524,9 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
      * rightPoleIndex = endTime - flexibleTimeTicks = 11 - 2 = 9
      * 
      * updated timeArray : 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14   
-     *                     |---|---|---|---|---|---xxxxxxxxx---|---|---|---|---|---|
+     *                     |---|---|---|---|---|---|---xxxxx---|---|---|---|---|---|
      * 
-     * Notice: 9 is still available.
+     * Notice: 6 and 9 is still available.
      * 
      * 
      * Example 3: Time needed is 45 minutes (timeNeededNumberOfTicks = 3 ticks).
@@ -539,32 +545,32 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
     private filterTimeArray(appointment: any, timeArray: Array<TimeArrayItem>, openTimePoint: number, closeTimePoint: number, timeNeededNumberOfTicks: number, flexibleTime: number) {
         // init leftPoleIndex
         let startPointOfAppointment = appointment.start.min + appointment.start.hour * 60;
-        let leftPoleIndex = (startPointOfAppointment - openTimePoint) / SmallestTimeTick;
+        let leftPoleIndex = (startPointOfAppointment - openTimePoint) / this.SmallestTimeTick;
 
         // init rightPoleIndex
         let endPointOfAppointment = appointment.end.min + appointment.end.hour * 60;
-        let rightPoleIndex = (endPointOfAppointment - openTimePoint) / SmallestTimeTick;
-
-        if (appointment.overlapped) {
+        let rightPoleIndex = (endPointOfAppointment - openTimePoint) / this.SmallestTimeTick;
+        
+        if (appointment.overlapped.status === true) {
             // adjust the poles with touched appointment;
             leftPoleIndex -= timeNeededNumberOfTicks;
         } else {
 
             // adjust the poles with UNTOUCHED APPOINTMENT;
-            leftPoleIndex = leftPoleIndex - timeNeededNumberOfTicks + flexibleTime / SmallestTimeTick;
-            rightPoleIndex = rightPoleIndex - flexibleTime / SmallestTimeTick;
+            leftPoleIndex = leftPoleIndex - timeNeededNumberOfTicks + flexibleTime / this.SmallestTimeTick;
+            rightPoleIndex = rightPoleIndex - flexibleTime / this.SmallestTimeTick;
         }
 
         // if leftPoleInded > rightPoleIndex, don't update timeArray;
         // if leftPoleInded<= rightPoleIndex, update timeArray with loop;
         if (leftPoleIndex <= rightPoleIndex) {
-            for (let i = rightPoleIndex - 1; (i >= leftPoleIndex) && (i >= 0); i--) {
+            for (let i = rightPoleIndex - 1; (i > leftPoleIndex) && (i >= 0); i--) {
                 timeArray[i].available = false;
             }
         }
         // update overlapped field for element in timeArray due to UNTOUCHED APPOINTMENT 
-        if (!appointment.overlapped) {
-            for (let i = 1; i <= flexibleTime / SmallestTimeTick; i++) {
+        if (!appointment.overlapped.status === false) {
+            for (let i = 1; i <= flexibleTime / this.SmallestTimeTick; i++) {
 
                 // update right-side elements
                 // number of elements need to be updated equal to flexibleTime/SmallestTimeTick 
@@ -578,13 +584,12 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             }
         }
         //check if lastAvailPeriod should be mark unavailable.
-        let lastAvailPeriodTicks = closeTimePoint / SmallestTimeTick - rightPoleIndex;
-        if (lastAvailPeriodTicks < timeNeededNumberOfTicks - flexibleTime / SmallestTimeTick) {
-            for (let i = rightPoleIndex; i <= closeTimePoint / SmallestTimeTick; i++) {
+        let lastAvailPeriodTicks = closeTimePoint / this.SmallestTimeTick - rightPoleIndex;
+        if (lastAvailPeriodTicks < timeNeededNumberOfTicks - flexibleTime / this.SmallestTimeTick) {
+            for (let i = rightPoleIndex; i <= closeTimePoint / this.SmallestTimeTick; i++) {
                 timeArray[i].available = false;
             }
         }
-        console.log('TIMEARRAY:', timeArray);
         return;
 
     }
