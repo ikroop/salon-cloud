@@ -169,7 +169,7 @@ describe('Appointment Management', function () {
         var aTimeCase25InSecond = employeeScheduleCloseTime - 60 * 60; //11 30' Error
         var aTimeCase261InSecond = employeeScheduleOpenTime + 90 * 60; //12 shorter service 15' ok
         var aTimeCase262InSecond = employeeScheduleOpenTime + 120 * 60; //12 longer service time 45' OK 
-        var aTimeCase27InSecond = employeeScheduleCloseTime - 135* 60; //13 shorter Service Time 15' 
+        var aTimeCase27InSecond = employeeScheduleOpenTime + 135* 60; //13 shorter Service Time 15' 
         var aTimeCase28InSecond = employeeScheduleOpenTime + 75 * 60; //14 longer Service Time 45'
         var aTimeCase29InSecond = employeeScheduleOpenTime + 90 * 60; //15 longer service time 45'
 
@@ -1739,7 +1739,7 @@ describe('Appointment Management', function () {
         //         });
         // });
 
-        it('should return appointment_id if request proceeds successfully with note', function (done) {
+        /*it('should return appointment_id if request proceeds successfully with note', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -1765,9 +1765,9 @@ describe('Appointment Management', function () {
                     res.body.should.have.property('appointment_id');
                     done();
                 });
-        });
+        });*/
 
-        it('should return appointment_id if request proceeds successfully without note', function (done) {
+       /* it('should return appointment_id if request proceeds successfully without note', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -1792,6 +1792,6 @@ describe('Appointment Management', function () {
                     res.body.should.have.property('appointment_id');
                     done();
                 });
-        });
+    });*/
     });
 });
