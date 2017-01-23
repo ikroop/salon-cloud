@@ -32,13 +32,20 @@ app.get('/', (req, res) => {
     res.json({ 'name': 'SalonCloud Server' });
 });
 
-app.use((err: Error & { status: number }, request: express.Request, response: express.Response, next: express.NextFunction): void => {
+app.use((request: express.Request, response: express.Response, next: express.NextFunction): void => {
+  response.header("Access-Control-Allow-Origin", "*");
+  response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
+/*app.use((err: Error & { status: number }, request: express.Request, response: express.Response, next: express.NextFunction): void => {
 
     response.status(err.status || 500);
     response.json({
         error: 'Server error'
     })
-});
+});*/
 
 app.use('/api/v1/schedule', new ScheduleRouter().getRouter());
 app.use('/api/v1/authentication', new AuthenticationRouter().getRouter());
