@@ -73,7 +73,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         if (timeAvalibilityCheck.err) {
             response.err = timeAvalibilityCheck.err;
             response.code = timeAvalibilityCheck.code;
-            return response;  
+            return response;
         } else {
             appointmentItemsArray = timeAvalibilityCheck.data;
         }
@@ -193,7 +193,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                     response.err = appointmentSearch.err;
                     response.code = appointmentSearch.code;
                     return response;
-                }else{
+                } else {
                     employeeAppointmentArray = appointmentSearch.data;
                 }
 
@@ -338,14 +338,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                         },
                         overlapped: eachPoint.overlapped
                     }
-                    
+
                     employeeAppointmentArrayList[employeeIndex].push(appointmentItem);
                     response.data.push(appointmentItem);
                     response.code = 200;
                 } else {
                     response.err = ErrorMessage.BookingTimeNotAvailable;
                     response.err.data = eachService;
-                    response.code =400;
+                    response.code = 400;
                     return response;
                 }
                 break;
@@ -394,12 +394,12 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         }
         var timeArrayLength = operatingTime / this.SmallestTimeTick + 1;
 
-        var timeNeededNumberOfTicks = timeNeeded / (this.SmallestTimeTick*60);
+        var timeNeededNumberOfTicks = timeNeeded / (this.SmallestTimeTick * 60);
         var startTime = new SalonTime(startDate);
         var flexibleTime = 15; //minutes
         // Todo: 
         var endTime = new SalonTime(startDate);
-        endTime.addMinute(timeNeeded/60);
+        endTime.addMinute(timeNeeded / 60);
 
         var openTime = new SalonTime(startDate);
         openTime.setHour(employee.days[0].open / 3600);
@@ -413,10 +413,10 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         var closeTimeData = closeTime;
         var closeTimePoint = closeTimeData.min + closeTimeData.hour * 60;
         //update the last available time in the day for booking with flexible time;
-        var lastAvailableTimePoint = employee.days[0].close + flexibleTime*60;
+        var lastAvailableTimePoint = employee.days[0].close + flexibleTime * 60;
         var lastAvaliableTime = new SalonTime(startDate);
-        lastAvaliableTime.setHour(lastAvailableTimePoint/3600);
-        lastAvaliableTime.setMinute(lastAvailableTimePoint%3600/60);
+        lastAvaliableTime.setHour(lastAvailableTimePoint / 3600);
+        lastAvaliableTime.setMinute(lastAvailableTimePoint % 3600 / 60);
 
         //validate
         var startDateString = startTime.toString();
@@ -428,7 +428,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         startTimeValidation = new MissingCheck(startTimeValidation, ErrorMessage.MissingStartDate);
         startTimeValidation = new IsAfterSecondDate(startTimeValidation, ErrorMessage.BookingTimeNotAvailable, openDateString);
         var startTimeError = await startTimeValidation.validate();
-        if(startTimeError){
+        if (startTimeError) {
             response.err = startTimeError;
             response.code = 400;
             return response;
@@ -437,7 +437,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         endTimeValidation = new MissingCheck(endTimeValidation, ErrorMessage.MissingStartDate);
         endTimeValidation = new IsBeforeSecondDate(endTimeValidation, ErrorMessage.BookingTimeNotAvailable, lastAvalaibleTimeString);
         var endTimeError = await endTimeValidation.validate();
-        if(endTimeError){
+        if (endTimeError) {
             response.err = endTimeError;
             response.code = 400;
             return response;
@@ -445,7 +445,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
 
         var appointmentArray;
-        if (appointmentList&&appointmentList.length>0) {
+        if (appointmentList && appointmentList.length > 0) {
             appointmentArray = appointmentList;
         } else {
             // get all employee's appointments in the day;
@@ -550,7 +550,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         // init rightPoleIndex
         let endPointOfAppointment = appointment.end.min + appointment.end.hour * 60;
         let rightPoleIndex = (endPointOfAppointment - openTimePoint) / this.SmallestTimeTick;
-        
+
         if (appointment.overlapped.status === true) {
             // adjust the poles with touched appointment;
             leftPoleIndex -= timeNeededNumberOfTicks;
@@ -564,23 +564,27 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         // if leftPoleInded > rightPoleIndex, don't update timeArray;
         // if leftPoleInded<= rightPoleIndex, update timeArray with loop;
         if (leftPoleIndex <= rightPoleIndex) {
-            for (let i = rightPoleIndex - 1; (i > leftPoleIndex) && (i >= 0); i--) {
-                timeArray[i].available = false;
+            for (let i = rightPoleIndex - 1; i > leftPoleIndex; i--) {
+                if (i >= 0 && i <= timeArray.length - 1) {
+                    timeArray[i].available = false;
+                }
             }
         }
         // update overlapped field for element in timeArray due to UNTOUCHED APPOINTMENT 
-        if (!appointment.overlapped.status === false) {
-            for (let i = 1; i <= flexibleTime / this.SmallestTimeTick; i++) {
+        if (appointment.overlapped.status === false) {
+            for (let i = 0; i < flexibleTime / this.SmallestTimeTick; i++) {
 
                 // update right-side elements
-                // number of elements need to be updated equal to flexibleTime/SmallestTimeTick 
-                timeArray[i + rightPoleIndex - 1].overlapped.status = true;
-                timeArray[i + rightPoleIndex - 1].overlapped.appointment_id = appointment.id;
+                // number of elements need to be updated equal to flexibleTime/SmallestTimeTick
+                var rightPoleArrayIndex = (rightPoleIndex + i) <= (timeArray.length - 1) ? (rightPoleIndex + i) : (timeArray.length - 1);
+                timeArray[rightPoleArrayIndex].overlapped.status = true;
+                timeArray[rightPoleArrayIndex].overlapped.appointment_id = appointment.appointment_id;
 
                 // update left-side element
                 // number of elements need to be updated equal to flexibleTime/SmallestTimeTick
-                timeArray[leftPoleIndex - i].overlapped.status = true;
-                timeArray[leftPoleIndex - i].overlapped.appointment_id = appointment.id;
+                var leftPoleArrayIndex = (leftPoleIndex - i) >= 0 ? (leftPoleIndex - i) : 0;
+                timeArray[leftPoleArrayIndex].overlapped.status = true;
+                timeArray[leftPoleArrayIndex].overlapped.appointment_id = appointment.appointment_id;
             }
         }
         //check if lastAvailPeriod should be mark unavailable.
