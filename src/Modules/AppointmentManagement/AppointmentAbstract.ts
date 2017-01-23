@@ -11,7 +11,7 @@ import { AppointmentBehavior } from './AppointmentBehavior';
 import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
 import { SalonTime } from './../../Core/SalonTime/SalonTime'
 import { EmployeeManagement } from './../UserManagement/EmployeeManagement'
-import { SmallestTimeTick } from './../../Core/DefaultData'
+import { SMALLEST_TIME_TICK, FLEXIBLE_TIME } from './../../Core/DefaultData'
 import { ServiceManagement } from './../ServiceManagement/ServiceManagement'
 import { EmployeeSchedule } from './../Schedule/EmployeeSchedule'
 import { ErrorMessage } from './../../Core/ErrorMessage'
@@ -23,7 +23,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
     private appointmentManagementDP: AppointmentManagement;
 
     public salonId: string;
-    private SmallestTimeTick: number = SmallestTimeTick;
+    private SmallestTimeTick: number = SMALLEST_TIME_TICK;
+    private FlexbilbleTime: number = FLEXIBLE_TIME;
 
     /**
      * Creates an instance of AppointmentAbstract.
@@ -323,9 +324,28 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         }
         response.data = [];
         let startTimePoint = eachService.start.hour * 60 + eachService.start.min;
-        for (var eachPoint of getTimeArray.data.time_array) {
-            if (eachPoint.time == startTimePoint) {
-                if (eachPoint.available == true) {
+        let endTimePoint = eachService.end.hour * 60 + eachService.end.min;
+        let amountOfTicks = (endTimePoint - startTimePoint) / this.SmallestTimeTick;
+        let amountOfFlexibleTimeTicks = this.FlexbilbleTime / this.SmallestTimeTick;
+        for (var eachPoint in getTimeArray.data.time_array) {
+            if (getTimeArray.data.time_array[eachPoint].time == startTimePoint) {
+                if (getTimeArray.data.time_array[eachPoint].available == true) {
+                    //check the total amount of overlapped time;
+                   var overlappedCount = 0;
+                   var eachPointIndex = Number(eachPoint);
+                    for (var i = 0; (i < amountOfTicks) && (eachPointIndex + i < getTimeArray.data.time_array.length); i++) {
+                        if (getTimeArray.data.time_array[eachPointIndex + i].occupied == true) {
+                            overlappedCount++;
+                        }
+                    }
+                    if (overlappedCount > amountOfFlexibleTimeTicks) {
+                        response.err = ErrorMessage.BookingTimeNotAvailable;
+                        response.err.data = eachService;
+                        response.code = 400;
+                        return response;
+                    }
+                    
+                    //if pass the overlapped time check, start to push data to response data;
                     let appointmentItem: AppointmentItemData = {
                         employee_id: eachService.employee_id,
                         start: eachService.start,
@@ -336,8 +356,11 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                             price: getServiceData.data.price,
                             service_name: getServiceData.data.name
                         },
-                        overlapped: eachPoint.overlapped
+                        overlapped: getTimeArray.data.time_array[eachPoint].overlapped
                     }
+
+
+
 
                     employeeAppointmentArrayList[employeeIndex].push(appointmentItem);
                     response.data.push(appointmentItem);
@@ -396,7 +419,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
         var timeNeededNumberOfTicks = timeNeeded / (this.SmallestTimeTick * 60);
         var startTime = new SalonTime(startDate);
-        var flexibleTime = 15; //minutes
+        var flexibleTime = this.FlexbilbleTime; //minutes
         // Todo: 
         var endTime = new SalonTime(startDate);
         endTime.addMinute(timeNeeded / 60);
@@ -474,6 +497,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                     appointment_id: null,
                 },
                 time: openTimePoint + this.SmallestTimeTick * i,
+                occupied: false,
             }
             timeArray.push(obj);
         }
@@ -482,14 +506,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             // loop appointmentArray to work with each busy appointed time period
             for (let eachAppointment of appointmentArray) {
                 //reject the new appointment that is total wrapped or totally wraps another appointment;
-                if((eachAppointment.start.timestamp < startTime.timestamp && eachAppointment.end.timestamp > endTime.timestamp)||
-                    (eachAppointment.start.timestamp > startTime.timestamp && eachAppointment.end.timestamp < endTime.timestamp)){
-                        for(var eachElement of timeArray){
-                            eachElement.available = false;
-                        }
-                        break;
+                if ((eachAppointment.start.timestamp < startTime.timestamp && eachAppointment.end.timestamp > endTime.timestamp) ||
+                    (eachAppointment.start.timestamp > startTime.timestamp && eachAppointment.end.timestamp < endTime.timestamp)) {
+                    for (var eachElement of timeArray) {
+                        eachElement.available = false;
+                    }
+                    break;
                 }
-
+                
                 var filterProcess = this.filterTimeArray(eachAppointment, timeArray, openTimePoint, closeTimePoint, timeNeededNumberOfTicks, flexibleTime);
 
             }
@@ -555,11 +579,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         // init leftPoleIndex
         let startPointOfAppointment = appointment.start.min + appointment.start.hour * 60;
         let leftPoleIndex = (startPointOfAppointment - openTimePoint) / this.SmallestTimeTick;
-
         // init rightPoleIndex
         let endPointOfAppointment = appointment.end.min + appointment.end.hour * 60;
         let rightPoleIndex = (endPointOfAppointment - openTimePoint) / this.SmallestTimeTick;
-
+        //update occupied fields
+        for(let i = leftPoleIndex; i<rightPoleIndex; i++){
+            timeArray[i].occupied = true;
+        }
+          
         if (appointment.overlapped.status === true) {
             // adjust the poles with touched appointment;
             leftPoleIndex -= timeNeededNumberOfTicks;
@@ -712,6 +739,7 @@ export interface TimeArrayItem {
         appointment_id?: string,
     },
     time: number,
+    occupied?: boolean,
 
 
 }
