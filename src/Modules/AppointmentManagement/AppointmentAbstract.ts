@@ -139,7 +139,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
      */
     public async checkBookingAvailableTime(servicesArray: AppointmentItemData[]): Promise<SalonCloudResponse<AppointmentItemData[]>> {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
-            data: null,
+            data: [],
             code: null,
             err: null
         }
@@ -225,7 +225,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                         response.code = appointmentArrayResult.code;
                         return response;
                     } else {
-                        response.data = appointmentArrayResult.data;
+                        response.data.push(appointmentArrayResult.data[0]);
                         response.code = appointmentArrayResult.code;
                     }
                 }
@@ -481,6 +481,15 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         if (appointmentArray) {
             // loop appointmentArray to work with each busy appointed time period
             for (let eachAppointment of appointmentArray) {
+                //reject the new appointment that is total wrapped or totally wraps another appointment;
+                if((eachAppointment.start.timestamp < startTime.timestamp && eachAppointment.end.timestamp > endTime.timestamp)||
+                    (eachAppointment.start.timestamp > startTime.timestamp && eachAppointment.end.timestamp < endTime.timestamp)){
+                        for(var eachElement of timeArray){
+                            eachElement.available = false;
+                        }
+                        break;
+                }
+
                 var filterProcess = this.filterTimeArray(eachAppointment, timeArray, openTimePoint, closeTimePoint, timeNeededNumberOfTicks, flexibleTime);
 
             }
