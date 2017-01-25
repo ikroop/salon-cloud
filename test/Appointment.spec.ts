@@ -28,7 +28,6 @@ import * as moment from 'moment';
 
 
 describe('Appointment Management', function () {
-    console.log('JJJ');
     var validToken;
     var invalidToken = 'eyJhbGciOiJSUz';
     var validSalonId;
@@ -93,7 +92,6 @@ describe('Appointment Management', function () {
         var salon = await signedInUser.createSalon(salonInformationInput);
 
         validSalonId = salon.data;
-        console.log('VALIDSALONDID: ', validSalonId);
         // 4. Add new employee
         const owner = new Owner(loginData.data.user._id, new SalonManagement(validSalonId));
         // Add new employee
@@ -110,7 +108,6 @@ describe('Appointment Management', function () {
 
         const employeeEmail = `${Math.random().toString(36).substring(7)}@gmail.com`;
         const employee: SalonCloudResponse<EmployeeReturn> = await owner.addEmployee(employeeEmail, employeeInput, new ByPhoneVerification());
-        console.log('EmPloyeEE: ', employee);
         validEmployeeId = employee.data.uid;
 
         // Create new user
@@ -143,7 +140,6 @@ describe('Appointment Management', function () {
         validServiceId = validGroupService.service_list[0]._id;
         validServiceIdWithShorterTime = validGroupService.service_list[1]._id; //1200
         validServiceIdWithLongerTime = validGroupService1.service_list[0]._id; //2400
-        console.log('SERVICES: ', service_array.data[0].service_list, service_array.data[1].service_list);
 
         // Get Daily Schedule
         const employeeSchedule = new EmployeeSchedule(validSalonId, validEmployeeId);
@@ -205,12 +201,6 @@ describe('Appointment Management', function () {
         aTimeCase28 = getDateString(dateString, aTimeCase28InSecond);
         aTimeCase29 = getDateString(dateString, aTimeCase29InSecond);
         var test = getDateString(dateString,aTimeCase15);
-        console.log(aTimeCase15, aTimeCase16, aTimeCase17, aTimeCase18);
-        console.log(aTimeCase19, aTimeCase20, aTimeCase21, aTimeCase22, aTimeCase23);
-        console.log(aTimeCase24, aTimeCase25, aTimeCase261, aTimeCase262, aTimeCase27);
-        console.log(aTimeCase28, aTimeCase29);
-        console.log('TEst: ', test);
-
 
     });
 
