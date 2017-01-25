@@ -87,7 +87,6 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             type: null
         };
 
-
         var appointmentByPhone: BookingAppointment = new BookingAppointment(salonId, new AppointmentManagement(salonId));
 
         appointmentByPhone.normalizationData(newAppointment);               

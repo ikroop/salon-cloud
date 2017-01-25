@@ -53,11 +53,17 @@ export class FirebaseAppointmentManagement implements AppointmentManagementDatab
      */
     public async createAppointment(appointment: AppointmentData): Promise<IAppointmentData> {
         var createdAppointment: IAppointmentData = null;
-        var appointmentItemList = appointment.appointment_items;
+        var appointmentItemList: Array<AppointmentItemData> = [];
+        for (var eachItem of appointment.appointment_items) {
+            appointmentItemList.push(eachItem);
+
+        }
         appointment.appointment_items = null;
+        //appointment.appointment_items = null;
         try {
-           createdAppointment = await this.saveAppointmentInformation(appointment);
-           await this.saveAppointmentItems(createdAppointment._id, appointmentItemList);
+            createdAppointment = await this.saveAppointmentInformation(appointment);
+            await this.saveAppointmentItems(createdAppointment._id, appointmentItemList);
+            createdAppointment.appointment_items
         } catch (error) {
             throw error;
         }
@@ -66,14 +72,24 @@ export class FirebaseAppointmentManagement implements AppointmentManagementDatab
 
     public async getEmployeeAppointmentByDate(employeeId: string, date: SalonTimeData): Promise<AppointmentItemData[]> {
         var appointmentItemList: AppointmentItemData[] = new Array();
-        var beginDate = date.timestamp;
-        var endDate = date.timestamp + 24 * 3600 * 1000;
+        var targetDate = new SalonTime(date);
+        targetDate.setToBeginningDate();
+        var beginDate = targetDate.timestamp;
+        var testDay = new Date(Date.UTC(targetDate.year, targetDate.month, targetDate.day));
+        var endDate = targetDate.timestamp + 24 * 3600 * 1000;
+
         try {
-            await this.appointmentItemsRef.orderByChild('start/timestamp').startAt(beginDate).endAt(endDate).once('value', async function (snapshot) {
-                
+            await this.appointmentItemsRef.orderByChild('start/timestamp').startAt(beginDate).endAt(endDate).once('value', function (snapshot) {
                 var appointmentItem: AppointmentItemData = snapshot.val();
-                if (appointmentItem.employee_id === employeeId){
-                    appointmentItemList.push(appointmentItem);
+
+                if (appointmentItem) {
+
+                    for (var eachItem in appointmentItem)
+                        if (appointmentItem.hasOwnProperty(eachItem)) {
+                            if (appointmentItem[eachItem].employee_id === employeeId) {
+                                appointmentItemList.push(appointmentItem[eachItem]);
+                            }
+                        }
                 }
             });
         } catch (error) {
@@ -97,12 +113,13 @@ export class FirebaseAppointmentManagement implements AppointmentManagementDatab
     }
 
     private async saveAppointmentItems(appointmentId: string, appointmentItemList: AppointmentItemData[]): Promise<void> {
-        var baseAppointmentItemRef = this.appointmentItemsRef.child(appointmentId);
+        var baseAppointmentItemRef = this.appointmentItemsRef
         appointmentItemList.forEach(async item => {
             try {
                 item.end = SalonTime.exportJSON(item.end);
                 item.start = SalonTime.exportJSON(item.start);
-                
+                item.appointment_id = appointmentId;
+
                 var newAppointmentItemRef = await baseAppointmentItemRef.push();
                 await newAppointmentItemRef.set(item);
             } catch (error) {
