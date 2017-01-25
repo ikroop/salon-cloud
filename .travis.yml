@@ -1,0 +1,16 @@
+sudo: false
+
+language: node_js
+
+node_js:
+  - "6"
+
+install:
+  - npm install -g typescript nodemon mocha nyc codecov
+
+script:
+  - tsc test/*.ts --module commonjs --sourcemap --target es6
+  - mocha -t 15000 test
+
+notifications:
+  slack: akveo:q559HckfZMSyZRb803aiLcjH
