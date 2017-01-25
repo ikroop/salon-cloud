@@ -49,6 +49,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
      * @param {AppointmentData} appointment
      * @returns {Promise<SalonCloudResponse<AppointmentData>>}
      * 
+     * step 1: Validate input appointment Data
+     * 
+     * step 2: Checking booking available time 
+     * 
+     * step 3: normalize the appointment before saving it
+     * 
+     * step 4: process to create appointment on database
+     * 
      * @memberOf AppointmentAbstract
      */
     public async createAppointment(appointment: AppointmentData): Promise<SalonCloudResponse<AppointmentData>> {
@@ -234,7 +242,16 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         }
         return response;
     }
-
+   
+    /**
+     * The purpose of this function is to modify the parameter 'eachService'
+     * 
+     * @private
+     * @param {AppointmentItemData} eachService
+     * @returns void
+     * 
+     * @memberOf AppointmentAbstract
+     */
     private async getServiceData(eachService: AppointmentItemData) {
         var response: SalonCloudResponse<any> = {
             data: null,
@@ -262,7 +279,19 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     }
 
-    private async getEmployeeScheduleForAddedEmployee(eachService: AppointmentItemData, employeeSchedule: any) {
+    
+    
+    /**
+     * 
+     * 
+     * @private
+     * @param {AppointmentItemData} eachService
+     * @param {*} employeeSchedule
+     * @returns {Promise<SalonCloudResponse<DailyScheduleArrayData>>}
+     * 
+     * @memberOf AppointmentAbstract
+     */
+    private async getEmployeeScheduleForAddedEmployee(eachService: AppointmentItemData, employeeSchedule: any): Promise<SalonCloudResponse<DailyScheduleArrayData>> {
 
         var response: SalonCloudResponse<DailyScheduleArrayData> = {
             data: null,
@@ -287,6 +316,17 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     }
 
+    
+    /**
+     * 
+     * 
+     * @private
+     * @param {AppointmentItemData} eachService
+     * @param {AppointmentItemData[]} employeeAppointmentArray
+     * @returns
+     * 
+     * @memberOf AppointmentAbstract
+     */
     private async getAppointmentForAddedEmployee(eachService: AppointmentItemData, employeeAppointmentArray: AppointmentItemData[]) {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
             data: null,
@@ -316,6 +356,20 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     }
 
+    
+    /**
+     * 
+     * 
+     * @private
+     * @param {AppointmentItemData} eachService
+     * @param {*} getTimeArray
+     * @param {*} getServiceData
+     * @param {Array<Array<AppointmentItemData>>} employeeAppointmentArrayList
+     * @param {number} employeeIndex
+     * @returns
+     * 
+     * @memberOf AppointmentAbstract
+     */
     private async makeAppointmentArrayForChecking(eachService: AppointmentItemData, getTimeArray: any, getServiceData: any, employeeAppointmentArrayList: Array<Array<AppointmentItemData>>, employeeIndex: number) {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
             data: null,
@@ -331,8 +385,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             if (getTimeArray.data.time_array[eachPoint].time == startTimePoint) {
                 if (getTimeArray.data.time_array[eachPoint].available == true) {
                     //check the total amount of overlapped time;
-                   var overlappedCount = 0;
-                   var eachPointIndex = Number(eachPoint);
+                    var overlappedCount = 0;
+                    var eachPointIndex = Number(eachPoint);
                     for (var i = 0; (i < amountOfTicks) && (eachPointIndex + i < getTimeArray.data.time_array.length); i++) {
                         if (getTimeArray.data.time_array[eachPointIndex + i].occupied == true) {
                             overlappedCount++;
@@ -344,7 +398,6 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                         response.code = 400;
                         return response;
                     }
-                    
                     //if pass the overlapped time check, start to push data to response data;
                     let appointmentItem: AppointmentItemData = {
                         employee_id: eachService.employee_id,
@@ -358,10 +411,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                         },
                         overlapped: getTimeArray.data.time_array[eachPoint].overlapped
                     }
-
-
-
-
+                    //push appointmentItem to the saving appointmentItem array;
                     employeeAppointmentArrayList[employeeIndex].push(appointmentItem);
                     response.data.push(appointmentItem);
                     response.code = 200;
@@ -441,12 +491,13 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         lastAvaliableTime.setHour(lastAvailableTimePoint / 3600);
         lastAvaliableTime.setMinute(lastAvailableTimePoint % 3600 / 60);
 
-        //validate
+        //validations
         var startDateString = startTime.toString();
         var endDateString = endTime.toString();
         var openDateString = openTime.toString();
         var closeDateString = closeTime.toString();
         var lastAvalaibleTimeString = lastAvaliableTime.toString();
+        //validate start time
         var startTimeValidation = new BaseValidator(startDateString);
         startTimeValidation = new MissingCheck(startTimeValidation, ErrorMessage.MissingStartDate);
         startTimeValidation = new IsAfterSecondDate(startTimeValidation, ErrorMessage.BookingTimeNotAvailable, openDateString);
@@ -456,6 +507,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             response.code = 400;
             return response;
         }
+        //validate end time
         var endTimeValidation = new BaseValidator(endDateString);
         endTimeValidation = new MissingCheck(endTimeValidation, ErrorMessage.MissingStartDate);
         endTimeValidation = new IsBeforeSecondDate(endTimeValidation, ErrorMessage.BookingTimeNotAvailable, lastAvalaibleTimeString);
@@ -466,9 +518,10 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             return response;
         }
 
-
+        //use the already exist appointmentArray or get one from database;
         var appointmentArray;
         if (appointmentList && appointmentList.length > 0) {
+            //use the already exist appointmentArray passed in as appointmentList
             appointmentArray = appointmentList;
         } else {
             // get all employee's appointments in the day;
@@ -513,7 +566,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                     }
                     break;
                 }
-                
+                //filter Time Array to mark avail/unavail time point for appointment;
                 var filterProcess = this.filterTimeArray(eachAppointment, timeArray, openTimePoint, closeTimePoint, timeNeededNumberOfTicks, flexibleTime);
 
             }
@@ -583,10 +636,10 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         let endPointOfAppointment = appointment.end.min + appointment.end.hour * 60;
         let rightPoleIndex = (endPointOfAppointment - openTimePoint) / this.SmallestTimeTick;
         //update occupied fields
-        for(let i = leftPoleIndex; i<rightPoleIndex; i++){
+        for (let i = leftPoleIndex; i < rightPoleIndex; i++) {
             timeArray[i].occupied = true;
         }
-          
+
         if (appointment.overlapped.status === true) {
             // adjust the poles with touched appointment;
             leftPoleIndex -= timeNeededNumberOfTicks;
