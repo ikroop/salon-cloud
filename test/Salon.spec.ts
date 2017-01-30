@@ -252,7 +252,7 @@ describe('Salon Management', function () {
         it('should return ' + ErrorMessage.InvalidTokenError + ' error trying to get salon list with invalid token', function (done) {
             var token = invalidToken;
             var userID = validUserId;
-            var parameterUrl = apiUrl+'?userId='+userID;
+            var parameterUrl = apiUrl+'?user_id='+userID;
             request(server)
                 .post(parameterUrl)
                 .set({ 'Authorization': token })
@@ -291,7 +291,7 @@ describe('Salon Management', function () {
         it('should return ' + ErrorMessage.InvalidUserId + ' error trying to get salon list with invalid user id', function (done) {
             var token = validToken;
             var userID = invalidUserId;
-            var parameterUrl = apiUrl+'?userId='+userID;
+            var parameterUrl = apiUrl+'?user_id='+userID;
             request(server)
                 .post(parameterUrl)
                 .set({ 'Authorization': token })
