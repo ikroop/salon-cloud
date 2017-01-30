@@ -3,7 +3,7 @@ SalonCloud – a software will change all your definition about managing a salon
 
 [![Join Chat](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg)](https://gitter.im/salon-cloud/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 [![Build Status](https://travis-ci.org/salonhelps/salon-cloud.svg?branch=master)](https://travis-ci.org/salonhelps/salon-cloud)
-[![codecov](https://codecov.io/gh/thanhtruong0315/salon-cloud/branch/master/graph/badge.svg?token=pf4UaCBhUy)](https://codecov.io/gh/thanhtruong0315/salon-cloud)
+[![codecov](https://codecov.io/gh/salonhelps/salon-cloud/branch/master/graph/badge.svg?token=pf4UaCBhUy)](https://codecov.io/gh/salonhelps/salon-cloud)
 # Overview
 ![Alt text](/Salon_Architecture.png "SalonCloud Overview")
 
