@@ -27,9 +27,10 @@ describe('Salon Management', function () {
     let validEmployeeId;
     let anotherUserId;
     let anotherUserToken;
+    let validUserId;
+    let invalidUserId = '100023232';
 
     before(async function () {
-
         // Login and get token
         var user = {
             username: 'unittest1473044833007@gmail.com',
@@ -44,13 +45,15 @@ describe('Salon Management', function () {
         // 2. login to get access token
         var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
         validToken = loginData.data.auth.token;
+        validUserId = loginData.data.user._id;
+
 
     });
 
     describe('Unit Test Create Salon API', function () {
         var apiUrl = '/api/v1/salon/create';
 
-        it('should return '+ErrorMessage.InvalidTokenError.err.name+' error trying to create salon information with invalid token', function (done) {
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to create salon information with invalid token', function (done) {
             var token = invalidToken;
             var bodyRequest = {
                 'salon_name': 'SunshineNails VA',
@@ -240,6 +243,71 @@ describe('Salon Management', function () {
                     done();
                 });
         });
+
+    });
+
+    describe('Unit Test Get Salon List By User Id', function () {
+        var apiUrl = '/api/v1/salon/getsalonlist';
+
+        it('should return ' + ErrorMessage.InvalidTokenError + ' error trying to get salon list with invalid token', function (done) {
+            var token = invalidToken;
+            var userID = validUserId;
+            var parameterUrl = apiUrl+'?userId='+userID;
+            request(server)
+                .post(parameterUrl)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        })
+
+        it('should return ' + ErrorMessage.MissingUserId + ' error trying to get salon list without user id', function (done) {
+            var token = validToken;
+            var parameterUrl = apiUrl;
+            request(server)
+                .post(parameterUrl)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingUserId.err.name);
+                    done();
+                });
+        })
+
+        it('should return ' + ErrorMessage.InvalidUserId + ' error trying to get salon list with invalid user id', function (done) {
+            var token = validToken;
+            var userID = invalidUserId;
+            var parameterUrl = apiUrl+'?userId='+userID;
+            request(server)
+                .post(parameterUrl)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        })
+
 
     });
 });
