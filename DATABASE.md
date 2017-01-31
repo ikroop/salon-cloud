@@ -19,8 +19,8 @@ use UTC.
   |           |----social_security_number: string (optional)
   |           |----salary_rate: double (optional)
   |           |----cash_rate: double (optional)
-  |           |----birthday: string (optional)
-  |           |----address: string (optional)
+  |           |----birthday: string (optional) //TODO: bring it outside
+  |           |----address: string (optional) //TODO: bring it outside, add phone too
   |----appointment
   |     |----id: string
   |     |----salon_id: string
