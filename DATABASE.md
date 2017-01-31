@@ -14,9 +14,9 @@ use UTC.
   |           |----salon_id: string
   |           |----status: boolean
   |           |----role: number, 1: Owner, 2: Manager, 3: Employee, 4: Customer
-  |           |----fullname: string
+  |           |----fullname: string  
   |           |----nickname: string
-  |           |----social_security_number: string (optional)
+  |           |----social_security_number: string (optional) //TODO: bring it outside
   |           |----salary_rate: double (optional)
   |           |----cash_rate: double (optional)
   |           |----birthday: string (optional) //TODO: bring it outside
