@@ -6,6 +6,7 @@
 
 import { ErrorMessage } from './../../../Core/ErrorMessage';
 import { UserData, IUserData, UserProfile } from './../../../Modules/UserManagement/UserData'
+import { SalonInformation } from './../../../Modules/SalonManagement/SalonData'
 import { SalonCloudResponse } from './../../../Core/SalonCloudResponse';
 
 import { UserManagementDatabaseInterface } from './../UserManagementDatabaseInterface';
@@ -18,6 +19,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
     private database: any;
     private userRef: any;
     private readonly USER_KEY_NAME: string = 'users';
+    private readonly SALON_KEY_NAME: string = 'salons';
     private salonDatabase: FirebaseSalonManagement;
     /**
      * Creates an instance of MongoSalonManagement.
@@ -231,4 +233,29 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
 
         return userProfile;
     }
+
+    /**
+     * 
+     * 
+     * @private
+     * 
+     * @memberOf FirebaseUserManagement
+     */
+    private async getSalonInformationList(userId: string) {
+        var salonInformationList: [SalonInformation] = null;
+        var salonRef = this.database.ref(this.SALON_KEY_NAME);
+        await salonRef.orderByChild('users').startAt(userId).endAt(userId).once('value', function (snapshot) {
+            var allSalon = snapshot.val();
+            for(var eachSalon of allSalon){
+                salonInformationList.push(eachSalon.profile.information);
+            }
+        }, function (errorObject) {
+            throw errorObject;
+        });
+        
+        return salonInformationList;
+
+    }
 }
+
+
