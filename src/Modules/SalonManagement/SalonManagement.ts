@@ -13,6 +13,7 @@ import { ErrorMessage } from './../../Core/ErrorMessage'
 import { GoogleMap } from './../../Core/GoogleMap/GoogleMap';
 import { SalonManagementDatabaseInterface } from './../../Services/SalonDatabase/SalonManagementDatabaseInterface';
 import { FirebaseSalonManagement } from './../../Services/SalonDatabase/Firebase/FirebaseSalonManagement'
+import { FirebaseUserManagement } from './../../Services/UserDatabase/Firebase/FirebaseUserManagement'
 
 export class SalonManagement implements SalonManagementBehavior {
 
@@ -92,8 +93,19 @@ export class SalonManagement implements SalonManagementBehavior {
         return;
     };
 
-    public getAllSalon(userId: string): SalonCloudResponse<SalonInformation> {
-        return;
+    public async getAllSalon(userId: string): Promise<SalonCloudResponse<Array<SalonInformation>>> {
+        var response : SalonCloudResponse<Array<SalonInformation>> = {
+            code: null,
+            data: null,
+            err: null
+        }
+        var database = new FirebaseUserManagement(null);
+        var getSalonInfoList = await database.getSalonInformationList(userId);
+        if(getSalonInfoList){
+            response.data = getSalonInfoList;
+            response.code = 200;
+        }
+        return response;
     };
 
     public updateInformation(data: SalonInformation): SalonCloudResponse<boolean> {
