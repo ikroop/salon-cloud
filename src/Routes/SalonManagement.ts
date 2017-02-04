@@ -51,7 +51,20 @@ export class SalonManagementRouter {
             response.json(dataReturn);
         });
 
-        this.router.post('/getsalonlist', authorizationRouter.checkPermission, function (request: Request, response: Response) {
+        this.router.get('/getsalonlist', authorizationRouter.checkPermission, async function (request: Request, response: Response) {
+            var userId = request.query.user_id;
+            var signedInUser = new SignedInUser(userId, null);
+            var getSalonListResponse = await signedInUser.getSalonList();
+            var dataReturn;
+            if(getSalonListResponse.err){
+                dataReturn = getSalonListResponse.err;
+            }else{
+                dataReturn = getSalonListResponse.data;
+            }
+
+            response.status(getSalonListResponse.code);
+            response.json(dataReturn);
+            
 
         });
 
