@@ -307,7 +307,25 @@ describe('Salon Management', function () {
                     done();
                 });
         })
+  
+        it('should return salon information list trying to get salon list successfully', function (done) {
+            var token = validToken;
+            var userID = validUserId;
+            var parameterUrl = apiUrl+'?user_id='+userID;
+            request(server)
+                .post(parameterUrl)
+                .set({ 'Authorization': token })
 
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('salon_list');
+                    done();
+                });
+        })
 
     });
 });

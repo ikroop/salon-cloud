@@ -14,7 +14,7 @@ export interface SignedInUserBehavior {
 
     createSalon(salonInformation : SalonInformation);
 
-    getSalonList() : SalonCloudResponse<Array<SalonInformation>>;
+    getSalonList() : Promise<SalonCloudResponse<Array<SalonInformation>>>;
 
     selectSalon(SalonId : string) : SalonCloudResponse<boolean>;
 
