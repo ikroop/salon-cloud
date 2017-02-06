@@ -51,7 +51,7 @@ export class SalonManagementRouter {
             response.json(dataReturn);
         });
 
-        this.router.get('/getsalonlist', authorizationRouter.checkPermission, async function (request: Request, response: Response) {
+        this.router.get('/getsalonlist', async function (request: Request, response: Response) {
             var userId = request.query.user_id;
             var signedInUser = new SignedInUser(userId, null);
             var getSalonListResponse = await signedInUser.getSalonList();

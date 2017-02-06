@@ -235,9 +235,11 @@ describe('Salon Management', function () {
                 .set({ 'Authorization': token })
 
                 .end(function (err, res) {
+                    console.log(res.body);
                     if (err) {
                         throw err;
                     }
+                    console.log(res.body);
                     res.status.should.be.equal(200);
                     res.body.should.have.property('_id');
                     done();
@@ -249,12 +251,12 @@ describe('Salon Management', function () {
     describe('Unit Test Get Salon List By User Id', function () {
         var apiUrl = '/api/v1/salon/getsalonlist';
 
-        it('should return ' + ErrorMessage.InvalidTokenError + ' error trying to get salon list with invalid token', function (done) {
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get salon list with invalid token', function (done) {
             var token = invalidToken;
             var userID = validUserId;
             var parameterUrl = apiUrl+'?user_id='+userID;
             request(server)
-                .post(parameterUrl)
+                .get(parameterUrl)
                 .set({ 'Authorization': token })
 
                 .end(function (err, res) {
@@ -269,11 +271,11 @@ describe('Salon Management', function () {
                 });
         })
 
-        it('should return ' + ErrorMessage.MissingUserId + ' error trying to get salon list without user id', function (done) {
+        it('should return ' + ErrorMessage.MissingUserId.err.name + ' error trying to get salon list without user id', function (done) {
             var token = validToken;
             var parameterUrl = apiUrl;
             request(server)
-                .post(parameterUrl)
+                .get(parameterUrl)
                 .set({ 'Authorization': token })
 
                 .end(function (err, res) {
@@ -288,12 +290,12 @@ describe('Salon Management', function () {
                 });
         })
 
-        it('should return ' + ErrorMessage.InvalidUserId + ' error trying to get salon list with invalid user id', function (done) {
+        it('should return ' + ErrorMessage.InvalidUserId.err.name + ' error trying to get salon list with invalid user id', function (done) {
             var token = validToken;
             var userID = invalidUserId;
             var parameterUrl = apiUrl+'?user_id='+userID;
             request(server)
-                .post(parameterUrl)
+                .get(parameterUrl)
                 .set({ 'Authorization': token })
 
                 .end(function (err, res) {
@@ -313,7 +315,7 @@ describe('Salon Management', function () {
             var userID = validUserId;
             var parameterUrl = apiUrl+'?user_id='+userID;
             request(server)
-                .post(parameterUrl)
+                .get(parameterUrl)
                 .set({ 'Authorization': token })
 
                 .end(function (err, res) {
