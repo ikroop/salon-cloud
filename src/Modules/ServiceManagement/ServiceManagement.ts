@@ -75,8 +75,15 @@ export class ServiceManagement implements ServiceManagementBehavior {
             response.code = validations.code;
             return response;
         }
+
+        var serviceGroupInput: ServiceGroupData={
+            description: group.description,
+            name: group.name,
+            salon_id: group.salon_id,
+            service_list: group.service_list
+        }
         try {
-            var serviceGroup = await this.serviceDatabase.createGroup(group);
+            var serviceGroup = await this.serviceDatabase.createGroup(serviceGroupInput);
             response.data = serviceGroup;
             response.code = 200;
         } catch (error) {

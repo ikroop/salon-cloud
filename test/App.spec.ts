@@ -1,4 +1,10 @@
-import server = require('../src/App');
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
+ */
+
+import * as server from './Config';
 import { expect } from 'chai';
 import  request = require('supertest');
 

@@ -99,4 +99,5 @@ export let samplesService2: ServiceGroupData = {
 
 }
 
-export const SmallestTimeTick: number = 15;
+export const SMALLEST_TIME_TICK: number = 15;
+export const FLEXIBLE_TIME: number =15;

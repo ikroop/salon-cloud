@@ -34,12 +34,12 @@ export class SalonTime implements SalonTimeData {
         if (salonTime) {
             this.momentjs.set('year', salonTime.year);
             this.momentjs.set('month', salonTime.month);
-            this.momentjs.set('day', salonTime.day);
+            this.momentjs.set('date', salonTime.day);
             this.momentjs.set('hour', salonTime.hour);
             this.momentjs.set('minute', salonTime.min);
             this.momentjs.set('second', 0);
         }
-        this.nomalize();
+        this.normalize();
     }
 
     /**
@@ -52,7 +52,7 @@ export class SalonTime implements SalonTimeData {
     public setString(dateString: string): SalonTime {
         this.momentjs = moment.utc(dateString, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD', 'YYYY-MM-DD HH:mm'], true);
         if (this.momentjs.isValid()) {
-            this.nomalize();
+            this.normalize();
         }else{
             this.day = null;
             this.month = null;
@@ -71,7 +71,7 @@ export class SalonTime implements SalonTimeData {
      */
     public setDate(date: Date): SalonTime {
         this.momentjs = moment.utc(date);
-        this.nomalize();
+        this.normalize();
         return this;
     }
 
@@ -84,7 +84,7 @@ export class SalonTime implements SalonTimeData {
      */
     public addMinute(minute: number): SalonTime {
         this.momentjs.add(minute, 'minutes');
-        this.nomalize();
+        this.normalize();
         return this;
     }
 
@@ -97,7 +97,7 @@ export class SalonTime implements SalonTimeData {
      */
     public addHour(hour: number): SalonTime {
         this.momentjs.add(hour, 'hours');
-        this.nomalize();
+        this.normalize();
         return this;
     }
 
@@ -110,7 +110,7 @@ export class SalonTime implements SalonTimeData {
      */
     public addDay(day: number): SalonTime {
         this.momentjs.add(day, 'days');
-        this.nomalize();
+        this.normalize();
         return this;
     }
 
@@ -123,7 +123,7 @@ export class SalonTime implements SalonTimeData {
      */
     public addMonth(month: number): SalonTime {
         this.momentjs.add(month, 'months');
-        this.nomalize();
+        this.normalize();
         return this;
     }
 
@@ -136,7 +136,7 @@ export class SalonTime implements SalonTimeData {
      */
     public addYear(year: number): SalonTime {
         this.momentjs.add(year, 'years');
-        this.nomalize();
+        this.normalize();
         return this;
     }
 
@@ -149,7 +149,7 @@ export class SalonTime implements SalonTimeData {
      */
     public setMinute(minute: number): SalonTime {
         this.momentjs.minute(minute);
-        this.nomalize();
+        this.normalize();
         return this;
     }
 
@@ -162,7 +162,7 @@ export class SalonTime implements SalonTimeData {
      */
     public setHour(hour: number): SalonTime {
         this.momentjs.hour(hour);
-        this.nomalize();
+        this.normalize();
         return this;
     }
 
@@ -175,7 +175,7 @@ export class SalonTime implements SalonTimeData {
      */
     public setDay(day: number): SalonTime {
         this.momentjs.day(day);
-        this.nomalize();
+        this.normalize();
         return this;
     }
 
@@ -188,7 +188,7 @@ export class SalonTime implements SalonTimeData {
      */
     public setMonth(month: number): SalonTime {
         this.momentjs.month(month);
-        this.nomalize();
+        this.normalize();
         return this;
     }
 
@@ -201,7 +201,7 @@ export class SalonTime implements SalonTimeData {
      */
     public setYear(year: number): SalonTime {
         this.momentjs.month(year);
-        this.nomalize();
+        this.normalize();
         return this;
     }
 
@@ -267,7 +267,7 @@ export class SalonTime implements SalonTimeData {
      * 
      * @memberOf SalonTime
      */
-    private nomalize(): void {
+    private normalize(): void {
         this.min = this.momentjs.minute();
         this.hour = this.momentjs.hour();
         this.day = this.momentjs.date();
@@ -311,5 +311,11 @@ export class SalonTime implements SalonTimeData {
         };
 
         return JSONData;
+    }
+
+    public setToBeginningDate() {
+        this.setMinute(0);
+        this.setHour(0);
+        this.normalize();
     }
 }

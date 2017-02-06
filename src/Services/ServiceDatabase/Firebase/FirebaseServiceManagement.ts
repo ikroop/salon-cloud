@@ -47,6 +47,8 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
 
         //ready for creating service item id
         var serviceList = group.service_list;
+
+        //clear service List
         group.service_list = null;
 
         var newGroup = await this.serviceRef.push();
@@ -54,9 +56,11 @@ export class FirebaseServiceManagement implements ServiceManagementDatabaseInter
         serviceGroup = await this.getServiceGroupById(newGroup.key);
 
         //push service item;
-        serviceList.forEach(async item => {
-            await newGroup.child('service_list').push().set(item);
-        });
+        if (serviceList) {
+            serviceList.forEach(async item => {
+                await newGroup.child('service_list').push().set(item);
+            });
+        }
         return serviceGroup;
     }
 
