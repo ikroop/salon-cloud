@@ -13,5 +13,3 @@ script:
   - NODE_ENV=development nyc mocha -t 15000
   - export CODECOV_TOKEN='22ee92e1-4cdd-4db2-ba21-95a1459f2e37' && nyc report --reporter=json && codecov -f coverage/*.json
 
-notifications:
-  slack: akveo:q559HckfZMSyZRb803aiLcjH
