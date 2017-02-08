@@ -13,6 +13,7 @@ import { UserManagement } from './../../Modules/UserManagement/UserManagement';
 import { SalonManagement } from './../../Modules/SalonManagement/SalonManagement';
 import * as moment from 'moment';
 import { SalonTime } from './../SalonTime/SalonTime';
+import {FirebaseUserManagement} from './../../Services/UserDatabase/Firebase/FirebaseUserManagement';
 //Validate if target element is missing.
 //To pass the test: Target Element must not be null.
 export class MissingCheck extends DecoratingValidator {
@@ -605,6 +606,33 @@ export class IsValidSalonTimeData extends DecoratingValidator {
     }
 
 }
+
+//Validate if a UserId is valid.
+//Valid if node 'users' contain userId
+export class IsValidUserId extends DecoratingValidator {
+    public errorType: any;
+    public targetElement: any;
+    constructor(wrapedValidator: Validator, errorType: any) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+    };
+
+    public async validatingOperation() {
+        let userId: string = this.targetElement;
+        var database = new FirebaseUserManagement(null);
+        var validation = await database.checkUserIdExistence(userId);
+        if(validation == false){
+            return this.errorType;
+        }else{
+            return null;
+        }
+
+    }
+
+}
+
 
 
 
