@@ -64,7 +64,7 @@ export const RoleConfig =
         }, {
             'api': '/api/v1/salon/getsalonlist',
             'role': [
-                'Anonymouse'
+                'SignedUser'
                 ]
         }
     ]

@@ -260,9 +260,14 @@ describe('Salon Management', function () {
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get salon list with invalid token', function (done) {
             var token = invalidToken;
             var userID = validUserId;
+            //this paraUrl is for get
             var parameterUrl = apiUrl+'?user_id='+userID;
+            var bodyRequest = {
+                user_id: userID
+            }
             request(server)
-                .get(parameterUrl)
+                .post(apiUrl)
+                .send(bodyRequest)
                 .set({ 'Authorization': token })
 
                 .end(function (err, res) {
@@ -279,9 +284,13 @@ describe('Salon Management', function () {
 
         it('should return ' + ErrorMessage.MissingUserId.err.name + ' error trying to get salon list without user id', function (done) {
             var token = validToken;
+            //this paraUrl is for get
             var parameterUrl = apiUrl;
+
+            var bodyRequest = {};
             request(server)
-                .get(parameterUrl)
+                .post(apiUrl)
+                .send(bodyRequest)
                 .set({ 'Authorization': token })
 
                 .end(function (err, res) {
@@ -299,9 +308,14 @@ describe('Salon Management', function () {
         it('should return ' + ErrorMessage.InvalidUserId.err.name + ' error trying to get salon list with invalid user id', function (done) {
             var token = validToken;
             var userID = invalidUserId;
+            //this paraUrl is for get
             var parameterUrl = apiUrl+'?user_id='+userID;
+            var bodyRequest = {
+                user_id: userID
+            }
             request(server)
-                .get(parameterUrl)
+                .post(apiUrl)
+                .send(bodyRequest)
                 .set({ 'Authorization': token })
 
                 .end(function (err, res) {
@@ -320,8 +334,12 @@ describe('Salon Management', function () {
             var token = validToken;
             var userID = validUserId;
             var parameterUrl = apiUrl+'?user_id='+userID;
+            var bodyRequest = {
+                user_id: userID
+            }
             request(server)
-                .get(parameterUrl)
+                .post(apiUrl)
+                .send(bodyRequest)
                 .set({ 'Authorization': token })
 
                 .end(function (err, res) {
