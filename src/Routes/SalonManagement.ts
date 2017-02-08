@@ -53,13 +53,13 @@ export class SalonManagementRouter {
 
         this.router.get('/getsalonlist', async function (request: Request, response: Response) {
             var userId = request.query.user_id;
-            var signedInUser = new SignedInUser(userId, null);
+            var signedInUser = new SignedInUser(userId, new SalonManagement(null));
             var getSalonListResponse = await signedInUser.getSalonList();
-            var dataReturn;
+            var dataReturn = {};
             if(getSalonListResponse.err){
-                dataReturn = getSalonListResponse.err;
+                dataReturn['err'] = getSalonListResponse.err;
             }else{
-                dataReturn = getSalonListResponse.data;
+                dataReturn['salon_list'] = getSalonListResponse.data;
             }
 
             response.status(getSalonListResponse.code);
