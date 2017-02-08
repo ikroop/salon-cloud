@@ -120,6 +120,9 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
             // create salon user Profile
             var salonRef = this.salonDatabase.getSalonFirebaseRef();
             await salonRef.child(this.salonId + '/users/' + userId).set(userProfile);
+            var update = {};
+            update[userId + '/salons/' + this.salonId + '/status'] = userProfile.status;
+            await this.userRef.update(update);
             returnResult.code = 200;
             returnResult.data = userProfile;
         } catch (error) {
@@ -241,20 +244,52 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      * 
      * @memberOf FirebaseUserManagement
      */
-    public async getSalonInformationList(userId: string): Promise<Array<SalonInformation>> {
-        var salonInformationList: [SalonInformation] = null;
+    public async getSalonInformationList(userId: string): Promise<any> {
+        var salonList = await this.getSalonList(userId);
+        var salonInformationList = {};
         var salonRef = this.database.ref(this.SALON_KEY_NAME);
-        await salonRef.orderByChild('users').startAt(userId).endAt(userId).once('value', function (snapshot) {
-            var allSalon = snapshot.val();
-            for(var eachSalon of allSalon){
-                salonInformationList.push(eachSalon.profile.information);
-            }
+        for (var eachSalon in salonList) {
+            await salonRef.child(eachSalon + '/users/' + userId).once('value', function (snapshot) {
+                var userProfile = snapshot.val();
+                salonInformationList[eachSalon] = userProfile;
+            }, function (errorObject) {
+                throw errorObject;
+            });
+        }
+
+        return salonInformationList;
+
+    }
+
+    public async getSalonList(userId: string): Promise<any> {
+        var salonInformationList = {};
+
+        await this.userRef.child(userId + '/salons').once('value', function (snapshot) {
+            snapshot.forEach(function (child) {
+                var key = child.key;
+                if (key == '__proto__') {
+                    return;
+                }
+                var value = child.val();
+                salonInformationList[key] = value;
+            });
+
         }, function (errorObject) {
             throw errorObject;
         });
-        
+
         return salonInformationList;
 
+    }
+
+    public async checkUserIdExistence(userId): Promise<boolean>{
+        var exist :boolean = false;
+        await this.userRef.once('value', function(snapshot){
+            if(snapshot.hasChild(userId)){
+                exist = true;
+            }
+        });
+        return exist;
     }
 }
 
