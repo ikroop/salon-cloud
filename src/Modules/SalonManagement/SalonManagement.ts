@@ -8,7 +8,7 @@ import { ISalonData, SalonData, SalonInformation, SalonSetting } from './SalonDa
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { defaultSalonSetting } from './../../Core/DefaultData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator'
-import { MissingCheck, IsPhoneNumber, IsEmail, IsString } from './../../Core/Validation/ValidationDecorators'
+import { MissingCheck, IsPhoneNumber, IsEmail, IsString, IsValidUserId } from './../../Core/Validation/ValidationDecorators'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { GoogleMap } from './../../Core/GoogleMap/GoogleMap';
 import { SalonManagementDatabaseInterface } from './../../Services/SalonDatabase/SalonManagementDatabaseInterface';
@@ -99,10 +99,24 @@ export class SalonManagement implements SalonManagementBehavior {
             data: null,
             err: null
         }
+        //validation
+        var userIdValidation = new BaseValidator(userId);
+        userIdValidation = new MissingCheck(userIdValidation, ErrorMessage.MissingUserId);
+        userIdValidation = new IsValidUserId(userIdValidation, ErrorMessage.InvalidUserId);
+        var userIdValidationResult = await userIdValidation.validate();
+        if (userIdValidationResult) {
+            response.err = userIdValidationResult.err;
+            response.code = 400;
+            return response;
+        }
+
         var database = new FirebaseUserManagement(null);
         var getSalonInfoList = await database.getSalonInformationList(userId);
         if(getSalonInfoList){
             response.data = getSalonInfoList;
+            response.code = 200;
+        }else{
+            response.data = null;
             response.code = 200;
         }
         return response;
