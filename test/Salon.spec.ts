@@ -289,7 +289,7 @@ describe('Salon Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(401);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.name.should.be.equal(ErrorMessage.MissingUserId.err.name);
                     done();
@@ -309,9 +309,9 @@ describe('Salon Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(401);
+                    res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidUserId.err.name);
                     done();
                 });
         })
