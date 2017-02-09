@@ -31,7 +31,6 @@ export class Authorization {
             err: null,
             data: null
         };
-        console.log(apiName);
         var roleAPI = RoleConfig.filter(item => item.api.toLowerCase() == apiName.toLowerCase())[0];
 
         if(!roleAPI){
