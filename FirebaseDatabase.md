@@ -9,6 +9,7 @@ root
   |           |     |----addess: string
   |           |     |----is_verified: boolean
   |           |----is_temporary: boolean
+  |           |----fullname: string   
   |           |----salons
   |                 |----<salon_id>
   |                       |----status: boolean
@@ -18,7 +19,6 @@ root
   |     |     |     |----<user_id>
   |     |     |           |----status: boolean
   |     |     |           |----role: number
-  |     |     |           |----fullname: string
   |     |     |           |----nickname: string
   |     |     |           |----social_security_number: string (optional)
   |     |     |           |----salary_rate: double (optional)
