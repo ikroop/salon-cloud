@@ -260,7 +260,15 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
         return salonInformationList;
 
     }
-
+    
+    /**
+     * 
+     * 
+     * @param {string} userId
+     * @returns {Promise<any>}
+     * 
+     * @memberOf FirebaseUserManagement
+     */
     public async getSalonList(userId: string): Promise<any> {
         var salonInformationList = {};
 
@@ -282,6 +290,14 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
 
     }
 
+    /**
+     * 
+     * This method is used by isValidUserId validation.
+     * @param {any} userId
+     * @returns {Promise<boolean>}
+     * 
+     * @memberOf FirebaseUserManagement
+     */
     public async checkUserIdExistence(userId): Promise<boolean>{
         var exist :boolean = false;
         await this.userRef.once('value', function(snapshot){

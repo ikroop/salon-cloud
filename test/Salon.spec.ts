@@ -259,15 +259,8 @@ describe('Salon Management', function () {
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get salon list with invalid token', function (done) {
             var token = invalidToken;
-            var userID = validUserId;
-            //this paraUrl is for get
-            var parameterUrl = apiUrl+'?user_id='+userID;
-            var bodyRequest = {
-                user_id: userID
-            }
             request(server)
-                .post(apiUrl)
-                .send(bodyRequest)
+                .get(apiUrl)
                 .set({ 'Authorization': token })
 
                 .end(function (err, res) {
@@ -282,64 +275,27 @@ describe('Salon Management', function () {
                 });
         })
 
-        it('should return ' + ErrorMessage.MissingUserId.err.name + ' error trying to get salon list without user id', function (done) {
+        /*it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to get salon list without authentication', function (done) {
             var token = validToken;
-            //this paraUrl is for get
-            var parameterUrl = apiUrl;
-
-            var bodyRequest = {};
             request(server)
                 .post(apiUrl)
-                .send(bodyRequest)
-                .set({ 'Authorization': token })
 
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
+                    res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingUserId.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
                     done();
                 });
         })
-
-        it('should return ' + ErrorMessage.InvalidUserId.err.name + ' error trying to get salon list with invalid user id', function (done) {
-            var token = validToken;
-            var userID = invalidUserId;
-            //this paraUrl is for get
-            var parameterUrl = apiUrl+'?user_id='+userID;
-            var bodyRequest = {
-                user_id: userID
-            }
-            request(server)
-                .post(apiUrl)
-                .send(bodyRequest)
-                .set({ 'Authorization': token })
-
-                .end(function (err, res) {
-                    if (err) {
-                        throw err;
-                    }
-
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidUserId.err.name);
-                    done();
-                });
-        })
-  
+        */
         it('should return salon information list trying to get salon list successfully', function (done) {
             var token = validToken;
-            var userID = validUserId;
-            var parameterUrl = apiUrl+'?user_id='+userID;
-            var bodyRequest = {
-                user_id: userID
-            }
             request(server)
-                .post(apiUrl)
-                .send(bodyRequest)
+                .get(apiUrl)
                 .set({ 'Authorization': token })
 
                 .end(function (err, res) {

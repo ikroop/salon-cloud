@@ -93,6 +93,14 @@ export class SalonManagement implements SalonManagementBehavior {
         return;
     };
 
+    /**
+     * 
+     * This function get the information of all the salons that the user is connected to.
+     * @param {string} userId
+     * @returns {Promise<SalonCloudResponse<Array<SalonInformation>>>}
+     * 
+     * @memberOf SalonManagement
+     */
     public async getAllSalon(userId: string): Promise<SalonCloudResponse<Array<SalonInformation>>> {
         var response : SalonCloudResponse<Array<SalonInformation>> = {
             code: null,
