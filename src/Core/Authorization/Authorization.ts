@@ -25,13 +25,16 @@ export class Authorization {
      * 
      * @memberOf Authorization
      */
-    public async checkPermission(userId: string, salonId: string, apiName: string): Promise<SalonCloudResponse<string>> {
+    public async checkPermission(userId: string, salonId: string, originalApiName: string): Promise<SalonCloudResponse<string>> {
         var response: SalonCloudResponse<string> = {
             code: null,
             err: null,
             data: null
         };
 
+        //remove parameters in GET method
+        var apiName:string = originalApiName.split('?')[0];
+        
         var roleAPI = RoleConfig.filter(item => item.api.toLowerCase() == apiName.toLowerCase())[0];
 
         if(!roleAPI){
