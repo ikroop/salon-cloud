@@ -208,7 +208,7 @@ describe('Salon Management', function () {
         it('should return salon object with id trying to create salon information successfully', function (done) {
             var token = validToken;
             var bodyRequest = {
-                'salon_name': 'SunshineNails VA',
+                'salon_name': 'AtlantaNail',
                 'address': '2506 Bailey Dr NW, Norcross, GA 30071',
                 'phonenumber': '4049806189',
                 'email': 'salon@salonhelps.com'
@@ -231,7 +231,7 @@ describe('Salon Management', function () {
         it('should return salon object with id trying to create salon information successfully without email', function (done) {
             var token = validToken;
             var bodyRequest = {
-                'salon_name': 'SunshineNails VA',
+                'salon_name': 'SunshineNails',
                 'address': '2506 Bailey Dr NW, Norcross, GA 30071',
                 'phonenumber': '4049806189'
             };
@@ -305,6 +305,9 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(200);
                     res.body.should.have.property('salon_list');
+                    res.body.salon_list.should.have.length(2);
+                    ['AtlantaNail','SunshineNails'].indexOf(res.body.salon_list[0].salon_name).should.not.be.equal(-1);
+                    ['AtlantaNail','SunshineNails'].indexOf(res.body.salon_list[1].salon_name).should.not.be.equal(-1);
                     done();
                 });
         })
