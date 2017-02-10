@@ -59,7 +59,13 @@ export class SalonManagementRouter {
             if(getSalonListResponse.err){
                 dataReturn['err'] = getSalonListResponse.err;
             }else{
-                dataReturn['salon_list'] = getSalonListResponse.data;
+                var salonListObject = getSalonListResponse.data;
+                dataReturn['salon_list'] = [];
+                for(var eachSalon in salonListObject){
+                    console.log(salonListObject);
+                    dataReturn['salon_list'].push(salonListObject[eachSalon]);
+                }
+                console.log('after', dataReturn);
             }
 
             response.status(getSalonListResponse.code);

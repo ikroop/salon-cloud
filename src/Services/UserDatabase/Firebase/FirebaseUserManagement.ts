@@ -246,12 +246,18 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      */
     public async getSalonInformationList(userId: string): Promise<any> {
         var salonList = await this.getSalonList(userId);
-        var salonInformationList = {};
+        var salonInformationList = [];
         var salonRef = this.database.ref(this.SALON_KEY_NAME);
         for (var eachSalon in salonList) {
-            await salonRef.child(eachSalon + '/users/' + userId).once('value', function (snapshot) {
+            await salonRef.child(eachSalon).once('value', function (snapshot) {
                 var userProfile = snapshot.val();
-                salonInformationList[eachSalon] = userProfile;
+                var infoObject = {};
+                infoObject['salon_id'] = eachSalon;
+                infoObject['salon_name'] =  userProfile.profile.information.salon_name;
+                infoObject['role'] = userProfile.users[userId].role;
+                infoObject['phone'] = userProfile.profile.information.phone.number;
+                infoObject['address'] = userProfile.profile.information.location.address;
+                salonInformationList.push(infoObject);
             }, function (errorObject) {
                 throw errorObject;
             });
