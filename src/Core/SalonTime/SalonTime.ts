@@ -53,11 +53,11 @@ export class SalonTime implements SalonTimeData {
         this.momentjs = moment.utc(dateString, ['YYYY-MM-DD HH:mm:ss', 'YYYY-MM-DD', 'YYYY-MM-DD HH:mm'], true);
         if (this.momentjs.isValid()) {
             this.normalize();
-        }else{
+        } else {
             this.day = null;
             this.month = null;
             this.year = null;
-            this.hour =  null;
+            this.hour = null;
             this.min = null;
         }
         return this;
@@ -300,8 +300,17 @@ export class SalonTime implements SalonTimeData {
         return this.momentjs.isValid();
     }
 
-    public static exportJSON(time:SalonTimeData): SalonTimeData{
-        var JSONData:SalonTimeData = {
+    /**
+     * 
+     * 
+     * @static
+     * @param {SalonTimeData} time
+     * @returns {SalonTimeData}
+     * 
+     * @memberOf SalonTime
+     */
+    public static exportJSON(time: SalonTimeData): SalonTimeData {
+        var JSONData: SalonTimeData = {
             hour: time.hour,
             min: time.min,
             year: time.year,
@@ -313,9 +322,29 @@ export class SalonTime implements SalonTimeData {
         return JSONData;
     }
 
+    /**
+     * 
+     * 
+     * 
+     * @memberOf SalonTime
+     */
     public setToBeginningDate() {
         this.setMinute(0);
         this.setHour(0);
         this.normalize();
+    }
+
+    /**
+     * Get UTC timestamp in miliseconds.
+     * 
+     * @static
+     * @returns {number}
+     * 
+     * @memberOf SalonTime
+     */
+    static getUTCTimestamp(): number {
+        var today: Date = new Date();
+        var date = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), today.getUTCHours(), today.getUTCMinutes(), today.getUTCSeconds()));
+        return date.getTime();
     }
 }
