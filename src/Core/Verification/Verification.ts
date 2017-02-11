@@ -4,7 +4,7 @@
  *
  */
 
-import { Twilio } from './../Sms/TwilioSMS'
+import { SMSService } from './../Sms/TwilioSMS'
 import { SalonCloudResponse } from './../SalonCloudResponse'
 
 export abstract class Verification {
@@ -15,7 +15,7 @@ export abstract class Verification {
             err: null,
             data: null
         }
-        response.err = await Twilio.sendSMS(phone, content);
+        response.err = await SMSService.sendSMS(phone, content);
         return response;
     }
 

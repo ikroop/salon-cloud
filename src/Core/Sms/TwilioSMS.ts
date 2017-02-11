@@ -5,9 +5,10 @@
  */
 
 import TwilioSecret from './TwilioSecret';
-var TwilioClient = require('twilio')(TwilioSecret.sid, TwilioSecret.token);
+var Twilio = require('twilio');
+var TwilioClient = new Twilio.RestClient(TwilioSecret.sid, TwilioSecret.token);
 
-export class Twilio {
+export class SMSService {
 
     /**
      * 
@@ -19,17 +20,21 @@ export class Twilio {
      * 
      * @memberOf Twilio
      */
-    static async sendSMS(phonenumber: string, content: string): Promise<string> {
+    static sendSMS(phonenumber: string, content: string): Promise<string> {
         var ErrorMessage: string = null;
-        if (process.env.NODE_ENV == 'production') {
-            await TwilioClient.sendSms({
-                to: phonenumber,
-                from: TwilioSecret.sender,
-                body: content
-            }, function (error) {
-                ErrorMessage = error;
+        let promise = new Promise(function (resolve, reject) {
+            TwilioClient.messages.create({
+                body: content,
+                to: phonenumber,  // Text this number
+                from: TwilioSecret.sender // From a valid Twilio number
+            }, function (err, message) {
+                if (err) {
+                    resolve(err.message);
+                } else {
+                    resolve(message.sid);
+                }
             });
-        }
-        return ErrorMessage;
+        });
+        return promise;
     }
 }

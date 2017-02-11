@@ -4,7 +4,7 @@
  *
  */
 
-import { Twilio } from './../Sms/TwilioSMS'
+import { SMSService } from './../Sms/TwilioSMS'
 import { Verification } from './Verification'
 import { SalonCloudResponse } from './../SalonCloudResponse'
 import { BaseValidator } from './../../Core/Validation/BaseValidator'
@@ -48,7 +48,7 @@ export class PhoneVerification extends Verification {
         var verificationDatabase: FirebaseVerification = new FirebaseVerification();
         try {
             var verificationObject = await verificationDatabase.generateVerification(phone, code);
-            returnResult = await this.sendContent(phone, CONTENT);
+            var smsErrorMessage = await this.sendContent(phone, CONTENT);
             returnResult.data = verificationObject._id;
             returnResult.code = 200;
         } catch (err) {
