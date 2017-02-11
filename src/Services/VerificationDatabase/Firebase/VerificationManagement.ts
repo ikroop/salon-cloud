@@ -76,15 +76,41 @@ export class FirebaseVerification implements VerificationDatabaseInterface {
         try {
             await this.verificationRef.child(id).orderByChild('code').equalTo(code).once('value', function (snapshot) {
                 var object = snapshot.val();
-                if (object && object.phone === phone) {
+                if (object && object.phone === phone && !object.activated) {
                     verification = object;
                     verification._id = id;
                 }
             });
+
+            // updated activated
+            if (verification) {
+                this.setActivated(id, true);
+            }
+
         } catch (error) {
             throw error;
         }
         return verification;
+    }
+
+    /**
+     * 
+     * 
+     * @private
+     * @param {string} id
+     * @param {boolean} value
+     * @returns {Promise<void>}
+     * 
+     * @memberOf FirebaseVerification
+     */
+    private async setActivated(id: string, value: boolean): Promise<void> {
+        try {
+            await this.verificationRef.child(id).update({
+                'activated': value
+            });
+        } catch (error) {
+            throw error;
+        }
     }
 }
 
