@@ -1,6 +1,9 @@
-/*
- * Schedule REST API
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
+
 import passport = require('passport');
 import jwt = require('jsonwebtoken');
 import fs = require('fs');
