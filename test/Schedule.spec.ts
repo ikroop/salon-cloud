@@ -16,7 +16,7 @@ import { Authentication } from './../src/Core/Authentication/Authentication';
 import { SignedInUser } from './../src/Core/User/SignedInUser';
 import { Owner } from './../src/Core/User/Owner';
 import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
-import { ByPhoneVerification } from './../src/Core/Verification/ByPhoneVerification';
+import { PhoneVerification } from './../src/Core/Verification/PhoneVerification';
 import { EmployeeReturn } from './../src/Modules/UserManagement/EmployeeData';
 import { UserToken } from './../src/Core/Authentication/AuthenticationData';
 import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
@@ -87,7 +87,7 @@ describe('Schedule Management', function () {
             social_security_number: null
         };
         const employeeEmail = `${Math.random().toString(36).substring(7)}@gmail.com`;
-        const employee: SalonCloudResponse<EmployeeReturn> = await owner.addEmployee(employeeEmail, employeeInput, new ByPhoneVerification());
+        const employee: SalonCloudResponse<EmployeeReturn> = await owner.addEmployee(employeeEmail, employeeInput, new PhoneVerification());
         validEmployeeId = employee.data.uid;
 
         // Create new user
