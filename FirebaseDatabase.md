@@ -99,4 +99,10 @@ root
   |     |     |                 |----overlapped:
   |     |     |                 |     |----status: boolean
   |     |     |                 |     |----appointment_id: string (optional)
+  |----verification
+  |     |----<id>
+  |           |----code: string
+  |           |----activated: boolean
+  |           |----phone: string
+  |           |----timestamp: number
   ```
