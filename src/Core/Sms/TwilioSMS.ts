@@ -23,17 +23,19 @@ export class SMSService {
     static sendSMS(phonenumber: string, content: string): Promise<string> {
         var ErrorMessage: string = null;
         let promise = new Promise(function (resolve, reject) {
-            TwilioClient.messages.create({
-                body: content,
-                to: phonenumber,  // Text this number
-                from: TwilioSecret.sender // From a valid Twilio number
-            }, function (err, message) {
-                if (err) {
-                    resolve(err.message);
-                } else {
-                    resolve(message.sid);
-                }
-            });
+            if (process.env.NODE_ENV == 'production') {
+                TwilioClient.messages.create({
+                    body: content,
+                    to: phonenumber,  // Text this number
+                    from: TwilioSecret.sender // From a valid Twilio number
+                }, function (err, message) {
+                    if (err) {
+                        resolve(err.message);
+                    } else {
+                        resolve(message.sid);
+                    }
+                });
+            }
         });
         return promise;
     }
