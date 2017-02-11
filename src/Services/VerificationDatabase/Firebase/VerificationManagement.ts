@@ -30,7 +30,7 @@ export class FirebaseVerification implements VerificationDatabaseInterface {
         this.database = firebaseAdmin.database();
         this.verificationRef = this.database.ref(this.VERIFICATION_KEY_NAME);
     }
-    
+
     /**
      * Generate verification code 
      * 
@@ -60,8 +60,31 @@ export class FirebaseVerification implements VerificationDatabaseInterface {
         return verificationObject;
     }
 
+    /**
+     * Verify code
+     * 
+     * @param {string} id
+     * @param {string} phone
+     * @param {string} code
+     * @returns {Promise<IVerificationData>}
+     * 
+     * @memberOf FirebaseVerification
+     */
     public async getVerification(id: string, phone: string, code: string): Promise<IVerificationData> {
-        return null;
+
+        var verification: IVerificationData = null;
+        try {
+            await this.verificationRef.child(id).orderByChild('code').equalTo(code).once('value', function (snapshot) {
+                var object = snapshot.val();
+                if (object && object.phone === phone) {
+                    verification = object;
+                    verification._id = id;
+                }
+            });
+        } catch (error) {
+            throw error;
+        }
+        return verification;
     }
 }
 
