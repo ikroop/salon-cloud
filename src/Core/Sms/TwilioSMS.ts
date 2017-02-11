@@ -35,6 +35,8 @@ export class SMSService {
                         resolve(message.sid);
                     }
                 });
+            } else {
+                resolve(null);
             }
         });
         return promise;
