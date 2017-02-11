@@ -1,7 +1,8 @@
-﻿/*
- * GET users listing.
+﻿/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
-
 
 import jwt = require('jsonwebtoken');
 import { Router, Request, Response } from 'express';

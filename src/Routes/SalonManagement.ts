@@ -1,5 +1,7 @@
-﻿/*
- * Salon REST API
+﻿/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
 
 import { Router, Request, Response } from 'express';

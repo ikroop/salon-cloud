@@ -1,6 +1,9 @@
-/*
- * GET users listing.
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
+
 
 import { Router, Request, Response } from 'express';
 import { SalonCloudResponse } from './../Core/SalonCloudResponse';
@@ -10,7 +13,7 @@ import { AuthorizationRouter } from './Authorization';
 import { EmployeeManagement } from './../Modules/UserManagement/EmployeeManagement';
 import { SalonManagement } from './../Modules/SalonManagement/SalonManagement'
 import { Owner } from './../Core/User/Owner'
-import { ByPhoneVerification } from './../Core/Verification/ByPhoneVerification'
+import { PhoneVerification } from './../Core/Verification/PhoneVerification'
 import { UserProfile } from './../Modules/UserManagement/UserData';
 
 export class EmployeeManagementRouter {
@@ -39,7 +42,7 @@ export class EmployeeManagementRouter {
                 nickname: request.body.nickname || null,
                 phone: request.body.phone || null
             }
-            result = await userObject.addEmployee(request.body.phone, userProfile, new ByPhoneVerification());
+            result = await userObject.addEmployee(request.body.phone, userProfile, new PhoneVerification());
             let dataReturn;
             if (result.err) {
                 dataReturn = result.err
