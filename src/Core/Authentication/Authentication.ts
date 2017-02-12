@@ -143,6 +143,14 @@ export class Authentication {
         return response;
     }
 
+    /**
+     * Sign Up new account with phone. ONLY use for customer & employee.
+     * 
+     * @param {string} phone
+     * @returns {Promise<SalonCloudResponse<string>>}
+     * 
+     * @memberOf Authentication
+     */
     public async signUpWithPhonenumber(phone: string): Promise<SalonCloudResponse<string>> {
 
         var response: SalonCloudResponse<string> = {
@@ -176,6 +184,26 @@ export class Authentication {
             response.code = 200;
             response.data = randomPasswordString;
         }
+        return response;
+    }
+
+    /**
+     * Set new password for user. ONLY use Customer & Employee.
+     * 
+     * @param {string} uid
+     * @param {string} newPassword
+     * @returns {Promise<SalonCloudResponse<null>>}
+     * 
+     * @memberOf Authentication
+     */
+    public async setPassword(uid: string, newPassword: string): Promise<SalonCloudResponse<null>> {
+        var response: SalonCloudResponse<null> = {
+            code: null,
+            data: null,
+            err: null
+        };
+
+        response = await this.authenticationDatabase.setPassword(uid, newPassword);
         return response;
     }
 }

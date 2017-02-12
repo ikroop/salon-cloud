@@ -153,7 +153,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
      * 
      * @memberOf FirebaseAuthenticationDatabase
      */
-    verifyToken(token: string): Promise<SalonCloudResponse<null>> {
+    public verifyToken(token: string): Promise<SalonCloudResponse<null>> {
         var response: any = {};
         let promise = new Promise(function (resolve, reject) {
 
@@ -177,6 +177,41 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                     });
             }
 
+        });
+        return promise;
+    }
+    
+    /**
+     * Set new password for user.
+     * 
+     * @param {string} uid
+     * @param {string} newPassword
+     * @returns {Promise<SalonCloudResponse<null>>}
+     * 
+     * @memberOf FirebaseAuthenticationDatabase
+     */
+    public setPassword(uid: string, newPassword: string): Promise<SalonCloudResponse<null>> {
+        var response: SalonCloudResponse<null> = {
+            code: null,
+            data: null,
+            err: null
+        };
+
+        let promise = new Promise(function (resolve, reject) {
+
+            firebaseAdmin.auth().updateUser(uid, {
+                password: newPassword
+            }).then(function (userRecord) {
+                // See the UserRecord reference doc for the contents of userRecord.
+                console.log("Successfully updated user", userRecord.toJSON());
+                response.code = 200;
+                resolve(response);
+            }).catch(function (error) {
+                console.log("Error updating user:", error);
+                response.code = 500;
+                response.err = error;
+                resolve(response);
+            });
         });
         return promise;
     }

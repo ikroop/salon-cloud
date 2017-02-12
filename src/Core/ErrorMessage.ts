@@ -563,5 +563,11 @@ export const ErrorMessage = {
             'name': 'InvalidUserId',
             'messsage': 'User id is invalid.'
         }
+    },
+    'InvalidVerificationCode': {
+        'err': {
+            'name': 'InvalidVerificationCode',
+            'messsage': 'Invalid Verification Code.'
+        }
     }
 };
