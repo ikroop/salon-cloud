@@ -41,7 +41,7 @@ export class AuthenticationRouter {
             }
         });
 
-        this.router.post('/customersigup', smsRouter.smsVerification, async function (request: Request, response: Response) {
+        this.router.post('/customersignup', smsRouter.smsVerification, async function (request: Request, response: Response) {
 
             var phone = request.body.phone;
             var salonId = request.body.salon_id;
