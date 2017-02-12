@@ -64,59 +64,6 @@ export class CustomerManagement extends UserManagement implements CustomerManage
         }
     };
 
-    /**
-     * 
-     * 
-     * @param {string} customerPhone
-     * @param {UserProfile} customerData
-     * @returns {Promise<SalonCloudResponse<UserToken>>}
-     * 
-     * @memberOf CustomerManagement
-     */
-    public async createCustomer(customerPhone: string, customerProfile: UserProfile): Promise<SalonCloudResponse<UserToken>> {
-        var response: SalonCloudResponse<UserToken> = {
-            code: null,
-            data: null,
-            err: null
-        }
-
-        var validation = await this.validateCustomerProfile(customerProfile);
-        if (validation.err) {
-            response.code = validation.code;
-            response.err = validation.err;
-            return response;
-        }
-
-        // create customer account with phone
-
-        var authObject = new Authentication();
-        var randomPassword = 100000 + Math.floor(Math.random() * 900000);
-        var randomPasswordString = randomPassword.toString();
-
-        var signUpData = await authObject.signUpWithUsernameAndPassword(customerPhone, randomPasswordString);
-
-        if (signUpData.err) {
-            response.err = signUpData.err;
-            response.code = signUpData.code;
-            return response;
-        }
-
-        //Signin new customer
-        let signinData: SalonCloudResponse<UserToken> = await authObject.signInWithUsernameAndPassword(customerPhone, randomPasswordString);
-
-        // add salon profile to customer account
-        var profileCreation = await this.addCustomerProfile(signinData.data.user._id, customerProfile);
-        if (profileCreation.err) {
-            response.err = profileCreation.err;
-            response.code = profileCreation.code;
-            return response;
-        }
-
-        response.data = signinData.data;
-        response.code = 200;
-        return response;
-    }
-
     getAllCustomers(): Array<UserData> {
         return;
     };

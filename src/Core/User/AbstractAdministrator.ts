@@ -89,7 +89,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         var appointmentByPhone: BookingAppointment = new BookingAppointment(salonId, new AppointmentManagement(salonId));
 
-        appointmentByPhone.normalizationData(newAppointment);               
+        appointmentByPhone.normalizationData(newAppointment);
 
         // create appointment
         var result: any = await appointmentByPhone.createAppointment(newAppointment);
@@ -128,23 +128,51 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         var customerManagementDP = new CustomerManagement(customerProfile.salon_id);
 
         var customer = await customerManagementDP.getUserByPhone(phone);
-        if (customer.err){
+        if (customer.err) {
             response.err = customer.err;
             response.code = customer.code;
             return response;
         }
         if (!customer.data) {
             // customer account not existed, create account with salon profile for the user                
-            var customerCreation = await customerManagementDP.createCustomer(phone, customerProfile);
-            if (customerCreation.err) {
-                response.err = customerCreation.err;
-                response.code = customerCreation.code;
+
+            // create customer account with phone.
+            var authenticationObject = new Authentication();
+            var customerSignUpResult = await authenticationObject.signUpWithPhonenumber(phone);
+            if (customerSignUpResult.err) {
+                response.err = customerSignUpResult.err;
+                response.code = customerSignUpResult.code;
+                return response;
+            }
+
+            // signin customer account
+            var customerSigninResult = await authenticationObject.signInWithUsernameAndPassword(phone, customerSignUpResult.data);
+
+            if (customerSigninResult.err) {
+                response.err = customerSigninResult.err;
+                response.code = customerSigninResult.code;
+                return response;
+            }
+
+            var customerId = customerSigninResult.data.user._id;
+            // add salon profile to customer account
+            var profileCreation = await customerManagementDP.addCustomerProfile(customerId, customerProfile);
+            if (profileCreation.err) {
+                response.err = profileCreation.err;
+                response.code = profileCreation.code;
+                return response;
+            }
+
+            if (profileCreation.err) {
+                response.err = profileCreation.err;
+                response.code = profileCreation.code;
                 return response;
             } else {
-                response.data = customerCreation.data.user._id;
+                response.data = customerId;
                 response.code = 200;
                 return response;
             }
+
         } else {
             if (customer.data.profile === null || customer.data.profile.length === 0) {
                 //create customer profile for this salon
