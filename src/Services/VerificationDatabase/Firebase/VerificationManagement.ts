@@ -74,9 +74,9 @@ export class FirebaseVerification implements VerificationDatabaseInterface {
 
         var verification: IVerificationData = null;
         try {
-            await this.verificationRef.child(id).orderByChild('code').equalTo(code).once('value', function (snapshot) {
+            await this.verificationRef.child(id).once('value', function (snapshot) {
                 var object = snapshot.val();
-                if (object && object.phone === phone && !object.activated) {
+                if (object && object.code === code && object.phone === phone && !object.activated) {
                     verification = object;
                     verification._id = id;
                 }
