@@ -44,8 +44,6 @@ export class AuthenticationRouter {
         this.router.post('/customersigup', smsRouter.smsVerification, async function (request: Request, response: Response) {
 
             var phone = request.body.phone;
-            var code = request.body.code;
-            var verificationId = request.body.verification_id;
             var salonId = request.body.salon_id;
 
             var customerManagementDP = new CustomerManagement(salonId);
