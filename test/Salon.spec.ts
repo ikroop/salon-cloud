@@ -33,9 +33,10 @@ describe('Salon Management', function () {
     let validEmployeeId;
     let anotherUserId;
     let anotherUserToken;
+    let validUserId;
+    let invalidUserId = '100023232';
 
     before(async function () {
-
         // Login and get token
         var user = {
             username: 'unittest1473044833007@gmail.com',
@@ -50,13 +51,15 @@ describe('Salon Management', function () {
         // 2. login to get access token
         var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
         validToken = loginData.data.auth.token;
+        validUserId = loginData.data.user._id;
+
 
     });
 
     describe('Unit Test Create Salon API', function () {
         var apiUrl = '/api/v1/salon/create';
 
-        it('should return '+ErrorMessage.InvalidTokenError.err.name+' error trying to create salon information with invalid token', function (done) {
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to create salon information with invalid token', function (done) {
             var token = invalidToken;
             var bodyRequest = {
                 'salon_name': 'SunshineNails VA',
@@ -205,7 +208,7 @@ describe('Salon Management', function () {
         it('should return salon object with id trying to create salon information successfully', function (done) {
             var token = validToken;
             var bodyRequest = {
-                'salon_name': 'SunshineNails VA',
+                'salon_name': 'AtlantaNail',
                 'address': '2506 Bailey Dr NW, Norcross, GA 30071',
                 'phonenumber': '4049806189',
                 'email': 'salon@salonhelps.com'
@@ -228,7 +231,7 @@ describe('Salon Management', function () {
         it('should return salon object with id trying to create salon information successfully without email', function (done) {
             var token = validToken;
             var bodyRequest = {
-                'salon_name': 'SunshineNails VA',
+                'salon_name': 'SunshineNails',
                 'address': '2506 Bailey Dr NW, Norcross, GA 30071',
                 'phonenumber': '4049806189'
             };
@@ -238,14 +241,76 @@ describe('Salon Management', function () {
                 .set({ 'Authorization': token })
 
                 .end(function (err, res) {
+                    console.log(res.body);
                     if (err) {
                         throw err;
                     }
+                    console.log(res.body);
                     res.status.should.be.equal(200);
                     res.body.should.have.property('_id');
                     done();
                 });
         });
+
+    });
+
+    describe('Unit Test Get Salon List By User Id', function () {
+        var apiUrl = '/api/v1/salon/getsalonlist';
+
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get salon list with invalid token', function (done) {
+            var token = invalidToken;
+            request(server)
+                .get(apiUrl)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        })
+
+        /*it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to get salon list without authentication', function (done) {
+            var token = validToken;
+            request(server)
+                .post(apiUrl)
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    done();
+                });
+        })
+        */
+        it('should return salon information list trying to get salon list successfully', function (done) {
+            var token = validToken;
+            request(server)
+                .get(apiUrl)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('salon_list');
+                    res.body.salon_list.should.have.length(2);
+                    ['AtlantaNail','SunshineNails'].indexOf(res.body.salon_list[0].salon_name).should.not.be.equal(-1);
+                    ['AtlantaNail','SunshineNails'].indexOf(res.body.salon_list[1].salon_name).should.not.be.equal(-1);
+                    done();
+                });
+        })
 
     });
 });

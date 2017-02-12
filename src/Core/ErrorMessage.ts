@@ -546,10 +546,22 @@ export const ErrorMessage = {
             'message': 'Unknown'
         }
     },
-    'WrongUsernameOrPassword':{
+    'WrongUsernameOrPassword': {
         'err': {
             'name': 'WrongUsernameOrPassword',
             'message': 'Wrong Useranme or Password.'
+        }
+    },
+    'MissingUserId': {
+        'err': {
+            'name': 'MissingUserId',
+            'message': 'User id is missing.'
+        }
+    },
+    'InvalidUserId': {
+        'err': {
+            'name': 'InvalidUserId',
+            'messsage': 'User id is invalid.'
         }
     }
 };

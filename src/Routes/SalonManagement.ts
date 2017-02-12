@@ -53,7 +53,26 @@ export class SalonManagementRouter {
             response.json(dataReturn);
         });
 
-        this.router.post('/getsalonlist', authorizationRouter.checkPermission, function (request: Request, response: Response) {
+        this.router.get('/getsalonlist', authorizationRouter.checkPermission, async function (request: Request, response: Response) {
+            var userId = request.user._id;
+            var signedInUser = new SignedInUser(userId, new SalonManagement(null));
+            var getSalonListResponse = await signedInUser.getSalonList();
+            var dataReturn = {};
+            if(getSalonListResponse.err){
+                dataReturn['err'] = getSalonListResponse.err;
+            }else{
+                var salonListObject = getSalonListResponse.data;
+                dataReturn['salon_list'] = [];
+                for(var eachSalon in salonListObject){
+                    console.log(salonListObject);
+                    dataReturn['salon_list'].push(salonListObject[eachSalon]);
+                }
+                console.log('after', dataReturn);
+            }
+
+            response.status(getSalonListResponse.code);
+            response.json(dataReturn);
+            
 
         });
 

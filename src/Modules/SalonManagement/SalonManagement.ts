@@ -8,11 +8,12 @@ import { ISalonData, SalonData, SalonInformation, SalonSetting } from './SalonDa
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { defaultSalonSetting } from './../../Core/DefaultData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator'
-import { MissingCheck, IsPhoneNumber, IsEmail, IsString } from './../../Core/Validation/ValidationDecorators'
+import { MissingCheck, IsPhoneNumber, IsEmail, IsString, IsValidUserId } from './../../Core/Validation/ValidationDecorators'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { GoogleMap } from './../../Core/GoogleMap/GoogleMap';
 import { SalonManagementDatabaseInterface } from './../../Services/SalonDatabase/SalonManagementDatabaseInterface';
 import { FirebaseSalonManagement } from './../../Services/SalonDatabase/Firebase/FirebaseSalonManagement'
+import { FirebaseUserManagement } from './../../Services/UserDatabase/Firebase/FirebaseUserManagement'
 
 export class SalonManagement implements SalonManagementBehavior {
 
@@ -92,8 +93,41 @@ export class SalonManagement implements SalonManagementBehavior {
         return;
     };
 
-    public getAllSalon(userId: string): SalonCloudResponse<SalonInformation> {
-        return;
+    /**
+     * 
+     * This function get the information of all the salons that the user is connected to.
+     * @param {string} userId
+     * @returns {Promise<SalonCloudResponse<Array<SalonInformation>>>}
+     * 
+     * @memberOf SalonManagement
+     */
+    public async getAllSalon(userId: string): Promise<SalonCloudResponse<Array<SalonInformation>>> {
+        var response : SalonCloudResponse<Array<SalonInformation>> = {
+            code: null,
+            data: null,
+            err: null
+        }
+        //validation
+        var userIdValidation = new BaseValidator(userId);
+        userIdValidation = new MissingCheck(userIdValidation, ErrorMessage.MissingUserId);
+        userIdValidation = new IsValidUserId(userIdValidation, ErrorMessage.InvalidUserId);
+        var userIdValidationResult = await userIdValidation.validate();
+        if (userIdValidationResult) {
+            response.err = userIdValidationResult.err;
+            response.code = 400;
+            return response;
+        }
+
+        var database = new FirebaseUserManagement(null);
+        var getSalonInfoList = await database.getSalonInformationList(userId);
+        if(getSalonInfoList){
+            response.data = getSalonInfoList;
+            response.code = 200;
+        }else{
+            response.data = null;
+            response.code = 200;
+        }
+        return response;
     };
 
     public updateInformation(data: SalonInformation): SalonCloudResponse<boolean> {

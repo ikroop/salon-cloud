@@ -93,10 +93,29 @@ export class SignedInUser implements SignedInUserBehavior {
         returnResult.code = 200;
         return returnResult;
     };
-
-    public getSalonList(): SalonCloudResponse<Array<SalonInformation>> {
-
-        return;
+    
+    /**
+     * This method get the information off all the salons that connects to the user.
+     * User Layer
+     * @returns {Promise<SalonCloudResponse<Array<SalonInformation>>>}
+     * 
+     * @memberOf SignedInUser
+     */
+    public async getSalonList(): Promise<SalonCloudResponse<Array<SalonInformation>>> {
+        var response : SalonCloudResponse<Array<SalonInformation>> = {
+            code: null,
+            data: null,
+            err: null
+        }
+        var getAllSalon = await this.salonManagementDP.getAllSalon(this.userId);
+        if(getAllSalon.err){
+            response.err = getAllSalon.err;
+            response.code = getAllSalon.code;
+        }else{
+            response.data = getAllSalon.data;
+            response.code = getAllSalon.code;
+        }
+        return response;
     };
 
     public selectSalon(SalonId: string): SalonCloudResponse<boolean> {
