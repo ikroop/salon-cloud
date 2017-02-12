@@ -11,6 +11,7 @@ import { BaseValidator } from './../../Core/Validation/BaseValidator'
 import { MissingCheck, IsPhoneNumber } from './../../Core/Validation/ValidationDecorators'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { FirebaseVerification } from './../../Services/VerificationDatabase/Firebase/VerificationManagement'
+import { IVerificationData } from './../../Core/Verification/VerificationData'
 
 export class PhoneVerification extends Verification {
 
@@ -22,14 +23,15 @@ export class PhoneVerification extends Verification {
      * 
      * @memberOf PhoneVerification
      */
-    public async sendVerificationCode(phone: string): Promise<SalonCloudResponse<string>> {
+    public async sendVerificationCode(phone: string): Promise<SalonCloudResponse<IVerificationData>> {
 
-        var returnResult: SalonCloudResponse<string> = {
+        var returnResult: SalonCloudResponse<IVerificationData> = {
             code: null,
             data: null,
             err: null
         };
 
+        // generate random code with 4 digits
         var code = this.generateCode();
 
         // phone number validation
@@ -49,7 +51,7 @@ export class PhoneVerification extends Verification {
         try {
             var verificationObject = await verificationDatabase.generateVerification(phone, code);
             var smsErrorMessage = await this.sendContent(phone, CONTENT);
-            returnResult.data = verificationObject._id;
+            returnResult.data = verificationObject;
             returnResult.code = 200;
         } catch (err) {
             returnResult.code = 500;

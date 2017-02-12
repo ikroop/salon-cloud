@@ -38,7 +38,7 @@ export class SMSRouter {
                 returnData = sendSMSAction.err
             } else {
                 returnData = {
-                    'verification_id': sendSMSAction.data,
+                    'verification_id': sendSMSAction.data._id,
                 }
             }
 
