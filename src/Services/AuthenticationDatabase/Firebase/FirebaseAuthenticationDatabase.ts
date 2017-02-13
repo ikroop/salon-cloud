@@ -180,7 +180,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
         });
         return promise;
     }
-    
+
     /**
      * Set new password for user.
      * 
@@ -214,5 +214,61 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
             });
         });
         return promise;
+    }
+
+    public createCustomToken(uid: string): Promise<string> {
+        let promise = new Promise(function (resolve, reject) {
+            firebaseAdmin.auth().createCustomToken(uid)
+                .then(function (customToken) {
+                    // Send token back to client
+                    resolve(customToken);
+                })
+                .catch(function (error) {
+                    console.log("Error creating custom token:", error);
+                    resolve(error);
+                });
+        });
+        return promise;
+    }
+
+    public signInWithCustomToken(token: string): Promise<SalonCloudResponse<UserToken>> {
+        var response: SalonCloudResponse<UserToken> = {
+            code: null,
+            data: null,
+            err: null
+        };
+        let promise = new Promise<SalonCloudResponse<UserToken>>(function (resolve, reject) {
+            firebase.auth().signInWithCustomToken(token)
+                .then(function (user) {
+                    console.log('user:', user);
+                    user.getToken().then(function (token) {
+                        response.code = 200;
+                        var userToken: UserToken = {
+                            user: {
+                                _id: user.uid,
+                                username: user.email,
+                                status: true
+                            },
+                            auth: {
+                                token: token
+                            }
+                        };
+
+                        response.data = userToken;
+                        resolve(response);
+                    });
+
+                })
+                .catch(function (error) {
+                    // Handle Errors here.
+                    console.log('error:', error);
+                    response.code = 400;
+                    response.err = error;
+
+                    resolve(response);
+                });
+        });
+        return promise;
+
     }
 }

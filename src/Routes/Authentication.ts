@@ -40,51 +40,7 @@ export class AuthenticationRouter {
                 response.json(result.data);
             }
         });
-
-        this.router.post('/customersignup', smsRouter.smsVerification, async function (request: Request, response: Response) {
-
-            var phone = request.body.phone;
-            var salonId = request.body.salon_id;
-
-            var customerManagementDP = new CustomerManagement(salonId);
-
-            var customer = await customerManagementDP.getUserByPhone(phone);
-            if (customer.err) {
-                response.statusCode = customer.code;
-                response.json(customer.err);
-            }
-
-            if (!customer.data) {
-                var customerSignUpResult = await authentication.signUpWithPhonenumber(phone);
-                response.statusCode = customerSignUpResult.code;
-                if (customerSignUpResult.err) {
-                    response.json(customerSignUpResult.err);
-                } else {
-                    var password = customerSignUpResult.data;
-                    response.json({
-                        'phone': phone,
-                        'password': password
-                    });
-                }
-            } else {
-                var customerId = customer.data._id;
-                var randomPassword = 100000 + Math.floor(Math.random() * 900000);
-                var randomPasswordString = randomPassword.toString();
-
-                var setPasswordResult = await authentication.setPassword(customerId, randomPasswordString);
-                response.statusCode = setPasswordResult.code;
-                if (setPasswordResult.err) {
-                    response.json(setPasswordResult.err);
-                } else {
-                    response.json({
-                        'phone': phone,
-                        'password': randomPasswordString
-                    });
-                }
-            }
-
-        });
-
+                
         return this.router;
 
     }
