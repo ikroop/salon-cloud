@@ -29,6 +29,7 @@ describe('Authentication', function () {
     var invalidPhoneNumber = "333";
     var verificationObject: IVerificationData = null;
     var invalidCode = "213123";
+    var wrongCode: string = null;
     var invalidVerificationId = "3324234";
     var validSalonId: string = null;
     var invalidSalonId: string = "123123";
@@ -51,6 +52,7 @@ describe('Authentication', function () {
             console.error('Error:', sendVerificationResult.err);
         } else {
             verificationObject = sendVerificationResult.data;
+            wrongCode = (String)((Number)(verificationObject.code) + 1);
         }
 
         // 4. Create salon
@@ -430,27 +432,6 @@ describe('Authentication', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.InvalidVerificationId.err.name + ' trying to sign up customer with invalid verification Id', function (done) {
-            var user = {
-                phone: phoneNumber,
-                verification_id: invalidVerificationId,
-                code: verificationObject.code,
-                salon_id: validSalonId
-            };
-            request(server)
-                .post(apiUrl)
-                .send(user)
-                .end(function (err, res) {
-                    if (err) {
-                        throw err;
-                    }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidVerificationId.err.name);
-                    done();
-                });
-        });
-
         it('should return ' + ErrorMessage.MissingVerificationCode.err.name + ' trying to sign up customer without verification code', function (done) {
             var user = {
                 phone: phoneNumber,
@@ -471,10 +452,10 @@ describe('Authentication', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.InvalidVerificationCode.err.name + ' trying to sign up customer with invalid verification code', function (done) {
+        it('should return ' + ErrorMessage.WrongVerificationCode.err.name + ' trying to sign up customer with wrong verification code', function (done) {
             var user = {
                 phone: phoneNumber,
-                code: invalidCode,
+                code: wrongCode,
                 verification_id: verificationObject._id,
                 salon_id: validSalonId
             };
@@ -487,10 +468,10 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidVerificationCode.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.WrongVerificationCode.err.name);
                     done();
                 });
-        });
+        });        
 
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' trying to sign up customer without salon id', function (done) {
             var user = {
@@ -508,27 +489,6 @@ describe('Authentication', function () {
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
-                    done();
-                });
-        });
-
-        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' trying to sign up customer with invalid salon id', function (done) {
-            var user = {
-                phone: phoneNumber,
-                verification_id: verificationObject._id,
-                code: verificationObject.code,
-                salon_id: invalidSalonId,
-            };
-            request(server)
-                .post(apiUrl)
-                .send(user)
-                .end(function (err, res) {
-                    if (err) {
-                        throw err;
-                    }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
                     done();
                 });
         });

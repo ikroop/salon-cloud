@@ -120,7 +120,7 @@ export class PhoneVerification extends Verification {
                 returnResult.code = 200;
             } else {
                 returnResult.data = false;
-                returnResult.err = ErrorMessage.InvalidVerificationId;
+                returnResult.err = ErrorMessage.WrongVerificationCode;
                 returnResult.code = 400;
             }
         } catch (err) {

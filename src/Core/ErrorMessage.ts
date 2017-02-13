@@ -564,10 +564,10 @@ export const ErrorMessage = {
             'messsage': 'User id is invalid.'
         }
     },
-    'InvalidVerificationCode': {
+    'WrongVerificationCode': {
         'err': {
-            'name': 'InvalidVerificationCode',
-            'messsage': 'Invalid Verification Code.'
+            'name': 'WrongVerificationCode',
+            'messsage': 'Wrong Verification Code.'
         }
     },
     'MissingVerificationCode': {
@@ -580,12 +580,6 @@ export const ErrorMessage = {
         'err': {
             'name': 'MissingVerificationId',
             'message': 'A verification id is required',
-        }
-    },
-    'InvalidVerificationId': {
-        'err': {
-            'name' : 'InvalidVerificationId',
-            'message': 'Invalid Verification id'
         }
     }
 };
