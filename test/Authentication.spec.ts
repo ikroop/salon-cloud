@@ -26,8 +26,12 @@ describe('Authentication', function () {
     var username = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
     var invalidPassword = "123456";
     var phoneNumber = ((new Date()).getTime() % 10000000000).toString();
-    var verificationObject:IVerificationData = null;
-    var validSalonId:string = null;
+    var invalidPhoneNumber = "333";
+    var verificationObject: IVerificationData = null;
+    var invalidCode = "213123";
+    var invalidVerificationId = "3324234";
+    var validSalonId: string = null;
+    var invalidSalonId: string = "123123";
     before(async function () {
         // 1. Create Owner 
         var authentication = new Authentication();
@@ -43,9 +47,9 @@ describe('Authentication', function () {
         // 3. send verification code for customer signup
         var phoneVerification = new PhoneVerification();
         var sendVerificationResult = await phoneVerification.sendVerificationCode(phoneNumber);
-        if (sendVerificationResult.err){
+        if (sendVerificationResult.err) {
             console.error('Error:', sendVerificationResult.err);
-        }else{
+        } else {
             verificationObject = sendVerificationResult.data;
         }
 
@@ -284,7 +288,7 @@ describe('Authentication', function () {
                     done();
                 });
         });
-        
+
         it('should return "MissingUsername" error trying to Signin without username', function (done) {
             var user = {
                 password: defaultPassword
@@ -365,7 +369,171 @@ describe('Authentication', function () {
     describe('User SignUp with Username & Password', function () {
         var apiUrl = '/api/v1/authentication/customersignup';
 
-         it('should return phonenumber & password trying to signup sucessfully', function (done) {
+        it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' trying to sign up customer without phonenumber', function (done) {
+            var user = {
+                code: verificationObject.code,
+                verification_id: verificationObject._id,
+                salon_id: validSalonId
+            };
+            request(server)
+                .post(apiUrl)
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingPhoneNumber.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.WrongPhoneNumberFormat.err.name + ' trying to sign up customer without invalid phonenumber', function (done) {
+            var user = {
+                phone: invalidPhoneNumber,
+                code: verificationObject.code,
+                verification_id: verificationObject._id,
+                salon_id: validSalonId
+            };
+            request(server)
+                .post(apiUrl)
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.WrongPhoneNumberFormat.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingVerificationId.err.name + ' trying to sign up customer without verification Id', function (done) {
+            var user = {
+                phone: phoneNumber,
+                code: verificationObject.code,
+                salon_id: validSalonId
+            };
+            request(server)
+                .post(apiUrl)
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingVerificationId.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidVerificationId.err.name + ' trying to sign up customer with invalid verification Id', function (done) {
+            var user = {
+                phone: phoneNumber,
+                verification_id: invalidVerificationId,
+                code: verificationObject.code,
+                salon_id: validSalonId
+            };
+            request(server)
+                .post(apiUrl)
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidVerificationId.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingVerificationCode.err.name + ' trying to sign up customer without verification code', function (done) {
+            var user = {
+                phone: phoneNumber,
+                verification_id: verificationObject._id,
+                salon_id: validSalonId
+            };
+            request(server)
+                .post(apiUrl)
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingVerificationCode.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidVerificationCode.err.name + ' trying to sign up customer with invalid verification code', function (done) {
+            var user = {
+                phone: phoneNumber,
+                code: invalidCode,
+                verification_id: verificationObject._id,
+                salon_id: validSalonId
+            };
+            request(server)
+                .post(apiUrl)
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidVerificationCode.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingSalonId.err.name + ' trying to sign up customer without salon id', function (done) {
+            var user = {
+                phone: phoneNumber,
+                verification_id: verificationObject._id,
+                code: verificationObject.code,
+            };
+            request(server)
+                .post(apiUrl)
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' trying to sign up customer with invalid salon id', function (done) {
+            var user = {
+                phone: phoneNumber,
+                verification_id: verificationObject._id,
+                code: verificationObject.code,
+                salon_id: invalidSalonId,
+            };
+            request(server)
+                .post(apiUrl)
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
+
+        it('should return phonenumber & password trying to signup sucessfully', function (done) {
             var user = {
                 phone: phoneNumber,
                 code: verificationObject.code,

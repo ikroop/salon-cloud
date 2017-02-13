@@ -569,5 +569,23 @@ export const ErrorMessage = {
             'name': 'InvalidVerificationCode',
             'messsage': 'Invalid Verification Code.'
         }
+    },
+    'MissingVerificationCode': {
+        'err': {
+            'name': 'MissingVerificationCode',
+            'message': 'A verification code is required',
+        }
+    },
+    'MissingVerificationId': {
+        'err': {
+            'name': 'MissingVerificationId',
+            'message': 'A verification id is required',
+        }
+    },
+    'InvalidVerificationId': {
+        'err': {
+            'name' : 'InvalidVerificationId',
+            'message': 'Invalid Verification id'
+        }
     }
 };

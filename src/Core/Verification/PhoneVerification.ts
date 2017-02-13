@@ -91,6 +91,25 @@ export class PhoneVerification extends Verification {
             return returnResult;
         }
 
+        var verificationIdValidator = new BaseValidator(verificationId);
+        verificationIdValidator = new MissingCheck(verificationIdValidator, ErrorMessage.MissingVerificationId);
+        var verificationIdError = await verificationIdValidator.validate();
+        if (verificationIdError) {
+            returnResult.err = verificationIdError;
+            returnResult.code = 400;
+            return returnResult;
+        }
+
+        var verificationCodeValidator = new BaseValidator(code);
+        verificationCodeValidator = new MissingCheck(verificationCodeValidator, ErrorMessage.MissingVerificationCode);
+        var verificationCodeError = await verificationCodeValidator.validate();
+        if (verificationCodeError) {
+            returnResult.err = verificationCodeError;
+            returnResult.code = 400;
+            return returnResult;
+        }
+
+
         // generate code in database
         var verificationDatabase: FirebaseVerification = new FirebaseVerification();
         try {
@@ -98,10 +117,12 @@ export class PhoneVerification extends Verification {
 
             if (verificationObject) {
                 returnResult.data = true;
+                returnResult.code = 200;
             } else {
                 returnResult.data = false;
+                returnResult.err = ErrorMessage.InvalidVerificationId;
+                returnResult.code = 400;
             }
-            returnResult.code = 200;
         } catch (err) {
             returnResult.code = 500;
             returnResult.data = null;
