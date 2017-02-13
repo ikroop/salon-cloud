@@ -127,7 +127,6 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         };
         var customerManagementDP = new CustomerManagement(customerProfile.salon_id);
         var customerAuth = await customerManagementDP.createCustomer(phone, customerProfile);
-        console.log('customerAuth:', customerAuth);
         if (customerAuth.err) {
             response.err = customerAuth.err;
             response.code = customerAuth.code;

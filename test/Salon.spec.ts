@@ -241,11 +241,9 @@ describe('Salon Management', function () {
                 .set({ 'Authorization': token })
 
                 .end(function (err, res) {
-                    console.log(res.body);
                     if (err) {
                         throw err;
                     }
-                    console.log(res.body);
                     res.status.should.be.equal(200);
                     res.body.should.have.property('_id');
                     done();

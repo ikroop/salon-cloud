@@ -203,11 +203,9 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                 password: newPassword
             }).then(function (userRecord) {
                 // See the UserRecord reference doc for the contents of userRecord.
-                console.log("Successfully updated user", userRecord.toJSON());
                 response.code = 200;
                 resolve(response);
             }).catch(function (error) {
-                console.log("Error updating user:", error);
                 response.code = 500;
                 response.err = error;
                 resolve(response);
@@ -240,7 +238,6 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
         let promise = new Promise<SalonCloudResponse<UserToken>>(function (resolve, reject) {
             firebase.auth().signInWithCustomToken(token)
                 .then(function (user) {
-                    console.log('user:', user);
                     user.getToken().then(function (token) {
                         response.code = 200;
                         var userToken: UserToken = {
@@ -261,7 +258,6 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                 })
                 .catch(function (error) {
                     // Handle Errors here.
-                    console.log('error:', error);
                     response.code = 400;
                     response.err = error;
 
