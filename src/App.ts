@@ -7,6 +7,7 @@ import * as http from 'http';
 import { ScheduleRouter } from './Routes/Schedule';
 import { AuthenticationRouter } from './Routes/Authentication';
 import { EmployeeManagementRouter } from './Routes/EmployeeManagement';
+import { CustomerManagementRouter } from './Routes/CustomerManagement';
 import { SalonManagementRouter } from './Routes/SalonManagement';
 import { ServiceManagementRouter } from './Routes/ServiceManagement';
 import { AppointmentManagementRouter } from './Routes/AppointmentManagement';
@@ -32,6 +33,7 @@ app.use((request: express.Request, response: express.Response, next: express.Nex
 app.use('/api/v1/schedule', new ScheduleRouter().getRouter());
 app.use('/api/v1/authentication', new AuthenticationRouter().getRouter());
 app.use('/api/v1/employee', new EmployeeManagementRouter().getRouter());
+app.use('/api/v1/customer', new CustomerManagementRouter().getRouter());
 app.use('/api/v1/salon', new SalonManagementRouter().getRouter());
 app.use('/api/v1/service', new ServiceManagementRouter().getRouter());
 app.use('/api/v1/appointment', new AppointmentManagementRouter().getRouter());

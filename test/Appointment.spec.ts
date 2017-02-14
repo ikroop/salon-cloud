@@ -296,7 +296,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingUsername.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingPhoneNumber.err.name);
                     done();
                 });
         });
@@ -306,7 +306,7 @@ describe('Appointment Management', function () {
                     - name: 'WrongPhoneNumberFormat' 
                     - message: 'Wrong Phone Number Format'
         */
-        it('should return ' + ErrorMessage.NotEmailOrPhoneNumber.err.name + ' error trying to create appointment with wrong-formatted phone number', function (done) {
+        it('should return ' + ErrorMessage.WrongPhoneNumberFormat.err.name + ' error trying to create appointment with wrong-formatted phone number', function (done) {
             var bodyRequest = {
                 "customer_phone": wrongFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -330,7 +330,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.NotEmailOrPhoneNumber.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongPhoneNumberFormat.err.name);
                     done();
                 });
         });

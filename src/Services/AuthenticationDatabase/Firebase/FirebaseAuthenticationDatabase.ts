@@ -153,7 +153,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
      * 
      * @memberOf FirebaseAuthenticationDatabase
      */
-    verifyToken(token: string): Promise<SalonCloudResponse<null>> {
+    public verifyToken(token: string): Promise<SalonCloudResponse<null>> {
         var response: any = {};
         let promise = new Promise(function (resolve, reject) {
 
@@ -179,5 +179,92 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
 
         });
         return promise;
+    }
+
+    /**
+     * Set new password for user.
+     * 
+     * @param {string} uid
+     * @param {string} newPassword
+     * @returns {Promise<SalonCloudResponse<null>>}
+     * 
+     * @memberOf FirebaseAuthenticationDatabase
+     */
+    public setPassword(uid: string, newPassword: string): Promise<SalonCloudResponse<null>> {
+        var response: SalonCloudResponse<null> = {
+            code: null,
+            data: null,
+            err: null
+        };
+
+        let promise = new Promise(function (resolve, reject) {
+
+            firebaseAdmin.auth().updateUser(uid, {
+                password: newPassword
+            }).then(function (userRecord) {
+                // See the UserRecord reference doc for the contents of userRecord.
+                response.code = 200;
+                resolve(response);
+            }).catch(function (error) {
+                response.code = 500;
+                response.err = error;
+                resolve(response);
+            });
+        });
+        return promise;
+    }
+
+    public createCustomToken(uid: string): Promise<string> {
+        let promise = new Promise(function (resolve, reject) {
+            firebaseAdmin.auth().createCustomToken(uid)
+                .then(function (customToken) {
+                    // Send token back to client
+                    resolve(customToken);
+                })
+                .catch(function (error) {
+                    console.log("Error creating custom token:", error);
+                    resolve(error);
+                });
+        });
+        return promise;
+    }
+
+    public signInWithCustomToken(token: string): Promise<SalonCloudResponse<UserToken>> {
+        var response: SalonCloudResponse<UserToken> = {
+            code: null,
+            data: null,
+            err: null
+        };
+        let promise = new Promise<SalonCloudResponse<UserToken>>(function (resolve, reject) {
+            firebase.auth().signInWithCustomToken(token)
+                .then(function (user) {
+                    user.getToken().then(function (token) {
+                        response.code = 200;
+                        var userToken: UserToken = {
+                            user: {
+                                _id: user.uid,
+                                username: user.email,
+                                status: true
+                            },
+                            auth: {
+                                token: token
+                            }
+                        };
+
+                        response.data = userToken;
+                        resolve(response);
+                    });
+
+                })
+                .catch(function (error) {
+                    // Handle Errors here.
+                    response.code = 400;
+                    response.err = error;
+
+                    resolve(response);
+                });
+        });
+        return promise;
+
     }
 }

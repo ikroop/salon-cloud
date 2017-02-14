@@ -20,10 +20,10 @@ export class SMSRouter {
             var sendSMSAction = await phoneVerification.sendVerificationCode(phone);
             var returnData;
             if (sendSMSAction.err) {
-                returnData = sendSMSAction.err                
+                returnData = sendSMSAction.err
             } else {
                 returnData = {
-                    'verification_id': sendSMSAction.data,
+                    'verification_id': sendSMSAction.data._id,
                 }
             }
 

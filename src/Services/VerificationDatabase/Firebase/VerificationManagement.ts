@@ -19,6 +19,7 @@ export class FirebaseVerification implements VerificationDatabaseInterface {
     private database: any;
     private verificationRef: any;
     private readonly VERIFICATION_KEY_NAME: string = 'verifications';
+    public static VERIFICATION_CODE_EXPIRES = 15 * 60 * 1000; // 15 minutes
     /**
      * Creates an instance of MongoSalonManagement.
      * 
@@ -73,20 +74,17 @@ export class FirebaseVerification implements VerificationDatabaseInterface {
     public async getVerification(id: string, phone: string, code: string): Promise<IVerificationData> {
 
         var verification: IVerificationData = null;
+        var timestamp = SalonTime.getUTCTimestamp();
         try {
-            await this.verificationRef.child(id).orderByChild('code').equalTo(code).once('value', function (snapshot) {
+            await this.verificationRef.child(id).once('value', function (snapshot) {
                 var object = snapshot.val();
-                if (object && object.phone === phone && !object.activated) {
+                if (object && object.code === code && object.phone === phone
+                    && !object.activated
+                    && ((timestamp - object.timestamp) < FirebaseVerification.VERIFICATION_CODE_EXPIRES)) {
                     verification = object;
                     verification._id = id;
                 }
             });
-
-            // updated activated
-            if (verification) {
-                this.setActivated(id, true);
-            }
-
         } catch (error) {
             throw error;
         }
@@ -103,7 +101,7 @@ export class FirebaseVerification implements VerificationDatabaseInterface {
      * 
      * @memberOf FirebaseVerification
      */
-    private async setActivated(id: string, value: boolean): Promise<void> {
+    public async setActivated(id: string, value: boolean): Promise<void> {
         try {
             await this.verificationRef.child(id).update({
                 'activated': value

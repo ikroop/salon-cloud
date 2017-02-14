@@ -10,7 +10,7 @@ import { IUserData, UserData, UserProfile } from './../../Modules/UserManagement
 import jwt = require('jsonwebtoken');
 import fs = require('fs');
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
-import { MissingCheck, IsString, IsLengthGreaterThan, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidUserName }
+import { MissingCheck, IsString, IsLengthGreaterThan, IsGreaterThan, IsLessThan, IsNotInArray, IsValidSalonId, IsValidUserName, IsPhoneNumber }
     from './../../Core/Validation/ValidationDecorators';
 import { UserToken } from './AuthenticationData';
 import { AuthenticationDatabaseInterface } from './../../Services/AuthenticationDatabase/AuthenticationDatabaseInterface';
@@ -140,6 +140,70 @@ export class Authentication {
      */
     public async verifyToken(token: string) {
         var response = await this.authenticationDatabase.verifyToken(token);
+        return response;
+    }
+
+    /**
+     * Sign Up new account with phone. ONLY use for customer & employee.
+     * 
+     * @param {string} phone
+     * @returns {Promise<SalonCloudResponse<string>>}
+     * 
+     * @memberOf Authentication
+     */
+    public async signUpWithPhonenumber(phone: string): Promise<SalonCloudResponse<string>> {
+
+        var response: SalonCloudResponse<string> = {
+            code: null,
+            data: null,
+            err: null
+        };
+
+        // validate phonenumber
+        var phoneNumberValidator = new BaseValidator(phone);
+        phoneNumberValidator = new MissingCheck(phoneNumberValidator, ErrorMessage.MissingPhoneNumber);
+        phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat);
+        var phoneNumberError = await phoneNumberValidator.validate();
+        if (phoneNumberError) {
+            response.err = phoneNumberError;
+            response.code = 400;
+            return response;
+        }
+
+        // create customer account with phone
+
+        var randomPassword = 100000 + Math.floor(Math.random() * 900000);
+        var randomPasswordString = randomPassword.toString();
+
+        var signUpData = await this.signUpWithUsernameAndPassword(phone, randomPasswordString);
+
+        if (signUpData.err) {
+            response.err = signUpData.err;
+            response.code = signUpData.code;
+        } else {
+            response.code = 200;
+            response.data = randomPasswordString;
+        }
+        return response;
+    }
+
+    /**
+     * Set new password for user. ONLY use Customer & Employee.
+     * 
+     * @param {string} uid
+     * @param {string} newPassword
+     * @returns {Promise<SalonCloudResponse<null>>}
+     * 
+     * @memberOf Authentication
+     */
+    public async setPassword(uid: string, newPassword: string): Promise<SalonCloudResponse<null>> {
+        var response: SalonCloudResponse<null> = {
+            code: null,
+            data: null,
+            err: null
+        };
+
+        response = await this.authenticationDatabase.setPassword(uid, newPassword);
         return response;
     }
 }

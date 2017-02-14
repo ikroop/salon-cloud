@@ -13,6 +13,11 @@ import { ErrorMessage } from './../src/Core/ErrorMessage';
 import { Authentication } from './../src/Core/Authentication/Authentication';
 import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
 import { UserToken } from './../src/Core/Authentication/AuthenticationData';
+import { PhoneVerification } from './../src/Core/Verification/PhoneVerification';
+import { IVerificationData } from './../src/Core/Verification/VerificationData';
+import { SalonInformation } from './../src/Modules/SalonManagement/SalonData';
+import { SignedInUser } from './../src/Core/User/SignedInUser';
+import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
 
 describe('Authentication', function () {
     var defaultPassword = '1234@1234'
@@ -20,7 +25,8 @@ describe('Authentication', function () {
     var invalidToken = '12dfab3bc554ad';
     var username = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
     var invalidPassword = "123456";
-
+    var phoneNumber = ((new Date()).getTime() % 10000000000).toString();
+    
     before(async function () {
         // 1. Create Owner 
         var authentication = new Authentication();
@@ -32,6 +38,7 @@ describe('Authentication', function () {
         // 2. login to get access token
         var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
         validToken = loginData.data.auth.token;
+
     });
 
     describe('User SignUp with Username & Password', function () {
@@ -250,7 +257,7 @@ describe('Authentication', function () {
                     done();
                 });
         });
-        
+
         it('should return "MissingUsername" error trying to Signin without username', function (done) {
             var user = {
                 password: defaultPassword
