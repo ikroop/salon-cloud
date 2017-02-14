@@ -20,13 +20,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.json({ 'name': 'SalonCloud Server' });
+    res.json({
+        'name': 'SalonCloud Server',
+        'version': '0.3.0'
+    });
 });
 
 app.use((request: express.Request, response: express.Response, next: express.NextFunction): void => {
-  response.header("Access-Control-Allow-Origin", "*");
-  response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 
