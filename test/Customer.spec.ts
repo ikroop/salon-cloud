@@ -205,7 +205,7 @@ describe('Authentication', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.MissingFullName.err.name + ' trying to sign up customer without fullname', function (done) {
+        it('should return ' + ErrorMessage.MissingCustomerName.err.name + ' trying to sign up customer without fullname', function (done) {
             var user = {
                 phone: phoneNumber,
                 verification_id: verificationObject._id,
@@ -222,7 +222,7 @@ describe('Authentication', function () {
                     }
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingFullName.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingCustomerName.err.name);
                     done();
                 });
         });
