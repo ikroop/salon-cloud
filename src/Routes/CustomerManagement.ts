@@ -49,7 +49,7 @@ export class CustomerManagementRouter {
                 dataReturn = result.err
             } else {
                 dataReturn = {
-                    'customToken': result.data.customToken
+                    'custom_token': result.data.customToken
                 }
             }
             response.status(result.code);

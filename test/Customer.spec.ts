@@ -81,7 +81,8 @@ describe('Authentication', function () {
             var user = {
                 code: verificationObject.code,
                 verification_id: verificationObject._id,
-                salon_id: validSalonId
+                salon_id: validSalonId,
+                fullname: "Marisol"
             };
             request(server)
                 .post(apiUrl)
@@ -102,7 +103,8 @@ describe('Authentication', function () {
                 phone: invalidPhoneNumber,
                 code: verificationObject.code,
                 verification_id: verificationObject._id,
-                salon_id: validSalonId
+                salon_id: validSalonId,
+                fullname: "Marisol"
             };
             request(server)
                 .post(apiUrl)
@@ -122,7 +124,8 @@ describe('Authentication', function () {
             var user = {
                 phone: phoneNumber,
                 code: verificationObject.code,
-                salon_id: validSalonId
+                salon_id: validSalonId,
+                fullname: "Marisol"
             };
             request(server)
                 .post(apiUrl)
@@ -142,7 +145,8 @@ describe('Authentication', function () {
             var user = {
                 phone: phoneNumber,
                 verification_id: verificationObject._id,
-                salon_id: validSalonId
+                salon_id: validSalonId,
+                fullname: "Marisol"
             };
             request(server)
                 .post(apiUrl)
@@ -163,7 +167,8 @@ describe('Authentication', function () {
                 phone: phoneNumber,
                 code: wrongCode,
                 verification_id: verificationObject._id,
-                salon_id: validSalonId
+                salon_id: validSalonId,
+                fullname: "Marisol"
             };
             request(server)
                 .post(apiUrl)
@@ -177,13 +182,14 @@ describe('Authentication', function () {
                     res.body.err.name.should.be.equal(ErrorMessage.WrongVerificationCode.err.name);
                     done();
                 });
-        });     
+        });
 
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' trying to sign up customer without salon id', function (done) {
             var user = {
                 phone: phoneNumber,
                 verification_id: verificationObject._id,
                 code: verificationObject.code,
+                fullname: "Marisol"
             };
             request(server)
                 .post(apiUrl)
@@ -199,12 +205,34 @@ describe('Authentication', function () {
                 });
         });
 
+        it('should return ' + ErrorMessage.MissingFullName.err.name + ' trying to sign up customer without fullname', function (done) {
+            var user = {
+                phone: phoneNumber,
+                verification_id: verificationObject._id,
+                code: verificationObject.code,
+                salon_id: validSalonId
+
+            };
+            request(server)
+                .post(apiUrl)
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingFullName.err.name);
+                    done();
+                });
+        });
+
         it('should return phonenumber & password trying to signup sucessfully', function (done) {
             var user = {
                 phone: phoneNumber,
                 code: verificationObject.code,
                 verification_id: verificationObject._id,
-                salon_id: validSalonId, 
+                salon_id: validSalonId,
                 fullname: "Marisol"
             };
             request(server)
@@ -215,7 +243,7 @@ describe('Authentication', function () {
                         throw err;
                     }
                     res.status.should.be.equal(200);
-                    res.body.should.have.property('customToken');
+                    res.body.should.have.property('custom_token');
                     done();
                 });
         });
