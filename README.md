@@ -85,7 +85,7 @@ Wiki](https://github.com/thanhtruong0315/salon-cloud/wiki/REST-API-Preferences)
 [62]: https://github.com/salonhelps/salon-cloud/wiki/Appointment-Management
 [63]: https://github.com/salonhelps/salon-cloud/wiki/Appointment-Management#get-available-booking-time
 [64]: https://github.com/salonhelps/salon-cloud/wiki/Appointment-Management#book-appointment-online
-[65]: https://github.com/salonhelps/salon-cloud/wiki/Appointment-Management
+[65]: https://github.com/salonhelps/salon-cloud/wiki/Appointment-Management#get-appointment-by-customer-id
 [70]: https://github.com/salonhelps/salon-cloud/wiki/Customer#signup-with-phonenumber-for-customer
 [80]: https://github.com/salonhelps/salon-cloud/wiki/SMS#send-verification-code
 
