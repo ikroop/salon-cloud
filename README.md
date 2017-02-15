@@ -48,7 +48,7 @@ Wiki](https://github.com/thanhtruong0315/salon-cloud/wiki/REST-API-Preferences)
 |  **Appointment**          |  Create Appointment By Phone     | Available    | [README][60]  |              - |
 |                           |  Get Appointment by Id           | Not Started  | [README][61]  |              - |
 |                           |  Get Appointment by date         | Not Started  | [README][62]  |              - |
-|                           |  Get Employee available time     | Not Started  | [README][63]  |              - |
+|                           |  Get available booking time      | Not Started  | [README][63]  |              - |
 |                           |  Book appointment online         | Not Started  | [README][64]  |              - |
 |                           |  Get appointment by customer id  | Not Started  | [README][65]  |              - |
 |  **Customer**             |  Customer register online        | Available    | [README][70]  |              - |
@@ -83,8 +83,8 @@ Wiki](https://github.com/thanhtruong0315/salon-cloud/wiki/REST-API-Preferences)
 [60]: https://github.com/salonhelps/salon-cloud/wiki/Appointment-Management#create-appointment-by-phone
 [61]: https://github.com/salonhelps/salon-cloud/wiki/Appointment-Management
 [62]: https://github.com/salonhelps/salon-cloud/wiki/Appointment-Management
-[63]: https://github.com/salonhelps/salon-cloud/wiki/Appointment-Management
-[64]: https://github.com/salonhelps/salon-cloud/wiki/Appointment-Management
+[63]: https://github.com/salonhelps/salon-cloud/wiki/Appointment-Management#get-available-booking-time
+[64]: https://github.com/salonhelps/salon-cloud/wiki/Appointment-Management#book-appointment-online
 [65]: https://github.com/salonhelps/salon-cloud/wiki/Appointment-Management
 [70]: https://github.com/salonhelps/salon-cloud/wiki/Customer#signup-with-phonenumber-for-customer
 [80]: https://github.com/salonhelps/salon-cloud/wiki/SMS#send-verification-code
