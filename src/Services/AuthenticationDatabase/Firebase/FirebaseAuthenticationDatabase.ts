@@ -44,6 +44,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
 
         let promise = new Promise<SalonCloudResponse<UserToken>>(function (resolve, reject) {
             firebase.auth().signInWithEmailAndPassword(username, password)
+                // FIX ME: Duplicate code [1]
                 .then(function (user) {
 
                     user.getToken().then(function (token) {
@@ -237,6 +238,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
         };
         let promise = new Promise<SalonCloudResponse<UserToken>>(function (resolve, reject) {
             firebase.auth().signInWithCustomToken(token)
+                // FIX ME: Duplicate code [1]
                 .then(function (user) {
                     user.getToken().then(function (token) {
                         response.code = 200;
