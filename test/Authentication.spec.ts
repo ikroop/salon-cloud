@@ -18,6 +18,7 @@ import { IVerificationData } from './../src/Core/Verification/VerificationData';
 import { SalonInformation } from './../src/Modules/SalonManagement/SalonData';
 import { SignedInUser } from './../src/Core/User/SignedInUser';
 import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
+import { FirebaseAuthenticationDatabase } from './../src/Services/AuthenticationDatabase/Firebase/FirebaseAuthenticationDatabase';
 
 describe('Authentication', function () {
     var defaultPassword = '1234@1234'
@@ -26,7 +27,8 @@ describe('Authentication', function () {
     var username = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
     var invalidPassword = "123456";
     var phoneNumber = ((new Date()).getTime() % 10000000000).toString();
-    
+    var validUserId = null;
+    var validCustomToken = null;
     before(async function () {
         // 1. Create Owner 
         var authentication = new Authentication();
@@ -38,6 +40,11 @@ describe('Authentication', function () {
         // 2. login to get access token
         var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
         validToken = loginData.data.auth.token;
+        validUserId = loginData.data.user._id;
+        
+        // 3. create custom token
+        var authenticationFirebase = new FirebaseAuthenticationDatabase();
+        validCustomToken = await authenticationFirebase.createCustomToken(validUserId);
 
     });
 
@@ -328,6 +335,86 @@ describe('Authentication', function () {
                     res.status.should.be.equal(200);
                     res.body.should.have.property('user');
                     res.body.user.username.should.be.equal(user.username);
+                    res.body.should.have.property('auth');
+                    res.body.auth.should.have.property('token');
+                    done();
+                });
+        });
+    });
+    
+    describe('User Signin with custom', function () {
+        var apiUrl = '/api/v1/Authentication/signinwithcustomtoken';
+
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' trying to register with invalidToken', function (done) {
+            var user = {
+                custom_token: validCustomToken
+            };
+            request(server)
+                .post(apiUrl)
+                .set({ 'Authorization': invalidToken })
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.NoPermission.err.name + ' trying to register with valid token', function (done) {
+            var user = {
+                custom_token: validCustomToken
+            };
+            request(server)
+                .post(apiUrl)
+                .set({ 'Authorization': validToken })
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingCustomToken.err.name + ' error trying to Signin without username', function (done) {
+            var user = {
+
+            };
+            request(server)
+                .post(apiUrl)
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingCustomToken.err.name);
+                    done();
+                });
+        });
+
+        it('should return user & auth object trying to Signin sucessfully', function (done) {
+            var user = {
+                custom_token: validCustomToken
+            };
+            request(server)
+                .post(apiUrl)
+                .send(user)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('user');
+                    res.body.user._id.should.be.equal(validUserId);
                     res.body.should.have.property('auth');
                     res.body.auth.should.have.property('token');
                     done();
