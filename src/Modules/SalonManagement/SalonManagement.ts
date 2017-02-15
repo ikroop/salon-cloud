@@ -252,6 +252,7 @@ export class SalonManagement implements SalonManagementBehavior {
             returnResult.err = error;
         }
 
+        return returnResult;
     }
 
 }

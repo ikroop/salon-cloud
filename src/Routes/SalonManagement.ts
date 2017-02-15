@@ -74,18 +74,18 @@ export class SalonManagementRouter {
 
         });
 
-        this.router.post('/getinformation', async function (request: Request, response: Response) {
-            var salonId = request.query.salon_id
+        this.router.get('/getinformation', async function (request: Request, response: Response) {
+            let salonId = request.query.salon_id;
             var salonManagement = new SalonManagement(salonId);
             var salonProfile = await salonManagement.getSalonById();
             var dataReturn;
 
             if (salonProfile.err) {
-                dataReturn = salonProfile.err
+                dataReturn = { 'err': salonProfile.err };
             } else {
                 var SalonInformation = salonProfile.data.information;
                 dataReturn = {
-                    'salonProfile': SalonInformation.salon_name,
+                    'name': SalonInformation.salon_name,
                     'phone': SalonInformation.phone.number,
                     'location': SalonInformation.location.address,
                     'email': SalonInformation.email
