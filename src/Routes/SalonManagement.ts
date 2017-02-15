@@ -58,20 +58,41 @@ export class SalonManagementRouter {
             var signedInUser = new SignedInUser(userId, new SalonManagement(null));
             var getSalonListResponse = await signedInUser.getSalonList();
             var dataReturn = {};
-            if(getSalonListResponse.err){
+            if (getSalonListResponse.err) {
                 dataReturn['err'] = getSalonListResponse.err;
-            }else{
+            } else {
                 var salonListObject = getSalonListResponse.data;
                 dataReturn['salon_list'] = [];
-                for(var eachSalon in salonListObject){
+                for (var eachSalon in salonListObject) {
                     dataReturn['salon_list'].push(salonListObject[eachSalon]);
                 }
             }
 
             response.status(getSalonListResponse.code);
             response.json(dataReturn);
-            
 
+
+        });
+
+        this.router.post('/getinformation', async function (request: Request, response: Response) {
+            var salonId = request.query.salon_id
+            var salonManagement = new SalonManagement(salonId);
+            var salonProfile = await salonManagement.getSalonById();
+            var dataReturn;
+
+            if (salonProfile.err) {
+                dataReturn = salonProfile.err
+            } else {
+                var SalonInformation = salonProfile.data.information;
+                dataReturn = {
+                    'salonProfile': SalonInformation.salon_name,
+                    'phone': SalonInformation.phone.number,
+                    'location': SalonInformation.location.address,
+                    'email': SalonInformation.email
+                }
+            }
+            response.status(salonProfile.code);
+            response.json(dataReturn);
         });
 
         this.router.post('/updatesettings', authorizationRouter.checkPermission, function (request: Request, response: Response) {

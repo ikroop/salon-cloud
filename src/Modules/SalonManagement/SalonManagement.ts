@@ -8,7 +8,7 @@ import { ISalonData, SalonData, SalonInformation, SalonSetting } from './SalonDa
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { defaultSalonSetting } from './../../Core/DefaultData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator'
-import { MissingCheck, IsPhoneNumber, IsEmail, IsString, IsValidUserId } from './../../Core/Validation/ValidationDecorators'
+import { MissingCheck, IsPhoneNumber, IsEmail, IsString, IsValidUserId, IsValidSalonId } from './../../Core/Validation/ValidationDecorators'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { GoogleMap } from './../../Core/GoogleMap/GoogleMap';
 import { SalonManagementDatabaseInterface } from './../../Services/SalonDatabase/SalonManagementDatabaseInterface';
@@ -102,7 +102,7 @@ export class SalonManagement implements SalonManagementBehavior {
      * @memberOf SalonManagement
      */
     public async getAllSalon(userId: string): Promise<SalonCloudResponse<Array<SalonInformation>>> {
-        var response : SalonCloudResponse<Array<SalonInformation>> = {
+        var response: SalonCloudResponse<Array<SalonInformation>> = {
             code: null,
             data: null,
             err: null
@@ -120,10 +120,10 @@ export class SalonManagement implements SalonManagementBehavior {
 
         var database = new FirebaseUserManagement(null);
         var getSalonInfoList = await database.getSalonInformationList(userId);
-        if(getSalonInfoList){
+        if (getSalonInfoList) {
             response.data = getSalonInfoList;
             response.code = 200;
-        }else{
+        } else {
             response.data = null;
             response.code = 200;
         }
@@ -220,13 +220,36 @@ export class SalonManagement implements SalonManagementBehavior {
      * 
      * @memberOf SalonManagement
      */
-    public async getSalonById(): Promise<ISalonData> {
-        var salon: ISalonData = null;
+    public async getSalonById(): Promise<SalonCloudResponse<ISalonData>> {
+
+        var returnResult: SalonCloudResponse<ISalonData> = {
+            code: null,
+            data: null,
+            err: null
+        };
+
+        var salonProfile: ISalonData = null;
+
+        var salonIdValidation = new BaseValidator(this.salonId);
+        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
+        salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
+        var salonIdError = await salonIdValidation.validate();
+
+        if (salonIdError) {
+            returnResult.err = salonIdError.err;
+            returnResult.code = 400; //Bad Request
+            return returnResult;
+        }
+
         try {
-            salon = await this.salonDatabase.getSalonById();
-            return salon;
+            salonProfile = await this.salonDatabase.getSalonById();
+            if (salonProfile) {
+                returnResult.code = 200;
+                returnResult.data = salonProfile;
+            }
         } catch (error) {
-            throw error;
+            returnResult.code = 500;
+            returnResult.err = error;
         }
 
     }
