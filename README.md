@@ -32,7 +32,7 @@ Wiki](https://github.com/thanhtruong0315/salon-cloud/wiki/REST-API-Preferences)
 |                           |  Save Employee Weekly Schedule   | Available    | [README][27]  |              - |
 | **Salon Management**      |  Create Salon                    | Available    | [README][30]  |              - |
 |                           |  Get Salon List By User Id       | Available    | [README][31]  |              - |
-|                           |  Get Salon Information           | Not Started  | [README][32]  |              - |
+|                           |  Get Salon Information           | Available    | [README][32]  |              - |
 |                           |  Get Salon Settings              | Not Started  | [README][33]  |              - |
 |                           |  Update Salon Information        | Not Started  | [README][34]  |              - |
 |                           |  Update Salon Settings           | Not Started  | [README][35]  |              - |
@@ -67,7 +67,7 @@ Wiki](https://github.com/thanhtruong0315/salon-cloud/wiki/REST-API-Preferences)
 [27]: https://github.com/salonhelps/salon-cloud/wiki/Schedule#save-employee-weekly-schedule
 [30]: https://github.com/salonhelps/salon-cloud/wiki/Salon-Management#create-salon
 [31]: https://github.com/salonhelps/salon-cloud/wiki/Salon-Management#get-salon-list-by-user-id
-[32]: https://github.com/salonhelps/salon-cloud/wiki/Salon-Managemen
+[32]: https://github.com/salonhelps/salon-cloud/wiki/Salon-Management#get-salon-information
 [33]: https://github.com/salonhelps/salon-cloud/wiki/Salon-Managemen
 [34]: https://github.com/salonhelps/salon-cloud/wiki/Salon-Managemen
 [35]: https://github.com/salonhelps/salon-cloud/wiki/Salon-Managemen
