@@ -21,7 +21,7 @@ Wiki](https://github.com/thanhtruong0315/salon-cloud/wiki/REST-API-Preferences)
 |---------------------------|----------------------------------|--------------|---------------|----------------|
 | **Authentication**        |  Sign Up with Username & Password| Available    | [README][10]  |              - |
 |                           |  Sign In with Username & Password| Available    | [README][11]  |              - |
-|                           |  Sign In with custom token       | Inprogress   | [README][12]  |              - |
+|                           |  Sign In with custom token       | Available    | [README][12]  |              - |
 | **Schedule**              |  Get salon daily schedule        | Available    | [README][20]  |              - |
 |                           |  Get salon weekly schedule       | Available    | [README][21]  |              - |
 |                           |  Save Salon Daily Schedule       | Available    | [README][22]  |              - |
@@ -56,7 +56,7 @@ Wiki](https://github.com/thanhtruong0315/salon-cloud/wiki/REST-API-Preferences)
 
 [10]: https://github.com/salonhelps/salon-cloud/wiki/Authentication#signup-with-email--password
 [11]: https://github.com/salonhelps/salon-cloud/wiki/Authentication#signin-with-email--password
-[12]: https://github.com/salonhelps/salon-cloud/wiki/Authentication
+[12]:https://github.com/salonhelps/salon-cloud/wiki/Authentication#signin-with-custom-token
 [20]: https://github.com/salonhelps/salon-cloud/wiki/Schedule#get-salon-daily-schedule
 [21]: https://github.com/salonhelps/salon-cloud/wiki/Schedule#get-salon-weekly-schedule
 [22]: https://github.com/salonhelps/salon-cloud/wiki/Schedule#save-salon-daily-schedule
