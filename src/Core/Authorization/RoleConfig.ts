@@ -19,6 +19,12 @@ export const RoleConfig =
             ]
         },
         {
+            'api': '/api/v1/Authentication/signinwithcustomtoken',
+            'role': [
+                'Anonymouse'
+            ]
+        },
+        {
             'api': '/api/v1/salon/create',
             'role': [
                 'SignedUser'
@@ -65,7 +71,7 @@ export const RoleConfig =
             'api': '/api/v1/salon/getsalonlist',
             'role': [
                 'SignedUser'
-                ]
+            ]
         }
     ]
     ;
