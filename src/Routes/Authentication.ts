@@ -40,6 +40,17 @@ export class AuthenticationRouter {
                 response.json(result.data);
             }
         });
+
+         this.router.post('/signinwithcustomtoken', authorizationRouter.checkPermission, async function (request: Request, response: Response) {
+            //TODO: have to use Anonymouse class
+            let result: any = await authentication.signInWithCustomToken(request.body.custom_token);
+            response.statusCode = result.code;
+            if (result.err) {
+                response.json(result.err);
+            } else {
+                response.json(result.data);
+            }
+        });
                 
         return this.router;
 

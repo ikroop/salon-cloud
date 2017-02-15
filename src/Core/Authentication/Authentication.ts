@@ -206,4 +206,34 @@ export class Authentication {
         response = await this.authenticationDatabase.setPassword(uid, newPassword);
         return response;
     }
+
+    /**
+     * Signin with custom token
+     * 
+     * @param {string} customeToken
+     * @returns {Promise<SalonCloudResponse<UserToken>>}
+     * 
+     * @memberOf Authentication
+     */
+    public async signInWithCustomToken(customeToken: string): Promise<SalonCloudResponse<UserToken>> {
+
+        var response: SalonCloudResponse<UserToken> = {
+            code: null,
+            data: null,
+            err: null
+        };
+
+        // Validate Username
+        var customTokenValidator = new BaseValidator(customeToken);
+        customTokenValidator = new MissingCheck(customTokenValidator, ErrorMessage.MissingCustomToken);
+        var customTokenValidationResult = await customTokenValidator.validate();
+        if (customTokenValidationResult) {
+            response.err = customTokenValidationResult;
+            response.code = 400;
+            return response;
+        }
+
+        response = await this.authenticationDatabase.signInWithCustomToken(customeToken);
+        return response;
+    }
 }

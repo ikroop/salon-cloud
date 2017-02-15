@@ -11,4 +11,5 @@ export interface AuthenticationDatabaseInterface {
     signInWithUsernameAndPassword(username: string, password: string): Promise<SalonCloudResponse<UserToken>>;
     verifyToken(token: string);
     setPassword(uid: string, newPassword: string): Promise<SalonCloudResponse<null>>;
+    signInWithCustomToken(token: string): Promise<SalonCloudResponse<UserToken>>;
 }
