@@ -581,5 +581,11 @@ export const ErrorMessage = {
             'name': 'MissingVerificationId',
             'message': 'A verification id is required',
         }
+    },
+    'MissingCustomToken':{
+        'err': {
+            'name': 'MissingCustomToken',
+            'message': 'A custom token is required',
+        } 
     }
 };
