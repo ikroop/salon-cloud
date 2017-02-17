@@ -34,8 +34,10 @@ describe('Salon Management', function () {
     let anotherUserId;
     let anotherUserToken;
     let validUserId;
+    let validUserIdOwner3Salons;
+    let validTokenOwner3Salons;
     let invalidUserId = '100023232';
-    let salonInformationInput: SalonInformation;
+    let salonInformationInput_1: SalonInformation;
 
     before(async function () {
         // Login and get token
@@ -54,9 +56,17 @@ describe('Salon Management', function () {
         validToken = loginData.data.auth.token;
         validUserId = loginData.data.user._id;
 
+        // 3. creat owner for 3 salons
+        var authentication = new Authentication();
+        const owner3Salonsmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
+        await authentication.signUpWithUsernameAndPassword(owner3Salonsmail, defaultPassword);
+        var loginOwner3SalonsData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(owner3Salonsmail, defaultPassword);
+        validUserIdOwner3Salons = loginOwner3SalonsData.data.user._id;
+        validTokenOwner3Salons = loginOwner3SalonsData.data.auth.token;
+
         // 3. Create salon
-        var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(null));
-        salonInformationInput = {
+        var signedInUser = new SignedInUser(validUserIdOwner3Salons, new SalonManagement(null));
+        salonInformationInput_1 = {
             email: 'salon@salon.com',
             phone: {
                 number: '7703456789',
@@ -69,8 +79,40 @@ describe('Salon Management', function () {
             },
             salon_name: 'Salon Appointment Test'
         }
-        var salon = await signedInUser.createSalon(salonInformationInput);
+        var salon = await signedInUser.createSalon(salonInformationInput_1);
         validSalonId = salon.data;
+
+        var salonInformationInput_2 = {
+            email: 'salon2@salon.com',
+            phone: {
+                number: '7703456780',
+                is_verified: false
+            },
+            location: {
+                address: '22506 Bailey Dr NW, Norcross, GA 30071',
+                is_verified: false,
+                timezone_id: null
+            },
+            salon_name: 'Salon Appointment Test 2'
+        }
+        await signedInUser.createSalon(salonInformationInput_2);
+
+        var salonInformationInput_3 = {
+            email: 'salon3@salon.com',
+            phone: {
+                number: '7703456783',
+                is_verified: false
+            },
+            location: {
+                address: '32506 Bailey Dr NW, Norcross, GA 30071',
+                is_verified: false,
+                timezone_id: null
+            },
+            salon_name: 'Salon Appointment Test 32'
+        }
+        await signedInUser.createSalon(salonInformationInput_2);
+
+
 
     });
 
@@ -292,24 +334,22 @@ describe('Salon Management', function () {
         })
 
         it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to get salon list without authentication', function (done) {
-            var token = validToken;
+            var token = validUserIdOwner3Salons;
             request(server)
-                .post(apiUrl)
+                .get(apiUrl)
 
                 .end(function (err, res) {
                     if (err) {
                         throw err;
                     }
-
+                    console.log(res.body);
                     res.status.should.be.equal(403);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
                     done();
                 });
         })
 
         it('should return salon information list trying to get salon list successfully', function (done) {
-            var token = validToken;
+            var token = validTokenOwner3Salons;
             request(server)
                 .get(apiUrl)
                 .set({ 'Authorization': token })
@@ -321,9 +361,11 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(200);
                     res.body.should.have.property('salon_list');
-                    res.body.salon_list.should.have.length(2);
-                    ['AtlantaNail', 'SunshineNails'].indexOf(res.body.salon_list[0].salon_name).should.not.be.equal(-1);
-                    ['AtlantaNail', 'SunshineNails'].indexOf(res.body.salon_list[1].salon_name).should.not.be.equal(-1);
+                    res.body.salon_list.should.have.length(3);
+                    ['Salon Appointment Test', 'Salon Appointment Test 2', 'Salon Appointment Test 3'].indexOf(res.body.salon_list[0].salon_name).should.not.be.equal(-1);
+                    ['Salon Appointment Test', 'Salon Appointment Test 2', 'Salon Appointment Test 3'].indexOf(res.body.salon_list[1].salon_name).should.not.be.equal(-1);
+                    ['Salon Appointment Test', 'Salon Appointment Test 2', 'Salon Appointment Test 3'].indexOf(res.body.salon_list[2].salon_name).should.not.be.equal(-1);
+
                     done();
                 });
         })
@@ -334,7 +376,6 @@ describe('Salon Management', function () {
         var apiUrl = '/api/v1/salon/getinformation';
 
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to get salon information without salon id', function (done) {
-            var token = validToken;
             var url = apiUrl + '';
             request(server)
                 .get(url)
@@ -351,7 +392,6 @@ describe('Salon Management', function () {
         });
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to get salon information with wrong salon id', function (done) {
-            var token = validToken;
             var url = apiUrl + '?salon_id=123456789';
             request(server)
                 .get(url)
@@ -368,7 +408,6 @@ describe('Salon Management', function () {
         });
 
         it('should return salon information trying to get salon information with valid salon id', function (done) {
-            var token = validToken;
             var url = apiUrl + '?salon_id=' + validSalonId;
             request(server)
                 .get(url)
@@ -379,13 +418,13 @@ describe('Salon Management', function () {
 
                     res.status.should.be.equal(200);
                     res.body.should.have.property('name');
-                    res.body.name.should.be.equal(salonInformationInput.salon_name);
+                    res.body.name.should.be.equal(salonInformationInput_1.salon_name);
                     res.body.should.have.property('phone');
-                    res.body.phone.should.be.equal(salonInformationInput.phone.number);
+                    res.body.phone.should.be.equal(salonInformationInput_1.phone.number);
                     res.body.should.have.property('location');
-                    res.body.location.should.be.equal(salonInformationInput.location.address);
+                    res.body.location.should.be.equal(salonInformationInput_1.location.address);
                     res.body.should.have.property('email');
-                    res.body.email.should.be.equal(salonInformationInput.email);
+                    res.body.email.should.be.equal(salonInformationInput_1.email);
                     done();
                 });
         });
