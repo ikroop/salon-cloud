@@ -10,10 +10,10 @@ import { IServiceGroupData } from './../../Modules/ServiceManagement/ServiceData
 import { ErrorMessage } from './../ErrorMessage';
 import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceManagement';
 import { UserManagement } from './../../Modules/UserManagement/UserManagement';
-import { SalonManagement } from './../../Modules/SalonManagement/SalonManagement';
+import { FirebaseSalonManagement } from './../../Services/SalonDatabase/Firebase/FirebaseSalonManagement'
 import * as moment from 'moment';
 import { SalonTime } from './../SalonTime/SalonTime';
-import {FirebaseUserManagement} from './../../Services/UserDatabase/Firebase/FirebaseUserManagement';
+import { FirebaseUserManagement } from './../../Services/UserDatabase/Firebase/FirebaseUserManagement';
 //Validate if target element is missing.
 //To pass the test: Target Element must not be null.
 export class MissingCheck extends DecoratingValidator {
@@ -320,10 +320,10 @@ export class IsValidSalonId extends DecoratingValidator {
     public async validatingOperation() {
         var salonId = this.targetElement;
         // Check Id valid or not
+        var salonDatabase = new FirebaseSalonManagement(salonId);
 
-        var salonManagement = new SalonManagement(salonId);
         try {
-            var response = await salonManagement.getSalonById();
+            var response = await salonDatabase.getSalonById();
             if (response && response._id) {
                 return null;
             } else {
@@ -623,9 +623,9 @@ export class IsValidUserId extends DecoratingValidator {
         let userId: string = this.targetElement;
         var database = new FirebaseUserManagement(null);
         var validation = await database.checkUserIdExistence(userId);
-        if(validation == false){
+        if (validation == false) {
             return this.errorType;
-        }else{
+        } else {
             return null;
         }
 
