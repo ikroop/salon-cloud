@@ -723,4 +723,62 @@ describe('Service Management', function () {
                 });
         });
     });
+
+    describe('Unit Test Get Salon Services', function () {
+        var apiUrl = '/api/v1/service/getall';
+
+        it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to get salon information without salon id', function (done) {
+            var url = apiUrl + '';
+            request(server)
+                .get(url)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to get salon information with wrong salon id', function (done) {
+            var url = apiUrl + '?salon_id=123456789';
+            request(server)
+                .get(url)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
+
+        it('should return salon services trying to get salon services with valid salon id', function (done) {
+            var url = apiUrl + '?salon_id=' + validSalonId;
+            request(server)
+                .get(url)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(200);
+                    /*res.body.should.have.property('name');
+                    res.body.name.should.be.equal(salonInformationInput_1.salon_name);
+                    res.body.should.have.property('phone');
+                    res.body.phone.should.be.equal(salonInformationInput_1.phone.number);
+                    res.body.should.have.property('location');
+                    res.body.location.should.be.equal(salonInformationInput_1.location.address);
+                    res.body.should.have.property('email');
+                    res.body.email.should.be.equal(salonInformationInput_1.email);*/
+                    done();
+                });
+        });
+    });
 });

@@ -76,7 +76,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
             return response;
         }
 
-        var serviceGroupInput: ServiceGroupData={
+        var serviceGroupInput: ServiceGroupData = {
             description: group.description,
             name: group.name,
             salon_id: group.salon_id,
@@ -108,6 +108,18 @@ export class ServiceManagement implements ServiceManagementBehavior {
             code: null,
             data: null
         };
+
+        var salonIdValidation = new BaseValidator(this.salonId);
+        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
+        salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
+        var salonIdError = await salonIdValidation.validate();
+
+        if (salonIdError) {
+            returnResult.err = salonIdError.err;
+            returnResult.code = 400; //Bad Request
+            return returnResult;
+        }
+
         try {
             var rs = await this.serviceDatabase.getAllServices();
             returnResult.data = rs;
