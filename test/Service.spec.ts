@@ -23,6 +23,7 @@ import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
 import { SalonInformation } from './../src/Modules/SalonManagement/SalonData'
 import * as moment from 'moment';
 import { UserProfile } from './../src/Modules/UserManagement/UserData';
+import { samplesService1, samplesService2 } from './../src/Core/DefaultData';
 
 describe('Service Management', function () {
     let validToken;
@@ -767,16 +768,10 @@ describe('Service Management', function () {
                     if (err) {
                         throw err;
                     }
-
+                    console.log(res.body);
                     res.status.should.be.equal(200);
-                    /*res.body.should.have.property('name');
-                    res.body.name.should.be.equal(salonInformationInput_1.salon_name);
-                    res.body.should.have.property('phone');
-                    res.body.phone.should.be.equal(salonInformationInput_1.phone.number);
-                    res.body.should.have.property('location');
-                    res.body.location.should.be.equal(salonInformationInput_1.location.address);
-                    res.body.should.have.property('email');
-                    res.body.email.should.be.equal(salonInformationInput_1.email);*/
+                    res.body.should.have.property('services');
+                    res.body.services.length.should.be.equal(4);
                     done();
                 });
         });
