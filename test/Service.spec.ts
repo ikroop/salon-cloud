@@ -23,6 +23,7 @@ import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
 import { SalonInformation } from './../src/Modules/SalonManagement/SalonData'
 import * as moment from 'moment';
 import { UserProfile } from './../src/Modules/UserManagement/UserData';
+import { samplesService1, samplesService2 } from './../src/Core/DefaultData';
 
 describe('Service Management', function () {
     let validToken;
@@ -719,6 +720,58 @@ describe('Service Management', function () {
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
                     res.body.err.name.should.be.equal(ErrorMessage.ServiceGroupNameExisted.err.name);
+                    done();
+                });
+        });
+    });
+
+    describe('Unit Test Get Salon Services', function () {
+        var apiUrl = '/api/v1/service/getall';
+
+        it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to get salon information without salon id', function (done) {
+            var url = apiUrl + '';
+            request(server)
+                .get(url)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to get salon information with wrong salon id', function (done) {
+            var url = apiUrl + '?salon_id=123456789';
+            request(server)
+                .get(url)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
+
+        it('should return salon services trying to get salon services with valid salon id', function (done) {
+            var url = apiUrl + '?salon_id=' + validSalonId;
+            request(server)
+                .get(url)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    console.log(res.body);
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('services');
+                    res.body.services.length.should.be.equal(4);
                     done();
                 });
         });

@@ -12,6 +12,7 @@ import { AuthorizationRouter } from './Authorization';
 import { Owner } from './../Core/User/Owner'
 import { SalonManagement } from './../Modules/SalonManagement/SalonManagement'
 import { ServiceGroupData } from './../Modules/ServiceManagement/ServiceData';
+import { ServiceManagement } from './../Modules/ServiceManagement/ServiceManagement';
 
 export class ServiceManagementRouter {
     private router: Router = Router();
@@ -45,6 +46,24 @@ export class ServiceManagementRouter {
 
             response.status(creatingServiceAction.code).json(returnData);
         });
+
+        this.router.get('/getall', async function (request: Request, response: Response) {
+            let salonId = request.query.salon_id;
+            var serviceManegement = new ServiceManagement(salonId);
+            var services = await serviceManegement.getServices();
+            var dataReturn;
+
+            if (services.err) {
+                dataReturn = { 'err': services.err };
+            } else {
+                dataReturn = {
+                   'services': services.data
+                }
+            }
+            response.status(services.code);
+            response.json(dataReturn);
+        });
+
         return this.router;
     }
 }
