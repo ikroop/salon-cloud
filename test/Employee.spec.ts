@@ -779,4 +779,103 @@ describe('Employee Management', function () {
         });
 
     });
+
+    //Add unit test for get employee list by salon id
+    describe('Unit Test Get Employee List', function () {
+        var apiUrl = '/api/v1/employee/getall';
+
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with missing token', function (done) {
+            var parameterUrl = apiUrl + '?salon_id=' + validSalonId;
+            request(server)
+                .get(parameterUrl)
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
+            var parameterUrl = apiUrl + '?salon_id=' + validSalonId;
+            request(server)
+                .get(parameterUrl)
+                .set({ 'Authorization': invalidToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(401);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to request with token no permission', function (done) {
+            var parameterUrl = apiUrl + '?salon_id=' + validSalonId;
+            request(server)
+                .get(parameterUrl)
+                .set({ 'Authorization': anotherUserToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(403);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to request without salon id', function (done) {
+            var parameterUrl = apiUrl + '?salon_id=';
+            request(server)
+                .get(parameterUrl)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to request with wrong salon id', function (done) {
+            var parameterUrl = apiUrl + '?salon_id=' + invalidSalonId;
+            request(server)
+                .get(parameterUrl)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    done();
+                });
+        });
+
+        it('should return all employee list by salon id successfully', function (done) {
+            var parameterUrl = apiUrl + '?salon_id=' + validSalonId;
+            request(server)
+                .get(parameterUrl)
+                .set({ 'Authorization': validToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.status.should.be.equal(200);
+                    res.body.should.have.property('_id');
+                    done();
+                });
+        });
+    });
 });
