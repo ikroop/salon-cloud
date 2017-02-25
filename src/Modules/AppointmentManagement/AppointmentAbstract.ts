@@ -687,7 +687,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     }
 
-    protected async validateServices(serviceArray: AppointmentItemData[]): Promise<SalonCloudResponse<any>> {
+    public async validateServices(serviceArray: AppointmentItemData[]): Promise<SalonCloudResponse<any>> {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
             data: null,
             code: null,

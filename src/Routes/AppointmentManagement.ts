@@ -17,7 +17,9 @@ import { SalonTime } from './../Core/SalonTime/SalonTime';
 import { ErrorMessage } from './../Core/ErrorMessage'
 import { BaseValidator } from './../Core/Validation/BaseValidator'
 import { MissingCheck, IsAfterSecondDate, IsValidSalonId } from './../Core/Validation/ValidationDecorators'
-
+import { Anonymous } from './../Core/User/Anonymous';
+import { BookingAppointment } from './../Modules/AppointmentManagement/BookingAppointment'
+import { AppointmentManagement } from './../Modules/AppointmentManagement/AppointmentManagement';
 export class AppointmentManagementRouter {
     private router: Router = Router();
 
@@ -70,6 +72,39 @@ export class AppointmentManagementRouter {
             }
             response.status(result.code).json(responseData);
 
+        });
+
+        this.router.get('/getavailablebookingtime', async function (request: Request, response: Response) {
+            var responseData;
+            var salonId: string = request.query.salon_id;
+            var bookingAppointment: BookingAppointment = new BookingAppointment(salonId, new AppointmentManagement(salonId));
+            var servicesNeededArray: AppointmentItemData[] = [];
+            for (var eachService of request.query.service_list) {
+                servicesNeededArray.push({
+                    start: eachService.date,
+                    employee_id: request.query.employee_id,
+                    service: {
+                        service_id: eachService.service_id
+                    },
+                    overlapped: {
+                        status: false
+                    }
+                })
+            }
+            var serviceValidation = await bookingAppointment.validateServices(servicesNeededArray);
+            if (serviceValidation.err) {
+                responseData = serviceValidation.err;
+                response.status(serviceValidation.code).json(responseData);
+            }
+            var checkAvailableTime = await bookingAppointment.checkBookingAvailableTime(servicesNeededArray);
+            var responseData;
+            if (checkAvailableTime.err) {
+                responseData = checkAvailableTime.err;
+            } else {
+                responseData = checkAvailableTime.data;
+            }
+
+            response.status(checkAvailableTime.code).json(responseData);
         });
         return this.router;
     }
