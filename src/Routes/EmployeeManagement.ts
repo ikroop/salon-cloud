@@ -12,6 +12,8 @@ import { SalonManagement } from './../Modules/SalonManagement/SalonManagement'
 import { Owner } from './../Core/User/Owner'
 import { ByPhoneVerification } from './../Core/Verification/ByPhoneVerification'
 import { UserProfile } from './../Modules/UserManagement/UserData';
+import { AdministratorBehavior } from './../Core/User/AdministratorBehavior';
+import { UserFactory } from './../Core/User/UserFactory';
 
 export class EmployeeManagementRouter {
     private router: Router = Router();
@@ -52,6 +54,31 @@ export class EmployeeManagementRouter {
 
             response.json(dataReturn);
         });
+
+        //get all employees by salon id
+        this.router.get('/getall', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
+
+            let salonId = request.get("salon_id");
+            var admin: AdministratorBehavior;
+            //create appropriate user object using UserFactory;
+            admin = UserFactory.createAdminUserObject(request.user._id, salonId, request.user.role);
+            admin.getAllEmployeeProfile();
+
+            let employeeManagement = new EmployeeManagement(salonId);
+            let employees = await employeeManagement.getAllEmployee();
+            let dataReturn;
+            if (employees.err) {
+                dataReturn = employees.err
+            } else {
+                dataReturn = {
+                    'employees': employees.data
+                }
+            }
+            response.status(employees.code);
+
+            response.json(dataReturn);
+        });  
+        
         return this.router;
     }
 }
