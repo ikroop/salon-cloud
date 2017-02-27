@@ -792,9 +792,7 @@ describe('Employee Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(401);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.status.should.be.equal(403);
                     done();
                 });
         });
@@ -848,7 +846,7 @@ describe('Employee Management', function () {
         });
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to request with wrong salon id', function (done) {
-            var parameterUrl = apiUrl + '?salon_id=' + invalidSalonId;
+            var parameterUrl = apiUrl + '?salon_id=' + notFoundSalonId;
             request(server)
                 .get(parameterUrl)
                 .set({ 'Authorization': validToken })
