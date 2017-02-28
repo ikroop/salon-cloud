@@ -138,6 +138,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
     public async getAllEmployees(): Promise<IUserData[]> {
         var emplpoyeeList: IUserData[] = [];
         var salonRef = this.salonDatabase.getSalonFirebaseRef();
+        var userRef = this.userRef;
 
         //get User Salon Profile which is employee.
         await salonRef.child('users').orderByChild('role').startAt(2).endAt(3).once('value', function (snapshot) {
@@ -147,7 +148,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
 
             //FIX ME: check data is overwrited or not.    
             //get User Data
-            this.userRef.child(uid).once('value', function (snapshot) {
+            userRef.child(uid).once('value', function (snapshot) {
                 userData = snapshot.val();
                 userData._id = uid;
                 userData.profile.push(userProfile);

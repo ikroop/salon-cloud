@@ -830,7 +830,7 @@ describe('Employee Management', function () {
         });
 
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to request without salon id', function (done) {
-            var parameterUrl = apiUrl + '?salon_id=';
+            var parameterUrl = apiUrl;
             request(server)
                 .get(parameterUrl)
                 .set({ 'Authorization': validToken })
@@ -846,7 +846,7 @@ describe('Employee Management', function () {
         });
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to request with wrong salon id', function (done) {
-            var parameterUrl = apiUrl + '?salon_id=' + notFoundSalonId;
+            var parameterUrl = apiUrl + '?salon_id=' + invalidSalonId;
             request(server)
                 .get(parameterUrl)
                 .set({ 'Authorization': validToken })
@@ -871,7 +871,7 @@ describe('Employee Management', function () {
                         throw err;
                     }
                     res.status.should.be.equal(200);
-                    res.body.should.have.property('_id');
+                    res.body.should.have.property('employees');
                     done();
                 });
         });

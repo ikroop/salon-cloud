@@ -56,7 +56,8 @@ export class EmployeeManagementRouter {
         //get all employees by salon id
         this.router.get('/getall', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
-            let salonId = request.query.salon_id;
+            let salonId = request.query.salon_id || null;
+            
 
             let employeeManagement = new EmployeeManagement(salonId);
             let employees = await employeeManagement.getAllEmployee();
