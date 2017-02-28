@@ -165,15 +165,15 @@ describe('Appointment Management', function () {
         var aTimeCase25InSecond = employeeScheduleCloseTime - 60 * 60; //11 30' Error
         var aTimeCase261InSecond = employeeScheduleOpenTime + 90 * 60; //12 shorter service 15' ok
         var aTimeCase262InSecond = employeeScheduleOpenTime + 120 * 60; //12 longer service time 45' OK 
-        var aTimeCase27InSecond = employeeScheduleOpenTime + 135* 60; //13 shorter Service Time 15' 
+        var aTimeCase27InSecond = employeeScheduleOpenTime + 135 * 60; //13 shorter Service Time 15' 
         var aTimeCase28InSecond = employeeScheduleOpenTime + 75 * 60; //14 longer Service Time 45'
         var aTimeCase29InSecond = employeeScheduleOpenTime + 90 * 60; //15 longer service time 45'
 
-        
-        function getDateString(dateString: string, time: number) : string{
-            var date = moment(dateString,'YYYY-MM-DD HH:mm:ss');
-            var hour = time/3600;
-            var minute = time%3600/60;
+
+        function getDateString(dateString: string, time: number): string {
+            var date = moment(dateString, 'YYYY-MM-DD HH:mm:ss');
+            var hour = time / 3600;
+            var minute = time % 3600 / 60;
             date.hour(hour);
             date.minute(minute);
             date.second(0);
@@ -200,7 +200,7 @@ describe('Appointment Management', function () {
         aTimeCase27 = getDateString(dateString, aTimeCase27InSecond);
         aTimeCase28 = getDateString(dateString, aTimeCase28InSecond);
         aTimeCase29 = getDateString(dateString, aTimeCase29InSecond);
-        var test = getDateString(dateString,aTimeCase15);
+        var test = getDateString(dateString, aTimeCase15);
 
     });
 
@@ -984,7 +984,7 @@ describe('Appointment Management', function () {
                     done();
                 });
         });
-        
+
         // Case 5 - OK: (CurrentAppointmentTime.End = SalonDailySchedule.End)
         /* 19
         */
@@ -1109,7 +1109,7 @@ describe('Appointment Management', function () {
                     done();
                 });
         });
-        
+
         // Case 9 - OK: (CurrentAppointmentTime.End - AnotherAppointmentTime.Start) = Flexibale time
         /* 23
         */
@@ -1218,7 +1218,7 @@ describe('Appointment Management', function () {
                     service_id: validServiceIdWithShorterTime,
                     employee_id: validEmployeeId,
                     start: aTimeCase261
-                },{
+                }, {
                     service_id: validServiceIdWithLongerTime,
                     employee_id: validEmployeeId,
                     start: aTimeCase262
@@ -1339,4 +1339,64 @@ describe('Appointment Management', function () {
 
 
     });
+    describe('Unit Test Get Available Booking Time', function () {
+        var apiUrl = '/api/v1/appointment/getavailablebookingtime';
+        it('should return ' + ErrorMessage.MissingSalonId.err.name + ' trying to get available booking time without salon id', function (done) {
+            var para = '?service_list[]=<service_id>&service_list[]=<service_id>&date=<UTCTimestamp>&employee_id=<employee_id>'
+            request(server)
+                .get(apiUrl + para)
+                .set({ 'Authorization': null })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.SalonNotFound + ' trying to get available booking time with invalid salon id', function (done) {
+            var para = '?service_list[]=<service_id>&service_list[]=<service_id>&date=<UTCTimestamp>&employee_id=<employee_id>'
+            request(server)
+                .get(apiUrl + para)
+                .set({ 'Authorization': null })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.status.should.be.equal(400);
+                    res.body.should.have.property('err');
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    done();
+        });
+
+        it('should return ' + ErrorMessage.EmployeeNotFound + ' trying to get available booking time with invalid employee id', function () {
+
+        });
+
+        it('should return ' + ErrorMessage.MissingDate + ' trying to get available booking time without date', function () {
+
+        });
+
+        it('should return ' + ErrorMessage.InvalidDate + ' trying to get avaliable booking time with invalid date', function () {
+
+        });
+
+        it('should return ' + ErrorMessage.MissingServiceId + 'trying to get available booking time without service id ', function () {
+
+        });
+        it('should return ' + ErrorMessage.ServiceNotFound + 'trying to get available booking time with invalid service id ', function () {
+
+        });
+        it('should return data if successfully get available booking time ', function () {
+
+        });
+    });
+
 });
