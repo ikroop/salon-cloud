@@ -19,7 +19,7 @@ import { SalonInformation } from './../src/Modules/SalonManagement/SalonData';
 import { SignedInUser } from './../src/Core/User/SignedInUser';
 import { SalonManagement } from './../src/Modules/SalonManagement/SalonManagement';
 
-describe('Authentication', function () {
+describe('Customer Test cases', function () {
     var defaultPassword = '1234@1234'
     var validToken;
     var invalidToken = '12dfab3bc554ad';
@@ -91,9 +91,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingPhoneNumber.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingPhoneNumber.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -113,9 +113,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.WrongPhoneNumberFormat.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.WrongPhoneNumberFormat.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -134,9 +134,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingVerificationId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingVerificationId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -155,9 +155,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingVerificationCode.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingVerificationCode.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -177,9 +177,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.WrongVerificationCode.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.WrongVerificationCode.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -198,9 +198,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -220,9 +220,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingCustomerName.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingCustomerName.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -242,8 +242,7 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('custom_token');
+                    res.body.should.have.property('data');
                     done();
                 });
         });
