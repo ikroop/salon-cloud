@@ -87,7 +87,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
             response.data = serviceGroup;
             response.code = 200;
         } catch (error) {
-            response.err = ErrorMessage.ServerError;
+            response.err = ErrorMessage.ServerError.err;
             response.code = 500;
         }
 
@@ -110,8 +110,8 @@ export class ServiceManagement implements ServiceManagementBehavior {
         };
 
         var salonIdValidation = new BaseValidator(this.salonId);
-        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
-        salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
+        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId.err);
+        salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound.err);
         var salonIdError = await salonIdValidation.validate();
 
         if (salonIdError) {
@@ -125,7 +125,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
             returnResult.data = rs;
             returnResult.code = 200;
         } catch (error) {
-            returnResult.err = ErrorMessage.ServerError;
+            returnResult.err = ErrorMessage.ServerError.err;
             returnResult.code = 500;
         }
         return returnResult;
@@ -173,8 +173,8 @@ export class ServiceManagement implements ServiceManagementBehavior {
         };
         //validate name field
         var serviceNameValidator = new BaseValidator(item.name);
-        serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingServiceName);
-        serviceNameValidator = new IsValidNameString(serviceNameValidator, ErrorMessage.InvalidNameString);
+        serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingServiceName.err);
+        serviceNameValidator = new IsValidNameString(serviceNameValidator, ErrorMessage.InvalidNameString.err);
         var serviceNameResult = await serviceNameValidator.validate();
         if (serviceNameResult) {
             returnResult.err = serviceNameResult.err;
@@ -184,9 +184,9 @@ export class ServiceManagement implements ServiceManagementBehavior {
 
         //validate price field
         var priceValidator = new BaseValidator(item.price);
-        priceValidator = new MissingCheck(priceValidator, ErrorMessage.MissingServicePrice);
-        priceValidator = new IsNumber(priceValidator, ErrorMessage.ServicePriceRangeError);
-        priceValidator = new IsInRange(priceValidator, ErrorMessage.ServicePriceRangeError, 0, 500);
+        priceValidator = new MissingCheck(priceValidator, ErrorMessage.MissingServicePrice.err);
+        priceValidator = new IsNumber(priceValidator, ErrorMessage.ServicePriceRangeError.err);
+        priceValidator = new IsInRange(priceValidator, ErrorMessage.ServicePriceRangeError.err, 0, 500);
         var priceResult = await priceValidator.validate();
         if (priceResult) {
             returnResult.err = priceResult.err;
@@ -196,9 +196,9 @@ export class ServiceManagement implements ServiceManagementBehavior {
 
         //validate time field
         var timeValidator = new BaseValidator(item.time);
-        timeValidator = new MissingCheck(timeValidator, ErrorMessage.MissingServiceTime);
-        timeValidator = new IsNumber(timeValidator, ErrorMessage.InvalidServiceTime);
-        timeValidator = new IsInRange(timeValidator, ErrorMessage.InvalidServiceTime, 300, 3600 * 3);
+        timeValidator = new MissingCheck(timeValidator, ErrorMessage.MissingServiceTime.err);
+        timeValidator = new IsNumber(timeValidator, ErrorMessage.InvalidServiceTime.err);
+        timeValidator = new IsInRange(timeValidator, ErrorMessage.InvalidServiceTime.err, 300, 3600 * 3);
         var timeResult = await timeValidator.validate();
         if (timeResult) {
             returnResult.err = timeResult.err;
@@ -223,8 +223,8 @@ export class ServiceManagement implements ServiceManagementBehavior {
         };
         // validate salon_id field
         var salonIdValidator = new BaseValidator(group.salon_id);
-        salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId);
-        salonIdValidator = new IsValidSalonId(salonIdValidator, ErrorMessage.SalonNotFound);
+        salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId.err);
+        salonIdValidator = new IsValidSalonId(salonIdValidator, ErrorMessage.SalonNotFound.err);
         var priceResult = await salonIdValidator.validate();
         if (priceResult) {
             returnResult.err = priceResult.err;
@@ -234,9 +234,9 @@ export class ServiceManagement implements ServiceManagementBehavior {
 
         // validate name field
         var serviceNameValidator = new BaseValidator(group.name);
-        serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingGroupName);
-        serviceNameValidator = new IsValidNameString(serviceNameValidator, ErrorMessage.InvalidNameString);
-        serviceNameValidator = new IsServiceGroupNameExisted(serviceNameValidator, ErrorMessage.ServiceGroupNameExisted, group.salon_id);
+        serviceNameValidator = new MissingCheck(serviceNameValidator, ErrorMessage.MissingGroupName.err);
+        serviceNameValidator = new IsValidNameString(serviceNameValidator, ErrorMessage.InvalidNameString.err);
+        serviceNameValidator = new IsServiceGroupNameExisted(serviceNameValidator, ErrorMessage.ServiceGroupNameExisted.err, group.salon_id);
         var serviceNameResult = await serviceNameValidator.validate();
         if (serviceNameResult) {
             returnResult.err = serviceNameResult.err;
@@ -246,8 +246,8 @@ export class ServiceManagement implements ServiceManagementBehavior {
 
         // validate description field 
         var descriptionValidator = new BaseValidator(group.description);
-        descriptionValidator = new MissingCheck(descriptionValidator, ErrorMessage.MissingDescription);
-        descriptionValidator = new IsValidNameString(descriptionValidator, ErrorMessage.InvalidDescriptionString);
+        descriptionValidator = new MissingCheck(descriptionValidator, ErrorMessage.MissingDescription.err);
+        descriptionValidator = new IsValidNameString(descriptionValidator, ErrorMessage.InvalidDescriptionString.err);
         var descriptionError = await descriptionValidator.validate();
         if (descriptionError) {
             returnResult.err = descriptionError.err;
@@ -288,7 +288,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
             response.data = rs;
         } catch (error) {
             response.code = 500;
-            response.err = ErrorMessage.ServerError;
+            response.err = ErrorMessage.ServerError.err;
         }
         return response;
     }
@@ -314,7 +314,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
             response.data = rs;
         } catch (error) {
             response.code = 500;
-            response.err = ErrorMessage.ServerError;
+            response.err = ErrorMessage.ServerError.err;
         }
         return response;
     }

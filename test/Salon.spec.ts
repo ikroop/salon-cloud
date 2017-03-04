@@ -80,7 +80,7 @@ describe('Salon Management', function () {
             salon_name: 'Salon Appointment Test'
         }
         var salon = await signedInUser.createSalon(salonInformationInput_1);
-        validSalonId = salon.data;
+        validSalonId = salon.data.id;
 
         var salonInformationInput_2 = {
             email: 'salon2@salon.com',
@@ -345,7 +345,7 @@ describe('Salon Management', function () {
                     }
                     res.body.should.have.property('error');
                     res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
-                    res.body.error.code.should.be.equal(403);
+                    res.body.error.code.should.be.equal(401);
                     done();
                 });
         })
@@ -416,7 +416,6 @@ describe('Salon Management', function () {
                     if (err) {
                         throw err;
                     }
-
                     res.body.should.have.property('data');
                     res.body.data.should.have.property('name');
                     res.body.data.name.should.be.equal(salonInformationInput_1.salon_name);

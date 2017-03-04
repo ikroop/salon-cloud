@@ -221,7 +221,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 return response;
             } else {
                 if (!getTimeArray.data) {
-                    response.err = ErrorMessage.AppointmentTimeNotAvailable;
+                    response.err = ErrorMessage.AppointmentTimeNotAvailable.err;
                     response.err.data = eachService;
                     response.code = 500;
                     return response;
@@ -393,7 +393,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                         }
                     }
                     if (overlappedCount > amountOfFlexibleTimeTicks) {
-                        response.err = ErrorMessage.BookingTimeNotAvailable;
+                        response.err = ErrorMessage.BookingTimeNotAvailable.err;
                         response.err.data = eachService;
                         response.code = 400;
                         return response;
@@ -416,7 +416,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                     response.data.push(appointmentItem);
                     response.code = 200;
                 } else {
-                    response.err = ErrorMessage.BookingTimeNotAvailable;
+                    response.err = ErrorMessage.BookingTimeNotAvailable.err;
                     response.err.data = eachService;
                     response.code = 400;
                     return response;
@@ -499,8 +499,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         var lastAvalaibleTimeString = lastAvaliableTime.toString();
         //validate start time
         var startTimeValidation = new BaseValidator(startDateString);
-        startTimeValidation = new MissingCheck(startTimeValidation, ErrorMessage.MissingStartDate);
-        startTimeValidation = new IsAfterSecondDate(startTimeValidation, ErrorMessage.BookingTimeNotAvailable, openDateString);
+        startTimeValidation = new MissingCheck(startTimeValidation, ErrorMessage.MissingStartDate.err);
+        startTimeValidation = new IsAfterSecondDate(startTimeValidation, ErrorMessage.BookingTimeNotAvailable.err, openDateString);
         var startTimeError = await startTimeValidation.validate();
         if (startTimeError) {
             response.err = startTimeError;
@@ -509,8 +509,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         }
         //validate end time
         var endTimeValidation = new BaseValidator(endDateString);
-        endTimeValidation = new MissingCheck(endTimeValidation, ErrorMessage.MissingStartDate);
-        endTimeValidation = new IsBeforeSecondDate(endTimeValidation, ErrorMessage.BookingTimeNotAvailable, lastAvalaibleTimeString);
+        endTimeValidation = new MissingCheck(endTimeValidation, ErrorMessage.MissingStartDate.err);
+        endTimeValidation = new IsBeforeSecondDate(endTimeValidation, ErrorMessage.BookingTimeNotAvailable.err, lastAvalaibleTimeString);
         var endTimeError = await endTimeValidation.validate();
         if (endTimeError) {
             response.err = endTimeError;
@@ -694,7 +694,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             err: null
         }
         let servicesValidation = new BaseValidator(serviceArray);
-        servicesValidation = new MissingCheck(servicesValidation, ErrorMessage.MissingBookedServiceList);
+        servicesValidation = new MissingCheck(servicesValidation, ErrorMessage.MissingBookedServiceList.err);
         let servicesError = await servicesValidation.validate();
         if (servicesError) {
             response.code = 400;
@@ -704,8 +704,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
         for (var eachItem of serviceArray) {
             let employeeIdValidator = new BaseValidator(eachItem.employee_id);
-            employeeIdValidator = new MissingCheck(employeeIdValidator, ErrorMessage.MissingEmployeeId);
-            employeeIdValidator = new IsValidEmployeeId(employeeIdValidator, ErrorMessage.EmployeeNotFound, this.salonId);
+            employeeIdValidator = new MissingCheck(employeeIdValidator, ErrorMessage.MissingEmployeeId.err);
+            employeeIdValidator = new IsValidEmployeeId(employeeIdValidator, ErrorMessage.EmployeeNotFound.err, this.salonId);
             let employeeIdError = await employeeIdValidator.validate();
             if (employeeIdError) {
                 response.err = employeeIdError;
@@ -714,8 +714,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             }
 
             let startValidator = new BaseValidator(eachItem.start);
-            startValidator = new MissingCheck(startValidator, ErrorMessage.MissingStartDate);
-            startValidator = new IsSalonTime(startValidator, ErrorMessage.WrongBookingTimeFormat)
+            startValidator = new MissingCheck(startValidator, ErrorMessage.MissingStartDate.err);
+            startValidator = new IsSalonTime(startValidator, ErrorMessage.WrongBookingTimeFormat.err)
             let startError = await startValidator.validate();
             if (startError) {
                 response.err = startError;
@@ -724,7 +724,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             }
 
             let serviceValidator = new BaseValidator(eachItem.service);
-            serviceValidator = new MissingCheck(serviceValidator, ErrorMessage.MissingServiceItem);
+            serviceValidator = new MissingCheck(serviceValidator, ErrorMessage.MissingServiceItem.err);
             let serviceError = await serviceValidator.validate();
             if (serviceError) {
                 response.err = serviceError;
@@ -733,8 +733,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             }
 
             let serviceIdValidator = new BaseValidator(eachItem.service.service_id);
-            serviceIdValidator = new MissingCheck(serviceIdValidator, ErrorMessage.MissingServiceId);
-            serviceIdValidator = new IsValidServiceId(serviceIdValidator, ErrorMessage.ServiceNotFound, this.salonId);
+            serviceIdValidator = new MissingCheck(serviceIdValidator, ErrorMessage.MissingServiceId.err);
+            serviceIdValidator = new IsValidServiceId(serviceIdValidator, ErrorMessage.ServiceNotFound.err, this.salonId);
             let serviceIdError = await serviceIdValidator.validate();
             if (serviceIdError) {
                 response.err = serviceIdError;
@@ -743,7 +743,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             }
 
             let overLapValidator = new BaseValidator(eachItem.overlapped);
-            overLapValidator = new MissingCheck(overLapValidator, ErrorMessage.MissingOverlappedObject);
+            overLapValidator = new MissingCheck(overLapValidator, ErrorMessage.MissingOverlappedObject.err);
             let overLapError = await overLapValidator.validate();
             if (overLapError) {
                 response.err = overLapError;
@@ -752,7 +752,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             }
 
             let overlapStatusValidator = new BaseValidator(eachItem.overlapped.status);
-            overlapStatusValidator = new MissingCheck(overlapStatusValidator, ErrorMessage.MissingOverlappedStatus);
+            overlapStatusValidator = new MissingCheck(overlapStatusValidator, ErrorMessage.MissingOverlappedStatus.err);
             let overlapStatusError = await overlapStatusValidator.validate();
             if (overlapStatusError) {
                 response.err = overlapStatusError;
@@ -762,7 +762,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
             if (eachItem.overlapped.status) {
                 let overlapAppointmentIdValidator = new BaseValidator(eachItem.overlapped.overlapped_appointment_id);
-                overlapAppointmentIdValidator = new MissingCheck(overlapAppointmentIdValidator, ErrorMessage.MissingAppointmentId);
+                overlapAppointmentIdValidator = new MissingCheck(overlapAppointmentIdValidator, ErrorMessage.MissingAppointmentId.err);
 
                 let overlapAppointmentIdError = await overlapAppointmentIdValidator.validate();
                 if (overlapAppointmentIdError) {

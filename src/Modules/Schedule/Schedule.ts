@@ -73,7 +73,7 @@ export abstract class Schedule implements ScheduleBehavior {
 
         // validation start date
         var startDateValidation = new BaseValidator(start);
-        startDateValidation = new IsSalonTime(startDateValidation, ErrorMessage.InvalidStartDate);
+        startDateValidation = new IsSalonTime(startDateValidation, ErrorMessage.InvalidStartDate.err);
         var startDateError = await startDateValidation.validate();
 
         if (startDateError) {
@@ -84,8 +84,8 @@ export abstract class Schedule implements ScheduleBehavior {
 
         // validation end date
         var endDateValidation = new BaseValidator(end);
-        endDateValidation = new IsSalonTime(endDateValidation, ErrorMessage.InvalidEndDate);
-        endDateValidation = new IsAfterSecondDate(endDateValidation, ErrorMessage.EndDateIsBeforeStartDate, start);
+        endDateValidation = new IsSalonTime(endDateValidation, ErrorMessage.InvalidEndDate.err);
+        endDateValidation = new IsAfterSecondDate(endDateValidation, ErrorMessage.EndDateIsBeforeStartDate.err, start);
         var endDateError = await endDateValidation.validate();
 
         if (endDateError) {
@@ -154,7 +154,7 @@ export abstract class Schedule implements ScheduleBehavior {
             response.code = 200;
             response.data = resultReturn;
         } else {
-            response.err = ErrorMessage.ServerError;
+            response.err = ErrorMessage.ServerError.err;
             response.code = 500;
             response.data = null;
         }
@@ -212,7 +212,7 @@ export abstract class Schedule implements ScheduleBehavior {
             response.err = null;
         } else {
             response.code = 500;
-            response.err = ErrorMessage.ServerError;
+            response.err = ErrorMessage.ServerError.err;
         }
 
         return response;
@@ -266,7 +266,7 @@ export abstract class Schedule implements ScheduleBehavior {
             response.err = null;
         } else {
             response.code = 500;
-            response.err = ErrorMessage.ServerError;
+            response.err = ErrorMessage.ServerError.err;
         }
         return response;
     }
@@ -291,7 +291,7 @@ export abstract class Schedule implements ScheduleBehavior {
             returnResult.data = rs;
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError;
+            returnResult.err = ErrorMessage.ServerError.err;
         }
 
         return returnResult;
@@ -319,7 +319,7 @@ export abstract class Schedule implements ScheduleBehavior {
             returnResult.data = rs;
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError;
+            returnResult.err = ErrorMessage.ServerError.err;
         }
 
         return returnResult;
@@ -337,29 +337,29 @@ export abstract class Schedule implements ScheduleBehavior {
         var tempArray: [any] = <any>[];
         for (let i = 0; i <= 6; i++) {
             var openTimeValidator = new BaseValidator(weeklyScheduleList[i].open);
-            openTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
-            openTimeValidator = new IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime);
-            openTimeValidator = new IsInRangeExclusively(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
-            openTimeValidator = new IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, weeklyScheduleList[i].close);
+            openTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime.err);
+            openTimeValidator = new IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime.err);
+            openTimeValidator = new IsInRangeExclusively(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime.err, 0, 86400);
+            openTimeValidator = new IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime.err, weeklyScheduleList[i].close);
             var openTimeResult = await openTimeValidator.validate();
             if (openTimeResult) {
                 return errorReturn = openTimeResult;
             }
 
             var closeTimeValidator = new BaseValidator(weeklyScheduleList[i].close);
-            closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
-            closeTimeValidator = new IsNumber(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime);
-            closeTimeValidator = new IsInRangeExclusively(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
+            closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime.err);
+            closeTimeValidator = new IsNumber(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime.err);
+            closeTimeValidator = new IsInRangeExclusively(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime.err, 0, 86400);
             var closeTimeResult = await closeTimeValidator.validate();
             if (closeTimeResult) {
                 return errorReturn = closeTimeResult;
             }
 
             var dayOfWeekValidator = new BaseValidator(weeklyScheduleList[i].day_of_week);
-            dayOfWeekValidator = new MissingCheck(dayOfWeekValidator, ErrorMessage.MissingDayOfWeek);
-            dayOfWeekValidator = new IsNumber(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek);
-            dayOfWeekValidator = new IsInRange(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek, 0, 6);
-            dayOfWeekValidator = new IsNotInArray(dayOfWeekValidator, ErrorMessage.DuplicateDaysOfWeek, tempArray);
+            dayOfWeekValidator = new MissingCheck(dayOfWeekValidator, ErrorMessage.MissingDayOfWeek.err);
+            dayOfWeekValidator = new IsNumber(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek.err);
+            dayOfWeekValidator = new IsInRange(dayOfWeekValidator, ErrorMessage.InvalidScheduleDayOfWeek.err, 0, 6);
+            dayOfWeekValidator = new IsNotInArray(dayOfWeekValidator, ErrorMessage.DuplicateDaysOfWeek.err, tempArray);
             var dayOfWeekResult = await dayOfWeekValidator.validate();
             if (dayOfWeekResult) {
                 return errorReturn = dayOfWeekResult;
@@ -391,7 +391,7 @@ export abstract class Schedule implements ScheduleBehavior {
 
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError;
+            returnResult.err = ErrorMessage.ServerError.err;
         }
         return returnResult;
     };
@@ -416,7 +416,7 @@ export abstract class Schedule implements ScheduleBehavior {
             returnResult.code = 200;
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError;
+            returnResult.err = ErrorMessage.ServerError.err;
         }
         return returnResult;
     };
@@ -442,7 +442,7 @@ export abstract class Schedule implements ScheduleBehavior {
             returnResult.code = 200;
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError;
+            returnResult.err = ErrorMessage.ServerError.err;
         }
         return returnResult;
     };
@@ -458,7 +458,7 @@ export abstract class Schedule implements ScheduleBehavior {
 
         // validation start date
         var dateValidation = new BaseValidator(dailySchedule.date);
-        dateValidation = new IsSalonTime(dateValidation, ErrorMessage.InvalidDate);
+        dateValidation = new IsSalonTime(dateValidation, ErrorMessage.InvalidDate.err);
         var dateError = await dateValidation.validate();
 
         if (dateError) {
@@ -466,9 +466,9 @@ export abstract class Schedule implements ScheduleBehavior {
         }
 
         var closeTimeValidator = new BaseValidator(dailySchedule.close);
-        closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime);
-        closeTimeValidator = new IsNumber(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime);
-        closeTimeValidator = new IsInRangeExclusively(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime, 0, 86400);
+        closeTimeValidator = new MissingCheck(closeTimeValidator, ErrorMessage.MissingScheduleCloseTime.err);
+        closeTimeValidator = new IsNumber(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime.err);
+        closeTimeValidator = new IsInRangeExclusively(closeTimeValidator, ErrorMessage.InvalidScheduleCloseTime.err, 0, 86400);
 
         var closeTimeResult = await closeTimeValidator.validate();
         if (closeTimeResult) {
@@ -476,10 +476,10 @@ export abstract class Schedule implements ScheduleBehavior {
         }
 
         var openTimeValidator = new BaseValidator(dailySchedule.open);
-        openTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime);
-        openTimeValidator = new IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime);
-        openTimeValidator = new IsInRangeExclusively(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime, 0, 86400);
-        openTimeValidator = new IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime, dailySchedule.close);
+        openTimeValidator = new MissingCheck(openTimeValidator, ErrorMessage.MissingScheduleOpenTime.err);
+        openTimeValidator = new IsNumber(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime.err);
+        openTimeValidator = new IsInRangeExclusively(openTimeValidator, ErrorMessage.InvalidScheduleOpenTime.err, 0, 86400);
+        openTimeValidator = new IsLessThan(openTimeValidator, ErrorMessage.OpenTimeGreaterThanCloseTime.err, dailySchedule.close);
         var openTimeResult = await openTimeValidator.validate();
         if (openTimeResult) {
             return errorReturn = openTimeResult;
@@ -644,8 +644,8 @@ export abstract class Schedule implements ScheduleBehavior {
 
         // validation salonId
         var salonIdValidation = new BaseValidator(this.salonId);
-        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.SalonNotFound);
-        salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
+        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.SalonNotFound.err);
+        salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound.err);
         var salonIdError = await salonIdValidation.validate();
 
         if (salonIdError) {

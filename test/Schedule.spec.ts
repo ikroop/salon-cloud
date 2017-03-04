@@ -72,7 +72,7 @@ describe('Schedule Management', function () {
         }
         var salon = await signedInUser.createSalon(salonInformationInput);
 
-        validSalonId = salon.data;
+        validSalonId = salon.data.id;
         // 4. Add new employee
         const owner = new Owner(loginData.data.user._id, new SalonManagement(validSalonId));
         // Add new employee

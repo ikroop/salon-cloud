@@ -36,7 +36,7 @@ export class OverlappedAppointment implements Observer {
                         response.code = 500;
                     })
             } else {
-                response.err = ErrorMessage.AppointmentTimeNotAvailable; //TODO
+                response.err = ErrorMessage.AppointmentTimeNotAvailable.err; //TODO
                 response.code = 500;
             }
         }, function (err) {

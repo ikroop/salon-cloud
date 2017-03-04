@@ -56,7 +56,7 @@ describe('Employee Management', function () {
             salon_name: 'Salon Appointment Test'
         }
         var salon = await signedInUser.createSalon(salonInformationInput);
-        validSalonId = salon.data;
+        validSalonId = salon.data.id;
 
         var authentication = new Authentication();
         const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;

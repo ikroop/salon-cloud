@@ -84,8 +84,8 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         };
         // 'phone' validation
         var phoneNumberValidation = new BaseValidator(employeeProfile.phone);
-        phoneNumberValidation = new MissingCheck(phoneNumberValidation, ErrorMessage.MissingPhoneNumber);
-        phoneNumberValidation = new IsPhoneNumber(phoneNumberValidation, ErrorMessage.WrongPhoneNumberFormat);
+        phoneNumberValidation = new MissingCheck(phoneNumberValidation, ErrorMessage.MissingPhoneNumber.err);
+        phoneNumberValidation = new IsPhoneNumber(phoneNumberValidation, ErrorMessage.WrongPhoneNumberFormat.err);
         var phoneNumberError = await phoneNumberValidation.validate();
         if (phoneNumberError) {
             response.err = phoneNumberError;
@@ -96,9 +96,9 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         // validation:
         // 'role' validation:
         var roleValidation = new BaseValidator(employeeProfile.role);
-        roleValidation = new MissingCheck(roleValidation, ErrorMessage.MissingRole);
-        roleValidation = new IsInRange(roleValidation, ErrorMessage.RoleRangeError, 1, 4);
-        roleValidation = new IsInArray(roleValidation, ErrorMessage.UnacceptedRoleForAddedEmployeeError, [2, 3]);
+        roleValidation = new MissingCheck(roleValidation, ErrorMessage.MissingRole.err);
+        roleValidation = new IsInRange(roleValidation, ErrorMessage.RoleRangeError.err, 1, 4);
+        roleValidation = new IsInArray(roleValidation, ErrorMessage.UnacceptedRoleForAddedEmployeeError.err, [2, 3]);
         var roleError = await roleValidation.validate();
         if (roleError) {
             response.err = roleError;
@@ -108,8 +108,8 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
 
         // 'fullname' validation
         var fullnameValidation = new BaseValidator(employeeProfile.fullname);
-        fullnameValidation = new MissingCheck(fullnameValidation, ErrorMessage.MissingFullName);
-        fullnameValidation = new IsValidNameString(fullnameValidation, ErrorMessage.InvalidNameString);
+        fullnameValidation = new MissingCheck(fullnameValidation, ErrorMessage.MissingFullName.err);
+        fullnameValidation = new IsValidNameString(fullnameValidation, ErrorMessage.InvalidNameString.err);
         var fullnameError = await fullnameValidation.validate();
         if (fullnameError) {
             response.err = fullnameError;
@@ -119,8 +119,8 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
 
         // 'nickname' validation
         var nicknameValidation = new BaseValidator(employeeProfile.nickname);
-        nicknameValidation = new MissingCheck(nicknameValidation, ErrorMessage.MissingNickName);
-        nicknameValidation = new IsValidNameString(nicknameValidation, ErrorMessage.InvalidNameString);
+        nicknameValidation = new MissingCheck(nicknameValidation, ErrorMessage.MissingNickName.err);
+        nicknameValidation = new IsValidNameString(nicknameValidation, ErrorMessage.InvalidNameString.err);
         var nicknameError = await nicknameValidation.validate();
         if (nicknameError) {
             response.err = nicknameError;
@@ -130,8 +130,8 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
 
         // 'salaryRate' validation
         var salaryRateValidation = new BaseValidator(employeeProfile.salary_rate);
-        salaryRateValidation = new MissingCheck(salaryRateValidation, ErrorMessage.MissingSalaryRate);
-        salaryRateValidation = new IsInRange(salaryRateValidation, ErrorMessage.SalaryRateRangeError, 0, 10);
+        salaryRateValidation = new MissingCheck(salaryRateValidation, ErrorMessage.MissingSalaryRate.err);
+        salaryRateValidation = new IsInRange(salaryRateValidation, ErrorMessage.SalaryRateRangeError.err, 0, 10);
         var salaryRateError = await salaryRateValidation.validate();
         if (salaryRateError) {
             response.err = salaryRateError;
@@ -141,8 +141,8 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
 
         // 'cashRate' validation
         var cashRateValidation = new BaseValidator(employeeProfile.cash_rate);
-        cashRateValidation = new MissingCheck(cashRateValidation, ErrorMessage.MissingCashRate);
-        cashRateValidation = new IsInRange(cashRateValidation, ErrorMessage.CashRateRangeError, 0, 10);
+        cashRateValidation = new MissingCheck(cashRateValidation, ErrorMessage.MissingCashRate.err);
+        cashRateValidation = new IsInRange(cashRateValidation, ErrorMessage.CashRateRangeError.err, 0, 10);
         var cashRateError = await cashRateValidation.validate();
         if (cashRateError) {
             response.err = cashRateError;
@@ -153,7 +153,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         // Social Security Number
         if (employeeProfile.social_security_number) {
             var ssnValidation = new BaseValidator(employeeProfile.social_security_number);
-            ssnValidation = new IsSSN(ssnValidation, ErrorMessage.WrongSSNFormat);
+            ssnValidation = new IsSSN(ssnValidation, ErrorMessage.WrongSSNFormat.err);
             var ssnError = await ssnValidation.validate();
             if (ssnError) {
                 response.err = ssnError;
@@ -187,7 +187,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
             response.data = employees;
             response.code = 200;
         } else {
-            response.err = ErrorMessage.ServerError;
+            response.err = ErrorMessage.ServerError.err;
             response.code = 500;
         }
         return response;

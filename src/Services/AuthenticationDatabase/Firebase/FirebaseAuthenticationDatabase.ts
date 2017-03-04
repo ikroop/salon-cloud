@@ -71,7 +71,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                     var errorMessage = error.message;
                     if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
                         response.code = 403;
-                        response.err = ErrorMessage.SignInFailed;
+                        response.err = ErrorMessage.SignInFailed.err;
                     } else {
                         response.code = 400;
                         response.err = {
@@ -137,10 +137,10 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                 var errorMessage = error.message;
                 if (errorCode == 'auth/email-already-in-use') {
                     response.code = 409;
-                    response.err = ErrorMessage.UsernameAlreadyExists;
+                    response.err = ErrorMessage.UsernameAlreadyExists.err;
                 } else if (errorCode == 'auth/operation-not-allowed') {
                     response.code = 400;
-                    response.err = ErrorMessage.UserBlocked;
+                    response.err = ErrorMessage.UserBlocked.err;
                 } else {
                     response.code = 400;
                     response.err = {
@@ -181,7 +181,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                         resolve(response);
                     }).catch(function (error) {
                         // Handle error
-                        response.err = ErrorMessage.Unauthorized;
+                        response.err = ErrorMessage.Unauthorized.err;
                         response.code = 401;
                         response.data = null;
                         resolve(response);

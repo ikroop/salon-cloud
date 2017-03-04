@@ -51,7 +51,7 @@ export class Authorization {
             } else {
                 // Unallowed  
                 response.code = 401; // Unauthorized
-                response.err = ErrorMessage.Unauthorized;
+                response.err = ErrorMessage.Unauthorized.err;
                 response.data = null;
             }
         } else {
@@ -61,7 +61,7 @@ export class Authorization {
                 // Api allows to access from Anonymouse
                 response.code = 403;
                 response.data = null;
-                response.err = ErrorMessage.Forbidden;
+                response.err = ErrorMessage.Forbidden.err;
                 return response;
             } 
 
@@ -76,8 +76,8 @@ export class Authorization {
                 // 'salonId' Validation
                 // Role depends on salon.
                 var salonIdValidation = new BaseValidator(salonId);
-                salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
-                salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
+                salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId.err);
+                salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound.err);
                 var salonIdError = await salonIdValidation.validate();
 
                 if (salonIdError) {
@@ -94,7 +94,7 @@ export class Authorization {
                     response.code = 200; // OK
                 } else {
                     // Unallowed
-                    response.err = ErrorMessage.Forbidden;
+                    response.err = ErrorMessage.Forbidden.err;
                     response.code = 403; // Forbidden
                     response.data = null;
                 }

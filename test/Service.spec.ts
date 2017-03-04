@@ -73,7 +73,7 @@ describe('Service Management', function () {
         }
         var salon = await signedInUser.createSalon(salonInformationInput);
 
-        validSalonId = salon.data;
+        validSalonId = salon.data.id;
 
         // Create new user
         var authentication = new Authentication();
@@ -768,7 +768,6 @@ describe('Service Management', function () {
                     if (err) {
                         throw err;
                     }
-                    console.log(res.body);
                     res.status.should.be.equal(200);
                     res.body.should.have.property('services');
                     res.body.services.length.should.be.equal(4);
