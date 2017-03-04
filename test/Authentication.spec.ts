@@ -50,7 +50,7 @@ describe('Authentication', function () {
 
     });
 
-    /*describe('User SignUp with Username & Password', function () {
+    describe('User SignUp with Username & Password', function () {
         var apiUrl = '/api/v1/authentication/signupwithusernameandpassword';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' trying to register with invalidToken', function (done) {
@@ -66,9 +66,11 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(401);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.error.code.should.be.equal(401);
+
                     done();
                 });
         });
@@ -86,9 +88,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(403);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    res.body.error.code.should.be.equal(403);
                     done();
                 });
         });
@@ -104,9 +106,10 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('MissingUsername');
+
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingUsername.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -123,9 +126,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('NotEmailOrPhoneNumber');
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.NotEmailOrPhoneNumber.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -142,9 +145,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('NotEmailOrPhoneNumber');
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.NotEmailOrPhoneNumber.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -160,9 +163,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('MissingPassword');
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingPassword.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -179,9 +182,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('PasswordTooShort');
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.PasswordTooShort.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -216,13 +219,13 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(409);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('UsernameAlreadyExists');
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.UsernameAlreadyExists.err.name);
+                    res.body.error.code.should.be.equal(409);
                     done();
                 });
         });
-    });*/
+    });
 
     describe('User Signin with Username & Password', function () {
         var apiUrl = '/api/v1/Authentication/signinwithusernameandpassword';
@@ -352,7 +355,7 @@ describe('Authentication', function () {
         });
     });
 
-    /*describe('User Signin with custom', function () {
+    describe('User Signin with custom token', function () {
         var apiUrl = '/api/v1/Authentication/signinwithcustomtoken';
 
         it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' trying to register with invalidToken', function (done) {
@@ -367,9 +370,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(401);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.error.code.should.be.equal(401);
                     done();
                 });
         });
@@ -386,9 +389,11 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(403);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    res.body.error.code.should.be.equal(403);
+
                     done();
                 });
         });
@@ -404,9 +409,9 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingCustomToken.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingCustomToken.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -422,15 +427,17 @@ describe('Authentication', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('user');
-                    res.body.user._id.should.be.equal(validUserId);
-                    res.body.should.have.property('auth');
-                    res.body.auth.should.have.property('token');
+
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('user');
+                    res.body.data.user._id.should.be.equal(validUserId);
+                    res.body.data.should.have.property('auth');
+                    res.body.data.auth.should.have.property('token');
+
                     done();
                 });
         });
-    });*/
+    });
 
     /*describe('Send password reset code to user by username(email or sms).', function () {
         var apiUrl = '/auth/sendpasswordreset';
