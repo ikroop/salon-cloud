@@ -587,5 +587,11 @@ export const ErrorMessage = {
             'name': 'MissingCustomToken',
             'message': 'A custom token is required',
         } 
+    },
+    'Unauthorized':{
+        'err': {
+            'name': 'Unauthorized',
+            'message': 'Unauthorized',
+        } 
     }
 };
