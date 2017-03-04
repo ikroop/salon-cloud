@@ -53,7 +53,7 @@ describe('Authentication', function () {
     describe('User SignUp with Username & Password', function () {
         var apiUrl = '/api/v1/authentication/signupwithusernameandpassword';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' trying to register with invalidToken', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' trying to register with invalidToken', function (done) {
             var user = {
                 username: username,
                 password: defaultPassword
@@ -68,14 +68,14 @@ describe('Authentication', function () {
                     }
 
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
                     res.body.error.code.should.be.equal(401);
 
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' trying to register with valid token', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' trying to register with valid token', function (done) {
             var user = {
                 username: username,
                 password: defaultPassword
@@ -89,7 +89,7 @@ describe('Authentication', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
                     res.body.error.code.should.be.equal(403);
                     done();
                 });
@@ -230,7 +230,7 @@ describe('Authentication', function () {
     describe('User Signin with Username & Password', function () {
         var apiUrl = '/api/v1/Authentication/signinwithusernameandpassword';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' trying to register with invalidToken', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' trying to register with invalidToken', function (done) {
             var user = {
                 username: username,
                 password: defaultPassword
@@ -245,14 +245,14 @@ describe('Authentication', function () {
                     }
 
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
                     res.body.error.code.should.be.equal(401);
 
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' trying to register with valid token', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' trying to register with valid token', function (done) {
             var user = {
                 username: username,
                 password: defaultPassword
@@ -267,7 +267,7 @@ describe('Authentication', function () {
                     }
 
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
                     res.body.error.code.should.be.equal(403);
                     done();
                 });
@@ -358,7 +358,7 @@ describe('Authentication', function () {
     describe('User Signin with custom token', function () {
         var apiUrl = '/api/v1/Authentication/signinwithcustomtoken';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' trying to register with invalidToken', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' trying to register with invalidToken', function (done) {
             var user = {
                 custom_token: validCustomToken
             };
@@ -371,13 +371,13 @@ describe('Authentication', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
                     res.body.error.code.should.be.equal(401);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' trying to register with valid token', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' trying to register with valid token', function (done) {
             var user = {
                 custom_token: validCustomToken
             };
@@ -391,7 +391,7 @@ describe('Authentication', function () {
                     }
 
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
                     res.body.error.code.should.be.equal(403);
 
                     done();

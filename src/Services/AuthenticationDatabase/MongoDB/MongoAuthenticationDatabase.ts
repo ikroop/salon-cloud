@@ -114,7 +114,7 @@ export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterf
                 var cert = fs.readFileSync('./Config/Dev/Public.pem');  // get private key
                 jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, payload) {
                     if (err) {
-                        response.err = ErrorMessage.InvalidTokenError;
+                        response.err = ErrorMessage.Unauthorized;
                         response.code = 401;
                         response.data = null;
                     } else {

@@ -316,7 +316,7 @@ describe('Schedule Management', function () {
     describe('Save Salon Daily Schedule', function () {
         var apiUrl = '/api/v1/schedule/savesalondailyschedule';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save salon daily schedule with invalidToken', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to save salon daily schedule with invalidToken', function (done) {
             var salonId = validSalonId;
             var date = '2016-12-27';
             var status = true;
@@ -340,12 +340,12 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(401);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.Unauthorized.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to save salon daily schedule with Token no permission', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' error trying to save salon daily schedule with Token no permission', function (done) {
 
             var token = anotherUserToken;
             var salonId = validSalonId;
@@ -371,7 +371,7 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.Forbidden.err.name);
                     done();
                 });
         });
@@ -715,7 +715,7 @@ describe('Schedule Management', function () {
     describe('Save Salon Weekly Schedule', function () {
         var apiUrl = '/api/v1/schedule/savesalonweeklyschedule';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save salon weekly schedule with invalidToken', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to save salon weekly schedule with invalidToken', function (done) {
             var salonId = validSalonId;
             var status = true;
             var openTime = 3600;
@@ -780,12 +780,12 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(401);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.Unauthorized.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to save salon weekly schedule with Token no permission', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' error trying to save salon weekly schedule with Token no permission', function (done) {
 
             var token = anotherUserToken;
             var salonId = validSalonId;
@@ -852,7 +852,7 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.Forbidden.err.name);
                     done();
                 });
         });
@@ -2093,7 +2093,7 @@ describe('Schedule Management', function () {
     describe('Save Employee Weekly Schedule', function () {
         var apiUrl = '/api/v1/schedule/saveemployeeweeklyschedule';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save Employee Weekly schedule with invalidToken', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to save Employee Weekly schedule with invalidToken', function (done) {
             var salonId = validSalonId;
             var employeeId = validEmployeeId;
             var status = true;
@@ -2160,12 +2160,12 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(401);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.Unauthorized.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to save Employee Weekly schedule with Token no permission', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' error trying to save Employee Weekly schedule with Token no permission', function (done) {
             // Create new user
             var token = anotherUserToken;
 
@@ -2236,7 +2236,7 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.Forbidden.err.name);
                     done();
                 });
         });
@@ -3399,7 +3399,7 @@ describe('Schedule Management', function () {
     describe('Save Employee Daily Schedule', function () {
         var apiUrl = '/api/v1/schedule/saveemployeedailyschedule';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to save Employee Daily schedule with invalidToken', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to save Employee Daily schedule with invalidToken', function (done) {
             var salonId = validSalonId;
             var employeeId = validEmployeeId;
             var date = '2016-12-27';
@@ -3425,12 +3425,12 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(401);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.Unauthorized.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to save Employee Daily schedule with Token no permission', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' error trying to save Employee Daily schedule with Token no permission', function (done) {
             var token = anotherUserToken;
             var salonId = validSalonId;
             var employeeId = validEmployeeId;
@@ -3457,7 +3457,7 @@ describe('Schedule Management', function () {
                     }
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.Forbidden.err.name);
                     done();
                 });
         });

@@ -71,7 +71,7 @@ describe('Employee Management', function () {
     describe('Unit Test Add New Employee', function () {
         var apiUrl = '/api/v1/employee/create';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to request with invalid token', function (done) {
             var token = invalidToken;
             var salonId = validSalonId;
             var bodyRequest = {
@@ -95,13 +95,13 @@ describe('Employee Management', function () {
                     }
 
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
                     res.body.error.code.should.be.equal(401);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to request with token no permission', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' error trying to request with token no permission', function (done) {
             var token = anotherUserToken;
             var salonId = validSalonId;
             var bodyRequest = {
@@ -125,7 +125,7 @@ describe('Employee Management', function () {
                     }
 
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
                     res.body.error.code.should.be.equal(403);
                     done();
                 });

@@ -181,7 +181,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                         resolve(response);
                     }).catch(function (error) {
                         // Handle error
-                        response.err = ErrorMessage.InvalidTokenError;
+                        response.err = ErrorMessage.Unauthorized;
                         response.code = 401;
                         response.data = null;
                         resolve(response);

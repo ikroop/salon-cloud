@@ -61,7 +61,7 @@ export class Authorization {
                 // Api allows to access from Anonymouse
                 response.code = 403;
                 response.data = null;
-                response.err = ErrorMessage.NoPermission;
+                response.err = ErrorMessage.Forbidden;
                 return response;
             } 
 
@@ -94,7 +94,7 @@ export class Authorization {
                     response.code = 200; // OK
                 } else {
                     // Unallowed
-                    response.err = ErrorMessage.NoPermission;
+                    response.err = ErrorMessage.Forbidden;
                     response.code = 403; // Forbidden
                     response.data = null;
                 }

@@ -89,7 +89,7 @@ describe('Service Management', function () {
     describe('Unit Test Add Service', function () {
         var apiUrl = '/api/v1/service/create';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to request with invalid token', function (done) {
             var token = invalidToken;
             var salonId = validSalonId;
             var bodyRequest = {
@@ -115,12 +115,12 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(401);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to request with token no permission', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' error trying to request with token no permission', function (done) {
             var token = anotherUserToken;
             var salonId = validSalonId;
             var bodyRequest = {
@@ -146,7 +146,7 @@ describe('Service Management', function () {
 
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.Forbidden.err.name);
                     done();
                 });
         });

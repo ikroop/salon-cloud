@@ -39,8 +39,8 @@ export class RestfulResponseAdapter {
         restfulResponse.version = this.VERSION;
         if (this.salonResponse.code !== 200) {
             restfulResponse.error.code = this.salonResponse.code;
-            restfulResponse.error.message = this.salonResponse.err.err.message;
-            restfulResponse.error.name = this.salonResponse.err.err.name;
+            restfulResponse.error.message = this.salonResponse.err.message;
+            restfulResponse.error.name = this.salonResponse.err.name;
         } else {
             restfulResponse.data = this.salonResponse.data;
             restfulResponse.error = undefined;

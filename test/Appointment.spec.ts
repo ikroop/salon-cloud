@@ -212,7 +212,7 @@ describe('Appointment Management', function () {
                     - name: 'InvalidTokenError' 
                     - message: 'Token is invalid'
         */
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to create appointment with invalid token', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to create appointment with invalid token', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -235,12 +235,12 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(401);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.Unauthorized.err.name);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to create appointment with no permission account', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' error trying to create appointment with no permission account', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -263,7 +263,7 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(403);
                     res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
+                    res.body.err.should.have.property('name').eql(ErrorMessage.Forbidden.err.name);
                     done();
                 });
         });

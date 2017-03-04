@@ -53,16 +53,10 @@ export const ErrorMessage = {
             'message': 'Username is already existing'
         }
     },
-    'InvalidTokenError': {
+    'Forbidden': {
         'err': {
-            'name': 'InvalidTokenError',
-            'message': 'Token is invalid'
-        }
-    },
-    'NoPermission': {
-        'err': {
-            'name': 'NoPermission',
-            'message': 'Unauthorized'
+            'name': 'Forbidden',
+            'message': 'Forbidden'
         }
     },
     'WrongBirthdayFormat': {
