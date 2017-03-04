@@ -540,12 +540,6 @@ export const ErrorMessage = {
             'message': 'User is blocked'
         }
     },
-    'Unknown': {
-        'err': {
-            'name': 'Unknown',
-            'message': 'Unknown'
-        }
-    },
     'WrongUsernameOrPassword': {
         'err': {
             'name': 'WrongUsernameOrPassword',
