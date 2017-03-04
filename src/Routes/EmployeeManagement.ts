@@ -15,6 +15,7 @@ import { SalonManagement } from './../Modules/SalonManagement/SalonManagement'
 import { Owner } from './../Core/User/Owner'
 import { PhoneVerification } from './../Core/Verification/PhoneVerification'
 import { UserProfile } from './../Modules/UserManagement/UserData';
+import { RestfulResponseAdapter } from './../Core/RestfulResponseAdapter';
 
 export class EmployeeManagementRouter {
     private router: Router = Router();
@@ -43,17 +44,9 @@ export class EmployeeManagementRouter {
                 phone: request.body.phone || null
             }
             result = await userObject.addEmployee(request.body.phone, userProfile, new PhoneVerification());
-            let dataReturn;
-            if (result.err) {
-                dataReturn = result.err
-            } else {
-                dataReturn = {
-                    '_id': result.data.uid
-                }
-            }
-            response.status(result.code);
-
-            response.json(dataReturn);
+            var restfulResponse = new RestfulResponseAdapter(result);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
         });
         return this.router;
     }

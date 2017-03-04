@@ -81,7 +81,7 @@ export class Authorization {
                 var salonIdError = await salonIdValidation.validate();
 
                 if (salonIdError) {
-                    response.err = salonIdError.err;
+                    response.err = salonIdError;
                     response.code = 400; //Bad Request
                     return response;
                 }
