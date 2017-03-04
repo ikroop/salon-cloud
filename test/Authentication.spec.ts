@@ -324,7 +324,7 @@ describe('Authentication', function () {
 
                     res.body.should.have.property('error');
                     res.body.error.name.should.be.equal('SignInFailed');
-                    res.body.error.code.should.be.equal(400);
+                    res.body.error.code.should.be.equal(403);
                     done();
                 });
         });
