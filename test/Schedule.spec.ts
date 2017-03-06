@@ -305,10 +305,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-
                     res.body.should.have.property('data');
-                    res.body.data.name.should.be.equal('weekly_schedules');
-                    res.body.data.weekly_schedules.length.should.be.equal(7);
+                    res.body.data.should.have.property('week');
+                    res.body.data.week.length.should.be.equal(7);
                     done();
                 });
         });
