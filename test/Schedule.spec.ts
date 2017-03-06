@@ -250,7 +250,8 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('data');
-                    res.body.data.name.should.be.equal('daily_schedules');
+                    res.body.data.should.have.property('days');
+                    res.body.data.should.have.property('salon_id');
                     done();
                 });
         });
