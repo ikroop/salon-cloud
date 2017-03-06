@@ -186,10 +186,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
         if (employees) {
             response.data = employees;
             response.code = 200;
-        } else {
-            response.err = ErrorMessage.ServerError.err;
-            response.code = 500;
-        }
+        } 
         return response;
     };
 

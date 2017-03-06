@@ -87,7 +87,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
             response.data = serviceGroup;
             response.code = 200;
         } catch (error) {
-            response.err = ErrorMessage.ServerError.err;
+            response.err = error;
             response.code = 500;
         }
 
@@ -115,7 +115,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
         var salonIdError = await salonIdValidation.validate();
 
         if (salonIdError) {
-            returnResult.err = salonIdError.err;
+            returnResult.err = salonIdError;
             returnResult.code = 400; //Bad Request
             return returnResult;
         }
@@ -125,7 +125,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
             returnResult.data = rs;
             returnResult.code = 200;
         } catch (error) {
-            returnResult.err = ErrorMessage.ServerError.err;
+            returnResult.err = error;
             returnResult.code = 500;
         }
         return returnResult;
@@ -177,7 +177,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
         serviceNameValidator = new IsValidNameString(serviceNameValidator, ErrorMessage.InvalidNameString.err);
         var serviceNameResult = await serviceNameValidator.validate();
         if (serviceNameResult) {
-            returnResult.err = serviceNameResult.err;
+            returnResult.err = serviceNameResult;
             returnResult.code = 400;
             return returnResult;
         }
@@ -189,7 +189,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
         priceValidator = new IsInRange(priceValidator, ErrorMessage.ServicePriceRangeError.err, 0, 500);
         var priceResult = await priceValidator.validate();
         if (priceResult) {
-            returnResult.err = priceResult.err;
+            returnResult.err = priceResult;
             returnResult.code = 400;
             return returnResult;
         }
@@ -201,7 +201,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
         timeValidator = new IsInRange(timeValidator, ErrorMessage.InvalidServiceTime.err, 300, 3600 * 3);
         var timeResult = await timeValidator.validate();
         if (timeResult) {
-            returnResult.err = timeResult.err;
+            returnResult.err = timeResult;
             returnResult.code = 400;
             return returnResult;
         }
@@ -227,7 +227,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
         salonIdValidator = new IsValidSalonId(salonIdValidator, ErrorMessage.SalonNotFound.err);
         var priceResult = await salonIdValidator.validate();
         if (priceResult) {
-            returnResult.err = priceResult.err;
+            returnResult.err = priceResult;
             returnResult.code = 400;
             return returnResult;
         }
@@ -239,7 +239,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
         serviceNameValidator = new IsServiceGroupNameExisted(serviceNameValidator, ErrorMessage.ServiceGroupNameExisted.err, group.salon_id);
         var serviceNameResult = await serviceNameValidator.validate();
         if (serviceNameResult) {
-            returnResult.err = serviceNameResult.err;
+            returnResult.err = serviceNameResult;
             returnResult.code = 400;
             return returnResult;
         }
@@ -250,7 +250,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
         descriptionValidator = new IsValidNameString(descriptionValidator, ErrorMessage.InvalidDescriptionString.err);
         var descriptionError = await descriptionValidator.validate();
         if (descriptionError) {
-            returnResult.err = descriptionError.err;
+            returnResult.err = descriptionError;
             returnResult.code = 400;
             return returnResult;
         }
@@ -288,7 +288,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
             response.data = rs;
         } catch (error) {
             response.code = 500;
-            response.err = ErrorMessage.ServerError.err;
+            response.err = error;
         }
         return response;
     }
@@ -314,7 +314,7 @@ export class ServiceManagement implements ServiceManagementBehavior {
             response.data = rs;
         } catch (error) {
             response.code = 500;
-            response.err = ErrorMessage.ServerError.err;
+            response.err = error;
         }
         return response;
     }

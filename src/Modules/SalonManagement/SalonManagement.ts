@@ -79,7 +79,7 @@ export class SalonManagement implements SalonManagementBehavior {
             returnResult.data = rs;
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError.err;
+            returnResult.err = error;
         }
 
         return returnResult;

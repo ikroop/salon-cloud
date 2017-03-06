@@ -153,10 +153,6 @@ export abstract class Schedule implements ScheduleBehavior {
             response.err = null;
             response.code = 200;
             response.data = resultReturn;
-        } else {
-            response.err = ErrorMessage.ServerError.err;
-            response.code = 500;
-            response.data = null;
         }
         return response;
     }
@@ -206,14 +202,8 @@ export abstract class Schedule implements ScheduleBehavior {
 
 
         //Step 4: check result form step 3 and return proper response;
-        response.data = saveStatus.data;
-        if (!saveStatus.err) {
-            response.code = 200;
-            response.err = null;
-        } else {
-            response.code = 500;
-            response.err = ErrorMessage.ServerError.err;
-        }
+        response = saveStatus;
+        
 
         return response;
     }
@@ -260,14 +250,7 @@ export abstract class Schedule implements ScheduleBehavior {
         }
 
 
-        response.data = saveStatus.data;
-        if (!saveStatus.err) {
-            response.code = 200;
-            response.err = null;
-        } else {
-            response.code = 500;
-            response.err = ErrorMessage.ServerError.err;
-        }
+        response = saveStatus;
         return response;
     }
 
@@ -291,7 +274,7 @@ export abstract class Schedule implements ScheduleBehavior {
             returnResult.data = rs;
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError.err;
+            returnResult.err = error;
         }
 
         return returnResult;
@@ -319,7 +302,7 @@ export abstract class Schedule implements ScheduleBehavior {
             returnResult.data = rs;
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError.err;
+            returnResult.err = error;
         }
 
         return returnResult;
@@ -391,7 +374,7 @@ export abstract class Schedule implements ScheduleBehavior {
 
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError.err;
+            returnResult.err = error;
         }
         return returnResult;
     };
@@ -416,7 +399,7 @@ export abstract class Schedule implements ScheduleBehavior {
             returnResult.code = 200;
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError.err;
+            returnResult.err = error;
         }
         return returnResult;
     };
@@ -442,7 +425,7 @@ export abstract class Schedule implements ScheduleBehavior {
             returnResult.code = 200;
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError.err;
+            returnResult.err = error;
         }
         return returnResult;
     };

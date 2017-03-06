@@ -120,7 +120,7 @@ export class UserManagement implements UserManagementBehavior {
             response.data = user;
         } catch (error) {
             response.code = 500;
-            response.err = ErrorMessage.ServerError.err;
+            response.err = error;
         }
         return response;
     }
