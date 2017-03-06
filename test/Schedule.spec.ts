@@ -154,8 +154,8 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                   res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidStartDate.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -173,7 +173,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidEndDate.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -191,8 +191,8 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                   res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidStartDate.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -210,8 +210,8 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                   res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidEndDate.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -230,7 +230,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.EndDateIsBeforeStartDate.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -249,9 +249,8 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('daily_schedules');
-                    res.body.daily_schedules.length.should.be.equal(totalDays);
+                    res.body.should.have.property('data');
+                    res.body.data.name.should.be.equal('daily_schedules');
                     done();
                 });
         });
@@ -305,9 +304,10 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('weekly_schedules');
-                    res.body.weekly_schedules.length.should.be.equal(7);
+
+                    res.body.should.have.property('data');
+                    res.body.data.name.should.be.equal('weekly_schedules');
+                    res.body.data.weekly_schedules.length.should.be.equal(7);
                     done();
                 });
         });
@@ -339,9 +339,10 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(401);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.Unauthorized.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
+                    res.body.error.code.should.be.equal(401);
+
                     done();
                 });
         });
@@ -370,9 +371,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(403);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.Forbidden.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
+                    res.body.error.code.should.be.equal(403);
                     done();
                 });
         });
@@ -399,8 +400,8 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                   res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -455,8 +456,8 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                   res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidDate.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -484,7 +485,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidDate.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -511,7 +512,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingScheduleOpenTime.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -539,7 +540,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleOpenTime.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -566,8 +567,8 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                   res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleOpenTime.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -593,7 +594,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingScheduleCloseTime.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -621,7 +622,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleCloseTime.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -648,8 +649,8 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                   res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleCloseTime.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -676,8 +677,8 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                   res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.OpenTimeGreaterThanCloseTime.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -704,8 +705,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('_id');
+
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('_id');
                     done();
                 });
         });
@@ -779,9 +781,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(401);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.Unauthorized.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
+                    res.body.error.code.should.be.equal(401);
                     done();
                 });
         });
@@ -851,9 +853,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(403);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.Forbidden.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
+                    res.body.error.code.should.be.equal(403);
                     done();
                 });
         });
@@ -922,7 +924,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -1060,7 +1062,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingDayOfWeek.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -1130,7 +1132,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleDayOfWeek.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -1200,7 +1202,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleDayOfWeek.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -1269,7 +1271,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.DuplicateDaysOfWeek.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -1337,7 +1339,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingScheduleOpenTime.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -1406,7 +1408,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleOpenTime.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -1475,7 +1477,7 @@ describe('Schedule Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleOpenTime.err.name);
                     res.body.error.code.should.be.equal(400);
                     done();
                 });
@@ -1542,9 +1544,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleCloseTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingScheduleCloseTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1611,9 +1613,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1680,9 +1682,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.OpenTimeGreaterThanCloseTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.OpenTimeGreaterThanCloseTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1772,9 +1774,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1791,9 +1793,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1809,9 +1811,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingEmployeeId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingEmployeeId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1828,9 +1830,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1848,9 +1850,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1867,9 +1869,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidStartDate.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidStartDate.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1886,9 +1888,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidEndDate.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidEndDate.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1905,9 +1907,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidStartDate.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidStartDate.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1925,9 +1927,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidEndDate.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidEndDate.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1945,9 +1947,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.EndDateIsBeforeStartDate.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.EndDateIsBeforeStartDate.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1964,9 +1966,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('daily_schedules');
-                    res.body.daily_schedules.length.should.be.equal(totalDays);
+
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('daily_schedules');
                     done();
                 });
         });
@@ -1988,9 +1990,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2007,9 +2009,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2025,9 +2027,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingEmployeeId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingEmployeeId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2043,9 +2045,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2064,9 +2066,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2082,9 +2084,10 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('weekly_schedules');
-                    res.body.weekly_schedules.length.should.be.equal(7);
+
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('weekly_schedules');
+                    res.body.data.weekly_schedules.length.should.be.equal(7);
                     done();
                 });
         });
@@ -2159,9 +2162,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(401);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.Unauthorized.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
+                    res.body.error.code.should.be.equal(401);
                     done();
                 });
         });
@@ -2235,9 +2238,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(403);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.Forbidden.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
+                    res.body.error.code.should.be.equal(403);
                     done();
                 });
         });
@@ -2308,9 +2311,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2381,9 +2384,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2454,9 +2457,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingEmployeeId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingEmployeeId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2527,9 +2530,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2601,9 +2604,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2671,9 +2674,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingDayOfWeek.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingDayOfWeek.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2744,9 +2747,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleDayOfWeek.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleDayOfWeek.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2817,9 +2820,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleDayOfWeek.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleDayOfWeek.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2889,9 +2892,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.DuplicateDaysOfWeek.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.DuplicateDaysOfWeek.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -2960,9 +2963,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleOpenTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingScheduleOpenTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3032,9 +3035,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3104,9 +3107,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3175,9 +3178,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleCloseTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingScheduleCloseTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3247,9 +3250,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3319,9 +3322,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.OpenTimeGreaterThanCloseTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.OpenTimeGreaterThanCloseTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3424,9 +3427,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(401);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.Unauthorized.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
+                    res.body.error.code.should.be.equal(401);
                     done();
                 });
         });
@@ -3456,9 +3459,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(403);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.Forbidden.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
+                    res.body.error.code.should.be.equal(403);
                     done();
                 });
         });
@@ -3487,9 +3490,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3518,9 +3521,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3550,9 +3553,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingEmployeeId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingEmployeeId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3581,9 +3584,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3615,9 +3618,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3644,9 +3647,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidDate.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidDate.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3674,9 +3677,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidDate.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidDate.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3703,9 +3706,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleOpenTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingScheduleOpenTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3733,9 +3736,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3763,9 +3766,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleOpenTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3791,9 +3794,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingScheduleCloseTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingScheduleCloseTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3821,9 +3824,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3851,9 +3854,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidScheduleCloseTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3881,9 +3884,9 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.OpenTimeGreaterThanCloseTime.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.OpenTimeGreaterThanCloseTime.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -3911,8 +3914,8 @@ describe('Schedule Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('_id');
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('_id');
                     done();
                 });
         });
