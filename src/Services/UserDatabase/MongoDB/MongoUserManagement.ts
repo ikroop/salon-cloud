@@ -107,11 +107,11 @@ export class MongoUserManagement implements UserManagementDatabaseInterface<IUse
                     });
 
                 } else {
-                    returnResult.err = ErrorMessage.ProfileAlreadyExist;
+                    returnResult.err = ErrorMessage.ProfileAlreadyExist.err;
                     returnResult.code = 400;
                 }
             } else {
-                returnResult.err = ErrorMessage.UserNotFound;
+                returnResult.err = ErrorMessage.UserNotFound.err;
                 returnResult.code = 404;
 
             }

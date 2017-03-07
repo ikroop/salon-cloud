@@ -4,13 +4,19 @@
  *
  */
 
-export interface VerificationBehavior {
+import { SMSService } from './../Sms/TwilioSMS'
+import { SalonCloudResponse } from './../SalonCloudResponse'
 
-}
+export abstract class Verification {
 
-export abstract class Verification implements VerificationBehavior {
-
-
-    public abstract sendContent(username: string, content: string);
+     public async sendContent(phone: string, content: string): Promise<SalonCloudResponse<null>>{
+        var response : SalonCloudResponse<any> = {
+            code: null,
+            err: null,
+            data: null
+        }
+        response.err = await SMSService.sendSMS(phone, content);
+        return response;
+    }
 
 }

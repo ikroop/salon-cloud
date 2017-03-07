@@ -10,9 +10,10 @@ import { IServiceGroupData } from './../../Modules/ServiceManagement/ServiceData
 import { ErrorMessage } from './../ErrorMessage';
 import { ServiceManagement } from './../../Modules/ServiceManagement/ServiceManagement';
 import { UserManagement } from './../../Modules/UserManagement/UserManagement';
-import { SalonManagement } from './../../Modules/SalonManagement/SalonManagement';
+import { FirebaseSalonManagement } from './../../Services/SalonDatabase/Firebase/FirebaseSalonManagement'
 import * as moment from 'moment';
 import { SalonTime } from './../SalonTime/SalonTime';
+import { FirebaseUserManagement } from './../../Services/UserDatabase/Firebase/FirebaseUserManagement';
 //Validate if target element is missing.
 //To pass the test: Target Element must not be null.
 export class MissingCheck extends DecoratingValidator {
@@ -319,10 +320,10 @@ export class IsValidSalonId extends DecoratingValidator {
     public async validatingOperation() {
         var salonId = this.targetElement;
         // Check Id valid or not
+        var salonDatabase = new FirebaseSalonManagement(salonId);
 
-        var salonManagement = new SalonManagement(salonId);
         try {
-            var response = await salonManagement.getSalonById();
+            var response = await salonDatabase.getSalonById();
             if (response && response._id) {
                 return null;
             } else {
@@ -374,10 +375,10 @@ export class IsValidUserName extends DecoratingValidator {
         let username: string = this.targetElement;
 
         var usernameValidator = new BaseValidator(username);
-        var usernameEmailValidator = new IsEmail(usernameValidator, ErrorMessage.WrongEmailFormat);
+        var usernameEmailValidator = new IsEmail(usernameValidator, ErrorMessage.WrongEmailFormat.err);
         var usernameEmailResult = await usernameEmailValidator.validate();
 
-        var usernamePhoneValidator = new IsPhoneNumber(usernameValidator, ErrorMessage.WrongPhoneNumberFormat);
+        var usernamePhoneValidator = new IsPhoneNumber(usernameValidator, ErrorMessage.WrongPhoneNumberFormat.err);
         var usernamePhoneResult = await usernamePhoneValidator.validate();
 
         if (usernameEmailResult && usernamePhoneResult) {
@@ -605,6 +606,33 @@ export class IsValidSalonTimeData extends DecoratingValidator {
     }
 
 }
+
+//Validate if a UserId is valid.
+//Valid if node 'users' contain userId
+export class IsValidUserId extends DecoratingValidator {
+    public errorType: any;
+    public targetElement: any;
+    constructor(wrapedValidator: Validator, errorType: any) {
+        super();
+        this.wrapedValidator = wrapedValidator;
+        this.errorType = errorType;
+        this.targetElement = this.wrapedValidator.targetElement;
+    };
+
+    public async validatingOperation() {
+        let userId: string = this.targetElement;
+        var database = new FirebaseUserManagement(null);
+        var validation = await database.checkUserIdExistence(userId);
+        if (validation == false) {
+            return this.errorType;
+        } else {
+            return null;
+        }
+
+    }
+
+}
+
 
 
 

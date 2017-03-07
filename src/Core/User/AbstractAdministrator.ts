@@ -89,7 +89,7 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
         var appointmentByPhone: BookingAppointment = new BookingAppointment(salonId, new AppointmentManagement(salonId));
 
-        appointmentByPhone.normalizationData(newAppointment);               
+        appointmentByPhone.normalizationData(newAppointment);
 
         // create appointment
         var result: any = await appointmentByPhone.createAppointment(newAppointment);
@@ -126,40 +126,15 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
             err: null
         };
         var customerManagementDP = new CustomerManagement(customerProfile.salon_id);
-
-        var customer = await customerManagementDP.getUserByPhone(phone);
-        if (customer.err){
-            response.err = customer.err;
-            response.code = customer.code;
-            return response;
-        }
-        if (!customer.data) {
-            // customer account not existed, create account with salon profile for the user                
-            var customerCreation = await customerManagementDP.createCustomer(phone, customerProfile);
-            if (customerCreation.err) {
-                response.err = customerCreation.err;
-                response.code = customerCreation.code;
-                return response;
-            } else {
-                response.data = customerCreation.data.user._id;
-                response.code = 200;
-                return response;
-            }
+        var customerAuth = await customerManagementDP.createCustomer(phone, customerProfile);
+        if (customerAuth.err) {
+            response.err = customerAuth.err;
+            response.code = customerAuth.code;
         } else {
-            if (customer.data.profile === null || customer.data.profile.length === 0) {
-                //create customer profile for this salon
-                var newCustomerProfile = await customerManagementDP.addCustomerProfile(customer.data._id, customerProfile);
-                if (newCustomerProfile.err) {
-                    response.err = newCustomerProfile.err;
-                    response.code = newCustomerProfile.code;
-                    return response;
-                }
-            }
-            response.data = customer.data._id;
+            response.data = customerAuth.data.uid;
             response.code = 200;
-            return response;
         }
-
+        return response;
     }
 
     public updateAppointment(appointment: AppointmentData) {

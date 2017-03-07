@@ -19,6 +19,12 @@ export const RoleConfig =
             ]
         },
         {
+            'api': '/api/v1/Authentication/signinwithcustomtoken',
+            'role': [
+                'Anonymouse'
+            ]
+        },
+        {
             'api': '/api/v1/salon/create',
             'role': [
                 'SignedUser'
@@ -47,25 +53,30 @@ export const RoleConfig =
             'role': [
                 'Owner', 'Manager'
             ]
-        },{
+        }, {
             'api': '/api/v1/schedule/saveemployeeweeklyschedule',
             'role': [
                 'Owner', 'Manager'
             ]
-        },{
+        }, {
             'api': '/api/v1/schedule/savesalonweeklyschedule',
             'role': [
                 'Owner'
             ]
-        },{
+        }, {
             'api': '/api/v1/schedule/savesalondailyschedule',
             'role': [
                 'Owner'
             ]
-        },{
+        }, {
             'api': '/api/v1/schedule/saveemployeedailyschedule',
             'role': [
                 'Owner'
+            ]
+        }, {
+            'api': '/api/v1/salon/getsalonlist',
+            'role': [
+                'SignedUser'
             ]
         }
     ]

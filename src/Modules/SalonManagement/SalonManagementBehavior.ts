@@ -16,7 +16,7 @@ export interface SalonManagementBehavior {
 
     deactivate(): SalonCloudResponse<boolean>;
 
-    getAllSalon(userId: string): SalonCloudResponse<SalonInformation>;
+    getAllSalon(userId: string): Promise<SalonCloudResponse<Array<SalonInformation>>>;
 
     updateInformation(data: SalonInformation): SalonCloudResponse<boolean>;
 

@@ -9,7 +9,5 @@ install:
   - npm install -g typescript nodemon mocha nyc codecov
   - npm install
 script:
-  - tsc test/*.ts --module commonjs --sourcemap --target es6
-  - NODE_ENV=development nyc mocha -t 15000
-  - export CODECOV_TOKEN='22ee92e1-4cdd-4db2-ba21-95a1459f2e37' && nyc report --reporter=json && codecov -f coverage/*.json
+  - npm test
 

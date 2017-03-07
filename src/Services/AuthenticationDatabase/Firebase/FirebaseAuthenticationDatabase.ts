@@ -44,6 +44,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
 
         let promise = new Promise<SalonCloudResponse<UserToken>>(function (resolve, reject) {
             firebase.auth().signInWithEmailAndPassword(username, password)
+                // FIX ME: Duplicate code [1]
                 .then(function (user) {
 
                     user.getToken().then(function (token) {
@@ -68,12 +69,17 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                     // Handle Errors here.
                     var errorCode = error.code;
                     var errorMessage = error.message;
-                    if (errorCode === 'auth/wrong-password') {
+                    if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
                         response.code = 403;
-                        response.err = ErrorMessage.SignInFailed;
+                        response.err = ErrorMessage.SignInFailed.err;
                     } else {
                         response.code = 400;
-                        response.err = ErrorMessage.Unknown;
+                        response.err = {
+                            'err': {
+                                'name': errorCode,
+                                'message': errorMessage
+                            }
+                        };
                     }
                     resolve(response);
                 });
@@ -131,13 +137,18 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                 var errorMessage = error.message;
                 if (errorCode == 'auth/email-already-in-use') {
                     response.code = 409;
-                    response.err = ErrorMessage.UsernameAlreadyExists;
+                    response.err = ErrorMessage.UsernameAlreadyExists.err;
                 } else if (errorCode == 'auth/operation-not-allowed') {
                     response.code = 400;
-                    response.err = ErrorMessage.UserBlocked;
+                    response.err = ErrorMessage.UserBlocked.err;
                 } else {
                     response.code = 400;
-                    response.err = ErrorMessage.Unknown;
+                    response.err = {
+                        'err': {
+                            'name': errorCode,
+                            'message': errorMessage
+                        }
+                    };
                 }
                 resolve(response);
             });
@@ -153,7 +164,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
      * 
      * @memberOf FirebaseAuthenticationDatabase
      */
-    verifyToken(token: string): Promise<SalonCloudResponse<null>> {
+    public verifyToken(token: string): Promise<SalonCloudResponse<null>> {
         var response: any = {};
         let promise = new Promise(function (resolve, reject) {
 
@@ -170,7 +181,7 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
                         resolve(response);
                     }).catch(function (error) {
                         // Handle error
-                        response.err = ErrorMessage.InvalidTokenError;
+                        response.err = ErrorMessage.Unauthorized.err;
                         response.code = 401;
                         response.data = null;
                         resolve(response);
@@ -179,5 +190,93 @@ export class FirebaseAuthenticationDatabase implements AuthenticationDatabaseInt
 
         });
         return promise;
+    }
+
+    /**
+     * Set new password for user.
+     * 
+     * @param {string} uid
+     * @param {string} newPassword
+     * @returns {Promise<SalonCloudResponse<null>>}
+     * 
+     * @memberOf FirebaseAuthenticationDatabase
+     */
+    public setPassword(uid: string, newPassword: string): Promise<SalonCloudResponse<null>> {
+        var response: SalonCloudResponse<null> = {
+            code: null,
+            data: null,
+            err: null
+        };
+
+        let promise = new Promise(function (resolve, reject) {
+
+            firebaseAdmin.auth().updateUser(uid, {
+                password: newPassword
+            }).then(function (userRecord) {
+                // See the UserRecord reference doc for the contents of userRecord.
+                response.code = 200;
+                resolve(response);
+            }).catch(function (error) {
+                response.code = 500;
+                response.err = error;
+                resolve(response);
+            });
+        });
+        return promise;
+    }
+
+    public createCustomToken(uid: string): Promise<string> {
+        let promise = new Promise(function (resolve, reject) {
+            firebaseAdmin.auth().createCustomToken(uid)
+                .then(function (customToken) {
+                    // Send token back to client
+                    resolve(customToken);
+                })
+                .catch(function (error) {
+                    console.log("Error creating custom token:", error);
+                    resolve(error);
+                });
+        });
+        return promise;
+    }
+
+    public signInWithCustomToken(token: string): Promise<SalonCloudResponse<UserToken>> {
+        var response: SalonCloudResponse<UserToken> = {
+            code: null,
+            data: null,
+            err: null
+        };
+        let promise = new Promise<SalonCloudResponse<UserToken>>(function (resolve, reject) {
+            firebase.auth().signInWithCustomToken(token)
+                // FIX ME: Duplicate code [1]
+                .then(function (user) {
+                    user.getToken().then(function (token) {
+                        response.code = 200;
+                        var userToken: UserToken = {
+                            user: {
+                                _id: user.uid,
+                                username: user.email,
+                                status: true
+                            },
+                            auth: {
+                                token: token
+                            }
+                        };
+
+                        response.data = userToken;
+                        resolve(response);
+                    });
+
+                })
+                .catch(function (error) {
+                    // Handle Errors here.
+                    response.code = 400;
+                    response.err = error;
+
+                    resolve(response);
+                });
+        });
+        return promise;
+
     }
 }

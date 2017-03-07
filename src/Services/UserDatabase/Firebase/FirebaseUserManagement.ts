@@ -6,6 +6,7 @@
 
 import { ErrorMessage } from './../../../Core/ErrorMessage';
 import { UserData, IUserData, UserProfile } from './../../../Modules/UserManagement/UserData'
+import { SalonInformation } from './../../../Modules/SalonManagement/SalonData'
 import { SalonCloudResponse } from './../../../Core/SalonCloudResponse';
 
 import { UserManagementDatabaseInterface } from './../UserManagementDatabaseInterface';
@@ -18,6 +19,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
     private database: any;
     private userRef: any;
     private readonly USER_KEY_NAME: string = 'users';
+    private readonly SALON_KEY_NAME: string = 'salons';
     private salonDatabase: FirebaseSalonManagement;
     /**
      * Creates an instance of MongoSalonManagement.
@@ -118,11 +120,14 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
             // create salon user Profile
             var salonRef = this.salonDatabase.getSalonFirebaseRef();
             await salonRef.child(this.salonId + '/users/' + userId).set(userProfile);
+            var update = {};
+            update[userId + '/salons/' + this.salonId + '/status'] = userProfile.status;
+            await this.userRef.update(update);
             returnResult.code = 200;
             returnResult.data = userProfile;
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError;
+            returnResult.err = error;
         }
         return returnResult;
     }
@@ -232,4 +237,83 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
 
         return userProfile;
     }
+
+    /**
+     * 
+     * 
+     * @private
+     * 
+     * @memberOf FirebaseUserManagement
+     */
+    public async getSalonInformationList(userId: string): Promise<any> {
+        var salonList = await this.getSalonList(userId);
+        var salonInformationList = [];
+        var salonRef = this.database.ref(this.SALON_KEY_NAME);
+        for (var eachSalon in salonList) {
+            await salonRef.child(eachSalon).once('value', function (snapshot) {
+                var userProfile = snapshot.val();
+                var infoObject = {};
+                infoObject['salon_id'] = eachSalon;
+                infoObject['salon_name'] =  userProfile.profile.information.salon_name;
+                infoObject['role'] = userProfile.users[userId].role;
+                infoObject['phone'] = userProfile.profile.information.phone.number;
+                infoObject['address'] = userProfile.profile.information.location.address;
+                salonInformationList.push(infoObject);
+            }, function (errorObject) {
+                throw errorObject;
+            });
+        }
+
+        return salonInformationList;
+
+    }
+    
+    /**
+     * 
+     * 
+     * @param {string} userId
+     * @returns {Promise<any>}
+     * 
+     * @memberOf FirebaseUserManagement
+     */
+    public async getSalonList(userId: string): Promise<any> {
+        var salonInformationList = {};
+
+        await this.userRef.child(userId + '/salons').once('value', function (snapshot) {
+            snapshot.forEach(function (child) {
+                var key = child.key;
+                if (key == '__proto__') {
+                    return;
+                }
+                var value = child.val();
+                salonInformationList[key] = value;
+            });
+
+        }, function (errorObject) {
+            throw errorObject;
+        });
+
+        return salonInformationList;
+
+    }
+
+    /**
+     * 
+     * This method is used by isValidUserId validation.
+     * @param {any} userId
+     * @returns {Promise<boolean>}
+     * 
+     * @memberOf FirebaseUserManagement
+     */
+    public async checkUserIdExistence(userId): Promise<boolean>{
+        var exist :boolean = false;
+        await this.userRef.once('value', function(snapshot){
+            if(snapshot.hasChild(userId)){
+                exist = true;
+            }
+        });
+        return exist;
+    }
 }
+
+

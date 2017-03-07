@@ -1,5 +1,7 @@
-/*
- * GET users listing.
+/**
+ * @license
+ * Copyright SalonHelps. All Rights Reserved.
+ *
  */
 
 import { Router, Request, Response } from 'express';
@@ -15,6 +17,7 @@ import { SalonTime } from './../Core/SalonTime/SalonTime';
 import { ErrorMessage } from './../Core/ErrorMessage'
 import { BaseValidator } from './../Core/Validation/BaseValidator'
 import { MissingCheck, IsAfterSecondDate, IsValidSalonId } from './../Core/Validation/ValidationDecorators'
+import { RestfulResponseAdapter } from './../Core/RestfulResponseAdapter';
 
 export class AppointmentManagementRouter {
     private router: Router = Router();
@@ -59,15 +62,9 @@ export class AppointmentManagementRouter {
             // call create appointment function
             var result = await admin.saveAppointment(appointment);
 
-            //return data
-            var responseData;
-            if (result.err) {
-                responseData = result.err;
-            } else {
-                responseData = result.data;
-            }
-            response.status(result.code).json(responseData);
-
+            var restfulResponse = new RestfulResponseAdapter(result);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
         });
         return this.router;
     }

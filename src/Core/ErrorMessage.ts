@@ -53,16 +53,10 @@ export const ErrorMessage = {
             'message': 'Username is already existing'
         }
     },
-    'InvalidTokenError': {
+    'Forbidden': {
         'err': {
-            'name': 'InvalidTokenError',
-            'message': 'Token is invalid'
-        }
-    },
-    'NoPermission': {
-        'err': {
-            'name': 'NoPermission',
-            'message': 'Unauthorized'
+            'name': 'Forbidden',
+            'message': 'Forbidden'
         }
     },
     'WrongBirthdayFormat': {
@@ -177,12 +171,6 @@ export const ErrorMessage = {
         'err': {
             'name': 'SignInFailed',
             'message': 'Username or password is wrong'
-        }
-    },
-    'ServerError': {
-        'err': {
-            'name': 'ServerError',
-            'message': 'Internal Server Error'
         }
     },
     'MissingScheduleStatus': {
@@ -540,16 +528,52 @@ export const ErrorMessage = {
             'message': 'User is blocked'
         }
     },
-    'Unknown': {
-        'err': {
-            'name': 'Unknown',
-            'message': 'Unknown'
-        }
-    },
-    'WrongUsernameOrPassword':{
+    'WrongUsernameOrPassword': {
         'err': {
             'name': 'WrongUsernameOrPassword',
             'message': 'Wrong Useranme or Password.'
         }
+    },
+    'MissingUserId': {
+        'err': {
+            'name': 'MissingUserId',
+            'message': 'User id is missing.'
+        }
+    },
+    'InvalidUserId': {
+        'err': {
+            'name': 'InvalidUserId',
+            'messsage': 'User id is invalid.'
+        }
+    },
+    'WrongVerificationCode': {
+        'err': {
+            'name': 'WrongVerificationCode',
+            'messsage': 'Wrong Verification Code.'
+        }
+    },
+    'MissingVerificationCode': {
+        'err': {
+            'name': 'MissingVerificationCode',
+            'message': 'A verification code is required',
+        }
+    },
+    'MissingVerificationId': {
+        'err': {
+            'name': 'MissingVerificationId',
+            'message': 'A verification id is required',
+        }
+    },
+    'MissingCustomToken':{
+        'err': {
+            'name': 'MissingCustomToken',
+            'message': 'A custom token is required',
+        } 
+    },
+    'Unauthorized':{
+        'err': {
+            'name': 'Unauthorized',
+            'message': 'Unauthorized',
+        } 
     }
 };

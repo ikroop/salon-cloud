@@ -106,13 +106,21 @@ export class UserManagement implements UserManagementBehavior {
             data: null
         };
         try {
+            var salonIdValidation = new BaseValidator(this.salonId);
+            salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId.err);
+            var salonIdError = await salonIdValidation.validate();
+            if(salonIdError){
+                response.err = salonIdError;
+                response.code = 400;
+                return response;
+            }
             var user: IUserData = null;
             user = await this.userDatabase.getUserByPhone(phone)
             response.code = 200;
             response.data = user;
         } catch (error) {
             response.code = 500;
-            response.err = ErrorMessage.ServerError;
+            response.err = error;
         }
         return response;
     }
