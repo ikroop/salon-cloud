@@ -152,8 +152,8 @@ export class EmployeeSchedule extends Schedule {
         };
 
         let employeeIdValidation = new BaseValidator(this.employeeId);
-        employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId);
-        employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound, this.salonId);
+        employeeIdValidation = new MissingCheck(employeeIdValidation, ErrorMessage.MissingEmployeeId.err);
+        employeeIdValidation = new IsValidEmployeeId(employeeIdValidation, ErrorMessage.EmployeeNotFound.err, this.salonId);
         let employeeIdError = await employeeIdValidation.validate();
 
         if (employeeIdError) {

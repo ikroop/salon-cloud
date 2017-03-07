@@ -127,7 +127,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
             returnResult.data = userProfile;
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError;
+            returnResult.err = error;
         }
         return returnResult;
     }

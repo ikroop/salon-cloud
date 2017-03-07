@@ -15,6 +15,7 @@ import { SalonManagement } from './../Modules/SalonManagement/SalonManagement'
 import { Owner } from './../Core/User/Owner'
 import { PhoneVerification } from './../Core/Verification/PhoneVerification'
 import { UserProfile } from './../Modules/UserManagement/UserData';
+import { RestfulResponseAdapter } from './../Core/RestfulResponseAdapter';
 
 export class CustomerManagementRouter {
     private router: Router = Router();
@@ -44,16 +45,11 @@ export class CustomerManagementRouter {
             var verificationId = request.body.verification_id
 
             var result = await customerManagement.createCustomerOnline(request.body.phone, userProfile, verificationId, code);
-            let dataReturn;
-            if (result.err) {
-                dataReturn = result.err
-            } else {
-                dataReturn = {
-                    'custom_token': result.data.customToken
-                }
-            }
-            response.status(result.code);
-            response.json(dataReturn);
+            var restfulResponse = new RestfulResponseAdapter(result);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
+
+
         });
         return this.router;
     }

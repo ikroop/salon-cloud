@@ -53,16 +53,10 @@ export const ErrorMessage = {
             'message': 'Username is already existing'
         }
     },
-    'InvalidTokenError': {
+    'Forbidden': {
         'err': {
-            'name': 'InvalidTokenError',
-            'message': 'Token is invalid'
-        }
-    },
-    'NoPermission': {
-        'err': {
-            'name': 'NoPermission',
-            'message': 'Unauthorized'
+            'name': 'Forbidden',
+            'message': 'Forbidden'
         }
     },
     'WrongBirthdayFormat': {
@@ -177,12 +171,6 @@ export const ErrorMessage = {
         'err': {
             'name': 'SignInFailed',
             'message': 'Username or password is wrong'
-        }
-    },
-    'ServerError': {
-        'err': {
-            'name': 'ServerError',
-            'message': 'Internal Server Error'
         }
     },
     'MissingScheduleStatus': {
@@ -540,12 +528,6 @@ export const ErrorMessage = {
             'message': 'User is blocked'
         }
     },
-    'Unknown': {
-        'err': {
-            'name': 'Unknown',
-            'message': 'Unknown'
-        }
-    },
     'WrongUsernameOrPassword': {
         'err': {
             'name': 'WrongUsernameOrPassword',
@@ -586,6 +568,12 @@ export const ErrorMessage = {
         'err': {
             'name': 'MissingCustomToken',
             'message': 'A custom token is required',
+        } 
+    },
+    'Unauthorized':{
+        'err': {
+            'name': 'Unauthorized',
+            'message': 'Unauthorized',
         } 
     }
 };

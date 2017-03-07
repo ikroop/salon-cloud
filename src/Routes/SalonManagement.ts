@@ -12,6 +12,7 @@ import { SalonManagement } from './../Modules/SalonManagement/SalonManagement';
 import { UserManagement } from './../Modules/UserManagement/UserManagement';
 import { SalonInformation } from './../Modules/SalonManagement/SalonData'
 import { EmployeeManagement } from './../Modules/UserManagement/EmployeeManagement';
+import { RestfulResponseAdapter } from './../Core/RestfulResponseAdapter';
 
 export class SalonManagementRouter {
     private router: Router = Router();
@@ -41,36 +42,18 @@ export class SalonManagementRouter {
             }
 
             var salonCreation = await signedUser.createSalon(salonInformationInput);
-            var dataReturn;
-            if (salonCreation.err) {
-                dataReturn = salonCreation.err
-            } else {
-                dataReturn = {
-                    '_id': salonCreation.data
-                }
-            }
-            response.status(salonCreation.code);
-            response.json(dataReturn);
+            var restfulResponse = new RestfulResponseAdapter(salonCreation);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
         });
 
         this.router.get('/getsalonlist', authorizationRouter.checkPermission, async function (request: Request, response: Response) {
             var userId = request.user._id;
             var signedInUser = new SignedInUser(userId, new SalonManagement(null));
             var getSalonListResponse = await signedInUser.getSalonList();
-            var dataReturn = {};
-            if (getSalonListResponse.err) {
-                dataReturn['err'] = getSalonListResponse.err;
-            } else {
-                var salonListObject = getSalonListResponse.data;
-                dataReturn['salon_list'] = [];
-                for (var eachSalon in salonListObject) {
-                    dataReturn['salon_list'].push(salonListObject[eachSalon]);
-                }
-            }
-
-            response.status(getSalonListResponse.code);
-            response.json(dataReturn);
-
+            var restfulResponse = new RestfulResponseAdapter(getSalonListResponse);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
 
         });
 
@@ -80,9 +63,7 @@ export class SalonManagementRouter {
             var salonProfile = await salonManagement.getSalonById();
             var dataReturn;
 
-            if (salonProfile.err) {
-                dataReturn = { 'err': salonProfile.err };
-            } else {
+            if (salonProfile.code === 200) {
                 var SalonInformation = salonProfile.data.information;
                 dataReturn = {
                     'name': SalonInformation.salon_name,
@@ -90,9 +71,14 @@ export class SalonManagementRouter {
                     'location': SalonInformation.location.address,
                     'email': SalonInformation.email
                 }
+
+                salonProfile.data = dataReturn;
             }
-            response.status(salonProfile.code);
-            response.json(dataReturn);
+
+
+            var restfulResponse = new RestfulResponseAdapter(salonProfile);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
         });
 
         this.router.post('/updatesettings', authorizationRouter.checkPermission, function (request: Request, response: Response) {

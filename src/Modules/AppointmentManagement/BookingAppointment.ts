@@ -21,8 +21,8 @@ export class BookingAppointment extends AppointmentAbstract {
             err: null
         }
         var salonIdValidator = new BaseValidator(appointment.salon_id);
-        salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId);
-        salonIdValidator = new IsValidSalonId(salonIdValidator, ErrorMessage.SalonNotFound);
+        salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId.err);
+        salonIdValidator = new IsValidSalonId(salonIdValidator, ErrorMessage.SalonNotFound.err);
         var salonIdResult = await salonIdValidator.validate();
         if (salonIdResult) {
             response.err = salonIdResult;
@@ -31,7 +31,7 @@ export class BookingAppointment extends AppointmentAbstract {
         }
 
         var isRemindedValidator = new BaseValidator(appointment.is_reminded);
-        isRemindedValidator = new MissingCheck(isRemindedValidator, ErrorMessage.MissingIsRemindedField);
+        isRemindedValidator = new MissingCheck(isRemindedValidator, ErrorMessage.MissingIsRemindedField.err);
         var isRemindedError = await isRemindedValidator.validate();
         if (isRemindedError) {
             response.err = isRemindedError;
@@ -40,7 +40,7 @@ export class BookingAppointment extends AppointmentAbstract {
         }
 
         var deviceValidator = new BaseValidator(appointment.device);
-        deviceValidator = new MissingCheck(deviceValidator, ErrorMessage.MissingDeviceField);
+        deviceValidator = new MissingCheck(deviceValidator, ErrorMessage.MissingDeviceField.err);
         var deviceError = await deviceValidator.validate();
         if (deviceError) {
             response.err = deviceError;
@@ -49,7 +49,7 @@ export class BookingAppointment extends AppointmentAbstract {
         }
 
         var statusValidator = new BaseValidator(appointment.status);
-        statusValidator = new MissingCheck(statusValidator, ErrorMessage.MissingStatus);
+        statusValidator = new MissingCheck(statusValidator, ErrorMessage.MissingStatus.err);
         var statusError = await statusValidator.validate();
         if (statusError) {
             response.err = statusError;
@@ -58,7 +58,7 @@ export class BookingAppointment extends AppointmentAbstract {
         }
 
         var typeValidator = new BaseValidator(appointment.type);
-        typeValidator = new MissingCheck(typeValidator, ErrorMessage.MissingTypeField);
+        typeValidator = new MissingCheck(typeValidator, ErrorMessage.MissingTypeField.err);
         var typeError = await typeValidator.validate();
         if (typeError) {
             response.err = typeError;
@@ -67,7 +67,7 @@ export class BookingAppointment extends AppointmentAbstract {
         }
 
         var customerIdValidator = new BaseValidator(appointment.customer_id);
-        customerIdValidator = new MissingCheck(customerIdValidator, ErrorMessage.MissingCustomerId);
+        customerIdValidator = new MissingCheck(customerIdValidator, ErrorMessage.MissingCustomerId.err);
         var customerIdError = await customerIdValidator.validate();
         if (customerIdError) {
             response.err = customerIdError;

@@ -107,7 +107,7 @@ export class UserManagement implements UserManagementBehavior {
         };
         try {
             var salonIdValidation = new BaseValidator(this.salonId);
-            salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
+            salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId.err);
             var salonIdError = await salonIdValidation.validate();
             if(salonIdError){
                 response.err = salonIdError;
@@ -120,7 +120,7 @@ export class UserManagement implements UserManagementBehavior {
             response.data = user;
         } catch (error) {
             response.code = 500;
-            response.err = ErrorMessage.ServerError;
+            response.err = error;
         }
         return response;
     }

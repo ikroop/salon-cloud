@@ -13,6 +13,7 @@ import { Owner } from './../Core/User/Owner'
 import { SalonManagement } from './../Modules/SalonManagement/SalonManagement'
 import { ServiceGroupData } from './../Modules/ServiceManagement/ServiceData';
 import { ServiceManagement } from './../Modules/ServiceManagement/ServiceManagement';
+import { RestfulResponseAdapter } from './../Core/RestfulResponseAdapter';
 
 export class ServiceManagementRouter {
     private router: Router = Router();
@@ -33,35 +34,19 @@ export class ServiceManagementRouter {
                 service_list: request.body.service_list || null
             }
             var creatingServiceAction = await ownerObject.addService(newServiceGroup);
-            var returnData;
-            if (creatingServiceAction.err) {
-                returnData = {
-                    'err': creatingServiceAction.err,
-                }
-            } else {
-                returnData = {
-                    'id': creatingServiceAction.data._id,
-                }
-            }
-
-            response.status(creatingServiceAction.code).json(returnData);
+            console.log('creatingServiceAction: %j', creatingServiceAction);
+            var restfulResponse = new RestfulResponseAdapter(creatingServiceAction);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
         });
 
         this.router.get('/getall', async function (request: Request, response: Response) {
             let salonId = request.query.salon_id;
             var serviceManegement = new ServiceManagement(salonId);
             var services = await serviceManegement.getServices();
-            var dataReturn;
-
-            if (services.err) {
-                dataReturn = { 'err': services.err };
-            } else {
-                dataReturn = {
-                   'services': services.data
-                }
-            }
-            response.status(services.code);
-            response.json(dataReturn);
+            var restfulResponse = new RestfulResponseAdapter(services);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
         });
 
         return this.router;
