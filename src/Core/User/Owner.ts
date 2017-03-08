@@ -110,6 +110,7 @@ export class Owner extends AbstractAdministrator {
             phone: employeeProfile.phone,
             fullname: employeeProfile.fullname,
             role: employeeProfile.role,
+            password: randomPasswordString
         }
 
         response.code = 200;
