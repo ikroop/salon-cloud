@@ -5,7 +5,7 @@
  */
 
 import { AbstractEmployee } from './AbstractEmployee'
-import { UserProfile, UserData } from './../../Modules/UserManagement/UserData'
+import { UserProfile, UserData, IUserData } from './../../Modules/UserManagement/UserData'
 import { AppointmentItemData, AppointmentData, SaveAppointmentData } from './../../Modules/AppointmentManagement/AppointmentData'
 import { AppointmentManagement } from './../../Modules/AppointmentManagement/AppointmentManagement'
 import { AdministratorBehavior } from './AdministratorBehavior'
@@ -18,6 +18,7 @@ import { DailyScheduleData, WeeklyScheduleData } from './../../Modules/Schedule/
 import { ScheduleBehavior } from './../../Modules/Schedule/ScheduleBehavior'
 import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
 import { RoleDefinition } from './../../Core/Authorization/RoleDefinition'
+import { EmployeeManagement } from './../../Modules/UserManagement/EmployeeManagement';
 
 export abstract class AbstractAdministrator extends AbstractEmployee implements AdministratorBehavior {
 
@@ -30,8 +31,13 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
 
     };
 
-    public getAllEmployeeProfile(): Array<UserProfile> {
-        return new Array<UserProfile>();
+    public async getAllEmployeeProfile(salonId: string): Promise<SalonCloudResponse<IUserData[]>> {
+        let employeeManagement = new EmployeeManagement(salonId);
+        let employees = await employeeManagement.getAllEmployee();
+        if (!employees.err) {
+            employees.data = this.filterEmployeeProfileData(employees.data);
+        }
+        return employees;
     };
 
     public getCustomerById(customerId: string): UserProfile {
@@ -213,6 +219,6 @@ export abstract class AbstractAdministrator extends AbstractEmployee implements 
         return;
     };
 
-    protected abstract filterProfileData(user: UserProfile): UserProfile;
+    protected abstract filterEmployeeProfileData(employeeList: IUserData[]): IUserData[];
 }
 

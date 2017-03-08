@@ -176,7 +176,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
      * 
      * @memberOf EmployeeManagement
      */
-    public async getAllEmployee(): Promise<SalonCloudResponse<Array<UserData>>> {
+    public async getAllEmployee(): Promise<SalonCloudResponse<Array<IUserData>>> {
         var response: SalonCloudResponse<Array<UserData>> = {
             data: null,
             code: null,

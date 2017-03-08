@@ -5,13 +5,14 @@
  */
 
 import { AbstractAdministrator } from './AbstractAdministrator'
-import { UserProfile } from './../../Modules/UserManagement/UserData'
+import { UserProfile, IUserData } from './../../Modules/UserManagement/UserData'
 
 
 export class Manager extends AbstractAdministrator {
+    protected filterEmployeeProfileData(employeeList: IUserData[]): IUserData[] {
 
-    protected filterProfileData(user: UserProfile): UserProfile {
+        
+        return employeeList;
+    }
 
-        return;
-    };
 }

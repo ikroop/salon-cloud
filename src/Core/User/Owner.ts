@@ -6,7 +6,7 @@
 
 import { AbstractAdministrator } from './AbstractAdministrator'
 import { SalonCloudResponse } from './../SalonCloudResponse'
-import { UserProfile, UserData } from './../../Modules/UserManagement/UserData'
+import { UserProfile, UserData, IUserData } from './../../Modules/UserManagement/UserData'
 import { AppointmentData } from './../../Modules/AppointmentManagement/AppointmentData'
 import { DailyDayData, WeeklyDayData } from './../../Modules/Schedule/ScheduleData'
 import { SalonInformation, SalonSetting } from './../../Modules/SalonManagement/SalonData'
@@ -229,8 +229,8 @@ export class Owner extends AbstractAdministrator {
         return;
     };
 
-    protected filterProfileData(user: UserProfile): UserProfile {
-
-        return;
+    protected filterEmployeeProfileData(employeeList: IUserData[]): IUserData[]{
+        return employeeList;
     }
+
 }
