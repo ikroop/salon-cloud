@@ -79,7 +79,7 @@ export class SalonManagement implements SalonManagementBehavior {
             returnResult.data = rs;
         } catch (error) {
             returnResult.code = 500;
-            returnResult.err = ErrorMessage.ServerError;
+            returnResult.err = error;
         }
 
         return returnResult;
@@ -109,8 +109,8 @@ export class SalonManagement implements SalonManagementBehavior {
         }
         //validation
         var userIdValidation = new BaseValidator(userId);
-        userIdValidation = new MissingCheck(userIdValidation, ErrorMessage.MissingUserId);
-        userIdValidation = new IsValidUserId(userIdValidation, ErrorMessage.InvalidUserId);
+        userIdValidation = new MissingCheck(userIdValidation, ErrorMessage.MissingUserId.err);
+        userIdValidation = new IsValidUserId(userIdValidation, ErrorMessage.InvalidUserId.err);
         var userIdValidationResult = await userIdValidation.validate();
         if (userIdValidationResult) {
             response.err = userIdValidationResult.err;
@@ -168,7 +168,7 @@ export class SalonManagement implements SalonManagementBehavior {
         // Validation
         // salon name validation
         var salonNameValidator = new BaseValidator(salonInformation.salon_name);
-        salonNameValidator = new MissingCheck(salonNameValidator, ErrorMessage.MissingSalonName);
+        salonNameValidator = new MissingCheck(salonNameValidator, ErrorMessage.MissingSalonName.err);
         var salonNameError = await salonNameValidator.validate();
         if (salonNameError) {
             returnResult.err = salonNameError;
@@ -177,7 +177,7 @@ export class SalonManagement implements SalonManagementBehavior {
         }
         // address validation 
         var addressValidator = new BaseValidator(salonInformation.location.address);
-        addressValidator = new MissingCheck(addressValidator, ErrorMessage.MissingAddress);
+        addressValidator = new MissingCheck(addressValidator, ErrorMessage.MissingAddress.err);
         // TODO: validator for IsAddress
         var addressError = await addressValidator.validate();
         if (addressError) {
@@ -188,8 +188,8 @@ export class SalonManagement implements SalonManagementBehavior {
 
         // phone number validation
         var phoneNumberValidator = new BaseValidator(salonInformation.phone.number);
-        phoneNumberValidator = new MissingCheck(phoneNumberValidator, ErrorMessage.MissingPhoneNumber);
-        phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat);
+        phoneNumberValidator = new MissingCheck(phoneNumberValidator, ErrorMessage.MissingPhoneNumber.err);
+        phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat.err);
         var phoneNumberError = await phoneNumberValidator.validate();
         if (phoneNumberError) {
             returnResult.err = phoneNumberError;
@@ -201,7 +201,7 @@ export class SalonManagement implements SalonManagementBehavior {
         // email is not required, so check if email is in the request first.
         if (salonInformation.email) {
             var emailValidator = new BaseValidator(salonInformation.email);
-            emailValidator = new IsEmail(emailValidator, ErrorMessage.WrongEmailFormat);
+            emailValidator = new IsEmail(emailValidator, ErrorMessage.WrongEmailFormat.err);
             var emailError = await emailValidator.validate();
             if (emailError) {
                 returnResult.err = emailError;
@@ -231,12 +231,12 @@ export class SalonManagement implements SalonManagementBehavior {
         var salonProfile: ISalonData = null;
 
         var salonIdValidation = new BaseValidator(this.salonId);
-        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId);
-        salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound);
+        salonIdValidation = new MissingCheck(salonIdValidation, ErrorMessage.MissingSalonId.err);
+        salonIdValidation = new IsValidSalonId(salonIdValidation, ErrorMessage.SalonNotFound.err);
         var salonIdError = await salonIdValidation.validate();
 
         if (salonIdError) {
-            returnResult.err = salonIdError.err;
+            returnResult.err = salonIdError;
             returnResult.code = 400; //Bad Request
             return returnResult;
         }

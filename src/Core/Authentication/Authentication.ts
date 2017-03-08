@@ -51,8 +51,8 @@ export class Authentication {
         };
         // Validate Username
         var usernameValidator = new BaseValidator(username);
-        usernameValidator = new MissingCheck(usernameValidator, ErrorMessage.MissingUsername);
-        usernameValidator = new IsValidUserName(usernameValidator, ErrorMessage.NotEmailOrPhoneNumber);
+        usernameValidator = new MissingCheck(usernameValidator, ErrorMessage.MissingUsername.err);
+        usernameValidator = new IsValidUserName(usernameValidator, ErrorMessage.NotEmailOrPhoneNumber.err);
         var usernameResult = await usernameValidator.validate();
         if (usernameResult) {
             response.err = usernameResult;
@@ -62,8 +62,8 @@ export class Authentication {
 
         // Validate password;
         var passwordValidator = new BaseValidator(password);
-        passwordValidator = new MissingCheck(passwordValidator, ErrorMessage.MissingPassword);
-        passwordValidator = new IsLengthGreaterThan(passwordValidator, ErrorMessage.PasswordTooShort, 6);
+        passwordValidator = new MissingCheck(passwordValidator, ErrorMessage.MissingPassword.err);
+        passwordValidator = new IsLengthGreaterThan(passwordValidator, ErrorMessage.PasswordTooShort.err, 6);
         var passwordResult = await passwordValidator.validate();
         if (passwordResult) {
             response.err = passwordResult;
@@ -108,7 +108,7 @@ export class Authentication {
 
         // Validate Username
         var usernameValidator = new BaseValidator(username);
-        usernameValidator = new MissingCheck(usernameValidator, ErrorMessage.MissingUsername);
+        usernameValidator = new MissingCheck(usernameValidator, ErrorMessage.MissingUsername.err);
         var usernameResult = await usernameValidator.validate();
         if (usernameResult) {
             response.err = usernameResult;
@@ -118,7 +118,7 @@ export class Authentication {
 
         // Validate password;
         var passwordValidator = new BaseValidator(password);
-        passwordValidator = new MissingCheck(passwordValidator, ErrorMessage.MissingPassword);
+        passwordValidator = new MissingCheck(passwordValidator, ErrorMessage.MissingPassword.err);
         var passwordResult = await passwordValidator.validate();
         if (passwordResult) {
             response.err = passwordResult;
@@ -161,8 +161,8 @@ export class Authentication {
 
         // validate phonenumber
         var phoneNumberValidator = new BaseValidator(phone);
-        phoneNumberValidator = new MissingCheck(phoneNumberValidator, ErrorMessage.MissingPhoneNumber);
-        phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat);
+        phoneNumberValidator = new MissingCheck(phoneNumberValidator, ErrorMessage.MissingPhoneNumber.err);
+        phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat.err);
         var phoneNumberError = await phoneNumberValidator.validate();
         if (phoneNumberError) {
             response.err = phoneNumberError;
@@ -225,7 +225,7 @@ export class Authentication {
 
         // Validate Username
         var customTokenValidator = new BaseValidator(customeToken);
-        customTokenValidator = new MissingCheck(customTokenValidator, ErrorMessage.MissingCustomToken);
+        customTokenValidator = new MissingCheck(customTokenValidator, ErrorMessage.MissingCustomToken.err);
         var customTokenValidationResult = await customTokenValidator.validate();
         if (customTokenValidationResult) {
             response.err = customTokenValidationResult;

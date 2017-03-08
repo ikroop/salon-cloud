@@ -10,6 +10,7 @@ import { Router, Request, Response } from 'express';
 import { SalonCloudResponse } from './../Core/SalonCloudResponse';
 import { Authentication } from './../Core/Authentication/Authentication';
 import { Authorization } from './../Core/Authorization/Authorization';
+import { RestfulResponseAdapter } from './../Core/RestfulResponseAdapter';
 
 export class AuthorizationRouter {
     private router: Router = Router();
@@ -36,21 +37,25 @@ export class AuthorizationRouter {
                     request.user.role = role.data;
                     next();
                 } else {
-                    response.status(role.code);
-                    response.json({ 'err': role.err });
+                    var restfulResponse = new RestfulResponseAdapter(role);
+                    response.statusCode = 200;
+                    response.json(restfulResponse.googleRestfulResponse());
+
                 }
 
             } else {
-                response.status(tokenStatus.code);
-                response.json(tokenStatus.err);
+                var restfulResponse = new RestfulResponseAdapter(tokenStatus);
+                response.statusCode = 200;
+                response.json(restfulResponse.googleRestfulResponse());
             }
         } else { // anonymous
             var role = await authorization.checkPermission(null, request.body.salon_id, request.originalUrl);
             if (role.data) {
                 next();
             } else {
-                response.status(403);
-                response.json();
+                var restfulResponse = new RestfulResponseAdapter(role);
+                response.statusCode = 200;
+                response.json(restfulResponse.googleRestfulResponse());
             }
         }
     }

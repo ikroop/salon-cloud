@@ -56,8 +56,8 @@ describe('Employee Management', function () {
             salon_name: 'Salon Appointment Test'
         }
         var salon = await signedInUser.createSalon(salonInformationInput);
-        validSalonId = salon.data;
-        
+        validSalonId = salon.data.id;
+
         var authentication = new Authentication();
         const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
         await authentication.signUpWithUsernameAndPassword(anotherEmail, defaultPassword);
@@ -65,19 +65,19 @@ describe('Employee Management', function () {
         var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(anotherEmail, defaultPassword);
         anotherUserId = loginData.data.user._id;
         anotherUserToken = loginData.data.auth.token;
-        
+
     });
 
     describe('Unit Test Add New Employee', function () {
         var apiUrl = '/api/v1/employee/create';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to request with invalid token', function (done) {
             var token = invalidToken;
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -94,20 +94,20 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(401);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
+                    res.body.error.code.should.be.equal(401);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to request with token no permission', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' error trying to request with token no permission', function (done) {
             var token = anotherUserToken;
             var salonId = validSalonId;
             var bodyRequest = {
                 'salon_id': salonId,
                 'role': 2,
-                'phone': ((new Date()).getTime()%10000000000).toString(),
+                'phone': ((new Date()).getTime() % 10000000000).toString(),
                 'fullname': 'Thanh Le',
                 'nickname': 'Lee',
                 'salary_rate': 6,
@@ -124,9 +124,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(403);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
+                    res.body.error.code.should.be.equal(403);
                     done();
                 });
         });
@@ -152,9 +152,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -182,9 +182,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -211,9 +211,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingRole.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingRole.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -241,9 +241,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.RoleRangeError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.RoleRangeError.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -271,9 +271,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.RoleRangeError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.RoleRangeError.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -301,9 +301,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -331,9 +331,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.UnacceptedRoleForAddedEmployeeError.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -359,9 +359,9 @@ describe('Employee Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingUsername.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingUsername.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -389,9 +389,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.NotEmailOrPhoneNumber.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.NotEmailOrPhoneNumber.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -418,9 +418,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingFullName.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingFullName.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -448,9 +448,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidNameString.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidNameString.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -477,9 +477,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingNickName.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingNickName.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -507,9 +507,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidNameString.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidNameString.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -536,9 +536,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalaryRate.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingSalaryRate.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -566,9 +566,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.SalaryRateRangeError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.SalaryRateRangeError.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -596,9 +596,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.SalaryRateRangeError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.SalaryRateRangeError.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -625,9 +625,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingCashRate.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingCashRate.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -655,9 +655,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.CashRateRangeError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.CashRateRangeError.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -685,9 +685,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.CashRateRangeError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.CashRateRangeError.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -715,9 +715,9 @@ describe('Employee Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.WrongSSNFormat.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.WrongSSNFormat.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -743,9 +743,10 @@ describe('Employee Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('_id');
-
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('uid');
+                    res.body.data.should.have.property('salon_id');
+                    res.body.data.salon_id.should.be.equal(salonId);
                     done();
                 });
         });
@@ -772,8 +773,10 @@ describe('Employee Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('_id');
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('uid');
+                    res.body.data.should.have.property('salon_id');
+                    res.body.data.salon_id.should.be.equal(salonId);
                     done();
                 });
         });

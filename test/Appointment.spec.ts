@@ -91,7 +91,7 @@ describe('Appointment Management', function () {
         }
         var salon = await signedInUser.createSalon(salonInformationInput);
 
-        validSalonId = salon.data;
+        validSalonId = salon.data.id;
         // 4. Add new employee
         const owner = new Owner(loginData.data.user._id, new SalonManagement(validSalonId));
         // Add new employee
@@ -212,7 +212,7 @@ describe('Appointment Management', function () {
                     - name: 'InvalidTokenError' 
                     - message: 'Token is invalid'
         */
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to create appointment with invalid token', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to create appointment with invalid token', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -233,14 +233,14 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(401);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
+                    res.body.error.code.should.be.equal(401);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to create appointment with no permission account', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' error trying to create appointment with no permission account', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -261,9 +261,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(403);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.NoPermission.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
+                    res.body.error.code.should.be.equal(403);
                     done();
                 });
         });
@@ -294,9 +294,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingPhoneNumber.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingPhoneNumber.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -328,9 +328,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongPhoneNumberFormat.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.WrongPhoneNumberFormat.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -362,9 +362,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingCustomerName.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingCustomerName.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -396,9 +396,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.InvalidNameString.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.InvalidNameString.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -429,9 +429,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingSalonId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -463,9 +463,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -492,9 +492,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingBookedServiceList.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingBookedServiceList.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -529,9 +529,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingServiceId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingServiceId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -567,9 +567,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.ServiceNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.ServiceNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -604,9 +604,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.MissingEmployeeId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingEmployeeId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -642,9 +642,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.EmployeeNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -675,9 +675,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongBookingTimeFormat.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.WrongBookingTimeFormat.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -708,9 +708,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongBookingTimeFormat.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.WrongBookingTimeFormat.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -741,9 +741,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongBookingTimeFormat.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.WrongBookingTimeFormat.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -774,9 +774,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongBookingTimeFormat.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.WrongBookingTimeFormat.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -807,14 +807,14 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongBookingTimeFormat.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.WrongBookingTimeFormat.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.WrongPhoneNumberFormat.err.name + ' error trying to create appointment which has no-minute booking_time', function (done) {
+        it('should return ' + ErrorMessage.WrongBookingTimeFormat.err.name + ' error trying to create appointment which has no-minute booking_time', function (done) {
             var bodyRequest = {
                 "customer_phone": rightFormattedPhoneNumber,
                 "customer_name": rightFormattedName,
@@ -840,9 +840,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.WrongBookingTimeFormat.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.WrongBookingTimeFormat.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -877,9 +877,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -912,9 +912,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -947,9 +947,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -979,8 +979,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('appointment_id');
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('appointment_id');
+
                     done();
                 });
         });
@@ -1009,8 +1010,8 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('appointment_id');
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('appointment_id');
                     done();
                 });
         });
@@ -1040,9 +1041,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1072,9 +1073,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1104,8 +1105,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('appointment_id');
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('appointment_id');
+
                     done();
                 });
         });
@@ -1135,8 +1137,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('appointment_id');
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('appointment_id');
+
                     done();
                 });
         });
@@ -1166,9 +1169,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1198,9 +1201,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1234,8 +1237,8 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('appointment_id');
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('appointment_id');
                     done();
                 });
         });
@@ -1265,9 +1268,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1297,9 +1300,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -1329,9 +1332,9 @@ describe('Appointment Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.should.have.property('name').eql(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.BookingTimeNotAvailable.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });

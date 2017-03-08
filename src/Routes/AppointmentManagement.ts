@@ -20,6 +20,8 @@ import { MissingCheck, IsAfterSecondDate, IsValidSalonId } from './../Core/Valid
 import { Anonymous } from './../Core/User/Anonymous';
 import { BookingAppointment } from './../Modules/AppointmentManagement/BookingAppointment'
 import { AppointmentManagement } from './../Modules/AppointmentManagement/AppointmentManagement';
+import { RestfulResponseAdapter } from './../Core/RestfulResponseAdapter';
+
 export class AppointmentManagementRouter {
     private router: Router = Router();
 
@@ -63,15 +65,9 @@ export class AppointmentManagementRouter {
             // call create appointment function
             var result = await admin.saveAppointment(appointment);
 
-            //return data
-            var responseData;
-            if (result.err) {
-                responseData = result.err;
-            } else {
-                responseData = result.data;
-            }
-            response.status(result.code).json(responseData);
-
+            var restfulResponse = new RestfulResponseAdapter(result);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
         });
 
         this.router.get('/getavailablebookingtime', async function (request: Request, response: Response) {

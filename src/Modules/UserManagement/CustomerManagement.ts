@@ -187,8 +187,8 @@ export class CustomerManagement extends UserManagement implements CustomerManage
         };
 
         let fullnameValidation = new BaseValidator(profile.fullname);
-        fullnameValidation = new MissingCheck(fullnameValidation, ErrorMessage.MissingCustomerName);
-        fullnameValidation = new IsValidNameString(fullnameValidation, ErrorMessage.InvalidNameString);
+        fullnameValidation = new MissingCheck(fullnameValidation, ErrorMessage.MissingCustomerName.err);
+        fullnameValidation = new IsValidNameString(fullnameValidation, ErrorMessage.InvalidNameString.err);
         let fullnameError = await fullnameValidation.validate();
 
         if (fullnameError) {

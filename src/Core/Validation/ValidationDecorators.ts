@@ -375,10 +375,10 @@ export class IsValidUserName extends DecoratingValidator {
         let username: string = this.targetElement;
 
         var usernameValidator = new BaseValidator(username);
-        var usernameEmailValidator = new IsEmail(usernameValidator, ErrorMessage.WrongEmailFormat);
+        var usernameEmailValidator = new IsEmail(usernameValidator, ErrorMessage.WrongEmailFormat.err);
         var usernameEmailResult = await usernameEmailValidator.validate();
 
-        var usernamePhoneValidator = new IsPhoneNumber(usernameValidator, ErrorMessage.WrongPhoneNumberFormat);
+        var usernamePhoneValidator = new IsPhoneNumber(usernameValidator, ErrorMessage.WrongPhoneNumberFormat.err);
         var usernamePhoneResult = await usernamePhoneValidator.validate();
 
         if (usernameEmailResult && usernamePhoneResult) {

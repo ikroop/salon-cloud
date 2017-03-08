@@ -30,7 +30,7 @@ export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterf
                     response.data = null;
                 }
                 if (!user) {
-                    response.err = ErrorMessage.SignInFailed;
+                    response.err = ErrorMessage.SignInFailed.err;
                     response.code = 403;
                     response.data = null;
                 } else {
@@ -81,7 +81,7 @@ export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterf
         let promise = new Promise<SalonCloudResponse<null>>(function (resolve, reject) {
             UserModel.register(new UserModel(user), password, function (err) {
                 if (err) {
-                    response.err = ErrorMessage.UsernameAlreadyExists;
+                    response.err = ErrorMessage.UsernameAlreadyExists.err;
                     response.code = 409;
                     response.data = null;
                 } else {
@@ -114,7 +114,7 @@ export class MongoAuthenticationDatabase implements AuthenticationDatabaseInterf
                 var cert = fs.readFileSync('./Config/Dev/Public.pem');  // get private key
                 jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, payload) {
                     if (err) {
-                        response.err = ErrorMessage.InvalidTokenError;
+                        response.err = ErrorMessage.Unauthorized.err;
                         response.code = 401;
                         response.data = null;
                     } else {

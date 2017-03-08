@@ -38,9 +38,9 @@ export class SignedInUser implements SignedInUserBehavior {
      * 
      * @memberOf SignedInUser
      */
-    public async createSalon(salonInformation: SalonInformation): Promise<SalonCloudResponse<string>> {
+    public async createSalon(salonInformation: SalonInformation): Promise<SalonCloudResponse<any>> {
 
-        var returnResult: SalonCloudResponse<string> = {
+        var returnResult: SalonCloudResponse<any> = {
             code: null,
             data: null,
             err: null
@@ -89,11 +89,11 @@ export class SignedInUser implements SignedInUserBehavior {
             return returnResult;
         }
 
-        returnResult.data = salonData.data._id;
+        returnResult.data = { 'id': salonData.data._id };
         returnResult.code = 200;
         return returnResult;
     };
-    
+
     /**
      * This method get the information off all the salons that connects to the user.
      * User Layer
@@ -102,16 +102,16 @@ export class SignedInUser implements SignedInUserBehavior {
      * @memberOf SignedInUser
      */
     public async getSalonList(): Promise<SalonCloudResponse<Array<SalonInformation>>> {
-        var response : SalonCloudResponse<Array<SalonInformation>> = {
+        var response: SalonCloudResponse<Array<SalonInformation>> = {
             code: null,
             data: null,
             err: null
         }
         var getAllSalon = await this.salonManagementDP.getAllSalon(this.userId);
-        if(getAllSalon.err){
+        if (getAllSalon.err) {
             response.err = getAllSalon.err;
             response.code = getAllSalon.code;
-        }else{
+        } else {
             response.data = getAllSalon.data;
             response.code = getAllSalon.code;
         }

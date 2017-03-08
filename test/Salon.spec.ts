@@ -80,7 +80,7 @@ describe('Salon Management', function () {
             salon_name: 'Salon Appointment Test'
         }
         var salon = await signedInUser.createSalon(salonInformationInput_1);
-        validSalonId = salon.data;
+        validSalonId = salon.data.id;
 
         var salonInformationInput_2 = {
             email: 'salon2@salon.com',
@@ -119,7 +119,7 @@ describe('Salon Management', function () {
     describe('Unit Test Create Salon API', function () {
         var apiUrl = '/api/v1/salon/create';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to create salon information with invalid token', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to create salon information with invalid token', function (done) {
             var token = invalidToken;
             var bodyRequest = {
                 'salon_name': 'SunshineNails VA',
@@ -137,9 +137,9 @@ describe('Salon Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(401);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
+                    res.body.error.code.should.be.equal(401);
                     done();
                 });
         });
@@ -161,9 +161,9 @@ describe('Salon Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('MissingSalonName');
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingSalonName.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -185,9 +185,9 @@ describe('Salon Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('MissingAddress');
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingAddress.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -209,9 +209,9 @@ describe('Salon Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('MissingPhoneNumber');
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingPhoneNumber.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -234,9 +234,9 @@ describe('Salon Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('WrongPhoneNumberFormat');
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.WrongPhoneNumberFormat.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -258,9 +258,9 @@ describe('Salon Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal('WrongEmailFormat');
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.WrongEmailFormat.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -282,8 +282,9 @@ describe('Salon Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('_id');
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('id');
+
                     done();
                 });
         });
@@ -304,8 +305,8 @@ describe('Salon Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('_id');
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('id');
                     done();
                 });
         });
@@ -315,7 +316,7 @@ describe('Salon Management', function () {
     describe('Unit Test Get Salon List By User Id', function () {
         var apiUrl = '/api/v1/salon/getsalonlist';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to get salon list with invalid token', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to get salon list with invalid token', function (done) {
             var token = invalidToken;
             request(server)
                 .get(apiUrl)
@@ -326,14 +327,14 @@ describe('Salon Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(401);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
+                    res.body.error.code.should.be.equal(401);
                     done();
                 });
         })
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to get salon list without authentication', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to get salon list without authentication', function (done) {
             var token = validUserIdOwner3Salons;
             request(server)
                 .get(apiUrl)
@@ -342,8 +343,9 @@ describe('Salon Management', function () {
                     if (err) {
                         throw err;
                     }
-                    console.log(res.body);
-                    res.status.should.be.equal(403);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
+                    res.body.error.code.should.be.equal(401);
                     done();
                 });
         })
@@ -359,12 +361,11 @@ describe('Salon Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('salon_list');
-                    res.body.salon_list.should.have.length(3);
-                    ['Salon Appointment Test', 'Salon Appointment Test 2', 'Salon Appointment Test 3'].indexOf(res.body.salon_list[0].salon_name).should.not.be.equal(-1);
-                    ['Salon Appointment Test', 'Salon Appointment Test 2', 'Salon Appointment Test 3'].indexOf(res.body.salon_list[1].salon_name).should.not.be.equal(-1);
-                    ['Salon Appointment Test', 'Salon Appointment Test 2', 'Salon Appointment Test 3'].indexOf(res.body.salon_list[2].salon_name).should.not.be.equal(-1);
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.length(3);
+                    ['Salon Appointment Test', 'Salon Appointment Test 2', 'Salon Appointment Test 3'].indexOf(res.body.data[0].salon_name).should.not.be.equal(-1);
+                    ['Salon Appointment Test', 'Salon Appointment Test 2', 'Salon Appointment Test 3'].indexOf(res.body.data[1].salon_name).should.not.be.equal(-1);
+                    ['Salon Appointment Test', 'Salon Appointment Test 2', 'Salon Appointment Test 3'].indexOf(res.body.data[2].salon_name).should.not.be.equal(-1);
 
                     done();
                 });
@@ -384,9 +385,9 @@ describe('Salon Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -400,9 +401,9 @@ describe('Salon Management', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -415,16 +416,15 @@ describe('Salon Management', function () {
                     if (err) {
                         throw err;
                     }
-
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('name');
-                    res.body.name.should.be.equal(salonInformationInput_1.salon_name);
-                    res.body.should.have.property('phone');
-                    res.body.phone.should.be.equal(salonInformationInput_1.phone.number);
-                    res.body.should.have.property('location');
-                    res.body.location.should.be.equal(salonInformationInput_1.location.address);
-                    res.body.should.have.property('email');
-                    res.body.email.should.be.equal(salonInformationInput_1.email);
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('name');
+                    res.body.data.name.should.be.equal(salonInformationInput_1.salon_name);
+                    res.body.data.should.have.property('phone');
+                    res.body.data.phone.should.be.equal(salonInformationInput_1.phone.number);
+                    res.body.data.should.have.property('location');
+                    res.body.data.location.should.be.equal(salonInformationInput_1.location.address);
+                    res.body.data.should.have.property('email');
+                    res.body.data.email.should.be.equal(salonInformationInput_1.email);
                     done();
                 });
         });

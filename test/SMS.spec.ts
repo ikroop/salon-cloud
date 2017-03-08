@@ -18,7 +18,7 @@ describe('SMS', function () {
         server.close();
         done();
     });
-    
+
     describe('Send Verification Code', function () {
         var apiUrl = '/api/v1/sms/sendverificationcode';
         it('should return ' + ErrorMessage.MissingPhoneNumber.err.name + ' error trying to send verification code without phone number', function (done) {
@@ -33,9 +33,9 @@ describe('SMS', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingPhoneNumber.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingPhoneNumber.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -52,9 +52,9 @@ describe('SMS', function () {
                         throw err;
                     }
 
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.WrongPhoneNumberFormat.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.WrongPhoneNumberFormat.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -70,9 +70,8 @@ describe('SMS', function () {
                     if (err) {
                         throw err;
                     }
-
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('verification_id');
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('_id');
                     done();
                 });
         });

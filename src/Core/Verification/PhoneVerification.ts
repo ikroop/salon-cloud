@@ -36,8 +36,8 @@ export class PhoneVerification extends Verification {
 
         // phone number validation
         var phoneNumberValidator = new BaseValidator(phone);
-        phoneNumberValidator = new MissingCheck(phoneNumberValidator, ErrorMessage.MissingPhoneNumber);
-        phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat);
+        phoneNumberValidator = new MissingCheck(phoneNumberValidator, ErrorMessage.MissingPhoneNumber.err);
+        phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat.err);
         var phoneNumberError = await phoneNumberValidator.validate();
         if (phoneNumberError) {
             returnResult.err = phoneNumberError;
@@ -82,8 +82,8 @@ export class PhoneVerification extends Verification {
 
         // phone number validation
         var phoneNumberValidator = new BaseValidator(phone);
-        phoneNumberValidator = new MissingCheck(phoneNumberValidator, ErrorMessage.MissingPhoneNumber);
-        phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat);
+        phoneNumberValidator = new MissingCheck(phoneNumberValidator, ErrorMessage.MissingPhoneNumber.err);
+        phoneNumberValidator = new IsPhoneNumber(phoneNumberValidator, ErrorMessage.WrongPhoneNumberFormat.err);
         var phoneNumberError = await phoneNumberValidator.validate();
         if (phoneNumberError) {
             returnResult.err = phoneNumberError;
@@ -92,7 +92,7 @@ export class PhoneVerification extends Verification {
         }
 
         var verificationIdValidator = new BaseValidator(verificationId);
-        verificationIdValidator = new MissingCheck(verificationIdValidator, ErrorMessage.MissingVerificationId);
+        verificationIdValidator = new MissingCheck(verificationIdValidator, ErrorMessage.MissingVerificationId.err);
         var verificationIdError = await verificationIdValidator.validate();
         if (verificationIdError) {
             returnResult.err = verificationIdError;
@@ -101,7 +101,7 @@ export class PhoneVerification extends Verification {
         }
 
         var verificationCodeValidator = new BaseValidator(code);
-        verificationCodeValidator = new MissingCheck(verificationCodeValidator, ErrorMessage.MissingVerificationCode);
+        verificationCodeValidator = new MissingCheck(verificationCodeValidator, ErrorMessage.MissingVerificationCode.err);
         var verificationCodeError = await verificationCodeValidator.validate();
         if (verificationCodeError) {
             returnResult.err = verificationCodeError;
@@ -120,7 +120,7 @@ export class PhoneVerification extends Verification {
                 returnResult.code = 200;
             } else {
                 returnResult.data = false;
-                returnResult.err = ErrorMessage.WrongVerificationCode;
+                returnResult.err = ErrorMessage.WrongVerificationCode.err;
                 returnResult.code = 400;
             }
         } catch (err) {

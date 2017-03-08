@@ -7,6 +7,7 @@
 import { Router, Request, Response } from 'express';
 import { SalonCloudResponse } from './../Core/SalonCloudResponse';
 import { PhoneVerification } from './../Core/Verification/PhoneVerification';
+import { RestfulResponseAdapter } from './../Core/RestfulResponseAdapter';
 
 export class SMSRouter {
     private router: Router = Router();
@@ -18,16 +19,9 @@ export class SMSRouter {
             var phoneVerification = new PhoneVerification();
 
             var sendSMSAction = await phoneVerification.sendVerificationCode(phone);
-            var returnData;
-            if (sendSMSAction.err) {
-                returnData = sendSMSAction.err
-            } else {
-                returnData = {
-                    'verification_id': sendSMSAction.data._id,
-                }
-            }
-
-            response.status(sendSMSAction.code).json(returnData);
+            var restfulResponse = new RestfulResponseAdapter(sendSMSAction);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
         });
         return this.router;
     }
