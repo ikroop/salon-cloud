@@ -787,7 +787,7 @@ describe('Employee Management', function () {
     describe('Unit Test Get Employee List', function () {
         var apiUrl = '/api/v1/employee/getall';
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with missing token', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to request with missing token', function (done) {
             var parameterUrl = apiUrl + '?salon_id=' + validSalonId;
             request(server)
                 .get(parameterUrl)
@@ -795,12 +795,14 @@ describe('Employee Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(403);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
+                    res.body.error.code.should.be.equal(401);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.InvalidTokenError.err.name + ' error trying to request with invalid token', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' error trying to request with invalid token', function (done) {
             var parameterUrl = apiUrl + '?salon_id=' + validSalonId;
             request(server)
                 .get(parameterUrl)
@@ -809,14 +811,14 @@ describe('Employee Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(401);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidTokenError.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
+                    res.body.error.code.should.be.equal(403);
                     done();
                 });
         });
 
-        it('should return ' + ErrorMessage.NoPermission.err.name + ' error trying to request with token no permission', function (done) {
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' error trying to request with token no permission', function (done) {
             var parameterUrl = apiUrl + '?salon_id=' + validSalonId;
             request(server)
                 .get(parameterUrl)
@@ -825,9 +827,9 @@ describe('Employee Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(403);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.NoPermission.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
+                    res.body.error.code.should.be.equal(403);
                     done();
                 });
         });
@@ -841,9 +843,9 @@ describe('Employee Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -857,9 +859,9 @@ describe('Employee Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(400);
-                    res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
                     done();
                 });
         });
@@ -873,8 +875,7 @@ describe('Employee Management', function () {
                     if (err) {
                         throw err;
                     }
-                    res.status.should.be.equal(200);
-                    res.body.should.have.property('employees');
+                    res.body.should.have.property('data');
                     done();
                 });
         });
