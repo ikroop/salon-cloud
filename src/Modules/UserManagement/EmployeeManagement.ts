@@ -49,9 +49,9 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
             salon_id: this.salonId,
             status: true,
             nickname: profile.nickname,
-            salary_rate: profile.salary_rate,
-            cash_rate: profile.cash_rate,
-            social_security_number: profile.social_security_number,
+            salary_rate: profile.salary_rate || null,
+            cash_rate: profile.cash_rate || null,
+            social_security_number: profile.social_security_number || null,
 
         }
         let addProfileAction = await this.addProfile(employeeId, newProfile);
@@ -176,7 +176,7 @@ export class EmployeeManagement extends UserManagement implements EmployeeManage
      * 
      * @memberOf EmployeeManagement
      */
-    public async getAllEmployee(): Promise<SalonCloudResponse<Array<UserData>>> {
+    public async getAllEmployee(): Promise<SalonCloudResponse<Array<IUserData>>> {
         var response: SalonCloudResponse<Array<UserData>> = {
             data: null,
             code: null,

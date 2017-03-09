@@ -16,5 +16,6 @@ export interface EmployeeReturn {
     username: string,
     phone: string,
     fullname: string,
-    role: number
+    role: number,
+    password: string
 }

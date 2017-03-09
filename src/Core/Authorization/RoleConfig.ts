@@ -37,6 +37,12 @@ export const RoleConfig =
             ]
         },
         {
+            'api': '/api/v1/employee/getall',
+            'role': [
+                'Owner', 'Manager'
+            ]
+        },
+        {
             'api': '/api/v1/service/create',
             'role': [
                 'Owner'

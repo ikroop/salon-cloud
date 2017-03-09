@@ -4,7 +4,7 @@
  *
  */
 
-import { UserProfile } from './../../Modules/UserManagement/UserData'
+import { UserProfile, IUserData } from './../../Modules/UserManagement/UserData'
 import { AppointmentData, SaveAppointmentData } from './../../Modules/AppointmentManagement/AppointmentData'
 import { IDailyScheduleData, IWeeklyScheduleData, WeeklyScheduleData, DailyScheduleData } from './../../Modules/Schedule/ScheduleData';
 import { ScheduleBehavior } from './../../Modules/Schedule/ScheduleBehavior'
@@ -14,7 +14,7 @@ import { SalonTimeData } from './../../Core/SalonTime/SalonTimeData'
 export interface AdministratorBehavior {
     cancelAppointment(appointmentId: string);
     getAllCustomer(): Array<UserProfile>;
-    getAllEmployeeProfile(): Array<UserProfile>;
+    getAllEmployeeProfile(salonId: string): Promise<SalonCloudResponse<IUserData[]>>;
     getCustomerById(customerId: string): UserProfile;
     getEmployeeProfile(employeeId: string): UserProfile;
     saveAppointment(appointment: SaveAppointmentData);

@@ -143,27 +143,30 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
     public async getAllEmployees(): Promise<IUserData[]> {
         var emplpoyeeList: IUserData[] = [];
         var salonRef = this.salonDatabase.getSalonFirebaseRef();
+        var userRef = this.userRef;
+        let employeeProfileSnapshot = {};
+
 
         //get User Salon Profile which is employee.
-        await salonRef.child('users').orderByChild('role').startAt(2).endAt(3).once('value', function (snapshot) {
-            var userProfile: UserProfile = snapshot.val();
-            var uid = snapshot.key;
-            var userData: IUserData = null;
+        await salonRef.child(this.salonId + '/users/').orderByChild('role').startAt(2).endAt(3).once('value', function (snapshot) {
 
-            //FIX ME: check data is overwrited or not.    
-            //get User Data
-            this.userRef.child(uid).once('value', function (snapshot) {
-                userData = snapshot.val();
-                userData._id = uid;
-                userData.profile.push(userProfile);
-                emplpoyeeList.push(userData);
+            snapshot.forEach(function (element) {
+                employeeProfileSnapshot[element.key] = element.val();
             });
+
         }, function (errorObject) {
             throw errorObject;
         });
 
+        for (var uid in employeeProfileSnapshot) {
+            let userData = await this.getUserDataById(uid);
+            userData.profile = [];
+            userData.profile.push(employeeProfileSnapshot[uid]);
+            emplpoyeeList.push(userData);
+        }
         return emplpoyeeList;
     }
+
 
     /**
      * 
@@ -253,7 +256,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
                 var userProfile = snapshot.val();
                 var infoObject = {};
                 infoObject['salon_id'] = eachSalon;
-                infoObject['salon_name'] =  userProfile.profile.information.salon_name;
+                infoObject['salon_name'] = userProfile.profile.information.salon_name;
                 infoObject['role'] = userProfile.users[userId].role;
                 infoObject['phone'] = userProfile.profile.information.phone.number;
                 infoObject['address'] = userProfile.profile.information.location.address;
@@ -266,7 +269,7 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
         return salonInformationList;
 
     }
-    
+
     /**
      * 
      * 
@@ -304,10 +307,10 @@ export class FirebaseUserManagement implements UserManagementDatabaseInterface<I
      * 
      * @memberOf FirebaseUserManagement
      */
-    public async checkUserIdExistence(userId): Promise<boolean>{
-        var exist :boolean = false;
-        await this.userRef.once('value', function(snapshot){
-            if(snapshot.hasChild(userId)){
+    public async checkUserIdExistence(userId): Promise<boolean> {
+        var exist: boolean = false;
+        await this.userRef.once('value', function (snapshot) {
+            if (snapshot.hasChild(userId)) {
                 exist = true;
             }
         });
