@@ -68,7 +68,6 @@ describe('Employee Management', function () {
 
         var owner = new Owner(salonOwnerId, new SalonManagement(validSalonId));
         let managerPhone = ((new Date()).getTime() % 10000000000).toString();
-        console.log('phone: ', managerPhone);
         var managerProfile: UserProfile = {
             fullname: 'Hoang',
             nickname: 'David',
@@ -79,8 +78,6 @@ describe('Employee Management', function () {
             phone: managerPhone
         }
         let managerData = await owner.addEmployee(managerPhone, managerProfile, new PhoneVerification());
-        console.log('managerData: %j', managerData);
-
         let managerLoginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(managerPhone, managerData.data.password);
         managerToken = managerLoginData.data.auth.token;
 
@@ -916,6 +913,13 @@ describe('Employee Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('data');
+
+                    let profile = res.body.data[0].profile[0];
+                    profile.should.not.have.property('address');
+                    profile.should.not.have.property('birthday');
+                    profile.should.not.have.property('cash_rate');
+                    profile.should.not.have.property('salary_rate');
+                    profile.should.not.have.property('social_security_number');
                     done();
                 });
         });
