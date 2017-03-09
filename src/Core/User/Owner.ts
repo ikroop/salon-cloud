@@ -23,6 +23,7 @@ import { defaultWeeklySchedule } from './../DefaultData'
 import { EmployeeSchedule } from './../../Modules/Schedule/EmployeeSchedule'
 import { EmployeeReturn } from './../../Modules/UserManagement/EmployeeData';
 import { UserToken } from './../Authentication/AuthenticationData';
+import { SalonManagement } from './../../Modules/SalonManagement/SalonManagement';
 
 export class Owner extends AbstractAdministrator {
 
@@ -230,8 +231,28 @@ export class Owner extends AbstractAdministrator {
         return;
     };
 
-    protected filterEmployeeProfileData(employeeList: IUserData[]): IUserData[]{
+    protected filterEmployeeProfileData(employeeList: IUserData[]): IUserData[] {
         return employeeList;
     }
 
+    public async getSalonSettings(salonId: string): Promise<SalonCloudResponse<SalonSetting>> {
+
+        var response: SalonCloudResponse<SalonSetting> = {
+            code: null,
+            err: null,
+            data: null
+        };
+
+        var salonManagement = new SalonManagement(salonId);
+        var salonProfile = await salonManagement.getSalonById();
+
+        response.code = salonProfile.code;
+        if (!salonProfile.err){
+            response.data = salonProfile.data.setting;
+        }else{
+            response.err = salonProfile.err;
+        }
+
+        return response;
+    };
 }
