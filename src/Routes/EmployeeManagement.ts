@@ -16,6 +16,9 @@ import { Owner } from './../Core/User/Owner'
 import { PhoneVerification } from './../Core/Verification/PhoneVerification'
 import { UserProfile } from './../Modules/UserManagement/UserData';
 import { RestfulResponseAdapter } from './../Core/RestfulResponseAdapter';
+import { AdministratorBehavior } from './../Core/User/AdministratorBehavior';
+import { AbstractAdministrator } from './../Core/User/AbstractAdministrator';
+import { UserFactory } from './../Core/User/UserFactory';
 
 export class EmployeeManagementRouter {
     private router: Router = Router();
@@ -53,17 +56,18 @@ export class EmployeeManagementRouter {
         this.router.get('/getall', authorizationRouter.checkPermission, async (request: Request, response: Response) => {
 
             let salonId = request.query.salon_id || null;
-            
 
-            let employeeManagement = new EmployeeManagement(salonId);
-            let employees = await employeeManagement.getAllEmployee();
-            if (employees.code === 200) {
-                response.status(employees.code).json({ 'employees': employees.data});
-            } else {
-                response.status(employees.code).json({'err': employees.err});
-            }
-        });  
-        
+            var admin: AdministratorBehavior;
+
+            //create appropriate user object using UserFactory;
+            admin = UserFactory.createAdminUserObject(request.user._id, request.body.salon_id, request.user.role);
+            let result = await admin.getAllEmployeeProfile(salonId);
+
+            var restfulResponse = new RestfulResponseAdapter(result);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
+        });
+
         return this.router;
     }
 }

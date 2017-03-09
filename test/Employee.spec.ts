@@ -19,6 +19,8 @@ import { EmployeeReturn } from './../src/Modules/UserManagement/EmployeeData';
 import { UserToken } from './../src/Core/Authentication/AuthenticationData';
 import { SalonCloudResponse } from './../src/Core/SalonCloudResponse';
 import { SalonInformation } from './../src/Modules/SalonManagement/SalonData'
+import { UserProfile } from './../src/Modules/UserManagement/UserData';
+import { RoleDefinition } from './../src/Core/Authorization/RoleDefinition';
 
 describe('Employee Management', function () {
     let validToken;
@@ -30,6 +32,10 @@ describe('Employee Management', function () {
     let validEmployeeId;
     let anotherUserId;
     let anotherUserToken;
+    let salonOwnerToken;
+    let salonManagerToken;
+    let salonOwnerId;
+    let managerToken;
 
     before(async function () {
         // 1. Create Owner 
@@ -40,6 +46,8 @@ describe('Employee Management', function () {
         // 2. login to get access token
         var loginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(ownerEmail, defaultPassword);
         validToken = loginData.data.auth.token;
+        salonOwnerId = loginData.data.user._id;
+        salonOwnerToken = validToken;
         // 3. Create salon
         var signedInUser = new SignedInUser(loginData.data.user._id, new SalonManagement(null));
         var salonInformationInput: SalonInformation = {
@@ -57,6 +65,24 @@ describe('Employee Management', function () {
         }
         var salon = await signedInUser.createSalon(salonInformationInput);
         validSalonId = salon.data.id;
+
+        var owner = new Owner(salonOwnerId, new SalonManagement(validSalonId));
+        let managerPhone = ((new Date()).getTime() % 10000000000).toString();
+        console.log('phone: ', managerPhone);
+        var managerProfile: UserProfile = {
+            fullname: 'Hoang',
+            nickname: 'David',
+            role: RoleDefinition.Manager.value,
+            salon_id: validSalonId,
+            cash_rate: 0.6,
+            salary_rate: 0.4,
+            phone: managerPhone
+        }
+        let managerData = await owner.addEmployee(managerPhone, managerProfile, new PhoneVerification());
+        console.log('managerData: %j', managerData);
+
+        let managerLoginData: SalonCloudResponse<UserToken> = await authentication.signInWithUsernameAndPassword(managerPhone, managerData.data.password);
+        managerToken = managerLoginData.data.auth.token;
 
         var authentication = new Authentication();
         const anotherEmail = `${Math.random().toString(36).substring(7)}@salonhelps.com`;
@@ -802,7 +828,7 @@ describe('Employee Management', function () {
                 });
         });
 
-        it('should return ' + ErrorMessage.Forbidden.err.name + ' error trying to request with invalid token', function (done) {
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to request with invalid token', function (done) {
             var parameterUrl = apiUrl + '?salon_id=' + validSalonId;
             request(server)
                 .get(parameterUrl)
@@ -812,8 +838,8 @@ describe('Employee Management', function () {
                         throw err;
                     }
                     res.body.should.have.property('error');
-                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
-                    res.body.error.code.should.be.equal(403);
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
+                    res.body.error.code.should.be.equal(401);
                     done();
                 });
         });
@@ -866,11 +892,25 @@ describe('Employee Management', function () {
                 });
         });
 
-        it('should return all employee list by salon id successfully', function (done) {
+        it('should return all employee list by salon id successfully with salon onwer', function (done) {
             var parameterUrl = apiUrl + '?salon_id=' + validSalonId;
             request(server)
                 .get(parameterUrl)
-                .set({ 'Authorization': validToken })
+                .set({ 'Authorization': salonOwnerToken })
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.body.should.have.property('data');
+                    done();
+                });
+        });
+
+        it('should return all employee list by salon id successfully with salon manager', function (done) {
+            var parameterUrl = apiUrl + '?salon_id=' + validSalonId;
+            request(server)
+                .get(parameterUrl)
+                .set({ 'Authorization': managerToken })
                 .end(function (err, res) {
                     if (err) {
                         throw err;
