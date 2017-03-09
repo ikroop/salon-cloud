@@ -429,4 +429,123 @@ describe('Salon Management', function () {
                 });
         });
     });
+
+    describe('Unit Test get salon settings', function () {
+        var apiUrl = '/api/v1/salon/getsettings';
+
+        it('should return ' + ErrorMessage.Unauthorized.err.name + ' error trying to request with invalid token', function (done) {
+            var token = invalidToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Unauthorized.err.name);
+                    res.body.error.code.should.be.equal(401);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.Forbidden.err.name + ' error trying to request with token no permission', function (done) {
+            var token = validToken;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.Forbidden.err.name);
+                    res.body.error.code.should.be.equal(403);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.MissingSalonId.err.name + ' error trying to create new employee without salon id', function (done) {
+            var token = validToken;
+            var bodyRequest = {
+
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.MissingSalonId.err.name);
+                    res.body.error.code.should.be.equal(400);
+                    done();
+                });
+        });
+
+        it('should return ' + ErrorMessage.SalonNotFound.err.name + ' error trying to create new employee wrong salon id', function (done) {
+            var token = validToken;
+            var salonId = notFoundSalonId;
+            var bodyRequest = {
+                'salon_id': salonId
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+                    res.body.should.have.property('error');
+                    res.body.error.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
+                    res.body.error.code.should.be.equal(400);
+                    done();
+                });
+        });
+
+        it('should return salon settings data trying to get salon settings', function (done) {
+            var token = validTokenOwner3Salons;
+            var salonId = validSalonId;
+            var bodyRequest = {
+                'salon_id': salonId
+            };
+            request(server)
+                .post(apiUrl)
+                .send(bodyRequest)
+                .set({ 'Authorization': token })
+
+                .end(function (err, res) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    res.body.should.have.property('data');
+                    res.body.data.should.have.property('appointment_reminder');
+                    res.body.data.should.have.property('flexible_time');
+                    res.body.data.should.have.property('technician_checkout');
+                    res.body.data.should.have.property('enable_online_booking');
+                    done();
+                });
+        });
+    });
+
 });

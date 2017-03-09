@@ -31,6 +31,12 @@ export const RoleConfig =
             ]
         },
         {
+            'api': '/api/v1/salon/getsettings',
+            'role': [
+                'Owner'
+            ]
+        },
+        {
             'api': '/api/v1/employee/create',
             'role': [
                 'Owner'

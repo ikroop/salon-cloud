@@ -13,6 +13,7 @@ import { UserManagement } from './../Modules/UserManagement/UserManagement';
 import { SalonInformation } from './../Modules/SalonManagement/SalonData'
 import { EmployeeManagement } from './../Modules/UserManagement/EmployeeManagement';
 import { RestfulResponseAdapter } from './../Core/RestfulResponseAdapter';
+import { Owner } from './../Core/User/Owner';
 
 export class SalonManagementRouter {
     private router: Router = Router();
@@ -75,8 +76,19 @@ export class SalonManagementRouter {
                 salonProfile.data = dataReturn;
             }
 
-
             var restfulResponse = new RestfulResponseAdapter(salonProfile);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
+        });
+
+        this.router.post('/getsettings', authorizationRouter.checkPermission, async function (request: Request, response: Response) {
+            let salonId = request.body.salon_id;
+            let userId = request.user._id;
+
+            var owner = new Owner(userId, new SalonManagement(salonId));
+            var salonSettings = await owner.getSalonSettings(salonId);
+
+            var restfulResponse = new RestfulResponseAdapter(salonSettings);
             response.statusCode = 200;
             response.json(restfulResponse.googleRestfulResponse());
         });
