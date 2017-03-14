@@ -1344,9 +1344,8 @@ describe('Appointment Management', function () {
     });
     describe('Unit Test Get Available Booking Time', function () {
         var apiUrl = '/api/v1/appointment/getavailablebookingtime';
-        var validServiceId = 
         it('should return ' + ErrorMessage.MissingSalonId.err.name + ' trying to get available booking time without salon id', function (done) {
-            var para = '?service_list[]='+validServiceId+'&service_list[]='+validServiceIdWithLongerTime+'&date=2017-02-28%2010:45:00&employee_id='+validEmployeeId;
+            var para = '?service_list[]=' + validServiceId + '&service_list[]=' + validServiceIdWithLongerTime + '&date=2017-02-28%2010:45:00&employee_id=' + validEmployeeId;
             request(server)
                 .get(apiUrl + para)
                 .set({ 'Authorization': null })
@@ -1364,7 +1363,7 @@ describe('Appointment Management', function () {
         });
 
         it('should return ' + ErrorMessage.SalonNotFound.err.name + ' trying to get available booking time with invalid salon id', function (done) {
-            var para = '?salon_id='+invalidSalonId+'&?service_list[]='+validServiceId+'&service_list[]='+validServiceIdWithLongerTime+'&date=2017-02-28%2010:45:00&employee_id='+validEmployeeId;
+            var para = '?salon_id=' + invalidSalonId + '&service_list[]=' + validServiceId + '&service_list[]=' + validServiceIdWithLongerTime + '&date=2017-02-28%2010:45:00&employee_id=' + validEmployeeId;
             request(server)
                 .get(apiUrl + para)
                 .set({ 'Authorization': null })
@@ -1378,10 +1377,10 @@ describe('Appointment Management', function () {
                     res.body.should.have.property('err');
                     res.body.err.name.should.be.equal(ErrorMessage.SalonNotFound.err.name);
                     done();
+                });
         });
-
         it('should return ' + ErrorMessage.EmployeeNotFound.err.name + ' trying to get available booking time with invalid employee id', function (done) {
-            var para = '?salon_id='+validSalonId+'&?service_list[]='+validServiceId+'&service_list[]='+validServiceIdWithLongerTime+'&date=2017-02-28%2010:45:00&employee_id='+invalidEmployeeId;
+            var para = '?salon_id=' + validSalonId + '&?service_list[]=' + validServiceId + '&service_list[]=' + validServiceIdWithLongerTime + '&date=2017-02-28%2010:45:00&employee_id=' + invalidEmployeeId;
             request(server)
                 .get(apiUrl + para)
                 .set({ 'Authorization': null })
@@ -1395,10 +1394,11 @@ describe('Appointment Management', function () {
                     res.body.should.have.property('err');
                     res.body.err.name.should.be.equal(ErrorMessage.EmployeeNotFound.err.name);
                     done();
+                });
         });
 
-        it('should return ' + ErrorMessage.MissingDate.err.name + ' trying to get available booking time without date', function () {
-            var para = '?salon_id='+validSalonId+'&?service_list[]='+validServiceId+'&service_list[]='+validServiceIdWithLongerTime+'&employee_id='+validEmployeeId;
+        it('should return ' + ErrorMessage.MissingStartDate.err.name + ' trying to get available booking time without date', function (done) {
+            var para = '?salon_id=' + validSalonId + '&service_list[]=' + validServiceId + '&service_list[]=' + validServiceIdWithLongerTime + '&employee_id=' + validEmployeeId;
             request(server)
                 .get(apiUrl + para)
                 .set({ 'Authorization': null })
@@ -1410,12 +1410,12 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.MissingDate.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.MissingStartDate.err.name);
                     done();
+                });
         });
-
-        it('should return ' + ErrorMessage.InvalidDate.err.name + ' trying to get avaliable booking time with invalid date', function () {
-            var para = '?salon_id='+validSalonId+'&?service_list[]='+validServiceId+'&service_list[]='+validServiceIdWithLongerTime+'&date=2017-15-28%2010:45:00&employee_id='+validEmployeeId;
+        it('should return ' + ErrorMessage.WrongBookingTimeFormat.err.name + ' trying to get avaliable booking time with invalid date', function (done) {
+            var para = '?salon_id=' + validSalonId + '&service_list[]=' + validServiceId + '&service_list[]=' + validServiceIdWithLongerTime + '&date=2017-15-28%2010:40h5:00&employee_id=' + validEmployeeId;
             request(server)
                 .get(apiUrl + para)
                 .set({ 'Authorization': null })
@@ -1427,12 +1427,12 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(400);
                     res.body.should.have.property('err');
-                    res.body.err.name.should.be.equal(ErrorMessage.InvalidDate.err.name);
+                    res.body.err.name.should.be.equal(ErrorMessage.WrongBookingTimeFormat.err.name);
                     done();
+                });
         });
-
-        it('should return ' + ErrorMessage.MissingServiceId.err.name + 'trying to get available booking time without service id ', function () {
-            var para = '?salon_id='+validSalonId+'&date=2017-02-28%2010:45:00&employee_id='+validEmployeeId;
+        it('should return ' + ErrorMessage.MissingServiceId.err.name + 'trying to get available booking time without service id ', function (done) {
+            var para = '?salon_id=' + validSalonId + '&date=2017-02-28%2010:45:00&employee_id=' + validEmployeeId;
             request(server)
                 .get(apiUrl + para)
                 .set({ 'Authorization': null })
@@ -1446,9 +1446,10 @@ describe('Appointment Management', function () {
                     res.body.should.have.property('err');
                     res.body.err.name.should.be.equal(ErrorMessage.MissingServiceId.err.name);
                     done();
+                });
         });
-        it('should return ' + ErrorMessage.ServiceNotFound.err.name + 'trying to get available booking time with invalid service id ', function () {
-            var para = '?salon_id='+validSalonId+'&?service_list[]='+invalidServiceId+'&service_list[]='+validServiceIdWithLongerTime+'&date=2017-02-28%2010:45:00&employee_id='+validEmployeeId;
+        it('should return ' + ErrorMessage.ServiceNotFound.err.name + 'trying to get available booking time with invalid service id ', function (done) {
+            var para = '?salon_id=' + validSalonId + '&service_list[]=' + invalidServiceId + '&date=2017-02-28%2010:45:00&employee_id=' + validEmployeeId;
             request(server)
                 .get(apiUrl + para)
                 .set({ 'Authorization': null })
@@ -1462,9 +1463,10 @@ describe('Appointment Management', function () {
                     res.body.should.have.property('err');
                     res.body.err.name.should.be.equal(ErrorMessage.ServiceNotFound.err.name);
                     done();
+                });
         });
-        it('should return data if successfully get available booking time ', function () {
-            var para = '?salon_id='+validSalonId+'&?service_list[]='+validServiceId+'&service_list[]='+validServiceIdWithLongerTime+'&date=2017-02-28%2010:45:00&employee_id='+validEmployeeId;
+        it('should return data if successfully get available booking time ', function (done) {
+            var para = '?salon_id=' + validSalonId + '&?service_list[]=' + validServiceId + '&service_list[]=' + validServiceIdWithLongerTime + '&date=2017-02-28%2010:45:00&employee_id=' + validEmployeeId;
             request(server)
                 .get(apiUrl + para)
                 .set({ 'Authorization': null })
@@ -1477,7 +1479,8 @@ describe('Appointment Management', function () {
                     res.status.should.be.equal(200);
                     res.body.should.have.property('data');
                     done();
+                });
         });
-    });
 
-});
+    });
+})
