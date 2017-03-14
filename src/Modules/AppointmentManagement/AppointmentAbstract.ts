@@ -17,7 +17,7 @@ import { EmployeeSchedule } from './../Schedule/EmployeeSchedule'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { DailyScheduleData, DailyScheduleArrayData, DailyDayData } from './../Schedule/ScheduleData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
-import { MissingCheck, IsValidNameString, IsValidEmployeeId, IsSalonTime, IsValidServiceId, IsAfterSecondDate, IsBeforeSecondDate } from './../../Core/Validation/ValidationDecorators';
+import { MissingCheck, IsValidNameString, IsValidEmployeeId, IsSalonTime, IsValidServiceId, IsAfterSecondDate, IsBeforeSecondDate, IsValidSalonId } from './../../Core/Validation/ValidationDecorators';
 
 export abstract class AppointmentAbstract implements AppointmentBehavior {
     private appointmentManagementDP: AppointmentManagement;
@@ -693,6 +693,16 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             code: null,
             err: null
         }
+        var salonIdValidator = new BaseValidator(this.salonId);
+        salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId.err);
+        salonIdValidator = new IsValidSalonId(salonIdValidator, ErrorMessage.SalonNotFound.err);
+        var salonIdResult = await salonIdValidator.validate();
+        if (salonIdResult) {
+            response.err = salonIdResult;
+            response.code = 400;
+            return response;
+        }
+        
         let servicesValidation = new BaseValidator(serviceArray);
         servicesValidation = new MissingCheck(servicesValidation, ErrorMessage.MissingBookedServiceList.err);
         let servicesError = await servicesValidation.validate();
