@@ -75,25 +75,31 @@ export class AppointmentManagementRouter {
             var salonId: string = request.query.salon_id;
             var bookingAppointment: BookingAppointment = new BookingAppointment(salonId, new AppointmentManagement(salonId));
             var servicesNeededArray: AppointmentItemData[] = [];
-            for (var eachService of request.query.service_list) {
-                servicesNeededArray.push({
-                    start: eachService.date,
-                    employee_id: request.query.employee_id,
-                    service: {
-                        service_id: eachService.service_id
-                    },
-                    overlapped: {
-                        status: false
-                    }
-                })
-            }
+            if (request.query.service_list) {
+                for (var eachService of request.query.service_list) {
+                    var salonTime = new SalonTime();
+                    servicesNeededArray.push({
+                        start: request.query.date ? salonTime.setString(request.query.date) : null,
+                        employee_id: request.query.employee_id,
+                        service: {
+                            service_id: eachService
+                        },
+                        overlapped: {
+                            status: false
+                        }
+                    })
+                }
             var serviceValidation = await bookingAppointment.validateServices(servicesNeededArray);
             if (serviceValidation.err) {
-                responseData = serviceValidation.err;
+                responseData = serviceValidation;
                 response.status(serviceValidation.code).json(responseData);
             }
+            }else{
+                responseData = ErrorMessage.MissingServiceId;
+                response.status(400).json(responseData);
+            }
             var checkAvailableTime = await bookingAppointment.checkBookingAvailableTime(servicesNeededArray);
-            var responseData;
+            /*var responseData;
             if (checkAvailableTime.err) {
                 responseData = checkAvailableTime.err;
             } else {
@@ -101,6 +107,10 @@ export class AppointmentManagementRouter {
             }
 
             response.status(checkAvailableTime.code).json(responseData);
+            */
+            var restfulResponse = new RestfulResponseAdapter(checkAvailableTime);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
         });
         return this.router;
     }
