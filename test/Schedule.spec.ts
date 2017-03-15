@@ -39,6 +39,12 @@ describe('Schedule Management', function () {
     let endDateMoment = moment().add(2, 'month');
     let totalDays = endDateMoment.diff(startDateMoment, 'days') + 1;
 
+    beforeEach(function (done) {
+        setTimeout(function () {
+            done();
+        }, 500);
+    });
+
     before(async function () {
 
         // Login and get token

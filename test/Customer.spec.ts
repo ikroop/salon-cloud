@@ -33,6 +33,13 @@ describe('Customer Test cases', function () {
     var invalidVerificationId = "3324234";
     var validSalonId: string = null;
     var invalidSalonId: string = "123123";
+
+    beforeEach(function (done) {
+        setTimeout(function () {
+            done();
+        }, 500);
+    });
+
     before(async function () {
         // 1. Create Owner 
         var authentication = new Authentication();
