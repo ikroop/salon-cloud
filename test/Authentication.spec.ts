@@ -31,6 +31,12 @@ describe('Authentication', function () {
     var validCustomToken = null;
     var ownerEmail: string = null;
 
+    beforeEach(function (done) {
+        setTimeout(function () {
+            done();
+        }, 500);
+    });
+
     before(async function () {
         // 1. Create Owner 
         var authentication = new Authentication();

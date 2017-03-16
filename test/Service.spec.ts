@@ -40,6 +40,12 @@ describe('Service Management', function () {
     let totalDays = endDateMoment.diff(startDateMoment, 'days') + 1;
     let premadeGroupName = 'Successful Name' + (new Date().getTime().toString());
 
+    beforeEach(function (done) {
+        setTimeout(function () {
+            done();
+        }, 500);
+    });
+
     before(async function () {
 
         // Login and get token

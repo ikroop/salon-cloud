@@ -56,6 +56,13 @@ describe('Appointment Management', function () {
 
     const date = new Date(2018, 3, 13);
 
+    beforeEach(function (done) {
+        setTimeout(function () {
+            done();
+        }, 500);
+    });
+
+
     before(async function () {
 
         // Login and get token

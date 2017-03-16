@@ -39,6 +39,12 @@ describe('Salon Management', function () {
     let invalidUserId = '100023232';
     let salonInformationInput_1: SalonInformation;
 
+    beforeEach(function (done) {
+        setTimeout(function () {
+            done();
+        }, 500);
+    });
+
     before(async function () {
         // Login and get token
         var user = {
