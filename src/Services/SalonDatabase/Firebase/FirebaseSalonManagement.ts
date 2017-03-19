@@ -83,17 +83,17 @@ export class FirebaseSalonManagement implements SalonManagementDatabaseInterface
      * 
      * @memberOf FirebaseSalonManagement
      */
-    public async updateInformation(salonInformation: SalonInformation): Promise<ISalonData> {
+    public async updateSalon(data: SalonData): Promise<ISalonData> {
 
         // FIX ME: server crash
         //salonDatabase.created_at = this.database.ServerValue.TIMESTAMP;
 
         try {
-            var salonInformationRef = await this.salonRef.child(this.salonId + '/profile/information');
+            var salonInformationRef = await this.salonRef.child(this.salonId + '/profile');
             
-            await salonInformationRef.update(salonInformation);
+            await salonInformationRef.update(data);
         } catch (error) {
-            console.log('error:', error);
+            throw error;
         }
         var salonData = await this.getSalonById();
         return salonData;

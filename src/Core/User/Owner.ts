@@ -9,7 +9,7 @@ import { SalonCloudResponse } from './../SalonCloudResponse'
 import { UserProfile, UserData, IUserData } from './../../Modules/UserManagement/UserData'
 import { AppointmentData } from './../../Modules/AppointmentManagement/AppointmentData'
 import { DailyDayData, WeeklyDayData } from './../../Modules/Schedule/ScheduleData'
-import { SalonInformation, SalonSetting } from './../../Modules/SalonManagement/SalonData'
+import { SalonInformation, SalonSetting, SalonData, ISalonData } from './../../Modules/SalonManagement/SalonData'
 import { Verification } from './../Verification/Verification'
 import { Authentication } from './../Authentication/Authentication'
 import { EmployeeManagement } from './../../Modules/UserManagement/EmployeeManagement'
@@ -210,8 +210,22 @@ export class Owner extends AbstractAdministrator {
 
     };
 
-    public updateSalonInformation(info: SalonInformation) {
+    public async updateSalonInformation(info: SalonInformation): Promise<SalonCloudResponse<ISalonData>> {
+        var response: SalonCloudResponse<ISalonData> = {
+            code: null,
+            err: null,
+            data: null
+        };
 
+        var updateResult = await this.salonManagementDP.updateInformation(info);
+        response.code = updateResult.code;
+        if (!updateResult.err) {
+            response.data = updateResult.data;
+        } else {
+            response.err = updateResult.err;
+        }
+
+        return response;
     };
 
     public updateSalonSetting(setting: SalonSetting) {
@@ -247,9 +261,9 @@ export class Owner extends AbstractAdministrator {
         var salonProfile = await salonManagement.getSalonById();
 
         response.code = salonProfile.code;
-        if (!salonProfile.err){
+        if (!salonProfile.err) {
             response.data = salonProfile.data.setting;
-        }else{
+        } else {
             response.err = salonProfile.err;
         }
 
