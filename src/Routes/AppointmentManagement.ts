@@ -98,7 +98,12 @@ export class AppointmentManagementRouter {
                 responseData = ErrorMessage.MissingServiceId;
                 response.status(400).json(responseData);
             }
-            var checkAvailableTime = await bookingAppointment.checkBookingAvailableTime(servicesNeededArray);
+            var checkAvailableTime = await bookingAppointment.checkBookingAvailableTime(servicesNeededArray, false);
+            var bridgeObject = {
+                err: checkAvailableTime.err,
+                code: checkAvailableTime.code,
+                data: checkAvailableTime.data.response_for_getter
+            }
             /*var responseData;
             if (checkAvailableTime.err) {
                 responseData = checkAvailableTime.err;
@@ -108,7 +113,7 @@ export class AppointmentManagementRouter {
 
             response.status(checkAvailableTime.code).json(responseData);
             */
-            var restfulResponse = new RestfulResponseAdapter(checkAvailableTime);
+            var restfulResponse = new RestfulResponseAdapter(bridgeObject);
             response.statusCode = 200;
             response.json(restfulResponse.googleRestfulResponse());
         });

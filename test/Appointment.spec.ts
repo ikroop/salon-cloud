@@ -1478,6 +1478,9 @@ describe('Appointment Management', function () {
 
                     res.status.should.be.equal(200);
                     res.body.should.have.property('data');
+                    res.body.data.should.have.length.above(0);
+                    res.body.data[0].should.have.property('time');
+                    res.body.data[0].should.have.property('status');
                     done();
                 });
         });
