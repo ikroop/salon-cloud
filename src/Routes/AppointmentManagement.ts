@@ -17,6 +17,9 @@ import { SalonTime } from './../Core/SalonTime/SalonTime';
 import { ErrorMessage } from './../Core/ErrorMessage'
 import { BaseValidator } from './../Core/Validation/BaseValidator'
 import { MissingCheck, IsAfterSecondDate, IsValidSalonId } from './../Core/Validation/ValidationDecorators'
+import { Anonymous } from './../Core/User/Anonymous';
+import { BookingAppointment } from './../Modules/AppointmentManagement/BookingAppointment'
+import { AppointmentManagement } from './../Modules/AppointmentManagement/AppointmentManagement';
 import { RestfulResponseAdapter } from './../Core/RestfulResponseAdapter';
 
 export class AppointmentManagementRouter {
@@ -63,6 +66,54 @@ export class AppointmentManagementRouter {
             var result = await admin.saveAppointment(appointment);
 
             var restfulResponse = new RestfulResponseAdapter(result);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
+        });
+
+        this.router.get('/getavailablebookingtime', async function (request: Request, response: Response) {
+            var responseData;
+            var salonId: string = request.query.salon_id;
+            var bookingAppointment: BookingAppointment = new BookingAppointment(salonId, new AppointmentManagement(salonId));
+            var servicesNeededArray: AppointmentItemData[] = [];
+            if (request.query.service_list) {
+                for (var eachService of request.query.service_list) {
+                    var salonTime = new SalonTime();
+                    servicesNeededArray.push({
+                        start: request.query.date ? salonTime.setString(request.query.date) : null,
+                        employee_id: request.query.employee_id,
+                        service: {
+                            service_id: eachService
+                        },
+                        overlapped: {
+                            status: false
+                        }
+                    })
+                }
+            var serviceValidation = await bookingAppointment.validateServices(servicesNeededArray);
+            if (serviceValidation.err) {
+                responseData = serviceValidation;
+                response.status(serviceValidation.code).json(responseData);
+            }
+            }else{
+                responseData = ErrorMessage.MissingServiceId;
+                response.status(400).json(responseData);
+            }
+            var checkAvailableTime = await bookingAppointment.checkBookingAvailableTime(servicesNeededArray, false);
+            var bridgeObject = {
+                err: checkAvailableTime.err,
+                code: checkAvailableTime.code,
+                data: checkAvailableTime.data.response_for_getter
+            }
+            /*var responseData;
+            if (checkAvailableTime.err) {
+                responseData = checkAvailableTime.err;
+            } else {
+                responseData = checkAvailableTime.data;
+            }
+
+            response.status(checkAvailableTime.code).json(responseData);
+            */
+            var restfulResponse = new RestfulResponseAdapter(bridgeObject);
             response.statusCode = 200;
             response.json(restfulResponse.googleRestfulResponse());
         });

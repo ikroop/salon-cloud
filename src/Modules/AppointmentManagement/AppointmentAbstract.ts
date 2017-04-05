@@ -17,7 +17,7 @@ import { EmployeeSchedule } from './../Schedule/EmployeeSchedule'
 import { ErrorMessage } from './../../Core/ErrorMessage'
 import { DailyScheduleData, DailyScheduleArrayData, DailyDayData } from './../Schedule/ScheduleData'
 import { BaseValidator } from './../../Core/Validation/BaseValidator';
-import { MissingCheck, IsValidNameString, IsValidEmployeeId, IsSalonTime, IsValidServiceId, IsAfterSecondDate, IsBeforeSecondDate } from './../../Core/Validation/ValidationDecorators';
+import { MissingCheck, IsValidNameString, IsValidEmployeeId, IsSalonTime, IsValidServiceId, IsAfterSecondDate, IsBeforeSecondDate, IsValidSalonId } from './../../Core/Validation/ValidationDecorators';
 
 export abstract class AppointmentAbstract implements AppointmentBehavior {
     private appointmentManagementDP: AppointmentManagement;
@@ -77,14 +77,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         // get available time
         var appointmentItemsArray: Array<AppointmentItemData>;
         // create Service
-        var timeAvalibilityCheck = await this.checkBookingAvailableTime(appointment.appointment_items);
+        var timeAvalibilityCheck = await this.checkBookingAvailableTime(appointment.appointment_items, true);
 
         if (timeAvalibilityCheck.err) {
             response.err = timeAvalibilityCheck.err;
             response.code = timeAvalibilityCheck.code;
             return response;
         } else {
-            appointmentItemsArray = timeAvalibilityCheck.data;
+            appointmentItemsArray = timeAvalibilityCheck.data.response_for_creator;
         }
 
         // Salon has available time for appointment, process to save appointment
@@ -146,7 +146,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
      * }]
      * }
      */
-    public async checkBookingAvailableTime(servicesArray: AppointmentItemData[]): Promise<SalonCloudResponse<AppointmentItemData[]>> {
+    /*public async checkBookingAvailableTime(servicesArray: AppointmentItemData[]): Promise<SalonCloudResponse<AppointmentItemData[]>> {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
             data: [],
             code: null,
@@ -214,7 +214,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
             }
 
             //get time array with avail and unvail points
-            var getTimeArray = await this.getEmployeeAvailableTime(getServiceData.data.time, eachService.start, employeeDaySchedule.data, employeeAppointmentArray);
+            var getTimeArray = await this.getEmployeeAvailableTime(getServiceData.data.time, eachService.start, employeeDaySchedule.data, employeeAppointmentArray, eachService.service.service_id);
             if (getTimeArray.err) {
                 response.err = getTimeArray.err;
                 response.code = getTimeArray.code;
@@ -228,7 +228,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                 } else {
 
                     //push data to appointment time array 
-                    var appointmentArrayResult = await this.makeAppointmentArrayForChecking(eachService, getTimeArray, getServiceData, employeeAppointmentArrayList, employeeIndex);
+                    var appointmentArrayResult = await this.makeAppointmentArrayForChecking(eachService, getTimeArray.data, getServiceData, employeeAppointmentArrayList, employeeIndex);
                     if (appointmentArrayResult.err) {
                         response.err = appointmentArrayResult.err;
                         response.code = appointmentArrayResult.code;
@@ -242,7 +242,111 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         }
         return response;
     }
-   
+    */
+    public async checkBookingAvailableTime(servicesArray: AppointmentItemData[], createAppointmentFlag: boolean): Promise<SalonCloudResponse<CheckBookingAvailableTimeResponseData>> {
+        var response: SalonCloudResponse<CheckBookingAvailableTimeResponseData> = {
+            data: {
+                response_for_creator: [],
+                response_for_getter: []
+            },
+            code: null,
+            err: null
+        }
+        var employeeIdList: Array<string> = [];
+        var employeeScheduleList: Array<DailyDayData> = [];
+        var employeeAppointmentArrayList: Array<Array<AppointmentItemData>> = [];
+
+        for (var eachService of servicesArray) {
+            //get Service Data 
+            var getServiceData = await this.getServiceData(eachService);
+            if (getServiceData.err) {
+                response.err = getServiceData.err;
+                response.code = getServiceData.code;
+                return response;
+            }
+
+            var employeeSchedule = null;
+            var employeeAppointmentArray;
+            var employeeIndex;
+
+            // get employee schedule and appointment of the employee on that day
+            if (employeeIdList.indexOf(eachService.employee_id) !== -1) {
+                //this case the employee is already in the array, just retrieve data from it
+                employeeIndex = employeeIdList.indexOf(eachService.employee_id);
+                employeeSchedule = employeeScheduleList[employeeIndex];
+                employeeAppointmentArray = employeeAppointmentArrayList[employeeIndex];
+            } else {
+                //this case the employee is not in the arrays yet
+
+                //get employee schedule
+                var employeeDaySchedule = await this.getEmployeeScheduleForAddedEmployee(eachService, employeeSchedule);
+                if (employeeDaySchedule.err) {
+                    response.err = employeeDaySchedule.err;
+                    response.code = employeeDaySchedule.code;
+                    return response;
+                } else {
+                    employeeSchedule = employeeDaySchedule.data;
+                }
+
+                employeeSchedule = {
+                    employee_id: eachService.employee_id,
+                    close: employeeDaySchedule.data.days[0].close,
+                    status: employeeDaySchedule.data.days[0].status,
+                    open: employeeDaySchedule.data.days[0].open
+
+                }
+                //get appointment for the employee on that day
+                var appointmentSearch = await this.getAppointmentForAddedEmployee(eachService, employeeAppointmentArray);
+                if (appointmentSearch.err) {
+                    response.err = appointmentSearch.err;
+                    response.code = appointmentSearch.code;
+                    return response;
+                } else {
+                    employeeAppointmentArray = appointmentSearch.data;
+                }
+
+                //push the employee data into the arrays
+                employeeIdList.push(eachService.employee_id);
+                employeeScheduleList.push(employeeSchedule);
+                employeeAppointmentArrayList.push(employeeAppointmentArray);
+                employeeIndex = employeeIdList.indexOf(eachService.employee_id);
+            }
+
+            //get time array with avail and unvail points
+            var getTimeArray = await this.getEmployeeAvailableTime(getServiceData.data.time, eachService.start, employeeDaySchedule.data, employeeAppointmentArray, eachService.service.service_id);
+            if (getTimeArray.err) {
+                response.err = getTimeArray.err;
+                response.code = getTimeArray.code;
+                return response;
+            } else {
+                if (createAppointmentFlag) {
+                    if (!getTimeArray.data) {
+                        response.err = ErrorMessage.AppointmentTimeNotAvailable.err;
+                        response.err.data = eachService;
+                        response.code = 500;
+                        return response;
+                    } else {
+
+                        //push data to appointment time array 
+                        var appointmentArrayResult = await this.makeAppointmentArrayForChecking(eachService, getTimeArray.data, getServiceData, employeeAppointmentArrayList, employeeIndex);
+                        if (appointmentArrayResult.err) {
+                            response.err = appointmentArrayResult.err;
+                            response.code = appointmentArrayResult.code;
+                            return response;
+                        } else {
+                            response.data.response_for_creator.push(appointmentArrayResult.data[0]);
+                            response.code = appointmentArrayResult.code;
+                        }
+                    }
+                } else {
+                    response.code = 200;
+                    response.data.response_for_getter.push(getTimeArray.data);
+                }
+            }
+        }
+        return response;
+    }
+
     /**
      * The purpose of this function is to modify the parameter 'eachService'
      * 
@@ -279,8 +383,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     }
 
-    
-    
+
+
     /**
      * 
      * 
@@ -316,7 +420,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     }
 
-    
+
     /**
      * 
      * 
@@ -356,7 +460,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     }
 
-    
+
     /**
      * 
      * 
@@ -381,14 +485,14 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         let endTimePoint = eachService.end.hour * 60 + eachService.end.min;
         let amountOfTicks = (endTimePoint - startTimePoint) / this.SmallestTimeTick;
         let amountOfFlexibleTimeTicks = this.FlexbilbleTime / this.SmallestTimeTick;
-        for (var eachPoint in getTimeArray.data.time_array) {
-            if (getTimeArray.data.time_array[eachPoint].time == startTimePoint) {
-                if (getTimeArray.data.time_array[eachPoint].available == true) {
+        for (var eachPoint in getTimeArray.time_array) {
+            if (getTimeArray.time_array[eachPoint].time == startTimePoint) {
+                if (getTimeArray.time_array[eachPoint].available == true) {
                     //check the total amount of overlapped time;
                     var overlappedCount = 0;
                     var eachPointIndex = Number(eachPoint);
-                    for (var i = 0; (i < amountOfTicks) && (eachPointIndex + i < getTimeArray.data.time_array.length); i++) {
-                        if (getTimeArray.data.time_array[eachPointIndex + i].occupied == true) {
+                    for (var i = 0; (i < amountOfTicks) && (eachPointIndex + i < getTimeArray.time_array.length); i++) {
+                        if (getTimeArray.time_array[eachPointIndex + i].occupied == true) {
                             overlappedCount++;
                         }
                     }
@@ -409,7 +513,7 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
                             price: getServiceData.data.price,
                             service_name: getServiceData.data.name
                         },
-                        overlapped: getTimeArray.data.time_array[eachPoint].overlapped
+                        overlapped: getTimeArray.time_array[eachPoint].overlapped
                     }
                     //push appointmentItem to the saving appointmentItem array;
                     employeeAppointmentArrayList[employeeIndex].push(appointmentItem);
@@ -452,8 +556,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
     *          }
     * 
     */
-    public async getEmployeeAvailableTime(timeNeeded: number, startDate: SalonTimeData, employee: DailyScheduleArrayData, appointmentList: Array<AppointmentItemData>): Promise<SalonCloudResponse<any>> {
-        var response: SalonCloudResponse<any> = {
+    public async getEmployeeAvailableTime(timeNeeded: number, startDate: SalonTimeData, employee: DailyScheduleArrayData, appointmentList: Array<AppointmentItemData>, serviceId: string): Promise<SalonCloudResponse<EmployeeTimeArrayObject>> {
+        var response: SalonCloudResponse<EmployeeTimeArrayObject> = {
             data: null,
             code: null,
             err: null
@@ -573,7 +677,8 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
         }
         response.data = {
             employee_id: employee.employee_id,
-            time_array: timeArray
+            time_array: timeArray,
+            service_id: serviceId
         };
         response.code = 200;
         return response;
@@ -687,12 +792,22 @@ export abstract class AppointmentAbstract implements AppointmentBehavior {
 
     }
 
-    protected async validateServices(serviceArray: AppointmentItemData[]): Promise<SalonCloudResponse<any>> {
+    public async validateServices(serviceArray: AppointmentItemData[]): Promise<SalonCloudResponse<any>> {
         var response: SalonCloudResponse<Array<AppointmentItemData>> = {
             data: null,
             code: null,
             err: null
         }
+        var salonIdValidator = new BaseValidator(this.salonId);
+        salonIdValidator = new MissingCheck(salonIdValidator, ErrorMessage.MissingSalonId.err);
+        salonIdValidator = new IsValidSalonId(salonIdValidator, ErrorMessage.SalonNotFound.err);
+        var salonIdResult = await salonIdValidator.validate();
+        if (salonIdResult) {
+            response.err = salonIdResult;
+            response.code = 400;
+            return response;
+        }
+
         let servicesValidation = new BaseValidator(serviceArray);
         servicesValidation = new MissingCheck(servicesValidation, ErrorMessage.MissingBookedServiceList.err);
         let servicesError = await servicesValidation.validate();
@@ -795,4 +910,16 @@ export interface TimeArrayItem {
     occupied?: boolean,
 
 
+}
+
+export interface EmployeeTimeArrayObject {
+    service_id: string,
+    employee_id: string,
+    time_array: TimeArrayItem[]
+
+}
+
+export interface CheckBookingAvailableTimeResponseData {
+    response_for_getter: EmployeeTimeArrayObject[],
+    response_for_creator: AppointmentItemData[]
 }
