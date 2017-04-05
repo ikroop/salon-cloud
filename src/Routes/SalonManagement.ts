@@ -97,8 +97,28 @@ export class SalonManagementRouter {
 
         });
 
-        this.router.post('/updateinformation', authorizationRouter.checkPermission, function (request: Request, response: Response) {
+        this.router.post('/updateinformation', authorizationRouter.checkPermission, async function (request: Request, response: Response) {
 
+            var owner = new Owner(request.user._id, new SalonManagement(request.body.salon_id));
+
+            var salonInformationInput: SalonInformation = {
+                email: request.body.email || null,
+                phone: {
+                    number: request.body.phonenumber || null,
+                    is_verified: false
+                },
+                location: {
+                    address: request.body.address || null,
+                    is_verified: false,
+                    timezone_id: null
+                },
+                salon_name: request.body.salon_name || null,
+            }
+
+            var result = await owner.updateSalonInformation(salonInformationInput);
+            var restfulResponse = new RestfulResponseAdapter(result);
+            response.statusCode = 200;
+            response.json(restfulResponse.googleRestfulResponse());
         });
 
         return this.router;

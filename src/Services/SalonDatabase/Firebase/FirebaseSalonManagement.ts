@@ -6,7 +6,7 @@
 
 import { SalonCloudResponse } from './../../../Core/SalonCloudResponse';
 import { ErrorMessage } from './../../../Core/ErrorMessage';
-import { SalonData, ISalonData } from './../../../Modules/SalonManagement/SalonData'
+import { SalonData, ISalonData, SalonInformation, SalonSetting } from './../../../Modules/SalonManagement/SalonData'
 import { mongoose } from './../../Database';
 
 import { SalonManagementDatabaseInterface } from './../SalonManagementDatabaseInterface';
@@ -75,6 +75,29 @@ export class FirebaseSalonManagement implements SalonManagementDatabaseInterface
         return salonDatabase;
     }
 
+    /**
+     * 
+     * 
+     * @param {SalonData} salon
+     * @returns {Promise<ISalonData>}
+     * 
+     * @memberOf FirebaseSalonManagement
+     */
+    public async updateSalon(data: SalonData): Promise<ISalonData> {
+
+        // FIX ME: server crash
+        //salonDatabase.created_at = this.database.ServerValue.TIMESTAMP;
+
+        try {
+            var salonInformationRef = await this.salonRef.child(this.salonId + '/profile');
+            
+            await salonInformationRef.update(data);
+        } catch (error) {
+            throw error;
+        }
+        var salonData = await this.getSalonById();
+        return salonData;
+    }
 
     /**
      * 

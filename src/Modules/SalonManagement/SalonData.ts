@@ -30,8 +30,8 @@ export interface SalonSetting {
 }
 
 export interface SalonData {
-    information: SalonInformation,
-    setting: SalonSetting
+    information?: SalonInformation,
+    setting?: SalonSetting
 }
 
 export interface ISalonData extends SalonData, FirebaseDocument{}//mongoose.Document{}

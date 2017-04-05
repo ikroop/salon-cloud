@@ -3,7 +3,6 @@
  * 
  * 
  */
-import { SalonManagementBehavior } from './SalonManagementBehavior'
 import { ISalonData, SalonData, SalonInformation, SalonSetting } from './SalonData'
 import { SalonCloudResponse } from './../../Core/SalonCloudResponse'
 import { defaultSalonSetting } from './../../Core/DefaultData'
@@ -15,7 +14,7 @@ import { SalonManagementDatabaseInterface } from './../../Services/SalonDatabase
 import { FirebaseSalonManagement } from './../../Services/SalonDatabase/Firebase/FirebaseSalonManagement'
 import { FirebaseUserManagement } from './../../Services/UserDatabase/Firebase/FirebaseUserManagement'
 
-export class SalonManagement implements SalonManagementBehavior {
+export class SalonManagement {
 
     private salonId: string;
     private salonDatabase: SalonManagementDatabaseInterface<ISalonData>;
@@ -130,8 +129,36 @@ export class SalonManagement implements SalonManagementBehavior {
         return response;
     };
 
-    public updateInformation(data: SalonInformation): SalonCloudResponse<boolean> {
-        return;
+    public async updateInformation(data: SalonInformation): Promise<SalonCloudResponse<ISalonData>> {
+
+        var returnResult: SalonCloudResponse<ISalonData> = {
+            code: null,
+            data: null,
+            err: null
+        };
+        var salonData: SalonData = {
+            information: data
+        }
+
+        // validations
+        var validations = await this.validation(data);
+        if (validations.err) {
+            returnResult.err = validations.err;
+            returnResult.code = validations.code;
+            return validations;
+        }
+
+        // update salon information
+        try {
+            var dataReturn = await this.salonDatabase.updateSalon(data);
+            returnResult.code = 200;
+            returnResult.data = dataReturn;
+        } catch (error) {
+            returnResult.code = 500;
+            returnResult.err = error;
+        }
+
+        return returnResult;
     };
 
     public updateSetting(setting: SalonSetting): SalonCloudResponse<boolean> {
